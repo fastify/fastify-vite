@@ -19,7 +19,23 @@ const fastifyVite = require('fastify-vite')
 fastify.register(fastifyVite, {
   rootDir: __dirname,
   srcDir: resolve(__dirname, 'src'),
-  distDir: resolve(__dirname, 'dist'),
-  prefix: '/',
+})
+
+fastify.get('/*', fastify.vite.handler)
+```
+
+## Data
+
+To fetch data on the server, use it for server rendering, and rehydrate later 
+for client rendering, similar to what Nuxt and Next.js do, this plugin provides 
+the following idiom:
+
+```js
+fastify.vite.get('/with-data*', (req) => {
+  req.vite.push({ message: 'server-data' })
 })
 ```
+
+This will cause `window.$ssrData` to be written to the client using 
+[`@nuxt/devalue`](https://github.com/nuxt-contrib/devalue). That key can be 
+customized via `options.ssrDataKey`.
