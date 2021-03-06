@@ -3,16 +3,24 @@ const { resolve } = require('path')
 const vite = require('vite')
 const devalue = require('@nuxt/devalue')
 
-function getHandler (options, getTemplate, viteApp) {
+function getHandler (options, getTemplate, viteDevServer) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
-      const { source, render } = await getTemplate(req, url, viteApp)
-      const [appHTML, preloadLinks] = await render(req, url, options.distManifest)
+      const { source, render } = await getTemplate(url, viteDevServer)
+      const [ appHTML, preloadLinks ] = await render(req, url, options.distManifest, options.ssrDataKey)
 
-      const html = source
+      let html = source
         .replace('<!--preload-links-->', preloadLinks)
         .replace('<!--app-html-->', appHTML)
+
+      const ssrData = req[options.ssrDataKey]
+      if (ssrData) {
+        html = html.replace(
+          '<!--ssr-data-->',
+          `<script>window.$ssrData = ${devalue(ssrData)}</script>`
+        )
+      }
 
       reply.code(200)
       reply.type('text/html')
@@ -28,27 +36,21 @@ function getHandler (options, getTemplate, viteApp) {
   }
 }
 
-function getTemplateGetter (options) {
-  const { srcDir, rootDir } = options
+function getTemplateGetter ({ dev, rootDir, srcDir, distDir, distIndex }) {
   const indexPath = resolve(rootDir, 'index.html')
-  if (options.dev) {
-    return async (req, url, viteApp) => {
-      req.$viteSSRData = req.$viteSSRData || {foobar: 'foobar'}
-      let source = readFileSync(indexPath, 'utf-8')
-      source = source.replace(
-        '<!--ssr-data-->',
-        `<script>window.$ssrData = ${devalue(req.$viteSSRData)}</script>`
-      )
-      source = await viteApp.transformIndexHtml(url, source)
-      const { render } = await viteApp.ssrLoadModule(resolve(srcDir, 'entry-server.js'))
+  if (dev) {
+    return async (url, viteDevServer) => {
+      // Reload template source every time in dev
+      const source = await viteDevServer.transformIndexHtml(url, readFileSync(indexPath, 'utf-8'))
+      const { render } = await viteDevServer.ssrLoadModule(resolve(srcDir, 'entry/server.js'))
       return { source, render }
     }
   } else {
-    const source = readFileSync(options.distIndex)
-    const { render } = require(resolve(options.distDir, 'entry-server.js'))
-    return () => {
-      return { source, render }
-    }
+    // Load production template source only once in prod
+    const source = readFileSync(distIndex, 'utf8')
+    const { render } = require(resolve(distDir, 'entry/server.js'))
+    const template = { source, render }
+    return () => template
   }
 }
 
