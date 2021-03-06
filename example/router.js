@@ -1,6 +1,6 @@
 import {
-  createMemoryHistory,
-  createRouter as _createRouter,
+  createMemoryHistory, 
+  createRouter, 
   createWebHistory
 } from 'vue-router'
 
@@ -14,10 +14,8 @@ const routes = Object.keys(pages).map((path) => {
   }
 })
 
-export function createRouter() {
-  return _createRouter({
-    // use appropriate history implementation for server/client
-    // import.meta.env.SSR is injected by Vite.
+export function getRouter() {
+  return createRouter({
     history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
     routes
   })
