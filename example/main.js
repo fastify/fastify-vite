@@ -1,12 +1,12 @@
 import { getCurrentInstance, ref } from 'vue'
 import base from './base.vue'
 import { createSSRApp } from 'vue'
-import { createRouter } from './router'
+import { getRouter } from './router'
 
 export function createApp (req) {
   const app = createSSRApp(base)
   const ctx = { req } // this can be retrieved via useSSRContext()
-  const router = createRouter()
+  const router = getRouter()
   app.use(router)
   return { ctx, app, router }
 }

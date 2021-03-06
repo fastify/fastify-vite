@@ -16,9 +16,10 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.0.0",
     "@vitejs/plugin-vue-jsx": "^1.1.2",
+    "@vue/compiler-sfc": "^3.0.7",
     "cross-env": "^7.0.3",
     "fastify": "^3.13.0",
-    "fastify-vite": "^0.0.0",
+    "fastify-vite": "0.0.1",
     "vite": "^2.0.5"
   }
 }

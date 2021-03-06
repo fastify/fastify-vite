@@ -5,7 +5,7 @@ module.exports = {
   plugins: [
     vuePlugin(),
     vueJsx(),
-  ]
+  ],
   build: {
     minify: false
   }

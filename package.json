@@ -1,0 +1,33 @@
+{
+  "bugs": {
+    "url": "https://github.com/galvez/fastify-vite/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A work in progress.",
+  "files": [
+    "index.js",
+    "example",
+    "deps.js",
+    "handler.js",
+    "README.md"
+  ],
+  "homepage": "https://github.com/galvez/fastify-vite",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fastify-vite",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galvez/fastify-vite.git"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "@nuxt/devalue": "^1.2.5",
+    "@vue/compiler-sfc": "^3.0.7",
+    "@vue/server-renderer": "^3.0.7",
+    "fastify": "^3.13.0",
+    "fastify-static": "^4.0.1",
+    "middie": "^5.2.0",
+    "vite": "^2.0.5"
+  }
+}

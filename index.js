@@ -7,7 +7,10 @@ async function fastifyVite (fastify, options) {
     options.ssrDataKey = '$ssrData'
   }
   if (!options.rootDir) {
-    options.rootDir = __dirname
+    options.rootDir = process.cwd()
+  }
+  if (typeof options.rootDir === 'function') {
+    options.rootDir = options.rootDir(resolve)
   }
   if (!options.srcDir) {
     options.srcDir = options.rootDir
