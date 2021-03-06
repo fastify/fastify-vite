@@ -15,10 +15,10 @@ const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 
 fastify.register(fastifyVite, {
-  // If you don't set rootDir, __dirname is used by default
+  // If you don't set rootDir, process.cwd() is used by default
   rootDir: __dirname,
-  // If you don't set srcDir, __dirname/src is used by default
-  srcDir: resolve(__dirname, 'src'),
+  // If you don't set srcDir, process.cwd()/src is used by default
+  srcDir: resolve => resolve(__dirname, 'src'),
 })
 
 fastify.get('/*', fastify.vite.handler)
@@ -31,7 +31,7 @@ for client rendering, similar to what Nuxt and Next.js do, this plugin provides
 the following idiom:
 
 ```js
-fastify.vite.get('/with-data', {
+fastify.vite.get('/hello', {
   ssrData (req) {
     return { message: `Hello from ${req.raw.url}` }
   },
@@ -39,20 +39,35 @@ fastify.vite.get('/with-data', {
 ```
 
 This will cause `window.$ssrData` to be written to the client using 
-[`@nuxt/devalue`][0]. That key can be customized via `options.ssrDataKey`.
+[`@nuxt/devalue`][0]. 
 
-[0]: https://github.com/nuxt-contrib/devalue
+It will also automatically register an extra endpoint based on the original `routePath` for retrieving the data returned by `ssrData` on-demand from the client. For example, for the `/hello` route registered above via `fastify.vite`, a `/-/data/hello` route is also registered and made available for GET requests.
 
-In your Vue component, you can access `ssrData` with:
+Both the final `$ssrData` data object and `$ssrDataPath`, a string with the endpoint you can use to construct client-side requests, can be easily injected into `globalProperties`. If you use this pattern, as shown in the [client]() and [server]() entry points of the [example app](), you can use the useSSRData hook provided by this plugin:
 
 ```vue
-<script setup>
-import { getSSRData } from 'fastify-vite'
+<template>
+  <h1 @click="refreshData">{{ data.message }}</h1>
+</template>
 
-const data = getSSRData('<ssrDataKey>')
+<script>
+import { ref } from 'vue'
+import { useSSRData } from 'fastify-vite/hooks'
+
+export default {
+  setup () {
+    const [ data, dataPath ] = useSSRData()
+    const refreshData = async () => {
+      const response = await fetch(dataPath)
+      data.value = await response.json()
+    }
+    return { data, refreshData }
+  }
+}
 </script>
 ```
-  
+
+
 You can also just use [`serverPrefetch`][1], but with the approach described 
 above you're able to skip the Vite rendering phase altogether if something goes 
 wrong with the data fetching.
