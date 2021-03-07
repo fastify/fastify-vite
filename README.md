@@ -13,6 +13,22 @@
 npm install fastify-vite --save-dev
 ```
 
+## Example app
+
+To play with the [example app][example-app]:
+
+[example-app]: https://github.com/galvez/fastify-vite/tree/main/example
+
+```sh
+cd example
+npm install
+npm run dev
+```
+
+See all script options in [its `package.json`][example-package-json] for more.
+
+[example-package-json]: https://github.com/galvez/fastify-vite/blob/main/example/package.json
+
 ## Basic usage
 
 ```js
