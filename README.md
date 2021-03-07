@@ -5,7 +5,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`0.0.2`**. **Still experimental, lacking a test suite**.
+**Latest release**: **`0.0.6`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
@@ -25,7 +25,7 @@ npm install
 npm run dev
 ```
 
-See all script options in [its `package.json`][example-package-json] for more.
+See all script options in [its package.json][example-package-json] for more.
 
 [example-package-json]: https://github.com/galvez/fastify-vite/blob/main/example/package.json
 

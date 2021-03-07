@@ -7,7 +7,14 @@
   "description": "A work in progress.",
   "files": [
     "index.js",
-    "example",
+    "example/entry",
+    "example/pages",
+    "example/base.vue",
+    "example/main.js",
+    "example/index.html",
+    "example/router.js",
+    "example/server.js",
+    "example/vite.config.js",
     "deps.js",
     "handler.js",
     "README.md"
@@ -20,7 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.6",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",

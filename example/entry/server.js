@@ -5,7 +5,7 @@ import devalue from '@nuxt/devalue'
 export async function render (req, url, manifest, ssrDataKey) {
   const { ctx, app, router } = createApp(req)
   
-  app.config.globalProperties.$ssrDataPath = () => `${req.routerPath}/data`
+  app.config.globalProperties.$ssrDataPath = () => `/-/data/${req.routerPath}`
   app.config.globalProperties[ssrDataKey] = req[ssrDataKey]
 
   router.push(url)

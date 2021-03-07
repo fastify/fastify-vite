@@ -48,7 +48,7 @@ function getTemplateGetter ({ dev, rootDir, srcDir, distDir, distIndex }) {
   } else {
     // Load production template source only once in prod
     const source = readFileSync(distIndex, 'utf8')
-    const { render } = require(resolve(distDir, 'entry/server.js'))
+    const { render } = require(resolve(distDir, 'server/entry/server.js'))
     const template = { source, render }
     return () => template
   }

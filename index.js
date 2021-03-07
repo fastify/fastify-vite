@@ -17,6 +17,7 @@ async function fastifyVite (fastify, options) {
   }
   if (!options.dev) {
     options.distDir = resolve(options.rootDir, 'dist')
+    options.distIndex = resolve(options.distDir, 'client/index.html')
     options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
   } else {
     options.distManifest = []
@@ -59,7 +60,7 @@ async function fastifyVite (fastify, options) {
           req[options.ssrDataKey] = await ssrData.call(this, req, reply)
         }
       }
-      fastify.get(`${url}/data`, async function (req, reply) {
+      fastify.get(`/-/data/${url}`, async function (req, reply) {
         return ssrData.call(this, req, reply)
       })
       fastify.route({
