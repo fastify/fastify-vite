@@ -2,6 +2,13 @@
 
 Fastify plugin to serve Vite applications.
 
+Currently written with a focus on Vue 3, but other frameworks can be worked in.
+
+_This would mean turning [`handler.js`][handler] into `handlers/vue.js` and adding a 
+different handler for each if needed. Contributions welcome._
+
+[handler]: https://github.com/galvez/fastify-vite/blob/main/handler.js
+
 ## Install
 
 ```
@@ -40,6 +47,8 @@ fastify.vite.get('/hello', {
 
 This will cause `window.$ssrData` to be written to the client using 
 [`@nuxt/devalue`][0]. 
+
+[0]: https://github.com/nuxt-contrib/devalue
 
 It will also automatically register an extra endpoint based on the original `routePath` for retrieving the data returned by `ssrData` on-demand from the client. For example, for the `/hello` route registered above via `fastify.vite`, a `/-/data/hello` route is also registered and made available for GET requests.
 
