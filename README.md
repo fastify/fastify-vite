@@ -35,16 +35,15 @@ level** for different routes of your Vue 3 app, for instance:
 ```js
 fastify.route({
   url: '/user/:user',
+  // Run this preHandler only for /user/:user routes
   async preHandler (req) {
-    await fastify.validateUser(req.params.user)
+    fastify.metrics.userAccess(req.params.user)
   }
   handler: fastify.vite.handler
 })
+// For everything else, get to the Vite handler straight away
 fastify.get('/*', fastify.vite.handler)
 ```
-
-This would allow you to run a custom `validateUser` function in `preHandler` for
-every request to `/user/:user` but not the others.
 
 ## Data fetching
 
