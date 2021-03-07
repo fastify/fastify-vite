@@ -4,8 +4,8 @@ Fastify plugin to serve Vite applications.
 
 Currently written with a focus on Vue 3, but other frameworks can be worked in.
 
-_This would mean turning [`handler.js`][handler] into `handlers/vue.js` and adding a 
-different handler for each if needed. Contributions welcome._
+<small><em>This would mean turning [`handler.js`][handler] into `handlers/vue.js` and adding a 
+different handler for each if needed. Contributions welcome.</em></small>
 
 [handler]: https://github.com/galvez/fastify-vite/blob/main/handler.js
 
