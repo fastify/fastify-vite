@@ -1,13 +1,6 @@
 # fastify-vite
 
-Fastify plugin to serve Vite applications.
-
-Currently written with a focus on Vue 3, but other frameworks can be worked in.
-
-<small><em>This would mean turning [`handler.js`][handler] into `handlers/vue.js` and adding a 
-different handler for each if needed. Contributions welcome.</em></small>
-
-[handler]: https://github.com/galvez/fastify-vite/blob/main/handler.js
+Fastify plugin to serve Vite applications. **Currently only supports Vue 3**.
 
 ## Install
 
@@ -50,7 +43,7 @@ This will cause `window.$ssrData` to be written to the client using
 
 [0]: https://github.com/nuxt-contrib/devalue
 
-It will also automatically register an extra endpoint based on the original `routePath` for retrieving the data returned by `ssrData` on-demand from the client. For example, for the `/hello` route registered above via `fastify.vite`, a `/-/data/hello` route is also registered and made available for GET requests.
+It will also automatically register an extra endpoint based on the original `routePath` for retrieving the data returned by `ssrData` on-demand from the client. **For example, for the `/hello` route registered above via `fastify.vite`, a `/-/data/hello` route is also registered and made available for GET requests.**
 
 Both the final `$ssrData` data object and `$ssrDataPath`, a string with the endpoint you can use to construct client-side requests, can be easily injected into `globalProperties`. If you use this pattern, as shown in the [client]() and [server]() entry points of the [example app](), you can use the useSSRData hook provided by this plugin:
 
