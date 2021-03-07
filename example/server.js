@@ -7,7 +7,7 @@ async function main() {
     rootDir: resolve => resolve(__dirname),
   })
 
-  fastify.vite.get('/with-data', {
+  fastify.vite.get('/hello', {
     ssrData (req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
     }

@@ -5,7 +5,7 @@
     "dev": "node server",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
+    "build:server": "vite build --ssr entry/server.js --outDir dist/server",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
   },
@@ -19,7 +19,7 @@
     "@vue/compiler-sfc": "^3.0.7",
     "cross-env": "^7.0.3",
     "fastify": "^3.13.0",
-    "fastify-vite": "0.0.1",
+    "fastify-vite": "0.0.6",
     "vite": "^2.0.5"
   }
 }
