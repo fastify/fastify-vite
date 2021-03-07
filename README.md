@@ -104,7 +104,6 @@ wrong with the data fetching.
 
 ## Multiple apps
 
-To run multiple Vite apps in the same Fastify server, just [encapsulate][2] your 
-`fastify-vite` instances in different application level plugins.
+Multiple Vite apps are supported via Fastify's own [encapsulation][2].
 
 [2]: https://github.com/fastify/fastify/blob/master/docs/Encapsulation.md
