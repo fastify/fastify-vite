@@ -5,7 +5,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`1.0.0`**. **Still experimental, lacking a test suite**.
+**Latest release**: **`1.0.5`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
@@ -32,16 +32,18 @@ See all script options in [its package.json][example-package-json] for more.
 ## Basic usage
 
 ```js
-const fastify = require('fastify')()
-const fastifyVite = require('fastify-vite')
+async function main () {
+  const fastify = require('fastify')()
+  await fastify.register(require('fastify-vite'), {
+    // Where your vite.config.js is located
+    // Defaults to process.cwd() if unset
+    rootDir: __dirname, 
+  })
 
-fastify.register(fastifyVite, {
-  // Where your vite.config.js is located
-  // Defaults to process.cwd() if unset
-  rootDir: __dirname, 
-})
+  fastify.get('/*', fastify.vite.handler)
+}
 
-fastify.get('/*', fastify.vite.handler)
+main()
 ```
 
 You can mount multiple routes on the same `fastify.vite.handler`. The motivation
