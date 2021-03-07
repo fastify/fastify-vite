@@ -1,6 +1,5 @@
 import { createApp } from '../main'
 import { renderToString } from '@vue/server-renderer'
-import devalue from '@nuxt/devalue'
 
 export async function render (req, url, manifest, ssrDataKey) {
   const { ctx, app, router } = createApp(req)

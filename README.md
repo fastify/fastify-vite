@@ -5,7 +5,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`1.0.5`**. **Still experimental, lacking a test suite**.
+**Latest release**: **`1.0.6`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
