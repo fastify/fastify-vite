@@ -19,7 +19,7 @@
     "@vue/compiler-sfc": "^3.0.7",
     "cross-env": "^7.0.3",
     "fastify": "^3.13.0",
-    "fastify-vite": "1.0.1",
+    "fastify-vite": "1.0.2",
     "vite": "^2.0.5"
   }
 }

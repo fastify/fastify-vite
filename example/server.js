@@ -1,5 +1,5 @@
 const fastify = require('fastify')()
-const fastifyVite = require('../index')
+const fastifyVite = require('fastify-vite')
 
 async function main() {
   await fastify.register(fastifyVite, {

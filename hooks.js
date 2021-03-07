@@ -1,6 +1,6 @@
-import { ref, getCurrentInstance } from 'vue'
+const { ref, getCurrentInstance } = require('vue')
 
-export function useSSRData () {
+exports.useSSRData = function useSSRData () {
   const appConfig = getCurrentInstance().appContext.app.config
   const { $ssrData, $ssrDataPath } = appConfig.globalProperties
   return [ ref($ssrData), $ssrDataPath() ]
