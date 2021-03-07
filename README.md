@@ -2,7 +2,7 @@
 
 Fastify plugin to serve Vite applications. **Currently only supports Vue 3**.
 
-**Latest release**: 0.0.2 on _March 6, 2021_. **Still experimental, lacking a test suite**.
+**Latest release**: **`0.0.2`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
