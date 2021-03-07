@@ -23,10 +23,13 @@ async function fastifyVite (fastify, options) {
     options.distManifest = []
   }
 
+  // We'll want access to this later
+  let viteDevServer
+
   // Setup appropriate Vite route handler
   // For dev you get more detailed logging and sautoreload 
   if (options.dev) {
-    const viteDevServer = await vite.createServer({
+    viteDevServer = await vite.createServer({
       root: options.rootDir,
       logLevel: 'error',
       server: { middlewareMode: true },
@@ -36,7 +39,6 @@ async function fastifyVite (fastify, options) {
     
     const getTemplate = getTemplateGetter(options)
     handler = getHandler(options, getTemplate, viteDevServer)
-    fastify.decorate('viteDevServer', viteDevServer)
   } else {
     fastify.register(static, {
       root: resolve(options.distDir, 'client'),
@@ -53,6 +55,7 @@ async function fastifyVite (fastify, options) {
   // a wrapper for setting a route with a ssrData handler
   fastify.decorate('vite', {
     handler,
+    devServer: viteDevServer,
     get (url, { ssrData, ...routeOptions }) {
       let preHandler
       if (ssrData) {
