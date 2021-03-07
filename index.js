@@ -41,11 +41,11 @@ async function fastifyVite (fastify, options) {
     handler = getHandler(options, getTemplate, viteDevServer)
   } else {
     fastify.register(static, {
-      root: resolve(options.distDir, 'client'),
-      prefix: options.publicPath || '/static/', // fixme
+      root: resolve(options.distDir, 'client/assets'),
+      prefix: '/assets',
     })
     const getTemplate = getTemplateGetter(options)
-    handler = getHandler(options, getTemplate, viteApp)
+    handler = getHandler(options, getTemplate)
   }
 
   // Pre-initialize request decorator (better performance?)

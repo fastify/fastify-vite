@@ -29,8 +29,8 @@ function getHandler (options, getTemplate, viteDevServer) {
       return reply
     } catch (e) {
       console.error(e.stack)
-      if (fastify.vite.devServer) {
-        fastify.vite.devServer.ssrFixStacktrace(e)
+      if (viteDevServer) {
+        viteDevServer.ssrFixStacktrace(e)
       }
       reply.code(500)
       reply.send(e.stack)
