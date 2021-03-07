@@ -60,7 +60,7 @@ async function fastifyVite (fastify, options) {
           req[options.ssrDataKey] = await ssrData.call(this, req, reply)
         }
       }
-      fastify.get(`/-/data/${url}`, async function (req, reply) {
+      fastify.get(`/-/data${url}`, async function (req, reply) {
         return ssrData.call(this, req, reply)
       })
       fastify.route({
