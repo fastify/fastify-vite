@@ -2,6 +2,8 @@
 
 Fastify plugin to serve Vite applications. **Currently only supports Vue 3**.
 
+**Latest release**: 0.0.2 on _March 6, 2021_. **Still experimental, lacking a test suite**.
+
 ## Install
 
 ```
@@ -15,10 +17,7 @@ const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 
 fastify.register(fastifyVite, {
-  // If you don't set rootDir, process.cwd() is used by default
-  rootDir: __dirname,
-  // If you don't set srcDir, process.cwd()/src is used by default
-  srcDir: resolve => resolve(__dirname, 'src'),
+  rootDir: __dirname, // defaults to process.cwd() if unset
 })
 
 fastify.get('/*', fastify.vite.handler)
