@@ -1,33 +1,59 @@
 # fastify-vite
 
-Fastify plugin to serve Vite applications. **Currently only supports Vue 3**.
+[**Fastify**][fastify] plugin to serve [**Vite**][vite] applications. **Currently only supports Vue 3**.
+
+[fastify]: http://fastify.io/
+[vite]: http://vitejs.dev/
 
 **Latest release**: **`0.0.2`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
 ```
-npm install --save fastify-vite
+npm install fastify-vite --save-dev
 ```
 
-## Usage
+## Basic usage
 
 ```js
 const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 
 fastify.register(fastifyVite, {
-  rootDir: __dirname, // defaults to process.cwd() if unset
+  // Where your vite.config.js is located
+  // Defaults to process.cwd() if unset
+  rootDir: __dirname, 
 })
 
 fastify.get('/*', fastify.vite.handler)
 ```
 
+You can mount multiple routes on the same `fastify.vite.handler`. The motivation
+for this is that **you may want to specify parameters and run hooks at the Fastify
+level** for different routes of your Vue 3 app, for instance:
+
+```js
+fastify.route({
+  url: '/user/:user',
+  async preHandler (req) {
+    await fastify.validateUser(req.params.user)
+  }
+  handler: fastify.vite.handler
+})
+fastify.get('/*', fastify.vite.handler)
+```
+
+This would allow you to run a custom `validateUser` function in `preHandler` for
+every request to `/user/:user` but not the others.
+
 ## Data fetching
 
 To fetch data on the server, use it for server rendering, and rehydrate later 
 for client rendering, similar to what Nuxt and Next.js do, this plugin provides 
-the following idiom:
+the `fastify.vite.get` helper. It will register a route automatically setting
+`fastify.vite.handler` as the **handler**, and the return value of the provided 
+`ssrData()` function is injected into `req.$ssrData` via an automatically set 
+`preHandler` hook.
 
 ```js
 fastify.vite.get('/hello', {
