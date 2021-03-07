@@ -54,7 +54,7 @@ fastify.route({
   // Run this preHandler only for /user/:user routes
   async preHandler (req) {
     fastify.metrics.userAccess(req.params.user)
-  }
+  },
   handler: fastify.vite.handler
 })
 // For everything else, get to the Vite handler straight away
@@ -85,9 +85,22 @@ This will cause `window.$ssrData` to be written to the client using
 
 [0]: https://github.com/nuxt-contrib/devalue
 
-It will also automatically register an extra endpoint based on the original `routePath` for retrieving the data returned by `ssrData` on-demand from the client. **For example, for the `/hello` route registered above via `fastify.vite`, a `/-/data/hello` route is also registered and made available for GET requests.**
+It will also automatically register an extra endpoint based on the original 
+`routePath` for retrieving the data returned by `ssrData` on-demand from the 
+client. **For example, for the `/hello` route registered above via 
+`fastify.vite`, a `/-/data/hello` route is also registered and made available 
+for GET requests.**
 
-Both the final `$ssrData` data object and `$ssrDataPath`, a string with the endpoint you can use to construct client-side requests, can be easily injected into `globalProperties`. If you use this pattern, as shown in the [client]() and [server]() entry points of the [example app](), you can use the useSSRData hook provided by this plugin:
+Both the final `$ssrData` data object and `$ssrDataPath`, a string with the 
+endpoint you can use to construct client-side requests, can be easily 
+injected into [`globalProperties`][gp]. If you use this pattern, as shown in 
+the [client][client-src] and [server][server-src] entry points of the 
+[example app][example-app], you can use the `useSSRData` hook provided by 
+the plugin:
+
+[gp]: https://v3.vuejs.org/api/application-config.html#globalproperties
+[client-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
+[server-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
 
 ```vue
 <template>
