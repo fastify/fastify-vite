@@ -49,7 +49,9 @@ fastify.get('/*', fastify.vite.handler)
 
 To fetch data on the server, use it for server rendering, and rehydrate later 
 for client rendering, similar to what Nuxt and Next.js do, this plugin provides 
-the `fastify.vite.get` helper. It will register a route automatically setting
+the `fastify.vite.get` helper. 
+
+It will register a route automatically setting
 `fastify.vite.handler` as the **handler**, and the return value of the provided 
 `ssrData()` function is injected into `req.$ssrData` via an automatically set 
 `preHandler` hook.
