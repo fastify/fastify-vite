@@ -4,7 +4,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useSSRData } from '../main'
+import { useSSRData } from 'fastify-vite/hooks'
 
 export default {
   setup () {

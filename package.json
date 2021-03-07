@@ -7,6 +7,7 @@
   "description": "A work in progress.",
   "files": [
     "index.js",
+    "hooks.js",
     "example/entry",
     "example/pages",
     "example/base.vue",
@@ -27,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",

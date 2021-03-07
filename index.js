@@ -77,6 +77,4 @@ async function fastifyVite (fastify, options) {
   })
 }
 
-class FastifyViteError extends Error {}
-
 module.exports = fp(fastifyVite)
