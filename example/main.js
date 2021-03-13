@@ -1,18 +1,15 @@
-import { getCurrentInstance, ref } from 'vue'
+import { getCurrentInstance, ref, createSSRApp } from 'vue'
 import base from './base.vue'
-import { createSSRApp } from 'vue'
+
+import { createHead } from '@vueuse/head'
 import { getRouter } from './router'
 
 export function createApp (req) {
   const app = createSSRApp(base)
+  const head = createHead()
   const ctx = { req } // this can be retrieved via useSSRContext()
   const router = getRouter()
   app.use(router)
-  return { ctx, app, router }
-}
-
-export function useSSRData () {
-  const appConfig = getCurrentInstance().appContext.app.config
-  const { $ssrData, $ssrDataPath } = appConfig.globalProperties
-  return [ ref($ssrData), $ssrDataPath() ]
+  app.use(head)
+  return { ctx, app, head, router }
 }

@@ -1,14 +1,9 @@
-const { resolve, vite, middie, static, fp } = require('./deps')
-const { getHandler, getTemplateGetter, assign } = require('./handler')
+const { assign, resolve, vite, middie, static, fp, defaults } = require('./deps')
+const { getHandler, getRenderGetter, defaultOptions } = require('./handler')
 
 async function fastifyVite (fastify, options) {
   // Set option defaults
-  if (!options.ssrDataKey) {
-    options.ssrDataKey = '$ssrData'
-  }
-  if (!options.rootDir) {
-    options.rootDir = process.cwd()
-  }
+  options = assign(defaults, options)
   if (typeof options.rootDir === 'function') {
     options.rootDir = options.rootDir(resolve)
   }
@@ -37,14 +32,14 @@ async function fastifyVite (fastify, options) {
     await fastify.register(middie)
     fastify.use(viteDevServer.middlewares)
     
-    const getTemplate = getTemplateGetter(options)
+    const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate, viteDevServer)
   } else {
     fastify.register(static, {
       root: resolve(options.distDir, 'client/assets'),
       prefix: '/assets',
     })
-    const getTemplate = getTemplateGetter(options)
+    const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate)
   }
 
@@ -55,6 +50,7 @@ async function fastifyVite (fastify, options) {
   // a wrapper for setting a route with a ssrData handler
   fastify.decorate('vite', {
     handler,
+    config: options,
     devServer: viteDevServer,
     get (url, { ssrData, ...routeOptions }) {
       let preHandler
