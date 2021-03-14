@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "lint": "eslint . --ext js --fix",
+    "test": "node test"
+  },
   "bugs": {
     "url": "https://github.com/galvez/fastify-vite/issues"
   },
@@ -8,6 +12,7 @@
   "files": [
     "index.js",
     "hooks.js",
+    "template.js",
     "example/entry",
     "example/pages",
     "example/base.vue",
@@ -28,14 +33,24 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "1.0.6",
+  "version": "1.0.7",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",
     "@vue/server-renderer": "^3.0.7",
+    "@vueuse/head": "^0.5.1",
+    "eslint-config-standard": "^16.0.2",
     "fastify": "^3.13.0",
     "fastify-static": "^4.0.1",
     "middie": "^5.2.0",
     "vite": "^2.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "got": "^11.8.2",
+    "tap": "^14.11.0"
   }
 }

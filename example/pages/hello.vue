@@ -7,11 +7,15 @@ import { ref } from 'vue'
 import { useSSRData } from 'fastify-vite/hooks'
 
 export default {
-  setup () {
+  async setup () {
     const [ data, dataPath ] = useSSRData()
     const refreshData = async () => {
       const response = await fetch(dataPath)
       data.value = await response.json()
+    }
+    // If navigation happened client-side
+    if (!data.value && !import.meta.env.SSR) {
+      await refreshData()
     }
     return { data, refreshData }
   }

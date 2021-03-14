@@ -1,19 +1,11 @@
-const { resolve, vite, middie, static, fp } = require('./deps')
-const { getHandler, getTemplateGetter, assign } = require('./handler')
+const { assign, resolve, vite, middie, staticPlugin, fp, defaults } = require('./deps')
+const { getHandler, getRenderGetter } = require('./handler')
 
 async function fastifyVite (fastify, options) {
   // Set option defaults
-  if (!options.ssrDataKey) {
-    options.ssrDataKey = '$ssrData'
-  }
-  if (!options.rootDir) {
-    options.rootDir = process.cwd()
-  }
+  options = assign(defaults, options)
   if (typeof options.rootDir === 'function') {
     options.rootDir = options.rootDir(resolve)
-  }
-  if (!options.srcDir) {
-    options.srcDir = options.rootDir
   }
   if (!options.dev) {
     options.distDir = resolve(options.rootDir, 'dist')
@@ -24,27 +16,28 @@ async function fastifyVite (fastify, options) {
   }
 
   // We'll want access to this later
+  let handler
   let viteDevServer
 
   // Setup appropriate Vite route handler
-  // For dev you get more detailed logging and sautoreload 
+  // For dev you get more detailed logging and sautoreload
   if (options.dev) {
     viteDevServer = await vite.createServer({
       root: options.rootDir,
       logLevel: 'error',
-      server: { middlewareMode: true },
+      server: { middlewareMode: true }
     })
     await fastify.register(middie)
     fastify.use(viteDevServer.middlewares)
-    
-    const getTemplate = getTemplateGetter(options)
+
+    const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate, viteDevServer)
   } else {
-    fastify.register(static, {
+    fastify.register(staticPlugin, {
       root: resolve(options.distDir, 'client/assets'),
-      prefix: '/assets',
+      prefix: '/assets'
     })
-    const getTemplate = getTemplateGetter(options)
+    const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate)
   }
 
@@ -55,6 +48,7 @@ async function fastifyVite (fastify, options) {
   // a wrapper for setting a route with a ssrData handler
   fastify.decorate('vite', {
     handler,
+    config: options,
     devServer: viteDevServer,
     get (url, { ssrData, ...routeOptions }) {
       let preHandler
@@ -71,9 +65,9 @@ async function fastifyVite (fastify, options) {
         url,
         preHandler,
         handler,
-        ...routeOptions,
+        ...routeOptions
       })
-    },
+    }
   })
 }
 

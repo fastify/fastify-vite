@@ -4,7 +4,7 @@ const vueJsx = require('@vitejs/plugin-vue-jsx')
 module.exports = {
   plugins: [
     vuePlugin(),
-    vueJsx(),
+    vueJsx()
   ],
   build: {
     minify: false

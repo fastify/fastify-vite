@@ -10,6 +10,7 @@
     "debug": "node --inspect-brk server"
   },
   "dependencies": {
+    "@vueuse/head": "^0.5.1",
     "vue": "^3.0.6",
     "vue-router": "^4.0.3"
   },

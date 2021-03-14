@@ -1,11 +1,32 @@
 <template>
   <div>
-    <router-link to="/">Index</router-link>|
+    <router-link to="/">Index</router-link> - 
+    <router-link to="/hello">Hello</router-link>
     <router-view v-slot="{ Component }">
-      <component :is="Component" />
+      <Suspense>
+        <component :is="Component" />
+      </Suspense>
     </router-view>
   </div>
 </template>
+
+<script>
+import { useHead } from '@vueuse/head'
+
+export default {
+  setup () {
+    useHead({
+      title: 'Vite App',
+      meta: [{
+        charset: 'utf-8',
+      }, {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1.0',
+      }]
+    })
+  }
+}
+</script>
 
 <style>
 #app {
