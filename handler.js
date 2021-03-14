@@ -1,4 +1,3 @@
-const { readFileSync } = require('fs')
 const { resolve } = require('path')
 const renderHTMLTemplate = require('./html')
 
@@ -26,12 +25,13 @@ function getHandler (options, getRenderer, viteDevServer) {
   }
 }
 
-function getRenderGetter ({ dev, rootDir, srcDir, distDir, distIndex }) {
-  const indexPath = resolve(rootDir, 'index.html')
+function getRenderGetter ({ dev, rootDir, srcDir, serverEntryPath, distDir, distIndex }) {
   if (dev) {
     return async (url, viteDevServer) => {
       // Reload template source every time in dev
-      const { render } = await viteDevServer.ssrLoadModule(resolve(srcDir, 'entry/server.js'))
+      const { render } = await viteDevServer.ssrLoadModule(
+        resolve(rootDir, serverEntryPath.replace(/^\/+/, ''))
+      )
       return render
     }
   } else {

@@ -3,5 +3,6 @@ module.exports = {
   resolve: require('path').resolve,
   vite: require('vite'),
   middie: require('middie'),
-  static: require('fastify-static'),
+  staticPlugin: require('fastify-static'),
+  assign: Object.assign
 }
