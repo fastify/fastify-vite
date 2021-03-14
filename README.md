@@ -5,7 +5,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`1.0.6`**. **Still experimental, lacking a test suite**.
+**Latest release**: **`1.0.7`**. **Still experimental, lacking a test suite**.
 
 ## Install
 
@@ -119,6 +119,10 @@ export default {
     const refreshData = async () => {
       const response = await fetch(dataPath)
       data.value = await response.json()
+    }
+    // If navigation happened client-side
+    if (!data.value && !import.meta.env.SSR) {
+      await refreshData()
     }
     return { data, refreshData }
   }

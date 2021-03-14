@@ -5,5 +5,5 @@ module.exports = {
   middie: require('middie'),
   staticPlugin: require('fastify-static'),
   defaults: require('./defaults'),
-  assign: Object.assign,
+  assign: Object.assign
 }

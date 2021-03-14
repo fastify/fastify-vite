@@ -13,6 +13,7 @@ export default {
       const response = await fetch(dataPath)
       data.value = await response.json()
     }
+    // If navigation happened client-side
     if (!data.value && !import.meta.env.SSR) {
       await refreshData()
     }
