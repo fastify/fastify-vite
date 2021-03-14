@@ -1,8 +1,11 @@
 <template>
   <div>
-    <router-link to="/">Index</router-link>|
+    <router-link to="/">Index</router-link> - 
+    <router-link to="/hello">Hello</router-link>
     <router-view v-slot="{ Component }">
-      <component :is="Component" />
+      <Suspense>
+        <component :is="Component" />
+      </Suspense>
     </router-view>
   </div>
 </template>

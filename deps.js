@@ -4,5 +4,6 @@ module.exports = {
   vite: require('vite'),
   middie: require('middie'),
   staticPlugin: require('fastify-static'),
-  assign: Object.assign
+  defaults: require('./defaults'),
+  assign: Object.assign,
 }

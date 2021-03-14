@@ -5,7 +5,8 @@ async function main () {
   await fastify.register(fastifyVite, {
     dev: process.env.NODE_ENV !== 'production',
     rootDir: resolve => resolve(__dirname),
-    clientEntryPath: '/entry/client.js'
+    clientEntryPath: '/entry/client.js',
+    serverEntryPath: '/entry/server.js',
   })
 
   fastify.get('/favicon.ico', (_, reply) => reply.code(404))
