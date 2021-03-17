@@ -31,9 +31,7 @@ function getFetchWrapper (methods, method) {
     if (hasParams) {
       return async (params, options) => {
         // eslint-disable-next-line no-undef
-        const response = await fetch(applyParams(methods[method], params), {
-          options
-        })
+        const response = await fetch(applyParams(methods[method], params), options)
         const body = await response.text()
         return {
           body,
@@ -45,9 +43,7 @@ function getFetchWrapper (methods, method) {
     } else {
       return async (options) => {
         // eslint-disable-next-line no-undef
-        const response = await fetch(methods[method], {
-          options
-        })
+        const response = await fetch(methods[method], options)
         const body = await response.text()
         return {
           body,
