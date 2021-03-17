@@ -42,23 +42,26 @@ async function fastifyVite (fastify, options) {
   }
 
   // Pre-initialize request decorator (better performance?)
-  fastify.decorateRequest(options.ssrDataKey, null)
+  fastify.decorateRequest(options.dataKey, null)
+  if (options.api) {
+    fastify.decorateRequest('api', fastify.api)
+  }
 
   // Sets fastify.vite.get() helper which uses
-  // a wrapper for setting a route with a ssrData handler
+  // a wrapper for setting a route with a data() handler
   fastify.decorate('vite', {
     handler,
     config: options,
     devServer: viteDevServer,
-    get (url, { ssrData, ...routeOptions }) {
+    get (url, { data, ...routeOptions }) {
       let preHandler
-      if (ssrData) {
+      if (data) {
         preHandler = async function (req, reply) {
-          req[options.ssrDataKey] = await ssrData.call(this, req, reply)
+          req[options.dataKey] = await data.call(this, req, reply)
         }
       }
       fastify.get(`/-/data${url}`, async function (req, reply) {
-        return ssrData.call(this, req, reply)
+        return data.call(this, req, reply)
       })
       fastify.route({
         method: 'GET',
