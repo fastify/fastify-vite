@@ -6,7 +6,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { useServerAPI } from '../temp'
+import { useServerAPI } from 'fastify-vite/hooks'
 
 const api = useServerAPI()
 const state = reactive({ count: 0, msg: '' })

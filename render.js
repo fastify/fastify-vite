@@ -1,12 +1,12 @@
-import { renderToString } from '@vue/server-renderer'
-import { renderHeadToString } from '@vueuse/head'
-import devalue from '@nuxt/devalue'
+const { renderToString } = require('@vue/server-renderer')
+const { renderHeadToString } = require('@vueuse/head')
+const devalue = require('@nuxt/devalue')
 
-async function render (req, url, options) {
+const getRender = createApp => async function render (req, url, options) {
   const { clientEntryPath, distManifest, dataKey } = options
   const { ctx, app, head, router } = createApp(req)
 
-  app.config.globalProperties.$ssrDataPath = () => `/-/data${req.routerPath}`
+  app.config.globalProperties.$dataPath = () => `/-/data${req.routerPath}`
   app.config.globalProperties[dataKey] = req[dataKey]
 
   router.push(url)
@@ -29,10 +29,10 @@ async function render (req, url, options) {
     )
   }
 
-  if (data) {
+  if (api) {
     api = (
       '<script>' +
-      `const apiSymbol = Symbol.for('fastify-vite-api')\n` +
+      'const apiSymbol = Symbol.for(\'fastify-vite-api\')\n' +
       `window[apiSymbol] = ${devalue(api)}\n` +
       '</script>'
     )
@@ -43,7 +43,7 @@ async function render (req, url, options) {
       preload: preloadLinks,
       tags: headTags,
       data,
-      api,
+      api
     },
     attrs: {
       html: htmlAttrs,
@@ -54,12 +54,12 @@ async function render (req, url, options) {
   }
 }
 
-module.exports = { render }
+module.exports = { getRender }
 
 function renderPreloadLinks (modules, manifest) {
   let links = ''
   const seen = new Set()
-  modules.forEach((id) => {
+  for (const id of modules) {
     const files = manifest[id]
     if (files) {
       files.forEach((file) => {
@@ -69,7 +69,7 @@ function renderPreloadLinks (modules, manifest) {
         }
       })
     }
-  })
+  }
   return links
 }
 

@@ -4,7 +4,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useServerData } from '../temp'
+import { useServerData } from 'fastify-vite/hooks'
 
 export default {
   async setup () {

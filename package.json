@@ -10,9 +10,14 @@
   "deprecated": false,
   "description": "A work in progress.",
   "files": [
-    "index.js",
+    "defaults.js",
+    "deps.js",
+    "handler.js",
     "hooks.js",
-    "template.js",
+    "html.js",
+    "hydrate.js",
+    "index.js",
+    "render.js",
     "example/entry",
     "example/pages",
     "example/base.vue",
@@ -21,8 +26,6 @@
     "example/router.js",
     "example/server.js",
     "example/vite.config.js",
-    "deps.js",
-    "handler.js",
     "README.md"
   ],
   "homepage": "https://github.com/galvez/fastify-vite",
@@ -33,7 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "1.0.7",
+  "version": "2.0.0-alpha.1",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",

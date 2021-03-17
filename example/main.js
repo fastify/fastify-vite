@@ -1,4 +1,4 @@
-import { getCurrentInstance, ref, createSSRApp } from 'vue'
+import { createSSRApp } from 'vue'
 import base from './base.vue'
 
 import { createHead } from '@vueuse/head'

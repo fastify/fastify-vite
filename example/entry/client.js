@@ -1,5 +1,5 @@
 import { createApp } from '../main'
-import { hydrate } from '../temp'
+import { hydrate } from 'fastify-vite/hydrate'
 const { app, router } = createApp()
 
 hydrate(app, '$data')
