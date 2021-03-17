@@ -24,7 +24,7 @@ export const getRender = createApp => async function render (req, url, options) 
   if (data) {
     data = (
       '<script>' +
-      `const dataSymbol = Symbol.for(${dataKey})\n` +
+      `const dataSymbol = Symbol.for('${dataKey}')\n` +
       `window[dataSymbol] = ${devalue(data)}\n` +
       '</script>'
     )

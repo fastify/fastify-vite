@@ -4,11 +4,11 @@
 
 <script>
 import { ref } from 'vue'
-import { useSSRData } from 'fastify-vite/hooks'
+import { useServerData } from '../temp'
 
 export default {
   async setup () {
-    const [ data, dataPath ] = useSSRData()
+    const [ data, dataPath ] = useServerData()
     const refreshData = async () => {
       const response = await fetch(dataPath)
       data.value = await response.json()
