@@ -5,7 +5,8 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`1.0.7`**. Still experimental.
+**Latest release**: **`2.0.0-beta`**.
+Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.0.0-beta)**.
 
 ## Install
 
@@ -71,34 +72,34 @@ the `fastify.vite.get` helper.
 
 It will register a route automatically setting
 `fastify.vite.handler` as the **handler**, and the return value of the provided 
-`ssrData()` function is injected into `req.$ssrData` via an automatically set 
+`data()` function is injected into `req.$data` via an automatically set 
 `preHandler` hook.
 
 ```js
 fastify.vite.get('/hello', {
-  ssrData (req) {
+  data (req) {
     return { message: `Hello from ${req.raw.url}` }
   },
 })
 ```
 
-This will cause `window.$ssrData` to be written to the client using 
+This will cause `window.$data` to be written to the client using 
 [`@nuxt/devalue`][0]. 
 
 [0]: https://github.com/nuxt-contrib/devalue
 
 It will also automatically register an extra endpoint based on the original 
-`routePath` for retrieving the data returned by `ssrData` on-demand from the 
+`routePath` for retrieving the data returned by `data` on-demand from the 
 client. **For example, for the `/hello` route registered above via 
 `fastify.vite`, a `/-/data/hello` route is also registered and made available 
 for GET requests.**
 
-Both the final `$ssrData` data object and `$ssrDataPath`, a string with the 
+Both the final `$data` data object and `$dataPath`, a string with the 
 endpoint you can use to construct client-side requests, can be easily 
 injected into [`globalProperties`][gp]. If you use this pattern, as shown in 
 the [client][client-src] and [server][server-src] entry points of the 
-[example app][example-app], you can use the `useSSRData` hook provided by 
-the plugin:
+[example app][example-app], you can use the `useServerData` hook provided 
+by  the plugin:
 
 [gp]: https://v3.vuejs.org/api/application-config.html#globalproperties
 [client-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
@@ -111,11 +112,11 @@ the plugin:
 
 <script>
 import { ref } from 'vue'
-import { useSSRData } from 'fastify-vite/hooks'
+import { useServerData } from 'fastify-vite/hooks'
 
 export default {
   setup () {
-    const [ data, dataPath ] = useSSRData()
+    const [ data, dataPath ] = useServerData()
     const refreshData = async () => {
       const response = await fetch(dataPath)
       data.value = await response.json()

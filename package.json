@@ -36,7 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-beta",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",
