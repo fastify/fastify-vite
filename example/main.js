@@ -4,8 +4,6 @@ import base from './base.vue'
 import { createHead } from '@vueuse/head'
 import { getRouter } from './router'
 
-const { assign } = Object
-
 export function createApp (req) {
   const app = createSSRApp(base)
   const head = createHead()

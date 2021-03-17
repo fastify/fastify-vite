@@ -30,7 +30,6 @@ exampleServer().then(async (fastify) => {
   tap.test('served hello page should have ssrData with matching ssrDataKey', async (t) => {
     t.plan(1)
     helloPage = await fastify.inject({ url: '/hello' })
-    console.log(helloPage.body)
     t.ok(helloPage.body.includes(`Symbol.for('${fastify.vite.config.dataKey}')`))
   })
 })

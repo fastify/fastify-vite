@@ -1,5 +1,4 @@
 module.exports = function renderHTMLTemplate (req, { attrs, head, element, entry }) {
-  console.log('head.api', head.api)
   return (
     '<!DOCTYPE html>\n' +
     `<html${attrs.html}>\n` +

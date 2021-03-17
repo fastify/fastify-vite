@@ -18,8 +18,7 @@ async function render (req, url, options) {
   const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
 
   let data = req[options.dataKey] || ''
-  console.log('req.api.meta', req.api.meta)
-  let api = JSON.parse(JSON.stringify(req.api ? req.api.meta : null))
+  let api = req.api ? req.api.meta : null
 
   if (data) {
     data = (
