@@ -24,14 +24,15 @@ function setupServerAPI (globalProperties) {
 
 function getFetchWrapper (methods, method) {
   if (method in methods) {
-    if (typeof methods[method] === 'object') {
+    if (Array.isArray(!methods[method]) && typeof methods[method] === 'object') {
       return new Proxy(methods[method], { get: getFetchWrapper })
     }
-    const hasParams = methods[method].match(/\/:(\w+)/)
+    const hasParams = methods[method][1].match(/\/:(\w+)/)
     if (hasParams) {
-      return async (params, options) => {
+      return async (params, options = {}) => {
+        options.method = methods[method][0]
         // eslint-disable-next-line no-undef
-        const response = await fetch(applyParams(methods[method], params), options)
+        const response = await fetch(applyParams(methods[method][1], params), options)
         const body = await response.text()
         return {
           body,
@@ -41,9 +42,10 @@ function getFetchWrapper (methods, method) {
         }
       }
     } else {
-      return async (options) => {
+      return async (options = {}) => {
+        options.method = methods[method][0]
         // eslint-disable-next-line no-undef
-        const response = await fetch(methods[method], options)
+        const response = await fetch(methods[method][1], options)
         const body = await response.text()
         return {
           body,

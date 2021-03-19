@@ -21,6 +21,8 @@ async function main () {
     }),
   }))
 
+  console.log('fastify.api.meta', fastify.api.meta)
+
   fastify.get('/favicon.ico', (_, reply) => reply.code(404))
   fastify.vite.get('/hello', {
     data (req) {
