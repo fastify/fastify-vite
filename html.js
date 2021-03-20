@@ -7,9 +7,9 @@ module.exports = function renderHTMLTemplate (req, { attrs, head, element, entry
     }\n${
         head.tags
     }\n${
-        head.data
+        head.data || ''
     }\n${
-        head.api
+        head.api || ''
     }\n</head>\n` +
     `<body${attrs.body}>\n` +
     `<div id="app">${element}</div>\n` +
