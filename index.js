@@ -41,19 +41,20 @@ async function fastifyVite (fastify, options) {
     handler = getHandler(options, getTemplate)
   }
 
-  // Pre-initialize request decorator (better performance?)
-  fastify.decorateRequest(options.dataKey, null)
-  if (options.api) {
-    fastify.decorateRequest('api', fastify.api)
-  }
-
   // Sets fastify.vite.get() helper which uses
   // a wrapper for setting a route with a data() handler
   fastify.decorate('vite', {
     handler,
+    global: undefined,
     config: options,
     devServer: viteDevServer,
-    get (url, { data, ...routeOptions }) {
+    get (url, { data, ...routeOptions } = {}) {
+      return this.route(url, { data, method: 'GET', ...routeOptions })
+    },
+    post (url, { data, method, ...routeOptions } = {}) {
+      return this.route(url, { data, method: 'GET', ...routeOptions })
+    },
+    route (url, { data, method, ...routeOptions } = {}) {
       let preHandler
       if (data) {
         preHandler = async function (req, reply) {
@@ -64,12 +65,21 @@ async function fastifyVite (fastify, options) {
         return data.call(this, req, reply)
       })
       fastify.route({
-        method: 'GET',
+        method,
         url,
         preHandler,
         handler,
         ...routeOptions
       })
+    }
+  })
+  fastify.addHook('onReady', () => {
+    // Pre-initialize request decorator for better performance
+    // This actually safely adds things to Request.prototype
+    fastify.decorateRequest(options.globalDataKey, { getter: () => fastify.vite.global })
+    fastify.decorateRequest(options.dataKey, null)
+    if (options.api) {
+      fastify.decorateRequest('api', fastify.api)
     }
   })
 }

@@ -1,10 +1,14 @@
 const { useSSRContext } = require('vue')
 
-function hydrate (app, dataKey = '$data') {
+function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   const dataSymbol = Symbol.for(dataKey)
   app.config.globalProperties.$dataPath = () => `/-/data${document.location.pathname}`
   app.config.globalProperties[dataKey] = window[dataSymbol]
   delete window[dataSymbol]
+
+  const globalDataSymbol = Symbol.for(globalDataKey)
+  app.config.globalProperties[globalDataKey] = window[globalDataSymbol]
+  delete window[globalDataSymbol]
 
   const apiSymbol = Symbol.for('fastify-vite-api')
   app.config.globalProperties.$api = window[apiSymbol]

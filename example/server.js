@@ -21,7 +21,7 @@ async function main () {
     }),
   }))
 
-  console.log('fastify.api.meta', fastify.api.meta)
+  fastify.vite.global = { prop: 'data' }
 
   fastify.get('/favicon.ico', (_, reply) => reply.code(404))
   fastify.vite.get('/hello', {
