@@ -14,13 +14,20 @@ async function useServerData (...args) {
     initialData = args[1]
   }
   const isSSR = typeof window === 'undefined'
-  const appConfig = getCurrentInstance().appContext.app.config
+  const appInstance = getCurrentInstance()
+  const appConfig = appInstance ? appInstance.appContext.app.config : null
   let $data
   if (isSSR && initialData) {
+    if (!appConfig) {
+      return initialData()
+    }
     appConfig.globalProperties[dataKey] = await initialData()
     $data = appConfig.globalProperties[dataKey]
     return $data
   } else if (initialData) {
+    if (!appConfig) {
+      return initialData()
+    }
     if (!appConfig.globalProperties[dataKey]) {
       appConfig.globalProperties[dataKey] = await initialData()
     }
