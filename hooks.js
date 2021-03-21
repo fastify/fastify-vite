@@ -13,9 +13,10 @@ async function useServerData (...args) {
     dataKey = args[0]
     initialData = args[1]
   }
+  const isSSR = typeof window === 'undefined'
   const appConfig = getCurrentInstance().appContext.app.config
   let $data
-  if (import.meta.env.SSR && initialData) {
+  if (isSSR && initialData) {
     appConfig.globalProperties[dataKey] = await initialData()
     $data = appConfig.globalProperties[dataKey]
     return $data
