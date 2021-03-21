@@ -1,23 +1,25 @@
 <template>
-  <h1 @click="refreshData">{{ data.message }}</h1>
+  <h1 @click="refreshData">{{ state.message }}</h1>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import { useServerData } from 'fastify-vite/hooks'
 
 export default {
   async setup () {
-    const [ data, dataPath ] = useServerData()
+    const [ data, dataPath ] = await useServerData()
+    const state = reactive({ message: data?.message })
     const refreshData = async () => {
       const response = await fetch(dataPath)
-      data.value = await response.json()
+      const json = await response.json()
+      state.message = json.message
     }
     // If navigation happened client-side
-    if (!data.value && !import.meta.env.SSR) {
+    if (!data && !import.meta.env.SSR) {
       await refreshData()
     }
-    return { data, refreshData }
+    return { state, refreshData }
   }
 }
 </script>

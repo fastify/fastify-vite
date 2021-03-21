@@ -23,7 +23,10 @@ async function main () {
 
   fastify.vite.global = { prop: 'data' }
 
-  fastify.get('/favicon.ico', (_, reply) => reply.code(404))
+  fastify.get('/favicon.ico', (_, reply) => {
+    reply.code(404)
+    reply.send('')
+  })
   fastify.vite.get('/hello', {
     data (req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }

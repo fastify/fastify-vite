@@ -4,7 +4,7 @@
     <router-link to="/hello">Hello</router-link>
     <router-view v-slot="{ Component }">
       <Suspense>
-        <component :is="Component" />
+        <component :key="route.path" :is="Component" />
       </Suspense>
     </router-view>
   </div>
@@ -12,6 +12,7 @@
 
 <script>
 import { useHead } from '@vueuse/head'
+import { useRoute } from 'vue-router'
 
 export default {
   setup () {
@@ -24,6 +25,7 @@ export default {
         content: 'width=device-width, initial-scale=1.0',
       }]
     })
+    return { route: useRoute() }
   }
 }
 </script>

@@ -21,7 +21,7 @@ const getRender = createApp => async function render (req, url, options) {
   const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
 
   const globalData = req[options.globalDataKey]
-  const data = req[options.dataKey]
+  const data = req[options.dataKey] || app.config.globalProperties[dataKey]
   const api = req.api ? req.api.meta : null
   let script = ''
 

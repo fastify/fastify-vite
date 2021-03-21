@@ -6,13 +6,17 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import { useServerAPI } from 'fastify-vite/hooks'
+import { reactive, getCurrentInstance, ref } from 'vue'
+import { useServerAPI, useServerData } from 'fastify-vite/hooks'
 
 const api = useServerAPI()
-const state = reactive({ count: 0, msg: '' })
+const data = await useServerData(async () => {
+  const { json } = await api.echo({ msg: 'hello from server '})
+  return json
+})
+const state = reactive({ count: 0, msg: data.msg })
 const fetchFromEcho = async () => {
-  const { json } = await api.echo({ msg: 'hello '})
+  const { json } = await api.echo({ msg: 'hello from client '})
   state.msg = json.msg
 }
 </script>
