@@ -5,8 +5,13 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`2.0.0-beta`**.
+**Latest release**: **`2.0.0-beta.10`**.
 Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.0.0-beta)**.
+
+This plugin is for minimalists who want a **lean, fast** stack where they have 
+as much control as possible. You can build any app with it that you would with 
+Nuxt.js or Next.js, for sure, but it's targeted at a more low-level approach 
+to development, instead of trying to do everything for you.
 
 ## Install
 
@@ -64,16 +69,21 @@ fastify.route({
 fastify.get('/*', fastify.vite.handler)
 ```
 
+
 ## Data fetching
 
 To fetch data on the server, use it for server rendering, and rehydrate later 
-for client rendering, similar to what Nuxt and Next.js do, this plugin provides 
-the `fastify.vite.get` helper. 
+for client rendering, similar to what Nuxt.js and Next.js do, there are two
+approaches made possible with this plugin
 
-It will register a route automatically setting
-`fastify.vite.handler` as the **handler**, and the return value of the provided 
-`data()` function is injected into `req.$data` via an automatically set 
-`preHandler` hook.
+### Prepass: fetch data before any Vue code runs
+
+Use `fastify.vite.get` or `fastify.vite.post` to register your Vite routes that
+need data. It will register routes automatically setting `fastify.vite.handler`
+as their **handler**, and the return value of the provided `data()` function is 
+injected into `req.$data` via an automatically set `preHandler` hook. 
+
+So if you write:
 
 ```js
 fastify.vite.get('/hello', {
@@ -99,7 +109,7 @@ endpoint you can use to construct client-side requests, can be easily
 injected into [`globalProperties`][gp]. If you use this pattern, as shown in 
 the [client][client-src] and [server][server-src] entry points of the 
 [example app][example-app], you can use the `useServerData` hook provided 
-by  the plugin:
+by the plugin:
 
 [gp]: https://v3.vuejs.org/api/application-config.html#globalproperties
 [client-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
@@ -131,12 +141,78 @@ export default {
 </script>
 ```
 
+### Combining useServerAPI() and useServerData()
 
-You can also just use [`serverPrefetch`][1], but with the approach described 
-above you're able to skip the Vite rendering phase altogether if something goes 
-wrong with the data fetching.
+You can also use `useServerAPI()` if you set `options.api` to `true` and have
+the [`fastify-api`](https://github.com/galvez/fastify-api) plugin registered. 
+This will literally send a minimal API manifesto to the client that it uses to 
+build an actual set of callable methods interfacing to 
+[`native fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
-[1]: https://github.com/vuejs/vue-next/commit/c73b4a0e10b7627d2d0d851e9abfeac9b6317e45
+On the server, API routes defined with `fastify-api` are automatically made 
+available via `fastify.api.client`, i.e., instead of having to execute HTTP
+requests on the server to reuse API routes, you can just call the functions 
+instead. The `useServerAPI()` hook ensures your API route methods are available
+and work the same way both on the server and on the client.
+
+The problem is, just ensuring you can call an API method seamlessly on the server
+and client isn't enough, because for first render, you'd be repeating the same
+call on the server and client. This is what Nuxt's `asyncData()` prevents, it 
+runs code on the server, serializes the data on the client, and the next time
+it runs, already on the client, it'll use the serialized data instead of making
+a fresh request to the API it consumes.
+
+To solve this in **fastify-vite**, pass a function to `useServerData()`:
+
+```
+<script setup>
+import { reactive, getCurrentInstance, ref } from 'vue'
+import { useServerAPI, useServerData } from 'fastify-vite/hooks'
+
+const api = useServerAPI()
+const data = await useServerData(async () => {
+  const { json } = await api.echo({ msg: 'hello from server '})
+  return json
+})
+const state = reactive({ count: 0, msg: data.msg })
+const fetchFromEcho = async () => {
+  const { json } = await api.echo({ msg: 'hello from client '})
+  state.msg = json.msg
+}
+</script>
+```
+
+This ensures the value of `data` is obtained once on the server during first 
+render, and rehydrated from serialized data the first time it runs on the client.
+The really convenient thing is: it stays working for subsequent, fresh requests
+on the client, so you can place a call to a function that uses `useServerData()`
+in Vue 3's `watchEffect()`, for instance, and it'll keep working for fetching
+fresh data, with the exact same signature of the code that ran on the server.
+
+See the `example/` folder for a functioning example of it.
+
+## Server global data
+
+If you have static data on the server that you want to send to the client, you
+can use the `fastify.vite.global` option. Just set an object to it and on the
+client, you have access to `$global` in templates. 
+
+```js
+fastify.vite.global = { prop: 'static data' }
+```
+
+You can also access it in `setup()` via `getCurrentInstance()`:
+
+```js
+import { getCurrentInstance } from 'vue'
+
+export default {
+  setup() {
+    const globalData = getCurrentInstance().appContext.app.config
+    // ...
+  }
+}
+```
 
 ## Multiple apps
 
