@@ -73,10 +73,10 @@ fastify.get('/*', fastify.vite.handler)
 ## Data fetching
 
 To fetch data on the server, use it for server rendering, and rehydrate later 
-for client rendering, similar to what Nuxt.js and Next.js do, there are two
-approaches made possible with this plugin.
+for client rendering, similar to what Nuxt.js and Next.js do, there are **two
+approaches** made possible with this plugin.
 
-### Prepass: fetch data before any Vue code runs
+### 1. Prepass: fetch data before any Vue code runs
 
 Use `fastify.vite.get` or `fastify.vite.post` to register your Vite routes that
 need data. It will register routes automatically setting `fastify.vite.handler`
@@ -141,7 +141,7 @@ export default {
 </script>
 ```
 
-### Combining useServerAPI() and useServerData()
+### 2. Combining useServerAPI() and useServerData()
 
 You can also use `useServerAPI()` if you set `options.api` to `true` and have
 the [`fastify-api`](https://github.com/galvez/fastify-api) plugin registered. 
