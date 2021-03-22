@@ -115,7 +115,7 @@ by the plugin:
 [client-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
 [server-src]: https://github.com/galvez/fastify-vite/blob/main/example/entry/client.js
 
-```vue
+```html
 <template>
   <h1 @click="refreshData">{{ data.message }}</h1>
 </template>
