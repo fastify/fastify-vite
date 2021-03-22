@@ -164,8 +164,7 @@ a fresh request to the API it consumes.
 
 To solve this in **fastify-vite**, pass a function to `useServerData()`:
 
-```
-<script setup>
+```js
 import { reactive, getCurrentInstance, ref } from 'vue'
 import { useServerAPI, useServerData } from 'fastify-vite/hooks'
 
@@ -179,7 +178,6 @@ const fetchFromEcho = async () => {
   const { json } = await api.echo({ msg: 'hello from client '})
   state.msg = json.msg
 }
-</script>
 ```
 
 This ensures the value of `data` is obtained once on the server during first 
