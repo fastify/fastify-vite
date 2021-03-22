@@ -74,7 +74,7 @@ fastify.get('/*', fastify.vite.handler)
 
 To fetch data on the server, use it for server rendering, and rehydrate later 
 for client rendering, similar to what Nuxt.js and Next.js do, there are two
-approaches made possible with this plugin
+approaches made possible with this plugin.
 
 ### Prepass: fetch data before any Vue code runs
 
@@ -184,7 +184,8 @@ const fetchFromEcho = async () => {
 
 This ensures the value of `data` is obtained once on the server during first 
 render, and rehydrated from serialized data the first time it runs on the client.
-The really convenient thing is: it stays working for subsequent, fresh requests
+
+**The really convenient thing is**: it stays working for subsequent, fresh requests
 on the client, so you can place a call to a function that uses `useServerData()`
 in Vue 3's `watchEffect()`, for instance, and it'll keep working for fetching
 fresh data, with the exact same signature of the code that ran on the server.
@@ -208,7 +209,7 @@ import { getCurrentInstance } from 'vue'
 
 export default {
   setup() {
-    const globalData = getCurrentInstance().appContext.app.config
+    const globalData = getCurrentInstance().appContext.app.config.$global
     // ...
   }
 }
