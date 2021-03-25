@@ -23,7 +23,7 @@ function renderHTMLTemplate (req, { attrs, head, element, entry }, template) {
     .replace('<body>', `<body${attrs.body}>`)
     .replace('<!--head.preload-->', head.preload)
     .replace('<!--head.tags-->', head.tags)
-    .replace('<!--head.script-->', head.script)
+    .replace('<!--script-->', head.script)
     .replace('<!--element-->', element)
 }
 

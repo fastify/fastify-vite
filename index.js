@@ -1,7 +1,7 @@
 const {
   assign,
   path: {
-    resolve,
+    resolve
   },
   fs: {
     existsSync,
