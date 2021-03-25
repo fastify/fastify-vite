@@ -5,7 +5,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`2.0.0-beta.10`**.
+**Latest release**: **`2.0.2`**.
 Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.0.0-beta)**.
 
 This plugin is for minimalists who want a **lean, fast** stack where they have 
