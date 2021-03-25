@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const renderHTMLTemplate = require('./html')
+const { renderDevHTMLTemplate, renderHTMLTemplate } = require('./html')
 
 function getHandler (options, getRenderer, viteDevServer) {
   return async function (req, reply) {
@@ -7,7 +7,9 @@ function getHandler (options, getRenderer, viteDevServer) {
       const url = req.raw.url
       const render = await getRenderer(url, viteDevServer)
       const fragments = await render(req, url, options)
-      const html = renderHTMLTemplate(req, fragments)
+      const html = options.dev
+        ? renderDevHTMLTemplate(req, fragments)
+        : renderHTMLTemplate(req, fragments, options.distIndex)
 
       reply.code(200)
       reply.type('text/html')
