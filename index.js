@@ -1,5 +1,23 @@
-const { assign, resolve, vite, middie, staticPlugin, fp, defaults } = require('./deps')
-const { getHandler, getRenderGetter } = require('./handler')
+const {
+  assign,
+  path: {
+    resolve
+  },
+  fs: {
+    existsSync,
+    readFileSync
+  },
+  vite,
+  middie,
+  staticPlugin,
+  fp,
+  defaults
+} = require('./deps')
+
+const {
+  getHandler,
+  getRenderGetter
+} = require('./handler')
 
 async function fastifyVite (fastify, options) {
   // Set option defaults
@@ -9,7 +27,11 @@ async function fastifyVite (fastify, options) {
   }
   if (!options.dev) {
     options.distDir = resolve(options.rootDir, 'dist')
-    options.distIndex = resolve(options.distDir, 'client/index.html')
+    const distIndex = resolve(options.distDir, 'client/index.html')
+    if (!existsSync(distIndex)) {
+      throw new Error('Missing production client/index.html — did you build first?')
+    }
+    options.distIndex = readFileSync(distIndex, 'utf8')
     options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
   } else {
     options.distManifest = []
@@ -33,9 +55,9 @@ async function fastifyVite (fastify, options) {
     const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate, viteDevServer)
   } else {
-    fastify.register(staticPlugin, {
+    await fastify.register(staticPlugin, {
       root: resolve(options.distDir, 'client/assets'),
-      prefix: '/assets'
+      prefix: `/${options.assetsDir}`
     })
     const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate)
