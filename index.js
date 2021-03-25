@@ -2,13 +2,10 @@ const {
   assign,
   path: {
     resolve,
-    join,
-    sep,
-    dirname,
   },
   fs: {
     existsSync,
-    readFileSync,
+    readFileSync
   },
   vite,
   middie,
@@ -19,7 +16,7 @@ const {
 
 const {
   getHandler,
-  getRenderGetter,
+  getRenderGetter
 } = require('./handler')
 
 async function fastifyVite (fastify, options) {
@@ -60,7 +57,7 @@ async function fastifyVite (fastify, options) {
   } else {
     await fastify.register(staticPlugin, {
       root: resolve(options.distDir, 'client/assets'),
-      prefix: `/${options.assetsDir}`,
+      prefix: `/${options.assetsDir}`
     })
     const getTemplate = getRenderGetter(options)
     handler = getHandler(options, getTemplate)
