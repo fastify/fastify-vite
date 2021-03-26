@@ -1,6 +1,7 @@
 const { renderToString } = require('@vue/server-renderer')
 const { renderHeadToString } = require('@vueuse/head')
 const devalue = require('@nuxt/devalue')
+const empty = {}
 
 const getRender = createApp => async function render (req, url, options) {
   const { clientEntryPath, distManifest, dataKey, globalDataKey } = options
@@ -17,7 +18,7 @@ const getRender = createApp => async function render (req, url, options) {
   await router.isReady()
 
   const element = await renderToString(app, ctx)
-  const { headTags, htmlAttrs, bodyAttrs } = renderHeadToString(head)
+  const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
   const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
 
   const globalData = req[options.globalDataKey]

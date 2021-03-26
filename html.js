@@ -5,7 +5,7 @@ function renderDevHTMLTemplate (req, { attrs, head, element, entry }) {
     `<head>${
         head.preload
     }\n${
-        head.tags
+        head.tags || ''
     }\n${
         head.script || ''
     }\n</head>\n` +
@@ -22,8 +22,8 @@ function renderHTMLTemplate (req, { attrs, head, element, entry }, template) {
     .replace('<html>', `<html${attrs.html}>`)
     .replace('<body>', `<body${attrs.body}>`)
     .replace('<!--head.preload-->', head.preload)
-    .replace('<!--head.tags-->', head.tags)
-    .replace('<!--script-->', head.script)
+    .replace('<!--head.tags-->', head.tags || '')
+    .replace('<!--script-->', head.script || '')
     .replace('<!--element-->', element)
 }
 
