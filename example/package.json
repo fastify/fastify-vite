@@ -16,13 +16,13 @@
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.0.0",
+    "@vitejs/plugin-vue": "^1.2.0",
     "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.7",
     "cross-env": "^7.0.3",
     "fastify": "^3.13.0",
     "fastify-api": "^0.1.0",
     "fastify-vite": "^2.0.3",
-    "vite": "^2.0.5"
+    "vite": "^2.1.3"
   }
 }
