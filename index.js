@@ -7,60 +7,46 @@ const {
     existsSync,
     readFileSync
   },
-  vite,
+  vite: _vite,
   middie,
   staticPlugin,
-  fp,
-  defaults
+  fp
 } = require('./deps')
 
-const {
-  getHandler,
-  getRenderGetter
-} = require('./handler')
+const { getOptions, patchOptions } = require('./options')
+const { getHandler, getRenderGetter } = require('./handler')
 
 async function fastifyVite (fastify, options) {
-  // Set option defaults
-  options = assign(defaults, options)
-  if (typeof options.rootDir === 'function') {
-    options.rootDir = options.rootDir(resolve)
-  }
-  if (!options.dev) {
-    options.distDir = resolve(options.rootDir, 'dist')
-    const distIndex = resolve(options.distDir, 'client/index.html')
-    if (!existsSync(distIndex)) {
-      throw new Error('Missing production client/index.html — did you build first?')
-    }
-    options.distIndex = readFileSync(distIndex, 'utf8')
-    options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
-  } else {
-    options.distManifest = []
-  }
+  // Set option defaults (shallow)
+  options = getOptions(options)
+  // Run options through Vite to get all Vite defaults taking vite.config.js
+  // into account and ensuring options.root and options.vite.root are the same
+  await patchOptions(options)
 
   // We'll want access to this later
   let handler
-  let viteDevServer
+  let vite
 
   // Setup appropriate Vite route handler
   // For dev you get more detailed logging and sautoreload
   if (options.dev) {
-    viteDevServer = await vite.createServer({
-      root: options.rootDir,
-      logLevel: 'error',
-      server: { middlewareMode: true }
-    })
+    vite = await _vite.createServer(options.vite)
     await fastify.register(middie)
-    fastify.use(viteDevServer.middlewares)
-
-    const getTemplate = getRenderGetter(options)
-    handler = getHandler(options, getTemplate, viteDevServer)
+    fastify.use(vite.middlewares)
+    const getRender = getRenderGetter(options)
+    console.log('getRender/1', getRender)
+    handler = getHandler(options, getRender, vite)
+    console.log('handler/1', handler.toString())
   } else {
+    const { assetsDir } = options.vite.build
     await fastify.register(staticPlugin, {
-      root: resolve(options.distDir, 'client/assets'),
-      prefix: `/${options.assetsDir}`
+      root: resolve(options.distDir, `client/${assetsDir}`),
+      prefix: `/${assetsDir}`
     })
-    const getTemplate = getRenderGetter(options)
-    handler = getHandler(options, getTemplate)
+    const getRender = getRenderGetter(options)
+    console.log('getRender/2', getRender)
+    handler = getHandler(options, getRender)
+    console.log('handler/2', handler)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -69,7 +55,7 @@ async function fastifyVite (fastify, options) {
     handler,
     global: undefined,
     config: options,
-    devServer: viteDevServer,
+    devServer: vite,
     get (url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
@@ -77,10 +63,12 @@ async function fastifyVite (fastify, options) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
     route (url, { data, method, ...routeOptions } = {}) {
+      console.log('--->', url, data, method, routeOptions)
       let preHandler
       if (data) {
         preHandler = async function (req, reply) {
-          req[options.dataKey] = await data.call(this, req, reply)
+          console.log('wtf wtf wtf')
+          req[options.hydration.data] = await data.call(this, req, reply)
         }
       }
       fastify.get(`/-/data${url}`, async function (req, reply) {
@@ -98,8 +86,8 @@ async function fastifyVite (fastify, options) {
   fastify.addHook('onReady', () => {
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype
-    fastify.decorateRequest(options.globalDataKey, { getter: () => fastify.vite.global })
-    fastify.decorateRequest(options.dataKey, null)
+    fastify.decorateRequest(options.hydration.global, { getter: () => fastify.vite.global })
+    fastify.decorateRequest(options.hydration.data, null)
     if (options.api) {
       fastify.decorateRequest('api', fastify.api)
     }
