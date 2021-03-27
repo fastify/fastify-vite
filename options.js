@@ -5,8 +5,6 @@ const { resolveConfig } = require('vite')
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
 
-console.log('foobar 123')
-
 const defaults = {
   dev: process.env.NODE_ENV !== 'production',
   hydration: {
@@ -21,7 +19,6 @@ const defaults = {
   },
   vite: {
     logLevel: 'error',
-    build: {},
     plugins: [
       vuePlugin(),
       vueJsx()

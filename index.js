@@ -1,9 +1,10 @@
 const {
-  assign,
   path: {
     resolve
   },
-  vite: _vite,
+  vite: {
+    createServer
+  },
   middie,
   staticPlugin,
   fp
@@ -26,7 +27,7 @@ async function fastifyVite (fastify, options) {
   // Setup appropriate Vite route handler
   // For dev you get more detailed logging and sautoreload
   if (options.dev) {
-    vite = await _vite.createServer({
+    vite = await createServer({
       server: { middlewareMode: true },
       ...options.vite
     })
