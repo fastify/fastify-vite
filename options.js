@@ -24,6 +24,8 @@ const defaults = {
       vueJsx()
     ],
     build: {
+      assetsDir: 'assets',
+      outDir: 'dist',
       minify: false
     }
   }

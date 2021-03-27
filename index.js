@@ -10,6 +10,7 @@ const {
   fp
 } = require('./deps')
 
+const { build } = require('./build')
 const { getOptions, patchOptions } = require('./options')
 const { getHandler, getRenderGetter } = require('./handler')
 
@@ -49,8 +50,8 @@ async function fastifyVite (fastify, options) {
   // a wrapper for setting a route with a data() handler
   fastify.decorate('vite', {
     handler,
+    options,
     global: undefined,
-    config: options,
     devServer: vite,
     get (url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
@@ -86,6 +87,15 @@ async function fastifyVite (fastify, options) {
       fastify.decorateRequest('api', fastify.api)
     }
   })
+}
+
+fastifyVite.app = async function appExport (main, serve) {
+  const fastify = await main()
+  if (process.argv.length > 2 && process.argv[2] === 'build') {
+    build(fastify.vite.options)
+  } else {
+    serve(fastify)
+  }
 }
 
 module.exports = fp(fastifyVite)

@@ -33,7 +33,7 @@ async function main () {
 }
 
 if (require.main === module) {
-  main().then((fastify) => {
+  fastifyVite.app(main, (fastify) => {
     fastify.listen(3000, (err, address) => {
       if (err) {
         console.error(err)
