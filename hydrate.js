@@ -17,7 +17,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   setupServerAPI(app.config.globalProperties)
 }
 
-module.exports = { hydrate }
+export { hydrate }
 
 function setupServerAPI (globalProperties) {
   const { $api } = globalProperties

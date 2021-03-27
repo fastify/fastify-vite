@@ -4,7 +4,6 @@ const devalue = require('@nuxt/devalue')
 const empty = {}
 
 const getRender = createApp => async function render (req, url, options) {
-  console.log('777')
   const { entry, distManifest, hydration } = options
   const { ctx, app, head, router } = createApp(req)
 

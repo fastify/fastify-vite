@@ -1,4 +1,5 @@
 const { assign } = Object
+const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 // const vuePlugin = require('@vitejs/plugin-vue')
 // const vueJsx = require('@vitejs/plugin-vue-jsx')
@@ -8,12 +9,12 @@ const defaults = {
   hydration: {
     global: '$global',
     data: '$data',
-    api: '$api',
+    api: '$api'
   },
   root: process.cwd(),
   entry: {
     client: '/entry/client.js',
-    server: '/entry/server.js',
+    server: '/entry/server.js'
   },
   vite: {
     // plugins: [
@@ -22,8 +23,8 @@ const defaults = {
     // ],
     build: {
       minify: false
-    },
-  },
+    }
+  }
 }
 
 function getOptions (options) {
@@ -63,8 +64,7 @@ function getViteOptions (options) {
     root: options.root,
     build: {
       assetsDir: 'assets',
-      outDir: 'dist',
+      outDir: 'dist'
     }
   }
 }
-
