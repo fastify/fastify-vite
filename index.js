@@ -3,10 +3,6 @@ const {
   path: {
     resolve
   },
-  fs: {
-    existsSync,
-    readFileSync
-  },
   vite: _vite,
   middie,
   staticPlugin,

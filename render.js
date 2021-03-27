@@ -59,9 +59,7 @@ const getRender = createApp => async function render (req, url, options) {
   }
 }
 
-export { getRender }
-
-// module.exports = { getRender }
+module.exports = { getRender }
 
 function renderPreloadLinks (modules, manifest) {
   let links = ''
