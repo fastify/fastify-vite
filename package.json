@@ -1,52 +1,14 @@
 {
-  "_from": "fastify-vite@^2.0.3",
-  "_id": "fastify-vite@2.0.3",
-  "_inBundle": false,
-  "_integrity": "sha512-AHefiMdpWcylfMl7957cIUnm5JsInVi9NFl1MIxQwi2IDgDpjJhLG/PA3xeqDeNvLy9NCXDfNoL/ck5uvce6nQ==",
-  "_location": "/fastify-vite",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "fastify-vite@^2.0.3",
-    "name": "fastify-vite",
-    "escapedName": "fastify-vite",
-    "rawSpec": "^2.0.3",
-    "saveSpec": null,
-    "fetchSpec": "^2.0.3"
+  "scripts": {
+    "lint": "eslint . --ext js --fix",
+    "test": "node test"
   },
-  "_requiredBy": [
-    "#DEV:/"
-  ],
-  "_resolved": "https://registry.npmjs.org/fastify-vite/-/fastify-vite-2.0.3.tgz",
-  "_shasum": "6f2b9a10ada5e0ad298511634dfbb2ce06f97d96",
-  "_spec": "fastify-vite@^2.0.3",
-  "_where": "/Users/jonas/Code/Galvez/fastify-vite/example",
   "bugs": {
     "url": "https://github.com/galvez/fastify-vite/issues"
   },
   "bundleDependencies": false,
-  "dependencies": {
-    "@nuxt/devalue": "^1.2.5",
-    "@vue/compiler-sfc": "^3.0.7",
-    "@vue/server-renderer": "^3.0.7",
-    "@vueuse/head": "^0.5.1",
-    "eslint-config-standard": "^16.0.2",
-    "fastify": "^3.13.0",
-    "fastify-static": "^4.0.1",
-    "middie": "^5.2.0",
-    "vite": "^2.0.5"
-  },
   "deprecated": false,
   "description": "A work in progress.",
-  "devDependencies": {
-    "eslint": "^7.22.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "got": "^11.8.2",
-    "tap": "^14.11.0"
-  },
   "files": [
     "defaults.js",
     "deps.js",
@@ -74,9 +36,24 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "scripts": {
-    "lint": "eslint . --ext js --fix",
-    "test": "node test"
+  "version": "2.0.3",
+  "dependencies": {
+    "@nuxt/devalue": "^1.2.5",
+    "@vue/compiler-sfc": "^3.0.7",
+    "@vue/server-renderer": "^3.0.7",
+    "@vueuse/head": "^0.5.1",
+    "eslint-config-standard": "^16.0.2",
+    "fastify": "^3.13.0",
+    "fastify-static": "^4.0.1",
+    "middie": "^5.2.0",
+    "vite": "^2.1.3"
   },
-  "version": "2.0.3"
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "got": "^11.8.2",
+    "tap": "^14.11.0"
+  }
 }
