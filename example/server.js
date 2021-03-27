@@ -4,13 +4,7 @@ const fastifyApi = require('fastify-api')
 
 async function main () {
   await fastify.register(fastifyApi)
-  await fastify.register(fastifyVite, {
-    api: true,
-    dev: process.env.NODE_ENV !== 'production',
-    rootDir: resolve => resolve(__dirname),
-    clientEntryPath: '/entry/client.js',
-    serverEntryPath: '/entry/server.js',
-  })
+  await fastify.register(fastifyVite, { api: true })
 
   fastify.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {
@@ -33,7 +27,8 @@ async function main () {
     }
   })
 
-  fastify.get('/*', fastify.vite.handler)
+  fastify.vite.get('/*')
+  
   return fastify
 }
 

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
+    "dev:install": "cp ../*.js node_modules/fastify-vite",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr entry/server.js --outDir dist/server",

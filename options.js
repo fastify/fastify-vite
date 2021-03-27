@@ -1,8 +1,11 @@
 const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
-// const vuePlugin = require('@vitejs/plugin-vue')
-// const vueJsx = require('@vitejs/plugin-vue-jsx')
+const { resolveConfig } = require('vite')
+const vuePlugin = require('@vitejs/plugin-vue')
+const vueJsx = require('@vitejs/plugin-vue-jsx')
+
+console.log('foobar 123')
 
 const defaults = {
   dev: process.env.NODE_ENV !== 'production',
@@ -17,10 +20,12 @@ const defaults = {
     server: '/entry/server.js'
   },
   vite: {
-    // plugins: [
-    //   vuePlugin(),
-    //   vueJsx()
-    // ],
+    logLevel: 'error',
+    build: {},
+    plugins: [
+      vuePlugin(),
+      vueJsx()
+    ],
     build: {
       minify: false
     }
@@ -60,11 +65,5 @@ function getViteOptions (options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js
-  return {
-    root: options.root,
-    build: {
-      assetsDir: 'assets',
-      outDir: 'dist'
-    }
-  }
+  return resolveConfig(mergedOptions, 'build')
 }

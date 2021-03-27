@@ -26,13 +26,14 @@ async function fastifyVite (fastify, options) {
   // Setup appropriate Vite route handler
   // For dev you get more detailed logging and sautoreload
   if (options.dev) {
-    vite = await _vite.createServer(options.vite)
+    vite = await _vite.createServer({
+      server: { middlewareMode: true },
+      ...options.vite
+    })
     await fastify.register(middie)
     fastify.use(vite.middlewares)
     const getRender = getRenderGetter(options)
-    console.log('getRender/1', getRender)
     handler = getHandler(options, getRender, vite)
-    console.log('handler/1', handler.toString())
   } else {
     const { assetsDir } = options.vite.build
     await fastify.register(staticPlugin, {
@@ -40,9 +41,7 @@ async function fastifyVite (fastify, options) {
       prefix: `/${assetsDir}`
     })
     const getRender = getRenderGetter(options)
-    console.log('getRender/2', getRender)
     handler = getHandler(options, getRender)
-    console.log('handler/2', handler)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -59,11 +58,9 @@ async function fastifyVite (fastify, options) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
     route (url, { data, method, ...routeOptions } = {}) {
-      console.log('--->', url, data, method, routeOptions)
       let preHandler
       if (data) {
         preHandler = async function (req, reply) {
-          console.log('wtf wtf wtf')
           req[options.hydration.data] = await data.call(this, req, reply)
         }
       }

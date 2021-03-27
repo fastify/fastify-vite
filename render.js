@@ -21,7 +21,7 @@ const getRender = createApp => async function render (req, url, options) {
   const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
   const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
 
-  const globalData = req[hydration.global]
+  const globalData = req[options.hydration.global]
   const data = req[hydration.data] || app.config.globalProperties[hydration.data]
   const api = req.api ? req.api.meta : null
 
@@ -47,7 +47,7 @@ const getRender = createApp => async function render (req, url, options) {
   return {
     head: {
       preload: preloadLinks,
-      tags: headTags
+      tags: headTags,
     },
     attrs: {
       html: htmlAttrs,

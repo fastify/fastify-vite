@@ -7,7 +7,6 @@ function getHandler (options, getRenderer, vite) {
       const url = req.raw.url
       const render = await getRenderer(url, vite)
       const fragments = await render(req, url, options)
-      console.log('fragments', fragments)
       const html = options.dev
         ? renderDevHTMLTemplate(req, fragments)
         : renderHTMLTemplate(req, fragments, options.distIndex)
