@@ -4,7 +4,10 @@ const fastifyApi = require('fastify-api')
 
 async function main () {
   await fastify.register(fastifyApi)
-  await fastify.register(fastifyVite, { api: true })
+  await fastify.register(fastifyVite, {
+    api: true,
+    root: __dirname,
+  })
 
   fastify.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {

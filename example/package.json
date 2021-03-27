@@ -6,7 +6,8 @@
     "dev:install": "cp ../*.js node_modules/fastify-vite",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
-    "debug": "node --inspect-brk server"
+    "debug": "node --inspect-brk server",
+    "test": "tap test.js"
   },
   "dependencies": {
     "@vueuse/head": "^0.5.1",
@@ -21,6 +22,7 @@
     "fastify": "^3.13.0",
     "fastify-api": "^0.1.0",
     "fastify-vite": "^2.0.3",
+    "tap": "^14.11.0",
     "vite": "^2.1.3"
   }
 }

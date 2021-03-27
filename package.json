@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "lint": "eslint . --ext js --fix",
-    "test": "node test"
+    "lint": "eslint . --ext js --fix"
   },
   "bugs": {
     "url": "https://github.com/galvez/fastify-vite/issues"

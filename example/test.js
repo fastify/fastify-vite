@@ -2,7 +2,7 @@
 
 const tap = require('tap')
 
-const exampleServer = require('./example/server')
+const exampleServer = require('./server')
 
 exampleServer().then(async (fastify) => {
   let indexPage
