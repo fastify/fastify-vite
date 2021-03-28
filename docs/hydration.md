@@ -62,8 +62,8 @@ it'll pick it up from `req.api`.
 
 ## Step 2: passing hydrations to the HTML template
 
-Next, still in `render.js`, we have the bit that generates the `<script>` 
-element where we hardcode all serialized data from the server into `window`.
+Next, still in `render.js`, we have the bit that generates the `<script>` tag
+where all serialized data from the server goes into `window`.
 
 ```js
 let hydrationScript = ''
