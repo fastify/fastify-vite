@@ -16,9 +16,11 @@ three build scripts in your `package.json`:
 }
 ```
 
-You can understand this better by reading [Vite's SSR Guide][ssr-guide]. For the 
-[example app][example-app], the server entry point is [this file][entry-server], 
-which actually uses the `getRender()` helper from **fastify-vite/render**.
+You can understand this better by reading [Vite's SSR Guide][ssr-guide]. 
+
+For the [example app][example-app], the server entry point is 
+[this file][entry-server], which actually uses the `getRender()` helper 
+from **fastify-vite/render**.
 
 [ssr-guide]: https://vitejs.dev/guide/ssr
 [example-app]: https://github.com/galvez/fastify-vite/tree/main/example
