@@ -1,9 +1,11 @@
 # Deployment
 
 Fastify application code doesn't have to be bundled, **but the server entry 
-point for your Vite app does**. That is a module that exports the `render` 
-function used for SSR. You also need to bundle your app's client code. In a 
-vanilla Vite app, that means having three build scripts in your `package.json`:
+point for your Vite app does**. 
+
+That is a module that exports the `render` function used for SSR. You also 
+need to bundle your app's client code. In a vanilla Vite app, that means having 
+three build scripts in your `package.json`:
 
 ```{
   "scripts": {

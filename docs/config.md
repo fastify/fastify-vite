@@ -2,7 +2,8 @@
 
 **fastify-vite** tries to intefere as little as possible in configuring your
 Vite apps. So if you want to just have `vite.config.js` for all Vite settings,
-that will just work as expected. However, you can also use the `vite` key.
+that will just work as expected. However, you can also use the `vite` key
+when passing options to the `fastify.register()` call.
 
 Below is the top of the internal `options.js`, which lists all defaults too.
 
