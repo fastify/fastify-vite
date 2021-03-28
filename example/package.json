@@ -21,7 +21,7 @@
     "cross-env": "^7.0.3",
     "fastify": "^3.13.0",
     "fastify-api": "^0.1.1",
-    "fastify-vite": "^2.1.0",
+    "fastify-vite": "^2.1.1",
     "tap": "^14.11.0",
     "vite": "^2.1.3"
   }
