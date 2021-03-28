@@ -14,7 +14,7 @@ const defaults = {
   // For Vue 3, that means adding them to globalProperties
   hydration: {
     global: '$global',
-    data: '$data',
+    data: '$data'
   },
   // Vite root app directory, whatever you set here
   // is also set under `vite.root` so Vite picks it up
@@ -43,8 +43,8 @@ const defaults = {
     build: {
       assetsDir: 'assets',
       outDir: 'dist',
-      minify: !dev,
-    },
+      minify: !dev
+    }
   }
 }
 
