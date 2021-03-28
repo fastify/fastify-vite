@@ -6,19 +6,19 @@
 
 [**Fastify**][fastify] plugin to serve [**Vite**][vite] applications.
 
+For minimalists who want a **lean, fast** stack where they have as much control 
+as possible. You can build any app with it that you would with Nuxt or Next, for
+sure, but it's targeted at a more low-level approach to development, instead of 
+trying to do everything for you.
+
+***
+
 **Currently only supports Vue 3**. React version **in the works**.
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`2.1.0`**.
-
-Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.1.0)**.
-
-This plugin is for minimalists who want a **lean, fast** stack where they have 
-as much control as possible. You can build any app with it that you would with 
-Nuxt.js or Next.js, for sure, but it's targeted at a more low-level approach 
-to development, instead of trying to do everything for you.
+**Latest release**: **`2.1.0`**. Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.1.0)**.
 
 ## Install
 
