@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "lint": "eslint . --ext js --fix",
-    "test": "node test"
+    "lint": "eslint . --ext js --fix"
   },
   "bugs": {
     "url": "https://github.com/galvez/fastify-vite/issues"
@@ -36,7 +35,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.0.3",
+  "version": "2.1.0",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vue/compiler-sfc": "^3.0.7",

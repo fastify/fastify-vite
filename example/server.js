@@ -6,10 +6,7 @@ async function main () {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
-    dev: process.env.NODE_ENV !== 'production',
-    rootDir: resolve => resolve(__dirname),
-    clientEntryPath: '/entry/client.js',
-    serverEntryPath: '/entry/server.js',
+    root: __dirname,
   })
 
   fastify.api(({ get }) => ({
@@ -33,12 +30,13 @@ async function main () {
     }
   })
 
-  fastify.get('/*', fastify.vite.handler)
+  fastify.vite.get('/*')
+  
   return fastify
 }
 
 if (require.main === module) {
-  main().then((fastify) => {
+  fastifyVite.app(main, (fastify) => {
     fastify.listen(3000, (err, address) => {
       if (err) {
         console.error(err)
