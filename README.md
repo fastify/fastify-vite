@@ -16,7 +16,7 @@ as possible.
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Latest release**: **`2.1.0`**. Check out the **[release notes](https://github.com/galvez/fastify-vite/releases/tag/v2.1.0)**.
+Check out recent **[release notes](https://github.com/galvez/fastify-vite/releases)**.
 
 ## Install
 
