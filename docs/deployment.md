@@ -33,7 +33,9 @@ replace the provided `getRender()` with your own.
 ## Option 1: Using vite build directly
 
 If you decide to just use the three `vite build` calls in `package.json`, there's
-nothing else involved other than tuning your [Vite `build` settings][vite-build].
+nothing else involved. 
+
+Well, other than tuning your [Vite `build` settings][vite-build].
 
 [vite-build]: https://vitejs.dev/config/#build-options
 
