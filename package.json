@@ -35,7 +35,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.1.2",
+  "version": "2.1.3",
   "dependencies": {
     "@nuxt/devalue": "^1.2.5",
     "@vitejs/plugin-vue": "^1.2.0",

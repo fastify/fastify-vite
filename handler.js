@@ -34,11 +34,9 @@ function getRenderGetter ({ dev, root, entry, distDir, distIndex }) {
       const { render } = await vite.ssrLoadModule(
         resolve(root, entry.server.replace(/^\/+/, ''))
       )
-      console.log('dev getter', render)
       return render
     }
   } else {
-    console.log('prod getter')
     // Load production template source only once in prod
     const { render } = require(resolve(distDir, 'server/server.js'))
     return () => render
