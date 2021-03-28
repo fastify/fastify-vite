@@ -7,9 +7,7 @@
 [**Fastify**][fastify] plugin to serve [**Vite**][vite] applications.
 
 For minimalists who want a **lean, fast** stack where they have as much control 
-as possible. You can build any app with it that you would with Nuxt or Next, for
-sure, but it's targeted at a more low-level approach to development, instead of 
-trying to do everything for you.
+as possible.
 
 ***
 
