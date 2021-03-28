@@ -88,11 +88,11 @@ if (globalData || data || api) {
 
 Finally, in **fastify-vite**'s internal [html.js module][html-module], you'll
 see where `hydrationScript` ends up inserted in the final document.
+**In a future version, html.js will be auto generated with pre-compiled string 
+interpolation** so there's no need to call `replace()` multiple times.
 
 [html-module]: https://github.com/galvez/fastify-vite/blob/main/html.js
 
-**In a future version, html.js will be auto generated with pre-compiled string 
-interpolation** so there's no need to call `replace()` multiple times.
 
 ## Step 3: hydrate() provided by fastify-vite/hydrate
 
