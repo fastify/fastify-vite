@@ -82,7 +82,7 @@ module.exports = main
 ```
 
 The `app()` helper from **fastify-vite** will [take care][fastify-vite-app] of 
-preventing the app frgom startin if you're just running the `build` command. It 
+preventing the app from starting if you're just running the `build` command. It 
 will also automatically run all needed build commands, for `client` and `server` 
 builds, using [Vite's JavaScript API][vite-js-api].
 
