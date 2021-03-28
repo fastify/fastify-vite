@@ -50,8 +50,9 @@ node <your-app> build
 ```
 
 That is to say, `build` becomes a recognizable command for the script where
-you boot up your Fastify server and register **fastify-vite**. You just need to 
-make one small adjustment:
+you boot up your Fastify server and register **fastify-vite**. 
+
+**You just need to make one small adjustment**:
 
 ```diff
 const fastify = require('fastify')()
