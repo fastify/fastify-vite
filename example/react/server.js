@@ -2,36 +2,40 @@ const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 const fastifyApi = require('fastify-api')
 
-async function main () {
+async function main() {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
+    lib: 'react',
+    entry: {
+      client: '/entry/client.jsx',
+      server: '/entry/server.js'
+    },
   })
+
 
   fastify.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {
-      reply.send({ msg })
+      reply.send({ msg: msg + 'hit server' })
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
     }),
   }))
 
-  fastify.vite.global = { prop: 'data' }
-
   fastify.get('/favicon.ico', (_, reply) => {
     reply.code(404)
     reply.send('')
   })
   fastify.vite.get('/hello', {
-    data (req) {
+    data(req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
     }
   })
 
   fastify.vite.get('/*')
-  
+
   return fastify
 }
 

@@ -4,6 +4,7 @@ const { resolve } = require('path')
 const { resolveConfig } = require('vite')
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
+const reactRefresh = require('@vitejs/plugin-react-refresh')
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'
@@ -39,6 +40,21 @@ const defaults = {
       plugins: [
         vuePlugin(),
         vueJsx()
+      ],
+      // Base build settings, default values
+      // for assetsDir and outDir match Vite's defaults
+      build: {
+        assetsDir: 'assets',
+        outDir: 'dist',
+        minify: !dev
+      }
+    },
+    react: {
+      esbuild: {
+        jsxInject: `import React from 'react';`
+      },
+      plugins: [
+        reactRefresh()
       ],
       // Base build settings, default values
       // for assetsDir and outDir match Vite's defaults

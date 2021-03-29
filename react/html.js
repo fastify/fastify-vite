@@ -1,18 +1,16 @@
-const renderToString = require('react-dom/server').renderToString
+const { renderToString } = require('react-dom/server')
 
-const headTags = []; // mutated during render so you can include in server-rendered template later
-
-exports.renderHTMLTemplate = (req, { headTags = headTags, element, hydration, entry }) => {
-  return (`
+  exports.renderHTMLTemplate = (req, { element, hydration, entry, context }) => {
+    return (`
     <!doctype html>
       <head>
       </head>
       <body>
-      <body${attrs.body}>
+      <body>
         ${hydration}
-        <div id="root">${renderToString(element)}</div>
+        <div id="root">${element}</div>
         <script type="module" src="${entry}"></script> 
       </body>
     </html>
   `)
-}
+  }

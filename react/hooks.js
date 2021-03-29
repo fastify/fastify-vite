@@ -1,6 +1,5 @@
-const { getCurrentInstance } = require('vue')
 
-async function useServerData (...args) {
+async function useServerData(...args) {
   let dataKey = '$data'
   let initialData
   if (args.length === 1) {
@@ -14,37 +13,37 @@ async function useServerData (...args) {
     initialData = args[1]
   }
   const isSSR = typeof window === 'undefined'
-  const appInstance = getCurrentInstance()
-  const appConfig = appInstance ? appInstance.appContext.app.config : null
-  let $data
+  // const appInstance = getCurrentInstance()
+  // const appConfig = appInstance ? appInstance.appContext.app.config : null
+  // let $data
   if (isSSR && initialData) {
     if (!appConfig) {
       return initialData()
     }
-    appConfig.globalProperties[dataKey] = await initialData()
-    $data = appConfig.globalProperties[dataKey]
+    window[dataKey] = await initialData()
+    $data = window[dataKey]
     return $data
   } else if (initialData) {
     if (!appConfig) {
       return initialData()
     }
-    if (!appConfig.globalProperties[dataKey]) {
-      appConfig.globalProperties[dataKey] = await initialData()
+    if (!window[dataKey]) {
+      window[dataKey] = await initialData()
     }
-    $data = appConfig.globalProperties[dataKey]
-    appConfig.globalProperties[dataKey] = undefined
+    $data = window[dataKey]
+    window[dataKey] = undefined
     return $data
   } else {
-    const $data = appConfig.globalProperties[dataKey]
-    const $dataPath = appConfig.globalProperties.$dataPath
-    appConfig.globalProperties[dataKey] = undefined
+    const $data = window[dataKey]
+    const $dataPath = window.$dataPath
+    window[dataKey] = undefined
     return [$data, $dataPath()]
   }
 }
 
-function useServerAPI () {
-  const appConfig = getCurrentInstance().appContext.app.config
-  const { $api } = appConfig.globalProperties
+function useServerAPI() {
+  const { $api } = window
+
   return $api
 }
 

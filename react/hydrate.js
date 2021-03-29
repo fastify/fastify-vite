@@ -1,32 +1,26 @@
-const { useSSRContext } = require('vue')
-
-function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
+function hydrate(window, dataKey = '$data', globalDataKey = '$global') {
   const dataSymbol = Symbol.for(dataKey)
-  app.config.globalProperties.$dataPath = () => `/-/data${document.location.pathname}`
-  app.config.globalProperties[dataKey] = window[dataSymbol]
-  delete window[dataSymbol]
+  window.$dataPath = () => `/-/data${document.location.pathname}`
 
   const globalDataSymbol = Symbol.for(globalDataKey)
-  app.config.globalProperties[globalDataKey] = window[globalDataSymbol]
-  delete window[globalDataSymbol]
-
   const apiSymbol = Symbol.for('fastify-vite-api')
-  app.config.globalProperties.$api = window[apiSymbol]
-  delete window[apiSymbol]
-
-  setupServerAPI(app.config.globalProperties)
+  // To be used maybe in creating a React.Context
+  return {
+    $api: window[apiSymbol],
+    [globalDataKey]: window[globalDataSymbol],
+    [dataKey]: window[dataSymbol]
+  };
 }
 
-module.exports = { hydrate }
+function setupServerAPI(obj) {
+  const { $api } = obj
 
-function setupServerAPI (globalProperties) {
-  const { $api } = globalProperties
-  globalProperties.$api = import.meta.env.SSR
-    ? useSSRContext().req.api.client
-    : new Proxy($api, { get: getFetchWrapper })
+  return new Proxy($api, { get: getFetchWrapper });
 }
 
-function getFetchWrapper (methods, method) {
+module.exports = { hydrate, setupServerAPI }
+
+function getFetchWrapper(methods, method) {
   if (method in methods) {
     if (Array.isArray(!methods[method]) && typeof methods[method] === 'object') {
       return new Proxy(methods[method], { get: getFetchWrapper })
@@ -62,7 +56,7 @@ function getFetchWrapper (methods, method) {
   }
 }
 
-function applyParams (template, params) {
+function applyParams(template, params) {
   try {
     return template.replace(/:(\w+)/g, (_, m) => {
       if (params[m]) {
@@ -77,7 +71,7 @@ function applyParams (template, params) {
   }
 }
 
-function tryJSONParse (str) {
+function tryJSONParse(str) {
   try {
     return JSON.parse(str)
   } catch (_) {

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { useServerAPI, useServerData } from 'fastify-vite/react/hooks'
+import { setupServerAPI } from 'fastify-vite/react/hydrate'
 
-export default async function Hello() {
-  const [msg, setMsg] = useState(0);
-  const api = useServerAPI()
-  const [data, dataPath] = await useServerData()
-  const state = reactive({ message: data?.message })
+export default function Hello() {
+  let [msg, setMsg] = useState('hello test');
+  window.$api = window[key]
+  const api = setupServerAPI(window)
+  // const api = useServerAPI()
+  // const [data, dataPath] = useServerData()
+  // const state = reactive({ message: data?.message })
 
   const refreshData = async () => {
     const response = await fetch(dataPath)
@@ -13,13 +15,12 @@ export default async function Hello() {
     setMsg(json.message)
   }
 
-  useEffect(() => {
-    if (!data && !import.meta.env.SSR) {
-      await refreshData()
-    }
-  })
+  // useEffect(() => {
+  //   if (!data && !import.meta.env.SSR) {
+  //     await refreshData();
+  //   }
+  // })
 
-  return (
-    <h1 onClick={refreshData}>{msg}</h1>
-  )
+  return <h1 onClick={refreshData}>{msg}</h1>
+
 }
