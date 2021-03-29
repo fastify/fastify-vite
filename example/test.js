@@ -2,7 +2,7 @@
 
 const tap = require('tap')
 
-const exampleServer = require('./example/server')
+const exampleServer = require('./server')
 
 exampleServer().then(async (fastify) => {
   let indexPage
@@ -30,10 +30,10 @@ exampleServer().then(async (fastify) => {
   tap.test('served hello page should have ssrData with matching ssrDataKey', async (t) => {
     t.plan(1)
     helloPage = await fastify.inject({ url: '/hello' })
-    t.ok(helloPage.body.includes(`Symbol.for('${fastify.vite.config.dataKey}')`))
+    t.ok(helloPage.body.includes(`Symbol.for('${fastify.vite.options.hydration.data}')`))
   })
 })
 
 function hasCorrectClientEntryPath (server, html) {
-  return html.includes(`<script type="module" src="${server.vite.config.clientEntryPath}"></script>`)
+  return html.includes(`<script type="module" src="${server.vite.options.entry.client}"></script>`)
 }

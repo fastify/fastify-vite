@@ -1,4 +1,4 @@
-function renderDevHTMLTemplate (req, { attrs, head, element, entry }) {
+function renderDevHTMLTemplate (req, { attrs, head, element, hydration, entry }) {
   return (
     '<!DOCTYPE html>\n' +
     `<html${attrs.html}>\n` +
@@ -6,10 +6,8 @@ function renderDevHTMLTemplate (req, { attrs, head, element, entry }) {
         head.preload
     }\n${
         head.tags || ''
-    }\n${
-        head.script || ''
     }\n</head>\n` +
-    `<body${attrs.body}>\n` +
+    `<body${attrs.body}>\n${hydration}\n` +
     `<div id="app">${element}</div>\n` +
     `<script type="module" src="${entry}"></script>\n` +
     '</body>\n' +
@@ -17,13 +15,13 @@ function renderDevHTMLTemplate (req, { attrs, head, element, entry }) {
   )
 }
 
-function renderHTMLTemplate (req, { attrs, head, element, entry }, template) {
+function renderHTMLTemplate (req, { attrs, head, element, hydration }, template) {
   return template
     .replace('<html>', `<html${attrs.html}>`)
     .replace('<body>', `<body${attrs.body}>`)
     .replace('<!--head.preload-->', head.preload)
     .replace('<!--head.tags-->', head.tags || '')
-    .replace('<!--script-->', head.script || '')
+    .replace('<!--hydration-->', hydration)
     .replace('<!--element-->', element)
 }
 
