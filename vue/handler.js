@@ -43,4 +43,4 @@ function getRenderGetter ({ dev, root, entry, distDir, distIndex }) {
   }
 }
 
-module.exports = { getHandler, getRenderer }
+module.exports = { getHandler, getRenderGetter }

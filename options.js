@@ -30,25 +30,28 @@ const defaults = {
   },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
+  lib: 'vue',
   vite: {
-    // Vite's logging level
-    logLevel: dev ? 'error' : 'info',
-    // Vite plugins needed for Vue 3 SSR to fully work
-    plugins: [
-      vuePlugin(),
-      vueJsx()
-    ],
-    // Base build settings, default values
-    // for assetsDir and outDir match Vite's defaults
-    build: {
-      assetsDir: 'assets',
-      outDir: 'dist',
-      minify: !dev
+    vue: {
+      // Vite's logging level
+      logLevel: dev ? 'error' : 'info',
+      // Vite plugins needed for Vue 3 SSR to fully work
+      plugins: [
+        vuePlugin(),
+        vueJsx()
+      ],
+      // Base build settings, default values
+      // for assetsDir and outDir match Vite's defaults
+      build: {
+        assetsDir: 'assets',
+        outDir: 'dist',
+        minify: !dev
+      }
     }
   }
 }
 
-function getOptions (options) {
+function getOptions(options) {
   options = assign({}, defaults, options)
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
@@ -56,10 +59,10 @@ function getOptions (options) {
   return options
 }
 
-async function patchOptions (options) {
+async function patchOptions(options) {
   const viteOptions = await getViteOptions(options)
 
-  options.vite.build.assetsDir = viteOptions.build.assetsDir
+  options.vite[options.lib].build.assetsDir = viteOptions.build.assetsDir
 
   if (!options.dev) {
     options.distDir = resolve(options.root, viteOptions.build.outDir)
@@ -77,7 +80,7 @@ async function patchOptions (options) {
 
 module.exports = { defaults, getOptions, patchOptions }
 
-function getViteOptions (options) {
+function getViteOptions(options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js

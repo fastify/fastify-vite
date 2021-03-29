@@ -5,7 +5,6 @@
 <script>
 import { ref, reactive, getCurrentInstance } from 'vue'
 import { useServerData } from 'fastify-vite/vue/hooks'
-
 export default {
   async setup () {
     const [ data, dataPath ] = await useServerData()
@@ -23,7 +22,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 h1 {
   cursor: pointer;

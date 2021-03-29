@@ -1,14 +1,13 @@
 <template>
   <h1>Home</h1>
-  <p>Here's some sda asda from the server: {{ $global }}</p>
+  <p>Here's some global data from the server: {{ $global }}</p>
   <button @click="state.count++">count is: {{ state.count }}</button>
   <button @click="fetchFromEcho">msg is: {{ state.msg }}</button>
 </template>
 
 <script setup>
 import { reactive, getCurrentInstance, ref } from 'vue'
-import { useServerAPI, useServerData } from 'fastify-vite/vue/hooks'
-
+import { useServerAPI, useServerData } from 'fastify-vite/hooks'
 const api = useServerAPI()
 const data = await useServerData(async () => {
   const { json } = await api.echo({ msg: 'hello from server '})

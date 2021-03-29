@@ -13,7 +13,6 @@
 <script>
 import { useHead } from '@vueuse/head'
 import { useRoute } from 'vue-router'
-
 export default {
   setup () {
     useHead({
