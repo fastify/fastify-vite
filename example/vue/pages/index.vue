@@ -1,7 +1,7 @@
 <template>
   <h1>Home</h1>
   <p>Here's some global data from the server: {{ $global }}</p>
-  <button @click="state.count++">count is: {{ state.count }}</button>
+  <button @click="state.count++">count is of vue: {{ state.count }}</button>
   <button @click="fetchFromEcho">msg is: {{ state.msg }}</button>
 </template>
 
