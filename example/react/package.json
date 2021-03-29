@@ -3,11 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr entry/server.js --outDir dist/server",
+    "dev:install": "cp ../*.js node_modules/fastify-vite",
+    "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
-    "debug": "node --inspect-brk server"
+    "debug": "node --inspect-brk server",
+    "test": "tap test.js"
   },
   "dependencies": {
     "react": "^17.0.2",
