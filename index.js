@@ -12,11 +12,10 @@ const {
 
 const { build } = require('./build')
 const { getOptions, patchOptions } = require('./options')
-const { getHandler, getRenderGetter } = require('./vue/handler')
-
-async function fastifyVite (fastify, options) {
+async function fastifyVite(fastify, options) {
   // Set option defaults (shallow)
   options = getOptions(options)
+  const { getHandler, getRenderGetter } = require(`./${options.lib}/handler`)
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
   await patchOptions(options)
@@ -53,13 +52,13 @@ async function fastifyVite (fastify, options) {
     options,
     global: undefined,
     devServer: vite,
-    get (url, { data, ...routeOptions } = {}) {
+    get(url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    post (url, { data, method, ...routeOptions } = {}) {
+    post(url, { data, method, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    route (url, { data, method, ...routeOptions } = {}) {
+    route(url, { data, method, ...routeOptions } = {}) {
       let preHandler
       if (data) {
         preHandler = async function (req, reply) {
@@ -89,7 +88,7 @@ async function fastifyVite (fastify, options) {
   })
 }
 
-fastifyVite.app = async function appExport (main, serve) {
+fastifyVite.app = async function appExport(main, serve) {
   const fastify = await main()
   if (process.argv.length > 2 && process.argv[2] === 'build') {
     build(fastify.vite.options)
