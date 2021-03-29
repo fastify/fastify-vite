@@ -10,7 +10,7 @@ const routes = Object.keys(pages).map((path) => {
   }
 })
 
-export function App() {
+export default function App() {
   return (
     <>
       <Helmet>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useServerAPI, useServerData } from 'fastify-vite/vue/hooks'
+import { useServerAPI, useServerData } from 'fastify-vite/react/hooks'
 
 export default function Home() {
   const [count, setCount] = useState(0);

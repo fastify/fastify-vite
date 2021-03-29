@@ -7,7 +7,7 @@
 
 <script setup>
 import { reactive, getCurrentInstance, ref } from 'vue'
-import { useServerAPI, useServerData } from 'fastify-vite/hooks'
+import { useServerAPI, useServerData } from 'fastify-vite/vue/hooks'
 
 const api = useServerAPI()
 const data = await useServerData(async () => {

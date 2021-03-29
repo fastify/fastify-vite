@@ -1,6 +1,6 @@
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
-import { App } from '../base'
+import App from '../base'
 
 export function render(url, context) {
   return ReactDOMServer.renderToString(
@@ -11,6 +11,6 @@ export function render(url, context) {
 }
 
 import { createApp } from '../main'
-import { getRender } from 'fastify-vite/render'
+import { getRender } from 'fastify-vite/react/render'
 
 export const render = getRender(createApp)
