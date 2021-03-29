@@ -27,7 +27,7 @@ function getHandler (options, getRenderer, viteDevServer) {
   }
 }
 
-function getRenderGetter ({ dev, rootDir, srcDir, serverEntryPath, distDir, distIndex }) {
+function getRenderer ({ dev, rootDir, srcDir, serverEntryPath, distDir, distIndex }) {
   if (dev) {
     return async (url, viteDevServer) => {
       // Reload template source every time in dev
@@ -43,4 +43,4 @@ function getRenderGetter ({ dev, rootDir, srcDir, serverEntryPath, distDir, dist
   }
 }
 
-module.exports = { getHandler, getRenderGetter }
+module.exports = { getHandler, getRenderer }

@@ -16,8 +16,8 @@ const {
 
 const {
   getHandler,
-  getRenderGetter
-} = require('./handler')
+  getRenderer
+} = require('./vue/handler')
 
 async function fastifyVite (fastify, options) {
   // Set option defaults
@@ -52,15 +52,13 @@ async function fastifyVite (fastify, options) {
     await fastify.register(middie)
     fastify.use(viteDevServer.middlewares)
 
-    const getTemplate = getRenderGetter(options)
-    handler = getHandler(options, getTemplate, viteDevServer)
+    handler = getHandler(options, getRenderer(options), viteDevServer)
   } else {
     await fastify.register(staticPlugin, {
       root: resolve(options.distDir, 'client/assets'),
       prefix: `/${options.assetsDir}`
     })
-    const getTemplate = getRenderGetter(options)
-    handler = getHandler(options, getTemplate)
+    handler = getHandler(options, getRenderer(options))
   }
 
   // Sets fastify.vite.get() helper which uses
