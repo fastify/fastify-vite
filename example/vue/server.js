@@ -6,10 +6,7 @@ async function main () {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
-    dev: process.env.NODE_ENV !== 'production',
-    rootDir: resolve => resolve(__dirname),
-    clientEntryPath: '/entry/client.js',
-    serverEntryPath: '/entry/server.js',
+    renderer: fastifyVite.vue,
   })
 
   fastify.api(({ get }) => ({

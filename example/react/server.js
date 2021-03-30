@@ -7,7 +7,7 @@ async function main() {
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
-    lib: 'react',
+    renderer: fastifyVite.react,
     entry: {
       client: '/entry/client.jsx',
       server: '/entry/server.js'
