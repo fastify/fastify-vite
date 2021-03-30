@@ -4,7 +4,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/galvez/fastify-vite/badge.svg)](https://snyk.io/test/github/galvez/fastify-vite)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-[**Fastify**][fastify] plugin to serve [**Vite**][vite] applications.
+[**Fastify**][fastify] plugin to serve [**Vite**][vite] **SSR** applications.
 
 For minimalists who want a **lean, fast** stack where they have as much control 
 as possible.
