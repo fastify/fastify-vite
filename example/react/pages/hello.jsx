@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
-import { hydrate } from 'fastify-vite/react/hydrate'
+import { useServerData } from 'fastify-vite/react/hooks'
 
 export default function Hello() {
   let [msg, setMsg] = useState();
-  window.$api = window[key]
-  const { $dataPath } = hydrate(window)
-  // const api = useServerAPI()
-  // const [data, dataPath] = useServerData()
+  const [data, dataPath] = useServerData()
+  // TODO: figure out similar component in react
   // const state = reactive({ message: data?.message })
 
   const refreshData = async () => {
-    const response = await fetch($dataPath())
+    const response = await fetch(dataPath)
     const json = await response.json()
     setMsg(json.message)
   }

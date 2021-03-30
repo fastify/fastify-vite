@@ -1,5 +1,5 @@
 
-async function useServerData(...args) {
+function useServerData(...args) {
   let dataKey = '$data'
   let initialData
   if (args.length === 1) {
@@ -15,12 +15,12 @@ async function useServerData(...args) {
   const isSSR = typeof window === 'undefined'
   // const appInstance = getCurrentInstance()
   // const appConfig = appInstance ? appInstance.appContext.app.config : null
-  // let $data
+  let $data
   if (isSSR && initialData) {
     if (!appConfig) {
       return initialData()
     }
-    window[dataKey] = await initialData()
+    window[dataKey] = initialData()
     $data = window[dataKey]
     return $data
   } else if (initialData) {
@@ -28,7 +28,7 @@ async function useServerData(...args) {
       return initialData()
     }
     if (!window[dataKey]) {
-      window[dataKey] = await initialData()
+      window[dataKey] = initialData()
     }
     $data = window[dataKey]
     window[dataKey] = undefined

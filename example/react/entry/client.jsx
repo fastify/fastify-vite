@@ -5,6 +5,7 @@ import { createContext } from 'react';
 import { BrowserRouter } from 'react-router-dom'
 
 const { app } = createApp()
+hydrate(app)
 
 ReactDOM.hydrate(
   <BrowserRouter>

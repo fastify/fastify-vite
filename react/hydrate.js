@@ -1,20 +1,17 @@
-function hydrate(window, dataKey = '$data', globalDataKey = '$global') {
-  const dataSymbol = Symbol.for(dataKey)
-  const globalDataSymbol = Symbol.for(globalDataKey)
-
+function hydrate(app = {}, dataKey = '$data', globalDataKey = '$global') {
+  window.$dataPath = () => `/-/data${document.location.pathname}`
+  setupServerAPI()
   // To be used maybe in creating a React.Context
-  return {
-    $api: setupServerAPI(window),
-    [globalDataKey]: window[globalDataSymbol],
-    [dataKey]: window[dataSymbol],
-    $dataPath: () => `/-/data${document.location.pathname}`
-  };
+  // return {
+  //   $api: setupServerAPI(window),
+  //   [globalDataKey]: window[globalDataSymbol],
+  //   [dataKey]: window[dataSymbol],
+  //   $dataPath: () => `/-/data${document.location.pathname}`
+  // };
 }
 
-function setupServerAPI(obj) {
-  const $api = obj[Symbol.for('fastify-vite-api')]
-
-  return new Proxy($api, { get: getFetchWrapper });
+function setupServerAPI() {
+  window.$api = new Proxy(window[Symbol.for('fastify-vite-api')], { get: getFetchWrapper });
 }
 
 module.exports = { hydrate, setupServerAPI }
