@@ -14,9 +14,6 @@ const getRender = createApp => async function render(req, url, options) {
   const data = req[options.dataKey]
   const api = req.api ? req.api.meta : null
 
-  console.log(api)
-  console.log(data)
-
   let hydrationScript = ''
 
   if (globalData || data || api) {

@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { setupServerAPI } from 'fastify-vite/react/hydrate'
+import { hydrate, setupServerAPI } from 'fastify-vite/react/hydrate'
 
 export default function Home() {
   let [count, setCount] = useState(0);
   let [msg, setMsg] = useState('');
-  window.$api = window[Symbol.for('fastify-vite-api')]
-  const api = setupServerAPI(window)
+  const { $api } = hydrate(window)
 
   const fetchFromEcho = async () => {
-    const { json } = await api.echo({ msg: 'hello from client -> ' })
+    console.log(hydrate(window))
+    const { json } = await $api.echo({ msg: 'hello from client -> ' })
     setMsg(json.msg)
   }
   return (
