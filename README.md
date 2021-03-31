@@ -98,6 +98,10 @@ Use it to develop and test any contributions.
 
 # Philosophy
 
+To fully embrace modern **Node.js** best practices.
+
+Committed to **never replacing standard JavaScript** with anything else.
+
 SSR shouldn't be something magical we need to rely on a megaframework to get done effectively.
 
 SSR patterns are straightforward and can be implemented with a handful of functions. 
