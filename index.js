@@ -57,13 +57,13 @@ async function fastifyVite (fastify, options) {
     options,
     global: undefined,
     devServer: vite,
-    get(url, { data, ...routeOptions } = {}) {
+    get (url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    post(url, { data, method, ...routeOptions } = {}) {
+    post (url, { data, method, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    route(url, { data, method, ...routeOptions } = {}) {
+    route (url, { data, method, ...routeOptions } = {}) {
       let preHandler
       if (data) {
         preHandler = async function (req, reply) {
