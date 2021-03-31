@@ -10,5 +10,5 @@ module.exports = {
   getRender,
   useServerData,
   useServerAPI,
-  hydrate,
+  hydrate
 }

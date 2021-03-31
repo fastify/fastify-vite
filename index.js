@@ -13,7 +13,7 @@ const {
 const { build } = require('./build')
 const { getOptions, patchOptions } = require('./options')
 
-const vueRenderer = require('./vue')
+// const vueRenderer = require('./vue')
 const reactRenderer = require('./react')
 
 async function fastifyVite (fastify, options) {
@@ -93,7 +93,7 @@ async function fastifyVite (fastify, options) {
   })
 }
 
-fastifyVite.vue = vueRenderer
+// fastifyVite.vue = vueRenderer
 fastifyVite.react = reactRenderer
 
 fastifyVite.app = async function appExport (main, serve) {
