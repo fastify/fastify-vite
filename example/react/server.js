@@ -10,7 +10,7 @@ async function main() {
     renderer: fastifyVite.react,
     entry: {
       client: '/entry/client.jsx',
-      server: '/entry/server.js'
+      server: '/entry/server.jsx'
     },
   })
 

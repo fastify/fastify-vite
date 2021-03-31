@@ -1,7 +1,7 @@
 const { resolve } = require('path')
 const { renderHTMLTemplate } = require('./html')
 
-function getHandler(options, getRenderer, viteDevServer) {
+function getHandler (options, getRenderer, viteDevServer) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
@@ -25,7 +25,7 @@ function getHandler(options, getRenderer, viteDevServer) {
   }
 }
 
-function getRenderGetter({ dev, root, entry, distDir, distIndex }) {
+function getRenderGetter ({ dev, root, entry, distDir, distIndex }) {
   if (dev) {
     return async (url, vite) => {
       // Reload template source every time in dev

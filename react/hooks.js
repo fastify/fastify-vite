@@ -1,47 +1,45 @@
-
-function useServerData(...args) {
-  let dataKey = '$data'
+function useServerData (props) {
+  const dataKey = '$data'
   let initialData
-  if (args.length === 1) {
-    if (typeof args[0] === 'string') {
-      dataKey = args[0]
-    } else if (typeof args[0] === 'function') {
-      initialData = args[0]
-    }
-  } else if (args.length > 1) {
-    dataKey = args[0]
-    initialData = args[1]
-  }
+  // if (args.length === 1) {
+  //   if (typeof args[0] === 'string') {
+  //     dataKey = args[0]
+  //   } else if (typeof args[0] === 'function') {
+  //     initialData = args[0]
+  //   }
+  // } else if (args.length > 1) {
+  //   dataKey = args[0]
+  //   initialData = args[1]
+  // }
   const isSSR = typeof window === 'undefined'
   // const appInstance = getCurrentInstance()
   // const appConfig = appInstance ? appInstance.appContext.app.config : null
   let $data
   if (isSSR && initialData) {
-    if (!appConfig) {
-      return initialData()
-    }
-    window[dataKey] = initialData()
-    $data = window[dataKey]
+    // if (!appConfig) {
+    //   return initialData()
+    // }
+    props[dataKey] = initialData()
+    $data = props[dataKey]
     return $data
   } else if (initialData) {
-    if (!appConfig) {
-      return initialData()
+    // if (!appConfig) {
+    //   return initialData()
+    // }
+    if (!props[dataKey]) {
+      props[dataKey] = initialData()
     }
-    if (!window[dataKey]) {
-      window[dataKey] = initialData()
-    }
-    $data = window[dataKey]
-    window[dataKey] = undefined
+    $data = props[dataKey]
+    props[dataKey] = undefined
     return $data
   } else {
-    const $data = window[dataKey]
-    const $dataPath = window.$dataPath
-    window[dataKey] = undefined
+    const $data = props[dataKey]
+    const $dataPath = props.$dataPath
     return [$data, $dataPath()]
   }
 }
 
-function useServerAPI() {
+function useServerAPI () {
   const { $api } = window
 
   return $api

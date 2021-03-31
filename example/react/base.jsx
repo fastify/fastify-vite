@@ -15,6 +15,7 @@ const routes = Object.keys(pages).map((path) => {
 })
 
 export default function App(props) {
+  console.log(props)
   return (
     <>
       <Helmet>
@@ -40,11 +41,11 @@ export default function App(props) {
           })}
         </ul>
       </div>
-       <Switch>
+      <Switch>
         {routes.map(({ path, component: RouteComp }) => {
           return (
             <Route key={path} path={path}>
-              <RouteComp />
+              <RouteComp  {...props} />
             </Route>
           )
         })}

@@ -16,7 +16,7 @@ const { getOptions, patchOptions } = require('./options')
 const vueRenderer = require('./vue')
 const reactRenderer = require('./react')
 
-async function fastifyVite(fastify, options) {
+async function fastifyVite (fastify, options) {
   // Set option defaults (shallow)
   options = getOptions(options)
   // Run options through Vite to get all Vite defaults taking vite.config.js
@@ -96,7 +96,7 @@ async function fastifyVite(fastify, options) {
 fastifyVite.vue = vueRenderer
 fastifyVite.react = reactRenderer
 
-fastifyVite.app = async function appExport(main, serve) {
+fastifyVite.app = async function appExport (main, serve) {
   const fastify = await main()
   if (process.argv.length > 2 && process.argv[2] === 'build') {
     build(fastify.vite.options)

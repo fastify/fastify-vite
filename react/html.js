@@ -1,7 +1,5 @@
-const { renderToString } = require('react-dom/server')
-
-  exports.renderHTMLTemplate = (req, { element, hydration, entry, context }) => {
-    return (`
+exports.renderHTMLTemplate = (req, { element, hydration, entry, context }) => {
+  return (`
     <!doctype html>
       <head>
       </head>
@@ -13,4 +11,4 @@ const { renderToString } = require('react-dom/server')
       </body>
     </html>
   `)
-  }
+}

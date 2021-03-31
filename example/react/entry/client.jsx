@@ -1,15 +1,12 @@
 import { createApp } from '../main'
-import { hydrate } from 'fastify-vite/react/hydrate'
+import { hydrate } from 'fastify-vite/react'
 import ReactDOM from 'react-dom'
-import { createContext } from 'react';
 import { BrowserRouter } from 'react-router-dom'
-
 const { app } = createApp()
-hydrate(app)
 
 ReactDOM.hydrate(
   <BrowserRouter>
-    {app()}
+    {hydrate(app)}
   </BrowserRouter>,
   document.getElementById('root')
 )
