@@ -2,12 +2,14 @@ import { useState } from 'react'
 
 export default function Home(props) {
   let [count, setCount] = useState(0);
+
   let [msg, setMsg] = useState('');
 
   const fetchFromEcho = async () => {
     const { json } = await props.$api.echo({ msg: `hello from client -> ` })
     setMsg(json.msg)
   }
+
   return (
     <div>
       <h1>Home</h1>
