@@ -85,3 +85,30 @@ fastify.route({
 // For everything else, get to the Vite handler straight away
 fastify.get('/*', fastify.vite.handler)
 ```
+
+# Contributing
+
+You can install the development version of the plugin in the **example app** with:
+
+```bash
+npm run dev:install
+```
+
+Use it to develop and test any contributions.
+
+# Philosophy
+
+SSR shouldn't be something magical we need to rely on a megaframework to get done effectively.
+
+SSR patterns are straightforward and can be implemented with a handful of functions. 
+
+This package has just about enough code to build and glue the server and the client, not one bit more.
+
+# Team
+
+- [Jonas Galvez](https://twitter.com/anothergalvez) - **Helloprint** - Core, Vue
+- [Paul Isache](https://twitter.com/paul_isache) - **NearForm** - Core, React
+
+# License
+
+MIT
