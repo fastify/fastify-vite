@@ -1,5 +1,4 @@
 const React = require('react')
-const { BrowserRouter } = require('react-router-dom')
 
 function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   const dataSymbol = Symbol.for(dataKey)
@@ -14,7 +13,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   setupServerAPI(context)
   const { Consumer } = React.createContext(context)
 
-  return React.createElement(BrowserRouter, { children: React.createElement(Consumer, { children: app }) })
+  return React.createElement(Consumer, { children: app })
 }
 
 function setupServerAPI (context) {
