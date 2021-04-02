@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "dev:install": "cp ../../*.js node_modules/fastify-vite && cp ../../react/*.js node_modules/fastify-vite/react",
+    "dev:install": "cp ../../*.js node_modules/fastify-vite && cp -r ../../react node_modules/fastify-vite",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server",
