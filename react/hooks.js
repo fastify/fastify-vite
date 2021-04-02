@@ -1,49 +1,37 @@
-function useServerData (...args) {
+function useServerData({ context, setContext }, effect) {
   let dataKey = '$data'
   let initialData
-  if (args.length === 1) {
-    if (typeof args[0] === 'string') {
-      dataKey = args[0]
-    } else if (typeof args[0] === 'function') {
-      initialData = args[0]
-    }
-  } else if (args.length > 1) {
-    dataKey = args[0]
-    initialData = args[1]
+
+  if (typeof effect === 'function') {
+    initialData = effect
   }
+  // else if (args.length > 1) {
+  //   dataKey = args[0]
+  //   initialData = args[1]
+  // }
   const isSSR = typeof window === 'undefined'
-  // const appInstance = getCurrentInstance()
-  // const appConfig = appInstance ? appInstance.appContext.app.config : null
-  let $data
+
   if (isSSR && initialData) {
     // if (!appConfig) {
     //   return initialData()
     // }
-    this[dataKey] = initialData()
-    $data = this[dataKey]
-    return $data
+    setContext({ [dataKey]: initialData() })
+    return initialData()
   } else if (initialData) {
     // if (!appConfig) {
     //   return initialData()
     // }
-    if (!this[dataKey]) {
-      this[dataKey] = initialData()
+    if (!context[dataKey]) {
+      setContext({ [dataKey]: initialData() })
     }
-    $data = this[dataKey]
-    this[dataKey] = undefined
-    return $data
+
+    setContext({ [dataKey]: undefined })
+    return undefined
   } else {
-    console.log(this)
-    const $data = this[dataKey]
-    const $dataPath = this.$dataPath
+    const $data = context[dataKey]
+    const $dataPath = context.$dataPath
     return [$data, $dataPath()]
   }
 }
 
-function useServerAPI () {
-  const { $api } = window
-
-  return $api
-}
-
-module.exports = { useServerData, useServerAPI }
+module.exports = { useServerData }

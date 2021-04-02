@@ -1,10 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { Context } from '../context'
+
 
 export default function Hello(props) {  
-  let [msg, setMsg] = useState(props.$data?.message);
-
+  const { context } = useContext(Context);
+  console.log('props', props)
+  console.log('context', context)
+  let [msg, setMsg] = useState(context?.$data?.message);
+ 
   const refreshData = async () => {
-    const response = await fetch(props.$dataPath())
+    const response = await fetch(context.$dataPath())
     const json = await response.json()
     setMsg(json.message)
   }

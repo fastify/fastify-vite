@@ -35,26 +35,26 @@ export default function App(props) {
         </style>
       </Helmet>
       {/* <Router location={url}> */}
-        <div>
-          <ul>
-            {routes.map(({ name, path }) => {
-              return (
-                <li key={path}>
-                  <Link to={path}>{name}</Link>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-        <Switch>
-          {routes.map(({ path, component: RouteComp }) => {
+      <div>
+        <ul>
+          {routes.map(({ name, path }) => {
             return (
-              <Route key={path} path={path}>
-                <RouteComp  {...props} />
-              </Route>
+              <li key={path}>
+                <Link to={path}>{name}</Link>
+              </li>
             )
           })}
-        </Switch>
+        </ul>
+      </div>
+      <Switch>
+        {routes.map(({ path, component: RouteComp }) => {
+          return (
+            <Route key={path} path={path}>
+              <RouteComp  {...props} />
+            </Route>
+          )
+        })}
+      </Switch>
       {/* </Router> */}
     </>
   )

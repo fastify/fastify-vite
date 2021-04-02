@@ -1,11 +1,18 @@
-import { createApp } from '../main'
-import { hydrate } from 'fastify-vite/react'
 import ReactDOM from 'react-dom'
-const { app, router: Router } = createApp()
+import { hydrate } from 'fastify-vite/react'
 
+import { createApp } from '../main'
+import { ContextProvider } from '../context'
+
+const { app, router: Router } = createApp()
+const { context } = hydrate();
+
+console.log('context', context)
 ReactDOM.hydrate(
   <Router>
-    {hydrate(app)}
+    <ContextProvider context={context}>
+      {app()}
+    </ContextProvider>
   </Router>,
   document.getElementById('root')
 )

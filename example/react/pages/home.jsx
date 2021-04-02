@@ -1,15 +1,27 @@
-import { useState, useLayoutEffect, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useServerData } from 'fastify-vite/react'
+
+import { Context } from '../context'
+
 export default function Home(props) {
   let [count, setCount] = useState(0);
-  let [msg, setMsg] = useState('');
+
+  const { context } = useContext(Context);
+  console.log(context)
+  const data = ''
+  console.log(useServerData(useContext(Context), () => {
+    return context.$api.echo({ msg: 'hello from server '}).then(({json}) => json.msg)
+  }))
+  // console.log(ddd)
+
+  let [msg, setMsg] = useState(data);
 
   const fetchFromEcho = async () => {
-    const { json } = await props.$api.echo({ msg: `hello from client -> ` });
+    const { json } = await context.$api.echo({ msg: `hello from client -> ` });
 
     setMsg(json.msg)
   }
- 
+
   return (
     <div>
       <h1>Home</h1>

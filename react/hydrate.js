@@ -1,5 +1,3 @@
-const React = require('react')
-
 function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   const dataSymbol = Symbol.for(dataKey)
   const globalDataSymbol = Symbol.for(globalDataKey)
@@ -11,9 +9,10 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
     $api: window[apiSymbol]
   }
   setupServerAPI(context)
-  const { Consumer } = React.createContext(context)
 
-  return React.createElement(Consumer, { children: app })
+  return {
+    context
+  }
 }
 
 function setupServerAPI (context) {
