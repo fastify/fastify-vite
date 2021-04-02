@@ -1,7 +1,10 @@
-exports.renderHTMLTemplate = (req, { element, hydration, entry, context }) => {
+exports.renderHTMLTemplate = (req, { element, hydration, entry, helmet }) => {
   return (`
     <!doctype html>
       <head>
+        ${helmet.title.toString()}
+        ${helmet.script.toString()}
+        ${helmet.style.toString()}
       </head>
       <body>
       <body>

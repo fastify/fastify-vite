@@ -22,6 +22,7 @@ export default function App(props) {
   return (
     <>
       <Helmet>
+        <title>React test</title>
         <style>{`
           #root {
             font - family: Avenir, Helvetica, Arial, sans-serif;

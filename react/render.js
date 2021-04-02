@@ -1,6 +1,7 @@
 const React = require('react')
 const { renderToString } = require('react-dom/server')
 const devalue = require('@nuxt/devalue')
+const { Helmet } = require('react-helmet');
 
 const getRender = createApp => async function render(req, url, options) {
   const { entry, hydration } = options
@@ -53,7 +54,8 @@ const getRender = createApp => async function render(req, url, options) {
   return {
     entry: entry.client,
     hydration: hydrationScript,
-    element
+    element,
+    helmet:  Helmet.renderStatic()
   }
 }
 
