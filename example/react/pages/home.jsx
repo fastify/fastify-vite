@@ -9,23 +9,7 @@ export default function Home(props) {
 
     setMsg(json.msg)
   }
-  // const getData = useServerData.bind(Object.assign({}, props));
-  // const data = async () => {
-  //   console.log('1')
-  //   console.log(getData(async () => {
-  //     console.log('2')
-
-  //     const { json } = await props.$api.echo({ msg: 'hello from server ' });
-  //     console.log(json);
-  //     setMsg(json.msg)
-  //     // return data
-  //   }))
-  // }
-
-  useEffect(() => {
-    console.log('daaa')
-  })
-
+ 
   return (
     <div>
       <h1>Home</h1>
