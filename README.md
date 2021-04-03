@@ -96,6 +96,8 @@ npm run dev:install
 
 Use it to develop and test any contributions.
 
+We use the [**conventional commits**](https://www.conventionalcommits.org/en/v1.0.0/) style of commit formatting.
+
 # Philosophy
 
 To fully embrace modern **Node.js** best practices.
