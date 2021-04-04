@@ -34,7 +34,7 @@ const defaults = {
 
 async function processOptions (options) {
   options = assign({}, defaults, options)
-  
+
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
   }
@@ -61,7 +61,7 @@ async function processOptions (options) {
   return options
 }
 
-module.exports = { defaults, getOptions, patchOptions }
+module.exports = { processOptions }
 
 function getViteOptions (options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
