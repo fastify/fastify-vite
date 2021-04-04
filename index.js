@@ -11,14 +11,17 @@ const {
 } = require('./deps')
 
 const { build } = require('./build')
-const { getOptions, patchOptions } = require('./options')
+const { processOptions } = require('./options')
 
 async function fastifyVite (fastify, options) {
-  // Set option defaults (shallow)
-  options = getOptions(options)
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
-  await patchOptions(options)
+  try {
+    await processOptions(options)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
 
   const { getHandler, getRenderGetter } = options.renderer
 
