@@ -1,6 +1,8 @@
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
 
+const dev = process.env.NODE_ENV !== 'production'
+
 module.exports = {
   // Vite's logging level
   logLevel: dev ? 'error' : 'info',

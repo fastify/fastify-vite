@@ -32,15 +32,13 @@ const defaults = {
   vite: null
 }
 
-function getOptions (options) {
+async function processOptions (options) {
   options = assign({}, defaults, options)
+  
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
   }
-  return options
-}
 
-async function patchOptions (options) {
   const viteOptions = await getViteOptions(options)
 
   if (!options.renderer) {
