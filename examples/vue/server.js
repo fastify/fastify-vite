@@ -6,7 +6,8 @@ async function main () {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
-    root: __dirname
+    root: __dirname,
+    renderer: fastifyVite.vue,
   })
 
   fastify.api(({ get }) => ({

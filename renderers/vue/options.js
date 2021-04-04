@@ -3,7 +3,7 @@ const vueJsx = require('@vitejs/plugin-vue-jsx')
 
 const dev = process.env.NODE_ENV !== 'production'
 
-module.exports = {
+const options = {
   // Vite's logging level
   logLevel: dev ? 'error' : 'info',
   // Vite plugins needed for Vue 3 SSR to fully work
@@ -19,3 +19,5 @@ module.exports = {
     minify: !dev
   }
 }
+
+module.exports = { options }
