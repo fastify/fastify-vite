@@ -31,40 +31,8 @@ const defaults = {
   },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
-  lib: 'vue',
-  vite: {
-    vue: {
-      // Vite's logging level
-      logLevel: dev ? 'error' : 'info',
-      // Vite plugins needed for Vue 3 SSR to fully work
-      plugins: [
-        vuePlugin(),
-        vueJsx()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    },
-    react: {
-      esbuild: {
-        jsxInject: `import React from 'react';`
-      },
-      plugins: [
-        reactRefresh()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    }
-  }
+  renderer: null,
+  vite: null,
 }
 
 function getOptions(options) {
