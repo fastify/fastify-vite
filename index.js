@@ -23,8 +23,6 @@ async function fastifyVite (fastify, options) {
     process.exit(1)
   }
 
-  console.log('options', options)
-
   const { getHandler, getRenderGetter } = options.renderer
 
   // We'll want access to this later

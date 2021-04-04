@@ -1,4 +1,4 @@
 import { createApp } from '../main'
-import { getRender } from 'fastify-vite/render'
+import { getRender } from 'fastify-vite/vue/render'
 
 export const render = getRender(createApp)

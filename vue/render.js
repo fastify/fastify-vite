@@ -1,3 +1,3 @@
-const { render } = require('../renderers/vue/render')
+const { getRender } = require('../renderers/vue/render')
 
-module.exports = { render }
+module.exports = { getRender }

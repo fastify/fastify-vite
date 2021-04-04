@@ -4,5 +4,5 @@ const { getHandler, getRenderGetter } = require('./handler')
 module.exports = {
   options,
   getHandler,
-  getRenderGetter,
+  getRenderGetter
 }
