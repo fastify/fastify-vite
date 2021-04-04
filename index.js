@@ -12,7 +12,6 @@ const {
 
 const { build } = require('./build')
 const { getOptions, patchOptions } = require('./options')
-const { getHandler, getRenderGetter } = require('./handler')
 
 async function fastifyVite (fastify, options) {
   // Set option defaults (shallow)
@@ -20,6 +19,8 @@ async function fastifyVite (fastify, options) {
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
   await patchOptions(options)
+
+  const { getHandler, getRenderGetter } = options.renderer
 
   // We'll want access to this later
   let handler

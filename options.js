@@ -46,7 +46,11 @@ function getOptions(options) {
 async function patchOptions(options) {
   const viteOptions = await getViteOptions(options)
 
-  options.vite[options.lib].build.assetsDir = viteOptions.build.assetsDir
+  if (!options.renderer) {
+    throw new Error('Must set options.renderer')
+  }
+
+  options.vite = options.renderer.options
 
   if (!options.dev) {
     options.distDir = resolve(options.root, viteOptions.build.outDir)
