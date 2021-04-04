@@ -1,7 +1,3 @@
-const { assign } = Object
-const { existsSync, readFileSync } = require('fs')
-const { resolve } = require('path')
-const { resolveConfig } = require('vite')
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
 

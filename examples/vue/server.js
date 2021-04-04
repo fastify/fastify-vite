@@ -6,7 +6,7 @@ async function main () {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
-    root: __dirname,
+    root: __dirname
   })
 
   fastify.api(({ get }) => ({
@@ -15,7 +15,7 @@ async function main () {
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
-    }),
+    })
   }))
 
   fastify.vite.global = { prop: 'data' }
@@ -31,7 +31,7 @@ async function main () {
   })
 
   fastify.vite.get('/*')
-  
+
   return fastify
 }
 

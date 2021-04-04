@@ -2,9 +2,6 @@ const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 const { resolveConfig } = require('vite')
-const vuePlugin = require('@vitejs/plugin-vue')
-const vueJsx = require('@vitejs/plugin-vue-jsx')
-const reactRefresh = require('@vitejs/plugin-react-refresh')
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'
@@ -32,10 +29,10 @@ const defaults = {
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
   renderer: null,
-  vite: null,
+  vite: null
 }
 
-function getOptions(options) {
+function getOptions (options) {
   options = assign({}, defaults, options)
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
@@ -43,7 +40,7 @@ function getOptions(options) {
   return options
 }
 
-async function patchOptions(options) {
+async function patchOptions (options) {
   const viteOptions = await getViteOptions(options)
 
   if (!options.renderer) {
@@ -68,7 +65,7 @@ async function patchOptions(options) {
 
 module.exports = { defaults, getOptions, patchOptions }
 
-function getViteOptions(options) {
+function getViteOptions (options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js
