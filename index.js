@@ -11,15 +11,19 @@ const {
 } = require('./deps')
 
 const { build } = require('./build')
-const { getOptions, patchOptions } = require('./options')
-const { getHandler, getRenderGetter } = require('./handler')
+const { processOptions } = require('./options')
 
 async function fastifyVite (fastify, options) {
-  // Set option defaults (shallow)
-  options = getOptions(options)
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
-  await patchOptions(options)
+  try {
+    options = await processOptions(options)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
+
+  const { getHandler, getRenderGetter } = options.renderer
 
   // We'll want access to this later
   let handler
@@ -97,5 +101,11 @@ fastifyVite.app = async function appExport (main, serve) {
     serve(fastify)
   }
 }
+
+Object.defineProperty(fastifyVite, 'vue', {
+  get () {
+    return require('./renderers/vue')
+  }
+})
 
 module.exports = fp(fastifyVite)

@@ -2,9 +2,6 @@ const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 const { resolveConfig } = require('vite')
-const vuePlugin = require('@vitejs/plugin-vue')
-const vueJsx = require('@vitejs/plugin-vue-jsx')
-const reactRefresh = require('@vitejs/plugin-react-refresh')
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'
@@ -31,54 +28,24 @@ const defaults = {
   },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
-  lib: 'vue',
-  vite: {
-    vue: {
-      // Vite's logging level
-      logLevel: dev ? 'error' : 'info',
-      // Vite plugins needed for Vue 3 SSR to fully work
-      plugins: [
-        vuePlugin(),
-        vueJsx()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    },
-    react: {
-      esbuild: {
-        jsxInject: `import React from 'react';`
-      },
-      plugins: [
-        reactRefresh()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    }
-  }
+  renderer: null,
+  vite: null
 }
 
-function getOptions(options) {
+async function processOptions (options) {
   options = assign({}, defaults, options)
+
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
   }
-  return options
-}
 
-async function patchOptions(options) {
   const viteOptions = await getViteOptions(options)
 
-  options.vite[options.lib].build.assetsDir = viteOptions.build.assetsDir
+  if (!options.renderer) {
+    throw new Error('Must set options.renderer')
+  }
+
+  options.vite = options.renderer.options
 
   if (!options.dev) {
     options.distDir = resolve(options.root, viteOptions.build.outDir)
@@ -94,9 +61,9 @@ async function patchOptions(options) {
   return options
 }
 
-module.exports = { defaults, getOptions, patchOptions }
+module.exports = { processOptions }
 
-function getViteOptions(options) {
+function getViteOptions (options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js
