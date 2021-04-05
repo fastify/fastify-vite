@@ -6,7 +6,8 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
     [globalDataKey]: window[globalDataSymbol],
     $dataPath: () => `/-/data${document.location.pathname}`,
     [dataKey]: window[dataSymbol],
-    $api: window[apiSymbol]
+    $api: window[apiSymbol],
+    requests: []
   }
   setupServerAPI(context)
 

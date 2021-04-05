@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet'
-import { Link, Route, Switch, StaticRouter, BrowserRouter } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 
 const pages = import.meta.globEager('./pages/*.jsx')
 
@@ -15,10 +15,7 @@ const routes = Object.keys(pages).map((path) => {
   }
 })
 
-const Router = typeof window === 'undefined' ? StaticRouter : BrowserRouter
-
 export default function App(props) {
-  console.log(props)
   return (
     <>
       <Helmet>
@@ -34,7 +31,6 @@ export default function App(props) {
             }`}
         </style>
       </Helmet>
-      {/* <Router location={url}> */}
       <div>
         <ul>
           {routes.map(({ name, path }) => {
@@ -55,7 +51,6 @@ export default function App(props) {
           )
         })}
       </Switch>
-      {/* </Router> */}
     </>
   )
 }

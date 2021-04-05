@@ -1,23 +1,20 @@
-import { useState, useContext } from 'react'
-import { useServerData } from 'fastify-vite/react'
+import { useState } from 'react'
+import { useServerData, useServerAPI } from 'fastify-vite/react'
 
-import { Context } from '../context'
+import { useSSEContext } from 'fastify-vite/react'
 
 export default function Home(props) {
-  let [count, setCount] = useState(0);
+  let [count, setCount] = useState(0)
 
-  const { context } = useContext(Context);
-  console.log(context)
-  const data = ''
-  console.log(useServerData(useContext(Context), () => {
-    return context.$api.echo({ msg: 'hello from server '}).then(({json}) => json.msg)
-  }))
-  // console.log(ddd)
-
-  let [msg, setMsg] = useState(data);
+  const { context } = useSSEContext()
+  const $api = useServerAPI();
+  const data = useServerData(() => {
+    return context.$api.echo({ msg: '1' }).then(({ json }) => json)
+  });
+  let [msg, setMsg] = useState(data?.msg || '');
 
   const fetchFromEcho = async () => {
-    const { json } = await context.$api.echo({ msg: `hello from client -> ` });
+    const { json } = await $api.echo({ msg: `hello from client -> ` });
 
     setMsg(json.msg)
   }

@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext } from 'react'
-import { Context } from '../context'
+import { useState, useEffect } from 'react'
+import { useSSEContext } from 'fastify-vite/react'
 
 
-export default function Hello(props) {  
-  const { context } = useContext(Context);
-  console.log('props', props)
-  console.log('context', context)
+export default function Hello() {
+  const { context, setContext } = useSSEContext();
   let [msg, setMsg] = useState(context?.$data?.message);
- 
+
   const refreshData = async () => {
     const response = await fetch(context.$dataPath())
     const json = await response.json()

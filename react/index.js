@@ -1,6 +1,7 @@
 const { getHandler, getRenderGetter } = require('./handler')
 const { useServerData, useServerAPI } = require('./hooks')
 const { hydrate } = require('./hydrate')
+const { ContextProvider, useSSEContext } = require('./context')
 
 module.exports = {
   renderer: 'react',
@@ -8,5 +9,7 @@ module.exports = {
   getRenderGetter,
   useServerData,
   useServerAPI,
-  hydrate
+  hydrate,
+  ContextProvider,
+  useSSEContext
 }
