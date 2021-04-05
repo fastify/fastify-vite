@@ -7,11 +7,15 @@ async function main() {
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
+<<<<<<< HEAD:examples/vue/react/server.js
     renderer: fastifyVite.react,
     entry: {
       client: '/entry/client.jsx',
       server: '/entry/server.jsx'
     },
+=======
+    renderer: fastifyVite.vue
+>>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81:examples/vue/server.js
   })
 
 
@@ -21,7 +25,7 @@ async function main() {
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
-    }),
+    })
   }))
 
   fastify.get('/favicon.ico', (_, reply) => {

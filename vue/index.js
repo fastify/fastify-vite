@@ -1,14 +1,3 @@
-const { getHandler, getRenderGetter } = require('./handler')
-const { useServerData, useServerAPI } = require('./hooks')
-const { hydrate } = require('./hydrate')
-const { getRender } = require('./render')
+const { hydrate, useServerData, useServerAPI } = require('../renderers/vue/client')
 
-module.exports = {
-  renderer: 'vue',
-  getHandler,
-  getRenderGetter,
-  getRender,
-  useServerData,
-  useServerAPI,
-  hydrate
-}
+module.exports = { hydrate, useServerData, useServerAPI }

@@ -11,17 +11,26 @@ const {
 } = require('./deps')
 
 const { build } = require('./build')
+<<<<<<< HEAD
 const { getOptions, patchOptions } = require('./options')
 
 // const vueRenderer = require('./vue')
 const reactRenderer = require('./react')
+=======
+const { processOptions } = require('./options')
+>>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
 
 async function fastifyVite (fastify, options) {
-  // Set option defaults (shallow)
-  options = getOptions(options)
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
-  await patchOptions(options)
+  try {
+    options = await processOptions(options)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
+
+  const { getHandler, getRenderGetter } = options.renderer
 
   const { getHandler, getRenderGetter } = options.renderer
 
@@ -104,5 +113,11 @@ fastifyVite.app = async function appExport (main, serve) {
     serve(fastify)
   }
 }
+
+Object.defineProperty(fastifyVite, 'vue', {
+  get () {
+    return require('./renderers/vue')
+  }
+})
 
 module.exports = fp(fastifyVite)

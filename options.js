@@ -2,9 +2,12 @@ const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 const { resolveConfig } = require('vite')
+<<<<<<< HEAD
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
 const reactRefresh = require('@vitejs/plugin-react-refresh')
+=======
+>>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'
@@ -31,6 +34,7 @@ const defaults = {
   },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
+<<<<<<< HEAD
   lib: 'vue',
   vite: {
     vue: {
@@ -68,17 +72,33 @@ const defaults = {
 }
 
 function getOptions(options) {
+=======
+  renderer: null,
+  vite: null
+}
+
+async function processOptions (options) {
+>>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
   options = assign({}, defaults, options)
+
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
   }
-  return options
-}
 
+<<<<<<< HEAD
 async function patchOptions(options) {
   const viteOptions = await getViteOptions(options)
 
   options.vite[options.lib].build.assetsDir = viteOptions.build.assetsDir
+=======
+  const viteOptions = await getViteOptions(options)
+
+  if (!options.renderer) {
+    throw new Error('Must set options.renderer')
+  }
+
+  options.vite = options.renderer.options
+>>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
 
   if (!options.dev) {
     options.distDir = resolve(options.root, viteOptions.build.outDir)
@@ -94,7 +114,7 @@ async function patchOptions(options) {
   return options
 }
 
-module.exports = { defaults, getOptions, patchOptions }
+module.exports = { processOptions }
 
 function getViteOptions(options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
