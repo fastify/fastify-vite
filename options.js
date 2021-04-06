@@ -29,7 +29,7 @@ const defaults = {
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
   renderer: null,
-  vite: null,
+  vite: null
 }
 
 async function processOptions (options) {
@@ -63,7 +63,7 @@ async function processOptions (options) {
 
 module.exports = { processOptions }
 
-function getViteOptions(options) {
+function getViteOptions (options) {
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js

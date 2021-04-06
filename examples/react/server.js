@@ -2,22 +2,17 @@ const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 const fastifyApi = require('fastify-api')
 
-async function main() {
+async function main () {
   await fastify.register(fastifyApi)
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
-<<<<<<< HEAD:examples/vue/react/server.js
     renderer: fastifyVite.react,
     entry: {
       client: '/entry/client.jsx',
       server: '/entry/server.jsx'
-    },
-=======
-    renderer: fastifyVite.vue
->>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81:examples/vue/server.js
+    }
   })
-
 
   fastify.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {
@@ -33,7 +28,7 @@ async function main() {
     reply.send('')
   })
   fastify.vite.get('/hello', {
-    data(req) {
+    data (req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
     }
   })
