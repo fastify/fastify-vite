@@ -3,11 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-<<<<<<< HEAD:examples/vue/react/package.json
-    "dev:install": "cp ../../*.js node_modules/fastify-vite && cp -r ../../react node_modules/fastify-vite",
-=======
-    "dev:install": "cp ../../*.js node_modules/fastify-vite && cp -r ../../renderers node_modules/fastify-vite && cp -r ../../vue node_modules/fastify-vite",
->>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81:examples/vue/package.json
+    "dev:install": "cp ../../*.js node_modules/fastify-vite && cp -r ../../renderers node_modules/fastify-vite && cp -r ../../vue node_modules/fastify-vite && cp -r ../../react node_modules/fastify-vite",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server",

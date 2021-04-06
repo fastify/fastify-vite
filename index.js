@@ -93,9 +93,6 @@ async function fastifyVite (fastify, options) {
   })
 }
 
-// fastifyVite.react = vueRenderer
-fastifyVite.react = reactRenderer
-
 fastifyVite.app = async function appExport (main, serve) {
   const fastify = await main()
   if (process.argv.length > 2 && process.argv[2] === 'build') {
