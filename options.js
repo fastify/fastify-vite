@@ -2,12 +2,6 @@ const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 const { resolveConfig } = require('vite')
-<<<<<<< HEAD
-const vuePlugin = require('@vitejs/plugin-vue')
-const vueJsx = require('@vitejs/plugin-vue-jsx')
-const reactRefresh = require('@vitejs/plugin-react-refresh')
-=======
->>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'
@@ -34,63 +28,17 @@ const defaults = {
   },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
-<<<<<<< HEAD
-  lib: 'vue',
-  vite: {
-    vue: {
-      // Vite's logging level
-      logLevel: dev ? 'error' : 'info',
-      // Vite plugins needed for Vue 3 SSR to fully work
-      plugins: [
-        vuePlugin(),
-        vueJsx()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    },
-    react: {
-      esbuild: {
-        jsxInject: `import React from 'react';`
-      },
-      plugins: [
-        reactRefresh()
-      ],
-      // Base build settings, default values
-      // for assetsDir and outDir match Vite's defaults
-      build: {
-        assetsDir: 'assets',
-        outDir: 'dist',
-        minify: !dev
-      }
-    }
-  }
-}
-
-function getOptions(options) {
-=======
   renderer: null,
-  vite: null
+  vite: null,
 }
 
 async function processOptions (options) {
->>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
   options = assign({}, defaults, options)
 
   if (typeof options.root === 'function') {
     options.root = options.root(resolve)
   }
 
-<<<<<<< HEAD
-async function patchOptions(options) {
-  const viteOptions = await getViteOptions(options)
-
-  options.vite[options.lib].build.assetsDir = viteOptions.build.assetsDir
-=======
   const viteOptions = await getViteOptions(options)
 
   if (!options.renderer) {
@@ -98,7 +46,6 @@ async function patchOptions(options) {
   }
 
   options.vite = options.renderer.options
->>>>>>> eff058a2c157c5555278ea0d9b85a15a579acf81
 
   if (!options.dev) {
     options.distDir = resolve(options.root, viteOptions.build.outDir)
