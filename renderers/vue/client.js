@@ -66,7 +66,11 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   setupServerAPI(app.config.globalProperties)
 }
 
-module.exports = { hydrate, useServerData, useServerAPI }
+module.exports = {
+  useServerData,
+  useServerAPI,
+  hydrate
+}
 
 function setupServerAPI (globalProperties) {
   const { $api } = globalProperties
