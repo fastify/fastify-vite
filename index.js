@@ -108,4 +108,10 @@ Object.defineProperty(fastifyVite, 'vue', {
   }
 })
 
+Object.defineProperty(fastifyVite, 'react', {
+  get () {
+    return require('./renderers/react')
+  }
+})
+
 module.exports = fp(fastifyVite)
