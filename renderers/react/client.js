@@ -1,4 +1,20 @@
-const { useSSEContext } = require('./context')
+const React = require('react')
+
+const Context = React.createContext({})
+
+function ContextProvider ({ children, context }) {
+  const [ctx, setctx] = React.useState(context)
+  const setContext = (val) => setctx(Object.assign({}, { ...ctx }, val))
+
+  return React.createElement(Context.Provider, {
+    children,
+    value: { context: ctx, setContext }
+  })
+}
+
+function useSSEContext () {
+  return React.useContext(Context)
+}
 
 function useServerData (...args) {
   let dataKey = '$data'
@@ -43,10 +59,14 @@ function useServerData (...args) {
   }
 }
 
-const useServerAPI = () => {
+function useServerAPI () {
   const { context } = useSSEContext()
-
   return context.$api
 }
 
-module.exports = { useServerData, useServerAPI }
+module.exports = {
+  ContextProvider,
+  useSSEContext
+  useServerData,
+  useServerAPI
+}
