@@ -3,11 +3,10 @@ import { ContextProvider, hydrate } from 'fastify-vite/react'
 import { createApp } from '../main'
 
 const { app, router: Router } = createApp()
-const { context } = hydrate()
 
 ReactDOM.hydrate(
   <Router>
-    <ContextProvider context={context}>
+    <ContextProvider context={hydrate()}>
       {app()}
     </ContextProvider>
   </Router>,

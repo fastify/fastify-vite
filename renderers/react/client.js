@@ -76,10 +76,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
     requests: []
   }
   setupServerAPI(context)
-
-  return {
-    context
-  }
+  return context
 }
 
 module.exports = {
