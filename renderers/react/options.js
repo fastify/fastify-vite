@@ -7,15 +7,11 @@ const options = {
   logLevel: dev ? 'error' : 'info',
   // Vite plugins needed for Vue 3 SSR to fully work
   plugins: [
-    vuePlugin(),
-    vueJsx()
-  ],
-  esbuild: {
-    jsxInject: `import React from 'react';`
-  },
-  plugins: [
     reactRefresh()
   ],
+  esbuild: {
+    jsxInject: 'import React from \'react\';'
+  },  
   // Base build settings, default values
   // for assetsDir and outDir match Vite's defaults
   build: {

@@ -1,6 +1,6 @@
 function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
   return (
-    '<!doctype html>\n' + 
+    '<!doctype html>\n' +
     `<head>${
       helmet.title.toString()
     }${
