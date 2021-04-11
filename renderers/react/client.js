@@ -84,7 +84,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
 
 module.exports = {
   ContextProvider,
-  useSSEContext
+  useSSEContext,
   useServerData,
   useServerAPI,
   hydrate,

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSSEContext } from 'fastify-vite/react'
 
-
 export default function Hello() {
   const { context, setContext } = useSSEContext();
   let [msg, setMsg] = useState(context?.$data?.message);

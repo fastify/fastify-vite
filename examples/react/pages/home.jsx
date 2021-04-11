@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { useServerData, useServerAPI } from 'fastify-vite/react'
-
-import { useSSEContext } from 'fastify-vite/react'
+import { useSSEContext, useServerData, useServerAPI } from 'fastify-vite/react'
 
 export default function Home(props) {
   let [count, setCount] = useState(0)
