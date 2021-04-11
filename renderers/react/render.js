@@ -2,8 +2,7 @@ const React = require('react')
 const { renderToString } = require('react-dom/server')
 const devalue = require('@nuxt/devalue')
 const { Helmet } = require('react-helmet')
-
-const { ContextProvider } = require('./context')
+const { ContextProvider } = require('./client')
 
 const getRender = createApp => async function render (req, url, options) {
   const { entry, hydration } = options
