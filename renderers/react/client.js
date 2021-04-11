@@ -87,7 +87,7 @@ module.exports = {
   useSSEContext,
   useServerData,
   useServerAPI,
-  hydrate,
+  hydrate
 }
 
 function setupServerAPI (context) {
