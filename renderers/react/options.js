@@ -11,7 +11,7 @@ const options = {
   ],
   esbuild: {
     jsxInject: 'import React from \'react\';'
-  },  
+  },
   // Base build settings, default values
   // for assetsDir and outDir match Vite's defaults
   build: {

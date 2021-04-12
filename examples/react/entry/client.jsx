@@ -10,5 +10,5 @@ ReactDOM.hydrate(
       {app()}
     </ContextProvider>
   </Router>,
-  document.getElementById('root')
+  document.getElementById('app')
 )
