@@ -79,4 +79,3 @@ function setupServerAPI (globalProperties) {
     ? useSSRContext().req.api.client
     : new Proxy($api, { get: getFetchWrapper })
 }
-

@@ -92,4 +92,3 @@ function setupServerAPI (context) {
   const { $api } = context
   context.$api = new Proxy($api, { get: getFetchWrapper })
 }
-
