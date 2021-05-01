@@ -1,0 +1,47 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext js --fix"
+  },
+  "bugs": {
+    "url": "https://github.com/galvez/fastify-vite/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A work in progress.",
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/galvez/fastify-vite",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fastify-vite-react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galvez/fastify-vite.git"
+  },
+  "version": "2.1.3",
+  "dependencies": {
+    "@nuxt/devalue": "^1.2.5",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "@vitejs/plugin-vue": "^1.2.0",
+    "@vitejs/plugin-vue-jsx": "^1.1.2",
+    "@vue/compiler-sfc": "^3.0.7",
+    "@vue/server-renderer": "^3.0.7",
+    "@vueuse/head": "^0.5.1",
+    "manifetch": "0.0.1",
+    "vite": "^2.1.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "got": "^11.8.2",
+    "tap": "^14.11.0"
+  }
+}
