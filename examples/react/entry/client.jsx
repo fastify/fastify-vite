@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import { ContextProvider, hydrate } from 'fastify-vite/client/react'
+import { ContextProvider, hydrate } from 'fastify-vite-react/client'
 import { createApp } from '../main'
 
 const { app, router: Router } = createApp()

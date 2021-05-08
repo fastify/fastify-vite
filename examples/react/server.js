@@ -1,5 +1,6 @@
 const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
+const fastifyViteReact = require('fastify-vite-react')
 const fastifyApi = require('fastify-api')
 
 async function main () {
@@ -7,7 +8,7 @@ async function main () {
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
-    renderer: fastifyVite.react,
+    renderer: fastifyViteReact,
     entry: {
       client: '/entry/client.jsx',
       server: '/entry/server.jsx'
