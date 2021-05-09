@@ -1,6 +1,8 @@
 const { resolve } = require('path')
 const { renderHTMLTemplate } = require('./html')
 
+// testing if this will change
+
 function getHandler (options, getRenderer, viteDevServer) {
   return async function (req, reply) {
     try {
