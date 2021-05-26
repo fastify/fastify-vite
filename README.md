@@ -41,7 +41,7 @@ npm install fastify-vite --save-dev
 Make sure to check out the [example app][example-app] and guides linked above, 
 but the essential aspects of **fastify-vite**'s usage are illustrated below:
 
-[example-app]: https://github.com/galvez/fastify-vite/tree/refactor-options/example
+[example-app]: https://github.com/galvez/fastify-vite/tree/main/example
 
 ```js
 async function getServer () {
