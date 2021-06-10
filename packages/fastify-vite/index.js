@@ -1,14 +1,8 @@
-const {
-  path: {
-    resolve
-  },
-  vite: {
-    createServer
-  },
-  middie,
-  staticPlugin,
-  fp
-} = require('./deps')
+const { resolve } = require('path')
+const { createServer } = require('vite')
+const middie = require('middie')
+const fastifyPlugin = require('fastify-plugin')
+const fastifyStatic = require('fastify-plugin')
 
 const { build } = require('./build')
 const { processOptions } = require('./options')
