@@ -17,6 +17,7 @@ async function fastifyVite (fastify, options) {
     process.exit(1)
   }
 
+  // Provided by the chosen rendering adapter
   const { getHandler, getRenderGetter } = options.renderer
 
   // We'll want access to this later
@@ -24,8 +25,8 @@ async function fastifyVite (fastify, options) {
   let vite
 
   // Setup appropriate Vite route handler
-  // For dev you get more detailed logging and sautoreload
   if (options.dev) {
+    // For dev you get more detailed logging and hot reload
     vite = await createServer({
       server: { middlewareMode: true },
       ...options.vite
@@ -35,8 +36,13 @@ async function fastifyVite (fastify, options) {
     const getRender = getRenderGetter(options)
     handler = getHandler(options, getRender, vite)
   } else {
+    // For production you get the distribution version of the render function
     const { assetsDir } = options.vite.build
-    await fastify.register(staticPlugin, {
+    // We also register fastify-static to serve all static files in production (dev server takes of this)
+    // Note: this is just to ensure it works, for a real world production deployment, you'll want
+    // to capture those paths in Nginx or just serve them from a CDN instead
+    // TODO make it possible to serve static assets from CDN
+    await fastify.register(fastifyStatic, {
       root: resolve(options.distDir, `client/${assetsDir}`),
       prefix: `/${assetsDir}`
     })
