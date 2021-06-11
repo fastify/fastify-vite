@@ -102,16 +102,4 @@ fastifyVite.app = async function appExport (main, serve) {
   }
 }
 
-Object.defineProperty(fastifyVite, 'vue', {
-  get () {
-    return require('./renderers/vue')
-  }
-})
-
-Object.defineProperty(fastifyVite, 'react', {
-  get () {
-    return require('./renderers/react')
-  }
-})
-
-module.exports = fp(fastifyVite)
+module.exports = fastifyPlugin(fastifyVite)
