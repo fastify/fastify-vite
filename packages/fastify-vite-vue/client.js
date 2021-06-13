@@ -1,6 +1,5 @@
-const { useSSRContext } = require('vue')
-const { getCurrentInstance } = require('vue')
-const { getFetchWrapper } = require('../fetch')
+import { useSSRContext, getCurrentInstance } from 'vue'
+import manifetch from 'manifetch'
 
 async function useServerData (...args) {
   let dataKey = '$data'
@@ -67,15 +66,21 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   setupServerAPI(app.config.globalProperties)
 }
 
-module.exports = {
+export {
   useServerData,
   useServerAPI,
   hydrate
 }
 
 function setupServerAPI (globalProperties) {
-  const { $api } = globalProperties
-  globalProperties.$api = import.meta.env.SSR
-    ? useSSRContext().req.api.client
-    : new Proxy($api, { get: getFetchWrapper })
+  if (import.meta.env.SSR) {
+    globalProperties.$api = useSSRContext().req.api.client
+  } else {
+    globalProperties.$api = new Proxy(globalProperties.$api, {
+      get: manifetch({
+        prefix: '',
+        fetch: window.fetch,
+      })
+    })
+  }
 }
