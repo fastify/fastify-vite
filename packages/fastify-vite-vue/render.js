@@ -1,6 +1,6 @@
 const { renderToString } = require('@vue/server-renderer')
 const { renderHeadToString } = require('@vueuse/head')
-const devalue = require('@nuxt/devalue')
+const devalue = require('devalue')
 const empty = {}
 
 const getRender = createApp => async function render (req, url, options) {
