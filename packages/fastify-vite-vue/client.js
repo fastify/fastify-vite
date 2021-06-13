@@ -79,7 +79,7 @@ function setupServerAPI (globalProperties) {
     globalProperties.$api = new Proxy(globalProperties.$api, {
       get: manifetch({
         prefix: '',
-        fetch: window.fetch,
+        fetch: (...args) => window.fetch(...args),
       })
     })
   }
