@@ -5,15 +5,13 @@ const { entries } = Object
 
 let examples = {
   vue: ['fastify-vite', 'fastify-vite-vue'],
-  // react: ['fastify-vite', 'fastify-vite-react'],
+  react: ['fastify-vite', 'fastify-vite-react'],
 }
 
 let root = (await $`pwd`).stdout.trim()
 
 for (let [example, pkgs] of entries(examples)) {
   let exRoot = `examples/${example}`
-  await $`rm -rf ${exRoot}/node_modules`
-  await $`mkdir -p ${exRoot}/node_modules`
   let pkgInfos = {}
   for (let pkg of pkgs) {
     await $`rm -rf ${exRoot}/node_modules/${pkg}`
