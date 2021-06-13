@@ -4,7 +4,7 @@
 
 <script>
 import { ref, reactive, getCurrentInstance } from 'vue'
-import { useServerData } from 'fastify-vite/hooks'
+import { useServerData } from '@fastify-vite-vue/client'
 
 export default {
   async setup () {

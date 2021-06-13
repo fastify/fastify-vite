@@ -7,16 +7,16 @@
 
 <script setup>
 import { reactive, getCurrentInstance, ref } from 'vue'
-import { useServerAPI, useServerData } from 'fastify-vite/hooks'
+import { useServerAPI, useServerData } from '@fastify-vite-vue/client'
 
 const api = useServerAPI()
 const data = await useServerData(async () => {
-  const { json } = await api.echo({ msg: 'hello from server '})
+  const { json } = await api.echo({ msg: 'hello from server' })
   return json
 })
 const state = reactive({ count: 0, msg: data.msg })
 const fetchFromEcho = async () => {
-  const { json } = await api.echo({ msg: 'hello from client '})
+  const { json } = await api.echo({ msg: 'hello from client' })
   state.msg = json.msg
 }
 </script>

@@ -6,5 +6,23 @@
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vitejs/plugin-vue-jsx": "^1.1.5",
+    "@vue/compiler-sfc": "^3.1.1",
+    "@vue/server-renderer": "^3.1.1",
+    "@vueuse/head": "^0.6.0",
+    "devalue": "^2.0.1",
+    "fastify": "^3.17.0",
+    "fastify-api": "^0.2.0",
+    "fastify-static": "^4.2.2",
+    "fastify-vite": "^2.2.0",
+    "fastify-vite-vue": "^2.2.0",
+    "manifetch": "0.0.1",
+    "middie": "^5.2.0",
+    "vite": "^2.3.7",
+    "vue": "^3.1.1",
+    "vue-router": "^4.0.8"
   }
 }

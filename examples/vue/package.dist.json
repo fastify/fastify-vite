@@ -1,0 +1,14 @@
+{
+  "name": "fastify-vite-vue-example",
+  "private": true,
+  "scripts": {
+    "dev": "node server",
+    "build": "node server build",
+    "serve": "cross-env NODE_ENV=production node server",
+    "debug": "node --inspect-brk server"
+  },
+  "dependencies": {
+    "fastify": "^3.17.0",
+    "fastify-api": "^0.2.0"
+  }
+}

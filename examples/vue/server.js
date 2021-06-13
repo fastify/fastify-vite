@@ -11,9 +11,9 @@ async function main () {
     renderer: fastifyViteVue
   })
 
-  fastify.api(({ get }) => ({
-    echo: get('/echo/:msg', ({ msg }, req, reply) => {
-      reply.send({ msg: msg + 'hit server' })
+  fastify.api(({ get, post }) => ({
+    echo: post('/echo/:msg', ({ msg }, req, reply) => {
+      reply.send({ msg })
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
