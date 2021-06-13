@@ -39,7 +39,7 @@ async function processOptions (options) {
     options.root = options.root(resolve)
   }
 
-  const viteOptions = await getViteOptions(options)
+  const viteOptions = { root: options.root, ...options.vite }
 
   if (!options.renderer) {
     throw new Error('Must set options.renderer')
@@ -62,10 +62,3 @@ async function processOptions (options) {
 }
 
 module.exports = { processOptions }
-
-function getViteOptions (options) {
-  const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
-  // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
-  // Note however that vite options set via fastify-vite take precedence over vite.config.js
-  return resolveConfig(mergedOptions, 'build')
-}
