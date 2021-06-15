@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet'
 import { Link, Route, Switch } from 'react-router-dom'
 
-const pages = import.meta.globEager('./pages/*.jsx')
+import Home from './pages/Home.jsx'
+import Hello from './pages/Hello.jsx'
 
-import Home from './pages/home'
-import Hello from './pages/hello'
+const pages = import.meta.globEager('./pages/*.jsx')
 
 const routes = Object.keys(pages).map((path) => {
   const name = path.match(/\.\/pages(.*)\.jsx$/)[1].toLowerCase()
@@ -15,7 +15,7 @@ const routes = Object.keys(pages).map((path) => {
   }
 })
 
-export default function App(props) {
+export function App (props) {
   return (
     <>
       <Helmet>
@@ -31,22 +31,14 @@ export default function App(props) {
             }`}
         </style>
       </Helmet>
-      <div>
-        <ul>
-          {routes.map(({ name, path }) => {
-            return (
-              <li key={path}>
-                <Link to={path}>{name}</Link>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+      {routes.map(({ name, path }) => {
+        return <Link key={path} to={path}>{name}</Link>
+      })}
       <Switch>
         {routes.map(({ path, component: RouteComp }) => {
           return (
             <Route key={path} path={path}>
-              <RouteComp  {...props} />
+              <RouteComp {...props} />
             </Route>
           )
         })}

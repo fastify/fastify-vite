@@ -6,9 +6,9 @@ const reactRefresh = require('@vitejs/plugin-react-refresh')
 module.exports = {
   plugins: [reactRefresh()],
   esbuild: {
-    jsxInject: 'import React from \'react\';'
+    jsxInject: 'import React from \'react\';',
   },
   build: {
-    minify: false
-  }
+    minify: false,
+  },
 }

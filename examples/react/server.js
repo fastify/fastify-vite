@@ -11,8 +11,8 @@ async function main () {
     renderer: fastifyViteReact,
     entry: {
       client: '/entry/client.jsx',
-      server: '/entry/server.jsx'
-    }
+      server: '/entry/server.jsx',
+    },
   })
 
   fastify.api(({ get }) => ({
@@ -21,7 +21,7 @@ async function main () {
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
-    })
+    }),
   }))
 
   fastify.get('/favicon.ico', (_, reply) => {
@@ -31,7 +31,7 @@ async function main () {
   fastify.vite.get('/hello', {
     data (req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
-    }
+    },
   })
 
   fastify.vite.get('/*')

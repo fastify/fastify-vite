@@ -1,21 +1,5 @@
-const React = require('react')
-const { getFetchWrapper } = require('../fetch')
-
-const Context = React.createContext({})
-
-function ContextProvider ({ children, context }) {
-  const [ctx, setctx] = React.useState(context)
-  const setContext = (val) => setctx(Object.assign({}, { ...ctx }, val))
-
-  return React.createElement(Context.Provider, {
-    children,
-    value: { context: ctx, setContext }
-  })
-}
-
-function useSSEContext () {
-  return React.useContext(Context)
-}
+const manifetch = require('manifetch')
+const { useSSEContext, ContextProvider, Context } = require('./context')
 
 function useServerData (...args) {
   let dataKey = '$data'
@@ -74,7 +58,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
     $dataPath: () => `/-/data${document.location.pathname}`,
     [dataKey]: window[dataSymbol],
     $api: window[apiSymbol],
-    requests: []
+    requests: [],
   }
   setupServerAPI(context)
   return context
@@ -85,7 +69,7 @@ module.exports = {
   useSSEContext,
   useServerData,
   useServerAPI,
-  hydrate
+  hydrate,
 }
 
 function setupServerAPI (context) {

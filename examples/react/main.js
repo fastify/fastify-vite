@@ -1,7 +1,7 @@
 
 import { StaticRouter } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
-import App from './base.jsx'
+import { App } from './App'
 
 export function createApp (req) {
   const app = App

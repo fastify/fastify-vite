@@ -8,19 +8,20 @@
     "debug": "node --inspect-brk server"
   },
   "dependencies": {
-    "@nuxt/devalue": "^1.2.5",
-    "@vitejs/plugin-react-refresh": "^1.3.3",
-    "@vitejs/plugin-vue": "^1.2.2",
-    "@vitejs/plugin-vue-jsx": "^1.1.4",
-    "@vue/compiler-sfc": "^3.0.11",
-    "@vue/server-renderer": "^3.0.11",
-    "@vueuse/head": "^0.5.1",
-    "fastify-static": "^4.0.1",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "@vue/compiler-sfc": "^3.1.1",
+    "devalue": "^2.0.1",
+    "fastify": "^3.17.0",
+    "fastify-api": "^0.2.0",
+    "fastify-static": "^4.2.2",
+    "fastify-vite": "^2.2.0",
+    "fastify-vite-react": "^2.1.3",
     "manifetch": "0.0.1",
     "middie": "^5.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "vite": "^2.3.7"
   }
 }
