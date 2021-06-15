@@ -8,7 +8,7 @@ async function main () {
   await fastify.register(fastifyVite, {
     api: true,
     root: __dirname,
-    renderer: fastifyViteVue
+    renderer: fastifyViteVue,
   })
 
   fastify.api(({ get, post }) => ({
@@ -17,7 +17,7 @@ async function main () {
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')
-    })
+    }),
   }))
 
   fastify.get('/favicon.ico', (_, reply) => {
@@ -27,7 +27,7 @@ async function main () {
   fastify.vite.get('/hello', {
     data (req) {
       return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
-    }
+    },
   })
 
   fastify.vite.get('/*')

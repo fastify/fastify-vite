@@ -69,7 +69,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
 export {
   useServerData,
   useServerAPI,
-  hydrate
+  hydrate,
 }
 
 function setupServerAPI (globalProperties) {
@@ -80,7 +80,7 @@ function setupServerAPI (globalProperties) {
       get: manifetch({
         prefix: '',
         fetch: (...args) => window.fetch(...args),
-      })
+      }),
     })
   }
 }

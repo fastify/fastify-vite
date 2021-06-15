@@ -47,15 +47,15 @@ const getRender = createApp => async function render (req, url, options) {
   return {
     head: {
       preload: preloadLinks,
-      tags: headTags
+      tags: headTags,
     },
     attrs: {
       html: htmlAttrs,
-      body: bodyAttrs
+      body: bodyAttrs,
     },
     entry: entry.client,
     hydration: hydrationScript,
-    element
+    element,
   }
 }
 

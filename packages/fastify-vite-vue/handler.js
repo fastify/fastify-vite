@@ -32,7 +32,7 @@ function getRenderGetter ({ dev, root, entry, distDir, distIndex }) {
     return async (url, vite) => {
       // Reload template source every time in dev
       const { render } = await vite.ssrLoadModule(
-        resolve(root, entry.server.replace(/^\/+/, ''))
+        resolve(root, entry.server.replace(/^\/+/, '')),
       )
       return render
     }

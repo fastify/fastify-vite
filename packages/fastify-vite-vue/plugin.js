@@ -13,5 +13,5 @@ module.exports = () => ({
     if (id === '@fastify-vite-vue/client') {
       return clientSource
     }
-  }
+  },
 })

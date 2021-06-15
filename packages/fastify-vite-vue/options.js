@@ -18,8 +18,8 @@ const options = {
   build: {
     assetsDir: 'assets',
     outDir: 'dist',
-    minify: !dev
-  }
+    minify: !dev,
+  },
 }
 
 module.exports = { options }
