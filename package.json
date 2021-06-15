@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "devinstall": "zx devinstall.mjs",
-    "lint": "eslint packages --ext .js,.jsx,.vue  --fix"
+    "lint": "eslint examples packages --ext .js --fix"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
