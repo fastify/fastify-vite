@@ -1,6 +1,7 @@
 function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
   return (
     '<!doctype html>\n' +
+    '<html>\n' +
     `<head>${
       helmet.title.toString()
     }${
@@ -16,12 +17,15 @@ function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
   )
 }
 
-function renderHTMLTemplate (req, { attrs, head, element, hydration }, template) {
+function renderHTMLTemplate (req, { element, hydration, helmet }, template) {
   return template
-    .replace('<html>', `<html${attrs.html}>`)
-    .replace('<body>', `<body${attrs.body}>`)
-    .replace('<!--head.preload-->', head.preload)
-    .replace('<!--head.tags-->', head.tags || '')
+    .replace('<!--helmet-->', `${
+      helmet.title.toString()
+    }${
+      helmet.script.toString()
+    }${
+      helmet.style.toString()
+    }`)
     .replace('<!--hydration-->', hydration)
     .replace('<!--element-->', element)
 }
