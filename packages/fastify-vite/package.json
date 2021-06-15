@@ -7,24 +7,11 @@
   },
   "bundleDependencies": false,
   "deprecated": false,
-  "description": "A work in progress.",
+  "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
-    "deps.js",
-    "handler.js",
-    "hooks.js",
     "options.js",
-    "html.js",
-    "hydrate.js",
     "index.js",
-    "render.js",
     "build.js",
-    "example/entry",
-    "example/pages",
-    "example/base.vue",
-    "example/main.js",
-    "example/index.html",
-    "example/router.js",
-    "example/server.js",
     "README.md"
   ],
   "homepage": "https://github.com/galvez/fastify-vite",
@@ -35,10 +22,11 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0",
+  "version": "2.2.0-beta.1",
   "dependencies": {
     "fastify-static": "^4.0.1",
     "middie": "^5.2.0",
-    "vite": "^2.3.7"
+    "vite": "^2.3.7",
+    "degit": "2.8.4"
   }
 }

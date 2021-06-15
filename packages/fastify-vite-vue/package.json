@@ -7,9 +7,16 @@
   },
   "bundleDependencies": false,
   "deprecated": false,
-  "description": "A work in progress.",
+  "description": "Vue renderer for fastify-vite.",
   "files": [
-    "index.js"
+    "client.js",
+    "handler.js",
+    "html.js",
+    "index.js",
+    "options.js",
+    "render.js",
+    "server.js",
+    "README.md"
   ],
   "homepage": "https://github.com/galvez/fastify-vite",
   "license": "MIT",
@@ -19,7 +26,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0",
+  "version": "2.2.0-beta.1",
   "dependencies": {
     "@vitejs/plugin-vue": "1.2.3",
     "@vitejs/plugin-vue-jsx": "1.1.5",

@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "fastify": "^3.17.0",
-    "fastify-api": "^0.2.0"
+    "fastify-api": "^0.2.0",
+    "fastify-vite": "^2.2.0",
+    "fastify-vite-vue": "^2.2.0"
   }
 }

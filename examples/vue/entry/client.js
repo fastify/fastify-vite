@@ -1,5 +1,5 @@
 import { createApp } from '../main'
-import { hydrate } from '@fastify-vite-vue/client'
+import { hydrate } from 'fastify-vite-vue/client'
 const { app, router } = createApp()
 
 hydrate(app)

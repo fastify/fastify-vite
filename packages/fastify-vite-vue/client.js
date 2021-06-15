@@ -1,5 +1,5 @@
-import { useSSRContext, getCurrentInstance } from 'vue'
-import manifetch from 'manifetch'
+const { getCurrentInstance } = require('vue')
+const manifetch = require('manifetch')
 
 async function useServerData (...args) {
   let dataKey = '$data'
@@ -60,27 +60,19 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
   delete window[globalDataSymbol]
 
   const apiSymbol = Symbol.for('fastify-vite-api')
-  app.config.globalProperties.$api = window[apiSymbol]
+  const $api = window[apiSymbol]
   delete window[apiSymbol]
 
-  setupServerAPI(app.config.globalProperties)
+  app.config.globalProperties.$api = new Proxy($api, {
+    get: manifetch({
+      prefix: '',
+      fetch: (...args) => window.fetch(...args),
+    }),
+  })
 }
 
-export {
+module.exports = {
   useServerData,
   useServerAPI,
   hydrate,
-}
-
-function setupServerAPI (globalProperties) {
-  if (import.meta.env.SSR) {
-    globalProperties.$api = useSSRContext().req.api.client
-  } else {
-    globalProperties.$api = new Proxy(globalProperties.$api, {
-      get: manifetch({
-        prefix: '',
-        fetch: (...args) => window.fetch(...args),
-      }),
-    })
-  }
 }

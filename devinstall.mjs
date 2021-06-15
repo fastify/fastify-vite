@@ -5,7 +5,7 @@ const { entries } = Object
 
 let examples = {
   vue: ['fastify-vite', 'fastify-vite-vue'],
-  react: ['fastify-vite', 'fastify-vite-react'],
+  // react: ['fastify-vite', 'fastify-vite-react'],
 }
 
 let root = (await $`pwd`).stdout.trim()

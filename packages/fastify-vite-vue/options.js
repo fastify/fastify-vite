@@ -1,6 +1,6 @@
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
-const fastifyViteVuePlugin = require('./plugin')
+// const fastifyViteVuePlugin = require('./plugin')
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -11,7 +11,7 @@ const options = {
   plugins: [
     vuePlugin(),
     vueJsx(),
-    fastifyViteVuePlugin(),
+    // fastifyViteVuePlugin(),
   ],
   // Base build settings, default values
   // for assetsDir and outDir match Vite's defaults
