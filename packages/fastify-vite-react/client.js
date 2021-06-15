@@ -74,5 +74,10 @@ module.exports = {
 
 function setupServerAPI (context) {
   const { $api } = context
-  context.$api = new Proxy($api, { get: getFetchWrapper })
+  context.$api = new Proxy($api, {
+    get: manifetch({
+      prefix: '',
+      fetch: (...args) => window.fetch(...args),
+    }),
+  })
 }

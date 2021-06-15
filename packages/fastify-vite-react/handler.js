@@ -7,13 +7,16 @@ function getHandler (options, getRenderer, viteDevServer) {
       const url = req.raw.url
       const render = await getRenderer(url, viteDevServer)
       const fragments = await render(req, url, options)
+      console.log('fragments', fragments)
+      console.log('options.dev', options.dev)
       const html = options.dev
         ? renderDevHTMLTemplate(req, fragments)
         : renderHTMLTemplate(req, fragments, options.distIndex)
 
       reply.code(200)
       reply.type('text/html')
-      reply.send(await viteDevServer.transformIndexHtml(req.raw.url, html))
+      reply.send(html)
+      // reply.send(await viteDevServer.transformIndexHtml(req.raw.url, html))
 
       return reply
     } catch (e) {

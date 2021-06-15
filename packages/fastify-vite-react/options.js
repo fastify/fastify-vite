@@ -1,4 +1,5 @@
-const reactRefresh = require('@vitejs/plugin-react-refresh')
+// const reactRefresh = require('@vitejs/plugin-react-refresh')
+const reactRefresh = require('./plugin')
 
 const dev = process.env.NODE_ENV !== 'production'
 

@@ -9,7 +9,7 @@ function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
       helmet.style.toString()
     }</head>\n` +
     `<body>\n${hydration}\n` +
-    `<div id="root">${element}</div>\n` +
+    `<div id="app">${element}</div>\n` +
     `<script type="module" src="${entry}"></script>\n` +
     '</body>\n' +
     '</html>\n'
