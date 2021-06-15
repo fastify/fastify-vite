@@ -60,7 +60,12 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
     $api: window[apiSymbol],
     requests: [],
   }
-  setupServerAPI(context)
+  context.$api = new Proxy(context.$api, {
+    get: manifetch({
+      prefix: '',
+      fetch: (...args) => window.fetch(...args),
+    }),
+  })
   return context
 }
 
@@ -70,14 +75,4 @@ module.exports = {
   useServerData,
   useServerAPI,
   hydrate,
-}
-
-function setupServerAPI (context) {
-  const { $api } = context
-  context.$api = new Proxy($api, {
-    get: manifetch({
-      prefix: '',
-      fetch: (...args) => window.fetch(...args),
-    }),
-  })
 }
