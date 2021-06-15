@@ -21,7 +21,7 @@ export function App (props) {
       <Helmet>
         <title>React test</title>
         <style>{`
-          #root {
+          #app {
             font - family: Avenir, Helvetica, Arial, sans-serif;
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
