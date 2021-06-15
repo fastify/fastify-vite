@@ -2,7 +2,7 @@ const { resolve } = require('path')
 const { createServer } = require('vite')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
-const fastifyStatic = require('fastify-plugin')
+const fastifyStatic = require('fastify-static')
 
 const { build } = require('./build')
 const { processOptions } = require('./options')
@@ -28,8 +28,8 @@ async function fastifyVite (fastify, options) {
   if (options.dev) {
     // For dev you get more detailed logging and hot reload
     vite = await createServer({
-      server: { middlewareMode: true },
-      ...options.vite
+      server: { middlewareMode: 'ssr' },
+      ...options.vite,
     })
     await fastify.register(middie)
     fastify.use(vite.middlewares)
@@ -44,7 +44,7 @@ async function fastifyVite (fastify, options) {
     // TODO make it possible to serve static assets from CDN
     await fastify.register(fastifyStatic, {
       root: resolve(options.distDir, `client/${assetsDir}`),
-      prefix: `/${assetsDir}`
+      prefix: `/${assetsDir}`,
     })
     const getRender = getRenderGetter(options)
     handler = getHandler(options, getRender)
@@ -78,9 +78,9 @@ async function fastifyVite (fastify, options) {
         url,
         preHandler,
         handler,
-        ...routeOptions
+        ...routeOptions,
       })
-    }
+    },
   })
   fastify.addHook('onReady', () => {
     // Pre-initialize request decorator for better performance
