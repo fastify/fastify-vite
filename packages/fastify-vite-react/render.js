@@ -1,8 +1,8 @@
 const React = require('react')
 const { renderToString } = require('react-dom/server')
-const devalue = require('@nuxt/devalue')
+const devalue = require('devalue')
 const { Helmet } = require('react-helmet')
-const { ContextProvider } = require('../../client/react')
+const { ContextProvider } = require('./context')
 
 const getRender = createApp => async function render (req, url, options) {
   const { entry, hydration } = options
@@ -14,7 +14,7 @@ const getRender = createApp => async function render (req, url, options) {
     $dataPath: () => `/-/data${req.routerPath}`,
     [hydration.data]: req[hydration.data] || {},
     $api: req.api && req.api.client,
-    requests: []
+    requests: [],
   }
   const theapp = app()
 
@@ -27,9 +27,9 @@ const getRender = createApp => async function render (req, url, options) {
     renderToString(React.createElement(router, {
       children: React.createElement(ContextProvider, {
         children: theapp,
-        context: context
+        context: context,
       }),
-      location: url
+      location: url,
     }))
 
     const resolved = await Promise.all(context.requests)
@@ -45,9 +45,9 @@ const getRender = createApp => async function render (req, url, options) {
     htmlBody = React.createElement(router, {
       children: React.createElement(ContextProvider, {
         children: theapp,
-        context: context
+        context: context,
       }),
-      location: url
+      location: url,
     })
   } else {
     const resolved = await Promise.all(context.requests)
@@ -61,7 +61,7 @@ const getRender = createApp => async function render (req, url, options) {
 
     htmlBody = React.createElement(ContextProvider, {
       children: app,
-      value: { context: context }
+      value: { context: context },
     })
   }
 
@@ -99,7 +99,7 @@ const getRender = createApp => async function render (req, url, options) {
     entry: entry.client,
     hydration: hydrationScript,
     element,
-    helmet: Helmet.renderStatic()
+    helmet: Helmet.renderStatic(),
   }
 }
 

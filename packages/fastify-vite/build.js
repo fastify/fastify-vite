@@ -25,17 +25,17 @@ async function build (options) {
   const client = mergeConfig(vite, {
     build: {
       outDir: `${outDir}/client`,
-      ssrManifest: true
-    }
+      ssrManifest: true,
+    },
   })
   const server = mergeConfig(vite, {
     build: {
       ssr: true,
       outDir: `${outDir}/server`,
       rollupOptions: {
-        input: join(options.root, options.entry.server)
-      }
-    }
+        input: join(options.root, options.entry.server),
+      },
+    },
   })
   await Promise.all([viteBuild(client), viteBuild(server)])
   console.log(`Generated ${outDir}/client and ${outDir}/server.`)

@@ -1,7 +1,5 @@
 const { resolve } = require('path')
-const { renderHTMLTemplate } = require('./html')
-
-// testing if this will change
+const { renderDevHTMLTemplate, renderHTMLTemplate } = require('./html')
 
 function getHandler (options, getRenderer, viteDevServer) {
   return async function (req, reply) {
@@ -9,11 +7,13 @@ function getHandler (options, getRenderer, viteDevServer) {
       const url = req.raw.url
       const render = await getRenderer(url, viteDevServer)
       const fragments = await render(req, url, options)
-      const html = renderHTMLTemplate(req, fragments)
+      const html = options.dev
+        ? renderDevHTMLTemplate(req, fragments)
+        : renderHTMLTemplate(req, fragments, options.distIndex)
 
       reply.code(200)
       reply.type('text/html')
-      reply.send(html)
+      reply.send(await viteDevServer.transformIndexHtml(req.raw.url, html))
 
       return reply
     } catch (e) {
@@ -32,7 +32,7 @@ function getRenderGetter ({ dev, root, entry, distDir, distIndex }) {
     return async (url, vite) => {
       // Reload template source every time in dev
       const { render } = await vite.ssrLoadModule(
-        resolve(root, entry.server.replace(/^\/+/, ''))
+        resolve(root, entry.server.replace(/^\/+/, '')),
       )
       return render
     }
