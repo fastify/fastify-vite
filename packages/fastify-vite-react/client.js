@@ -1,5 +1,5 @@
 const manifetch = require('manifetch')
-const { useSSEContext, ContextProvider, Context } = require('./context')
+const { useSSEContext, ContextProvider } = require('./context')
 
 function useServerData (...args) {
   let dataKey = '$data'

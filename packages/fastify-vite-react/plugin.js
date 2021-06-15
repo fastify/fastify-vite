@@ -1,11 +1,9 @@
-// @ts-check
+
 const fs = require('fs')
-const { transformSync, ParserOptions } = require('@babel/core')
+const { transformSync } = require('@babel/core')
 
 const runtimePublicPath = '/@react-refresh'
-const runtimeFilePath = require.resolve(
-  'react-refresh/cjs/react-refresh-runtime.development.js'
-)
+const runtimeFilePath = require.resolve('react-refresh/cjs/react-refresh-runtime.development.js')
 
 const runtimeCode = `
 const exports = {}
@@ -34,7 +32,7 @@ window.__vite_plugin_react_preamble_installed__ = true
  *
  * @type {import('.').default}
  */
-function reactRefreshPlugin(opts) {
+function reactRefreshPlugin (opts) {
   let shouldSkip = false
   let base = '/'
 
@@ -43,25 +41,25 @@ function reactRefreshPlugin(opts) {
 
     enforce: 'pre',
 
-    configResolved(config) {
+    configResolved (config) {
       console.log('configResolved!')
       shouldSkip = true // config.command === 'build' || config.isProduction
       base = config.base
     },
 
-    resolveId(id) {
+    resolveId (id) {
       if (id === runtimePublicPath) {
         return id
       }
     },
 
-    load(id) {
+    load (id) {
       if (id === runtimePublicPath) {
         return runtimeCode
       }
     },
 
-    transform(code, id, ssr) {
+    transform (code, id, ssr) {
       if (shouldSkip || ssr) {
         return
       }
@@ -76,9 +74,6 @@ function reactRefreshPlugin(opts) {
         return
       }
 
-      /**
-       * @type ParserOptions["plugins"]
-       */
       const parserPlugins = [
         'jsx',
         'importMeta',
@@ -88,7 +83,7 @@ function reactRefreshPlugin(opts) {
         'topLevelAwait',
         'classProperties',
         'classPrivateProperties',
-        'classPrivateMethods'
+        'classPrivateMethods',
       ]
       if (/\.tsx?$/.test(id)) {
         // it's a typescript file
@@ -108,16 +103,16 @@ function reactRefreshPlugin(opts) {
         parserOpts: {
           sourceType: 'module',
           allowAwaitOutsideFunction: true,
-          plugins: parserPlugins
+          plugins: parserPlugins,
         },
         plugins: [
           require('@babel/plugin-transform-react-jsx-self'),
           require('@babel/plugin-transform-react-jsx-source'),
-          [require('react-refresh/babel'), { skipEnvCheck: true }]
+          [require('react-refresh/babel'), { skipEnvCheck: true }],
         ],
         ast: !isReasonReact,
         sourceMaps: true,
-        sourceFileName: id
+        sourceFileName: id,
       })
 
       if (!/\$RefreshReg\$\(/.test(result.code)) {
@@ -154,8 +149,8 @@ function reactRefreshPlugin(opts) {
 
     ${
       isReasonReact || isRefreshBoundary(result.ast)
-        ? `import.meta.hot.accept();`
-        : ``
+        ? 'import.meta.hot.accept();'
+        : ''
     }
     if (!window.__vite_plugin_react_timeout) {
       window.__vite_plugin_react_timeout = setTimeout(() => {
@@ -167,11 +162,11 @@ function reactRefreshPlugin(opts) {
 
       return {
         code: `${header}${result.code}${footer}`,
-        map: result.map
+        map: result.map,
       }
     },
 
-    transformIndexHtml() {
+    transformIndexHtml () {
       if (shouldSkip) {
         return
       }
@@ -180,17 +175,17 @@ function reactRefreshPlugin(opts) {
         {
           tag: 'script',
           attrs: { type: 'module' },
-          children: preambleCode.replace(`__BASE__`, base)
-        }
+          children: preambleCode.replace('__BASE__', base),
+        },
       ]
-    }
+    },
   }
 }
 
 /**
  * @param {import('@babel/core').BabelFileResult['ast']} ast
  */
-function isRefreshBoundary(ast) {
+function isRefreshBoundary (ast) {
   // Every export must be a React component.
   return ast.program.body.every((node) => {
     if (node.type !== 'ExportNamedDeclaration') {
@@ -199,12 +194,12 @@ function isRefreshBoundary(ast) {
     const { declaration, specifiers } = node
     if (declaration && declaration.type === 'VariableDeclaration') {
       return declaration.declarations.every(
-        ({ id }) => id.type === 'Identifier' && isComponentishName(id.name)
+        ({ id }) => id.type === 'Identifier' && isComponentishName(id.name),
       )
     }
     return specifiers.every(
       ({ exported }) =>
-        exported.type === 'Identifier' && isComponentishName(exported.name)
+        exported.type === 'Identifier' && isComponentishName(exported.name),
     )
   })
 }
@@ -212,10 +207,10 @@ function isRefreshBoundary(ast) {
 /**
  * @param {string} name
  */
-function isComponentishName(name) {
+function isComponentishName (name) {
   return typeof name === 'string' && name[0] >= 'A' && name[0] <= 'Z'
 }
 
 module.exports = reactRefreshPlugin
-reactRefreshPlugin['default'] = reactRefreshPlugin
+reactRefreshPlugin.default = reactRefreshPlugin
 reactRefreshPlugin.preambleCode = preambleCode

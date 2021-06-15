@@ -9,6 +9,6 @@ export function createApp (req) {
   return {
     ctx,
     app,
-    router: typeof window === 'undefined' ? StaticRouter : BrowserRouter
+    router: typeof window === 'undefined' ? StaticRouter : BrowserRouter,
   }
 }
