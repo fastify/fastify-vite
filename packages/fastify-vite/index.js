@@ -94,7 +94,7 @@ async function fastifyVite (fastify, options) {
 }
 
 fastifyVite.app = async function appExport (main, serve) {
-  const fastify = await main()
+  const fastify = await main(require('fastify')())
   if (process.argv.length > 2 && process.argv[2] === 'build') {
     build(fastify.vite.options)
   } else {
