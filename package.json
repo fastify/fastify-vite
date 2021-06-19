@@ -5,6 +5,7 @@
     "lint": "eslint examples packages --ext .js --fix"
   },
   "devDependencies": {
+    "desm": "^1.1.0",
     "eslint": "^7.28.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

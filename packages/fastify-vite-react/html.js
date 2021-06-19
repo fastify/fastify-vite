@@ -1,5 +1,5 @@
-function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
-  return (
+function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }, viteDevServer) {
+  return viteDevServer.transformIndexHtml(req.url, (
     '<!doctype html>\n' +
     '<html>\n' +
     `<head>${
@@ -14,7 +14,7 @@ function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }) {
     `<script type="module" src="${entry}"></script>\n` +
     '</body>\n' +
     '</html>\n'
-  )
+  ))
 }
 
 function renderHTMLTemplate (req, { element, hydration, helmet }, template) {
