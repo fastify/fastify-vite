@@ -9,7 +9,6 @@ const globalDataKey = '$global'
 const isServer = typeof window === 'undefined'
 
 function useIsomorphic (getData, useData) {
-  console.log('useIsomorphic()/2')
   const { context } = useContext(Context)
   const firstRender = useRef(true)
   if (isServer) {
@@ -19,12 +18,10 @@ function useIsomorphic (getData, useData) {
     const location = useLocation()
     useEffect(() => {
       if (firstRender.current) {
-        console.log('if(firstRender.current) called')
         useData(context[dataKey])
         firstRender.current = false
         return
       }
-      console.log('getData() called')
       setter({ ...state, $loading: false })
       getData(context).then(($data) => {
         setter({ ...state, $loading: false })
