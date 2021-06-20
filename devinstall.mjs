@@ -14,6 +14,8 @@ let [example, pkgs] = parseArgv(root)
 
 let exRoot = `examples/${example}`
 let pkgInfos = {}
+await $`rm -rf ${exRoot}/node_modules/vite`
+await $`rm -rf ${exRoot}/node_modules/.vite`
 for (let pkg of pkgs) {
   await $`rm -rf ${exRoot}/node_modules/${pkg}`
   let pkgRoot = `packages/${pkg}`
