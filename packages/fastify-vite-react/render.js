@@ -1,71 +1,53 @@
 const React = require('react')
 const { renderToString } = require('react-dom/server')
+const { matchPath } = require('react-router-dom')
 const devalue = require('devalue')
 const { Helmet } = require('react-helmet')
 const { ContextProvider } = require('./context')
 
-const getRender = createApp => async function render (req, url, options) {
-  const { entry, hydration } = options
-  const { app, router } = createApp(req)
+function getRender ({ createApp, routes }) {
+  return async function render (req, url, options) {
+    const { entry, hydration } = options
+    const { App, router, context } = createApp({
+      req,
+      $dataPath: () => `/-/data${req.routerPath}`,
+      [hydration.global]: req[hydration.global],
+      [hydration.data]: req[hydration.data] || null,
+      $api: req.api && req.api.client,
+    })
 
-  let htmlBody
-  const context = {
-    [hydration.global]: req[hydration.global],
-    $dataPath: () => `/-/data${req.routerPath}`,
-    [hydration.data]: req[hydration.data] || {},
-    $api: req.api && req.api.client,
-    requests: [],
+    context.$data = await getRouteData(req, routes, context)
+    console.log('context.$data', context.$data)
+
+    const app = App()
+    const element = renderElement(req.url, app, context, router)
+    const hydrationScript = getHydrationScript(req, context, hydration)
+
+    return {
+      entry: entry.client,
+      hydration: hydrationScript,
+      element,
+      helmet: Helmet.renderStatic(),
+    }
   }
-  const theapp = app()
+}
 
-  if (router) {
-    console.log('router')
+const getRouteDataCache = {}
 
-    /**
-     * Mount app to push requests
-     */
-    renderToString(React.createElement(router, {
-      children: React.createElement(ContextProvider, {
-        children: theapp,
-        context: context,
-      }),
-      location: url,
-    }))
-
-    const resolved = await Promise.all(context.requests)
-
-    // Attach data on context from requests
-    resolved.forEach((value) => {
-      Object.keys(value).forEach((itemKey) => {
-        context.$data[itemKey] = value[itemKey]
-      })
-    })
-
-    // Return body
-    htmlBody = React.createElement(router, {
-      children: React.createElement(ContextProvider, {
-        children: theapp,
-        context: context,
-      }),
-      location: url,
-    })
-  } else {
-    const resolved = await Promise.all(context.requests)
-
-    // Attach data on context from requests
-    resolved.forEach((value) => {
-      Object.keys(value).forEach((itemKey) => {
-        context.$data[itemKey] = value[itemKey]
-      })
-    })
-
-    htmlBody = React.createElement(ContextProvider, {
-      children: app,
-      value: { context: context },
-    })
+function getRouteData (req, routes, context) {
+  for (const route of routes) {
+    if (getRouteDataCache[req.url]) {
+      return getRouteDataCache[req.url](context)
+    }
+    console.log('route', route)
+    if (matchPath(req.url, route) && route.getData) {
+      getRouteDataCache[req.url] = context => route.getData(context)
+      return route.getData(context)
+    }
   }
+}
 
-  const element = renderToString(htmlBody)
+function getHydrationScript (req, context, hydration) {
   const globalData = req.$global
   const data = req.$data || context.$data
   const api = req.api ? req.api.meta : null
@@ -95,11 +77,24 @@ const getRender = createApp => async function render (req, url, options) {
     hydrationScript += '</script>'
   }
 
-  return {
-    entry: entry.client,
-    hydration: hydrationScript,
-    element,
-    helmet: Helmet.renderStatic(),
+  return hydrationScript
+}
+
+function renderElement (url, app, context, router) {
+  if (router) {
+    return renderToString(
+      React.createElement(router, {
+        children: React.createElement(ContextProvider, { children: app, context }),
+        location: url,
+      }),
+    )
+  } else {
+    return renderToString(
+      React.createElement(ContextProvider, {
+        children: app,
+        value: { context },
+      }),
+    )
   }
 }
 

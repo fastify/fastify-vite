@@ -1,55 +1,36 @@
 const manifetch = require('manifetch')
-const { useSSEContext, ContextProvider } = require('./context')
 
-function useServerData (...args) {
-  let dataKey = '$data'
-  let initialData
+const { useContext, useState, useEffect, useRef } = require('react')
+const { Context, ContextProvider } = require('./context')
 
-  if (args.length === 1) {
-    if (typeof args[0] === 'string') {
-      dataKey = args[0]
-    } else if (typeof args[0] === 'function') {
-      initialData = args[0]
-    }
-  } else if (args.length > 1) {
-    dataKey = args[0]
-    initialData = args[1]
+const dataKey = '$data'
+const globalDataKey = '$global'
+const isServer = typeof window === 'undefined'
+
+function useIsomorphic (getData, useData) {
+  const { context } = useContext(Context)
+  const mounted = useRef(true)
+  if (isServer) {
+    return context
+  } else if (getData) {
+    const [state, setter] = useState(context)
+    useEffect(() => {
+      if (mounted.current) {
+        mounted.current = false
+      }
+    }, [])
+    useEffect(() => {
+      setter({ ...state, $loading: false })
+      getData(context).then(($data) => {
+        setter({ ...state, $loading: false })
+        useData($data)
+      })
+    }, [])
   }
-
-  const isSSR = typeof window === 'undefined'
-  const { context } = useSSEContext()
-
-  if (isSSR && initialData) {
-    if (!context[dataKey] || Object.keys(context[dataKey]).length === 0) {
-      context.requests.push(initialData())
-      return
-    }
-
-    return context[dataKey]
-  } else if (initialData) {
-    if (!context[dataKey] || Object.keys(context[dataKey]).length === 0) {
-      initialData().then((value) => {
-        context[dataKey] = value
-      }).catch(err => console.log(err))
-      return
-    }
-    const $data = Object.assign({}, context[dataKey])
-    context[dataKey] = {}
-    return $data
-  } else {
-    const $data = Object.assign({}, context[dataKey])
-    context[dataKey] = {}
-    const $dataPath = context.$dataPath
-    return [$data, $dataPath()]
-  }
+  return context
 }
 
-function useServerAPI () {
-  const { context } = useSSEContext()
-  return context.$api
-}
-
-function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
+function hydrate (app) {
   const dataSymbol = Symbol.for(dataKey)
   const globalDataSymbol = Symbol.for(globalDataKey)
   const apiSymbol = Symbol.for('fastify-vite-api')
@@ -70,9 +51,7 @@ function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
 }
 
 module.exports = {
-  ContextProvider,
-  useSSEContext,
-  useServerData,
-  useServerAPI,
+  useIsomorphic,
   hydrate,
+  ContextProvider,
 }

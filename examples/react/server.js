@@ -17,7 +17,7 @@ async function main () {
 
   fastify.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {
-      reply.send({ msg: msg + 'hit server' })
+      reply.send({ msg })
     }),
     other: get('/other', (req, reply) => {
       reply.send('string response')

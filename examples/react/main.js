@@ -3,12 +3,10 @@ import { StaticRouter } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import { App } from './base'
 
-export function createApp (req) {
-  const app = App
-  const ctx = { req }
+export function createApp (context) {
   return {
-    ctx,
-    app,
-    router: typeof window === 'undefined' ? StaticRouter : BrowserRouter,
+    App,
+    router: import.meta.env.SSR ? StaticRouter : BrowserRouter,
+    context,
   }
 }

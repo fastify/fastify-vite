@@ -1,21 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useSSEContext } from 'fastify-vite-react/client'
+import { useIsomorphic } from 'fastify-vite-react/client'
+
+export const path = '/hello'
 
 export default function Hello () {
-  const { context, setContext } = useSSEContext()
-  const [msg, setMsg] = useState(context?.$data?.message)
-
+  const ctx = useIsomorphic()
+  const [msg, setMsg] = useState(ctx.$data.msg)
   const refreshData = async () => {
-    const response = await fetch(context.$dataPath())
+    const response = await fetch(ctx.$dataPath)
     const json = await response.json()
     setMsg(json.message)
   }
-
-  useEffect(() => {
-    if (!msg && !import.meta.env.SSR) {
-      refreshData()
-    }
-  })
-
   return <h1 onClick={refreshData}>{msg}</h1>
 }

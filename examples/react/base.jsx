@@ -1,19 +1,9 @@
 import { Helmet } from 'react-helmet'
 import { Link, Route, Switch } from 'react-router-dom'
+import { loadRoutes } from 'fastify-vite-react/app'
 
-import Home from './pages/Home.jsx'
-import Hello from './pages/Hello.jsx'
-
-const pages = import.meta.globEager('./pages/*.jsx')
-
-const routes = Object.keys(pages).map((path) => {
-  const name = path.match(/\.\/pages(.*)\.jsx$/)[1].toLowerCase()
-  return {
-    path: name === '/home' ? '/' : name,
-    component: name === '/home' ? Home : Hello,
-    name
-  }
-})
+const views = import.meta.globEager('./pages/*.jsx')
+export const routes = loadRoutes(views)
 
 export function App (props) {
   return (
