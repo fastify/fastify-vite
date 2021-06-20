@@ -1,28 +1,27 @@
 import { useState } from 'react'
-import { useIsomorphic } from 'fastify-vite-react/client'
+import { useIsomorphic, isServer } from 'fastify-vite-react/client'
 
 export const path = '/'
 
 export async function getData ({ $api }) {
-  const msg = `hello from client`
+  const msg = `hello from ${isServer ? 'server' : 'client'}`
   const { json } = await $api.echo({ msg })
   return json
 }
 
 export default function Home(props) {  
+  let [msg, setMsg] = useState(null)
+
   // If first rendered on the server, just rehydrates on the client
-  // If first rendered on the client, does a fresh $api fetch()
   const ctx = useIsomorphic(getData, (json) => {
+    // If first rendered on the client, does a fresh $api fetch()
+    // And pass the result of getData() to this callback function
     setMsg(json.msg)
   })
 
-  let [msg, setMsg] = useState(ctx.$data.msg)
-
   // Triggered by a button, does a fresh $api fetch()
   const fetchFromEcho = async () => {
-    const { json } = await ctx.$api.echo({
-      msg: `hello from client`
-    })
+    const { json } = await ctx.$api.echo({ msg: 'hello from client button' })
     setMsg(`${json.msg} ${count}`)
     setCount(count + 1)
   }

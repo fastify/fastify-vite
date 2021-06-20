@@ -5,7 +5,7 @@ const empty = {}
 
 const getRender = createApp => async function render (req, url, options) {
   const { entry, distManifest, hydration } = options
-  const { ctx, app, head, router } = createApp(req)
+  const { context, app, head, router } = createApp({ req })
 
   // On the client, hydrate() from fastify-vite/hidrate repeats these steps
   app.config.globalProperties[hydration.global] = req[hydration.global]
@@ -17,9 +17,9 @@ const getRender = createApp => async function render (req, url, options) {
 
   await router.isReady()
 
-  const element = await renderToString(app, ctx)
+  const element = await renderToString(app, context)
   const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
-  const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
+  const preloadLinks = renderPreloadLinks(context.modules, distManifest)
 
   const globalData = req[options.hydration.global]
   const data = req[hydration.data] || app.config.globalProperties[hydration.data]

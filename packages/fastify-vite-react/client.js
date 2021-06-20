@@ -1,5 +1,6 @@
 const manifetch = require('manifetch')
 
+const { useLocation } = require('react-router-dom')
 const { useContext, useState, useEffect, useRef } = require('react')
 const { Context, ContextProvider } = require('./context')
 
@@ -8,24 +9,28 @@ const globalDataKey = '$global'
 const isServer = typeof window === 'undefined'
 
 function useIsomorphic (getData, useData) {
+  console.log('useIsomorphic()/2')
   const { context } = useContext(Context)
-  const mounted = useRef(true)
+  const firstRender = useRef(true)
   if (isServer) {
     return context
-  } else if (getData) {
+  } else if (getData && useData) {
     const [state, setter] = useState(context)
+    const location = useLocation()
     useEffect(() => {
-      if (mounted.current) {
-        mounted.current = false
+      if (firstRender.current) {
+        console.log('if(firstRender.current) called')
+        useData(context[dataKey])
+        firstRender.current = false
+        return
       }
-    }, [])
-    useEffect(() => {
+      console.log('getData() called')
       setter({ ...state, $loading: false })
       getData(context).then(($data) => {
         setter({ ...state, $loading: false })
         useData($data)
       })
-    }, [])
+    }, [location])
   }
   return context
 }
@@ -51,6 +56,7 @@ function hydrate (app) {
 }
 
 module.exports = {
+  isServer,
   useIsomorphic,
   hydrate,
   ContextProvider,
