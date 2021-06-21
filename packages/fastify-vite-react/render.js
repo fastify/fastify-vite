@@ -82,9 +82,13 @@ function getHydrationScript (req, context, hydration) {
 
 function renderElement (url, app, context, router) {
   if (router) {
+    console.log('context', context)
     return renderToString(
       React.createElement(router, {
-        children: React.createElement(ContextProvider, { children: app, context }),
+        children: React.createElement(ContextProvider, {
+          children: app,
+          context
+        }),
         location: url,
       }),
     )

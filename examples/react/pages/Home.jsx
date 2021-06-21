@@ -39,7 +39,7 @@ export default function Home(props) {
         <h1>Home</h1>
         <p>Here's some data from the server: {ctx.$global}</p>
         <button onClick={() => setCount(++count)}>count is: {count}</button>
-        <button onClick={fetchFromEcho}>msg is: {msg}</button >
+        <button onClick={fetchFromEcho}>msg is: {msg || ctx.$data.msg}</button >
       </div>
     )
   }

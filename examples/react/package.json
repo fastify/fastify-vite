@@ -2,6 +2,7 @@
   "name": "fastify-vite-react-example",
   "private": true,
   "scripts": {
+    "devinstall": "zx ../../devinstall.mjs react",
     "dev": "node server",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
@@ -23,5 +24,8 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
     "vite": "^2.3.8"
+  },
+  "devDependencies": {
+    "zx": "^1.14.2"
   }
 }
