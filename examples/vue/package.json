@@ -1,8 +1,9 @@
 {
-  "name": "fastify-vite-vue-example",
+  "name": "vue-api",
   "private": true,
   "scripts": {
     "dev": "node server",
+    "devinstall": "zx ../../devinstall.mjs vue",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
