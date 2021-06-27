@@ -7,29 +7,34 @@ const { Context, ContextProvider } = require('./context')
 const dataKey = '$data'
 const globalDataKey = '$global'
 const isServer = typeof window === 'undefined'
+const rendered = { value: false }
 
-function useIsomorphic (getData, useData) {
-  const { context } = useContext(Context)
-  const firstRender = useRef(true)
+function useIsomorphic (getData) {
+  const firstRender = useRef(rendered)
+  const context = useContext(Context)
   if (isServer) {
     return context
-  } else if (getData && useData) {
+  } else {
     const [state, setter] = useState(context)
-    const location = useLocation()
     useEffect(() => {
-      if (firstRender.current) {
-        useData(context[dataKey])
-        firstRender.current = false
+      if (!firstRender.current.value) {
+        firstRender.current.value = true
         return
+      }
+      if (!getData) {
+        getData = async () => {
+          const response = await fetch(context.$dataPath())
+          const json = await response.json()
+          return json
+        }
       }
       setter({ ...state, $loading: false })
       getData(context).then(($data) => {
-        setter({ ...state, $loading: false })
-        useData($data)
+        setter({ ...state, $data, $loading: false })
       })
-    }, [location])
+    }, [])
+    return state
   }
-  return context
 }
 
 function hydrate (app) {

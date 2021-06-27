@@ -23,6 +23,7 @@ function getRender ({ createApp, routes }) {
     }
 
     const app = App()
+    console.log('context', context)
     const element = renderElement(req.url, app, context, router)
     const hydrationScript = getHydrationScript(req, context, hydration)
 
@@ -90,19 +91,15 @@ function renderElement (url, app, context, router) {
   if (router) {
     return renderToString(
       React.createElement(router, {
-        children: React.createElement(ContextProvider, {
-          children: app,
-          context
-        }),
         location: url,
-      }),
+      }, React.createElement(ContextProvider, {
+        children: app,
+        context,
+      })),
     )
   } else {
     return renderToString(
-      React.createElement(ContextProvider, {
-        children: app,
-        value: { context },
-      }),
+      React.createElement(ContextProvider, { context, children: app }),
     )
   }
 }
