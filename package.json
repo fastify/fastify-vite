@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "devinstall": "zx devinstall.mjs",
     "lint": "eslint examples packages --ext .js --fix"
   },
   "devDependencies": {
