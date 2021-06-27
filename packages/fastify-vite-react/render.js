@@ -16,8 +16,11 @@ function getRender ({ createApp, routes }) {
       $api: req.api && req.api.client,
     })
 
-    context.$data = await getRouteData(req, routes, context)
-    console.log('context.$data', context.$data)
+    const routeData = await getRouteData(req, routes, context)
+
+    if (routeData) {
+      context.$data = routeData
+    }
 
     const app = App()
     const element = renderElement(req.url, app, context, router)
@@ -39,8 +42,11 @@ function getRouteData (req, routes, context) {
     if (getRouteDataCache[req.url]) {
       return getRouteDataCache[req.url](context)
     }
-    console.log('route', route)
-    if (matchPath(req.url, route) && route.getData) {
+    if (matchPath(req.url, {
+      path: route.path,
+      exact: true,
+      strict: false,
+    }) && route.getData) {
       getRouteDataCache[req.url] = context => route.getData(context)
       return route.getData(context)
     }
@@ -82,7 +88,6 @@ function getHydrationScript (req, context, hydration) {
 
 function renderElement (url, app, context, router) {
   if (router) {
-    console.log('context', context)
     return renderToString(
       React.createElement(router, {
         children: React.createElement(ContextProvider, {

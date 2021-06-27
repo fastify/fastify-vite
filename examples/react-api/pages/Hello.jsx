@@ -5,9 +5,9 @@ export const path = '/hello'
 
 export default function Hello () {
   const ctx = useIsomorphic()
-  const [msg, setMsg] = useState(ctx.$data.msg)
+  const [msg, setMsg] = useState(ctx.$data.message)
   const refreshData = async () => {
-    const response = await fetch(ctx.$dataPath)
+    const response = await fetch(ctx.$dataPath())
     const json = await response.json()
     setMsg(json.message)
   }
