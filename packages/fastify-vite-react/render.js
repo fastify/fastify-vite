@@ -23,7 +23,6 @@ function getRender ({ createApp, routes }) {
     }
 
     const app = App()
-    console.log('context', context)
     const element = renderElement(req.url, app, context, router)
     const hydrationScript = getHydrationScript(req, context, hydration)
 

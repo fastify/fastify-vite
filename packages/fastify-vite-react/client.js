@@ -3,10 +3,12 @@ const manifetch = require('manifetch')
 const { useContext, useState, useEffect, useRef } = require('react')
 const { Context, ContextProvider } = require('./context')
 
+const noop = () => {}
 const dataKey = '$data'
 const globalDataKey = '$global'
 const isServer = typeof window === 'undefined'
 const rendered = { value: false }
+const fetch = isServer ? noop : window.fetch
 
 function useIsomorphic (getData) {
   const firstRender = useRef(rendered)

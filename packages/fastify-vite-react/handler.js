@@ -11,12 +11,7 @@ function getHandler (options, getRenderer, viteDevServer) {
       reply.code(200)
       reply.type('text/html')
       if (options.dev) {
-        try {
-          reply.send(await renderDevHTMLTemplate(req, fragments, viteDevServer))
-        } catch (err) {
-          console.log('renderDevHTMLTemplate error')
-          console.error(err)
-        }
+        reply.send(await renderDevHTMLTemplate(req, fragments, viteDevServer))
       } else {
         reply.send(renderHTMLTemplate(req, fragments, options.distIndex))
       }
