@@ -13,7 +13,6 @@ export default function Home(props) {
   let [msg, setMsg] = useState(null)
 
   // If first rendered on the server, just rehydrates on the client
-  console.log('useIsomorphic()')
   const ctx = useIsomorphic(getData)
 
   // Triggered by a button, does a fresh $api fetch()

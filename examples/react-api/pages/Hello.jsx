@@ -5,7 +5,6 @@ export const path = '/hello'
 
 export default function Hello () {
   const ctx = useIsomorphic()
-  console.log('ctx', ctx)
   const [msg, setMsg] = useState(null)
   const refreshData = async () => {
     const response = await fetch(ctx.$dataPath())
