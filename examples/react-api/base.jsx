@@ -12,18 +12,16 @@ export function App (props) {
         <title>React test</title>
         <style>{`
           #app {
-            font - family: Avenir, Helvetica, Arial, sans-serif;
-              -webkit-font-smoothing: antialiased;
-              -moz-osx-font-smoothing: grayscale;
-              text-align: center;
-              color: #2c3e50;
-              margin-top: 60px;
-            }`}
-        </style>
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 60px;
+          }
+        `}</style>
       </Helmet>
-      {routes.map(({ name, path }) => {
-        return <Link key={path} to={path}>{name}</Link>
-      })}
+      <Link to="/">Index</Link> - <Link to="/hello">Hello</Link>
       <Switch>
         {routes.map(({ path, component: RouteComp }) => {
           return (

@@ -13,11 +13,8 @@ export default function Home(props) {
   let [msg, setMsg] = useState(null)
 
   // If first rendered on the server, just rehydrates on the client
-  const ctx = useIsomorphic(getData, (json) => {
-    // If first rendered on the client, does a fresh $api fetch()
-    // And pass the result of getData() to this callback function
-    setMsg(json.msg)
-  })
+  console.log('useIsomorphic()')
+  const ctx = useIsomorphic(getData)
 
   // Triggered by a button, does a fresh $api fetch()
   const fetchFromEcho = async () => {
@@ -30,14 +27,16 @@ export default function Home(props) {
 
   // ctx.$loading is set automatically before and after await getData()
   if (ctx.$loading) {
-    <div>
-      <h1>Loading</h1>
-    </div>
+    return (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    )
   } else {
     return (
       <div>
         <h1>Home</h1>
-        <p>Here's some data from the server: {ctx.$global}</p>
+        <p>Here's some data from the server: {JSON.stringify(ctx.$global)}</p>
         <button onClick={() => setCount(++count)}>count is: {count}</button>
         <button onClick={fetchFromEcho}>msg is: {msg || ctx.$data.msg}</button >
       </div>
