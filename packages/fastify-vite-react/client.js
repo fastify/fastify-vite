@@ -1,6 +1,5 @@
 const manifetch = require('manifetch')
 
-const { useLocation } = require('react-router-dom')
 const { useContext, useState, useEffect, useRef } = require('react')
 const { Context, ContextProvider } = require('./context')
 
