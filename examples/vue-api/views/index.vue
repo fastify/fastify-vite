@@ -12,7 +12,7 @@
       </router-link>
     </li>
     <li>
-      <router-link :to="/exporting-fastify-hooks">
+      <router-link :to="/exporting-route-hooks">
         <code>onRequest()</code>, <code>useHydration()</code> and <code>$data</code>.
       </router-link>
     </li>
