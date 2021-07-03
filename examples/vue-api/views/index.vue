@@ -2,11 +2,6 @@
   <h1>Examples</h1>
   <ol>
     <li>
-      <router-link :to="/global-data">
-        <code>useHydration()</code> and <code>$global</code> data.
-      </router-link>
-    </li>
-    <li>
       <router-link :to="/isomorphic-data-fetching">
         <code>useHydration()</code>, <code>getData()</code> and <code>$data</code>.
       </router-link>
@@ -17,6 +12,9 @@
       </router-link>
     </li>
   </ol>
+  <p>
+    <code>useHydration()</code> and <code>$global</code> data.
+  </p>
 </template>
 
 <script>
