@@ -22,7 +22,8 @@ function getDevHandler (options, getRender, viteDevServer) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
-      const fragments = await getRender(req, url, options)
+      const render = await getRender()
+      const fragments = await render(req, url, options)
 
       reply.code(200)
       reply.type('text/html')

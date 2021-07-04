@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useIsomorphic, isServer } from 'fastify-vite-react/client'
+import { useHydration, isServer } from 'fastify-vite-react/client'
 
 export const path = '/'
 
@@ -9,11 +9,15 @@ export async function getData ({ $api }) {
   return json
 }
 
+export async function onRequest(req) {
+  console.log('onRequest from React view')
+}
+
 export default function Home(props) {  
   let [msg, setMsg] = useState(null)
-
+  console.log('!')
   // If first rendered on the server, just rehydrates on the client
-  const ctx = useIsomorphic(getData)
+  const ctx = useHydration(getData)
 
   // Triggered by a button, does a fresh $api fetch()
   const fetchFromEcho = async () => {
