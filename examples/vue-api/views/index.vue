@@ -21,14 +21,15 @@
 import { reactive, getCurrentInstance, ref } from 'vue'
 import { useHydration } from 'fastify-vite-vue/client'
 
-export async function getData ({ api }) {
-  const { json } = await api.echo({ msg: 'hello from server' })
+export async function getData ({ $api }) {
+  const msg = `hello from ${isServer ? 'server' : 'client'}`
+  const { json } = await $api.echo({ msg })
   return json
 }
 
 export default {
   async setup () {
-    const { $global, $data, $api } = await useHydration()
+    const { $global, $data, $api } = await useHydration(getData)
     const state = reactive({ count: 0, msg: $data.msg })
     async function fetchFromEcho () {
       const { json } = await $api.echo({ msg: 'hello from client' })
