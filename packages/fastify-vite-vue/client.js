@@ -1,78 +1,74 @@
-const { getCurrentInstance } = require('vue')
+const { getCurrentInstance, reactive } = require('vue')
 const manifetch = require('manifetch')
 
-async function useServerData (...args) {
-  let dataKey = '$data'
-  let initialData
-  if (args.length === 1) {
-    if (typeof args[0] === 'string') {
-      dataKey = args[0]
-    } else if (typeof args[0] === 'function') {
-      initialData = args[0]
-    }
-  } else if (args.length > 1) {
-    dataKey = args[0]
-    initialData = args[1]
-  }
-  const isSSR = typeof window === 'undefined'
-  const appInstance = getCurrentInstance()
-  const appConfig = appInstance ? appInstance.appContext.app.config : null
-  let $data
-  if (isSSR && initialData) {
-    if (!appConfig) {
-      return initialData()
-    }
-    appConfig.globalProperties[dataKey] = await initialData()
-    $data = appConfig.globalProperties[dataKey]
-    return $data
-  } else if (initialData) {
-    if (!appConfig) {
-      return initialData()
-    }
-    if (!appConfig.globalProperties[dataKey]) {
-      appConfig.globalProperties[dataKey] = await initialData()
-    }
-    $data = appConfig.globalProperties[dataKey]
-    appConfig.globalProperties[dataKey] = undefined
-    return $data
+const kHydration = Symbol('kHydration')
+const kData = Symbol.for('kData')
+const kGlobal = Symbol.for('kGlobal')
+const kAPI = Symbol.for('kAPI')
+
+const isServer = typeof window === 'undefined'
+const firstRender = { value: true }
+const fetch = isServer ? () => {} : window.fetch
+
+function useHydration (getData) {
+  const globalProps = useGlobalProperties()
+  const hydration = globalProps[kHydration]
+  if (isServer) {
+    return hydration
   } else {
-    const $data = appConfig.globalProperties[dataKey]
-    const $dataPath = appConfig.globalProperties.$dataPath
-    appConfig.globalProperties[dataKey] = undefined
-    return [$data, $dataPath()]
+    const state = reactive(hydration)
+    if (!firstRender.value) {
+      firstRender.value = true
+      return
+    }
+    if (!getData) {
+      getData = async () => {
+        const response = await fetch(hydration.$dataPath())
+        const json = await response.json()
+        return json
+      }
+    }
+    state.$loading = true
+    const promise = getData(state).then(($data) => {
+      state.$data = $data
+      state.$loading = false
+    })
+    for (const key in hydration) {
+      Object.defineProperty(promise, key, {
+        enumerable: true,
+        get: () => state[key],
+        set: (value) => {
+          state[key] = value
+          return state[key]
+        },
+      })
+    }
+    return promise
   }
 }
 
-function useServerAPI () {
-  const appConfig = getCurrentInstance().appContext.app.config
-  const { $api } = appConfig.globalProperties
-  return $api
+function hydrate (app) {
+  useGlobalProperties()[kHydration] = {
+    $global: window[kGlobal],
+    $data: window[kData],
+    $dataPath: () => `/-/data${document.location.pathname}`,
+    $api: new Proxy({ ...window[kAPI] }, {
+      get: manifetch({
+        prefix: '',
+        fetch: (...args) => fetch(...args),
+      }),
+    }),
+  }
+  delete window[kGlobal]
+  delete window[kData]
+  delete window[kAPI]
 }
 
-function hydrate (app, dataKey = '$data', globalDataKey = '$global') {
-  const dataSymbol = Symbol.for(dataKey)
-  app.config.globalProperties.$dataPath = () => `/-/data${document.location.pathname}`
-  app.config.globalProperties[dataKey] = window[dataSymbol]
-  delete window[dataSymbol]
-
-  const globalDataSymbol = Symbol.for(globalDataKey)
-  app.config.globalProperties[globalDataKey] = window[globalDataSymbol]
-  delete window[globalDataSymbol]
-
-  const apiSymbol = Symbol.for('fastify-vite-api')
-  const $api = window[apiSymbol]
-  delete window[apiSymbol]
-
-  app.config.globalProperties.$api = new Proxy($api, {
-    get: manifetch({
-      prefix: '',
-      fetch: (...args) => window.fetch(...args),
-    }),
-  })
+export function useGlobalProperties () {
+  return getCurrentInstance().appContext.app.config.globalProperties
 }
 
 module.exports = {
-  useServerData,
-  useServerAPI,
+  useHydration,
   hydrate,
 }

@@ -8,10 +8,12 @@ const getRender = createApp => async function render (req, url, options) {
   const { ctx, app, head, router } = createApp({ req })
 
   // On the client, hydrate() from fastify-vite/hidrate repeats these steps
-  app.config.globalProperties[hydration.global] = req[hydration.global]
-  app.config.globalProperties.$dataPath = () => `/-/data${req.routerPath}`
-  app.config.globalProperties[hydration.data] = req[hydration.data]
-  app.config.globalProperties.$api = req.api && req.api.client
+  app.config.globalProperties.$hydration = {
+    [hydration.global]: req[hydration.global],
+    [hydration.data]: req[hydration.data],
+    $dataPath: () => `/-/data${req.routerPath}`,
+    $api: req.api && req.api.client,
+  }
 
   router.push(url)
 
@@ -28,18 +30,15 @@ const getRender = createApp => async function render (req, url, options) {
   let hydrationScript = ''
 
   if (globalData || data || api) {
-    hydrationScript += '<script>\nlet key\n'
+    hydrationScript += '<script>'
     if (globalData) {
-      hydrationScript += `key = Symbol.for('${hydration.global}')\n`
-      hydrationScript += `window[key] = ${devalue(globalData)}\n`
+      hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
     }
     if (data) {
-      hydrationScript += `key = Symbol.for('${hydration.data}')\n`
-      hydrationScript += `window[key] = ${devalue(data)}\n`
+      hydrationScript += `window[Symbol.for('kData')] = ${devalue(data)}\n`
     }
     if (api) {
-      hydrationScript += 'key = Symbol.for(\'fastify-vite-api\')\n'
-      hydrationScript += `window[key] = ${devalue(api)}\n`
+      hydrationScript += `window[Symbol.for('kAPI')] = ${devalue(api)}\n`
     }
     hydrationScript += '</script>'
   }

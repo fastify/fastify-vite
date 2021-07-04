@@ -10,7 +10,7 @@ const isServer = typeof window === 'undefined'
 const rendered = { value: false }
 const fetch = isServer ? noop : window.fetch
 
-function useIsomorphic (getData) {
+function useHydration (getData) {
   const firstRender = useRef(rendered)
   const context = useContext(Context)
   if (isServer) {
@@ -60,7 +60,7 @@ function hydrate (app) {
 
 module.exports = {
   isServer,
-  useIsomorphic,
+  useHydration,
   hydrate,
   ContextProvider,
 }
