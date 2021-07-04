@@ -34,7 +34,8 @@ async function fastifyVite (fastify, options) {
     })
     await fastify.register(middie)
     fastify.use(vite.middlewares)
-    const entry = renderer.dev.getEntry(options, vite)
+    const entry = await renderer.dev.getEntry(options, vite)
+    console.log('entry', entry)
     handler = renderer.dev.getHandler(options, entry.getRender)
     routes = entry.routes
   } else {
@@ -67,25 +68,45 @@ async function fastifyVite (fastify, options) {
     post (url, { data, method, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    route (url, { data, method, ...routeOptions } = {}) {
-      let preHandler
-      if (data) {
-        preHandler = async function (req, reply) {
-          req[options.hydration.data] = await data.call(this, req, reply)
-        }
+    route (url, { getData, method, ...routeOptions } = {}) {
+      let preHandler = routeOptions.preHandler || []
+      if (getData) {
+        preHandler.push(
+          async function (req, reply) {
+            req[options.hydration.data] = await getData.call(this, req, reply)
+          }
+        )
+        fastify.get(`/-/data${url}`, async function (req, reply) {
+          return getData.call(this, req, reply)
+        })
       }
-      fastify.get(`/-/data${url}`, async function (req, reply) {
-        return data.call(this, req, reply)
-      })
       fastify.route({
         method,
         url,
-        preHandler,
         handler,
         ...routeOptions,
+        preHandler,        
       })
     },
   })
+
+  for (const route of routes) {
+    fastify.vite.route({
+      url: route.path,
+      method: route.method || 'GET',
+      getData: route.getData,
+      onRequest: route.onRequest,
+      preParsing: route.preParsing,
+      preValidation: route.preValidation,
+      preHandler: route.preHandler,
+      preSerialization: route.preSerialization,
+      onError: route.onError,
+      onSend: route.onSend,
+      onResponse: route.onResponse,
+      onTimeout: route.onTimeout,
+    })
+  }
+
   fastify.addHook('onReady', () => {
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype
