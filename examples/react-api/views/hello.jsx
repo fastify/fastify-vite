@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useIsomorphic } from 'fastify-vite-react/client'
+import { useHydration } from 'fastify-vite-react/client'
 
 export const path = '/hello'
 
 export default function Hello () {
-  const ctx = useIsomorphic()
+  const ctx = useHydration()
   const [msg, setMsg] = useState(null)
   const refreshData = async () => {
     const response = await fetch(ctx.$dataPath())
