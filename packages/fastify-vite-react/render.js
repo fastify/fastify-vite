@@ -5,7 +5,7 @@ const devalue = require('devalue')
 const { Helmet } = require('react-helmet')
 const { ContextProvider } = require('./context')
 
-function getRender ({ createApp, routes }) {
+function createRenderFunction ({ createApp, routes }) {
   return async function render (req, url, options) {
     const { entry, hydration } = options
     const { App, router, context } = createApp({
@@ -35,23 +35,7 @@ function getRender ({ createApp, routes }) {
   }
 }
 
-const getRouteDataCache = {}
-
-function getRouteData (req, routes, context) {
-  for (const route of routes) {
-    if (getRouteDataCache[req.url]) {
-      return getRouteDataCache[req.url](context)
-    }
-    if (matchPath(req.url, {
-      path: route.path,
-      exact: true,
-      strict: false,
-    }) && route.getData) {
-      getRouteDataCache[req.url] = context => route.getData(context)
-      return route.getData(context)
-    }
-  }
-}
+module.exports = { createRenderFunction }
 
 function getHydrationScript (req, context, hydration) {
   const globalData = req.$global
@@ -102,5 +86,3 @@ function renderElement (url, app, context, router) {
     )
   }
 }
-
-module.exports = { getRender }
