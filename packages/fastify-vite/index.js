@@ -35,7 +35,6 @@ async function fastifyVite (fastify, options) {
     await fastify.register(middie)
     fastify.use(vite.middlewares)
     const entry = await renderer.dev.getEntry(options, vite)
-    console.log('entry', entry)
     handler = renderer.dev.getHandler(options, entry.getRender)
     routes = entry.routes
   } else {
@@ -73,7 +72,15 @@ async function fastifyVite (fastify, options) {
       if (getData) {
         preHandler.push(
           async function (req, reply) {
-            req[options.hydration.data] = await getData.call(this, req, reply)
+            req[options.hydration.data] = await getData.call(
+              this,
+              {
+                $api: this.api && this.api.client,
+                fastify: this,
+              },              
+              req,
+              reply
+            )
           }
         )
         fastify.get(`/-/data${url}`, async function (req, reply) {
@@ -91,8 +98,7 @@ async function fastifyVite (fastify, options) {
   })
 
   for (const route of routes) {
-    fastify.vite.route({
-      url: route.path,
+    fastify.vite.route(route.path, {
       method: route.method || 'GET',
       getData: route.getData,
       onRequest: route.onRequest,

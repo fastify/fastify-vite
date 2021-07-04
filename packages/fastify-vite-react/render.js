@@ -5,7 +5,7 @@ const devalue = require('devalue')
 const { Helmet } = require('react-helmet')
 const { ContextProvider } = require('./context')
 
-function createRenderFunction ({ createApp, routes }) {
+function createRenderFunction (createApp) {
   return async function render (req, url, options) {
     const { entry, hydration } = options
     const { App, router, context } = createApp({
@@ -15,12 +15,6 @@ function createRenderFunction ({ createApp, routes }) {
       [hydration.data]: req[hydration.data] || null,
       $api: req.api && req.api.client,
     })
-
-    const routeData = await getRouteData(req, routes, context)
-
-    if (routeData) {
-      context.$data = routeData
-    }
 
     const app = App()
     const element = renderElement(req.url, app, context, router)
