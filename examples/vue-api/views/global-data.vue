@@ -13,10 +13,3 @@ import { useHydration } from 'fastify-vite-vue/client'
 
 const { $global: foobar } = await useHydration()
 </script>
-
-<style scoped>
-h1,
-a {
-  color: green;
-}
-</style>
