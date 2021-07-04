@@ -1,9 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { Link, Route, Switch } from 'react-router-dom'
-import { loadRoutes } from 'fastify-vite-react/app'
-
-const views = import.meta.globEager('./pages/*.jsx')
-export const routes = loadRoutes(views)
+import routes from  './routes'
 
 export function App (props) {
   return (
