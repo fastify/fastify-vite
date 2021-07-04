@@ -68,7 +68,7 @@ async function fastifyVite (fastify, options) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
     route (url, { getData, method, ...routeOptions } = {}) {
-      let preHandler = routeOptions.preHandler || []
+      const preHandler = routeOptions.preHandler || []
       if (getData) {
         preHandler.push(
           async function (req, reply) {
@@ -77,11 +77,11 @@ async function fastifyVite (fastify, options) {
               {
                 $api: this.api && this.api.client,
                 fastify: this,
-              },              
+              },
               req,
-              reply
+              reply,
             )
-          }
+          },
         )
         fastify.get(`/-/data${url}`, async function (req, reply) {
           return getData.call(this, req, reply)
@@ -92,7 +92,7 @@ async function fastifyVite (fastify, options) {
         url,
         handler,
         ...routeOptions,
-        preHandler,        
+        preHandler,
       })
     },
   })

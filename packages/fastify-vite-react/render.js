@@ -1,6 +1,5 @@
 const React = require('react')
 const { renderToString } = require('react-dom/server')
-const { matchPath } = require('react-router-dom')
 const devalue = require('devalue')
 const { Helmet } = require('react-helmet')
 const { ContextProvider } = require('./context')

@@ -6,9 +6,9 @@ function loadRoutes (views) {
     if (view.path && Array.isArray(view.path)) {
       routes.push(
         ...view.path.map((path) => {
-          const { path, default: component, ...viewProps } = view
+          const { default: component, ...viewProps } = view
           return { path, component, ...viewProps }
-        })
+        }),
       )
     } else if (view.path) {
       const { path, default: component, ...viewProps } = view

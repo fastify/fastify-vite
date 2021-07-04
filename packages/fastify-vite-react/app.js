@@ -8,7 +8,7 @@ function loadRoutes (views) {
         ...view.path.map((path) => {
           const { default: component, ...viewProps } = view
           return { path, component, ...viewProps }
-        })
+        }),
       )
     } else if (view.path) {
       const { path, default: component, ...viewProps } = view
