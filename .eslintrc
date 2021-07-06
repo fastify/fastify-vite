@@ -1,6 +1,22 @@
 {
-  extends: 'standard',
+  extends: [
+    'standard',
+    'plugin:react/recommended',
+  ],
+  plugins: [
+    'react',
+  ],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
+  },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    }
+  },
+  settings: {
+    react: {
+      version: '17.0',
+    },
   },
 }

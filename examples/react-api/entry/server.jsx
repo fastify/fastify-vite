@@ -3,6 +3,6 @@ import { createApp } from '../main'
 import routes from '../routes'
 
 export default {
- routes,
- render: createRenderFunction(createApp),
+  routes,
+  render: createRenderFunction(createApp),
 }

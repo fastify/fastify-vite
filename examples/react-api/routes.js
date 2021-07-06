@@ -1,3 +1,7 @@
 import { loadRoutes } from 'fastify-vite-react/app'
 
-export default loadRoutes(import.meta.globEager('./views/*.jsx'))
+const routes = loadRoutes(import.meta.globEager('./views/*.jsx'))
+
+console.log('routes', routes)
+
+export default routes
