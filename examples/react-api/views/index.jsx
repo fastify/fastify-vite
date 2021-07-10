@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import './index.css'
 
 export const path = '/'
 
@@ -9,19 +8,19 @@ export default function Index (props) {
       <ul>
         <li>
           <Link to="/global-data">Global Data</Link><span>:</span>
-          <code>useHydration()</code> and <code>$global</code> data.
+          <b>useHydration()</b> and <b>$global</b> data.
         </li>
         <li>
           <Link to="/route-hooks">Route Hooks</Link><span>:</span>
-          <code>onRequest()</code>, <code>useHydration()</code> and <code>$data</code>.
+          <b>onRequest()</b>, <b>useHydration()</b> and <b>$data</b>.
         </li>
         <li>
           <Link to="/route-payload">Route Payload</Link><span>:</span>
-          <code>useHydration()</code>, <code>getPayload()</code> and <code>$payloadPath</code>.
+          <b>useHydration()</b>, <b>getPayload()</b> and <b>$payloadPath</b>.
         </li>
         <li>
           <Link to="/data-fetching">Isomorphic API</Link><span>:</span>
-          <code>useHydration()</code>, <code>getData()</code> and <code>$data</code>.
+          <b>useHydration()</b>, <b>getData()</b> and <b>$data</b>.
         </li>
       </ul>
     </>

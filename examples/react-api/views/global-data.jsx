@@ -6,7 +6,7 @@ export default function GlobalData (props) {
   const ctx = useHydration()
   return (
     <>
-      <h2>Accessing Global Data from the Server</h2>
+      <h2>Accessing global data from the server</h2>
       <p>{JSON.stringify(ctx.$global)}</p>
     </>
   )

@@ -5,13 +5,13 @@ export const path = '/route-payload'
 
 export async function getPayload ({ req }) {
   return {
-    message: req.query.message || 'Hello from server',
+    message: req?.query?.message || 'Hello from server',
   }
 }
 
 export default function RoutePayload () {
   const ctx = useHydration()
-  const [message, setMessage] = useState(ctx.$payload.message)
+  const [message, setMessage] = useState(ctx.$payload?.message)
   async function refreshPayload () {
     const response = await fetch(`${
       ctx.$payloadPath()
