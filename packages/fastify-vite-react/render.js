@@ -9,7 +9,7 @@ function createRenderFunction (createApp) {
     const { entry, hydration } = options
     const { App, router, context } = createApp({
       req,
-      $dataPath: () => `/-/data${req.routerPath}`,
+      $payloadPath: () => `/-/data${req.routerPath}`,
       [hydration.global]: req[hydration.global],
       [hydration.data]: req[hydration.data] || null,
       $api: req.api && req.api.client,

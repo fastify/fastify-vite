@@ -24,7 +24,7 @@ function useHydration (getData) {
       }
       if (!getData) {
         getData = async () => {
-          const response = await fetch(context.$dataPath())
+          const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
         }
@@ -44,7 +44,7 @@ function hydrate (app) {
   const apiSymbol = Symbol.for('fastify-vite-api')
   const context = {
     [globalDataKey]: window[globalDataSymbol],
-    $dataPath: () => `/-/data${document.location.pathname}`,
+    $payloadPath: () => `/-/data${document.location.pathname}`,
     [dataKey]: window[dataSymbol],
     $api: window[apiSymbol],
     requests: [],

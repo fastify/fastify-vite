@@ -23,7 +23,7 @@ function useHydration (getData) {
     }
     if (!getData) {
       getData = async () => {
-        const response = await fetch(hydration.$dataPath())
+        const response = await fetch(hydration.$payloadPath())
         const json = await response.json()
         return json
       }
@@ -51,7 +51,7 @@ function hydrate (app) {
   useGlobalProperties()[kHydration] = {
     $global: window[kGlobal],
     $data: window[kData],
-    $dataPath: () => `/-/data${document.location.pathname}`,
+    $payloadPath: () => `/-/data${document.location.pathname}`,
     $api: new Proxy({ ...window[kAPI] }, {
       get: manifetch({
         prefix: '',

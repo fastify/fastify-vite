@@ -11,7 +11,7 @@ const getRender = createApp => async function render (req, url, options) {
   app.config.globalProperties.$hydration = {
     [hydration.global]: req[hydration.global],
     [hydration.data]: req[hydration.data],
-    $dataPath: () => `/-/data${req.routerPath}`,
+    $payloadPath: () => `/-/data${req.routerPath}`,
     $api: req.api && req.api.client,
   }
 
