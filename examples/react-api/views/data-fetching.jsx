@@ -14,7 +14,7 @@ export async function getData ({ req, $api }) {
 }
 
 export default function DataFetching (props) {
-  const ctx = useHydration()
+  const ctx = useHydration(getData)
   if (ctx.$loading) {
     return (
       <>
