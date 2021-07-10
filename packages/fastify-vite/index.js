@@ -100,7 +100,7 @@ async function fastifyVite (fastify, options) {
   for (const route of routes) {
     fastify.vite.route(route.path, {
       method: route.method || 'GET',
-      getData: route.getData,
+      getPayload: route.getPayload,
       onRequest: route.onRequest,
       preParsing: route.preParsing,
       preValidation: route.preValidation,
