@@ -7,14 +7,15 @@ export async function getData ({ req, $api }) {
     message: isServer
       ? req.query?.message ?? 'Hello from server'
       : 'Hello from client',
-    result: await $api.method({
-      message: 'Hello from API method',
+    result: await $api.echo({
+      msg: 'Hello from API method',
     }),
   }
 }
 
 export default function DataFetching (props) {
-  const ctx = useHydration(getData)
+  const ctx = useHydration({ getData })
+  console.log('ctx', ctx)
   if (ctx.$loading) {
     return (
       <>

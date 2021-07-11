@@ -18,26 +18,27 @@ function useHydration ({ getData, getPayload } = {}) {
   if (isServer) {
     return context
   } else {
-    const [state, setter] = useState(context)
+    const [state, setter] = useState({
+      ...context,
+      $loading: firstRender.current.value && !!getPayload || !!getData,
+    })
     useEffect(() => {
-      if (!firstRender.current.value) {
+      if (firstRender.current.value) {
         firstRender.current.value = true
         return
       }
       if (getPayload) {
-        console.log('getPayload is set')
         const getPayloadFromClient = async () => {
           const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
-        }
-        setter({ ...state, $loading: false })
+        }        
         console.log('getPayloadFromClient()')
         getPayloadFromClient(context).then(($payload) => {
           setter({ ...state, $payload, $loading: false })
         })
       } else if (getData) {
-        setter({ ...state, $loading: false })
+        console.log('About to run getData()')
         getData(context).then(($data) => {
           setter({ ...state, $data, $loading: false })
         })

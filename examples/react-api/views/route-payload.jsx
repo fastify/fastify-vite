@@ -11,7 +11,8 @@ export async function getPayload ({ req }) {
 
 export default function RoutePayload () {
   const ctx = useHydration({ getPayload })
-  const [message, setMessage] = useState(ctx.$payload?.message)
+  console.log('ctx', ctx)
+  const [message, setMessage] = useState(null)
   async function refreshPayload () {
     const response = await window.fetch(`${
       ctx.$payloadPath()
@@ -21,10 +22,20 @@ export default function RoutePayload () {
     const json = await response.json()
     setMessage(json.message)
   }
+  console.log('ctx.$loading', ctx.$loading)
+  if (ctx.$loading) {
+    return (
+      <>
+        <h2>Automatic route payload endpoint</h2>
+        <p>Loading...</p>
+      </>
+    )
+  }
+  console.log('ctx.$payload?.message', ctx.$payload?.message)
   return (
     <>
       <h2>Automatic route payload endpoint</h2>
-      <p>Message: {message}</p>
+      <p>Message: {message || ctx.$payload?.message}</p>
       <button onClick={refreshPayload}>
         Click to refresh payload from server
       </button>
