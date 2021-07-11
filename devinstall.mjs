@@ -16,12 +16,9 @@ await cd(root)
 await $`rm -rf ${exRoot}/node_modules/vite`
 await $`rm -rf ${exRoot}/node_modules/.vite`
 
-console.log('deps', deps)
-
 for (let pkg of deps.local) {
   await $`rm -rf ${exRoot}/node_modules/${pkg}`
   let pkgRoot = `${root}/packages/${pkg}`
-  console.log('pkgRoot', pkgRoot)
   let pkgInfo = await readJSON(`${pkgRoot}/package.json`)
   pkgInfos[pkg] = pkgInfo
   const subDeps = entries(pkgInfo.dependencies).map(([n, v]) => `${n}@${v}`)

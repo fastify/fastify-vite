@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useHydration } from 'fastify-vite-react/client'
 
 export const path = '/route-payload'
@@ -10,10 +10,10 @@ export async function getPayload ({ req }) {
 }
 
 export default function RoutePayload () {
-  const ctx = useHydration()
+  const ctx = useHydration({ getPayload })
   const [message, setMessage] = useState(ctx.$payload?.message)
   async function refreshPayload () {
-    const response = await fetch(`${
+    const response = await window.fetch(`${
       ctx.$payloadPath()
     }?message=${
       encodeURIComponent('Hello from client')

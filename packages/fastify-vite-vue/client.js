@@ -1,9 +1,11 @@
-const { getCurrentInstance, reactive } = require('vue')
 const manifetch = require('manifetch')
 
+const { getCurrentInstance, reactive } = require('vue')
+
 const kHydration = Symbol('kHydration')
-const kData = Symbol.for('kData')
 const kGlobal = Symbol.for('kGlobal')
+const kData = Symbol.for('kData')
+const kPayload = Symbol.for('kPayload')
 const kAPI = Symbol.for('kAPI')
 
 const isServer = typeof window === 'undefined'
@@ -51,7 +53,8 @@ function hydrate (app) {
   useGlobalProperties()[kHydration] = {
     $global: window[kGlobal],
     $data: window[kData],
-    $payloadPath: () => `/-/data${document.location.pathname}`,
+    $payload: window[kPayload],
+    $payloadPath: () => `/-/payload${document.location.pathname}`,
     $api: new Proxy({ ...window[kAPI] }, {
       get: manifetch({
         prefix: '',

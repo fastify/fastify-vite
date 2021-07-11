@@ -1,4 +1,4 @@
-import { useHydration } from 'fastify-vite-react/client'
+import { useHydration, isServer } from 'fastify-vite-react/client'
 
 export const path = '/data-fetching'
 
@@ -8,7 +8,7 @@ export async function getData ({ req, $api }) {
       ? req.query?.message ?? 'Hello from server'
       : 'Hello from client',
     result: await $api.method({
-      message: 'Hello from API method'
+      message: 'Hello from API method',
     }),
   }
 }

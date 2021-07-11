@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useHydration, isServer } from 'fastify-vite-react/client'
+import { useHydration } from 'fastify-vite-react/client'
 
 export const path = '/route-hooks'
 

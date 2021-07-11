@@ -67,24 +67,44 @@ async function fastifyVite (fastify, options) {
     post (url, { data, method, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    route (url, { getPayload, method, ...routeOptions } = {}) {
+    route (url, { getData, getPayload, method, ...routeOptions } = {}) {
       const preHandler = routeOptions.preHandler || []
-      if (getPayload) {
+      if (getData) {
         preHandler.push(
           async function (req, reply) {
-            req[options.hydration.data] = await getPayload.call(
+            req[options.hydration.data] = await getData.call(
               this,
               {
+                req,
+                reply,
                 $api: this.api && this.api.client,
                 fastify: this,
               },
-              req,
-              reply,
             )
           },
         )
-        fastify.get(`/-/data${url}`, async function (req, reply) {
-          return getPayload.call(this, req, reply)
+      }
+      if (getPayload) {
+        preHandler.push(
+          async function (req, reply) {
+            req[options.hydration.payload] = await getPayload.call(
+              this,
+              {
+                req,
+                reply,
+                $api: this.api && this.api.client,
+                fastify: this,
+              },
+            )
+          },
+        )
+        fastify.get(`/-/payload${url}`, async function (req, reply) {
+          return getPayload.call(this, {
+            req,
+            reply,
+            $api: this.api && this.api.client,
+            fastify: this,
+          })
         })
       }
       fastify.route({

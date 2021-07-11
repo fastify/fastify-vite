@@ -8,6 +8,9 @@
   ],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
+    'react/react-in-jsx-scope': 'off',
+    // TODO fix required in fastify-vite-react/context.js
+    'react/prop-types': 'off',
   },
   parserOptions: {
     ecmaFeatures: {

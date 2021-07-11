@@ -3,14 +3,16 @@ const manifetch = require('manifetch')
 const { useContext, useState, useEffect, useRef } = require('react')
 const { Context, ContextProvider } = require('./context')
 
-const noop = () => {}
-const dataKey = '$data'
-const globalDataKey = '$global'
+const kData = Symbol.for('kData')
+const kPayload = Symbol.for('kPayload')
+const kGlobal = Symbol.for('kGlobal')
+const kAPI = Symbol.for('kAPI')
+
 const isServer = typeof window === 'undefined'
 const rendered = { value: false }
-const fetch = isServer ? noop : window.fetch
+const fetch = isServer ? () => {} : window.fetch
 
-function useHydration (getData) {
+function useHydration ({ getData, getPayload } = {}) {
   const firstRender = useRef(rendered)
   const context = useContext(Context)
   if (isServer) {
@@ -22,32 +24,36 @@ function useHydration (getData) {
         firstRender.current.value = true
         return
       }
-      if (!getData) {
-        getData = async () => {
+      if (getPayload) {
+        console.log('getPayload is set')
+        const getPayloadFromClient = async () => {
           const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
         }
+        setter({ ...state, $loading: false })
+        console.log('getPayloadFromClient()')
+        getPayloadFromClient(context).then(($payload) => {
+          setter({ ...state, $payload, $loading: false })
+        })
+      } else if (getData) {
+        setter({ ...state, $loading: false })
+        getData(context).then(($data) => {
+          setter({ ...state, $data, $loading: false })
+        })
       }
-      setter({ ...state, $loading: false })
-      getData(context).then(($data) => {
-        setter({ ...state, $data, $loading: false })
-      })
     }, [])
     return state
   }
 }
 
 function hydrate (app) {
-  const dataSymbol = Symbol.for(dataKey)
-  const globalDataSymbol = Symbol.for(globalDataKey)
-  const apiSymbol = Symbol.for('fastify-vite-api')
   const context = {
-    [globalDataKey]: window[globalDataSymbol],
-    $payloadPath: () => `/-/data${document.location.pathname}`,
-    [dataKey]: window[dataSymbol],
-    $api: window[apiSymbol],
-    requests: [],
+    $global: window[kGlobal],
+    $payloadPath: () => `/-/payload${document.location.pathname}`,
+    $payload: window[kPayload],
+    $data: window[kData],
+    $api: window[kAPI],
   }
   context.$api = new Proxy(context.$api, {
     get: manifetch({

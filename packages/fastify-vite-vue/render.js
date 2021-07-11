@@ -10,8 +10,9 @@ const getRender = createApp => async function render (req, url, options) {
   // On the client, hydrate() from fastify-vite/hidrate repeats these steps
   app.config.globalProperties.$hydration = {
     [hydration.global]: req[hydration.global],
+    [hydration.payload]: req[hydration.payload],
     [hydration.data]: req[hydration.data],
-    $payloadPath: () => `/-/data${req.routerPath}`,
+    $payloadPath: () => `/-/payload${req.routerPath}`,
     $api: req.api && req.api.client,
   }
 
@@ -25,17 +26,21 @@ const getRender = createApp => async function render (req, url, options) {
 
   const globalData = req[options.hydration.global]
   const data = req[hydration.data] || app.config.globalProperties[hydration.data]
+  const payload = req[hydration.data] || app.config.globalProperties[hydration.data]
   const api = req.api ? req.api.meta : null
 
   let hydrationScript = ''
 
-  if (globalData || data || api) {
+  if (globalData || data || payload || api) {
     hydrationScript += '<script>'
     if (globalData) {
       hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
     }
     if (data) {
       hydrationScript += `window[Symbol.for('kData')] = ${devalue(data)}\n`
+    }
+    if (payload) {
+      hydrationScript += `window[Symbol.for('kPayload')] = ${devalue(payload)}\n`
     }
     if (api) {
       hydrationScript += `window[Symbol.for('kAPI')] = ${devalue(api)}\n`
