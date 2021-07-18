@@ -16,7 +16,6 @@ export const path = '/global-data'
 export default {
   async setup () {
     const ctx = await useHydration()
-    console.log('ctx', ctx)
     return { foobar: ctx.$global }
   }
 }

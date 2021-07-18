@@ -118,7 +118,6 @@ async function fastifyVite (fastify, options) {
   })
 
   for (const route of routes) {
-    console.log('route', route)
     fastify.vite.route(route.path, {
       method: route.method || 'GET',
       getData: route.getData,

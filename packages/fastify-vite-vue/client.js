@@ -102,7 +102,6 @@ function hydrate (app) {
     }),
   }
   assign(app.config.globalProperties, hydration)
-  console.log('app.config.globalProperties', app.config.globalProperties)
   delete window[kGlobal]
   delete window[kData]
   delete window[kAPI]

@@ -9,17 +9,12 @@ import { useHydration, isServer } from 'fastify-vite-vue/client'
 export const path = '/route-hooks'
 
 export async function onRequest (req) {
-  console.log('onRequest called')
   req.$data = { msg: 'hello from onRequest' }
 }
 
 export default {
   async setup () {
     const ctx = await useHydration()
-    console.log('isServer', isServer)
-    if (!isServer) {
-      window.ctx = ctx
-    }
     return { ctx }
   }
 }
