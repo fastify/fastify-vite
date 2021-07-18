@@ -1,53 +1,77 @@
 const manifetch = require('manifetch')
 
-const { useContext, useState, useEffect, useRef } = require('react')
+const { useContext, useState, useEffect } = require('react')
 const { Context, ContextProvider } = require('./context')
 
-const noop = () => {}
-const dataKey = '$data'
-const globalDataKey = '$global'
-const isServer = typeof window === 'undefined'
-const rendered = { value: false }
-const fetch = isServer ? noop : window.fetch
+const kData = Symbol.for('kData')
+const kPayload = Symbol.for('kPayload')
+const kGlobal = Symbol.for('kGlobal')
+const kAPI = Symbol.for('kAPI')
+const kFirstRender = Symbol.for('kFirstRender')
 
-function useIsomorphic (getData) {
-  const firstRender = useRef(rendered)
+const isServer = typeof window === 'undefined'
+const fetch = isServer ? () => {} : window.fetch
+
+if (!isServer) {
+  let firstRender = true
+  Object.defineProperty(window, kFirstRender, {
+    get () {
+      return firstRender
+    },
+    set (v) {
+      firstRender = v
+      return firstRender
+    },
+  })
+}
+
+if (!isServer) {
+  window.requestIdleCallback(() => {
+    window[kFirstRender] = false
+  })
+}
+
+function useHydration ({ getData, getPayload } = {}) {
   const context = useContext(Context)
   if (isServer) {
-    return context
+    return [context]
   } else {
     const [state, setter] = useState(context)
     useEffect(() => {
-      if (!firstRender.current.value) {
-        firstRender.current.value = true
+      if (window[kFirstRender]) {
         return
       }
-      if (!getData) {
-        getData = async () => {
-          const response = await fetch(context.$dataPath())
+      if (getPayload) {
+        const getPayloadFromClient = async () => {
+          const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
         }
+        setter({ ...state, $loading: true })
+        getPayloadFromClient(context).then(($payload) => {
+          setter({ ...state, $payload, $loading: false })
+        })
+      } else if (getData) {
+        setter({ ...state, $loading: true })
+        getData(context).then(($data) => {
+          setter({ ...state, $data, $loading: false })
+        })
       }
-      setter({ ...state, $loading: false })
-      getData(context).then(($data) => {
-        setter({ ...state, $data, $loading: false })
-      })
     }, [])
-    return state
+    const update = (payload) => {
+      setter({ ...state, ...payload })
+    }
+    return [state, update]
   }
 }
 
 function hydrate (app) {
-  const dataSymbol = Symbol.for(dataKey)
-  const globalDataSymbol = Symbol.for(globalDataKey)
-  const apiSymbol = Symbol.for('fastify-vite-api')
   const context = {
-    [globalDataKey]: window[globalDataSymbol],
-    $dataPath: () => `/-/data${document.location.pathname}`,
-    [dataKey]: window[dataSymbol],
-    $api: window[apiSymbol],
-    requests: [],
+    $global: window[kGlobal],
+    $payloadPath: () => `/-/payload${document.location.pathname}`,
+    $payload: window[kPayload],
+    $data: window[kData],
+    $api: window[kAPI],
   }
   context.$api = new Proxy(context.$api, {
     get: manifetch({
@@ -60,7 +84,7 @@ function hydrate (app) {
 
 module.exports = {
   isServer,
-  useIsomorphic,
+  useHydration,
   hydrate,
   ContextProvider,
 }

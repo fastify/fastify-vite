@@ -12,6 +12,7 @@ const defaults = {
   // For Vue 3, that means adding them to globalProperties
   hydration: {
     global: '$global',
+    payload: '$payload',
     data: '$data',
   },
   // Vite root app directory, whatever you set here

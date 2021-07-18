@@ -1,27 +1,43 @@
 import { Helmet } from 'react-helmet'
-import { Link, Route, Switch } from 'react-router-dom'
-import { loadRoutes } from 'fastify-vite-react/app'
-
-const views = import.meta.globEager('./pages/*.jsx')
-export const routes = loadRoutes(views)
+import { Route, Switch } from 'react-router-dom'
+import routes from './routes'
 
 export function App (props) {
   return (
     <>
       <Helmet>
-        <title>React test</title>
+        <title>fastify-vite-react examples</title>
         <style>{`
-          #app {
-            font-family: Avenir, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 60px;
-          }
+        #app {
+          font-family: Avenir, Helvetica, Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: #2c3e50;
+          margin-top: 60px;
+        }
+        body {
+          margin: 0px auto;
+          width: 500px;
+        }
+        ul {
+          margin: 0px;
+          padding: 0px;
+        }
+        li {
+          list-style-type: none;
+          padding-left:  0px;
+        }
+        li span {
+          margin-right: 0.5rem;
+        }
+        code {
+          font-weight:  bold;
+          font-size:  1rem;
+          color: #555;
+        }
         `}</style>
       </Helmet>
-      <Link to="/">Index</Link> - <Link to="/hello">Hello</Link>
+      <h1>Examples</h1>
       <Switch>
         {routes.map(({ path, component: RouteComp }) => {
           return (

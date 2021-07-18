@@ -1,5 +1,8 @@
-import { getRender } from 'fastify-vite-react/server'
+import { createRenderFunction } from 'fastify-vite-react/server'
 import { createApp } from '../main'
-import { routes } from '../base'
+import routes from '../routes'
 
-export const render = getRender({ createApp, routes })
+export default {
+  routes,
+  render: createRenderFunction(createApp),
+}

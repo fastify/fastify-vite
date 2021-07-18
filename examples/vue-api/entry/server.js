@@ -1,4 +1,8 @@
 import { createApp } from '../main'
-import { getRender } from 'fastify-vite-vue/server'
+import { createRenderFunction } from 'fastify-vite-vue/server'
+import routes from '../routes'
 
-export const render = getRender(createApp)
+export default {
+  routes,
+  render: createRenderFunction(createApp),
+}

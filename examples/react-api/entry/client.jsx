@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom'
 import { ContextProvider, hydrate } from 'fastify-vite-react/client'
 import { createApp } from '../main'
-import { routes } from '../base'
 
 const { App, router: Router } = createApp()
 
@@ -11,5 +10,5 @@ ReactDOM.hydrate(
       {App()}
     </ContextProvider>
   </Router>,
-  document.getElementById('app')
+  document.getElementById('app'),
 )

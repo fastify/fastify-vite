@@ -1,3 +1,3 @@
-const { getRender } = require('./render')
+const { createRenderFunction } = require('./render')
 
-module.exports = { getRender }
+module.exports = { createRenderFunction }

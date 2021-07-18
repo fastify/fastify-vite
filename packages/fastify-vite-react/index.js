@@ -1,8 +1,13 @@
 const { options } = require('./options')
-const { getHandler, getRenderGetter } = require('./handler')
+const { getHandler, getDevHandler } = require('./handler')
+const { getEntry, getDevEntry } = require('./entry')
 
 module.exports = {
   options,
   getHandler,
-  getRenderGetter,
+  getEntry,
+  dev: {
+    getHandler: getDevHandler,
+    getEntry: getDevEntry,
+  },
 }

@@ -26,13 +26,6 @@ async function main () {
   })
 
   fastify.vite.global = { foobar: 123 }
-  fastify.vite.get('/hello', {
-    data (req) {
-      return { message: `Hello from ${req.raw.url} - ${Math.random()}` }
-    },
-  })
-
-  fastify.vite.get('/*')
 
   return fastify
 }

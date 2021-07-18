@@ -18,10 +18,11 @@ async function fastifyVite (fastify, options) {
   }
 
   // Provided by the chosen rendering adapter
-  const { getHandler, getRenderGetter } = options.renderer
+  const renderer = options.renderer
 
   // We'll want access to this later
   let handler
+  let routes
   let vite
 
   // Setup appropriate Vite route handler
@@ -33,8 +34,9 @@ async function fastifyVite (fastify, options) {
     })
     await fastify.register(middie)
     fastify.use(vite.middlewares)
-    const getRender = getRenderGetter(options)
-    handler = getHandler(options, getRender, vite)
+    const entry = await renderer.dev.getEntry(options, vite)
+    handler = renderer.dev.getHandler(options, entry.getRender, vite)
+    routes = entry.routes
   } else {
     // For production you get the distribution version of the render function
     const { assetsDir } = options.vite.build
@@ -46,8 +48,9 @@ async function fastifyVite (fastify, options) {
       root: resolve(options.distDir, `client/${assetsDir}`),
       prefix: `/${assetsDir}`,
     })
-    const getRender = getRenderGetter(options)
-    handler = getHandler(options, getRender)
+    const entry = renderer.getEntry(options)
+    routes = entry.routes
+    handler = renderer.getHandler(options, entry.render)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -56,6 +59,7 @@ async function fastifyVite (fastify, options) {
     handler,
     options,
     global: undefined,
+    // Not available when NODE_ENV=production
     devServer: vite,
     get (url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
@@ -63,25 +67,73 @@ async function fastifyVite (fastify, options) {
     post (url, { data, method, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },
-    route (url, { data, method, ...routeOptions } = {}) {
-      let preHandler
-      if (data) {
-        preHandler = async function (req, reply) {
-          req[options.hydration.data] = await data.call(this, req, reply)
-        }
+    route (url, { getData, getPayload, method, ...routeOptions } = {}) {
+      const preHandler = routeOptions.preHandler || []
+      if (getData) {
+        preHandler.push(
+          async function (req, reply) {
+            req[options.hydration.data] = await getData.call(
+              this,
+              {
+                req,
+                reply,
+                $api: this.api && this.api.client,
+                fastify: this,
+              },
+            )
+          },
+        )
       }
-      fastify.get(`/-/data${url}`, async function (req, reply) {
-        return data.call(this, req, reply)
-      })
+      if (getPayload) {
+        preHandler.push(
+          async function (req, reply) {
+            req[options.hydration.payload] = await getPayload.call(
+              this,
+              {
+                req,
+                reply,
+                $api: this.api && this.api.client,
+                fastify: this,
+              },
+            )
+          },
+        )
+        fastify.get(`/-/payload${url}`, async function (req, reply) {
+          return getPayload.call(this, {
+            req,
+            reply,
+            $api: this.api && this.api.client,
+            fastify: this,
+          })
+        })
+      }
       fastify.route({
         method,
         url,
-        preHandler,
         handler,
         ...routeOptions,
+        preHandler,
       })
     },
   })
+
+  for (const route of routes) {
+    fastify.vite.route(route.path, {
+      method: route.method || 'GET',
+      getData: route.getData,
+      getPayload: route.getPayload,
+      onRequest: route.onRequest,
+      preParsing: route.preParsing,
+      preValidation: route.preValidation,
+      preHandler: route.preHandler,
+      preSerialization: route.preSerialization,
+      onError: route.onError,
+      onSend: route.onSend,
+      onResponse: route.onResponse,
+      onTimeout: route.onTimeout,
+    })
+  }
+
   fastify.addHook('onReady', () => {
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype
