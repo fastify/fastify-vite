@@ -7,7 +7,7 @@ export async function onRequest (req) {
 }
 
 export default function RouteHooks () {
-  const ctx = useHydration()
+  const [ctx] = useHydration()
 
   return (
     <>

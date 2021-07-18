@@ -4,16 +4,17 @@ import { useHydration } from 'fastify-vite-react/client'
 export const path = '/route-payload'
 
 export async function getPayload ({ req }) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   return {
     message: req?.query?.message || 'Hello from server',
   }
 }
 
 export default function RoutePayload () {
-  const ctx = useHydration({ getPayload })
-  console.log('ctx', ctx)
+  const [ctx, update] = useHydration({ getPayload })
   const [message, setMessage] = useState(null)
   async function refreshPayload () {
+    update({ $loading: true })
     const response = await window.fetch(`${
       ctx.$payloadPath()
     }?message=${
@@ -21,8 +22,8 @@ export default function RoutePayload () {
     }`)
     const json = await response.json()
     setMessage(json.message)
+    update({ $loading: false })
   }
-  console.log('ctx.$loading', ctx.$loading)
   if (ctx.$loading) {
     return (
       <>

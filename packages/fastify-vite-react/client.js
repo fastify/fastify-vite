@@ -1,30 +1,45 @@
 const manifetch = require('manifetch')
 
 const { useContext, useState, useEffect, useRef } = require('react')
+const { useLocation } = require('react-router-dom')
 const { Context, ContextProvider } = require('./context')
 
 const kData = Symbol.for('kData')
 const kPayload = Symbol.for('kPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
+const kFirstRender = Symbol.for('kFirstRender')
 
 const isServer = typeof window === 'undefined'
-const rendered = { value: false }
 const fetch = isServer ? () => {} : window.fetch
 
+if (!isServer) {
+  let firstRender = true
+  Object.defineProperty(window, kFirstRender, {
+    get () {
+      return firstRender
+    },
+    set (v) {
+      firstRender = v
+      return firstRender
+    }
+  })
+}
+
+if (!isServer) {
+  requestIdleCallback(() => {
+    window[kFirstRender] = false
+  })
+}
+
 function useHydration ({ getData, getPayload } = {}) {
-  const firstRender = useRef(rendered)
   const context = useContext(Context)
   if (isServer) {
-    return context
+    return [context]
   } else {
-    const [state, setter] = useState({
-      ...context,
-      $loading: firstRender.current.value && !!getPayload || !!getData,
-    })
+    const [state, setter] = useState(context)
     useEffect(() => {
-      if (firstRender.current.value) {
-        firstRender.current.value = true
+      if (window[kFirstRender]) {
         return
       }
       if (getPayload) {
@@ -32,19 +47,22 @@ function useHydration ({ getData, getPayload } = {}) {
           const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
-        }        
-        console.log('getPayloadFromClient()')
+        } 
+        setter({ ...state, $loading: true })
         getPayloadFromClient(context).then(($payload) => {
           setter({ ...state, $payload, $loading: false })
         })
       } else if (getData) {
-        console.log('About to run getData()')
+        setter({ ...state, $loading: true })
         getData(context).then(($data) => {
           setter({ ...state, $data, $loading: false })
         })
       }
     }, [])
-    return state
+    const update = (payload) => {
+      setter({ ...state, ...payload })
+    }
+    return [state, update]
   }
 }
 
