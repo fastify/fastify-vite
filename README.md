@@ -9,7 +9,7 @@
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
 
-**Part of a bigger effort** — see [video][video] and [slides][slides]).
+**Part of a bigger effort** — see [video][video] and [slides][slides].
 
 [slides]: https://docs.google.com/presentation/d/1416uSrpQe36EXS2z3Ry_HutQbuSImHqdsZJsyY1B0bI/
 [video]: https://www.youtube.com/watch?v=EuvcVD0oKCA&t=2s
@@ -22,7 +22,7 @@ Highly experimental, not yet ready for production. Install beta with:
 npm install fastify-vite@2.2.0-beta.3
 ```
 
-Documentation at this point is in [the examples][https://github.com/terixjs/fastify-vite/tree/main/examples].
+Documentation at this point is in [the examples](https://github.com/terixjs/fastify-vite/tree/main/examples).
 
 # Contributors
 
