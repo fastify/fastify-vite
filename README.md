@@ -28,6 +28,7 @@ Documentation at this point is in [the examples][https://github.com/terixjs/fast
 
 - [Jonas Galvez](https://twitter.com/anothergalvez) — **[Helloprint](https://helloprint.com)**
 - [Paul Isache](https://twitter.com/paul_isache) — **[NearForm](https://nearform.com)**
+- [Rafael Gonzaga](https://twitter.com/_rafaelgss) — **[Habit](https://habit.global)**
 
 # License
 
