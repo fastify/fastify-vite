@@ -26,7 +26,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0-beta.2",
+  "version": "2.2.0-beta.3",
   "dependencies": {
     "@vitejs/plugin-vue": "1.2.3",
     "@vitejs/plugin-vue-jsx": "1.1.5",
