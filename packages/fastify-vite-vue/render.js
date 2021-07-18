@@ -47,7 +47,7 @@ module.exports = { createRenderFunction }
 function getHydrationScript (req, context, hydration) {
   const globalData = req[hydration.global]
   const data = req[hydration.data] || context[hydration.data]
-  const payload = req[hydration.data] || context[hydration.data]
+  const payload = req[hydration.payload] || context[hydration.payload]
   const api = req.api ? req.api.meta : null
 
   let hydrationScript = ''
