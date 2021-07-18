@@ -1,0 +1,41 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext js --fix"
+  },
+  "bugs": {
+    "url": "https://github.com/galvez/fastify-vite/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Vue renderer for fastify-vite.",
+  "files": [
+    "client.js",
+    "handler.js",
+    "html.js",
+    "index.js",
+    "options.js",
+    "render.js",
+    "server.js",
+    "README.md"
+  ],
+  "homepage": "https://github.com/galvez/fastify-vite",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fastify-vite-vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galvez/fastify-vite.git"
+  },
+  "version": "2.2.0-beta.3",
+  "dependencies": {
+    "@vitejs/plugin-vue": "1.2.3",
+    "@vitejs/plugin-vue-jsx": "1.1.5",
+    "@vue/compiler-sfc": "3.1.1",
+    "@vue/server-renderer": "3.1.1",
+    "@vueuse/head": "0.6.0",
+    "devalue": "2.0.1",
+    "manifetch": "0.0.1",
+    "vue": "3.1.4",
+    "vue-router": "4.0.10"
+  }
+}

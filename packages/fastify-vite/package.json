@@ -1,0 +1,33 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext js --fix"
+  },
+  "bugs": {
+    "url": "https://github.com/galvez/fastify-vite/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Fastify plugin to serve Vite SSR applications.",
+  "files": [
+    "options.js",
+    "index.js",
+    "build.js",
+    "README.md"
+  ],
+  "homepage": "https://github.com/galvez/fastify-vite",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fastify-vite",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galvez/fastify-vite.git"
+  },
+  "version": "2.2.0-beta.3",
+  "dependencies": {
+    "fastify-static": "^4.0.1",
+    "fastify": "^3.17.0",
+    "middie": "^5.2.0",
+    "vite": "^2.3.7",
+    "degit": "2.8.4"
+  }
+}
