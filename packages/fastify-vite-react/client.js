@@ -1,7 +1,6 @@
 const manifetch = require('manifetch')
 
-const { useContext, useState, useEffect, useRef } = require('react')
-const { useLocation } = require('react-router-dom')
+const { useContext, useState, useEffect } = require('react')
 const { Context, ContextProvider } = require('./context')
 
 const kData = Symbol.for('kData')
@@ -22,12 +21,12 @@ if (!isServer) {
     set (v) {
       firstRender = v
       return firstRender
-    }
+    },
   })
 }
 
 if (!isServer) {
-  requestIdleCallback(() => {
+  window.requestIdleCallback(() => {
     window[kFirstRender] = false
   })
 }
@@ -47,7 +46,7 @@ function useHydration ({ getData, getPayload } = {}) {
           const response = await fetch(context.$payloadPath())
           const json = await response.json()
           return json
-        } 
+        }
         setter({ ...state, $loading: true })
         getPayloadFromClient(context).then(($payload) => {
           setter({ ...state, $payload, $loading: false })

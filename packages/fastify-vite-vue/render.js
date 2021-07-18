@@ -9,7 +9,7 @@ function createRenderFunction (createApp) {
     const { ctx, app, head, router } = createApp({ req })
 
     // On the client, hydrate() from fastify-vite/hidrate repeats these steps
-    app.config.globalProperties.$hydration = {
+    app.config.globalProperties = {
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],
       [hydration.data]: req[hydration.data],
@@ -92,7 +92,7 @@ function renderPreloadLinks (modules, manifest) {
 }
 
 // Based on https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js
-function getPreloadLink(file) {
+function getPreloadLink (file) {
   if (file.endsWith('.js')) {
     return `<link rel="modulepreload" crossorigin href="${file}">`
   } else if (file.endsWith('.css')) {

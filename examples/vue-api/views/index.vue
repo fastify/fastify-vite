@@ -1,48 +1,24 @@
 <template>
-  <h1>Examples</h1>
-  <ol>
+  <ul>
     <li>
-      <router-link :to="/isomorphic-data-fetching">
-        <code>useHydration()</code>, <code>getData()</code> and <code>$data</code>.
-      </router-link>
+      <router-link to="/global-data">Global Data</router-link><span>:</span>
+      <b>useHydration()</b> and <b>$global</b> data.
     </li>
     <li>
-      <router-link :to="/exporting-route-hooks">
-        <code>onRequest()</code>, <code>useHydration()</code> and <code>$data</code>.
-      </router-link>
+      <router-link to="/route-hooks">Route Hooks</router-link><span>:</span>
+      <b>onRequest()</b>, <b>useHydration()</b> and <b>$data</b>.
     </li>
-  </ol>
-  <p>
-    <code>useHydration()</code> and <code>$global</code> data.
-  </p>
+    <li>
+      <router-link to="/route-payload">Route Payload</router-link><span>:</span>
+      <b>useHydration()</b>, <b>getPayload()</b> and <b>$payloadPath</b>.
+    </li>
+    <li>
+      <router-link to="/data-fetching">Isomorphic API</router-link><span>:</span>
+      <b>useHydration()</b>, <b>getData()</b> and <b>$data</b>.
+    </li>
+  </ul>
 </template>
 
 <script>
-import { reactive, getCurrentInstance, ref } from 'vue'
-import { useHydration } from 'fastify-vite-vue/client'
-
-export async function getData ({ $api }) {
-  const msg = `hello from ${isServer ? 'server' : 'client'}`
-  const { json } = await $api.echo({ msg })
-  return json
-}
-
-export default {
-  async setup () {
-    const { $global, $data, $api } = await useHydration(getData)
-    const state = reactive({ count: 0, msg: $data.msg })
-    async function fetchFromEcho () {
-      const { json } = await $api.echo({ msg: 'hello from client' })
-      state.msg = json.msg
-    }
-    return { ctx, state, fetchFromEcho }
-  }
-}
+export const path = '/'
 </script>
-
-<style scoped>
-h1,
-a {
-  color: green;
-}
-</style>

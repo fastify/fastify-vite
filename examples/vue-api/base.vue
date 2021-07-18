@@ -1,8 +1,7 @@
 <template>
   <div>
-    <router-link to="/">Index</router-link> - 
-    <router-link to="/hello">Hello</router-link>
     <router-view v-slot="{ Component }">
+      <h1>Examples</h1>
       <Suspense>
         <component :key="route.path" :is="Component" />
       </Suspense>
@@ -35,8 +34,27 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+body {
+  margin: 0px auto;
+  width: 500px;
+}
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+li {
+  list-style-type: none;
+  padding-left:  0px;
+}
+li span {
+  margin-right: 0.5rem;
+}
+code {
+  font-weight:  bold;
+  font-size:  1rem;
+  color: #555;
 }
 </style>

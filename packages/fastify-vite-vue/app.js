@@ -12,7 +12,7 @@ function loadRoutes (views) {
       )
     } else if (view.path) {
       const { path, default: component, ...viewProps } = view
-      routes.push({ path, component, viewProps })
+      routes.push({ path, component, ...viewProps })
     } else {
       throw new Error('View components need to export a `path` property.')
     }

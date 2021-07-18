@@ -1,36 +1,26 @@
 <template>
-  <h1>Home</h1>
-  <p>Here's some global data from the server: {{ ctx.$global }}</p>
-  <button @click="state.count++">count is: {{ state.count }}</button>
-  <button @click="fetchFromEcho">msg is: {{ state.msg }}</button>
+  <h2>Registering Fastify route hooks via exports</h2>
+  <p>{{ ctx.$data ? ctx.$data.msg : 'Refresh (SSR) to get server data' }}</p>
 </template>
 
 <script>
-import { reactive, getCurrentInstance, ref } from 'vue'
-import { useHydration } from 'fastify-vite-vue/client'
+import { useHydration, isServer } from 'fastify-vite-vue/client'
+
+export const path = '/route-hooks'
 
 export async function onRequest (req) {
-  // Hook functions exported from a view 
-  // are bound to the current Fastify instance
-  req.$data = await this.api.client.echo({ msg: 'hello from server' })
+  console.log('onRequest called')
+  req.$data = { msg: 'hello from onRequest' }
 }
 
 export default {
   async setup () {
-    const { $global, $data, $api } = await useHydration()
-    const state = reactive({ count: 0, msg: $data.msg })
-    async function fetchFromEcho () {
-      const { json } = await $api.echo({ msg: 'hello from client' })
-      state.msg = json.msg
+    const ctx = await useHydration()
+    console.log('isServer', isServer)
+    if (!isServer) {
+      window.ctx = ctx
     }
-    return { ctx, state, fetchFromEcho }
+    return { ctx }
   }
 }
 </script>
-
-<style scoped>
-h1,
-a {
-  color: green;
-}
-</style>

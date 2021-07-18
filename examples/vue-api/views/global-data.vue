@@ -1,5 +1,5 @@
 <template>
-  <h1>Accessing Global Data from the Server</h1>
+  <h2>Accessing global data from the server</h2>
 
   <!-- Global Data comes from req.$global and it's already injected as globalProperties -->
   <p>{{ $global }}</p>
@@ -8,8 +8,16 @@
   <p>{{ foobar }}</p>
 </template>
 
-<script setup>
+<script>
 import { useHydration } from 'fastify-vite-vue/client'
 
-const { $global: foobar } = await useHydration()
+export const path = '/global-data'
+
+export default {
+  async setup () {
+    const ctx = await useHydration()
+    console.log('ctx', ctx)
+    return { foobar: ctx.$global }
+  }
+}
 </script>

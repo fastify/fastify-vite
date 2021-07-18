@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export const path = '/'
 
-export default function Index (props) {
+export default function Index () {
   return (
     <>
       <ul>
