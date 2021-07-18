@@ -7,7 +7,6 @@ const kData = Symbol.for('kData')
 const kPayload = Symbol.for('kPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
-const kHydration = Symbol.for('kHydration')
 const kFirstRender = Symbol('kFirstRender')
 
 const isServer = typeof window === 'undefined'
@@ -41,6 +40,9 @@ function useHydration ({ getData, getPayload } = {}) {
     $payloadPath: globalProps.$payloadPath,
     $api: globalProps.$api,
   }
+  globalProps.$data = undefined
+  globalProps.$payload = undefined
+
   if (isServer) {
     return hydration
   } else {

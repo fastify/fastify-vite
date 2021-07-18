@@ -20,5 +20,10 @@ export async function getData ({ req, $api }) {
   }
 }
 
-export default { setup: useHydration }
+export default {
+  async setup () {
+    const ctx = await useHydration({ getData })
+    return { ctx }
+  }
+}
 </script>
