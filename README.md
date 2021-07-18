@@ -19,7 +19,7 @@
 Highly experimental, not yet ready for production. Install beta with:
 
 ```bash
-npm install fastify-vite@2.2.0-beta.3
+npm install fastify-vite@2.2.0-beta.4
 ```
 
 Documentation at this point is in [the examples](https://github.com/terixjs/fastify-vite/tree/main/examples).

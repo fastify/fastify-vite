@@ -9,8 +9,10 @@
   "deprecated": false,
   "description": "Vue renderer for fastify-vite.",
   "files": [
+    "app.js",    
     "client.js",
     "handler.js",
+    "entry.js",
     "html.js",
     "index.js",
     "options.js",
@@ -26,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0-beta.3",
+  "version": "2.2.0-beta.4",
   "dependencies": {
     "@vitejs/plugin-vue": "1.2.3",
     "@vitejs/plugin-vue-jsx": "1.1.5",
