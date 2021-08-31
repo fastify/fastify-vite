@@ -59,8 +59,3 @@ async function getServer () {
 ├─ main.js
 └─ server.js
 ```
-
-## Routing
-
-...
-

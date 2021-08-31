@@ -1,36 +1,39 @@
 
+const Item = (text, link) => ({ text, link })
+
 const Guide = [
-  { text: 'Basic Setup', link: '/guide/setup' },
-  { text: 'Configuration', link: '/guide/config' },
-  { text: 'Modular Renderers', link: '/guide/renderers' },
-  { text: 'Environments', link: '/guide/environments' },
-  { text: 'Global Data', link: '/guide/global-data' },
-  { text: 'Route Hooks', link: '/guide/route-hooks' },
-  { text: 'Route Payload', link: '/guide/route-payload' },
-  { text: 'Isomorphic API', link: '/guide/isomorphic-api' },
-  { text: 'Live deployment', link: '/guide/deployment' },
-  { text: 'Static generation', link: '/guide/static' },
+  Item('Basic Setup', '/guide/setup'),
+  Item('Configuration', '/guide/config'),
+  Item('Environments', '/guide/environments'),
+  Item('Routing', '/guide/routing'),
+  Item('Global Data', '/guide/global-data'),
+  Item('Route Hooks', '/guide/route-hooks'),
+  Item('Route Payload', '/guide/route-payload'),
+  Item('Isomorphic API', '/guide/isomorphic-api'),
+  Item('Live Deployment', '/guide/deployment'),
+  Item('Static Generation', '/guide/static'),
+  Item('Renderer API', '/guide/renderers'),
 ]
 
 const Examples = [
-  { text: 'Vue + API', link: '/examples/vue' },
-  { text: 'React + API', link: '/examples/vue' },
-  { text: 'Vue + Integrated API', link: '/examples/vue-api' },
-  { text: 'React + Integrated API', link: '/examples/react-api' },
-  { text: 'HTTP clients', link: '/recipes/http-clients' },
-  { text: 'Redis cache', link: '/recipes/redis-cache' },
-  { text: 'ElementUI', link: '/recipes/elementui' },
-  { text: 'WindiCSS', link: '/recipes/windicss' },
-  { text: 'Storyblok', link: '/recipes/storyblok' },
-  { text: 'Contentful', link: '/recipes/contentful' },
+  Item('Vue + API', '/examples/vue'),
+  Item('React + API', '/examples/vue'),
+  Item('Vue + Integrated API', '/examples/vue-api'),
+  Item('React + Integrated API', '/examples/react-api'),
+  Item('HTTP clients', '/recipes/http-clients'),
+  Item('Redis cache', '/recipes/redis-cache'),
+  Item('ElementUI', '/recipes/elementui'),
+  Item('WindiCSS', '/recipes/windicss'),
+  Item('Storyblok', '/recipes/storyblok'),
+  Item('Contentful', '/recipes/contentful'),
 ]
 
 const Meta = [
-  { text: 'Motivation', link: '/meta/motivation' },
-  { text: 'Philosophy', link: '/meta/philosophy' },
-  { text: 'Contributing', link: '/meta/contributing' },
-  { text: 'Roadmap', link: '/meta/roadmap' },
-  { text: 'Team', link: '/meta/team' },
+  Item('Motivation', '/meta/motivation'),
+  Item('Philosophy', '/meta/philosophy'),
+  Item('Contributing', '/meta/contributing'),
+  Item('Roadmap', '/meta/roadmap'),
+  Item('Team', '/meta/team'),
 ]
 
 const DefaultSidebar = [
