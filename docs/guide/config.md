@@ -1,4 +1,4 @@
-# Config
+# Configuration
 
 **fastify-vite** tries to intefere as little as possible in configuring your
 Vite apps. So if you want to just have `vite.config.js` for all Vite settings,
@@ -52,4 +52,4 @@ const defaults = {
 }
 ```
 
-[**See all available configuration options for Vite**](https://vitejs.dev/config/).
+<b>[See all available configuration options for Vite](https://vitejs.dev/config/)</b>.

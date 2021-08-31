@@ -1,0 +1,12 @@
+{
+  "name": "docs",
+  "scripts": {
+    "docs:dev": "vitepress dev .",
+    "docs:build": "vitepress build ."
+  },
+  "dependencies": {
+    "autoprefixer": "^10.3.2",
+    "postcss-nesting": "^8.0.1",
+    "vitepress": "^0.16.1"
+  }
+}
