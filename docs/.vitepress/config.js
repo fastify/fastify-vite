@@ -2,10 +2,7 @@
 const Item = (text, link) => ({ text, link })
 
 const Guide = [
-  Item('Basic Setup', '/guide/setup'),
-  Item('Configuration', '/guide/config'),
-  Item('Environments', '/guide/environments'),
-  Item('Routing', '/guide/routing'),
+  Item('Basic Setup', '/guide/basic-setup'),
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
   Item('Route Payload', '/guide/route-payload'),
@@ -16,16 +13,14 @@ const Guide = [
 ]
 
 const Examples = [
-  Item('Vue + API', '/examples/vue'),
-  Item('React + API', '/examples/vue'),
-  Item('Vue + Integrated API', '/examples/vue-api'),
-  Item('React + Integrated API', '/examples/react-api'),
-  Item('HTTP clients', '/recipes/http-clients'),
-  Item('Redis cache', '/recipes/redis-cache'),
-  Item('ElementUI', '/recipes/elementui'),
-  Item('WindiCSS', '/recipes/windicss'),
-  Item('Storyblok', '/recipes/storyblok'),
-  Item('Contentful', '/recipes/contentful'),
+  Item('Vue Starter', '/examples/vue-starter'),
+  Item('React Starter', '/examples/react-starter'),
+  Item('HTTP clients', '/examples/http-clients'),
+  Item('Redis cache', '/examples/redis-cache'),
+  Item('ElementUI', '/examples/elementui'),
+  Item('WindiCSS', '/examples/windicss'),
+  Item('Storyblok', '/examples/storyblok'),
+  Item('Contentful', '/examples/contentful'),
 ]
 
 const Meta = [

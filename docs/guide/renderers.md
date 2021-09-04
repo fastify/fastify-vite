@@ -73,8 +73,6 @@ Depending on the framework and idioms employed, other helpers might be added. Fo
 </tr>
 </table>
 
-You can see an example of `createRenderFunction()` for Vue [here](...), and React [here](...).
-
 <table class="infotable">
 <tr>
 <td>
@@ -91,3 +89,12 @@ You can see an example of `createRenderFunction()` for Vue [here](...), and Reac
 </td>
 </tr>
 </table>
+
+The naming of these helper modules might be confusing. 
+
+The <b>server</b> module is supposed to be used <b>only</b> in a server context, that is, anything exported from it should only be imported in code that's required to only run in a Node.js context. 
+
+The <b>client</b> module is <i>everything pertaining to the client</i>, and its exports <b>should be isomorphic in nature</b>, that is, it should be impossible import the helper `client` module both in SSR (Node.js) and client (browser) contexts. Perhaps a better name for this module would be `universal`, not `client`, and this might still change in future versions of <b>fastify-vite</b>.
+
+You can see the full pattern employed by the Vue and React fastify-vite renderers in the [base-vue]() and [base-react]() examples. You'll see for instance `createRenderFunction()` for Vue [imported here](...), and for React [imported here](...). And the client imports for Vue [here](...), and for React [here](...).
+
