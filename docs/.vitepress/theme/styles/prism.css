@@ -30,7 +30,7 @@ pre[class*="language-"] {
 }
 
 pre > code[class*="language-"] {
-  font-size: 1em;
+  font-size: 1em !important;
 }
 
 pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,

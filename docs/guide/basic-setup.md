@@ -1,10 +1,55 @@
+getHydrationScript
+renderPreloadLinks
+getPreloadLink
+
+
 # Basic Setup
 
 <b>fastify-vite</b> is designed to provide _core_ <b>SSR</b>, 
 <b>client hydration</b> and <b>data fetching</b> capabilities to Vite apps, judiciously limiting the amount of complexity and arbitrary additions. 
 
+In that sense, the absolute minimum options you're required to provide are: 
+
+Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps submit a Pull Request if you do.
+
+And your Vite app is expected to match this basic structure:
+
+<table class="infotable">
+<tr>
+<td style="width: 20%">
+<div class="language-"><pre><code>
+├─ entry/
+│  ├─ client.js
+│  └─ server.js
+├─ views/
+│  ├─ index.vue
+│  └─ about.vue
+├─ index.html
+├─ base.vue
+├─ routes.js
+├─ main.js
+└─ <b style="color: #ec6f2d">server.js</b>
+</code></pre></div>
+</td>
+<td>
+
+```js
+await fastify.register(fastifyVite, {
+  root: __dirname,
+  renderer: fastifyViteReact,
+  entry: {
+    client: '/entry/client.jsx',
+    server: '/entry/server.jsx',
+  },
+})
+```
+
+</td>
+</tr>
+</table>
+
 ::: tip
-In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to ever mess around with.
+In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to mess around with.
 :::
 
 ## Configuration
@@ -17,6 +62,41 @@ that will just work as expected. However, you can also use the `vite` key
 when passing options to the `fastify.register()` call.
 
 [Here](...) you can see the internal `options.js`, which lists all defaults too.
+
+<table class="infotable">
+<tr style="width: 100%">
+<td style="width: 20%">
+<strong>Required</strong>
+<br><br>
+</td>
+<td class="code-h" style="width: 80%">
+<code class="h inline-block">root</code>
+—— The Vite client app's source root
+<br><br>
+<code class="h inline-block">renderer</code>
+—— <b>fastify-vite</b>'s <a href="./renderers">renderer adapter</a>
+<br><br>
+</td>
+</tr>
+</table>
+
+<table class="infotable">
+<tr style="width: 100%">
+<td style="width: 20%">
+<strong>Optional</strong>
+<br><br>
+</td>
+<td>
+<code class="h inline-block">entry.client</code>
+—— The Vite client app's client entry point
+<br><br>
+<code class="h inline-block">entry.server</code>
+—— The Vite client app's client entry point
+</td>
+</tr>
+</table>
+
+## Vite defaults
 
 ```js
   hydration: {

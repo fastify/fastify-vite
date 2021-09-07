@@ -1,12 +1,13 @@
 code {
   margin: 0;
   border-radius: 3px;
-  /*padding: .25rem .5rem;*/
+  padding: 0 !important;
   font-family: var(--code-font-family);
-  font-size: .85em;
+  font-size: .95em;
+  font-weight: 500;
   color: var(--c-text-light);
   color: #ffcc99;
-  /*background-color: var(--code-inline-bg-color);*/
+  background-color: transparent !important;
 }
 
 code.h {

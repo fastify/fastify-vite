@@ -1,8 +1,12 @@
 # Global Data
 
+You can easily make data from the server <b>globally available</b>b> (and properly client hydrated) by simply assigning to `fastify.vite.global`:
+
 ```js
 fastify.vite.global = { foobar: 123 }
 ```
+
+This object will be serialized into the HTML document as `window[kGlobal]`
 
 ## Vue
 

@@ -1,17 +1,5 @@
 # Renderer API
 
-<style>
-.infotable {
-  display: table;
-  width: 100%;
-  font-size: 0.8em;
-}
-.small {
-  font-size: 0.9em;
-  color: #ec6f2d;
-}
-</style>
-
 <b>fastify-vite</b> has a modular renderer API that aims to allow you to use it with any framework, as long as you provide _the right adapter_. Quoting the introductory example:
 
 ```js
