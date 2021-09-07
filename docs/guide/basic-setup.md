@@ -8,11 +8,82 @@ getPreloadLink
 <b>fastify-vite</b> is designed to provide _core_ <b>SSR</b>, 
 <b>client hydration</b> and <b>data fetching</b> capabilities to Vite apps, judiciously limiting the amount of complexity and arbitrary additions. 
 
-In that sense, the absolute minimum options you're required to provide are: 
+You can use this plugin to <b>serve</b> a Vite SSR application — or — <b>statically generate a build</b> from it.
 
 Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps submit a Pull Request if you do.
 
-And your Vite app is expected to match this basic structure:
+## Vue 3
+
+To illustrate what a <b>fastify-vite</b> app looks like, let's go over the files that compose 
+
+<b>fastify-vite</b>'s 
+[base Vue 3 starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
+
+[vue-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
+[ssr-vue]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue
+[playground]: https://github.com/vitejs/vite/tree/main/packages/playground
+
+<table class="infotable">
+<tr>
+<td style="width: 20%">
+<div class="language-"><pre><code>
+├─ entry/
+│  ├─ client.js
+│  └─ server.js
+├─ views/
+│  ├─ index.vue
+│  └─ about.vue
+├─ index.html
+├─ base.vue
+├─ routes.js
+├─ main.js
+└─ <b style="color: #ec6f2d">server.js</b>
+</code></pre></div>
+</td>
+<td>
+
+```js
+
+const fastify = require('fastify')()
+const fastifyVite = require('fastify-vite')
+const fastifyViteVue = require('fastify-vite-vue')
+
+async function main () {
+  await fastify.register(fastifyVite, {
+    api: true,
+    root: __dirname,
+    renderer: fastifyViteVue,
+  })
+
+  return fastify
+}
+
+if (require.main === module) {
+  fastifyVite.app(main, (fastify) => {
+    fastify.listen(3000, (err, address) => {
+      if (err) {
+        console.error(err)
+        process.exit(1)
+      }
+      console.log(`Server listening on ${address}`)
+    })
+  })
+}
+
+module.exports = main
+```
+
+</td>
+</tr>
+</table>
+
+You may notice instantly `main()` doesn't call `fastify.listen()` directly. This is an established <b>_idiom_</b> to facilitate <b>testing</b>, that is, having a function that returns the preconfigured Fastify instance.
+
+But the reason why it's done in the above snippet is so that it can be used in conjunction with `fastifyVite.app()`, a helper that will make `server.js` respond to a `build` command. Running the following command would then trigger the Vite build for your app instead of booting the server:
+
+```
+node server.js build
+```
 
 <table class="infotable">
 <tr>
@@ -47,6 +118,7 @@ await fastify.register(fastifyVite, {
 </td>
 </tr>
 </table>
+
 
 ::: tip
 In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to mess around with.

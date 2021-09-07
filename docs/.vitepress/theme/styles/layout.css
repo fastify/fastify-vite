@@ -310,7 +310,7 @@ td > pre {
 .infotable {
   display: table;
   width: 100%;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   & code {
     padding: .25rem .5em !important;
   }
