@@ -79,6 +79,10 @@ function hydrate (app) {
       fetch: (...args) => window.fetch(...args),
     }),
   })
+  delete window[kGlobal]
+  delete window[kData]
+  delete window[kPayload]
+  delete window[kAPI]
   return context
 }
 

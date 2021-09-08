@@ -42,7 +42,9 @@ function createRenderFunction (createApp) {
   }
 }
 
-module.exports = { createRenderFunction }
+module.exports = {
+  createRenderFunction,
+}
 
 function getHydrationScript (req, context, hydration) {
   const globalData = req[hydration.global]

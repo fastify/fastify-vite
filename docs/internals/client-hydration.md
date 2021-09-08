@@ -61,6 +61,16 @@ function getHydrationScript (req, context, hydration) {
 </tr>
 </table>
 
+The first parameter it receives is Fastify's Request object, followed by the SSR rendering `context` and the `hydration` key from the plugin options. Typically you won't want to change these.
+
+::: tip
+I found out later SolidJS has a [similar abstraction][solid-js-hydration] for this. Sadly, we do not have a <b>renderer adapter</b> for SolidJS yet but it certainly looks very feasible. [Pull Requests]() welcome.
+
+[solid-js-hydration]: https://www.solidjs.com/guide#hydration-script
+:::
+
+On the client, you can use the `hydrate()` function provided by <b>fastify-vite-vue</b>:
+
 <table class="infotable">
 <tr style="width: 100%">
 <td style="width: 20%">
@@ -90,6 +100,7 @@ function hydrate (app) {
   assign(app.config.globalProperties, hydration)
   delete window[kGlobal]
   delete window[kData]
+  delete window[kPayload]
   delete window[kAPI]
 }
 ```
@@ -98,11 +109,44 @@ function hydrate (app) {
 </tr>
 </table>
 
-::: tip
-I found out later SolidJS has a [similar abstraction][solid-js-hydration] for this. Sadly, we do not have a <b>renderer adapter</b> for SolidJS yet but it certainly looks very feasible. [Pull Requests]() welcome.
-:::
+Or <b>fastify-vite-react</b>:
 
+<table class="infotable">
+<tr style="width: 100%">
+<td style="width: 20%">
+<strong>hydrate()</strong>
+<br><br>
+<span style="font-size: 0.7rem">
+<b>React</b> version
+</span>
+</td>
+<td class="code-h" style="width: 80%">
 
+```js
 
-[solid-js-hydration]: https://www.solidjs.com/guide#hydration-script
+function hydrate (app) {
+  const context = {
+    $global: window[kGlobal],
+    $payloadPath: () => `/-/payload${document.location.pathname}`,
+    $payload: window[kPayload],
+    $data: window[kData],
+    $api: new Proxy({ ...window[kAPI] }, {
+      get: manifetch({
+        prefix: '',
+        fetch: (...args) => fetch(...args),
+      }),
+    }),
+  }
+  delete window[kGlobal]
+  delete window[kData]
+  delete window[kPayload]
+  delete window[kAPI]
+  return context
+}
+```
 
+</td>
+</tr>
+</table>
+
+Both are practically the same, and like `getHydrationScript()`, can also very easily be replaced with your own if you need to. In that case you'd provide it directly in your application's <b>client entry point</b> instead of importing from <b>fastify-vite-vue/client</b> or <b>fastify-vite-react/client</b>.

@@ -17,20 +17,21 @@ const Guide = [
 
 const Internals = [
   Item('Client Hydration', '/internals/client-hydration'),
-  Item('Renderer API', '/internals/renderers'),
+  Item('Renderer API', '/internals/renderer-api'),
 ]
 
+/*
 const Examples = [
   Item('HTTP clients', '/examples/http-clients'),
   Item('Redis cache', '/examples/redis-cache'),
-  /*
   Item('ElementUI', '/examples/elementui'),
   Item('WindiCSS', '/examples/windicss'),
   Item('Storyblok', '/examples/storyblok'),
   Item('Contentful', '/examples/contentful'),
-  */
 ]
+*/
 
+/*
 const Meta = [
   Item('Motivation', '/meta/motivation'),
   Item('Philosophy', '/meta/philosophy'),
@@ -38,12 +39,13 @@ const Meta = [
   Item('Roadmap', '/meta/roadmap'),
   Item('Team', '/meta/team'),
 ]
+*/
 
 const DefaultSidebar = [
   { text: 'Guide', children: Guide },
   { text: 'Internals', children: Internals },
-  { text: 'Examples', children: Examples },
-  { text: 'Meta', children: Meta },
+  // { text: 'Examples', children: Examples },
+  // { text: 'Meta', children: Meta },
 ]
 
 module.exports = {
@@ -61,14 +63,10 @@ module.exports = {
         text: 'Internals',
         items: Internals,
       },
-      {
-        text: 'Examples',
-        items: Examples,
-      },
-      {
-        text: 'Meta',
-        items: Meta,
-      },
+      // {
+      //   text: 'Meta',
+      //   items: Meta,
+      // },
     ],
     sidebar: {
       '/': DefaultSidebar,

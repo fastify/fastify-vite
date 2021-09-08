@@ -245,7 +245,7 @@ You can set view route paths directly from Vue files by using the `loadRoutes()`
 
 import { loadRoutes } from 'fastify-vite-react/app'
 
-export default loadRoutes(import.meta.globEager('./views/*.vue'))
+export default loadRoutes(import.meta.globEager('./views/*.jsx'))
 ```
 
 </td>
