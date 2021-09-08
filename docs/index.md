@@ -16,6 +16,13 @@ A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js an
 - Provides generic utilities for [client hydration](/guide/route-payload) and [isomorphic data fetching](/guide/isomorphic-api).
 - No magic application folder (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor](...).
 
+<b>fastify-vite</b> is designed to provide _core_ <b>SSR</b>, 
+<b>client hydration</b> and <b>data fetching</b> capabilities to Vite apps, judiciously limiting the amount of complexity and arbitrary additions. 
+
+You can use this plugin to <b>serve</b> a Vite SSR application — or — <b>statically generate a build</b> from it.
+
+Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps submit a Pull Request if you do.
+
 <b style="font-size: 2em">[Get started here]()</b>.
 
 ## New to Fastify?

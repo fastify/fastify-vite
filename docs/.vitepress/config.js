@@ -2,7 +2,9 @@
 const Item = (text, link) => ({ text, link })
 
 const Guide = [
-  Item('Basic Setup', '/guide/basic-setup'),
+  Item('Using Vue', '/guide/vue'),
+  Item('Using React', '/guide/react'),
+  Item('Client Hydration', '/guide/client-hydration'),
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
   Item('Route Payload', '/guide/route-payload'),
@@ -13,8 +15,6 @@ const Guide = [
 ]
 
 const Examples = [
-  Item('Vue Starter', '/examples/vue-starter'),
-  Item('React Starter', '/examples/react-starter'),
   Item('HTTP clients', '/examples/http-clients'),
   Item('Redis cache', '/examples/redis-cache'),
   Item('ElementUI', '/examples/elementui'),

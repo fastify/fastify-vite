@@ -2,19 +2,7 @@ getHydrationScript
 renderPreloadLinks
 getPreloadLink
 
-
-# Basic Setup
-
-<b>fastify-vite</b> is designed to provide _core_ <b>SSR</b>, 
-<b>client hydration</b> and <b>data fetching</b> capabilities to Vite apps, judiciously limiting the amount of complexity and arbitrary additions. 
-
-You can use this plugin to <b>serve</b> a Vite SSR application — or — <b>statically generate a build</b> from it.
-
-Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps submit a Pull Request if you do.
-
-## Vue 3
-
-To illustrate what a <b>fastify-vite</b> app looks like, let's go over the files that compose 
+# Using React
 
 <b>fastify-vite</b>'s 
 [base Vue 3 starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
@@ -79,19 +67,26 @@ module.exports = main
 
 You may notice instantly `main()` doesn't call `fastify.listen()` directly. This is an established <b>_idiom_</b> to facilitate <b>testing</b>, that is, having a function that returns the preconfigured Fastify instance.
 
-But the reason why it's done in the above snippet is so that it can be used in conjunction with `fastifyVite.app()`, a helper that will make `server.js` respond to a `build` command. Running the following command would then trigger the Vite build for your app instead of booting the server:
+But the reason why it's done in the above snippet is so that it can be used in conjunction with `fastifyVite.app()`, a helper that will make `server.js` respond to a `build` command. Running the following command would then <b>trigger the Vite build</b> for your app instead of booting the server:
 
-```
-node server.js build
-```
+<code style="font-size: 1.2em">$ node server.js build</code>
+
+
+::: tip
+This is the equivalent of [nuxt build]() and [next build]().
+:::
+
+The second difference from Vite's official Vue 3 SSR example is the [server entry point][server-entry-point]. Instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array.
+
+[server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js 
 
 <table class="infotable">
 <tr>
 <td style="width: 20%">
 <div class="language-"><pre><code>
-├─ entry/
+├─ <b style="color: #ec6f2d">entry/</b>
 │  ├─ client.js
-│  └─ server.js
+│  └─ <b style="color: #ec6f2d">server.js</b>
 ├─ views/
 │  ├─ index.vue
 │  └─ about.vue
@@ -99,26 +94,29 @@ node server.js build
 ├─ base.vue
 ├─ routes.js
 ├─ main.js
-└─ <b style="color: #ec6f2d">server.js</b>
+└─ server.js
 </code></pre></div>
 </td>
 <td>
 
 ```js
-await fastify.register(fastifyVite, {
-  root: __dirname,
-  renderer: fastifyViteReact,
-  entry: {
-    client: '/entry/client.jsx',
-    server: '/entry/server.jsx',
-  },
-})
+
+import { createApp } from '../main'
+import { createRenderFunction } from 'fastify-vite-vue/server'
+import routes from '../routes'
+
+export default {
+  routes,
+  render: createRenderFunction(createApp),
+}
 ```
 
 </td>
 </tr>
 </table>
 
+
+The reason this routes array is optional is that you can still manually register Fastify
 
 ::: tip
 In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to mess around with.
