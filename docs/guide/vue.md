@@ -2,7 +2,7 @@
 # Using Vue
 
 <b>fastify-vite</b>'s 
-[base Vue 3 starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
+[base Vue 3+ starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
 
 [vue-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
 [ssr-vue]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue
@@ -115,11 +115,65 @@ export default {
 </tr>
 </table>
 
+For the <b>client</b> entry point, things are nearly exact the same as [the original example][client-entry-point], the only addition being the `hydrate()` import and call seen in the snippet below. 
+
+[client-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-client.js 
+
+<table class="infotable">
+<tr>
+<td style="width: 20%">
+<div class="language-"><pre><code>
+├─ <b style="color: #ec6f2d">entry/</b>
+│  ├─ <b style="color: #ec6f2d">client.js</b>
+│  └─ server.js
+├─ views/
+│  ├─ index.vue
+│  └─ about.vue
+├─ index.html
+├─ base.vue
+├─ routes.js
+├─ main.js
+└─ server.js
+</code></pre></div>
+</td>
+<td>
+
+```js
+
+import { createApp } from '../main'
+import { hydrate } from 'fastify-vite-vue/client'
+const { app, router } = createApp()
+
+hydrate(app)
+
+// Wait until router is ready before 
+// mounting to ensure hydration match
+router.isReady().then(() => app.mount('#app'))
+```
+
+</td>
+</tr>
+</table>
+
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
+
 ## Routing Setup
 
-Likewise, providing a `routes` array is what ensures you can have individual Fastify [route hooks](), [payloads]() and [isomorphic data fetching]() for each of your VueRouter routes.
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](), [payloads]() and [isomorphic data fetching]() for each of your [Vue Router][vue-router] routes. That is, <b>fastify-vite</b> [will use]() this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
 
-Fastify uses an [extremely fast router based on a radix tree][find-my-way], making the overhead of this layering of routers minimal. Ideally, [VueRouter][vue-router] would provide a way to preset a route during SSR, like React's [StaticRouter][static-router] (a router that never changes location) but this is not supported yet.
+[vue-router]: https://router.vuejs.org/
+
+::: tip
+<b>If you don't export</b> `routes`, you have to tell Fastify what routes you want rendering your SSR application:
+
+```js
+fastify.vite.get('/*')
+```
+
+And in this case, any <b>_hooks_</b> or <b>_data functions_</b> exported directly from your Vue files <b>would be ignored</b>.
+:::
+
+Fastify uses an [extremely fast router based on a radix tree][find-my-way], making the overhead of this layering of routers minimal. Ideally, [Vue Router][vue-router] would provide a way to preset a route during SSR, like React's [StaticRouter][static-router] (a router that never changes location) but this is not supported yet.
 
 [find-my-way]: https://github.com/delvedor/find-my-way
 [static-router]: https://reactrouter.com/web/api/StaticRouter
@@ -162,7 +216,7 @@ export default [
 </tr>
 </table>
 
-You can set view route paths directly from Vue files by using the `loadRoutes()` helper provided by <b>fastify-vite-vue</b>. It will collect hooks (functions named after any of [Fastify's route hooks](), [payload]() and [isomorphic data]() functions that you have exported directly from your Vue files.
+You can set view route paths directly from Vue files by using the `loadRoutes()` helper provided by <b>fastify-vite-vue</b>. It will collect route data functions that you may have exported directly from your Vue files. See more in <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
 
 <table class="infotable">
 <tr>
@@ -195,6 +249,3 @@ export default loadRoutes(import.meta.globEager('./views/*.vue'))
 </table>
 
 
-::: tip
-In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to mess around with.
-:::

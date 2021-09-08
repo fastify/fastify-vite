@@ -1,14 +1,11 @@
-getHydrationScript
-renderPreloadLinks
-getPreloadLink
 
 # Using React
 
 <b>fastify-vite</b>'s 
-[base Vue 3 starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
+[base React 17 starter boilerplate](...) is based on the [official React SSR example][ssr-react] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][vue-server.js] can be replaced with the following Fastify server initialization boilerplate:
 
-[vue-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
-[ssr-vue]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue
+[react-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/server.js
+[ssr-react]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react
 [playground]: https://github.com/vitejs/vite/tree/main/packages/playground
 
 <table class="infotable">
@@ -16,13 +13,13 @@ getPreloadLink
 <td style="width: 20%">
 <div class="language-"><pre><code>
 ├─ entry/
-│  ├─ client.js
-│  └─ server.js
+│  ├─ client.jsx
+│  └─ server.jsx
 ├─ views/
-│  ├─ index.vue
-│  └─ about.vue
+│  ├─ index.jsx
+│  └─ about.jsx
 ├─ index.html
-├─ base.vue
+├─ base.jsx
 ├─ routes.js
 ├─ main.js
 └─ <b style="color: #ec6f2d">server.js</b>
@@ -34,13 +31,12 @@ getPreloadLink
 
 const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
-const fastifyViteVue = require('fastify-vite-vue')
+const fastifyViteReact = require('fastify-vite-react')
 
 async function main () {
   await fastify.register(fastifyVite, {
-    api: true,
     root: __dirname,
-    renderer: fastifyViteVue,
+    renderer: fastifyViteReact,
   })
 
   return fastify
@@ -71,25 +67,28 @@ But the reason why it's done in the above snippet is so that it can be used in c
 
 <code style="font-size: 1.2em">$ node server.js build</code>
 
-
 ::: tip
-This is the equivalent of [nuxt build]() and [next build]().
+This mimics the behavior of [vite build](), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
 :::
 
-The second difference from Vite's official Vue 3 SSR example is the [server entry point][server-entry-point]. Instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array.
+## Entry Points 
 
-[server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js 
+The next differences from Vite's official Vue 3 SSR example are the <b>server</b> and <b>client</b> entry points.
+
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-react</b>, `createRenderFunction()`, which will automate things like [client hydration]() and add support for [route hooks](), [payloads]() and [isomorphic data fetching]().
+
+[server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/src/entry-server.js 
 
 <table class="infotable">
 <tr>
 <td style="width: 20%">
 <div class="language-"><pre><code>
 ├─ <b style="color: #ec6f2d">entry/</b>
-│  ├─ client.js
-│  └─ <b style="color: #ec6f2d">server.js</b>
+│  ├─ client.jsx
+│  └─ <b style="color: #ec6f2d">server.jsx</b>
 ├─ views/
-│  ├─ index.vue
-│  └─ about.vue
+│  ├─ index.jsx
+│  └─ about.jsx
 ├─ index.html
 ├─ base.vue
 ├─ routes.js
@@ -102,7 +101,7 @@ The second difference from Vite's official Vue 3 SSR example is the [server entr
 ```js
 
 import { createApp } from '../main'
-import { createRenderFunction } from 'fastify-vite-vue/server'
+import { createRenderFunction } from 'fastify-vite-react/server'
 import routes from '../routes'
 
 export default {
@@ -115,156 +114,142 @@ export default {
 </tr>
 </table>
 
+For the <b>client</b> entry point, things are nearly exact the same as [the original example][client-entry-point], the only addition being the `hydrate()` import and call seen in the snippet below. 
 
-The reason this routes array is optional is that you can still manually register Fastify
-
-::: tip
-In Nuxt.js and Next.js, you can get started with a single component file. These frameworks allow this by doing a lot of heavy lifting <b>hidden from your eyes</b>, relying on a runtime that will pick up the files you provide and stitch together a full blown app, kept in a `.nuxt` or `.next` folder, that you're not supposed to mess around with.
-:::
-
-## Configuration
-
-**fastify-vite** tries to intefere as little as possible in configuring your
-Vite apps. 
-
-So if you want to just have `vite.config.js` for all Vite settings,
-that will just work as expected. However, you can also use the `vite` key
-when passing options to the `fastify.register()` call.
-
-[Here](...) you can see the internal `options.js`, which lists all defaults too.
+[client-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/src/entry-client.js 
 
 <table class="infotable">
-<tr style="width: 100%">
+<tr>
 <td style="width: 20%">
-<strong>Required</strong>
-<br><br>
-</td>
-<td class="code-h" style="width: 80%">
-<code class="h inline-block">root</code>
-—— The Vite client app's source root
-<br><br>
-<code class="h inline-block">renderer</code>
-—— <b>fastify-vite</b>'s <a href="./renderers">renderer adapter</a>
-<br><br>
-</td>
-</tr>
-</table>
-
-<table class="infotable">
-<tr style="width: 100%">
-<td style="width: 20%">
-<strong>Optional</strong>
-<br><br>
+<div class="language-"><pre><code>
+├─ <b style="color: #ec6f2d">entry/</b>
+│  ├─ <b style="color: #ec6f2d">client.jsx</b>
+│  └─ server.jsx
+├─ views/
+│  ├─ index.jsx
+│  └─ about.jsx
+├─ index.html
+├─ base.vue
+├─ routes.js
+├─ main.js
+└─ server.js
+</code></pre></div>
 </td>
 <td>
-<code class="h inline-block">entry.client</code>
-—— The Vite client app's client entry point
-<br><br>
-<code class="h inline-block">entry.server</code>
-—— The Vite client app's client entry point
+
+```js
+
+import ReactDOM from 'react-dom'
+import { ContextProvider, hydrate } from 'fastify-vite-react/client'
+import { createApp } from '../main'
+
+const { App, router: Router } = createApp()
+
+ReactDOM.hydrate(
+  <Router>
+    <ContextProvider context={hydrate()}>
+      {App()}
+    </ContextProvider>
+  </Router>,
+  document.getElementById('app'),
+)
+```
+
 </td>
 </tr>
 </table>
 
-## Vite defaults
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
+
+## Routing Setup
+
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](), [payloads]() and [isomorphic data fetching]() for each of your [Vue Router][vue-router] routes. That is, <b>fastify-vite</b> [will use]() this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
+
+[vue-router]: https://router.vuejs.org/
+
+::: tip
+<b>If you don't export</b> `routes`, you have to tell Fastify what routes you want rendering your SSR application:
 
 ```js
-  hydration: {
-    global: '$global',
-    data: '$data',
-  },
-  // Vite root app directory, whatever you set here
-  // is also set under `vite.root` so Vite picks it up
-  root: process.cwd(),
-  // App's entry points for generating client and server builds
-  entry: {
-    // This differs from Vite's choice for its playground examples,
-    // which is having entry-client.js and entry-server.js files on
-    // the same top-level folder. For better organization fastify-vite
-    // expects them to be grouped under /entry
-    client: '/entry/client.js',
-    server: '/entry/server.js'
-  },
-  // Any Vite configuration option set here
-  // takes precedence over <root>/vite.config.js
-  vite: {
-    // Vite's logging level
-    logLevel: dev ? 'error' : 'info',
-    // Vite plugins needed for Vue 3 SSR to fully work
-    plugins: [
-      vuePlugin(),
-      vueJsx()
-    ],
-    // Base build settings, default values
-    // for assetsDir and outDir match Vite's defaults
-    build: {
-      assetsDir: 'assets',
-      outDir: 'dist',
-      minify: !dev,
-    },
-  }
-}
+fastify.vite.get('/*')
 ```
 
-<b>[See all available configuration options for Vite](https://vitejs.dev/config/)</b>.
+And in this case, any <b>_hooks_</b> or <b>_data functions_</b> exported directly from your Vue files <b>would be ignored</b>.
+:::
+
+Fastify uses an [extremely fast router based on a radix tree][find-my-way], making the overhead of this layering of routers minimal. Ideally, [Vue Router][vue-router] would provide a way to preset a route during SSR, like React's [StaticRouter][static-router] (a router that never changes location) but this is not supported yet.
+
+[find-my-way]: https://github.com/delvedor/find-my-way
+[static-router]: https://reactrouter.com/web/api/StaticRouter
+[vue-router]: https://next.router.vuejs.org/
 
 
-## Vue 3+
-
-```js
-const Fastify = require('fastify')
-const fastifyVite = require('fastify-vite')
-const fastifyViteVue = require('fastify-vite-vue')
-
-async function getServer () {
-  const fastify = Fastify()
-  await fastify.register(fastifyVite, {
-    renderer: fastifyViteVue,
-  })
-  return fastify
-}
-
-getServer().then(fastify => fastify.listen(3000))
-```
-
-```
+<table class="infotable">
+<tr>
+<td style="width: 20%">
+<div class="language-"><pre><code>
 ├─ entry/
-│  ├─ client.js
-│  └─ server.js
+│  ├─ client.jsx
+│  └─ server.jsx
 ├─ views/
-│  ├─ index.vue
-│  └─ about.vue
+│  ├─ index.jsx
+│  └─ about.jsx
 ├─ index.html
 ├─ base.vue
-├─ routes.js
+├─ <b style="color: #ec6f2d">routes.js</b>
 ├─ main.js
 └─ server.js
-```
-
-## React 17+
+</code></pre></div>
+</td>
+<td>
 
 ```js
-const fastifyViteReact = require('fastify-vite-react')
-
-async function getServer () {
-  const fastify = Fastify()
-  await fastify.register(fastifyVite, {
-    renderer: fastifyViteReact,
-  })
-  return fastify
-}
+export default [
+  {
+    path: '/',
+    component: () => import('./views/index.jsx'),
+  },
+  {
+    path: '/about',
+    component: () => import('./views/about.jsx'),
+  },
+]
 ```
 
-```
+</td>
+</tr>
+</table>
+
+You can set view route paths directly from Vue files by using the `loadRoutes()` helper provided by <b>fastify-vite-react</b>. It will collect route data functions that you may have exported directly from your Vue files. See more in <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
+
+<table class="infotable">
+<tr>
+<td style="width: 20%">
+<div class="language-"><pre><code>
 ├─ entry/
-│  ├─ client.js
-│  └─ server.js
+│  ├─ client.jsx
+│  └─ server.jsx
 ├─ views/
-│  ├─ index.vue
-│  └─ about.vue
+│  ├─ index.jsx
+│  └─ about.jsx
 ├─ index.html
 ├─ base.vue
-├─ routes.js
+├─ <b style="color: #ec6f2d">routes.js</b>
 ├─ main.js
 └─ server.js
+</code></pre></div>
+</td>
+<td>
+
+```js
+
+import { loadRoutes } from 'fastify-vite-react/app'
+
+export default loadRoutes(import.meta.globEager('./views/*.vue'))
 ```
+
+</td>
+</tr>
+</table>
+
+

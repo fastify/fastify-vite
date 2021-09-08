@@ -4,23 +4,31 @@ const Item = (text, link) => ({ text, link })
 const Guide = [
   Item('Using Vue', '/guide/vue'),
   Item('Using React', '/guide/react'),
-  Item('Client Hydration', '/guide/client-hydration'),
+  Item('Configuration', '/guide/config'),
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
-  Item('Route Payload', '/guide/route-payload'),
-  Item('Isomorphic API', '/guide/isomorphic-api'),
+  Item('Route Payloads', '/guide/route-payloads'),
+  Item('Isomorphic Data', '/guide/isomorphic-data'),
+  /*
   Item('Live Deployment', '/guide/deployment'),
   Item('Static Generation', '/guide/static'),
-  Item('Renderer API', '/guide/renderers'),
+  */
+]
+
+const Internals = [
+  Item('Client Hydration', '/internals/client-hydration'),
+  Item('Renderer API', '/internals/renderers'),
 ]
 
 const Examples = [
   Item('HTTP clients', '/examples/http-clients'),
   Item('Redis cache', '/examples/redis-cache'),
+  /*
   Item('ElementUI', '/examples/elementui'),
   Item('WindiCSS', '/examples/windicss'),
   Item('Storyblok', '/examples/storyblok'),
   Item('Contentful', '/examples/contentful'),
+  */
 ]
 
 const Meta = [
@@ -33,6 +41,7 @@ const Meta = [
 
 const DefaultSidebar = [
   { text: 'Guide', children: Guide },
+  { text: 'Internals', children: Internals },
   { text: 'Examples', children: Examples },
   { text: 'Meta', children: Meta },
 ]
@@ -47,6 +56,10 @@ module.exports = {
       {
         text: 'Guide',
         items: Guide,
+      },
+      {
+        text: 'Internals',
+        items: Internals,
       },
       {
         text: 'Examples',
