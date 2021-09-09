@@ -11,9 +11,9 @@
 
 A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js and Next.js.
 
-- Currently supports Vue 3+ and React 17+ — using the same [modular renderer API](/guide/renderers.html).
+- Currently supports Vue 3+ and React 17+ — using the same [modular renderer API](/internals/renderer-api.html).
 - Automatically registers <b>individual Fastify routes</b> for your client application routes
-- Provides generic utilities for [client hydration](/guide/route-payload) and [isomorphic data fetching](/guide/isomorphic-api).
+- Provides generic utilities for [client hydration](/internals/client-hydration) and [isomorphic data fetching](/guide/isomorphic-data).
 - No magic application folder (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor](...).
 
 Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps submit a Pull Request if you do.

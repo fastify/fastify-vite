@@ -21,10 +21,13 @@ when passing options to the `fastify.register()` call.
 Whether or not to run Vite's development server.
 <br><br>
 <code class="h inline-block">root</code>
-—— The Vite client app's source root
+—— <code>process.cwd()</code>
+<br><br>The Vite client app's source root, typically set to <code>__dirname</code>
 <br><br>
 <code class="h inline-block">renderer</code>
-—— <b>fastify-vite</b>'s <a href="./renderers">renderer adapter</a>
+—— <b><code>no default value</code></b>
+<br><br><a href="/internals/renderer-api">Renderer adapter</a>
+(<code>fastify-vite-vue</code> or <code>fastify-vite-react</code>).
 <br><br>
 <code class="h inline-block">hydration.global</code>
 —— <code>'$global'</code>
@@ -34,20 +37,17 @@ Whether or not to run Vite's development server.
 <br><br>
 <code class="h inline-block">hydration.data</code>
  —— <code>'$data'</code>
+<br><br>The Vite client app's source root, typically set to <code>__dirname</code>
 <br><br>
-
+<code class="h inline-block">entry.server</code>
+ —— <code>default value provided by renderer adapter</code>
+<br><br>The Vite client app's source root, typically set to <code>__dirname</code>
+<br><br>
+<code class="h inline-block">entry.client</code>
+ —— <code>default value provided by renderer adapter</code>
+<br><br>The Vite client app's client entry point
 </td>
 </tr>
 </table>
 
 See the internal `options.js` used by <b>fastify-vite</b> [here]().
-
-<!--
-root: process.cwd()
-entry.client
-entry.server
-renderer: null
-vite: null
--->
-
-<p>adasda</p>

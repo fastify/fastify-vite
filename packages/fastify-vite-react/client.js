@@ -71,14 +71,13 @@ function hydrate (app) {
     $payloadPath: () => `/-/payload${document.location.pathname}`,
     $payload: window[kPayload],
     $data: window[kData],
-    $api: window[kAPI],
-  }
-  context.$api = new Proxy(context.$api, {
-    get: manifetch({
-      prefix: '',
-      fetch: (...args) => window.fetch(...args),
+    $api: new Proxy({ ...window[kAPI] }, {
+      get: manifetch({
+        prefix: '',
+        fetch: (...args) => fetch(...args),
+      }),
     }),
-  })
+  }
   delete window[kGlobal]
   delete window[kData]
   delete window[kPayload]
