@@ -43,16 +43,16 @@ Below is a quick rundown of all Fastify route-level hooks available:
 
 <br>
 
-The following examples for Vue and React demonstrate how to leverage automatic [client hydration](/advanced/client-hydration) for `req.$data` —— that is made available on the client as `ctx.$data` via `useHydration()` —— from Fastify's `onResponse` route hook. To make it absolutely crystal clear:
+The following examples for Vue and React demonstrate how to leverage automatic [client hydration](/advanced/client-hydration) for `req.$data` —— that is made available on the client as `ctx.$data` via `useHydration()` —— from Fastify's `onRequest` route hook. To make it absolutely crystal clear:
 
 <table class="infotable">
 <tr style="width: 100%">
 <td style="width: 20%">
 <strong>Execution Order</strong>
-<br><br><b>onResponse data client hydration example</b>
+<br><br><b>onRequest data client hydration example</b>
 </td>
 <td class="code-h" style="width: 80%">
-<span class="h inline-block"><b>1.</b> <code>onResponse</code> hook runs on the server, <code>req.$data</code> gets populated</span>
+<span class="h inline-block"><b>1.</b> <code>onRequest</code> hook runs on the server, <code>req.$data</code> gets populated</span>
 <br><br>
 <span class="h inline-block"><b>2.</b> <b>fastify-vite</b>'s <code>getHydrationScript()</code> is called from handler</span>
 <br><br>

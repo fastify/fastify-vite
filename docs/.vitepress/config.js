@@ -11,7 +11,7 @@ const Guide = [
   Item('Build and Deploy', '/guide/deployment'),
 ]
 
-const Internals = [
+const Advanced = [
   Item('Client Hydration', '/advanced/client-hydration'),
   Item('Integrated API', '/advanced/integrated-api'),
   Item('Renderer API', '/advanced/renderer-api'),
@@ -28,21 +28,17 @@ const Examples = [
 ]
 */
 
-/*
+
 const Meta = [
-  Item('Motivation', '/meta/motivation'),
-  Item('Philosophy', '/meta/philosophy'),
+  Item('About', '/meta/about'),
   Item('Contributing', '/meta/contributing'),
-  Item('Roadmap', '/meta/roadmap'),
-  Item('Team', '/meta/team'),
 ]
-*/
 
 const DefaultSidebar = [
   { text: 'Guide', children: Guide },
-  { text: 'Internals', children: Internals },
+  { text: 'Advanced', children: Advanced },
   // { text: 'Examples', children: Examples },
-  // { text: 'Meta', children: Meta },
+  { text: 'Meta', children: Meta },
 ]
 
 module.exports = {
@@ -57,13 +53,13 @@ module.exports = {
         items: Guide,
       },
       {
-        text: 'Internals',
-        items: Internals,
+        text: 'Advanced',
+        items: Advanced,
       },
-      // {
-      //   text: 'Meta',
-      //   items: Meta,
-      // },
+      {
+        text: 'Meta',
+        items: Meta,
+      },
     ],
     sidebar: {
       '/': DefaultSidebar,

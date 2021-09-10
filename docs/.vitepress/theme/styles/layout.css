@@ -162,7 +162,7 @@ a:hover {
 }
 
 strong:hover {
-  border-bottom: 2px solid var(--c-brand-dark);
+  /*border-bottom: 2px solid var(--c-brand-dark);*/
 }
 
 a.header-anchor {
