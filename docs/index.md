@@ -6,7 +6,7 @@
 </style>
 
 <p class="headline">
-<a href=""><b>Fastify</b></a> plugin for <b>Vite</b> integration<br>
+<a href="https://fastify.io"><b>Fastify</b></a> plugin for <a href="https://vitejs.dev"><b>Vite</b></a> integration<br>
 <b>Build</b> and <b>run</b> SSR client applications</p>
 
 A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js and Next.js.

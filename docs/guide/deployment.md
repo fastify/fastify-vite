@@ -1,102 +1,49 @@
 # Deployment
 
-Fastify application code doesn't have to be bundled, **but the server entry 
-point for your Vite app does**. 
+Before you can deploy to production, you need to bundle your code through Vite.
 
-That is a module that exports the `render` function used for SSR. You also 
-need to bundle your app's client code. In a vanilla Vite app, that means having 
-three build scripts in your `package.json`:
+To be more specific, you need to bundle your <b>client</b> and <b>server</b> entry points.
 
-```{
-  "scripts": {
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr entry/server.js --outDir dist/server",
-  }
+In a vanilla Vite app, that means having three build scripts in your `package.json`:
+
+```json
+"scripts": {
+  "build": "npm run build:client && npm run build:server",
+  "build:client": "vite build --ssrManifest --outDir dist/client",
+  "build:server": "vite build --ssr entry/server.js --outDir dist/server",
 }
 ```
 
-You can understand this better by reading [Vite's SSR Guide][ssr-guide]. 
-
-For the [example app][example-app], the server entry point is 
-[this file][entry-server], which actually uses the `getRender()` helper 
-from **fastify-vite/render**.
+Check out [Vite's SSR Guide][ssr-guide] for in-depth details. 
 
 [ssr-guide]: https://vitejs.dev/guide/ssr
-[example-app]: https://github.com/galvez/fastify-vite/tree/main/example
-[entry-server]: https://github.com/galvez/fastify-vite/blob/main/example/entry/server.js
-[fastify-vite-render]: https://github.com/galvez/fastify-vite/blob/main/render.js
 
-If you ever need to deeply customize your `render` function, you can just 
-replace the provided `getRender()` with your own.
+You can also set up `server.js` to recognize the `build` command:
 
-## Option 1: Using vite build directly
-
-If you decide to just use the three `vite build` calls in `package.json`, there's
-nothing else involved. 
-
-Well, other than tuning your [Vite `build` settings][vite-build].
-
-[vite-build]: https://vitejs.dev/config/#build-options
-
-## Option 2: Using the unified build command
-
-**fastify-vite** can add a `build` command to your app.
-
-So instead of running `next build` or `nuxt build`, for instance, can you run:
-
-```bash
-node <your-app> build
+```js
+await app.register(fastifyVite, {
+  // ...
+  build: process.argv.includes('build'),
+  // ...
+})
 ```
 
-That is to say, `build` becomes a recognizable command for the script where
-you boot up your Fastify server and register **fastify-vite**. 
+As shown in the [Vue]() and [React]() guides. 
 
-**You just need to make one small adjustment**:
+If `build` is true, it will force the Vite build and exit the script without starting the server.
 
-```diff
-const fastify = require('fastify')()
-const fastifyVite = require('fastify-vite')
+## Live Server
 
-async function main () {
-  await fastify.register(fastifyApi)
-  await fastify.register(fastifyVite, { root: __dirname })
-  fastify.vite.get('/*')
-  return fastify
-}
+Deploying a Fastify application involves generally the same steps in [deploying any Node.js application](https://www.google.com/search?q=deploying+node.js) to production — copy code to server, `npm install` dependencies and run (`node server.js`). 
 
-if (require.main === module) {
--  main.then((fastify) => {
-+  fastifyVite.app(main, (fastify) => {
-    fastify.listen(3000, (err, address) => {
-      if (err) {
-        console.error(err)
-        process.exit(1)
-      }
-      console.log(`Server listening on ${address}`)
-    })
-  })
-}
+Two things to keep in mind:
 
-module.exports = main
-```
+- Your Vite application obviously <b>must be bundled</b> (following the steps covered at the top of this page) before it can be served in production. After the build, your application bundle will be available in `./.vite/dist` (deafault), or where defined in Vite's [`build.outDir`](https://vitejs.dev/config/#build-outdir) configuration key.
 
-The `app()` helper from **fastify-vite** will [take care][fastify-vite-app] of 
-preventing the app from starting if you're just running the `build` command. It 
-will also automatically run all needed build commands, for `client` and `server` 
-builds, using [Vite's JavaScript API][vite-js-api].
+- If you accidentally set `dev` to `true` in your <b>fastify-vite</b> plugin settings, you'll be using Vite's development server instead of the live rendering handler provided by your chosen framework (via the [renderer adapter](/advanced/renderer-api)). Vite's development server is <b>automatically turned off</b> in case the `NODE_ENV` environment variable is set to `production` when the application boots.
 
-[fastify-vite-app]: https://github.com/galvez/fastify-vite/blob/main/index.js
-[vite-js-api]: https://vitejs.dev/guide/api-javascript.html
-
-## Getting code to production
-
-Getting code ready to production has three essential steps:
-
-- Running `npm run build` or `node <your-app> build` (read previous section)
-- Coping over your app's code to your server,
-  - **including the generated dist/** folder after `npm run build`
-- Booting the app with `node <your-app>.js` or your favorite process manager,
-  - **ensuring** the `NODE_ENV` environment variable equals `true`
+Anything beyond that is likely related to the particular server platform you're deploying to.
 
 You'll need **Node v14+**.
+
+## Static Build

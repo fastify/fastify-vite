@@ -1,6 +1,42 @@
 
 # Using React
 
+::: tip
+This section is intentionally kept in sync with [Using Vue]() (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
+:::
+
+## Quick Start
+
+First make sure you have `degit`, a CLI to [scaffold directories pulling from Git]():
+
+[degit]: https://github.com/Rich-Harris/degit
+
+<code>npm i degit -g</code>
+
+Then you can start off with <b>fastify-vite</b>'s base Vue 3 starter or any of the others available:
+
+<code>degit terixjs/flavors/react-base <b>your-app</b></code>
+
+::: tip
+[terixjs/flavors]() is a mirror to the `examples/` folder from <b>fastify-vite</b>, kept as a convenience for shorter `degit` calls.
+:::
+
+After that you should be able to `cd` to `your-app` and run:
+
+<code>npm install</code> — will install <code>fastify</code>, <code>vite</code>, <code>fastify-vite</code> etc from <code>package.json</code>
+
+<code>npm run dev</code> — for running your app with Fastify + Vite's development server
+
+<code>npm run build</code> — for [building]() your Vite application
+
+<code>npm run start</code> — for serving in production mode
+
+## Project Structure
+
+There's <b>no predetermined project structure</b> absolutely required. For convenience, some conventions are implemented, but they are easy to override and defined mostly by renderer adapters. For instance, <b>fastify-vite-vue</b> expects the client entry point to be located at `entry/client.js` while <b>fastify-vite-react</b> expects the client entry point to be located at `entry/client.jsx`.
+
+A <b>fastify-vite</b> project will have _at the very least_ a) a `server.js` file launching the Fastify server, b) an `index.html` file and c) <b>client</b> and <b>server</b> entry points for the Vite application.
+
 <b>fastify-vite</b>'s 
 [base React 17 starter boilerplate](...) is based on the [official React SSR example][ssr-react] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][react-server.js] can be replaced with the following Fastify server initialization boilerplate:
 

@@ -1,6 +1,10 @@
 
 # Using Vue
 
+::: tip
+This section is intentionally kept in sync with [Using React]() (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
+:::
+
 ## Quick Start
 
 First make sure you have `degit`, a CLI to [scaffold directories pulling from Git]():
