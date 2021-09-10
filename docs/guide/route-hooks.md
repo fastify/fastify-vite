@@ -41,6 +41,34 @@ Below is a quick rundown of all Fastify route-level hooks available:
 </tr>
 </table>
 
+<br>
+
+The following examples for Vue and React demonstrate how to leverage automatic [client hydration](/advanced/client-hydration) for `req.$data` —— that is made available on the client as `ctx.$data` via `useHydration()` —— from Fastify's `onResponse` route hook. To make it absolutely crystal clear:
+
+<table class="infotable">
+<tr style="width: 100%">
+<td style="width: 20%">
+<strong>Execution Order</strong>
+<br><br><b>onResponse data client hydration example</b>
+</td>
+<td class="code-h" style="width: 80%">
+<span class="h inline-block"><b>1.</b> <code>onResponse</code> hook runs on the server, <code>req.$data</code> gets populated</span>
+<br><br>
+<span class="h inline-block"><b>2.</b> <b>fastify-vite</b>'s <code>getHydrationScript()</code> is called from handler</span>
+<br><br>
+<span class="h inline-block"><b>3.</b> Hydration takes place on client entry point with <code>hydrate()</code></span>
+<br><br>
+<span class="h inline-block"><b>4.</b> Hydrated data available via <code>useHydration()</code> on Vue or React view</span>
+</td>
+</tr>
+</table>
+
+::: tip
+Bear in mind `ctx.$data` would no longer be populated following client-side navigation (History API) in these examples. For this you need to ensure data can be retrieved from the client as well.
+
+This is covered in [Isomorphic Data]().
+:::
+
 ## Vue
 
 ```vue
@@ -103,4 +131,4 @@ fastify.vite.get('/*', {
 })
 ```
 
-Or also manually in the `routes` array exported in the server entry point.
+Or via the `routes` array exported in the server entry point.

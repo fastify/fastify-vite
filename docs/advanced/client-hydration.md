@@ -9,6 +9,17 @@ A common technique for solving this problem is to append a `<script>` snippet to
 [window-nuxt]: https://github.com/nuxt/nuxt.js/blob/82e4c2dc5fa62be60876da7bb0ec271a921954bc/packages/vue-renderer/src/renderers/ssr.js
 [next-data]: https://github.com/vercel/next.js/discussions/15117
 
+::: tip
+This very nicely covered in [this Google Developers article][gd-article] by [Jason Miller][jason-miller] and 
+[Addy Osmani][addy-osmani].
+
+[gd-article]: https://developers.google.com/web/updates/2019/02/rendering-on-the-web#rehydration
+[jason-miller]: https://twitter.com/_developit
+[addy-osmani]: https://twitter.com/addyosmani
+:::
+
+## getHydrationScript()
+
 <b>fastify-vite</b> uses a similar approach, while allowing for a deep level of customization. For instance, below is the code used to generate the serialized hydration data for <b>fastify-vite-vue</b> and <b>fastify-vite-react</b> renderer adapters. The function used in both is identical, and can be overriden if you set the `render.getHydrationScript` option with a function of your own.
 
 <table class="infotable">
@@ -69,7 +80,9 @@ I found out later SolidJS has a [similar abstraction][solid-js-hydration] for th
 [solid-js-hydration]: https://www.solidjs.com/guide#hydration-script
 :::
 
-On the client, you can use the `hydrate()` function provided by <b>fastify-vite-vue</b>:
+## hydrate()
+
+On the client, you can use the `hydrate()` function provided by <b>fastify-vite-vue/client</b>:
 
 <table class="infotable">
 <tr style="width: 100%">
@@ -109,7 +122,7 @@ function hydrate (app) {
 </tr>
 </table>
 
-Or <b>fastify-vite-react</b>:
+Or <b>fastify-vite-react/client</b>:
 
 <table class="infotable">
 <tr style="width: 100%">

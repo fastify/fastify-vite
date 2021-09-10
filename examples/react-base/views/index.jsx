@@ -5,24 +5,8 @@ export const path = '/'
 export default function Index () {
   return (
     <>
-      <ul>
-        <li>
-          <Link to="/global-data">Global Data</Link><span>:</span>
-          <b>useHydration()</b> and <b>$global</b> data.
-        </li>
-        <li>
-          <Link to="/route-hooks">Route Hooks</Link><span>:</span>
-          <b>onRequest()</b>, <b>useHydration()</b> and <b>$data</b>.
-        </li>
-        <li>
-          <Link to="/route-payload">Route Payload</Link><span>:</span>
-          <b>useHydration()</b>, <b>getPayload()</b> and <b>$payloadPath</b>.
-        </li>
-        <li>
-          <Link to="/data-fetching">Isomorphic API</Link><span>:</span>
-          <b>useHydration()</b>, <b>getData()</b> and <b>$data</b>.
-        </li>
-      </ul>
+      <h1>Index Page</h1>
+      <p>Go to <Link to="/about">/about</Link></p>
     </>
   )
 }

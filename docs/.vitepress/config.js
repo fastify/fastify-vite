@@ -7,17 +7,14 @@ const Guide = [
   Item('Configuration', '/guide/config'),
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
-  Item('Route Payloads', '/guide/route-payloads'),
-  Item('Isomorphic Data', '/guide/isomorphic-data'),
-  /*
-  Item('Live Deployment', '/guide/deployment'),
-  Item('Static Generation', '/guide/static'),
-  */
+  Item('Data Fetching', '/guide/data-fetching'),
+  Item('Build and Deploy', '/guide/deployment'),
 ]
 
 const Internals = [
-  Item('Client Hydration', '/internals/client-hydration'),
-  Item('Renderer API', '/internals/renderer-api'),
+  Item('Client Hydration', '/advanced/client-hydration'),
+  Item('Integrated API', '/advanced/integrated-api'),
+  Item('Renderer API', '/advanced/renderer-api'),
 ]
 
 /*
