@@ -1,3 +1,6 @@
+---
+sidebarDepth: 3
+---
 
 # Client Hydration
 

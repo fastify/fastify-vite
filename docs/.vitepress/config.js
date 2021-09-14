@@ -8,7 +8,7 @@ const Guide = [
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
   Item('Data Fetching', '/guide/data-fetching'),
-  Item('Build and Deploy', '/guide/deployment'),
+  Item('Deployment', '/guide/deployment'),
 ]
 
 const Advanced = [

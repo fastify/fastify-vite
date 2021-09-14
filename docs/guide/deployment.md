@@ -1,4 +1,28 @@
+---
+sidebarDepth: 3
+---
+
 # Deployment
+
+Deploying a Fastify application involves generally the same steps in [deploying any Node.js application](https://www.google.com/search?q=deploying+node.js) to production — copy code to server, `npm install` dependencies and run (`node server.js`). 
+
+A few things to keep in mind:
+
+- Try and follow Fastify's [deployment recommendations](https://www.fastify.io/docs/latest/Recommendations/).
+- As made clear at the top of this page, your Vite application <b>must be bundled</b> before it can be served in production. After the build, your application bundle will be available in `./dist` (default).
+
+- Be mindful about Vite's settings, such as [build.outDir][out-dir] (`./dist`) and [build.assetsDir][assets-dir] (`assets`).
+
+[out-dir]: https://vitejs.dev/config/#build-outdir
+[assets-dir]: https://vitejs.dev/config/#build-assetsdir
+
+- If you accidentally set `dev` to `true` in your <b>fastify-vite</b> plugin settings, you'll be using Vite's development server instead of the live rendering handler provided by your chosen framework (via the [renderer adapter](/advanced/renderer-api)). Vite's development server is <b>automatically turned off</b> in case the `NODE_ENV` environment variable is set to `production` when the application boots.
+
+Anything beyond that is likely related to the particular server platform you're deploying to.
+
+You'll need **Node v14+**.
+
+## Running Vite Build
 
 Before you can deploy to production, you need to bundle your code through Vite.
 
@@ -32,18 +56,43 @@ As shown in the [Vue]() and [React]() guides.
 
 If `build` is true, it will force the Vite build and exit the script without starting the server.
 
-## Live Server
+## Static Generation
 
-Deploying a Fastify application involves generally the same steps in [deploying any Node.js application](https://www.google.com/search?q=deploying+node.js) to production — copy code to server, `npm install` dependencies and run (`node server.js`). 
+You can **prerender** a set of paths from your application into its final Vite build, so it can be served statically without live, dynamic SSR — that is — without a live Node.js server. This is similar to `nuxt generate` and [`next export`][next-export].
 
-Two things to keep in mind:
+[nuxt-generate]: https://nuxtjs.org/docs/2.x/concepts/static-site-generation
+[next-export]: https://nextjs.org/docs/advanced-features/static-html-export
 
-- Your Vite application obviously <b>must be bundled</b> (following the steps covered at the top of this page) before it can be served in production. After the build, your application bundle will be available in `./.vite/dist` (deafault), or where defined in Vite's [`build.outDir`](https://vitejs.dev/config/#build-outdir) configuration key.
+### Static routes
 
-- If you accidentally set `dev` to `true` in your <b>fastify-vite</b> plugin settings, you'll be using Vite's development server instead of the live rendering handler provided by your chosen framework (via the [renderer adapter](/advanced/renderer-api)). Vite's development server is <b>automatically turned off</b> in case the `NODE_ENV` environment variable is set to `production` when the application boots.
+The easiest way to do this is to set the `generate` option to `true`. As long as you provide a `routes` array as detailed in the Vue and React guides, <b>fastify-vite</b> will identify which routes  are static (don't contain any dynamic parameters) and will prerender those as part of the build.
 
-Anything beyond that is likely related to the particular server platform you're deploying to.
+```js
+await app.register(fastifyVite, {
+  generate: process.argv.includes('generate'),
+})
+```
 
-You'll need **Node v14+**.
+With the snippet above, if you run `node server.js generate`, it would trigger the Vite build, then initialize the Fastify app so it can [process injected requests][injected-requests], prerender the static routes it can find and exit without actually launching the Fastify HTTP server.
 
-## Static Build
+[injected-requests]: https://www.fastify.io/docs/latest/Testing/#benefits-of-using-fastifyinject
+
+### Dynamic routes
+
+In order to statically generate dynamic routes, you need to be able to compose all possible paths to access them. You can do this by providing the `generatePaths()` function in <b>fastify-vite</b>'s plugin options. In this case, only the paths provided by this function will be considered for static generation.
+
+If you have a `/pages/:page` route, for example:
+
+```js
+await app.register(fastifyVite, {
+  generate: process.argv.includes('generate'),
+  async generatePaths (add) {
+    const pages = await getPagesTotalFromDataSource()
+    for (let page = 1; page <= pages; page++) {
+      add(`/pages/${page}`)
+    }
+  },
+})
+```
+
+The `add()` helper function that is passed as first parameter is an _optional convenience_. You can create and return an array of routes yourself from `generatePaths()` if you want.
