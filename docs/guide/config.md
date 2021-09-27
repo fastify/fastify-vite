@@ -50,4 +50,4 @@ Whether or not to run Vite's development server.
 </tr>
 </table>
 
-See the internal `options.js` used by <b>fastify-vite</b> [here]().
+See the internal `options.js` used by <b>fastify-vite</b> [here](https://github.com/terixjs/fastify-vite/blob/main/packages/fastify-vite/options.js).

@@ -2,12 +2,12 @@
 # Using React
 
 ::: tip
-This section is intentionally kept in sync with [Using Vue]() (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
+This section is intentionally kept in sync with [Using Vue](/guide/vue.html) (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
 :::
 
 ## Quick Start
 
-First make sure you have `degit`, a CLI to [scaffold directories pulling from Git]():
+First make sure you have `degit`, a CLI to [scaffold directories pulling from Git][degit]:
 
 [degit]: https://github.com/Rich-Harris/degit
 
@@ -18,7 +18,7 @@ Then you can start off with <b>fastify-vite</b>'s base Vue 3 starter or any of t
 <code>degit terixjs/flavors/react-base <b>your-app</b></code>
 
 ::: tip
-[terixjs/flavors]() is a mirror to the `examples/` folder from <b>fastify-vite</b>, kept as a convenience for shorter `degit` calls.
+[terixjs/flavors](https://github.com/terixjs/flavors) is a mirror to the `examples/` folder from <b>fastify-vite</b>, kept as a convenience for shorter `degit` calls.
 :::
 
 After that you should be able to `cd` to `your-app` and run:
@@ -27,7 +27,7 @@ After that you should be able to `cd` to `your-app` and run:
 
 <code>npm run dev</code> — for running your app with Fastify + Vite's development server
 
-<code>npm run build</code> — for [building]() your Vite application
+<code>npm run build</code> — for [building](/guide/deployment) your Vite application
 
 <code>npm run start</code> — for serving in production mode
 
@@ -38,7 +38,7 @@ There's <b>no predetermined project structure</b> absolutely required. For conve
 A <b>fastify-vite</b> project will have _at the very least_ a) a `server.js` file launching the Fastify server, b) an `index.html` file and c) <b>client</b> and <b>server</b> entry points for the Vite application.
 
 <b>fastify-vite</b>'s 
-[base React 17 starter boilerplate](...) is based on the [official React SSR example][ssr-react] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][react-server.js] can be replaced with the following Fastify server initialization boilerplate:
+[base React 17 starter boilerplate](https://github.com/terixjs/fastify-vite/tree/new-docs/examples/react-base) is based on the [official React SSR example][ssr-react] from Vite's [playground][playground]. The differences start with `server.js`, where the [raw original _Express_-based example][react-server.js] can be replaced with the following Fastify server initialization boilerplate:
 
 [react-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/server.js
 [ssr-react]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react
@@ -105,14 +105,14 @@ Notice how we also pass in `build` flag, based on the presence of a `build` comm
 <code style="font-size: 1.2em">$ node server.js build</code>
 
 ::: tip
-This mimics the behavior of [vite build](), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
+This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
 :::
 
 ## Entry Points 
 
 The next differences from Vite's official React SSR example are the <b>server</b> and <b>client</b> entry points.
 
-For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-react</b>, `createRenderFunction()`, which will automate things like [client hydration]() and add support for [route hooks](), [payloads]() and [isomorphic data fetching]().
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-react</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching]().
 
 [server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/src/entry-server.js 
 
@@ -196,7 +196,7 @@ ReactDOM.hydrate(
 </tr>
 </table>
 
-This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration](/internals/client-hydration.html)</b>, <b>[Route Payloads](/guide/data-fetching.html#route-payloads)</b> and <b>[Isomorphic Data](/guide/data-fetching.html#isomorphic-data)</b>. 
 
 ## Routing Setup
 
@@ -318,9 +318,9 @@ export default [
 </table>
 
 
-Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](), [payloads]() and [isomorphic data]() functions for each of your [React Router][react-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data](/guide/data-fetching.html#isomorphic-data) functions for each of your [React Router][react-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
 
-<b>fastify-vite</b> [will use]() this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
+<b>fastify-vite</b> will use this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
 
 [vue-router]: https://reactrouter.com/
 

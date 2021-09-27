@@ -78,7 +78,7 @@ function getHydrationScript (req, context, hydration) {
 The first parameter it receives is Fastify's Request object, followed by the SSR rendering `context` and the `hydration` key from the plugin options. Typically you won't want to change these.
 
 ::: tip
-I found out later SolidJS has a [similar abstraction][solid-js-hydration] for this. Sadly, we do not have a <b>renderer adapter</b> for SolidJS yet but it certainly looks very feasible. [Pull Requests]() welcome.
+I found out later SolidJS has a [similar abstraction][solid-js-hydration] for this. Sadly, we do not have a <b>renderer adapter</b> for SolidJS yet but it certainly looks very feasible. [Pull Requests](https://github.com/terixjs/fastify-vite/pulls) welcome.
 
 [solid-js-hydration]: https://www.solidjs.com/guide#hydration-script
 :::

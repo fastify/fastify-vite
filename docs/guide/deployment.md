@@ -9,7 +9,7 @@ Deploying a Fastify application involves generally the same steps in [deploying 
 A few things to keep in mind:
 
 - Try and follow Fastify's [deployment recommendations](https://www.fastify.io/docs/latest/Recommendations/).
-- As made clear at the top of this page, your Vite application <b>must be bundled</b> before it can be served in production. After the build, your application bundle will be available in `./dist` (default).
+- Your Vite application <b>must be bundled</b> before it can be served in production. After the build, your application bundle will be available in `./dist` (default).
 
 - Be mindful about Vite's settings, such as [build.outDir][out-dir] (`./dist`) and [build.assetsDir][assets-dir] (`assets`).
 
@@ -58,10 +58,14 @@ If `build` is true, it will force the Vite build and exit the script without sta
 
 ## Static Generation
 
-You can **prerender** a set of paths from your application into its final Vite build, so it can be served statically without live, dynamic SSR — that is — without a live Node.js server. This is similar to `nuxt generate` and [`next export`][next-export].
+You can **prerender** a set of paths from your application into its final Vite build, so it can be served statically without live, dynamic SSR — that is — without a live Node.js server. 
+
+::: tip
+This is similar to [`nuxt generate`][nuxt-generate] and [`next export`][next-export].
 
 [nuxt-generate]: https://nuxtjs.org/docs/2.x/concepts/static-site-generation
 [next-export]: https://nextjs.org/docs/advanced-features/static-html-export
+:::
 
 ### Static routes
 
@@ -80,6 +84,13 @@ With the snippet above, if you run `node server.js generate`, it would trigger t
 ### Dynamic routes
 
 In order to statically generate dynamic routes, you need to be able to compose all possible paths to access them. You can do this by providing the `generatePaths()` function in <b>fastify-vite</b>'s plugin options. In this case, only the paths provided by this function will be considered for static generation.
+
+::: tip
+This is the equivalent of [generate.routes][generate-routes] in Nuxt.js and [getStaticPaths][getStaticPaths] in Next.js
+
+[getStaticPaths]: https://nextjs.org/docs/basic-features/data-fetching#getstaticpaths-static-generation
+[generate-routes]: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-generate#routes
+:::
 
 If you have a `/pages/:page` route, for example:
 

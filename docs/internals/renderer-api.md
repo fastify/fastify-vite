@@ -1,6 +1,11 @@
 # Renderer API
 
-<b>fastify-vite</b> has a modular renderer API that aims to allow you to use it with any framework, as long as you provide _the right adapter_. Quoting the introductory example:
+<b>fastify-vite</b> has a modular renderer API that aims to allow you to use it with any framework, as long as you provide _the right adapter_. Currently there are two official renderer adapters, [fastify-vite-vue][fastify-vite-vue] (Vue 3+ support) and [fastify-vite-react][fastify-vite-react] (React 17+ support). This is an overview of what constitutes a _renderer adapter_ and currently serves as a specification, with the Vue and React adapters as official reference implementations.
+
+[fastify-vite-vue]: https://github.com/terixjs/fastify-vite/tree/main/packages/fastify-vite-vue
+[fastify-vite-react]: https://github.com/terixjs/fastify-vite/tree/main/packages/fastify-vite-react
+
+Quoting the introductory example:
 
 ```js
 const fastify = require('fastify')()
@@ -84,5 +89,11 @@ The <b>server</b> module is supposed to be used <b>only</b> in a server context,
 
 The <b>client</b> module is <i>everything pertaining to the client</i>, and its exports <b>should be isomorphic in nature</b>, that is, it should be impossible import the helper `client` module both in SSR (Node.js) and client (browser) contexts. Perhaps a better name for this module would be `universal`, not `client`, and this might still change in future versions of <b>fastify-vite</b>.
 
-You can see the full pattern employed by the Vue and React fastify-vite renderers in the [base-vue]() and [base-react]() examples. You'll see for instance `createRenderFunction()` for Vue [imported here](...), and for React [imported here](...). And the client imports for Vue [here](...), and for React [here](...).
+You can see the full pattern employed by the Vue and React <b>fastify-vite</b> renderers in the [vue-base][vue-base] and [react-base][react-base] examples. You'll see for instance `createRenderFunction()` for Vue [imported here][createRenderFunction-for-vue], and for React [imported here][[createRenderFunction-for-react]. And the client imports for Vue [here][client-imports-for-vue], and for React [here][client-imports-for-react].
 
+[vue-base]: https://github.com/terixjs/fastify-vite/tree/main/examples/vue-base
+[react-base]: https://github.com/terixjs/fastify-vite/tree/main/examples/vue-base
+[createRenderFunction-for-vue]: https://github.com/terixjs/fastify-vite/blob/main/examples/vue-base/entry/server.js
+[createRenderFunction-for-react]: https://github.com/terixjs/fastify-vite/blob/main/examples/react-base/entry/server.js
+[client-imports-for-vue]: https://github.com/terixjs/fastify-vite/blob/main/examples/vue-base/entry/client.js
+[client-imports-for-react]: https://github.com/terixjs/fastify-vite/blob/main/examples/react-base/entry/client.js

@@ -8,12 +8,12 @@ const Guide = [
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
   Item('Data Fetching', '/guide/data-fetching'),
+  Item('API Integration', '/guide/api-integration'),
   Item('Deployment', '/guide/deployment'),
 ]
 
-const Advanced = [
+const Internals = [
   Item('Client Hydration', '/advanced/client-hydration'),
-  Item('Integrated API', '/advanced/integrated-api'),
   Item('Renderer API', '/advanced/renderer-api'),
 ]
 
@@ -36,7 +36,7 @@ const Meta = [
 
 const DefaultSidebar = [
   { text: 'Guide', children: Guide },
-  { text: 'Advanced', children: Advanced },
+  { text: 'Internals', children: Internals },
   // { text: 'Examples', children: Examples },
   { text: 'Meta', children: Meta },
 ]
@@ -44,6 +44,9 @@ const DefaultSidebar = [
 module.exports = {
   lang: 'en-US',
   title: 'fastify-vite',
+  // markdown: {
+  //   lineNumbers: true,
+  // },
   themeConfig: {
     displayAllHeaders: true,
     repo: 'terixjs/fastify-vite',
@@ -53,8 +56,8 @@ module.exports = {
         items: Guide,
       },
       {
-        text: 'Advanced',
-        items: Advanced,
+        text: 'Internals',
+        items: Internals,
       },
       {
         text: 'Meta',

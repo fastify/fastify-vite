@@ -8,7 +8,7 @@ fastify.vite.global = { foobar: 123 }
 
 This object is made available to requests as `req.$global`.
 
-And [serialized]() to the HTML document as `window[Symbol.for('kGlobal')]` [for hydration]().
+And **serialized** to the HTML document as `window[Symbol.for('kGlobal')]` for hydration.
 
 This can be used, for instance, to serialize public `process.env` variables to the client.
 

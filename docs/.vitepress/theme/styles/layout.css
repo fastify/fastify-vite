@@ -210,7 +210,7 @@ tr {
 }
 
 tr:nth-child(2n) {
-  background-color: transparent;
+  background-color: var(--code-inline-bg-color);
 }
 
 th,
@@ -311,6 +311,14 @@ td > pre {
   display: table;
   width: 100%;
   font-size: 0.8rem;
+  & td {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  & p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+  }
   & code {
     padding: .25rem .5em !important;
   }

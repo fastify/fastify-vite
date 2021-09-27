@@ -2,12 +2,12 @@
 # Using Vue
 
 ::: tip
-This section is intentionally kept in sync with [Using React]() (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
+This section is intentionally kept in sync with [Using React](/guide/react.html) (and any other future framework usage guides), because one of <b>fastify-vite</b>'s goals is to provide the very same usage API no matter what framework you use.
 :::
 
 ## Quick Start
 
-First make sure you have `degit`, a CLI to [scaffold directories pulling from Git]():
+First make sure you have `degit`, a CLI to [scaffold directories pulling from Git][degit]:
 
 [degit]: https://github.com/Rich-Harris/degit
 
@@ -107,14 +107,14 @@ Notice how we also pass in `build` flag, based on the presence of a `build` comm
 <code style="font-size: 1.2em">$ node server.js build</code>
 
 ::: tip
-This mimics the behavior of [vite build](), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
+This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
 :::
 
 ## Entry Points 
 
 The next differences from Vite's official Vue 3 SSR example are the <b>server</b> and <b>client</b> entry points.
 
-For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration]() and add support for [route hooks](), [payloads]() and [isomorphic data fetching]().
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching]().
 
 [server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js 
 
@@ -193,7 +193,7 @@ router.isReady().then(() => app.mount('#app'))
 </tr>
 </table>
 
-This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads]()</b> and <b>[Isomorphic Data]()</b>. 
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads](/guide/data-fetching.html#route-payloads)</b> and <b>[Isomorphic Data](/guide/route-hooks.html#isomorphic-data)</b>. 
 
 ## Routing Setup
 
@@ -309,7 +309,7 @@ export default [
 </table>
 
 
-Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](), [payloads]() and [isomorphic data]() functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads]() and [isomorphic data]() functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
 
 <b>fastify-vite</b> [will use]() this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
 

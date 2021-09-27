@@ -7,8 +7,8 @@
   --c-bg: #fff;
   --c-bg-secondary: #f3f5f7;
 
-  --c-white: #ffffff;
-  --c-black: #000000;
+  --c-white: #f6f6f6;
+  --c-black: #080808;
 
   --c-divider-light: rgba(60, 60, 67, .12);
   --c-divider-dark: rgba(84, 84, 88, .48);
@@ -90,7 +90,7 @@ html.dark {
 
   --c-bg: var(--c-white);
 
-  --code-line-height: 24px;
+  --code-line-height: 30px;
   --code-font-family: var(--font-family-mono);
   --code-font-size: 14px;
 }

@@ -11,23 +11,39 @@
 
 A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js and Next.js.
 
-- Currently supports **Vue 3+** and **React 17+** — using the same [modular renderer API](/internals/renderer-api.html).
+- Currently supports **Vue 3+** and **React 17+** — using the same [modular renderer API](/advanced/renderer-api.html).
 - Automatically registers **individual Fastify routes** for your client application routes
-- Provides **generic utilities** for [client hydration](/internals/client-hydration) and [isomorphic data fetching](/guide/isomorphic-data).
-- **No magic app folder** (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor](...).
+- Provides **generic utilities** for [client hydration](/advanced/client-hydration) and [isomorphic data fetching](/guide/data-fetching).
+- **No magic app folder** (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor][flavors].
 
-Currently there are two official renderer adapters, [fastify-vite-vue](...) (supports Vue 3+) and [fastify-vite-react](...) (supports React 17+). Both modules follow [the same adapter design](./renderers), which you can also use to provide support for other frameworks, and perhaps [submit a Pull Request]() if you do.
+[flavors]: https://github.com/terixjs/flavors
 
 <span style="font-size: 1.8em">Get started with
 <b>[Vue](/guide/vue)</b> or <b>[React](/guide/react)</b>.</span>
 
+## New to SSR?
+
+In the literal sense, pretty much any web application can be said to be server-side rendered (SSR). The term was popularized following the birth of [React](https://reactjs.org/) and [Vue](https://vuejs.org/) and their support for creating JavaScript applications that can be prerendered on the server via Node.js prior to being delivered to the browser. This very nicely covered in [this Google Developers article][gd-article] by [Jason Miller][jason-miller] and [Addy Osmani][addy-osmani].
+
+[gd-article]: https://developers.google.com/web/updates/2019/02/rendering-on-the-web#rehydration
+[jason-miller]: https://twitter.com/_developit
+[addy-osmani]: https://twitter.com/addyosmani
+
+In addition to being benefitial for SEO, this technique makes the client UI to render more quickly into view because the prerendered markup doesn't have to be recreated, [just hydrated](/advanced/client-hydration).
+
 ## New to Fastify?
 
-If you're just getting started with Fastify itself, I'd suggest spending some time getting familiarized with its notion of
+If you're just getting started with Fastify itself, check out Pawel Grzybek's [From Express to Fastify in Node.js
+][pawels-article] and Simon Plenderleith's [How To Migrate Your App from Express to Fastify][simons-article]. 
+
+I'd also suggest spending some time getting familiarized with its notion of
 [plugins](https://www.fastify.io/docs/latest/Plugins-Guide),
 [hooks](https://www.fastify.io/docs/latest/Hooks),
 [encapsulation](https://www.fastify.io/docs/latest/Encapsulation) and
-[lifecycle](https://www.fastify.io/docs/latest/Lifecycle/).
+[lifecycle](https://www.fastify.io/docs/latest/Lifecycle/), to understand what _the fuss is all about_ and why you should care about going with Fastify for your next Node.js apps.
+
+[pawels-article]: https://pawelgrzybek.com/from-express-to-fastify-in-node-js/
+[simons-article]: https://www.sitepoint.com/express-to-fastify-migrate/
 
 ::: tip
 [Matteo Colina's](https://www.youtube.com/watch?v=FQu8FnTzOR0) and [Simon Plenderleith's](https://simonplend.com/learning-fastify/) video introductions are great if you need a little guidance. 
