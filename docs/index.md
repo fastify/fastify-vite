@@ -11,9 +11,9 @@
 
 A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js and Next.js.
 
-- Currently supports **Vue 3+** and **React 17+** — using the same [modular renderer API](/advanced/renderer-api.html).
+- Currently supports **Vue 3+** and **React 17+** — using the same [modular renderer API](/internals/renderer-api.html).
 - Automatically registers **individual Fastify routes** for your client application routes
-- Provides **generic utilities** for [client hydration](/advanced/client-hydration) and [isomorphic data fetching](/guide/data-fetching).
+- Provides **generic utilities** for [client hydration](/internals/client-hydration) and [isomorphic data fetching](/guide/data-fetching).
 - **No magic app folder** (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor][flavors].
 
 [flavors]: https://github.com/terixjs/flavors
@@ -29,7 +29,7 @@ In the literal sense, pretty much any web application can be said to be server-s
 [jason-miller]: https://twitter.com/_developit
 [addy-osmani]: https://twitter.com/addyosmani
 
-In addition to being benefitial for SEO, this technique makes the client UI to render more quickly into view because the prerendered markup doesn't have to be recreated, [just hydrated](/advanced/client-hydration).
+In addition to being benefitial for SEO, this technique makes the client UI to render more quickly into view because the prerendered markup doesn't have to be recreated, [just hydrated](/internals/client-hydration).
 
 ## New to Fastify?
 

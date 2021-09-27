@@ -112,7 +112,7 @@ This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), c
 
 The next differences from Vite's official React SSR example are the <b>server</b> and <b>client</b> entry points.
 
-For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-react</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching]().
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-react</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching](/guide/data-fetching.html#isomorphic-data).
 
 [server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-react/src/entry-server.js 
 

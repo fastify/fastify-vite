@@ -43,7 +43,7 @@ Below is a quick rundown of all Fastify route-level hooks available:
 
 <br>
 
-The following examples for Vue and React demonstrate how to leverage automatic [client hydration](/advanced/client-hydration) for `req.$data` —— that is made available on the client as `ctx.$data` via `useHydration()` —— from Fastify's `onRequest` route hook. To make it absolutely crystal clear:
+The following examples for Vue and React demonstrate how to leverage automatic [client hydration](/internals/client-hydration) for `req.$data` —— that is made available on the client as `ctx.$data` via `useHydration()` —— from Fastify's `onRequest` route hook. To make it absolutely crystal clear:
 
 <table class="infotable">
 <tr style="width: 100%">
@@ -66,7 +66,7 @@ The following examples for Vue and React demonstrate how to leverage automatic [
 ::: tip
 Bear in mind `ctx.$data` would no longer be populated following client-side navigation (History API) in these examples. For this you need to ensure data can be retrieved from the client as well.
 
-This is covered in [Isomorphic Data]().
+This is covered in [Isomorphic Data](/guide/data-fetching.html#isomorphic-data).
 :::
 
 ## Vue

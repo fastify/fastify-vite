@@ -18,7 +18,7 @@ Then you can start off with <b>fastify-vite</b>'s base Vue 3 starter or any of t
 <code>degit terixjs/flavors/vue-base <b>your-app</b></code>
 
 ::: tip
-[terixjs/flavors]() is a mirror to the `examples/` folder from <b>fastify-vite</b>, kept as a convenience for shorter `degit` calls.
+[terixjs/flavors](https://github.com/terixjs/flavors) is a mirror to the `examples/` folder from <b>fastify-vite</b>, kept as a convenience for shorter `degit` calls.
 :::
 
 After that you should be able to `cd` to `your-app` and run:
@@ -27,7 +27,7 @@ After that you should be able to `cd` to `your-app` and run:
 
 <code>npm run dev</code> — for running your app with Fastify + Vite's development server
 
-<code>npm run build</code> — for [building]() your Vite application
+<code>npm run build</code> — for [building](/guide/deployment.html) your Vite application
 
 <code>npm run start</code> — for serving in production mode
 
@@ -38,7 +38,7 @@ There's <b>no predetermined project structure</b> absolutely required. For conve
 A <b>fastify-vite</b> project will have _at the very least_ a) a `server.js` file launching the Fastify server, b) an `index.html` file and c) <b>client</b> and <b>server</b> entry points for the Vite application.
 
 <b>fastify-vite</b>'s 
-[base Vue 3+ starter boilerplate](...) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. For simplicity, the client source code is kept at the same level as `server.js`, but if you set the `root` option for <b>fastify-vite</b> you could easily move it all to a `client/` folder. In a big project with multiple folders and files for both client and server code, you'll want to do this.
+[base Vue 3+ starter boilerplate](https://github.com/terixjs/fastify-vite/tree/main/examples/vue-base) is based on the [official Vue 3 SSR example][ssr-vue] from Vite's [playground][playground]. For simplicity, the client source code is kept at the same level as `server.js`, but if you set the `root` option for <b>fastify-vite</b> you could easily move it all to a `client/` folder. In a big project with multiple folders and files for both client and server code, you'll want to do this.
 
 The differences from the official Vite example start with `server.js`, where the [raw original _Express_-based example][vue-server.js] is replaced with the following Fastify server initialization boilerplate:
 
@@ -114,7 +114,7 @@ This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), c
 
 The next differences from Vite's official Vue 3 SSR example are the <b>server</b> and <b>client</b> entry points.
 
-For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching]().
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching](/guide/data-fetching.html#isomorphic-data).
 
 [server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js 
 
@@ -193,7 +193,7 @@ router.isReady().then(() => app.mount('#app'))
 </tr>
 </table>
 
-This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration]()</b>, <b>[Route Payloads](/guide/data-fetching.html#route-payloads)</b> and <b>[Isomorphic Data](/guide/route-hooks.html#isomorphic-data)</b>. 
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration](/internals/client-hydration.html)</b>, <b>[Route Payloads](/guide/data-fetching.html#route-payloads)</b> and <b>[Isomorphic Data](/guide/data-fetching.html#isomorphic-data)</b>. 
 
 ## Routing Setup
 
@@ -267,7 +267,6 @@ export default loadRoutes(import.meta.globEager('./views/*.vue'))
 
 The following snippet is equivalent to the one above:
 
-
 <table class="infotable">
 <tr>
 <td style="width: 20%">
@@ -309,9 +308,9 @@ export default [
 </table>
 
 
-Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads]() and [isomorphic data]() functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data](/guide/data-fetching.html#isomorphic-data) functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
 
-<b>fastify-vite</b> [will use]() this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
+<b>fastify-vite</b> will use this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
 
 [vue-router]: https://router.vuejs.org/
 
