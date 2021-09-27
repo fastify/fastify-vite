@@ -13,8 +13,8 @@ const Guide = [
 ]
 
 const Internals = [
-  Item('Client Hydration', '/advanced/client-hydration'),
-  Item('Renderer API', '/advanced/renderer-api'),
+  Item('Client Hydration', '/internals/client-hydration'),
+  Item('Renderer API', '/internals/renderer-api'),
 ]
 
 /*
