@@ -1,5 +1,5 @@
 {
-  "name": "vue-api",
+  "name": "vue-base",
   "private": true,
   "scripts": {
     "dev": "node server",
