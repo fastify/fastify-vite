@@ -134,7 +134,11 @@ async function fastifyVite (fastify, options) {
     })
   }
 
-  fastify.addHook('onReady', () => {
+  fastify.addHook('onReady', async () => {
+    if (fastify.vite.options.build) {
+      await build(fastify.vite.options)
+      process.exit()
+    }
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype
     fastify.decorateRequest(options.hydration.global, { getter: () => fastify.vite.global })
@@ -143,15 +147,6 @@ async function fastifyVite (fastify, options) {
       fastify.decorateRequest('api', fastify.api)
     }
   })
-}
-
-fastifyVite.app = async function appExport (main, serve) {
-  const fastify = await main(require('fastify')())
-  if (process.argv.length > 2 && process.argv[2] === 'build') {
-    build(fastify.vite.options)
-  } else {
-    serve(fastify)
-  }
 }
 
 module.exports = fastifyPlugin(fastifyVite)
