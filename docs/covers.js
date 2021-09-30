@@ -210,7 +210,7 @@ async function main() {
          /<meta name="twitter:image" content="([^"]+)">/g
       ]) {
          html.contents = html.contents.replace(re, (...m) => {
-            return m[0].replace(m[1], `/${pngName}`)
+            return m[0].replace(m[1], `https://fastify-vite.dev/${pngName}`)
          })
       }
       await fs.writeFile(path.join(__dirname, '.vitepress', 'dist', html.name), html.contents)
