@@ -4,9 +4,9 @@ const devalue = require('devalue')
 const empty = {}
 
 function createRenderFunction (createApp) {
-  return async function render (req, url, options) {
+  return async function render (fastify, req, reply, url, options) {
     const { entry, distManifest, hydration } = options
-    const { ctx, app, head, router } = createApp({ req })
+    const { ctx, app, head, router } = createApp({ fastify, req, reply })
 
     // On the client, hydrate() from fastify-vite/hidrate repeats these steps
     app.config.globalProperties = {

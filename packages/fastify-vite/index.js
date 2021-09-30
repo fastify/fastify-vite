@@ -35,7 +35,7 @@ async function fastifyVite (fastify, options) {
     await fastify.register(middie)
     fastify.use(vite.middlewares)
     const entry = await renderer.dev.getEntry(options, vite)
-    handler = renderer.dev.getHandler(options, entry.getRender, vite)
+    handler = renderer.dev.getHandler(fastify, options, entry.getRender, vite)
     routes = entry.routes
   } else {
     // For production you get the distribution version of the render function
@@ -50,7 +50,7 @@ async function fastifyVite (fastify, options) {
     })
     const entry = renderer.getEntry(options)
     routes = entry.routes
-    handler = renderer.getHandler(options, entry.render)
+    handler = renderer.getHandler(fastify, options, entry.render.bind(fastify))
   }
 
   // Sets fastify.vite.get() helper which uses
