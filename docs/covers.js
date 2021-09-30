@@ -193,7 +193,8 @@ async function main() {
    }
    for (const html of htmls) {
       if (html.name === 'index.html') {
-         console.log('replacing')
+         console.log('replacing', html.name)
+         console.log('->', path.resolve(__dirname, '.vitepress', 'dist', html.name))
          await fs.writeFile(
             path.resolve(__dirname, '.vitepress', 'dist', html.name),
             html.contents.replace(
