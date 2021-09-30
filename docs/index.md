@@ -73,6 +73,4 @@ Also check out Evan You's [Vite 2.0 announcement][vite-2-announcement] for more 
 <a class="sponsor" href="https://helloprint.com">
 <img width="150" src="/helloprint.svg" alt="Helloprint">
 </a>
-<a class="sponsor" href="https://sex.com">
-<img class="sponsor" width="150" src="/sexdotcom.svg" alt="Sex.com">
-</a>
+<img class="sponsor" width="150" src="/sxdotcom.svg" alt="S​e​x​.com">
