@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 
-# API integration
+# API Integration
 
 As the reader is probably aware, most modern web applications have the backend layer (data) decoupled from the frontend layer (UI) completely. You're probably no stranger to this setup:
 
