@@ -39,7 +39,6 @@ async function build (options) {
   })
   await Promise.all([viteBuild(client), viteBuild(server)])
   console.log(`Generated ${outDir}/client and ${outDir}/server.`)
-  process.exit()
 }
 
 module.exports = { build }

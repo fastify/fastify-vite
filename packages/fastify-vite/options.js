@@ -10,6 +10,7 @@ const defaults = {
   dev,
   // If true, causes the Fastify server boot to halt after onReady
   build: false,
+  generatePaths: undefined,
   // Used to determine the keys to be injected in the application's boot
   // For Vue 3, that means adding them to globalProperties
   hydration: {
@@ -50,17 +51,24 @@ async function processOptions (options) {
 
   options.vite = options.renderer.options
 
-  if (!options.dev) {
-    options.distDir = resolve(options.root, viteOptions.build.outDir)
-    const distIndex = resolve(options.distDir, 'client/index.html')
-    if (!existsSync(distIndex)) {
-      throw new Error('Missing production client/index.html — did you build first?')
+  function recalcDist () {
+    console.log('recalcDist', options.dev)
+    if (!options.dev) {
+      options.distDir = resolve(options.root, viteOptions.build.outDir)
+      const distIndex = resolve(options.distDir, 'client/index.html')
+      if (!existsSync(distIndex)) {
+        throw new Error('Missing production client/index.html — did you build first?')
+      }
+      options.distIndex = readFileSync(distIndex, 'utf8')
+      options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
+    } else {
+      options.distManifest = []
     }
-    options.distIndex = readFileSync(distIndex, 'utf8')
-    options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
-  } else {
-    options.distManifest = []
   }
+
+  recalcDist()
+  options.recalcDist = recalcDist
+
   return options
 }
 

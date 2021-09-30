@@ -1,5 +1,7 @@
 const { resolve } = require('path')
+const { writeFile } = require('fs').promises
 const { createServer } = require('vite')
+const fastify = require('fastify')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
@@ -15,6 +17,12 @@ async function fastifyVite (fastify, options) {
   } catch (err) {
     console.error(err)
     process.exit(1)
+  }
+
+  if (options.generatePaths) {
+    await build(options)
+    options.dev = false
+    options.recalcDist()
   }
 
   // Provided by the chosen rendering adapter
@@ -48,9 +56,9 @@ async function fastifyVite (fastify, options) {
       root: resolve(options.distDir, `client/${assetsDir}`),
       prefix: `/${assetsDir}`,
     })
-    const entry = renderer.getEntry(options)
+    const entry = await renderer.getEntry(options)
     routes = entry.routes
-    handler = renderer.getHandler(fastify, options, entry.render.bind(fastify))
+    handler = renderer.getHandler(fastify, options, entry.render)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -138,6 +146,18 @@ async function fastifyVite (fastify, options) {
     if (fastify.vite.options.build) {
       await build(fastify.vite.options)
       process.exit()
+    }
+    if (fastify.vite.options.generatePaths) {
+      setImmediate(async () => {
+        const files = []
+        for (const path of fastify.vite.options.generatePaths) {
+          const { payload } = await fastify.inject({ url: path })
+          const htmlPath = resolve(options.distDir, 'server', `${path.slice(1)}.html`)
+          files.push(writeFile(htmlPath, payload))
+        }
+        await Promise.all(files)
+        process.exit()
+      })
     }
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype

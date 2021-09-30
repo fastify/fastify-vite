@@ -6,29 +6,15 @@ async function main () {
   await fastify.register(fastifyVite, {
     root: __dirname,
     renderer: fastifyViteVue,
+    generatePaths: process.argv.includes('generate') && [
+      '/',
+    ],
   })
-
-  fastify.api(({ get, post }) => ({
-    echo: post('/echo/:msg', ({ msg }, req, reply) => {
-      reply.send({ msg })
-    }),
-    other: get('/other', (req, reply) => {
-      reply.send('string response')
-    }),
-  }))
-
-  fastify.get('/favicon.ico', (_, reply) => {
-    reply.code(404)
-    reply.send('')
-  })
-
-  fastify.vite.global = { foobar: 123 }
-
   return fastify
 }
 
 if (require.main === module) {
-  fastifyVite.app(main, (fastify) => {
+  main().then((fastify) => {
     fastify.listen(3000, (err, address) => {
       if (err) {
         console.error(err)

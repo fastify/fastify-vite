@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs vue-api",
+    "devinstall": "zx ../../devinstall.mjs vue-static",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"

@@ -1,29 +1,18 @@
 <template>
-  <template v-for="year in years">
-    <h1>{{ year }}</h1>
-    <template v-for="month in year.months">
-      <template v-for="entry in archive[year][month]">
-        <p class="title"><a :href="entry.path">{{ entry.title }}</a></p>
-      </template>
-    </template>
-  </template>
+  <h1>Index Page</h1>
+  <p><router-link to="/about">Go to /about</router-link></p>
 </template>
 
 <script>
-import { usePayload } from 'fastify-vite-vue/client'
+import { useFastify } from 'fastify-vite-vue/server'
 
 export const path = '/'
 
-export function getPayload ({ fastify }) {
-  const archive = fastify.press.archive
-  const years = Object.keys(archive)
-  for (const year of years) {
-    year.months = Object.keys(years).sort()
-  }
-  return { archive, years }
-}
-
 export default {
-  setup: usePayload,
+  async setup () {
+    const fastify = useFastify()
+    console.log(typeof fastify)
+    return
+  }
 }
 </script>
