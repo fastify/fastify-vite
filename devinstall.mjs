@@ -30,6 +30,7 @@ for (let pkg of deps.local) {
 // Hard copy packages after all calls to npm install have ended
 // If you run npm install on the example folder, you also need to run devinstall again
 for (let pkg of deps.local) {
+  await $`rm -r ${root}/${exRoot}/node_modules/${pkg}`
   await $`cp -r ${root}/packages/${pkg} ${root}/${exRoot}/node_modules/${pkg}`
   await $`cp ${root}/${exRoot}/package.dist.json ${root}/${exRoot}/package.json`
 }
