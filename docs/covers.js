@@ -193,10 +193,14 @@ async function main() {
    }
    for (const html of htmls) {
       if (html.name === 'index.html') {
-         await fs.writeFile(html.name, html.contents.replace(
-            '<title>New to SSR? | fastify-vite</title>',
-            '<title>fastify-vite: Fastify plugin for Vite integration</title>'
-         ))
+         console.log('replacing')
+         await fs.writeFile(
+            path.resolve(__dirname, '.vitepress', 'dist', html.name),
+            html.contents.replace(
+               '<title>New to SSR? | fastify-vite</title>',
+               '<title>fastify-vite: Fastify plugin for Vite integration</title>'
+            )
+         )
          continue
       }
       const title = html.contents.match(titleRe)[1]
