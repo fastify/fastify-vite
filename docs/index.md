@@ -62,3 +62,17 @@ Also check out Evan You's [Vite 2.0 announcement][vite-2-announcement] for more 
 
 [evan-course]: https://www.vuemastery.com/courses/lightning-fast-builds-with-vite/intro-to-vite/
 [vite-2-announcement]: https://dev.to/yyx990803/announcing-vite-2-0-2f0a
+
+## Sponsors
+
+<style>
+.sponsor { text-decoration: none; }
+.sponsor:hover { text-decoration: none; }
+.sponsor img { margin-right: 20px }
+</style>
+<a class="sponsor" href="https://helloprint.com">
+<img width="150" src="/helloprint.svg" alt="Helloprint">
+</a>
+<a class="sponsor" href="https://sex.com">
+<img class="sponsor" width="150" src="/sexdotcom.svg" alt="Sex.com">
+</a>

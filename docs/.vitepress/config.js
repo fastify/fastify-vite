@@ -31,6 +31,8 @@ const Examples = [
 
 const Meta = [
   Item('About', '/meta/about'),
+  Item('Philosophy', '/meta/philosophy'),
+  Item('Acknowledgements', '/meta/acknowledgements'),
   Item('Contributing', '/meta/contributing'),
 ]
 
