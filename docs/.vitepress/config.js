@@ -69,7 +69,7 @@ module.exports = {
   head: [
     ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['meta', { name: 'author', content: 'Jonas Galvez' }],
-    ['meta', { property: 'og:title', content: 'VueUse' }],
+    ['meta', { property: 'og:title', content: 'fastify-vite' }],
     ['meta', { property: 'og:image', content: 'https://fastify-vite.dev/cover.png' }],
     ['meta', { property: 'og:description', content: 'Fastify plugin for Vite integration' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
