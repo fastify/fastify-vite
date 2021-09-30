@@ -1,3 +1,6 @@
+---
+title: Fastify plugin for Vite integration
+---
 
 <style>
 .headline {
