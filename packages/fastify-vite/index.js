@@ -1,5 +1,6 @@
-const { resolve } = require('path')
+const { parse, resolve } = require('path')
 const { writeFile } = require('fs').promises
+const { mkdirSync, existsSync } = require('fs')
 const { createServer } = require('vite')
 const fastify = require('fastify')
 const middie = require('middie')
@@ -149,17 +150,28 @@ async function fastifyVite (fastify, options) {
       process.exit()
     }
     if (fastify.vite.options.generatePaths) {
-      const files = []
       const paths = typeof fastify.vite.options.generatePaths === 'function'
         ? await fastify.vite.options.generatePaths()
         : fastify.vite.options.generatePaths
       if (Array.isArray(paths)) {
+        const tasks = []
         for (const path of paths) {
-          const { payload } = await fastify.inject({ url: path })
-          const htmlPath = resolve(options.distDir, 'server', `${path.slice(1)}.html`)
-          files.push(writeFile(htmlPath, payload))
+          tasks.push(async () => {
+            try {
+              const { payload } = await fastify.inject({ url: path })
+              const name = path.slice(1) || 'index'
+              const htmlPath = resolve(options.distDir, 'client', `${name}.html`)
+              const { dir } = parse(htmlPath)
+              if (!existsSync(dir)) {
+                mkdirSync(dir)
+              }
+              await writeFile(htmlPath, payload)
+            } catch (err) {
+              console.error(err)
+            }
+          })
         }
-        await Promise.all(files)
+        await Promise.all(tasks.map(task => task()))
       }
       process.exit()
     }
