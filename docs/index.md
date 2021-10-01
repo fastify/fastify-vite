@@ -68,7 +68,7 @@ Also check out Evan You's [Vite 2.0 announcement][vite-2-announcement] for more 
 <style>
 .sponsor { text-decoration: none; }
 .sponsor:hover { text-decoration: none; }
-.sponsor img { margin-right: 20px }
+.sponsor img { margin-right: 30px }
 </style>
 <a class="sponsor" href="https://helloprint.com">
 <img width="150" src="/helloprint.svg" alt="Helloprint">
