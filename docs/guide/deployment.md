@@ -107,3 +107,28 @@ await app.register(fastifyVite, {
 ```
 
 The `add()` helper function that is passed as first parameter is an _optional convenience_. You can create and return an array of routes yourself from `generatePaths()` if you want.
+
+
+## Generate Server
+
+<b>fastify-vite</b> also includes a built-in **live static generation server** — just set the `generateServer` option to `true` or pass a configuration object where you can set `port` and the `onGenerate` callback that gets called every time a new page gets regenerated, with a path to the updated file, so it can be uploaded to a different location if needed.
+
+```js{9-14}
+await app.register(fastifyVite, {
+  generate: process.argv.includes('generate'),
+  async generatePaths (add) {
+    const pages = await getPagesTotalFromDataSource()
+    for (let page = 1; page <= pages; page++) {
+      add(`/pages/${page}`)
+    }
+  },
+  generateServer: {
+    port: 5000,
+    onGenerate ({ path, file }) {
+      // Upload assets
+    }
+  },
+})
+```
+
+This would trigger an initial build and static generation but also start a server on `:5000` where you can do an HTTP `GET` to `/<path>` to trigger regeneration for that path in the build, without have to rebuild the entire application, i.e., this will keep regenerating pages based on the initial build.

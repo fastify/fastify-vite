@@ -179,7 +179,7 @@ async function fastifyVite (fastify, options) {
     }
 
     if (fastify.vite.options.generateServer) {
-      const { port } = fastify.vite.options.generateServer
+      const { port, onGenerate } = fastify.vite.options.generateServer
       const builder = Fastify()
       builder.get('*', async (req, reply) => {
         const path = req.raw.url
@@ -196,6 +196,7 @@ async function fastifyVite (fastify, options) {
         } for build on ${
           fastify.vite.options.distDir
         }`)
+        onGenerate({ file: htmlPath, path })
       })
       await new Promise(() => {
         builder.listen(port, (err, address) => {
