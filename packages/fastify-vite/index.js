@@ -2,7 +2,7 @@ const { parse, resolve } = require('path')
 const { writeFile } = require('fs').promises
 const { mkdirSync, existsSync } = require('fs')
 const { createServer } = require('vite')
-const fastify = require('fastify')
+const Fastify = require('fastify')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
@@ -173,7 +173,39 @@ async function fastifyVite (fastify, options) {
         }
         await Promise.all(tasks.map(task => task()))
       }
-      process.exit()
+      if (!fastify.vite.options.generateServer) {
+        process.exit()
+      }
+    }
+
+    if (fastify.vite.options.generateServer) {
+      const { port } = fastify.vite.options.generateServer
+      const builder = Fastify()
+      builder.get('*', async (req, reply) => {
+        const path = req.raw.url
+        const { payload } = await fastify.inject({ url: path })
+        const name = path.slice(1) || 'index'
+        const htmlPath = resolve(options.distDir, 'client', `${name}.html`)
+        const { dir } = parse(htmlPath)
+        if (!existsSync(dir)) {
+          mkdirSync(dir)
+        }
+        await writeFile(htmlPath, payload)
+        reply.send(`Generated fresh static page for ${
+          req.raw.url
+        } for build on ${
+          fastify.vite.options.distDir
+        }`)
+      })
+      await new Promise(() => {
+        builder.listen(port, (err, address) => {
+          if (err) {
+            console.error(err)
+            process.exit(1)
+          }
+          console.log(`Generate Server listening on ${address}`)
+        })
+      })
     }
   }
 
