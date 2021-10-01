@@ -10,6 +10,7 @@ async function main () {
       '/',
     ],
   })
+  await fastify.vite.ready()
   return fastify
 }
 

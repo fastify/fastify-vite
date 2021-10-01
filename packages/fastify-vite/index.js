@@ -142,23 +142,30 @@ async function fastifyVite (fastify, options) {
     })
   }
 
-  fastify.addHook('onReady', async () => {
+  fastify.vite.ready = async () => {
+    await fastify.ready()
     if (fastify.vite.options.build) {
       await build(fastify.vite.options)
       process.exit()
     }
     if (fastify.vite.options.generatePaths) {
-      setImmediate(async () => {
-        const files = []
-        for (const path of fastify.vite.options.generatePaths) {
+      const files = []
+      const paths = typeof fastify.vite.options.generatePaths === 'function'
+        ? await fastify.vite.options.generatePaths()
+        : fastify.vite.options.generatePaths
+      if (Array.isArray(paths)) {
+        for (const path of paths) {
           const { payload } = await fastify.inject({ url: path })
           const htmlPath = resolve(options.distDir, 'server', `${path.slice(1)}.html`)
           files.push(writeFile(htmlPath, payload))
         }
         await Promise.all(files)
-        process.exit()
-      })
+      }
+      process.exit()
     }
+  }
+
+  fastify.addHook('onReady', async () => {
     // Pre-initialize request decorator for better performance
     // This actually safely adds things to Request.prototype
     fastify.decorateRequest(options.hydration.global, { getter: () => fastify.vite.global })
