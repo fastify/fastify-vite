@@ -131,4 +131,4 @@ await app.register(fastifyVite, {
 })
 ```
 
-This would trigger an initial build and static generation but also start a server on `:5000` where you can do an HTTP `GET` to `/<path>` to trigger regeneration for that path in the build, without have to rebuild the entire application, i.e., this will keep regenerating pages based on the initial build.
+This would trigger an initial build and static generation but also start a server on `:5000` where you can **do an HTTP `GET` to `/<path>` to trigger regeneration for that path in the build**, without having to rebuild the entire application, i.e., this will keep regenerating pages based on the initial build.

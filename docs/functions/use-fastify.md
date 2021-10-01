@@ -1,0 +1,3 @@
+# useFastify
+
+Reference for `useFastify()`.

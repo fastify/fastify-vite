@@ -12,6 +12,13 @@ const Guide = [
   Item('Deployment', '/guide/deployment'),
 ]
 
+const Functions = [
+  Item('useHydration', '/functions/use-hydration'),
+  Item('useFastify', '/functions/use-fastify'),
+  Item('useRequest', '/functions/useRequest'),
+  Item('useReply', '/functions/useReply'),
+]
+
 const Internals = [
   Item('Client Hydration', '/internals/client-hydration'),
   Item('Renderer API', '/internals/renderer-api'),
@@ -38,8 +45,8 @@ const Meta = [
 
 const DefaultSidebar = [
   { text: 'Guide', children: Guide },
+  { text: 'Functions', children: Functions },
   { text: 'Internals', children: Internals },
-  // { text: 'Examples', children: Examples },
   { text: 'Meta', children: Meta },
 ]
 
@@ -54,6 +61,10 @@ module.exports = {
       {
         text: 'Guide',
         items: Guide,
+      },
+      {
+        text: 'Functions',
+        items: Functions,
       },
       {
         text: 'Internals',
