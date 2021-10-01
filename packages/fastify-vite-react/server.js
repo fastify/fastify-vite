@@ -1,3 +1,4 @@
+const { useContext } = require('react')
 const { createRenderFunction } = require('./render')
 const { Context } = require('./context')
 

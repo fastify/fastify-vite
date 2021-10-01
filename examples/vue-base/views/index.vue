@@ -11,7 +11,7 @@ export const path = '/'
 export default {
   async setup () {
     const fastify = useFastify()
-    console.log(typeof fastify)
+    // console.log(typeof fastify)
     return
   }
 }

@@ -5,10 +5,12 @@ const { Helmet } = require('react-helmet')
 const { ContextProvider } = require('./context')
 
 function createRenderFunction (createApp) {
-  return async function render (req, url, options) {
+  return async function render (fastify, req, reply, url, options) {
     const { entry, hydration } = options
     const { App, router, context } = createApp({
+      fastify,
       req,
+      reply,
       $payloadPath: () => `/-/data${req.routerPath}`,
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],

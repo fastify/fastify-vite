@@ -6,6 +6,7 @@ async function main () {
   await fastify.register(fastifyVite, {
     root: __dirname,
     renderer: fastifyViteReact,
+    build: process.argv.includes('build'),
     entry: {
       client: '/entry/client.jsx',
       server: '/entry/server.jsx',
