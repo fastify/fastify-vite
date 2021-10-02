@@ -10,8 +10,8 @@ import { isServer, useRequest } from 'fastify-vite-react/server'
 ```
 ```js
 if (isServer) {
-	const req = useRequest()
-	console.log('req.url', req.url)
+  const req = useRequest()
+  console.log('req.url', req.url)
 }
 ````
 

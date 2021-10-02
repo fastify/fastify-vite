@@ -10,7 +10,7 @@ import { isServer, useReply } from 'fastify-vite-react/server'
 ```
 ```js
 if (isServer) {
-	const reply = useReply()
+  const reply = useReply()
 }
 ````
 
