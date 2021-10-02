@@ -15,7 +15,7 @@ if (isServer) {
 }
 ````
 
-For convenience, here's the property reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/):
+For convenience, here's the API reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/Request/):
 
 <table class="infotable"><tr><td>
 <code class="h inline-block">query</code></td>

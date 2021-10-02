@@ -321,6 +321,7 @@ td > pre {
   }
   & code {
     padding: .25rem .5em !important;
+    white-space: nowrap;
   }
   & div[class^="language"] {
     margin: 0;
