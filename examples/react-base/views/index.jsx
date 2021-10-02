@@ -5,7 +5,6 @@ export const path = '/'
 
 export default function Index () {
   const fastify = useFastify()
-  console.log(fastify)
   return (
     <>
       <h1>Index Page</h1>

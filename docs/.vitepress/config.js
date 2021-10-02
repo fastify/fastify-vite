@@ -15,8 +15,8 @@ const Guide = [
 const Functions = [
   Item('useHydration', '/functions/use-hydration'),
   Item('useFastify', '/functions/use-fastify'),
-  Item('useRequest', '/functions/useRequest'),
-  Item('useReply', '/functions/useReply'),
+  Item('useRequest', '/functions/use-request'),
+  Item('useReply', '/functions/use-reply'),
 ]
 
 const Internals = [
