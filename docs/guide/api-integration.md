@@ -4,6 +4,10 @@ sidebarDepth: 3
 
 # API Integration
 
+::: tip
+Given the density of this section, it was taken out of the framework-specifc guides and all usage examples displayed here Vue-oriented. However the same principles apply to any framework. You'll notice the data functions look exactly the same in the [vue-api]() and [react-api]() boilerplate flavors. The only differences are in what is required by each framework, and the return value of `useHydration` which [can vary by framework](/functions/use-hydration).
+:::
+
 As the reader is probably aware, most modern web applications have the backend layer (data) decoupled from the frontend layer (UI) completely. You're probably no stranger to this setup:
 
 <table class="infotable">
@@ -59,7 +63,7 @@ If you can only consume an API externally, via HTTP, all you need is an isomorph
 
 Probably the most popular solution for this to date is the combination of the [node-fetch](https://www.npmjs.com/package/node-fetch) and [whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch) packages, providing isomorphic [`fetch()`](https://fetch.spec.whatwg.org/). Other popular options are [axios](https://github.com/axios/axios) and [ky-universal](https://github.com/sindresorhus/ky-universal).
 
-2021 saw the maturing of [undici](https://github.com/nodejs/undici), a fast HTTP/1.1 client for Node.js, built by Node.js core maintainers. For more background, check out Matteo Colina's [Can we double HTTP client throughput?](https://www.youtube.com/watch?v=D9xblqBAHO8) from [NodeConf](https://www.nodeconfremote.com/) 2020. Undici also includes a mature `fetch()` implementation that benefits from its speed. If you consider the adoption rate of modern browsers and the fact that [nearly everyone dropped support for IE11](https://www.google.com/search?q=drops+ie+11+support), you can probably safely replace the combination of `node-fetch` and `whatwg-fetch` with just [`undici-fetch`](https://github.com/bcomnes/fetch-undici) and native `fetch()` on the browser.
+2021 saw the maturing of [undici](https://github.com/nodejs/undici), a fast HTTP/1.1 client for Node.js, built by Node.js core maintainers. For more background, check out Matteo Colina's [Can we double HTTP client throughput?](https://www.youtube.com/watch?v=D9xblqBAHO8) from [NodeConf](https://www.nodeconfremote.com/) 2020. Undici also includes a mature `fetch()` implementation that benefits from its speed. If you consider the adoption rate of modern browsers and the fact that [nearly everyone dropped support for IE11](https://www.google.com/search?q=drops+ie+11+support), you can probably safely replace the combination of `node-fetch` and `whatwg-fetch` with just [`fetch-undici`](https://github.com/bcomnes/fetch-undici) and native `fetch()` on the browser.
 
 Using the sample [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) API to illustrate — here's an isomorphic `fetch()` call to its `/posts` resource — stored in an `api.js` file in a <b>fastify-vite</b> project:
 
