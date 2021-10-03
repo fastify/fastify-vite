@@ -5,7 +5,7 @@ sidebarDepth: 3
 # API Integration
 
 ::: tip
-Given the density of this section, it was taken out of the framework-specifc guides and all usage examples displayed here Vue-oriented. However the same principles apply to any framework. You'll notice the data functions look exactly the same in the [vue-api]() and [react-api]() boilerplate flavors. The only differences are in what is required by each framework, and the return value of `useHydration` which [can vary by framework](/functions/use-hydration).
+Given the density of this section, it was taken out of the framework-specifc guides and all usage examples displayed here Vue-oriented. However the same principles apply to any framework. You'll notice the data functions look exactly the same in the [vue-api](https://github.com/terixjs/flavors/tree/main/vue-api) and [react-api](https://github.com/terixjs/flavors/tree/main/react-api) boilerplate flavors. The only differences are in what is required by each framework, and the return value of `useHydration` which [can vary by framework](/functions/use-hydration).
 :::
 
 As the reader is probably aware, most modern web applications have the backend layer (data) decoupled from the frontend layer (UI) completely. You're probably no stranger to this setup:

@@ -1,15 +1,15 @@
+import { fetch } from 'fetch-undici'
 import { useHydration, isServer } from 'fastify-vite-react/client'
 
 export const path = '/data-fetching'
 
-export async function getData ({ req, $api }) {
+export async function getData ({ req }) {
+  const response = await fetch('https://httpbin.org/json')
   return {
     message: isServer
-      ? req.query?.message ?? 'Hello from server'
+      ? req?.query?.message ?? 'Hello from server'
       : 'Hello from client',
-    result: await $api.echo({
-      msg: 'Hello from API method',
-    }),
+    result: await response.json(),
   }
 }
 

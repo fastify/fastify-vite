@@ -16,7 +16,7 @@ A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js an
 
 - Currently supports **Vue 3+** and **React 17+** — using the same [modular renderer API](/internals/renderer-api.html).
 - Automatically registers **individual Fastify routes** for your client application routes.
-- Provides **generic utilities** for [client hydration](/internals/client-hydration) and [isomorphic data fetching](/guide/data-fetching).
+- Provides **generic utilities** for [client hydration](/internals/client-hydration) and **isomorphic data fetching**.
 - **No magic app folder** (<b>.nuxt</b>, <b>.next</b>), just start with the right [boilerplate flavor][flavors].
 
 [flavors]: https://github.com/terixjs/flavors

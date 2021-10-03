@@ -117,7 +117,7 @@ This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), c
 
 The next differences from Vite's official Vue 3 SSR example are the <b>server</b> and <b>client</b> entry points.
 
-For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data fetching](/guide/data-fetching.html#isomorphic-data).
+For the <b>server</b> entry point, instead of providing only a `render` function, with <b>fastify-vite</b> you can also provide a `routes` array. The `render` function itself should be created with the factory function provided by <b>fastify-vite-vue</b>, `createRenderFunction()`, which will automate things like [client hydration](/internals/client-hydration.html) and add support for [route hooks](/guide/route-hooks.html), [payloads](#route-payloads) and [isomorphic data fetching](#isomorphic-data).
 
 [server-entry-point]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js 
 
@@ -196,7 +196,7 @@ router.isReady().then(() => app.mount('#app'))
 </tr>
 </table>
 
-This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration](/internals/client-hydration.html)</b>, <b>[Route Payloads](/guide/data-fetching.html#route-payloads)</b> and <b>[Isomorphic Data](/guide/data-fetching.html#isomorphic-data)</b>. 
+This will pick up values serialized in `window` during SSR (like `window.__NUXT__`) and make sure they're available through `useHydration()`, <b>fastify-vite</b>'s unified helper for dealing with isomorphic data. See more in <b>[Client Hydration](/internals/client-hydration.html)</b>, <b>[Route Payloads](#route-payloads)</b> and <b>[Isomorphic Data](#isomorphic-data)</b>. 
 
 ## Routing Setup
 
@@ -311,7 +311,7 @@ export default [
 </table>
 
 
-Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads](/guide/data-fetching.html#route-payloads) and [isomorphic data](/guide/data-fetching.html#isomorphic-data) functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
+Similarly to the way `createRenderFunction()` works, providing a `routes` array in your server entry export is what ensures you can have individual Fastify [route hooks](/guide/route-hooks.html), [payloads](#route-payloads) and [isomorphic data](#isomorphic-data) functions for each of your [Vue Router][vue-router] routes. When these are exported directly from your view files, `loadRoutes()` ensures they're collected. 
 
 <b>fastify-vite</b> will use this array to automatically <b>register one individual route</b> for them while applying any hooks and data functions provided.
 
@@ -327,7 +327,6 @@ fastify.vite.get('/*')
 And in this case, any <b>_hooks_</b> or <b>_data functions_</b> exported directly from your Vue files <b>would be ignored</b>.
 :::
 
-
 ## Data Fetching
 
 <b>fastify-vite</b> prepacks two different **_convenience mechanisms_** for fetching data before and after initial page load. Those are in essence just two different <b>data functions</b> you can export from your view files.
@@ -340,7 +339,7 @@ One is for when your data function can only run on the server but still needs to
 [prepass]: https://github.com/FormidableLabs/react-ssr-prepass
 [preHandler]: https://www.fastify.io/docs/latest/Hooks/#prehandler
 
-The first is `getPayload`, which is in a way very similar to `getServerSideProps` [in Next.js](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering) and [react-ssr-prepass][prepass], but has some other tricks of its own. Exporting a `getPayload` function from a view will **automatically cause it to be called prior to SSR when rendering the route it's associated to**, but will **also automatically register an endpoint where you can call it from the client**. Not only that, coupled with <b>fastify-vite</b>'s [`useHydration`](/functions/use-hydration) isomorphic hook, `getPayload` will stay working seamlessly during client-side navigation ([History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) via [Vue Router](https://next.router.vuejs.org/), [React Router](https://reactrouter.com/) etc). In that regard it's very similar to `asyncData` Nuxt.js, which will also work seamlessly during SSR and client-side navigation.
+The first is `getPayload`, which is in a way very similar to `getServerSideProps` [in Next.js](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering), with a dash of [react-ssr-prepass][prepass]. Exporting a `getPayload` function from a view will **automatically cause it to be called <b>prior to SSR</b> (still in the Fastify layer) when rendering the route it's associated to**, but will **also automatically register an endpoint where you can call it from the client**. Not only that, coupled with <b>fastify-vite</b>'s [`useHydration`](/functions/use-hydration) isomorphic hook, `getPayload` will stay working seamlessly during client-side navigation ([History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) via [Vue Router](https://next.router.vuejs.org/), [React Router](https://reactrouter.com/) etc). In that regard it's very similar to `asyncData` Nuxt.js, which will also work seamlessly during SSR and client-side navigation.
 
 In a nutshell — navigating to a route on the client will cause an HTTP request to be triggered automatically for that route's payload data. If the route is being server-side rendered, data is retrieved on the server and just hydrated on the client on first render.
 
@@ -437,7 +436,6 @@ Learn more by playing with the [`vue-data`](https://github.com/terixjs/flavors/t
 
 `degit terixjs/flavors/vue-data your-app`
 
-
 ### Isomorphic Data
 
 The second convenience mechanism is `getData`. It's very similar to `getPayload` as <b>fastify-vite</b> will also run it from the route's [preHandler][preHandler] hook. 
@@ -457,7 +455,7 @@ import { useHydration, isServer } from 'fastify-vite-vue/client'
 
 export const path = '/data-fetching'
 
-export async function getData ({ req, $api }) {
+export async function getData ({ req }) {
   const response = await fetch('https://httpbin.org/json')
   return {
     message: isServer

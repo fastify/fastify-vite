@@ -64,9 +64,7 @@ The following examples for Vue and React demonstrate how to leverage automatic [
 </table>
 
 ::: tip
-Bear in mind `ctx.$data` would no longer be populated following client-side navigation (History API) in these examples. For this you need to ensure data can be retrieved from the client as well.
-
-This is covered in [Isomorphic Data](/guide/data-fetching.html#isomorphic-data).
+Bear in mind `ctx.$data` would no longer be populated following client-side navigation (History API) in these examples. For this you need to ensure data can be retrieved from the client as well. Route Hooks work best to power first render specific tasks before Route Payloads and Isomorphic Data.
 :::
 
 ## Vue

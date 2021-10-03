@@ -58,7 +58,7 @@ Below is a quick reference of all options and their default values.
 <td>
 <code class="h inline-block">hydration.payload</code>
 <br><br>
-<span class="small"><a href="/guide/data-fetching.html#route-payloads">Route Payload</a> hydration key</span>
+<span class="small">Route Payloads hydration key</span>
 </td>
 <td>
 <code>'$payload'</code>
@@ -68,7 +68,7 @@ Below is a quick reference of all options and their default values.
 <td>
 <code class="h inline-block">hydration.data</code>
 <br><br>
-<span class="small"><a href="/guide/data-fetching.html#isomorphic-data">Isomorphic Data</a> hydration key</span>
+<span class="small">Isomorphic Data hydration key</span>
 </td>
 <td>
 <code>'$data'</code>

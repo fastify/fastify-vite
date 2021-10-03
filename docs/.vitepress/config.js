@@ -7,7 +7,6 @@ const Guide = [
   Item('Configuration', '/guide/config'),
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
-  Item('Data Fetching', '/guide/data-fetching'),
   Item('API Integration', '/guide/api-integration'),
   Item('Deployment', '/guide/deployment'),
 ]
