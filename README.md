@@ -4,7 +4,9 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/terixjs/fastify-vite/badge.svg)](https://snyk.io/test/github/terixjs/fastify-vite)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-[**Fastify**][fastify] plugin to serve [**Vite**][vite] **SSR** applications.
+[**Fastify**][fastify] plugin for [**Vite**][vite] integration.
+
+<img src="https://fastify-vite.dev/cover.png">
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
