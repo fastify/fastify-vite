@@ -105,7 +105,7 @@ Below is a quick reference of all options and their default values.
 <td>
 <code class="h inline-block">generate.server.enabled</code>
 <br><br>
-<span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and starts the live <a href="/guide/deployment.html#generate-server">static generation server</a></span>
+<span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and starts the live <a href="/guide/deployment.html#generate-server">static generation server API</a></span>
 </td>
 <td>
 <code>process.argv.includes('generate-server')</code><br><br>
@@ -116,7 +116,7 @@ Below is a quick reference of all options and their default values.
 <td>
 <code class="h inline-block">generate.server.generated</code>
 <br><br>
-<span class="small">...</span>
+<span class="small">Callback function called when an URL gets generated (or regenerated) via the live <a href="/guide/deployment.html#generate-server">static generation server API</a></span>
 </td>
 <td>
 <code>No default value</code><br><br>
