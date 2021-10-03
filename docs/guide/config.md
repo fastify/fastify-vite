@@ -103,6 +103,17 @@ Below is a quick reference of all options and their default values.
 </tr>
 <tr>
 <td>
+<code class="h inline-block">generate.paths</code>
+<br><br>
+<span class="small">Callback function called to <b>determine which paths should be prerendered in the initial statically generated build</b> (more can be added via the live generate server)</span>
+</td>
+<td>
+<code>No default value</code><br><br>
+<span class="smallp">If none provided, static paths are inferred from the <code>routes</code> array</span>
+</td>
+</tr>
+<tr>
+<td>
 <code class="h inline-block">generate.server.enabled</code>
 <br><br>
 <span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and starts the live <a href="/guide/deployment.html#generate-server">static generation server API</a></span>

@@ -1,18 +1,15 @@
-# useRequest()
+# useRequest
 
 Returns the core Fastify [request object](https://www.fastify.io/docs/latest/Request/), only available in SSR. 
 
 ```js
-import { isServer, useRequest } from 'fastify-vite-vue/server'
+import { useRequest } from 'fastify-vite-vue/server'
 ```
 ```js
-import { isServer, useRequest } from 'fastify-vite-react/server'
+import { useRequest } from 'fastify-vite-react/server'
 ```
 ```js
-if (isServer) {
-  const req = useRequest()
-  console.log('req.url', req.url)
-}
+const req = useRequest()
 ````
 
 For convenience, here's the API reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/Request/):

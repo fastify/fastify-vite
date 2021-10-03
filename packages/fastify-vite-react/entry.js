@@ -2,7 +2,8 @@ const { resolve } = require('path')
 
 async function getEntry ({ root, entry, distDir }, vite) {
   // Load production template source only once in prod
-  const { routes, render } = require(resolve(distDir, 'server/server.js'))
+  const serverBundle = require(resolve(distDir, 'server/server.js'))
+  const { routes, render } = serverBundle.default ? serverBundle.default : serverBundle
   return { routes, render }
 }
 
