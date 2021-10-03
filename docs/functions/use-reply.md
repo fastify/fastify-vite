@@ -72,3 +72,5 @@ For convenience, here's the API reference taken from the [official Fastify docum
 <code class="h inline-block">context</code></td>
 <td>access to the request's [context property](https://www.fastify.io/docs/latest/Request#Request).
 </td></tr></table>
+
+This reference is also included in `useHydration`'s return object as `reply`.

@@ -1,6 +1,3 @@
----
-sidebarDepth: 3
----
 
 # Using Vue
 

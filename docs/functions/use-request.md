@@ -64,9 +64,8 @@ For convenience, here's the API reference taken from the [official Fastify docum
 <code class="h inline-block">is404</code></td>
 <td>true if request is being handled by 404 handler, false if it is not
 </td></tr><tr><td>
-<code class="h inline-block">connection</code></td>
-<td>Deprecated, use socket instead. The underlying connection of the incoming request.
-</td></tr><tr><td>
 <code class="h inline-block">socket</code></td>
 <td>the underlying connection of the incoming request
 </td></tr></table>
+
+This reference is also included in `useHydration`'s return object as `req`.
