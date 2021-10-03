@@ -66,7 +66,7 @@ Below is a quick reference of all options and their default values.
 </tr>
 <tr>
 <td>
-<code class="h inline-block">hydration.payload</code>
+<code class="h inline-block">hydration.data</code>
 <br><br>
 <span class="small"><a href="/guide/data-fetching.html#isomorphic-data">Isomorphic Data</a> hydration key</span>
 </td>
@@ -86,7 +86,8 @@ Below is a quick reference of all options and their default values.
 <span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> and exits</span>
 </td>
 <td>
-<code>process.argv.includes('build')</code>
+<code>process.argv.includes('build')</code><br><br>
+<span class="smallp">Enables <code><b>node app.js build</b></code> by default</span>
 </td>
 </tr>
 <tr>
@@ -96,27 +97,29 @@ Below is a quick reference of all options and their default values.
 <span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and exits</span>
 </td>
 <td>
-<code>process.argv.includes('generate')</code>
+<code>process.argv.includes('generate')</code><br><br>
+<span class="smallp">Enables <code><b>node app.js generate</b></code> by default</span>
 </td>
 </tr>
 <tr>
 <td>
 <code class="h inline-block">generate.server.enabled</code>
 <br><br>
-<span class="small"><a href="/guide/data-fetching.html#isomorphic-data">Isomorphic Data</a> hydration key</span>
+<span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and starts the live <a href="/guide/deployment.html#generate-server">static generation server</a></span>
 </td>
 <td>
-<code>'$data'</code>
+<code>process.argv.includes('generate-server')</code><br><br>
+<span class="smallp">Enables <code><b>node app.js generate-server</b></code> by default</span>
 </td>
 </tr>
 <tr>
 <td>
-<code class="h inline-block">generate.server.route</code>
+<code class="h inline-block">generate.server.generated</code>
 <br><br>
-<span class="small"><a href="/guide/data-fetching.html#isomorphic-data">Isomorphic Data</a> hydration key</span>
+<span class="small">...</span>
 </td>
 <td>
-<code>':url'</code>
+<code>No default value</code><br><br>
 </td>
 </tr>
 </table>

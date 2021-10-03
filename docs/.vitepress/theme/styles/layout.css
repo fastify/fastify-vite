@@ -323,6 +323,11 @@ td > pre {
       color: #e35c14;
     }
   }
+  & .smallp {
+    padding: .25rem .5em !important;
+    font-size: 0.9em;
+    color: #ec6f2d;
+  }
   & .small code {
     padding: 0 !important;
   }
