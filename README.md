@@ -6,7 +6,7 @@
 
 [**Fastify**][fastify] plugin for [**Vite**][vite] integration.
 
-<img src="https://fastify-vite.dev/cover.png">
+<img width="70%" src="https://fastify-vite.dev/cover.png">
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
