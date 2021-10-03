@@ -3,15 +3,13 @@
 Returns the core Fastify [reply object](https://www.fastify.io/docs/latest/Reply/), only available in SSR. 
 
 ```js
-import { isServer, useReply } from 'fastify-vite-vue/server'
+import { useReply } from 'fastify-vite-vue/server'
 ```
 ```js
-import { isServer, useReply } from 'fastify-vite-react/server'
+import { useReply } from 'fastify-vite-react/server'
 ```
 ```js
-if (isServer) {
-  const reply = useReply()
-}
+const reply = useReply()
 ````
 
 For convenience, here's the API reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/Reply/):

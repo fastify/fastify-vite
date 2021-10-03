@@ -315,6 +315,14 @@ td > pre {
     padding-top: 1em;
     padding-bottom: 1em;
   }
+  & a {
+    color: #ec6f2d;
+    font-weight: bold;
+    text-decoration: underline;
+    &:hover {
+      color: #e35c14;
+    }
+  }
   & p {
     margin-top: 0.2em;
     margin-bottom: 0.2em;
