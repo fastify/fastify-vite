@@ -83,17 +83,17 @@ Below is a quick reference of all options and their default values.
 <td width="40%">
 <code class="h inline-block">build</code>
 <br><br>
-<span class="small"><a href="/guide/global-data">Global Data</a> hydration key</span>
+<span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> and exits</span>
 </td>
 <td>
-<code>'$global'</code>
+<code>process.argv.includes('build')</code>
 </td>
 </tr>
 <tr>
 <td>
 <code class="h inline-block">generate.enabled</code>
 <br><br>
-<span class="small"><a href="/guide/data-fetching.html#route-payloads">Route Payload</a> hydration key</span>
+<span class="small">If <code>true</code>, <a href="/guide/deployment.html#running-vite-build">triggers Vite build</a> with prerendered paths included (<a href="/guide/deployment.html#static-generation">static generation</a>) and exits</span>
 </td>
 <td>
 <code>process.argv.includes('generate')</code>
@@ -129,46 +129,50 @@ As [explained in Vite's documentation](https://vitejs.dev/guide/ssr.html#source-
 In plain Vite SSR projects, the server entry point is not something you configure, but rather pass in to Vite's `build` CLI command, while the client entry point is the main JavaScript file you reference from index.html — even though the official documentation refers to index.html as the entry point of your app. This is probably because the generated `index.html` is what is delivered to the browser <b>if you're not performing SSR</b> — but if you are, it gets replaced by what is dynamically generated (SSR) from the server.
 :::
 
-
 <table class="infotable">
 <tr>
 <td width="40%">
 <code class="h inline-block">entry.server</code>
 <br><br>
-<span class="small">Vite server <a href="/guide/global-data">Global Data</a> hydration key</span>
+<span class="small">Vite server entry point</span>
 </td>
 <td>
-<code>Default value provided by <b>renderer adapter</b></code>
+<code>Default value provided by <b>renderer adapter</b></code><br><br>
+<code>Conventionally set as <b>/entry/server.&lt;extension&gt;</b></code>
 </td>
 </tr>
 <tr>
 <td>
 <code class="h inline-block">entry.client</code>
 <br><br>
-<span class="small">Vite <a href="https://vitejs.dev/guide/#index-html-and-project-root">client entry point</a></span>
+<span class="small">Vite client entry point</span>
+</td>
+<td>
+<code>Default value provided by <b>renderer adapter</b></code><br><br>
+<code>Conventionally set as <b>/entry/client.&lt;extension&gt;</b></code>
+</td>
+</tr>
+</table>
+
+<b>fastify-vite</b> tries to intefere as little as possible in configuring your Vite apps. 
+
+So if you want to just have `vite.config.js` for all Vite settings, that will just work as expected.
+
+However, you can also use the `vite` option:
+
+<table class="infotable">
+<tr>
+<td width="40%">
+<code class="h inline-block">vite</code>
+<br><br>
+<span class="small"><a href="https://vitejs.dev/config/">Vite configuration</a> options</span>
 </td>
 <td>
 <code>Default value provided by <b>renderer adapter</b></code>
 </td>
 </tr>
-<tr>
-<td>
-<code class="h inline-block">vite</code>
-<br><br>
-<span class="small"><a href="/guide/data-fetching.html#isomorphic-data">Isomorphic Data</a> hydration key</span>
-</td>
-<td>
-<code>'$data'</code>
-</td>
-</tr>
 </table>
 
-**fastify-vite** tries to intefere as little as possible in configuring your
-Vite apps. 
-
-So if you want to just have `vite.config.js` for all Vite settings,
-that will just work as expected. However, you can also use the `vite` key
-when passing options to the `fastify.register()` call.
+It is advised you use one or the other to avoid confusion.
 
 
-See the internal `options.js` used by <b>fastify-vite</b> [here](https://github.com/terixjs/fastify-vite/blob/main/packages/fastify-vite/options.js).

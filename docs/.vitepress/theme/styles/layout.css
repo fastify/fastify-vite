@@ -323,6 +323,9 @@ td > pre {
       color: #e35c14;
     }
   }
+  & .small code {
+    padding: 0 !important;
+  }
   & p {
     margin-top: 0.2em;
     margin-bottom: 0.2em;
