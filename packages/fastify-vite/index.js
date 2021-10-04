@@ -174,13 +174,13 @@ async function fastifyVite (fastify, options) {
         })
       }
       await Promise.all(tasks.map(task => task()))
-      if (!fastify.vite.options.generateServer) {
+      if (!fastify.vite.options.generate.server.enabled) {
         process.exit()
       }
     }
 
-    if (fastify.vite.options.generateServer) {
-      const { port, onGenerate } = fastify.vite.options.generateServer
+    if (fastify.vite.options.generate.server.enabled) {
+      const { port, generated } = fastify.vite.options.generate.server
       const builder = Fastify()
       builder.get('*', async (req, reply) => {
         const path = req.raw.url
@@ -197,8 +197,15 @@ async function fastifyVite (fastify, options) {
         } for build on ${
           fastify.vite.options.distDir
         }`)
-        onGenerate({ file: htmlPath, path })
+        generated({ file: htmlPath, path })
       })
+      // @Matteo
+      //
+      // FIXME Unresolved Promise used here just to prevent
+      // execution from advancing into the .listen() call
+      //
+      // Fastify Core Idea: render .listen() ineffective 
+      // in case any of the registered onReady hooks returns false
       await new Promise(() => {
         builder.listen(port, (err, address) => {
           if (err) {

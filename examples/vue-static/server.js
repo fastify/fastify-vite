@@ -6,9 +6,9 @@ async function main () {
   await fastify.register(fastifyVite, {
     root: __dirname,
     renderer: fastifyViteVue,
-    generatePaths: process.argv.includes('generate') && [
-      '/',
-    ],
+    generate: {
+      paths: ['/'],
+    }
   })
   await fastify.vite.ready()
   return fastify
