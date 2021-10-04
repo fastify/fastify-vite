@@ -76,6 +76,7 @@ async function main () {
     renderer: fastifyViteReact,
     build: process.argv.includes('build'),
   })
+  await app.vite.ready()
   return fastify
 }
 
@@ -107,6 +108,8 @@ Notice how we also pass in `build` flag, based on the presence of a `build` comm
 ::: tip
 This mimics the behavior of [vite build](https://vitejs.dev/guide/build.html), calling Vite's internal `build()` function and will take into consideration options defined in a `vite.config.js` file or provided via the `vite` plugin option.
 :::
+
+The `build` option is already set to `process.argv.includes('build')` by default, but it was made explicit above as to show how <b>fastify-vite</b> makes your app recognize the `build` command.
 
 ## Entry Points 
 
