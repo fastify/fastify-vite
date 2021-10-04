@@ -9,7 +9,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const defaults = {
   dev,
   // If true, causes the Fastify server boot to halt after onReady
-  build: false,
+  build: process.argv.includes('build'),
   generatePaths: undefined,
   // Used to determine the keys to be injected in the application's boot
   // For Vue 3, that means adding them to globalProperties
