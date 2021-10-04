@@ -8,7 +8,7 @@ async function main () {
     renderer: fastifyViteVue,
     generate: {
       paths: ['/'],
-    }
+    },
   })
   await fastify.vite.ready()
   return fastify

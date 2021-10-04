@@ -111,13 +111,19 @@ The `add()` helper function that is passed as first parameter is an _optional co
 
 ## Generate Server
 
-<b>fastify-vite</b> also includes a built-in **live static generation server** — just set the `generateServer` option to `true` or pass a configuration object where you can set `port` and the `generated` callback that gets called every time a new page gets regenerated, with a path to the updated file, so it can be uploaded to a different location if needed.
+<b>fastify-vite</b> also includes a built-in **live static generation server** — just set the `generate.server.enabled` option to `true` or pass a configuration object where you can set `port` and the `generated` callback that gets called every time a new page gets regenerated, with a path to the updated file, so it can be uploaded to a different location if needed.
 
-```js{2-15}
+```js{11-21}
 await app.register(fastifyVite, {
   generate: {
     // This option is actually set by default
     enabled: process.argv.includes('generate'),
+    async paths (add) {
+      const pages = await getPagesTotalFromDataSource()
+      for (let page = 1; page <= pages; page++) {
+        add(`/pages/${page}`)
+      }
+    },
     server: {
       // This option is actually set by default
       enabled: process.argv.includes('generate-server'),
@@ -129,12 +135,6 @@ await app.register(fastifyVite, {
         // html — raw HTML string generated
       }
     },
-  },
-  async generatePaths (add) {
-    const pages = await getPagesTotalFromDataSource()
-    for (let page = 1; page <= pages; page++) {
-      add(`/pages/${page}`)
-    }
   },
 })
 ```

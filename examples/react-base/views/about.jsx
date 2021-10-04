@@ -1,12 +1,10 @@
-import { useHydration } from 'fastify-vite-react/client'
-
 export const path = '/about'
 
-export default function GlobalData (props) {
-  const [ctx] = useHydration()
+export default function About (props) {
   return (
     <>
       <h2>About</h2>
+      <p><Link to="/">Go to /</Link></p>
     </>
   )
 }

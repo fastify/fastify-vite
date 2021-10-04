@@ -18,6 +18,14 @@ const defaults = {
     payload: '$payload',
     data: '$data',
   },
+  // Static generation options
+  generate: {
+    enabled: process.argv.includes('generate'),
+    server: {
+      port: 5000,
+      enabled: process.argv.includes('generate-server'),
+    },
+  },
   // Vite root app directory, whatever you set here
   // is also set under `vite.root` so Vite picks it up
   root: process.cwd(),
@@ -37,6 +45,12 @@ const defaults = {
 }
 
 async function processOptions (options) {
+  if (options.generate) {
+    if (options.generate.server) {
+      options.generate.server = assign({}, defaults.generate.server, options.generate.server)
+    }
+    options.generate = assign({}, defaults.generate, options.generate)
+  }
   options = assign({}, defaults, options)
 
   if (typeof options.root === 'function') {

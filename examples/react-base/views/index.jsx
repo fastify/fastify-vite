@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useFastify } from 'fastify-vite-react/server'
 
 export const path = '/'
 
 export default function Index () {
-  const fastify = useFastify()
   return (
     <>
       <h1>Index Page</h1>

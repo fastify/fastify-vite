@@ -204,7 +204,7 @@ async function fastifyVite (fastify, options) {
       // FIXME Unresolved Promise used here just to prevent
       // execution from advancing into the .listen() call
       //
-      // Fastify Core Idea: render .listen() ineffective 
+      // Fastify Core Idea: render .listen() ineffective
       // in case any of the registered onReady hooks returns false
       await new Promise(() => {
         builder.listen(port, (err, address) => {
