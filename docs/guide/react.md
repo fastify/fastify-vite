@@ -33,7 +33,7 @@ After that you should be able to `cd` to `your-app` and run:
 
 ## Project Structure
 
-Some conventions are used in the official boilerplates, but they are easy to override and defined mostly by renderer adapters. For convenience, some conventions are implemented, but they are easy to override and defined mostly by renderer adapters. For instance, <b>fastify-vite-vue</b> expects the client entry point to be located at `entry/client.js` while <b>fastify-vite-react</b> expects it at `entry/client.jsx`.
+Some conventions are used in the official boilerplates, but they are easy to override and defined mostly by renderer adapters. For instance, <b>fastify-vite-vue</b> expects the client entry point to be located at `entry/client.js` while <b>fastify-vite-react</b> expects it at `entry/client.jsx`.
 
 A <b>fastify-vite</b> project will have _at the very least_ a) a `server.js` file launching the Fastify server, b) an `index.html` file and c) <b>client</b> and <b>server</b> entry points for the Vite application.
 
