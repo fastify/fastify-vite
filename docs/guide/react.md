@@ -385,8 +385,7 @@ So, to recap — because this can be a little confusing at first — <b>here's t
 
 The `useHydration` hook takes a configuration object as first parameter. The purpose of this configuration object is to easily to hold a reference to the data function being used in the view.
 
-```vue{4-8,12-14}
-<script>
+```jsx{4-8,12-14}
 export const path = '/route-payload'
 
 export async function getPayload ({ req, reply, fastify }) {
@@ -395,13 +394,13 @@ export async function getPayload ({ req, reply, fastify }) {
   // ...
 }
 
-export default {
-  setup () {
-    // Pass getPayload reference to useHydration() so 
-    // it knows that's what is being used for this component
-    const { $payload } = useHydration({ getPayload })
-    return { message: $payload.message }
-  }
+export default function RoutePayload () {
+  const [ctx] = useHydration({ getPayload })
+  return (
+    <>
+      <p>Message: {ctx.$payload.message}</p>
+    </>
+  )
 }
 </script>
 ```

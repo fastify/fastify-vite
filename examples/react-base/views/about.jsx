@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export const path = '/about'
 
 export default function About (props) {
