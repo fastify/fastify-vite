@@ -87,7 +87,7 @@ The naming of these helper modules might be confusing.
 
 The <b>server</b> module is supposed to be used <b>only</b> in a server context, that is, anything exported from it should only be imported in code that's required to only run in a Node.js context. 
 
-The <b>client</b> module is <i>everything pertaining to the client</i>, and its exports <b>should be isomorphic in nature</b>, that is, it should be impossible import the helper `client` module both in SSR (Node.js) and client (browser) contexts. Perhaps a better name for this module would be `universal`, not `client`, and this might still change in future versions of <b>fastify-vite</b>.
+The <b>client</b> module is <i>everything pertaining to the client</i>, and its exports <b>should be isomorphic in nature</b>, that is, it should be possible to import the helper `client` module both in SSR (Node.js) and client (browser) contexts. Perhaps a better name for this module would be `universal`, not `client`, and this might still change in future versions of <b>fastify-vite</b>.
 
 You can see the full pattern employed by the Vue and React <b>fastify-vite</b> renderers in the [vue-base][vue-base] and [react-base][react-base] examples. You'll see for instance `createRenderFunction()` for Vue [imported here][createRenderFunction-for-vue], and for React [imported here][createRenderFunction-for-react]. And the client imports for Vue [here][client-imports-for-vue], and for React [here][client-imports-for-react].
 
