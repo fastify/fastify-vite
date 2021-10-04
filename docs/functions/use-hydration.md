@@ -48,5 +48,3 @@ See the _<b>Data Fetching</b>_ section on the [Vue](/guide/vue.html#data-fetchin
 <code class="h inline-block">$data</code></td>
 <td><b>Route Isomorphic Data</b> — available isomorphically
 </td></tr></table>
-
-This reference is also included in `useHydration`'s return object as `req`.
