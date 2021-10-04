@@ -23,10 +23,10 @@ See [release notes](https://www.youtube.com/watch?v=ybCMaNDcb1s) for the 2.2.0 (
 Highly experimental, not yet ready for production. Install beta with:
 
 ```bash
-npm install fastify-vite@2.2.0-beta.5
+npm install fastify-vite@2.2.0-beta.6
 ```
 
-Documentation at this point is in [the examples](https://github.com/terixjs/fastify-vite/tree/main/examples).
+Refer to [beta documentation suite](https://fastify-vite.dev/) and please report errors in it.
 
 # Contributors
 
