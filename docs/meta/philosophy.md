@@ -29,7 +29,7 @@ To learn about migrating from Express to Fastify, refer to:
 
 ## Pack light 
 
-<img src="/node_modules.png" width="70%">
+<img src="/node_modules.png" style="width: 70%;" />
 
 <table>
 <tr>
