@@ -7,6 +7,7 @@ async function main () {
     root: __dirname,
     renderer: fastifyViteReact,
   })
+  await fastify.vite.ready()
   return fastify
 }
 

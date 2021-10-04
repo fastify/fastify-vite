@@ -10,7 +10,6 @@ const defaults = {
   dev,
   // If true, causes the Fastify server boot to halt after onReady
   build: process.argv.includes('build'),
-  generatePaths: undefined,
   // Used to determine the keys to be injected in the application's boot
   // For Vue 3, that means adding them to globalProperties
   hydration: {
@@ -29,15 +28,6 @@ const defaults = {
   // Vite root app directory, whatever you set here
   // is also set under `vite.root` so Vite picks it up
   root: process.cwd(),
-  // App's entry points for generating client and server builds
-  entry: {
-    // This differs from Vite's choice for its playground examples,
-    // which is having entry-client.js and entry-server.js files on
-    // the same top-level folder. For better organization fastify-vite
-    // expects them to be grouped under /entry
-    client: '/entry/client.js',
-    server: '/entry/server.js',
-  },
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
   renderer: null,
@@ -63,10 +53,10 @@ async function processOptions (options) {
     throw new Error('Must set options.renderer')
   }
 
-  options.vite = options.renderer.options
+  options.vite = assign({}, options.renderer.options.vite, options.vite)
+  options = assign({}, options.renderer.options, options)
 
   function recalcDist () {
-    console.log('recalcDist', options.dev)
     if (!options.dev) {
       options.distDir = resolve(options.root, viteOptions.build.outDir)
       const distIndex = resolve(options.distDir, 'client/index.html')

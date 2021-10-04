@@ -6,8 +6,8 @@ async function main () {
   await fastify.register(fastifyVite, {
     root: __dirname,
     renderer: fastifyViteVue,
-    build: process.argv.includes('build'),
   })
+  await fastify.vite.ready()
   return fastify
 }
 

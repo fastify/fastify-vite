@@ -20,7 +20,7 @@ async function fastifyVite (fastify, options) {
     process.exit(1)
   }
 
-  if (options.generatePaths) {
+  if (options.generate.paths) {
     await build(options)
     options.dev = false
     options.recalcDist()
@@ -149,12 +149,12 @@ async function fastifyVite (fastify, options) {
       await build(fastify.vite.options)
       process.exit()
     }
-    if (fastify.vite.options.generatePaths) {
+    if (fastify.vite.options.generate.paths) {
       const paths = []
-      if (typeof fastify.vite.options.generatePaths === 'function') {
-        await fastify.vite.options.generatePaths(path => paths.push(path))
-      } else if (Array.isArray(fastify.vite.options.generatePaths)) {
-        paths.push(...fastify.vite.options.generatePaths)
+      if (typeof fastify.vite.options.generate.paths === 'function') {
+        await fastify.vite.options.generate.paths(path => paths.push(path))
+      } else if (Array.isArray(fastify.vite.options.generate.paths)) {
+        paths.push(...fastify.vite.options.generate.paths)
       }
       const tasks = []
       for (const path of paths) {
@@ -197,7 +197,7 @@ async function fastifyVite (fastify, options) {
         } for build on ${
           fastify.vite.options.distDir
         }`)
-        generated({ file: htmlPath, path })
+        generated({ path: htmlPath, url: path, html: payload })
       })
       // @Matteo
       //
