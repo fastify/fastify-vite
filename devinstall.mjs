@@ -23,6 +23,7 @@ for (let pkg of deps.local) {
   pkgInfos[pkg] = pkgInfo
   const subDeps = entries(pkgInfo.dependencies).map(([n, v]) => `${n}@${v}`)
   await cd(`${root}/${exRoot}`)
+  console.log(`npm install --silent --force ${deps.external} ${subDeps.join(' ')}`)
   await $`npm install --silent --force ${deps.external} ${subDeps.join(' ')}`
   await cd(root)
 }
