@@ -1,6 +1,8 @@
 const { renderToString } = require('@vue/server-renderer')
 const { renderHeadToString } = require('@vueuse/head')
 const devalue = require('devalue')
+const { assign } = Object
+
 const empty = {}
 
 function createRenderFunction (createApp) {
@@ -9,13 +11,13 @@ function createRenderFunction (createApp) {
     const { ctx, app, head, router } = createApp({ fastify, req, reply })
 
     // On the client, hydrate() from fastify-vite/hidrate repeats these steps
-    app.config.globalProperties = {
+    assign(app.config.globalProperties, {
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],
       [hydration.data]: req[hydration.data],
       $payloadPath: () => `/-/payload${req.routerPath}`,
       $api: req.api && req.api.client,
-    }
+    })
 
     router.push(url)
 
