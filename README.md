@@ -4,9 +4,11 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/terixjs/fastify-vite/badge.svg)](https://snyk.io/test/github/terixjs/fastify-vite)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-[**Fastify**][fastify] plugin for [**Vite**][vite] integration.
+[**Fastify**][fastify] plugin for [**Vite**][vite] integration. 
 
-<img width="70%" src="https://fastify-vite.dev/cover.png">
+**[Dive into the documentation](https://fastify-vite.dev/)**.
+
+<a href="https://fastify-vite.dev"><img width="70%" src="https://fastify-vite.dev/cover.png"></a>
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
@@ -25,8 +27,6 @@ Highly experimental, not yet ready for production. Install beta with:
 ```bash
 npm install fastify-vite@2.2.0-beta.7
 ```
-
-Refer to [beta documentation suite](https://fastify-vite.dev/) and please report errors in it.
 
 # Contributors
 
