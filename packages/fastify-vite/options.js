@@ -31,7 +31,9 @@ const defaults = {
   // Any Vite configuration option set here
   // takes precedence over <root>/vite.config.js
   renderer: null,
-  vite: null,
+  vite: {
+    configFile: false,
+  },
 }
 
 async function processOptions (options) {
@@ -47,18 +49,23 @@ async function processOptions (options) {
     options.root = options.root(resolve)
   }
 
-  const viteOptions = await getViteOptions(options)
+  options.vite = await getViteOptions(options)
 
-  if (!options.renderer) {
+  if (options.vite && !options.renderer) {
     throw new Error('Must set options.renderer')
   }
 
-  options.vite = assign({}, options.renderer.options.vite, options.vite)
-  options = assign({}, options.renderer.options, options)
+  if (options.vite) {
+    options.vite = assign({}, options.renderer.options.vite, options.vite)
+    options = assign({}, options.renderer.options, options)
+  } else {
+    options = assign({}, options.renderer.options, options)
+    options.vite = null
+  }
 
   function recalcDist () {
     if (!options.dev) {
-      options.distDir = resolve(options.root, viteOptions.build.outDir)
+      options.distDir = resolve(options.root, options.vite.build.outDir)
       const distIndex = resolve(options.distDir, 'client/index.html')
       if (!existsSync(distIndex)) {
         throw new Error('Missing production client/index.html — did you build first?')
@@ -78,7 +85,10 @@ async function processOptions (options) {
 
 module.exports = { processOptions }
 
-function getViteOptions (options) {
+async function getViteOptions (options) {
+  if (existsSync(resolve(options.root, 'vite.config.js'))) {
+    return null
+  }
   const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js

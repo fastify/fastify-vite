@@ -187,6 +187,6 @@ However, you can also use the `vite` option:
 </tr>
 </table>
 
-It is advised you use one or the other to avoid confusion.
+You must use one or the other, as there's no way to reliably merge the order of plugins if there are two sources of configuration.
 
 

@@ -28,17 +28,16 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0-beta.6",
+  "version": "2.2.0-beta.9",
   "dependencies": {
-    "@vitejs/plugin-vue": "1.2.3",
-    "@vitejs/plugin-vue-jsx": "1.1.5",
-    "@vue/compiler-sfc": "3.1.1",
-    "@vue/server-renderer": "3.1.1",
-    "@vueuse/head": "0.6.0",
     "devalue": "2.0.1",
     "manifetch": "0.0.1",
     "node-html-parser": "^4.1.5",
-    "vue": "3.1.4",
-    "vue-router": "4.0.10"
+    "vue": "3.2.19",
+    "@vue/server-renderer": "3.2.19",
+    "vue-router": "4.0.10",
+    "@vitejs/plugin-vue": "1.9.3",
+    "@vitejs/plugin-vue-jsx": "1.2.0",
+    "@vueuse/head": "0.6.0"
   }
 }
