@@ -1,4 +1,3 @@
-const devalue = require('devalue')
 const manifetch = require('manifetch')
 const { parse } = require('node-html-parser')
 
@@ -31,40 +30,6 @@ if (!isServer) {
   window.requestIdleCallback(() => {
     window[kFirstRender] = false
   })
-}
-
-function packIsland () {
-  return (request, reply, payload, done) => {
-    const serializedScripts = []
-    const parsed = parse(payload)
-    payload = payload.replace(/<script[^<>]*>.*?<\/script>/gs, '')
-    const scripts = parsed.querySelectorAll('script')
-    for (const script of scripts) {
-      serializedScripts.push(script.attributes)
-    }
-    let error
-    let modified = payload
-    try {
-      const hydrator = `
-        ;(() => {
-          const scripts = ${devalue(serializedScripts)}
-          requestIdleCallback(() => {
-            for (const script of scripts) {
-              console.log('script', script)
-              const scriptElem = document.createElement('script')
-              scriptElem.setAttribute('type', script.type)
-              scriptElem.setAttribute('src', script.src)
-              document.head.appendChild(scriptElem)
-            }
-          })
-        })();
-      `
-      modified = `${payload}<script>${hydrator}</script>`
-    } catch (err) {
-      error = err
-    }
-    done(error, modified)
-  }
 }
 
 function useHydration ({ getData, getPayload } = {}) {
@@ -149,7 +114,6 @@ function useGlobalProperties () {
 
 module.exports = {
   useGlobalProperties,
-  packIsland,
   useHydration,
   hydrate,
   isServer,

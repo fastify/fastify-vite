@@ -30,8 +30,12 @@ async function fastifyVite (fastify, options) {
   const renderer = options.renderer
 
   // We'll want access to this later
+  let render
+  let islands
+
   let handler
   let routes
+
   let vite
 
   // Setup appropriate Vite route handler
@@ -44,8 +48,10 @@ async function fastifyVite (fastify, options) {
     await fastify.register(middie)
     fastify.use(vite.middlewares)
     const entry = await renderer.dev.getEntry(options, vite)
-    handler = renderer.dev.getHandler(fastify, options, entry.getRender, vite)
-    routes = entry.routes
+    render = renderer.dev.getRenderer(fastify, options, entry)
+    handler = renderer.dev.getHandler(fastify, options, entry, vite)
+    routes = entry.views.routes
+    islands = entry.views.islands
   } else {
     // For production you get the distribution version of the render function
     const { assetsDir } = options.vite.build
@@ -58,8 +64,10 @@ async function fastifyVite (fastify, options) {
       prefix: `/${assetsDir}`,
     })
     const entry = await renderer.getEntry(options)
-    routes = entry.routes
-    handler = renderer.getHandler(fastify, options, entry.render)
+    routes = entry.views.routes
+    islands = entry.views.islands
+    render = renderer.getRenderer(fastify, options, entry)
+    handler = renderer.getHandler(fastify, options, entry)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -70,6 +78,10 @@ async function fastifyVite (fastify, options) {
     global: undefined,
     // Not available when NODE_ENV=production
     devServer: vite,
+    async render (req, reply, island) {
+      const result = await render(fastify, req, reply, options, islands[island])
+      return result
+    },
     get (url, { data, ...routeOptions } = {}) {
       return this.route(url, { data, method: 'GET', ...routeOptions })
     },

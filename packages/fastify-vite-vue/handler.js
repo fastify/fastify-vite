@@ -1,10 +1,10 @@
 const { renderDevHTMLTemplate, renderHTMLTemplate } = require('./html')
 
-function getHandler (fastify, options, render) {
+function getHandler (fastify, options, { renderApp }) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
-      const fragments = await render(fastify, req, reply, url, options)
+      const fragments = await renderApp(fastify, req, reply, url, options)
 
       reply.code(200)
       reply.type('text/html')
@@ -18,12 +18,12 @@ function getHandler (fastify, options, render) {
   }
 }
 
-function getDevHandler (fastify, options, getRender, viteDevServer) {
+function getDevHandler (fastify, options, { getRenderers }, viteDevServer) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
-      const render = await getRender()
-      const fragments = await render(fastify, req, reply, url, options)
+      const { renderApp } = await getRenderers()
+      const fragments = await renderApp(fastify, req, reply, url, options)
 
       reply.code(200)
       reply.type('text/html')
@@ -39,4 +39,7 @@ function getDevHandler (fastify, options, getRender, viteDevServer) {
   }
 }
 
-module.exports = { getHandler, getDevHandler }
+module.exports = {
+  getHandler,
+  getDevHandler,
+}

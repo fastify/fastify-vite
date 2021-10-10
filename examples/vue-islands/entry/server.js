@@ -1,8 +1,6 @@
-import { createApp } from '../main'
-import { createRenderFunction } from 'fastify-vite-vue/server'
-import routes from '../routes'
+import { createServerEntryPoint } from 'fastify-vite-vue/server'
 
-export default {
-  routes,
-  render: createRenderFunction(createApp),
-}
+import client from '../client.js'
+import views from '../views.js'
+
+export default createServerEntryPoint(client, views)

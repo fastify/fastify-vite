@@ -1,9 +1,9 @@
 {
-  "name": "vue-lazy",
+  "name": "vue-islands",
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs vue-lazy",
+    "devinstall": "zx ../../devinstall.mjs vue-islands",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"

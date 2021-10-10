@@ -1,5 +1,5 @@
 const { useSSRContext } = require('vue')
-const { createRenderFunction } = require('./render')
+const { createRenderApp, createRenderIsland } = require('./render')
 
 const isServer = typeof window === 'undefined'
 
@@ -21,8 +21,18 @@ function useFastify () {
   }
 }
 
+function createServerEntryPoint (client, views) {
+  return {
+    views,
+    renderApp: createRenderApp(client.createApp),
+    renderIsland: createRenderIsland(client.createIsland),
+  }
+}
+
 module.exports = {
-  createRenderFunction,
+  createRenderApp,
+  createRenderIsland,
+  createServerEntryPoint,
   useRequest,
   useReply,
   useFastify,

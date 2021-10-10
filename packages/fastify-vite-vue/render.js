@@ -5,8 +5,8 @@ const { assign } = Object
 
 const empty = {}
 
-function createRenderFunction (createApp) {
-  return async function render (fastify, req, reply, url, options) {
+function createRenderApp ({ createApp }) {
+  return async function render (fastify, req, reply, url, options, island) {
     const { entry, distManifest, hydration } = options
     const { ctx, app, head, router } = createApp({ fastify, req, reply })
 
@@ -44,8 +44,37 @@ function createRenderFunction (createApp) {
   }
 }
 
+function createRenderIsland ({ createIsland }) {
+  return async function render (fastify, req, reply, url, options, island) {
+    const { entry /* distManifest, hydration */ } = options
+    const { ctx, app } = createIsland({ fastify, req, reply })
+
+    // On the client, hydrate() from fastify-vite/hidrate repeats these steps
+    // TODO Support mixed route and island data payloads
+    assign(app.config.globalProperties, {
+      // [hydration.global]: req[hydration.global],
+      // [hydration.payload]: req[hydration.payload],
+      // [hydration.data]: req[hydration.data],
+      // $payloadPath: () => `/-/payload${req.routerPath}`,
+      // $api: req.api && req.api.client,
+    })
+
+    const element = await renderToString(app, ctx)
+    // TODO Support mixed route and island data payloads
+    // const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration)
+
+    return {
+      entry: entry.client,
+      // TODO Support mixed route and island data payloads
+      // hydration: hydrationScript,
+      element,
+    }
+  }
+}
+
 module.exports = {
-  createRenderFunction,
+  createRenderApp,
+  createRenderIsland,
 }
 
 function getHydrationScript (req, context, hydration) {
