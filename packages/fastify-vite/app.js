@@ -7,6 +7,9 @@ function loadViews (views) {
   const routes = []
   const islands = {}
   for (const view of values(views)) {
+    if (view.path && view.island) {
+      throw new Error('View components must either export `path` or `island`.')
+    }
     if (view.path && Array.isArray(view.path)) {
       routes.push(
         ...view.path.map((path) => {
@@ -21,8 +24,8 @@ function loadViews (views) {
       const { island, default: component, ...viewProps } = view
       // viewProps.onSend = packIsland()
       islands[island] = { id: island, component, ...viewProps }
-    } else {
-      throw new Error('View components need to export a `path` property.')
+    } else if (!view.path || !view.island) {
+      throw new Error('View components must export `path` or `island`.')
     }
   }
   return {
@@ -40,11 +43,13 @@ function loadViews (views) {
 }
 
 function getIsland (url) {
-  const src = new URL(url).pathname
-  return (
-    document.querySelector(`script[src$="${src}"]`) ||
-    document.querySelector(`link[href="${src}"]`)
-  )
+  console.log('getIsland()')
+  return null
+  // const src = new URL(url).pathname
+  // return (
+  //   document.querySelector(`script[src$="${src}"]`) ||
+  //   document.querySelector(`link[href="${src}"]`)
+  // )
 }
 
 // function packIsland (id) {

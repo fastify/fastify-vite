@@ -21,9 +21,9 @@ function useFastify () {
   }
 }
 
-function createServerEntryPoint (client, views) {
+function createServerEntryPoint (client) {
   return {
-    views,
+    views: client.views,
     renderApp: createRenderApp(client.createApp),
     renderIsland: createRenderIsland(client.createIsland),
   }

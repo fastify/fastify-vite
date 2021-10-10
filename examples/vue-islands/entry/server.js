@@ -1,6 +1,4 @@
 import { createServerEntryPoint } from 'fastify-vite-vue/server'
+import * as client from '../client.js'
 
-import client from '../client.js'
-import views from '../views.js'
-
-export default createServerEntryPoint(client, views)
+export default createServerEntryPoint(client)

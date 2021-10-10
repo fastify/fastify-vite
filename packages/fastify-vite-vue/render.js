@@ -5,7 +5,7 @@ const { assign } = Object
 
 const empty = {}
 
-function createRenderApp ({ createApp }) {
+function createRenderApp (createApp) {
   return async function render (fastify, req, reply, url, options, island) {
     const { entry, distManifest, hydration } = options
     const { ctx, app, head, router } = createApp({ fastify, req, reply })
@@ -44,11 +44,12 @@ function createRenderApp ({ createApp }) {
   }
 }
 
-function createRenderIsland ({ createIsland }) {
+function createRenderIsland (createIsland) {
   return async function render (fastify, req, reply, url, options, island) {
     const { entry /* distManifest, hydration */ } = options
-    const { ctx, app } = createIsland({ fastify, req, reply })
+    const x = createIsland({ fastify, req, reply }, island)
 
+    const { ctx, app } = x
     // On the client, hydrate() from fastify-vite/hidrate repeats these steps
     // TODO Support mixed route and island data payloads
     assign(app.config.globalProperties, {
@@ -64,6 +65,7 @@ function createRenderIsland ({ createIsland }) {
     // const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration)
 
     return {
+      modules: ctx.modules,
       entry: entry.client,
       // TODO Support mixed route and island data payloads
       // hydration: hydrationScript,

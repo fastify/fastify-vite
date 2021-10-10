@@ -9,6 +9,7 @@
   "deprecated": false,
   "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
+    "app.js",
     "options.js",
     "index.js",
     "build.js",

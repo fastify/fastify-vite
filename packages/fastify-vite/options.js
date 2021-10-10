@@ -89,8 +89,8 @@ async function getViteOptions (options) {
   if (existsSync(resolve(options.root, 'vite.config.js'))) {
     return null
   }
-  const mergedOptions = { root: options.root, ...defaults.vite, ...options.vite }
+  return { root: options.root, ...defaults.vite, ...options.vite }
   // If vite.config.js is present, resolveConfig() ensures it's taken into consideration
   // Note however that vite options set via fastify-vite take precedence over vite.config.js
-  return resolveConfig(mergedOptions, 'build')
+  // return resolveConfig(mergedOptions, 'build')
 }

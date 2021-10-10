@@ -79,7 +79,7 @@ async function fastifyVite (fastify, options) {
     // Not available when NODE_ENV=production
     devServer: vite,
     async render (req, reply, island) {
-      const result = await render(fastify, req, reply, options, islands[island])
+      const result = await render(req, reply, islands[island])
       return result
     },
     get (url, { data, ...routeOptions } = {}) {

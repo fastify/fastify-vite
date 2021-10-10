@@ -1,9 +1,11 @@
 import { createSSRApp } from 'vue'
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
+import { loadViews } from 'fastify-vite/app'
 
 import base from './base.vue'
-import views from './views'
+
+export const views = loadViews(import.meta.globEager('./views/*.vue'))
 
 export function createApp (ctx) {
   const app = createSSRApp(base)
@@ -18,5 +20,12 @@ export function createApp (ctx) {
 }
 
 export function createIsland (ctx, { id, component }) {
-  return { ctx, island: id, app: createSSRApp(component) }
+  return {
+    ctx,
+    component,
+    island: id,
+    get app() {
+      return createSSRApp(component)
+    }
+  }
 }

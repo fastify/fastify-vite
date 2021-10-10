@@ -1,8 +1,12 @@
 import { getIsland } from 'fastify-vite/app'
 import { hydrate } from 'fastify-vite-vue/client'
 
+console.log('getIsland->', getIsland.toString())
+
 async function main () {
   const island = getIsland(import.meta.url)
+
+  console.log('island', island)
 
   if (island) {
     // Obvious Convention: Islands will never contain Vue Router
