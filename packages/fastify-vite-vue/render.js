@@ -19,9 +19,10 @@ function createRenderFunction (createApp) {
       $api: req.api && req.api.client,
     })
 
-    router.push(url)
-
-    await router.isReady()
+    if (router) {
+      router.push(url)
+      await router.isReady()
+    }
 
     const element = await renderToString(app, ctx)
     const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
@@ -75,6 +76,9 @@ function getHydrationScript (req, context, hydration) {
 }
 
 function renderPreloadLinks (modules, manifest) {
+  if (!modules) {
+    return
+  }
   let links = ''
   const seen = new Set()
   for (const id of modules) {
