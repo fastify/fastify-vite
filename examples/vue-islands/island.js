@@ -1,30 +1,31 @@
-import { createStaticVNode, h, defineAsyncComponent, defineComponent } from 'vue'
-import { isServer } from 'fastify-vite-vue/client'
-import { useFastify, useRequest, useReply } from 'fastify-vite-vue/server'
+import {
+  useSSRContext,
+  h,
+  createStaticVNode,
+  defineAsyncComponent,
+} from 'vue'
 
 export default {
-	props: {
-		name: String,
-	},
-	async setup (props) {
-		let element
-		if (isServer) {
-			const fastify = useFastify()
-			const req = useRequest()
-			const reply = useReply()
-			// This can be hooked to an external microservice
-			;({ element } = await fastify.vite.render(req, reply, props.name))
-		}
-		return () => {
-			if (import.meta.env.SSR) {
-				console.log( 'ran on the server')
-				return createStaticVNode(element)
-			} else {
-				console.log( 'ran on the client')
-				return h(defineAsyncComponent({
-	  			loader: () => import(`./views/${props.name}.vue`)
-				}))
-			}
-		}
-	}
+  props: {
+    name: String,
+  },
+  async setup (props) {
+    let element
+    if (import.meta.env.SSR) {
+      const { fastify, req, reply } = useSSRContext()
+      const renderingResult = await fastify.vite.render(req, reply, props.name)
+      element = renderingResult.element
+      // const island = await useIsland(props.name)
+      // element = island.element
+    }
+    return () => {
+      if (import.meta.env.SSR) {
+        return createStaticVNode(element)
+      } else {
+        return h(defineAsyncComponent({
+	  			loader: () => import(`./views/${props.name}.vue`),
+        }))
+      }
+    }
+  },
 }

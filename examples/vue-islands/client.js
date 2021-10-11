@@ -24,8 +24,8 @@ export function createIsland (ctx, { id, component }) {
     ctx,
     component,
     island: id,
-    get app() {
+    get app () {
       return createSSRApp(component)
-    }
+    },
   }
 }
