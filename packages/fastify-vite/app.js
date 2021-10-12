@@ -73,11 +73,10 @@ function packIsland (id) {
         markup = payload.slice(...markup.range)
         result.markup = markup
       }
-      let html = ''
+      let html = `${result.markup}\n`
       for (const script of result.scripts) {
         html += `<script src="${script.src}" type="${script.type}"></script>\n`
       }
-      html += result.markup
       done(null, html)
     } catch (error) {
       done(error, payload)
