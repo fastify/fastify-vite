@@ -1,7 +1,6 @@
 const { assign } = Object
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
-const { resolveConfig } = require('vite')
 
 // Used to determine whether to use Vite's dev server or not
 const dev = process.env.NODE_ENV !== 'production'

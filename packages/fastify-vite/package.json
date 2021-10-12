@@ -9,6 +9,7 @@
   "deprecated": false,
   "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
+    "app.js",
     "options.js",
     "index.js",
     "build.js",
@@ -22,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0-beta.9",
+  "version": "2.2.0-beta.10",
   "dependencies": {
     "fastify-static": "^4.0.1",
     "fastify": "^3.17.0",
