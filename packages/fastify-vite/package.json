@@ -10,6 +10,8 @@
   "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
     "app.js",
+    "client.js",
+    "islands.js",
     "options.js",
     "index.js",
     "build.js",
@@ -23,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/galvez/fastify-vite.git"
   },
-  "version": "2.2.0-beta.10",
+  "version": "2.2.0-beta.11",
   "dependencies": {
     "degit": "2.8.4",
     "fastify": "^3.17.0",
