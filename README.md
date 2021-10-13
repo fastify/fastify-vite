@@ -25,7 +25,7 @@ See [release notes](https://www.youtube.com/watch?v=ybCMaNDcb1s) for the 2.2.0 (
 Highly experimental, not yet ready for production. Install beta with:
 
 ```bash
-npm install fastify-vite@2.2.0-beta.9
+npm install fastify-vite@2.2.0-beta.11
 ```
 
 # Contributors
