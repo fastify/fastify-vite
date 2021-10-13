@@ -1,14 +1,6 @@
 const { parse: parseHTML } = require('node-html-parser')
 const { addScript } = require('./client')
 
-function getIsland (url) {
-  const src = new URL(url).pathname
-  return (
-    document.querySelector(`script[src$="${src}"]`) ||
-    document.querySelector(`link[href="${src}"]`)
-  )
-}
-
 function packIsland (id, loader) {
   return (req, reply, payload, done) => {
     const result = {
@@ -63,7 +55,4 @@ function packIsland (id, loader) {
   }
 }
 
-module.exports = {
-  getIsland,
-  packIsland,
-}
+module.exports = { packIsland }
