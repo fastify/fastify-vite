@@ -34,17 +34,18 @@ function packIsland (id, loader) {
         markup = payload.slice(...markup.range)
         result.markup = markup
       }
-      let html = `${result.markup}\n`
+      let html = ''
       for (const link of result.links) {
         html += `${link}\n`
       }
+      html += `${result.markup}\n`
       if (result.scripts.length) {
         html += '<script>\n'
         html += `${loader.toString()}\n`
         html += `${addScript.toString()}\n`
         html += `${loader.name}(() => {\n`
         for (const script of result.scripts) {
-          html += `addScript('${script.src}', '${script.type}')\n`
+          html += `  addScript('${script.src}', '${script.type}')\n`
         }
         html += '})\n</script>\n'
       }

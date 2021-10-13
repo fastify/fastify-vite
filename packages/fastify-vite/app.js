@@ -1,18 +1,20 @@
 const { packIsland } = require('./islands.js')
 const { onIdle, onMedia, onDisplay } = require('./client.js')
 
-function * getViewRoutes (view) {
+function getViewRoutes (view) {
+  const routes = []
   if (view.path && Array.isArray(view.path)) {
     for (const path of view.path) {
       const { default: component, ...viewProps } = view
-      yield { path, component, ...viewProps }
+      routes.push({ path, component, ...viewProps })
     }
   } else if (view.path) {
     const { path, default: component, ...viewProps } = view
-    yield { path, component, ...viewProps }
+    routes.push({ path, component, ...viewProps })
   } else {
     throw new Error('View components need to export a `path` property.')
   }
+  return routes
 }
 
 function getAllRoutes (views) {

@@ -25,10 +25,11 @@
   },
   "version": "2.2.0-beta.10",
   "dependencies": {
-    "fastify-static": "^4.0.1",
+    "degit": "2.8.4",
     "fastify": "^3.17.0",
+    "fastify-static": "^4.0.1",
+    "matchit": "^1.1.0",
     "middie": "^5.2.0",
-    "vite": "^2.3.7",
-    "degit": "2.8.4"
+    "vite": "^2.3.7"
   }
 }

@@ -2,6 +2,7 @@ const { parse, resolve } = require('path')
 const { writeFile } = require('fs').promises
 const { mkdirSync, existsSync } = require('fs')
 const { createServer } = require('vite')
+const matchit = require('matchit')
 const Fastify = require('fastify')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
@@ -20,7 +21,7 @@ async function fastifyVite (fastify, options) {
     process.exit(1)
   }
 
-  if (options.generate.paths) {
+  if (options.generate.enabled) {
     await build(options)
     options.dev = false
     options.recalcDist()
@@ -149,19 +150,27 @@ async function fastifyVite (fastify, options) {
       await build(fastify.vite.options)
       process.exit()
     }
-    if (fastify.vite.options.generate.paths) {
+    if (fastify.vite.options.generate.enabled) {
       const paths = []
       if (typeof fastify.vite.options.generate.paths === 'function') {
         await fastify.vite.options.generate.paths(path => paths.push(path))
       } else if (Array.isArray(fastify.vite.options.generate.paths)) {
         paths.push(...fastify.vite.options.generate.paths)
+      } else {
+        paths.push(
+          ...routes
+            .filter(({ path }) => matchit.parse(path).every(segment => segment.type === 0))
+            .map(({ path }) => path)
+        )
       }
+
       const tasks = []
       for (const path of paths) {
         tasks.push(async () => {
           try {
             const { payload } = await fastify.inject({ url: path })
             const name = path.slice(1) || 'index'
+            console.log('options.distDir', options.distDir)
             const htmlPath = resolve(options.distDir, 'client', `${name}.html`)
             const { dir } = parse(htmlPath)
             if (!existsSync(dir)) {
