@@ -1,13 +1,13 @@
 function renderDevHTMLTemplate (req, { attrs, head, element, hydration, entry }) {
   return (
     '<!DOCTYPE html>\n' +
-    `<html${attrs.html}>\n` +
+    `<html${attrs.html ? attrs.html : ''}>\n` +
     `<head>${
         head.preload
     }\n${
         head.tags || ''
     }\n</head>\n` +
-    `<body${attrs.body}>\n${hydration}\n` +
+    `<body${attrs.body ? attrs.boyd : ''}>\n${hydration}\n` +
     `<div id="app">${element}</div>\n` +
     `<script type="module" src="${entry}"></script>\n` +
     '</body>\n' +
