@@ -8,6 +8,7 @@ const Guide = [
   Item('Global Data', '/guide/global-data'),
   Item('Route Hooks', '/guide/route-hooks'),
   Item('API Integration', '/guide/api-integration'),
+  Item('Island Mode', '/guide/island-mode'),
   Item('Deployment', '/guide/deployment'),
 ]
 
