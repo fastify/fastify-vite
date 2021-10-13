@@ -3,14 +3,10 @@
 </template>
 
 <script>
-import { packIsland } from 'fastify-vite/app'
-
-function loadJavaScriptOnlyAfter10Seconds (callback) {
-  setTimeout(callback, 10*1000)
-}
+import { packIsland, onIdle } from 'fastify-vite/app'
 
 export const path = '/'
-export const onSend = packIsland('#app', loadJavaScriptOnlyAfter10Seconds)
+export const onSend = packIsland('#app', onIdle)
 </script>
 
 <style>
