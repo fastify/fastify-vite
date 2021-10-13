@@ -1,33 +1,58 @@
-// Adapted from Máximo Mussini's iles:
-// https://github.com/ElMassimo/iles/blob/main/packages/hydration/hydration.ts
 
-export const onIdle = (
-  window.requestIdleCallback || (fn => setTimeout(fn, 1000))
-)
-
-export function onMedia (query, fn) {
-  const mediaQuery = matchMedia(query)
-  if (mediaQuery.matches) {
-    fn()
-  } else {
-    mediaQuery.addEventListener('change', fn, { once: true })
-  }
+function addScript (src, type) {
+  const script = document.createElement('script')
+  script.setAttribute('src', src)
+  script.setAttribute('type', type)
+  document.head.appendChild(script)
 }
 
-export function onDisplay (id, fn) {
-  const observer = new IntersectionObserver(([{ isIntersecting }]) => {
-    if (isIntersecting) {
-      observer.disconnect()
+function onIdle (callback) {
+  let requestIdleCallback = window.requestIdleCallback
+  if (!window.requestIdleCallback) {
+    requestIdleCallback = fn => setTimeout(fn, 200)
+  }
+  requestIdleCallback(callback)
+}
+
+function onMedia (query) {
+  return function onMedia (fn) {
+    const mediaQuery = matchMedia(query)
+    if (mediaQuery.matches) {
       fn()
+    } else {
+      mediaQuery.addEventListener('change', fn, { once: true })
     }
-  })
-  const fragment = document.getElementById(id)
-  if (!fragment) {
-    throw new Error(`onDisplay: fragment #${id} not found`)
-  }
-  for (const child of Array.from(fragment.children)) {
-    observer.observe(child)
   }
 }
+
+function onDisplay (id) {
+  return function onDisplay (fn) {
+    const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (isIntersecting) {
+        observer.disconnect()
+        fn()
+      }
+    })
+    const fragment = document.getElementById(id)
+    if (!fragment) {
+      throw new Error(`onDisplay: fragment #${id} not found`)
+    }
+    for (const child of Array.from(fragment.children)) {
+      observer.observe(child)
+    }
+  }
+}
+
+// onIdle, onMedia and onDisplay were adapted from iles:
+// https://github.com/ElMassimo/iles/blob/main/packages/hydration/hydration.ts
+// Which was itself based on Astro:
+// https://github.com/snowpackjs/astro/tree/main/packages/astro/src/frontend/hydrate
 
 /* global IntersectionObserver, matchMedia */
+
+module.exports = {
+  addScript,
+  onIdle,
+  onMedia,
+  onDisplay,
+}

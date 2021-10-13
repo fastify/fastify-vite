@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import { packIsland } from 'fastify-vite/app'
+import { packIsland, onIdle } from 'fastify-vite/app'
 
 export const path = '/'
-export const onSend = packIsland('#app')
+export const onSend = packIsland('#app', onIdle)
 </script>
 
 <style>

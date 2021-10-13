@@ -17,7 +17,15 @@ function loadRoutes (views) {
       throw new Error('View components need to export a `path` property.')
     }
   }
-  return routes
+  return routes.sort((a, b) => {
+    if (b.path > a.path) {
+      return 1
+    } else if (a.path > b.path) {
+      return -1
+    } else {
+      return 0
+    }
+  })
 }
 
 module.exports = { loadRoutes }

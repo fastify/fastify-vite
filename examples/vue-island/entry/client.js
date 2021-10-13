@@ -1,10 +1,6 @@
-
-import { onIdle } from 'fastify-vite/client'
 import { hydrate } from 'fastify-vite-vue/client'
+import { createApp } from '../client'
 
-onIdle(async () => {
-  const { createApp } = await import('../client')
-  const { app } = createApp()
-  hydrate(app)
-  app.mount('#app')
-})
+const { app } = createApp()
+hydrate(app)
+app.mount('#app')

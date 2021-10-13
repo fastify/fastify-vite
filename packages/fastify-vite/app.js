@@ -1,7 +1,5 @@
-const { parse: parseHTML } = require('node-html-parser')
-// const devalue = require('devalue')
-
-const { values } = Object
+const { packIsland } = require('./islands.js')
+const { onIdle, onMedia, onDisplay } = require('./client.js')
 
 function * getViewRoutes (view) {
   if (view.path && Array.isArray(view.path)) {
@@ -17,9 +15,9 @@ function * getViewRoutes (view) {
   }
 }
 
-function loadRoutes (views) {
+function getAllRoutes (views) {
   const routes = []
-  for (const view of values(views)) {
+  for (const view of Object.values(views)) {
     for (const route of getViewRoutes(view)) {
       routes.push(route)
     }
@@ -35,58 +33,11 @@ function loadRoutes (views) {
   })
 }
 
-function getIsland (url) {
-  const src = new URL(url).pathname
-  return (
-    document.querySelector(`script[src$="${src}"]`) ||
-    document.querySelector(`link[href="${src}"]`)
-  )
-}
-
-function packIsland (id) {
-  return (req, reply, payload, done) => {
-    const result = {
-      scripts: [],
-      markup: null,
-    }
-    try {
-      const host = req.headers.host
-      const parsed = parseHTML(payload)
-      const scripts = parsed.querySelectorAll('script')
-      const links = parsed.querySelectorAll('link')
-      for (const link of links) {
-        if (link.attributes.rel === 'modulepreload') {
-          result.scripts.push({
-            type: 'module',
-            src: `//${host}${link.attributes.href}`,
-          })
-        }
-      }
-      for (const script of scripts) {
-        result.scripts.push({
-          type: script.attributes.type,
-          src: `//${host}${script.attributes.src}`,
-        })
-      }
-      let markup = parsed.querySelector(id)
-      if (markup) {
-        markup = payload.slice(...markup.range)
-        result.markup = markup
-      }
-      let html = `${result.markup}\n`
-      for (const script of result.scripts) {
-        html += `<script src="${script.src}" type="${script.type}"></script>\n`
-      }
-      done(null, html)
-    } catch (error) {
-      done(error, payload)
-    }
-  }
-}
-
 module.exports = {
   getViewRoutes,
-  loadRoutes,
-  getIsland,
+  getAllRoutes,
   packIsland,
+  onIdle,
+  onMedia,
+  onDisplay,
 }

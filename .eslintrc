@@ -9,8 +9,10 @@
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'react/react-in-jsx-scope': 'off',
-    // TODO fix required in fastify-vite-react/context.js
+    // FIXME
     'react/prop-types': 'off',
+    // FIXME
+    'react/no-children-prop': 'off',
   },
   parserOptions: {
     ecmaFeatures: {
