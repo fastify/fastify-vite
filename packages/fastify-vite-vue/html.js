@@ -7,7 +7,7 @@ function renderDevHTMLTemplate (req, { attrs, head, element, hydration, entry })
     }\n${
         head.tags || ''
     }\n</head>\n` +
-    `<body${attrs.body ? attrs.boyd : ''}>\n${hydration}\n` +
+    `<body${attrs.body ? attrs.body : ''}>\n${hydration}\n` +
     `<div id="app">${element}</div>\n` +
     `<script type="module" src="${entry}"></script>\n` +
     '</body>\n' +
