@@ -1,5 +1,6 @@
 const { parse, resolve } = require('path')
 const { writeFile } = require('fs').promises
+const { ensureDir } = require('fs-extra')
 const { mkdirSync, existsSync } = require('fs')
 const { createServer } = require('vite')
 const matchit = require('matchit')
@@ -7,6 +8,7 @@ const Fastify = require('fastify')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
+const { parse: parseHTML } = require('node-html-parser')
 
 const { build } = require('./build')
 const { processOptions } = require('./options')
@@ -86,7 +88,6 @@ async function fastifyVite (fastify, options) {
               this,
               {
                 req,
-                params: req.params,
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
@@ -102,7 +103,6 @@ async function fastifyVite (fastify, options) {
               this,
               {
                 req,
-                params: req.params,
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
@@ -170,14 +170,29 @@ async function fastifyVite (fastify, options) {
       for (const path of paths) {
         tasks.push(async () => {
           try {
-            const { payload } = await fastify.inject({ url: path })
-            const name = path.slice(1) || 'index'
-            const htmlPath = resolve(options.distDir, 'client', `${name}.html`)
+            const { payload: htmlWithPayload } = await fastify.inject({ url: path })
+            const name = path.slice(1)
+            let htmlPath
+            let jsonPath
+            let jsonURL
+            if (name) {
+              jsonURL = `${name}/index.json`
+              htmlPath = resolve(options.distDir, 'client', `${name}/index.html`)
+              jsonPath = resolve(options.distDir, 'client', jsonURL)
+            } else {
+              jsonURL = `index.json`
+              htmlPath = resolve(options.distDir, 'client', `index.html`)
+              jsonPath = resolve(options.distDir, 'client', jsonURL)
+            }
+            const { html, json } = extractPayload(htmlWithPayload, `/${jsonURL}`)
             const { dir } = parse(htmlPath)
             if (!existsSync(dir)) {
-              mkdirSync(dir)
+              await ensureDir(dir)
             }
-            await writeFile(htmlPath, payload)
+            if (json) {
+              await writeFile(jsonPath, JSON.stringify(json, null, 2))
+            }
+            await writeFile(htmlPath, html)
           } catch (err) {
             console.error(err)
           }
@@ -237,6 +252,27 @@ async function fastifyVite (fastify, options) {
       fastify.decorateRequest('api', fastify.api)
     }
   })
+
+  function extractPayload (source, jsonPath) {
+    const parsed = parseHTML(source)
+    const scripts = parsed.querySelectorAll('script')
+    for (const script of scripts) {
+      if (script.innerHTML.includes('kPayload')) {
+        const hydrator = (0, eval)(`(function (window) {\n${script.innerHTML}\n})`)
+        const hydration = {}
+        hydrator(hydration)
+        return {
+          html: `${
+            source.slice(0, script.range[0])
+          }<script>window[Symbol.for('kStaticPayload')] = '${jsonPath}'</script>${
+            source.slice(script.range[1])
+          }`,
+          json: hydration[Symbol.for('kPayload')],
+        }
+      }
+    }
+    return { html: source }
+  }
 }
 
 module.exports = fastifyPlugin(fastifyVite)
