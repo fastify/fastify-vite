@@ -86,6 +86,7 @@ async function fastifyVite (fastify, options) {
               this,
               {
                 req,
+                params: req.params,
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
@@ -101,6 +102,7 @@ async function fastifyVite (fastify, options) {
               this,
               {
                 req,
+                params: req.params,
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
