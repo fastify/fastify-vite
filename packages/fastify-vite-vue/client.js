@@ -6,6 +6,7 @@ const { assign } = Object
 
 const kData = Symbol.for('kData')
 const kPayload = Symbol.for('kPayload')
+const kStaticPayload = Symbol.for('kStaticPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
 const kFirstRender = Symbol('kFirstRender')
@@ -42,6 +43,7 @@ function useHydration ({ getData, getPayload } = {}) {
   const globalProps = useGlobalProperties()
   const hydration = {
     params: route ? route.params : null,
+    $static: globalProps.$static,
     $global: globalProps.$global,
     $data: globalProps.$data,
     $payload: globalProps.$payload,
@@ -62,7 +64,7 @@ function useHydration ({ getData, getPayload } = {}) {
       let promise
       if (getPayload) {
         const getPayloadFromClient = async () => {
-          const response = await fetch(hydration.$payloadPath())
+          const response = await fetch(hydration.$payloadPath(hydration.$static))
           const json = await response.json()
           return json
         }
@@ -96,12 +98,30 @@ function useHydration ({ getData, getPayload } = {}) {
   }
 }
 
-function hydrate (app) {
+async function hydrate (app) {
+  let $payload
+  if (window[kStaticPayload]) {
+    const staticPayloadResponse = await fetch(window[kStaticPayload])
+    $payload = await staticPayloadResponse.json()
+  } else {
+    $payload = window[kPayload]
+  }
   const hydration = {
+    $payload,
+    $payloadPath: (staticPayload) => {
+      if (staticPayload) {
+        let { pathname } = Object.assign({}, document.location)
+        if (pathname.endsWith('/')) {
+          pathname = `${pathname}index`
+        }
+        return `${pathname.replace('.html', '')}/index.json`
+      } else {
+        return `/-/payload${document.location.pathname}`
+      }
+    },
+    $static: !!window[kStaticPayload],
     $global: window[kGlobal],
     $data: window[kData],
-    $payload: window[kPayload],
-    $payloadPath: () => `/-/payload${document.location.pathname}`,
     $api: new Proxy({ ...window[kAPI] }, {
       get: manifetch({
         prefix: '',
@@ -113,6 +133,8 @@ function hydrate (app) {
   delete window[kGlobal]
   delete window[kData]
   delete window[kAPI]
+  delete window[kPayload]
+  delete window[kStaticPayload]
 }
 
 function useGlobalProperties () {
