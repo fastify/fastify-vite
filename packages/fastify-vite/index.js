@@ -180,8 +180,8 @@ async function fastifyVite (fastify, options) {
               htmlPath = resolve(options.distDir, 'client', `${name}/index.html`)
               jsonPath = resolve(options.distDir, 'client', jsonURL)
             } else {
-              jsonURL = `index.json`
-              htmlPath = resolve(options.distDir, 'client', `index.html`)
+              jsonURL = 'index.json'
+              htmlPath = resolve(options.distDir, 'client', 'index.html')
               jsonPath = resolve(options.distDir, 'client', jsonURL)
             }
             const { html, json } = extractPayload(htmlWithPayload, `/${jsonURL}`)
@@ -257,7 +257,8 @@ async function fastifyVite (fastify, options) {
     const parsed = parseHTML(source)
     const scripts = parsed.querySelectorAll('script')
     for (const script of scripts) {
-      if (script.innerHTML.includes('kPayload')) {
+      if (script.innerHTML && script.innerHTML.includes('kPayload')) {
+        // eslint-disable-next-line no-eval
         const hydrator = (0, eval)(`(function (window) {\n${script.innerHTML}\n})`)
         const hydration = {}
         hydrator(hydration)

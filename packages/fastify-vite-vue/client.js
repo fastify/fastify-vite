@@ -91,7 +91,7 @@ function useHydration ({ getData, getPayload } = {}) {
 }
 
 async function hydrate (app) {
-  let $payload 
+  let $payload
   if (window[kStaticPayload]) {
     const staticPayloadResponse = await fetch(window[kStaticPayload])
     $payload = await staticPayloadResponse.json()
