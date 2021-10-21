@@ -1,6 +1,7 @@
 const manifetch = require('manifetch')
 
 const { getCurrentInstance, reactive } = require('vue')
+const { useRoute } = require('vue-router')
 const { assign } = Object
 
 const kData = Symbol.for('kData')
@@ -33,8 +34,15 @@ if (!isServer) {
 }
 
 function useHydration ({ getData, getPayload } = {}) {
+  let route
+  try {
+    route = useRoute()
+  } catch {
+    // In case app is running without Vue Router
+  }
   const globalProps = useGlobalProperties()
   const hydration = {
+    params: route ? route.params : null,
     $static: globalProps.$static,
     $global: globalProps.$global,
     $data: globalProps.$data,

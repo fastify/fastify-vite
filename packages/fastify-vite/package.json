@@ -32,6 +32,7 @@
     "fastify-static": "^4.0.1",
     "matchit": "^1.1.0",
     "middie": "^5.2.0",
+    "node-html-parser": "^5.0.0",
     "vite": "^2.3.7"
   }
 }
