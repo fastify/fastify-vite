@@ -28,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/terixjs/fastify-vite.git"
   },
-  "version": "2.2.0-beta.17",
+  "version": "2.2.0-beta.18",
   "dependencies": {
     "devalue": "2.0.1",
     "manifetch": "0.0.1",
