@@ -2,8 +2,8 @@ import { createSSRApp } from 'vue'
 import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@vueuse/head'
 
-import base from './base.vue'
-import routes from './routes.js'
+import base from './client.vue'
+import routes from '@fastify-vite-vue/routes'
 
 export function createApp (ctx) {
   const app = createSSRApp(base)

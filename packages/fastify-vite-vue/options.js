@@ -1,6 +1,6 @@
 const vuePlugin = require('@vitejs/plugin-vue')
 const vueJsx = require('@vitejs/plugin-vue-jsx')
-// const fastifyViteVuePlugin = require('./plugin')
+const fastifyViteVuePlugin = require('./plugin')
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -10,8 +10,8 @@ const options = {
     // which is having entry-client.js and entry-server.js files on
     // the same top-level folder. For better organization fastify-vite
     // expects them to be grouped under /entry
-    client: '/entry/client.js',
-    server: '/entry/server.js',
+    client: '@fastify-vite-vue/entry/client',
+    server: '@fastify-vite-vue/entry/server',
   },
   vite: {
     // Vite's logging level
@@ -20,7 +20,7 @@ const options = {
     plugins: [
       vuePlugin(),
       vueJsx(),
-      // fastifyViteVuePlugin(),
+      fastifyViteVuePlugin(),
     ],
     // Base build settings, default values
     // for assetsDir and outDir match Vite's defaults

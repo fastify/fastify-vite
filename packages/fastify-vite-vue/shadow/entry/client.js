@@ -1,5 +1,5 @@
-import { createApp } from '../main'
-import { hydrate } from 'fastify-vite-vue/client'
+import { createApp } from '/client.js'
+import { hydrate } from 'fastify-vite-vue/client.js'
 const { app, router } = createApp()
 
 // Wait until hydration payload has loaded
