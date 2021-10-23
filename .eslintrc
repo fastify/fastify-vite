@@ -13,6 +13,7 @@
     'react/prop-types': 'off',
     // FIXME
     'react/no-children-prop': 'off',
+    'import/no-absolute-path': 'off',
   },
   parserOptions: {
     ecmaFeatures: {

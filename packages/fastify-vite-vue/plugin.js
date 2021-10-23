@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const { readFile, pathExists, readdir } = require('fs-extra')
+const { readFile, pathExists } = require('fs-extra')
 
 const shadowModules = [
   'entry/client',
@@ -20,7 +20,7 @@ const overrideMap = {
     'server/entry.js',
     'server-entry.js',
   ],
-  'routes': [
+  routes: [
     'routes.js',
   ],
 }
@@ -32,7 +32,7 @@ function fastifyViteVuePlugin () {
     config (config) {
       root = config.root
     },
-    async resolveId (id)  {
+    async resolveId (id) {
       const [, shadowModule] = id.split('@fastify-vite-vue/')
       if (shadowModule && shadowModules.includes(shadowModule)) {
         const overrides = overrideMap[shadowModule]
@@ -50,10 +50,10 @@ function fastifyViteVuePlugin () {
       if (shadowModule) {
         return {
           code: await readFile(resolve(__dirname, 'shadow', `${shadowModule}.js`), 'utf8'),
-          map: null
+          map: null,
         }
       }
-    }
+    },
   }
 }
 
