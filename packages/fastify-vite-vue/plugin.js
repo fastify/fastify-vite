@@ -37,8 +37,9 @@ function fastifyViteVuePlugin () {
       if (shadowModule && shadowModules.includes(shadowModule)) {
         const overrides = overrideMap[shadowModule]
         for (const override of overrides) {
-          if (await pathExists(resolve(root, override))) {
-            return
+          const overridePath = resolve(root, override)
+          if (await pathExists(overridePath)) {
+            return overridePath
           }
         }
         return id
