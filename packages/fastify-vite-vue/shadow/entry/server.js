@@ -1,6 +1,6 @@
-import { createApp } from '../main'
+import { createApp } from '/client.js'
 import { createRenderFunction } from 'fastify-vite-vue/server'
-import routes from '../routes'
+import routes from '@fastify-vite-vue/routes'
 
 export default {
   routes,
