@@ -21,11 +21,13 @@ function getDevHandler (fastify, options, getRender, getTemplate, viteDevServer)
       const fragments = await render(fastify, req, reply, url, options)
       reply.type('text/html')
       reply.send(template(req, fragments))
+      return reply
     } catch (e) {
       viteDevServer.ssrFixStacktrace(e)
       console.error(e.stack)
       reply.code(500)
       reply.send(e.stack)
+      return reply
     }
   }
 }
