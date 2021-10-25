@@ -1,4 +1,4 @@
-import { createApp } from '@app/client'
+import { createApp } from '@app/client.js'
 import { hydrate } from 'fastify-vite-vue/client'
 const { app, router } = createApp()
 

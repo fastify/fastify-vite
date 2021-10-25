@@ -9,7 +9,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import { useRoute } from 'vue-router'
-import head from '@app/head'
+import head from '@app/head.js'
 
 export default {
   setup () {

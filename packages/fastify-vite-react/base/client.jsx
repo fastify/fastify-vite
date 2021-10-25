@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { StaticRouter } from 'react-router'
-import routes from '@app/routes'
+import routes from '@app/routes.js'
 
 export function createApp (context) {
   return {

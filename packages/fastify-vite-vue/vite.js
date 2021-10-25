@@ -24,6 +24,7 @@ module.exports = {
           'server-entry.js',
         ]],
         ['client.js'],
+        ['client.vue'],
         ['head.js'],
         ['routes.js'],
       ],
