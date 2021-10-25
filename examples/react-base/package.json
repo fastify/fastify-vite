@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "fastify": "^3.17.0",
-    "fastify-vite": "^2.2.0-beta.18",
-    "fastify-vite-react": "^2.2.0-beta.18"
+    "fastify-vite": "^2.2.0-beta.19",
+    "fastify-vite-react": "^2.2.0-beta.19"
   }
 }

@@ -18,7 +18,7 @@ module.exports = {
     ],
   },
   esbuild: {
-    jsxInject: 'import React from \'react\'\n'
+    jsxInject: 'import React from \'react\'\n',
   },
   plugins: [
     viteReactRefresh(),

@@ -10,12 +10,12 @@
   "description": "Fastify plugin to serve Vite SSR applications.",
   "files": [
     "app.js",
+    "build.js",
     "client.js",
+    "index.js",
     "islands.js",
     "options.js",
-    "index.js",
-    "build.js",
-    "README.md"
+    "static.js"
   ],
   "homepage": "https://github.com/galvez/fastify-vite",
   "license": "MIT",
