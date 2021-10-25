@@ -51,8 +51,10 @@ async function fastifyVite (fastify, options) {
       const baseIndexHtmlPath = resolve(renderer.path, 'base', 'index.html')
       await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
     }
-    const getTemplate = async () => {
-      return renderer.compileIndexHtml(await readFile(indexHtmlPath, 'utf8'))
+    const getTemplate = async (url) => {
+      const indexHtml = await readFile(indexHtmlPath, 'utf8')
+      const transformedHtml = await vite.transformIndexHtml(url, indexHtml)
+      return await renderer.compileIndexHtml(transformedHtml)
     }
     const entry = await renderer.dev.getEntry(options, vite)
     handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)

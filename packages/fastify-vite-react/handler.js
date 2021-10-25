@@ -17,7 +17,7 @@ function getDevHandler (fastify, options, getRender, getTemplate, viteDevServer)
     try {
       const url = req.raw.url
       const render = await getRender()
-      const template = await getTemplate()
+      const template = await getTemplate(url)
       const fragments = await render(fastify, req, reply, url, options)
       reply.type('text/html')
       reply.send(template(req, fragments))
