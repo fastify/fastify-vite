@@ -9,7 +9,8 @@
   "deprecated": false,
   "description": "Vue renderer for fastify-vite.",
   "files": [
-    "app.js",    
+    "base",    
+    "app.js",
     "client.js",
     "handler.js",
     "entry.js",
@@ -30,13 +31,14 @@
   },
   "version": "2.2.0-beta.18",
   "dependencies": {
-    "devalue": "2.0.1",
-    "manifetch": "0.0.1",
-    "vue": "3.2.19",
-    "@vue/server-renderer": "3.2.19",
-    "vue-router": "4.0.10",
     "@vitejs/plugin-vue": "1.9.3",
     "@vitejs/plugin-vue-jsx": "1.2.0",
-    "@vueuse/head": "0.6.0"
+    "@vue/server-renderer": "3.2.19",
+    "@vueuse/head": "0.6.0",
+    "devalue": "2.0.1",
+    "manifetch": "0.0.1",
+    "vite-plugin-blueprint": "^0.0.2",
+    "vue": "3.2.19",
+    "vue-router": "4.0.10"
   }
 }

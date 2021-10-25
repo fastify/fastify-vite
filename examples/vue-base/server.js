@@ -1,3 +1,6 @@
+
+process.on('unhandledRejection', console.error)
+
 const fastify = require('fastify')()
 const fastifyVite = require('fastify-vite')
 const fastifyViteVue = require('fastify-vite-vue')

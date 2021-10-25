@@ -3,7 +3,7 @@
     <router-view v-slot="{ Component }">
       <h1>Examples</h1>
       <Suspense>
-        <component :key="route.path" :is="Component" />
+        <component :key="$route.path" :is="Component" />
       </Suspense>
     </router-view>
   </div>
@@ -24,7 +24,6 @@ export default {
         content: 'width=device-width, initial-scale=1.0',
       }]
     })
-    return { route: useRoute() }
   }
 }
 </script>

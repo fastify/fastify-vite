@@ -1,8 +1,17 @@
 import { Helmet } from 'react-helmet'
-import { Route, Switch } from 'react-router-dom'
-import routes from './routes'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { StaticRouter } from 'react-router'
+import routes from '@app/routes'
 
-export function App (props) {
+export function createApp (context) {
+  return {
+    App,
+    router: import.meta.env.SSR ? StaticRouter : BrowserRouter,
+    context,
+  }
+}
+
+function App (props) {
   return (
     <>
       <Helmet>
