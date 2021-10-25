@@ -1,4 +1,6 @@
 const { assign } = Object
+const { fileURLToPath } = require('url')
+const { dirname } = require('path')
 const { existsSync, readFileSync } = require('fs')
 const { resolve } = require('path')
 
@@ -45,7 +47,15 @@ async function processOptions (options) {
   options = assign({}, defaults, options)
 
   if (typeof options.root === 'function') {
-    options.root = options.root(resolve)
+    options.root = options.root((...path) => {
+      if (path.length && path[0].startsWith('file:')) {
+        return resolve(dirname(fileURLToPath(path[0]), ...path.slice(1)))
+      } else {
+        return resolve(...path)
+      }
+    })
+  } else if (options.root.startsWith('file:')) {
+    options.root = dirname(fileURLToPath(options.root))
   }
 
   options.vite = await getViteOptions(options)
