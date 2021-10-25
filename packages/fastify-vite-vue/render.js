@@ -10,7 +10,7 @@ function createRenderFunction (createApp) {
     const { entry, distManifest, hydration } = options
     const { ctx, app, head, router } = createApp({ fastify, req, reply })
 
-    // On the client, hydrate() from fastify-vite/hidrate repeats these steps
+    // On the client, hydrate() from fastify-vite/client repeats these steps
     assign(app.config.globalProperties, {
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],

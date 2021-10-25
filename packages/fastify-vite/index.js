@@ -1,5 +1,5 @@
 const { parse, resolve } = require('path')
-const { writeFile } = require('fs').promises
+const { readFile, writeFile } = require('fs').promises
 const { ensureDir } = require('fs-extra')
 const { mkdirSync, existsSync } = require('fs')
 const { createServer } = require('vite')
@@ -8,9 +8,9 @@ const Fastify = require('fastify')
 const middie = require('middie')
 const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
-const { parse: parseHTML } = require('node-html-parser')
 
 const { build } = require('./build')
+const { extractPayload } = require('./static')
 const { processOptions } = require('./options')
 
 async function fastifyVite (fastify, options) {
@@ -46,23 +46,33 @@ async function fastifyVite (fastify, options) {
     })
     await fastify.register(middie)
     fastify.use(vite.middlewares)
+    const indexHtmlPath = resolve(options.root, 'index.html')
+    if (!existsSync(indexHtmlPath)) {
+      const baseIndexHtmlPath = resolve(renderer.path, 'base', 'index.html')
+      await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
+    }
+    const getTemplate = async () => {
+      return renderer.compileIndexHtml(await readFile(indexHtmlPath, 'utf8'))
+    }
     const entry = await renderer.dev.getEntry(options, vite)
-    handler = renderer.dev.getHandler(fastify, options, entry.getRender, vite)
+    handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
     routes = entry.routes
   } else {
     // For production you get the distribution version of the render function
     const { assetsDir } = options.vite.build
-    // We also register fastify-static to serve all static files in production (dev server takes of this)
-    // Note: this is just to ensure it works, for a real world production deployment, you'll want
-    // to capture those paths in Nginx or just serve them from a CDN instead
-    // TODO make it possible to serve static assets from CDN
+    // We also register fastify-static to serve all static files
+    // in production (dev server takes of this)
+    // Note: this is just to ensure it works, for a real world
+    // production deployment, you'll want to capture those paths in
+    // Nginx or just serve them from a CDN instead
     await fastify.register(fastifyStatic, {
       root: resolve(options.distDir, `client/${assetsDir}`),
       prefix: `/${assetsDir}`,
     })
+    const template = await renderer.compileIndexHtml(options.distIndex)
     const entry = await renderer.getEntry(options)
     routes = entry.routes
-    handler = renderer.getHandler(fastify, options, entry.render)
+    handler = renderer.getHandler(fastify, options, entry.render, template)
   }
 
   // Sets fastify.vite.get() helper which uses
@@ -115,6 +125,7 @@ async function fastifyVite (fastify, options) {
         fastify.get(`/-/payload${url}`, async function (req, reply) {
           return getPayload.call(this, {
             req,
+            params: req.params,
             reply,
             $api: this.api && this.api.client,
             fastify: this,
@@ -254,28 +265,6 @@ async function fastifyVite (fastify, options) {
       fastify.decorateRequest('api', fastify.api)
     }
   })
-
-  function extractPayload (source, jsonPath) {
-    const parsed = parseHTML(source)
-    const scripts = parsed.querySelectorAll('script')
-    for (const script of scripts) {
-      if (script.innerHTML && script.innerHTML.includes('kPayload')) {
-        // eslint-disable-next-line no-eval
-        const hydrator = (0, eval)(`(function (window) {\n${script.innerHTML}\n})`)
-        const hydration = {}
-        hydrator(hydration)
-        return {
-          html: `${
-            source.slice(0, script.range[0])
-          }<script>window[Symbol.for('kStaticPayload')] = '${jsonPath}'</script>${
-            source.slice(script.range[1])
-          }`,
-          json: hydration[Symbol.for('kPayload')],
-        }
-      }
-    }
-    return { html: source }
-  }
 }
 
 module.exports = fastifyPlugin(fastifyVite)

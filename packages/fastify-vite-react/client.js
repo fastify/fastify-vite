@@ -1,10 +1,12 @@
 const manifetch = require('manifetch')
 
 const { useContext, useState, useEffect } = require('react')
+const { useParams } = require('react-router-dom')
 const { Context, ContextProvider } = require('./context')
 
 const kData = Symbol.for('kData')
 const kPayload = Symbol.for('kPayload')
+const kStaticPayload = Symbol.for('kStaticPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
 const kFirstRender = Symbol.for('kFirstRender')
@@ -65,11 +67,36 @@ function useHydration ({ getData, getPayload } = {}) {
   }
 }
 
-function hydrate (app) {
+async function hydrate (app) {
+  let $payload
+  if (window[kStaticPayload]) {
+    const staticPayloadResponse = await fetch(window[kStaticPayload])
+    $payload = await staticPayloadResponse.json()
+  } else {
+    $payload = window[kPayload]
+  }
+  let params
+  try {
+    params = useParams()
+  } catch {
+    // In case app is running without React Router
+  }
   const context = {
+    params,
+    $payload,
+    $payloadPath: (staticPayload) => {
+      if (staticPayload) {
+        let { pathname } = Object.assign({}, document.location)
+        if (pathname.endsWith('/')) {
+          pathname = `${pathname}index`
+        }
+        return `${pathname.replace('.html', '')}/index.json`
+      } else {
+        return `/-/payload${document.location.pathname}`
+      }
+    },
+    $static: !!window[kStaticPayload],
     $global: window[kGlobal],
-    $payloadPath: () => `/-/payload${document.location.pathname}`,
-    $payload: window[kPayload],
     $data: window[kData],
     $api: new Proxy({ ...window[kAPI] }, {
       get: manifetch({
@@ -81,6 +108,7 @@ function hydrate (app) {
   delete window[kGlobal]
   delete window[kData]
   delete window[kPayload]
+  delete window[kStaticPayload]
   delete window[kAPI]
   return context
 }

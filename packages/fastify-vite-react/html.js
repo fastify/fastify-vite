@@ -1,33 +1,20 @@
-function renderDevHTMLTemplate (req, { element, hydration, entry, helmet }, viteDevServer) {
-  return viteDevServer.transformIndexHtml(req.url, (
-    '<!doctype html>\n' +
-    '<html>\n' +
-    `<head>${
-      helmet.title.toString()
-    }${
-      helmet.script.toString()
-    }${
-      helmet.style.toString()
-    }</head>\n` +
-    `<body>\n${hydration}\n` +
-    `<div id="app">${element}</div>\n` +
-    `<script type="module" src="${entry}"></script>\n` +
-    '</body>\n' +
-    '</html>\n'
-  ))
+const unescapedBacktick = /(?<!\\)`/g
+
+function compileIndexHtml (source) {
+  const indexHtml = (
+    '(function (req, { attrs, helmet, element, hydration }, vite) {\n' +
+    `  return vite.transformIndexHtml(req.url, \`${
+      source
+        // eslint-disable-next-line no-template-curly-in-string
+        .replace('<html>', '<html${attrs.html ? attrs.html : \'\'}>')
+        // eslint-disable-next-line no-template-curly-in-string
+        .replace('<body>', '<body${attrs.body ? attrs.body : \'\'}>')
+        .replace(unescapedBacktick, '\\`')
+    }\`)\n` +
+    '})'
+  )
+  // eslint-disable-next-line no-eval
+  return (0, eval)(indexHtml)
 }
 
-function renderHTMLTemplate (req, { element, hydration, helmet }, template) {
-  return template
-    .replace('<!--helmet-->', `${
-      helmet.title.toString()
-    }${
-      helmet.script.toString()
-    }${
-      helmet.style.toString()
-    }`)
-    .replace('<!--hydration-->', hydration)
-    .replace('<!--element-->', element)
-}
-
-module.exports = { renderHTMLTemplate, renderDevHTMLTemplate }
+module.exports = { compileIndexHtml }
