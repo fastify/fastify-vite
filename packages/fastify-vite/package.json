@@ -3,7 +3,7 @@
     "lint": "eslint . --ext js --fix"
   },
   "bugs": {
-    "url": "https://github.com/galvez/fastify-vite/issues"
+    "url": "https://github.com/terixjs/fastify-vite/issues"
   },
   "bundleDependencies": false,
   "deprecated": false,
@@ -17,15 +17,15 @@
     "options.js",
     "static.js"
   ],
-  "homepage": "https://github.com/galvez/fastify-vite",
+  "homepage": "https://github.com/terixjs/fastify-vite",
   "license": "MIT",
   "main": "index.js",
   "name": "fastify-vite",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/galvez/fastify-vite.git"
+    "url": "git+https://github.com/terixjs/fastify-vite.git"
   },
-  "version": "2.2.0-beta.18",
+  "version": "2.2.0-beta.19",
   "dependencies": {
     "degit": "2.8.4",
     "fastify": "^3.17.0",
