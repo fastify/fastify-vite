@@ -76,15 +76,18 @@ Also check out Evan You's [Vite 2.0 announcement][vite-2-announcement] for more 
 ## Sponsors
 
 <style>
-.sponsor { text-decoration: none; }
+.sponsor { position: relative; display: inline-block; text-decoration: none; }
 .sponsor:hover { text-decoration: none; }
-.sponsor img { margin-right: 40px }
+.sponsor img { margin-right: 40px; }
 </style>
 <a class="sponsor" href="https://nearform.com">
 <img height="25" src="/nearform.svg" alt="NearForm">
 </a>
 <a class="sponsor" href="https://helloprint.com">
 <img height="25" src="/helloprint.svg" alt="Helloprint">
+</a>
+<a class="sponsor" href="https://feature.fm" style="height: 35px; width: 180px;">
+<img height="35" style="position: absolute; top: 8px; left: 0px" src="/featurefm.svg" alt="Feature.fm">
 </a>
 <img class="sponsor" width="150" src="/sxdotcom.svg" alt="S​e​x​.com">
 
