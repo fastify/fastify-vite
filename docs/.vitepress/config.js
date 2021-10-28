@@ -1,12 +1,22 @@
 
 const Item = (text, link) => ({ text, link })
 
+const Quickstart = [
+  Item('Vue 3+', '/quickstart/vue'),
+  Item('React 17+', '/quickstart/react'),
+]
+
+const Concepts = [
+  Item('Project Blueprint', '/concepts/project-blueprint'),
+  Item('Integrated Routing', '/concepts/integrated-routing'),
+  Item('Client Hydration', '/concepts/client-hydration'),
+  Item('Renderer API', '/concepts/renderer-api'),
+]
+
 const Guide = [
-  Item('Using Vue', '/guide/vue'),
-  Item('Using React', '/guide/react'),
   Item('Configuration', '/guide/config'),
   Item('Global Data', '/guide/global-data'),
-  Item('Route Hooks', '/guide/route-hooks'),
+  Item('Data Fetching', '/guide/data-fetching'),
   Item('API Integration', '/guide/api-integration'),
   Item('Island Mode', '/guide/island-mode'),
   Item('Deployment', '/guide/deployment'),
@@ -19,22 +29,16 @@ const Functions = [
   Item('useReply', '/functions/use-reply'),
 ]
 
-const Internals = [
-  Item('Client Hydration', '/internals/client-hydration'),
-  Item('Renderer API', '/internals/renderer-api'),
-]
-
 /*
 const Examples = [
-  Item('HTTP clients', '/examples/http-clients'),
-  Item('Redis cache', '/examples/redis-cache'),
-  Item('ElementUI', '/examples/elementui'),
+  Item('Undici', '/examples/http-clients'),
+  Item('Redis', '/examples/redis-cache'),
   Item('WindiCSS', '/examples/windicss'),
+  Item('ElementUI', '/examples/elementui'),
   Item('Storyblok', '/examples/storyblok'),
   Item('Contentful', '/examples/contentful'),
 ]
 */
-
 
 const Meta = [
   Item('About', '/meta/about'),
@@ -43,9 +47,10 @@ const Meta = [
 ]
 
 const DefaultSidebar = [
+  { text: 'Quickstart', children: Quickstart },
+  { text: 'Concepts', children: Concepts },
   { text: 'Guide', children: Guide },
   { text: 'Functions', children: Functions },
-  { text: 'Internals', children: Internals },
   { text: 'Meta', children: Meta },
 ]
 
@@ -58,16 +63,20 @@ module.exports = {
     repo: 'terixjs/fastify-vite',
     nav: [
       {
+        text: 'Quickstart',
+        items: Quickstart,
+      },
+      {
+        text: 'Concepts',
+        items: Concepts,
+      },
+      {
         text: 'Guide',
         items: Guide,
       },
       {
         text: 'Functions',
         items: Functions,
-      },
-      {
-        text: 'Internals',
-        items: Internals,
       },
       {
         text: 'Meta',
