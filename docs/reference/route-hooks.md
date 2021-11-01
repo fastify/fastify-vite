@@ -1,4 +1,4 @@
-# Route Hooks
+# Hooks
 
 <b>fastify-vite</b> lets you define Fastify [route-level hooks](https://www.fastify.io/docs/latest/Hooks/#requestreply-hooks) directly in your <b>view files</b>, as long as you use the `loadRoutes()` method provided by your chosen renderer adapter. 
 
@@ -66,67 +66,3 @@ The following examples for Vue and React demonstrate how to leverage automatic [
 ::: tip
 Bear in mind `ctx.$data` would no longer be populated following client-side navigation (History API) in these examples. For this you need to ensure data can be retrieved from the client as well. Route Hooks work best to power first render specific tasks before Route Payloads and Isomorphic Data.
 :::
-
-## Vue
-
-```vue
-<template>
-  <h2>Registering Fastify route hooks via exports</h2>
-  <p>{{ ctx.$data ? ctx.$data.msg : 'Refresh (SSR) to get server data' }}</p>
-</template>
-
-<script>
-import { useHydration, isServer } from 'fastify-vite-vue/client'
-
-export const path = '/route-hooks'
-
-export async function onRequest (req) {
-  req.$data = { msg: 'hello from onRequest' }
-}
-
-export default {
-  async setup () {
-    const ctx = await useHydration()
-    return { ctx }
-  }
-}
-</script>
-
-```
-
-## React
-
-```jsx
-import { useHydration } from 'fastify-vite-react/client'
-
-export const path = '/route-hooks'
-
-export async function onRequest (req) {
-  req.$data = { msg: 'hello from onRequest' }
-}
-
-export default function RouteHooks () {
-  const [ctx] = useHydration()
-
-  return (
-    <>
-      <h2>Registering Fastify route hooks via exports</h2>
-      <p>{ ctx.$data ? ctx.$data.msg : 'Refresh (SSR) to get server data' }</p>
-    </>
-  )
-}
-```
-
-## Manual
-
-Alternatively, you can manually pass them to your Fastify route definitions:
-
-```js
-fastify.vite.get('/*', {
-  onRequest (req, reply, done) {
-    done()
-  }
-})
-```
-
-Or via the `routes` array exported in the server entry point.

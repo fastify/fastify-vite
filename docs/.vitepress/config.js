@@ -1,51 +1,52 @@
 
 const Item = (text, link) => ({ text, link })
 
-const Guide = [
-  Item('Using Vue', '/guide/vue'),
-  Item('Using React', '/guide/react'),
-  Item('Configuration', '/guide/config'),
-  Item('Global Data', '/guide/global-data'),
-  Item('Route Hooks', '/guide/route-hooks'),
-  Item('API Integration', '/guide/api-integration'),
-  Item('Island Mode', '/guide/island-mode'),
-  Item('Deployment', '/guide/deployment'),
+const Quickstart = [
+  Item('Vue 3+', '/quickstart/vue'),
+  Item('React 17+', '/quickstart/react'),
 ]
 
-const Functions = [
-  Item('useHydration', '/functions/use-hydration'),
-  Item('useFastify', '/functions/use-fastify'),
-  Item('useRequest', '/functions/use-request'),
-  Item('useReply', '/functions/use-reply'),
+const Concepts = [
+  Item('Project Blueprint', '/concepts/project-blueprint'),
+  Item('Built-in Commands', '/concepts/builtin-commands'),
+  Item('Integrated Routing', '/concepts/integrated-routing'),
+  Item('Client Hydration', '/concepts/client-hydration'),
+  Item('Renderer Adapters', '/concepts/renderer-adapters'),
 ]
 
-const Internals = [
-  Item('Client Hydration', '/internals/client-hydration'),
-  Item('Renderer API', '/internals/renderer-api'),
+const Deployment = [
+  Item('Vite Build', '/deployment/vite-build'),
+  Item('Node Server', '/deployment/node-server'),
+  Item('Static Generation', '/deployment/static-generation'),
+  Item('Generate Server', '/deployment/generate-server'),
 ]
 
-/*
-const Examples = [
-  Item('HTTP clients', '/examples/http-clients'),
-  Item('Redis cache', '/examples/redis-cache'),
-  Item('ElementUI', '/examples/elementui'),
-  Item('WindiCSS', '/examples/windicss'),
-  Item('Storyblok', '/examples/storyblok'),
-  Item('Contentful', '/examples/contentful'),
+const Reference = [
+  Item('Config', '/reference/config'),
+  Item('Route Hooks', '/reference/route-hooks'),
+  Item('Functions', '/reference/functions'),
+  Item('Global Data', '/reference/global-data'),  
 ]
-*/
 
+const Experimental = [
+  Item('Data Fetching', '/experimental/data-fetching'),
+  Item('API Integration', '/experimental/api-integration'),
+  Item('Island Mode', '/experimental/island-mode'),  
+]
 
 const Meta = [
   Item('About', '/meta/about'),
   Item('Philosophy', '/meta/philosophy'),
   Item('Contributing', '/meta/contributing'),
+  Item('Maintenance', '/meta/maintenance'),  
 ]
 
 const DefaultSidebar = [
-  { text: 'Guide', children: Guide },
-  { text: 'Functions', children: Functions },
-  { text: 'Internals', children: Internals },
+  { text: 'Quickstart', children: Quickstart },
+  { text: 'Concepts', children: Concepts },
+  { text: 'Deployment', children: Deployment },
+  { text: 'Experimental', children: Experimental },
+  { text: 'Reference', children: Reference },
   { text: 'Meta', children: Meta },
 ]
 
@@ -58,16 +59,8 @@ module.exports = {
     repo: 'terixjs/fastify-vite',
     nav: [
       {
-        text: 'Guide',
-        items: Guide,
-      },
-      {
-        text: 'Functions',
-        items: Functions,
-      },
-      {
-        text: 'Internals',
-        items: Internals,
+        text: 'Quickstart',
+        items: Quickstart,
       },
       {
         text: 'Meta',
