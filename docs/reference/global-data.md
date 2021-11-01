@@ -1,6 +1,6 @@
 # Global Data
 
-You can easily make data from the server <b>globally available</b> (and properly [client hydrated](/internals/client-hydration)) by simply assigning to `fastify.vite.global`:
+You can easily make data from the server <b>globally available</b> (and properly [client hydrated](/concepts/client-hydration)) by simply assigning to `fastify.vite.global`:
 
 ```js
 fastify.vite.global = { foobar: 123 }
