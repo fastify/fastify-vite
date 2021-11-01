@@ -1,5 +1,5 @@
 
-# Configuration
+# Config
 
 Most configuration options are covered in the sections relating to them.
 

@@ -1,4 +1,4 @@
-# Renderer API
+# Renderer Adapters
 
 <b>fastify-vite</b> has a modular renderer API that aims to allow you to use it with any framework, as long as you provide _the right adapter_. Currently there are two official renderer adapters, [fastify-vite-vue][fastify-vite-vue] (Vue 3+ support) and [fastify-vite-react][fastify-vite-react] (React 17+ support). This is an overview of what constitutes a _renderer adapter_ and currently serves as a specification, with the Vue and React adapters as official reference implementations.
 

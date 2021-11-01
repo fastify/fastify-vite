@@ -1,4 +1,6 @@
-# Global Data
+# Request Data
+
+## Global Data
 
 You can easily make data from the server <b>globally available</b> (and properly [client hydrated](/internals/client-hydration)) by simply assigning to `fastify.vite.global`:
 
