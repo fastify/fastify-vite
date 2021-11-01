@@ -33,7 +33,7 @@ Below is a quick reference of all options and their default values.
 <td>
 <code class="h inline-block">renderer</code>
 <br><br>
-<span class="small"><a href="/internals/renderer-api">Renderer adapter</a></span>
+<span class="small"><a href="/concepts/renderer-adapters">Renderer adapter</a></span>
 </td>
 <td>
 <code>No default value</code>
