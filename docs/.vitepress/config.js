@@ -8,37 +8,31 @@ const Quickstart = [
 
 const Concepts = [
   Item('Project Blueprint', '/concepts/project-blueprint'),
+  Item('Built-in Commands', '/concepts/builtin-commands'),
   Item('Integrated Routing', '/concepts/integrated-routing'),
   Item('Client Hydration', '/concepts/client-hydration'),
-  Item('Renderer API', '/concepts/renderer-api'),
+  Item('Renderer Adapters', '/concepts/renderer-adapters'),
 ]
 
-const Guide = [
-  Item('Configuration', '/guide/config'),
-  Item('Global Data', '/guide/global-data'),
-  Item('Data Fetching', '/guide/data-fetching'),
-  Item('API Integration', '/guide/api-integration'),
-  Item('Island Mode', '/guide/island-mode'),
-  Item('Deployment', '/guide/deployment'),
+const Deployment = [
+  Item('Vite Build', '/deployment/vite-build'),
+  Item('Node Server', '/deployment/node-server'),
+  Item('Static Generation', '/deployment/static-generation'),
+  Item('Generate Server', '/deployment/generate-server'),
 ]
 
-const Functions = [
-  Item('useHydration', '/functions/use-hydration'),
-  Item('useFastify', '/functions/use-fastify'),
-  Item('useRequest', '/functions/use-request'),
-  Item('useReply', '/functions/use-reply'),
+const Reference = [
+  Item('Config', '/reference/config'),
+  Item('Route Hooks', '/reference/route-hooks'),
+  Item('Functions', '/reference/functions'),
+  Item('Global Data', '/reference/global-data'),  
 ]
 
-/*
-const Examples = [
-  Item('Undici', '/examples/http-clients'),
-  Item('Redis', '/examples/redis-cache'),
-  Item('WindiCSS', '/examples/windicss'),
-  Item('ElementUI', '/examples/elementui'),
-  Item('Storyblok', '/examples/storyblok'),
-  Item('Contentful', '/examples/contentful'),
+const Experimental = [
+  Item('Data Fetching', '/experimental/data-fetching'),
+  Item('API Integration', '/experimental/api-integration'),
+  Item('Island Mode', '/experimental/island-mode'),  
 ]
-*/
 
 const Meta = [
   Item('About', '/meta/about'),
@@ -49,8 +43,9 @@ const Meta = [
 const DefaultSidebar = [
   { text: 'Quickstart', children: Quickstart },
   { text: 'Concepts', children: Concepts },
-  { text: 'Guide', children: Guide },
-  { text: 'Functions', children: Functions },
+  { text: 'Deployment', children: Deployment },
+  { text: 'Experimental', children: Experimental },
+  { text: 'Reference', children: Reference },
   { text: 'Meta', children: Meta },
 ]
 
@@ -65,18 +60,6 @@ module.exports = {
       {
         text: 'Quickstart',
         items: Quickstart,
-      },
-      {
-        text: 'Concepts',
-        items: Concepts,
-      },
-      {
-        text: 'Guide',
-        items: Guide,
-      },
-      {
-        text: 'Functions',
-        items: Functions,
       },
       {
         text: 'Meta',
