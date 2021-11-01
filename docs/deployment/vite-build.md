@@ -4,30 +4,29 @@ Before you can deploy to production, you need to bundle your code through Vite.
 
 To be more specific, you need to bundle your <b>client</b> and <b>server</b> entry points.
 
-In a vanilla Vite app, that means having three build scripts in your `package.json`:
+In a vanilla Vite app, that means having to run two build commands:
 
-```json
-"scripts": {
-  "build": "npm run build:client && npm run build:server",
-  "build:client": "vite build --ssrManifest --outDir dist/client",
-  "build:server": "vite build --ssr entry/server.js --outDir dist/server",
-}
-```
+<div style="
+  background: #191919; 
+  padding: 1.4em; 
+  border-radius: 5px !important;
+  margin-top: 1em;"><code>
+vite build --ssrManifest --outDir dist/client<br>
+vite build --ssr entry/server.js --outDir dist/server
+</code></div>
 
 Check out [Vite's SSR Guide][ssr-guide] for in-depth details. 
 
 [ssr-guide]: https://vitejs.dev/guide/ssr
 
-You can also set up `server.js` to recognize the `build` command:
+In <b>fastify-vite</b> apps, you can just use the `build` command that is added to the app automatically:
 
-```js
-await app.register(fastifyVite, {
-  // ...
-  build: process.argv.includes('build'),
-  // ...
-})
-```
+<div style="
+  background: #191919; 
+  padding: 1.4em; 
+  border-radius: 5px !important;
+  margin-top: 1em;"><code>
+node &lt;app&gt; build
+</code></div>
 
-As shown in the [Vue](/guide/vue.html) and [React](/guide/vue.html) guides. 
-
-If `build` is true, it will force the Vite build and exit the script without starting the server.
+This command will use Vite's API to trigger the builds for both client and server bundles, and prevent the Fastify server from starting. See [Built-in Commands](/concepts/builtin-commands) for more details.

@@ -19,3 +19,19 @@ Builds the Vite application (creates a bundle) <b>with prerendered pages</b>.
 <br><br>See <a href="">Generate Server</a> for more details.
 </td></tr></table>
 
+Under the hood, this is enabled via these default options:
+
+```js
+app.register(FastifyVite, {
+  // ...
+  build: process.argv.includes('build'),
+  eject: process.argv.includes('eject'),  
+  generate: {
+    enabled: process.argv.includes('generate'),
+    server: {
+      enabled: process.argv.includes('generate-server'),
+    },
+  },
+  // ...
+}
+```

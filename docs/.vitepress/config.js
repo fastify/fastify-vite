@@ -38,6 +38,7 @@ const Meta = [
   Item('About', '/meta/about'),
   Item('Philosophy', '/meta/philosophy'),
   Item('Contributing', '/meta/contributing'),
+  Item('Maintenance', '/meta/maintenance'),  
 ]
 
 const DefaultSidebar = [

@@ -11,6 +11,8 @@ const defaults = {
   dev,
   // If true, causes the Fastify server boot to halt after onReady
   build: process.argv.includes('build'),
+  // If true, extracts the base blueprint files from the renderer adapter
+  eject: process.argv.includes('eject'),
   // Used to determine the keys to be injected in the application's boot
   // For Vue 3, that means adding them to globalProperties
   hydration: {
@@ -37,7 +39,7 @@ const defaults = {
   },
 }
 
-async function processOptions (options) {
+function processOptions (options) {
   if (options.generate) {
     if (options.generate.server) {
       options.generate.server = assign({}, defaults.generate.server, options.generate.server)
@@ -58,7 +60,7 @@ async function processOptions (options) {
     options.root = dirname(fileURLToPath(options.root))
   }
 
-  options.vite = await getViteOptions(options)
+  options.vite = getViteOptions(options)
 
   if (options.vite && !options.renderer) {
     throw new Error('Must set options.renderer')
@@ -94,7 +96,7 @@ async function processOptions (options) {
 
 module.exports = { processOptions }
 
-async function getViteOptions (options) {
+function getViteOptions (options) {
   if (existsSync(resolve(options.root, 'vite.config.js'))) {
     return null
   }

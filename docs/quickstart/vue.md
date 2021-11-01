@@ -1,5 +1,4 @@
-
-# Vue 3
+# Vue 3+
 
 <div style="
   background: #191919; 
@@ -65,13 +64,9 @@ ${hydration}
 
 As you can probably imagine, these variable names cannot be changed because they are used by <b>fastify-vite-vue</b>'s internal rendering functions. The contents of <b>index.html</b> itself are compiled into a function loaded into memory for maximum performance.
 
-If you hit `http://localhost:3000` you'll be promptly greeted with a 404 error.
-
-That's because you haven't registered any routes. 
-
 ## Blueprint Files
 
-The fastify-vite-vue package will provide nearly all your starting boilerplate, the snippet above, where you actually register fastify-vite in your Fastify application, being the only exception you're expected to provide yourself. The files provided by fastify-vite-vue are listed below.
+The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly all your starting boilerplate, the snippet , where you actually register fastify-vite in your Fastify application, being the only exception you're expected to provide yourself. The files provided by fastify-vite-vue are listed below.
 
 <table class="infotable"><tr><td>
 <code class="h inline-block">client.js</code></td>

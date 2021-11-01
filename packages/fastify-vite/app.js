@@ -1,27 +1,24 @@
 const { packIsland } = require('./islands.js')
 const { onIdle, onMedia, onDisplay } = require('./client.js')
 
-function getViewRoutes (view) {
-  const routes = []
+function flattenPaths (view) {
+  const paths = []
   if (view.path && Array.isArray(view.path)) {
     for (const path of view.path) {
-      const { default: component, ...viewProps } = view
-      routes.push({ path, component, ...viewProps })
+      paths.push(path)
     }
   } else if (view.path) {
-    const { path, default: component, ...viewProps } = view
-    routes.push({ path, component, ...viewProps })
-  } else {
-    throw new Error('View components need to export a `path` property.')
+    paths.push(view.path)
   }
-  return routes
+  return paths
 }
 
-function getAllRoutes (views) {
+function getRoutes (views) {
   const routes = []
   for (const view of Object.values(views)) {
-    for (const route of getViewRoutes(view)) {
-      routes.push(route)
+    for (const path of flattenPaths(view)) {
+      const { default: component, ...viewProps } = view
+      routes.push({ path, component, ...viewProps })
     }
   }
   return routes.sort((a, b) => {
@@ -36,8 +33,8 @@ function getAllRoutes (views) {
 }
 
 module.exports = {
-  getViewRoutes,
-  getAllRoutes,
+  flattenPaths,
+  getRoutes,
   packIsland,
   onIdle,
   onMedia,
