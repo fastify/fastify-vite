@@ -10,7 +10,7 @@ import { useFastify } from 'fastify-vite-vue/server'
 const fastify = useFastify()
 ````
 
-This reference is also included in [`useHydration`](/functions/use-hydration)'s return object as `fastify`.
+This reference is also included in [`useHydration`](/reference/functions)'s return object as `fastify`.
 
 ## useHydration
 

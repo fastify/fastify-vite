@@ -32,7 +32,7 @@ A minimal and fast alternative to full blown mega SSR frameworks like Nuxt.js an
 [flavors]: https://github.com/terixjs/flavors
 
 <span style="font-size: 1.8em">Get started with
-<b>[Vue](/guide/vue)</b> or <b>[React](/guide/react)</b>.</span>
+<b>[Vue](/quickstart/vue)</b> or <b>[React](/quickstart/react)</b>.</span>
 
 ## New to SSR?
 
