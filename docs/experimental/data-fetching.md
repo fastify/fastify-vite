@@ -39,7 +39,7 @@ If you're exporting a `getPayload` function from the `/foobar` view component, t
 So, to recap — because this can be a little confusing at first — <b>here's the rundown</b>:
 
 - During first-render, on the server, `getPayload` is executed via a [`preHandler`][preHandler] hook.
-- Its result is stored as <code>req.$payload</code> and then serialized for [client hydration](/internals/client-hydration). 
+- Its result is stored as <code>req.$payload</code> and then serialized for [client hydration](/concepts/client-hydration). 
 - <b>Both on the server and on the client, the value is available via `useHydration` as `$payload`</b>.
 - <b>For client-side navigation, <code>useHydration</code> will call the HTTP endpoint automatically</b>.
 
@@ -111,7 +111,7 @@ Learn more by playing with the [`vue-data`](https://github.com/terixjs/flavors/t
 
 The second convenience mechanism is `getData`. It's very similar to `getPayload` as <b>fastify-vite</b> will also run it from the route's [preHandler][preHandler] hook. 
 
-But it resembles the classic [`asyncData`][async-data] from Nuxt.js more closely — because the very same `getData` function gets executed both on the server and on the client (during navigation). If it's executed first on the server, the client gets the [hydrated](/internals/client-hydration) value on first render. 
+But it resembles the classic [`asyncData`][async-data] from Nuxt.js more closely — because the very same `getData` function gets executed both on the server and on the client (during navigation). If it's executed first on the server, the client gets the [hydrated](/concepts/client-hydration) value on first render. 
 
 ::: tip
 When using `getPayload`, the client is able to execute that very same function, but via a HTTP request to an automatically created endpoint that provides access to it on the server.
@@ -150,6 +150,6 @@ Notice how this example uses [fetch-undici](https://www.npmjs.com/package/fetch-
 To recap:
 
 - During first-render, on the server, `getData` is executed via a [`preHandler`][preHandler] hook.
-- Its result is stored as <code>req.$data</code> and then serialized for [client hydration](/internals/client-hydration). 
+- Its result is stored as <code>req.$data</code> and then serialized for [client hydration](/concepts/client-hydration). 
 - <b>Both on the server and on the client, the value is available via `useHydration` as `$data`</b>.
 - <b>For client-side navigation, <code>useHydration</code> executes the `getData` function isomorphically</b>.

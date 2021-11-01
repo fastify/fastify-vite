@@ -40,7 +40,7 @@ In React an `update` function is also returned because `ctx` is not reactive lik
 
 The `config` object passed to `useHydration` is <b>optional</b>. It can either contain a reference to `getPayload`, which will cause `$payload` and `$payloadPath` to be included in the returned object — or a reference to `getData`, which will cause `$data` to be included in the returned object.
 
-See the _<b>Data Fetching</b>_ section on the [Vue](/guide/vue.html#data-fetching) and [React](/guide/react.html#data-fetching) guides for more info.
+See [Data Fetching](/experimental/data-fetching) for more info.
 
 ## Context
 

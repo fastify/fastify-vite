@@ -36,7 +36,7 @@ Assuming you have saved the snippet above as `app.mjs`:
 node app.mjs
 </code></div>
 
-Take note that `root` and `renderer` are <b>fastify-vite</b>'s only required plugin options. The first is the [Vite application root](https://vitejs.dev/config/#root) and the second determines what [renderer adapter]() to use.
+Take note that `root` and `renderer` are <b>fastify-vite</b>'s only required plugin options. The first is the [Vite application root](https://vitejs.dev/config/#root) and the second determines what [renderer adapter](/concepts/renderer-adapters) to use.
 
 ::: tip
 All examples in the documentation use [ESM][esm], but it's not required. If you use CJS, use `__dirname` instead of `import.meta.url` when setting the `root` option. It will know the difference.
