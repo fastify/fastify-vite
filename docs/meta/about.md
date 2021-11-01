@@ -14,7 +14,7 @@ Maintained with the help of [Paul Isache](https://twitter.com/paul_isache), [Raf
 
 ## Acknowledgements
 
-Big shout out to [NearForm](http://nearform.com/) for lending this project the amazing [Paul Isache](https://twitter.com/paul_isache), who helped get the first iterations of React [renderer adapter](https://fastify-vite.dev/internals/renderer-api.html) working.
+Big shout out to [NearForm](http://nearform.com/) for lending this project the amazing [Paul Isache](https://twitter.com/paul_isache), who helped get the first iterations of React [renderer adapter](https://fastify-vite.dev/concepts/renderer-adapters) working.
 
 This project wouldn't have come to existence without all the inspiring work of the teams behind [Nuxt.js](https://github.com/nuxt/nuxt.js) and [Next.js](https://github.com/vercel/next.js). They set the bar high for SSR frameworks.
 

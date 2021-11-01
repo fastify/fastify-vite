@@ -7,7 +7,7 @@ sidebarDepth: 2
 Despite having received a handful of code contributions already, <b>fastify-vite</b> is still very much an individual endeavor. It very much welcomes contributors interested in helping with:
 
 - Readding a test suite (check the old one [here](https://github.com/terixjs/fastify-vite/blob/b6a894df77af1fde88826c235e97d692e84426e8/example/test.js))
-- [Renderer adapters](/internals/renderer-api.html) for <b>Vue 2</b>, <b>Preact</b>, <b>Svelte</b> and <b>SolidJS</b>
+- [Renderer adapters](/concepts/renderer-adapters) for <b>Vue 2</b>, <b>Preact</b>, <b>Svelte</b> and <b>SolidJS</b>
 - Documentation refinements and more boilerplate flavors.
 - Improving the development process as described below
 
