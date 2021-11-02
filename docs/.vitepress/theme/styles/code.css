@@ -1,3 +1,10 @@
+.inline-code {
+  background: #191919; 
+  padding: 1.4em; 
+  border-radius: 5px !important;
+  margin-top: 1em;
+}
+
 code {
   margin: 0;
   border-radius: 3px;

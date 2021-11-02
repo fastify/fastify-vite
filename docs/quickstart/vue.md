@@ -1,10 +1,6 @@
 # Vue 3+
 
-<div style="
-  background: #191919; 
-  padding: 1.4em; 
-  border-radius: 5px !important;
-  margin-top: 1em;"><code>
+<div class="inline-code"><code>
 npm i <b>fastify</b> <b>fastify-vite</b> <b>fastify-vite-vue</b> --save
 </code></div>
 
@@ -32,7 +28,7 @@ await app.listen(3000)
 
 Assuming you have saved the snippet above as `app.mjs`:
 
-<div style="background: #191919; padding: 1.4em; border-radius: 5px !important;"><code>
+<div class="inline-code"><code>
 node app.mjs
 </code></div>
 
@@ -77,19 +73,19 @@ The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly 
 <br><br>That would be the one where you set a layout, a router view etc.
 </td></tr><tr><td>
 <code class="h inline-block">routes.js</code></td>
-<td>Must have a default export with the Vite application's routes array
+<td>Must have a default export with the Vite application's routes array.
 </td></tr><tr><td>
 <code class="h inline-block">head.js</code></td>
-<td><a href="/guide/global-data">Global Data</a> — available isomorphically
+<td>Array of &lt;head&gt; elements, following <a href="https://github.com/vueuse/head">@vueuse/head</a>'s format.
 </td></tr><tr><td>
 <code class="h inline-block">entry/client.js</code></td>
-<td><b>Route Payload data</b> — available isomorphically
+<td>Vite application client entry point (DOM element mount).
 </td></tr><tr><td>
 <code class="h inline-block">entry/server.js</code></td>
-<td><b>Route Payload endpoint</b> — available isomorphically
+<td>Vite application server entry point (render function and routes).
 </td></tr><tr><td>
 <code class="h inline-block">index.html</code></td>
-<td><b>Route Isomorphic Data</b> — available isomorphically
+<td>Vite application <b>main</b> entry point (loads client entry point).
 </td></tr></table>
 
 
@@ -110,7 +106,7 @@ Global Data is automaticallyed added to [`globalProperties`][global-properties] 
 </template>
 ```
 
-You can also access it via the context object returned by the `useHydration()` hook.
+You can also access it via the context object returned by the [`useHydration`](/reference/functions) hook.
 
 ```vue
 <template>
