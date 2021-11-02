@@ -11,22 +11,33 @@ Below is a minimal script to boot a Fastify server with an integrated Vite app:
 ```js
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import FastifyViteVue from 'fastify-vite-vue'
+import renderer from 'fastify-vite-vue'
 
-const app = Fastify({
-  logger: true,
-})
+const root = import.meta.url
+const app = Fastify({ logger: true })
 
-await app.register(FastifyVite, {
-  root: import.meta.url,
-  renderer: FastifyVite,
-})
-
+await app.register(FastifyVite, { root, renderer })
 await app.vite.ready()
 await app.listen(3000)
 ```
 
-Assuming you have saved the snippet above as `app.mjs`:
+With that, create a view at `views/index.vue`:
+
+```vue
+<template>
+  <h1>Hello World</h1>
+</template>
+
+<script>
+export const path = '/'
+</script>
+```
+
+::: tip
+View files can be named anything, in the examples `index.vue` is always associated to `/` as a convention.
+:::
+
+And then, assuming you have saved the first snippet as `app.mjs`:
 
 <div class="inline-code"><code>
 node app.mjs
@@ -42,6 +53,8 @@ All examples in the documentation use [ESM][esm], but it's not required. If you 
 :::
 
 ## Index HTML template
+
+Vite's required `index.html` is provided by <b>fastify-vite-vue</b> automatically on the first run if you don't provide one yourself. See the default template below:
 
 ```html
 <!DOCTYPE html>
@@ -60,9 +73,11 @@ ${hydration}
 
 As you can probably imagine, these variable names cannot be changed because they are used by <b>fastify-vite-vue</b>'s internal rendering functions. The contents of <b>index.html</b> itself are compiled into a function loaded into memory for maximum performance.
 
+The `@app/` import prefix is used to load the client entry from the project blueprint provided by <b>fastify-vite-vue</b>. If you create a `entry/client.js` file at the root of your Vite application, that will be used instead. See [Project Blueprint](/concepts/project-blueprint) for more info on this works.
+
 ## Blueprint Files
 
-The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly all your starting boilerplate, the snippet , where you actually register fastify-vite in your Fastify application, being the only exception you're expected to provide yourself. The files provided by fastify-vite-vue are listed below.
+The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly all your starting boilerplate. The script where you actually register <b>fastify-vite</b> in your Fastify application being the only exception (you're expected to write it yourself). The files provided by <b>fastify-vite-vue</b> are listed below.
 
 <table class="infotable"><tr><td>
 <code class="h inline-block">client.js</code></td>
@@ -87,11 +102,6 @@ The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly 
 <code class="h inline-block">index.html</code></td>
 <td>Vite application <b>main</b> entry point (loads client entry point).
 </td></tr></table>
-
-
-[vue-server.js]: https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
-[ssr-vue]: https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue
-[playground]: https://github.com/vitejs/vite/tree/main/packages/playground
 
 ## Global Data
 

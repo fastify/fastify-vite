@@ -1,48 +1,30 @@
 # Functions
 
-## useFastify
-
-Returns reference to the Fastify server instance, only available in SSR.
-
-```js
-import { useFastify } from 'fastify-vite-vue/server'
-
-const fastify = useFastify()
-````
-
-This reference is also included in [`useHydration`](/reference/functions)'s return object as `fastify`.
-
 ## useHydration
 
 Returns the <b>isomorphic</b> context object, aptly named _hydration context_.
 
 <b>Works isomorphically</b> on client and server.
 
-## Vue
-
 ```js
+// Vue
 import { useHydration } from 'fastify-vite-vue/client'
-
 const ctx = useHydration(config)
-````
 
-## React
-
-```js
+// React
 import { useHydration } from 'fastify-vite-react/client'
-
 const [ctx, update] = useHydration(config)
 ````
 
 In React an `update` function is also returned because `ctx` is not reactive like in the Vue version.
 
-## Config
+### useHydration config
 
 The `config` object passed to `useHydration` is <b>optional</b>. It can either contain a reference to `getPayload`, which will cause `$payload` and `$payloadPath` to be included in the returned object — or a reference to `getData`, which will cause `$data` to be included in the returned object.
 
 See [Data Fetching](/experimental/data-fetching) for more info.
 
-## Context
+### useHydration context
 
 <table class="infotable"><tr><td>
 <code class="h inline-block">req</code></td>
@@ -67,7 +49,91 @@ See [Data Fetching](/experimental/data-fetching) for more info.
 <td><b>Route Isomorphic Data</b> — available isomorphically
 </td></tr></table>
 
-# useReply
+## useFastify
+
+Returns reference to the Fastify server instance, only available in SSR.
+
+```js
+import { useFastify } from 'fastify-vite-vue/server'
+
+const fastify = useFastify()
+````
+
+This reference is also included in [`useHydration`](/reference/functions)'s return object as `fastify`.
+
+## useRequest
+
+Returns the core Fastify [request object](https://www.fastify.io/docs/latest/Request/), only available in SSR. 
+
+```js
+import { useRequest } from 'fastify-vite-vue/server'
+```
+```js
+import { useRequest } from 'fastify-vite-react/server'
+```
+```js
+const req = useRequest()
+````
+
+For convenience, here's the API reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/Request/):
+
+<table class="infotable"><tr><td>
+<code class="h inline-block">query</code></td>
+<td>the parsed querystring
+</td></tr><tr><td>
+<code class="h inline-block">body</code></td>
+<td>the body
+</td></tr><tr><td>
+<code class="h inline-block">params</code></td>
+<td>the params matching the URL
+</td></tr><tr><td>
+<code class="h inline-block">headers</code></td>
+<td>the headers
+</td></tr><tr><td>
+<code class="h inline-block">raw</code></td>
+<td>the incoming HTTP request from Node core
+</td></tr><tr><td>
+<code class="h inline-block">id</code></td>
+<td>the request id
+</td></tr><tr><td>
+<code class="h inline-block">log</code></td>
+<td>the logger instance of the incoming request
+</td></tr><tr><td>
+<code class="h inline-block">ip</code></td>
+<td>the IP address of the incoming request
+</td></tr><tr><td>
+<code class="h inline-block">ips</code></td>
+<td><p>An array of the IP addresses in the <code>X-Forwarded-For</code> header of the incoming request.</p>
+<p>Only functional if the <a href="https://www.fastify.io/docs/latest/Server#factory-trust-proxy"><code>trustProxy</code></a> server option is enabled.</p>
+</td></tr><tr><td>
+<code class="h inline-block">hostname</code></td>
+<td>the hostname of the incoming request
+</td></tr><tr><td>
+<code class="h inline-block">protocol</code></td>
+<td>the protocol of the incoming request (https or http)
+</td></tr><tr><td>
+<code class="h inline-block">method</code></td>
+<td>the method of the incoming request
+</td></tr><tr><td>
+<code class="h inline-block">url</code></td>
+<td>the url of the incoming request
+</td></tr><tr><td>
+<code class="h inline-block">routerMethod</code></td>
+<td>the method defined for the router that is handling the request
+</td></tr><tr><td>
+<code class="h inline-block">routerPath</code></td>
+<td>the path pattern defined for the router that is handling the request
+</td></tr><tr><td>
+<code class="h inline-block">is404</code></td>
+<td>true if request is being handled by 404 handler, false if it is not
+</td></tr><tr><td>
+<code class="h inline-block">socket</code></td>
+<td>the underlying connection of the incoming request
+</td></tr></table>
+
+This reference is also included in `useHydration`'s return object as `req`.
+
+## useReply
 
 Returns the core Fastify [reply object](https://www.fastify.io/docs/latest/Reply/), only available in SSR. 
 
@@ -143,75 +209,3 @@ For convenience, here's the API reference taken from the [official Fastify docum
 </td></tr></table>
 
 This reference is also included in `useHydration`'s return object as `reply`.
-
-# useRequest
-
-Returns the core Fastify [request object](https://www.fastify.io/docs/latest/Request/), only available in SSR. 
-
-```js
-import { useRequest } from 'fastify-vite-vue/server'
-```
-```js
-import { useRequest } from 'fastify-vite-react/server'
-```
-```js
-const req = useRequest()
-````
-
-For convenience, here's the API reference taken from the [official Fastify documentation](https://www.fastify.io/docs/latest/Request/):
-
-<table class="infotable"><tr><td>
-<code class="h inline-block">query</code></td>
-<td>the parsed querystring
-</td></tr><tr><td>
-<code class="h inline-block">body</code></td>
-<td>the body
-</td></tr><tr><td>
-<code class="h inline-block">params</code></td>
-<td>the params matching the URL
-</td></tr><tr><td>
-<code class="h inline-block">headers</code></td>
-<td>the headers
-</td></tr><tr><td>
-<code class="h inline-block">raw</code></td>
-<td>the incoming HTTP request from Node core
-</td></tr><tr><td>
-<code class="h inline-block">id</code></td>
-<td>the request id
-</td></tr><tr><td>
-<code class="h inline-block">log</code></td>
-<td>the logger instance of the incoming request
-</td></tr><tr><td>
-<code class="h inline-block">ip</code></td>
-<td>the IP address of the incoming request
-</td></tr><tr><td>
-<code class="h inline-block">ips</code></td>
-<td><p>An array of the IP addresses in the <code>X-Forwarded-For</code> header of the incoming request.</p>
-<p>Only functional if the <a href="https://www.fastify.io/docs/latest/Server#factory-trust-proxy"><code>trustProxy</code></a> server option is enabled.</p>
-</td></tr><tr><td>
-<code class="h inline-block">hostname</code></td>
-<td>the hostname of the incoming request
-</td></tr><tr><td>
-<code class="h inline-block">protocol</code></td>
-<td>the protocol of the incoming request (https or http)
-</td></tr><tr><td>
-<code class="h inline-block">method</code></td>
-<td>the method of the incoming request
-</td></tr><tr><td>
-<code class="h inline-block">url</code></td>
-<td>the url of the incoming request
-</td></tr><tr><td>
-<code class="h inline-block">routerMethod</code></td>
-<td>the method defined for the router that is handling the request
-</td></tr><tr><td>
-<code class="h inline-block">routerPath</code></td>
-<td>the path pattern defined for the router that is handling the request
-</td></tr><tr><td>
-<code class="h inline-block">is404</code></td>
-<td>true if request is being handled by 404 handler, false if it is not
-</td></tr><tr><td>
-<code class="h inline-block">socket</code></td>
-<td>the underlying connection of the incoming request
-</td></tr></table>
-
-This reference is also included in `useHydration`'s return object as `req`.
