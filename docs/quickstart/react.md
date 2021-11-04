@@ -52,7 +52,7 @@ All examples in the documentation use [ESM][esm], but it's not required. If you 
 
 ## Index HTML template
 
-Vite's required `index.html` is provided by <b>fastify-vite-vue</b> automatically on the first run if you don't provide one yourself. See the default template below:
+Vite's required `index.html` is provided by <b>fastify-vite-react</b> automatically on the first run if you don't provide one yourself. See the default template below:
 
 ```html
 <!DOCTYPE html>
@@ -79,11 +79,11 @@ The `@app/` import prefix is used to load the client entry from the project blue
 The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly all your starting boilerplate. The script where you actually register <b>fastify-vite</b> in your Fastify application being the only exception (you're expected to write it yourself). The files provided by <b>fastify-vite-vue</b> are listed below.
 
 <table class="infotable"><tr><td>
-<code class="h inline-block">client.js</code></td>
+<code class="h inline-block">client.mjs</code></td>
 <td>Must export a <code>createApp</code> function <b>returning a React application instance</b>.
 </td></tr><tr><td>
-<code class="h inline-block">client.vue</code></td>
-<td>Must export the <b>main Vue component for your app</b>.
+<code class="h inline-block">client.jsx</code></td>
+<td>Must export the <b>main React component for your app</b>.
 <br><br>That would be the one where you set a layout, a router view etc.
 </td></tr><tr><td>
 <code class="h inline-block">routes.js</code></td>
@@ -105,18 +105,7 @@ To [quote Evan You](https://twitter.com/youyuxi/status/1362050255009816577), "Vi
 
 ## Global Data
 
-Global Data is automaticallyed added to [`globalProperties`][global-properties] as `$global`.
-
-[global-properties]: https://v3.vuejs.org/api/application-config.html#globalproperties
-
-```vue
-<template>
-  <h2>Accessing global data from the server</h2>
-  <p>{{ $global }}</p>
-</template>
-```
-
-You can also access it via the context object returned by the [`useHydration`](/reference/functions) hook.
+You can also access [Global Data](/reference/global-data) via the context object returned by the [`useHydration`](/reference/functions) hook.
 
 ```vue
 import { useHydration } from 'fastify-vite-react/client'

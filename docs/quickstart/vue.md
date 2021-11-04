@@ -80,7 +80,7 @@ The `@app/` import prefix is used to load the client entry from the project blue
 The fastify-vite-vue package [will provide](/concepts/project-blueprint) nearly all your starting boilerplate. The script where you actually register <b>fastify-vite</b> in your Fastify application being the only exception (you're expected to write it yourself). The files provided by <b>fastify-vite-vue</b> are listed below.
 
 <table class="infotable"><tr><td>
-<code class="h inline-block">client.js</code></td>
+<code class="h inline-block">client.mjs</code></td>
 <td>Must export a <code>createApp</code> function <b>returning a Vue application instance</b>.
 </td></tr><tr><td>
 <code class="h inline-block">client.vue</code></td>
