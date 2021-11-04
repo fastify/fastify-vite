@@ -1,10 +1,10 @@
-## Data Fetching
+# Data Fetching
 
 <b>fastify-vite</b> prepacks two different **_convenience mechanisms_** for fetching data before and after initial page load. Those are in essence just two different <b>data functions</b> you can export from your view files.
 
 One is for when your data function can only run on the server but still needs to be accessible from the client via an HTTP API call, the other is for when your data function needs to be fully isomorphic, that is, run both on server and client exactly the same way.
 
-### Route Payloads
+## Route Payloads
 
 [async-data]: https://nuxtjs.org/examples/data-fetching-async-data
 [prepass]: https://github.com/FormidableLabs/react-ssr-prepass
@@ -44,7 +44,7 @@ So, to recap — because this can be a little confusing at first — <b>here's t
 - <b>For client-side navigation, <code>useHydration</code> will call the HTTP endpoint automatically</b>.
 
 
-#### Retrieving payload with useHydration
+### Retrieving payload with useHydration
 
 The `useHydration` hook takes a configuration object as first parameter. The purpose of this configuration object is to easily to hold a reference to the data function being used in the view.
 
@@ -107,7 +107,7 @@ Learn more by playing with the [`vue-data`](https://github.com/terixjs/flavors/t
 
 `degit terixjs/flavors/vue-data your-app`
 
-### Isomorphic Data
+## Isomorphic Data
 
 The second convenience mechanism is `getData`. It's very similar to `getPayload` as <b>fastify-vite</b> will also run it from the route's [preHandler][preHandler] hook. 
 

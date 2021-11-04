@@ -3,13 +3,9 @@ title: Fastify plugin for Vite integration
 ---
 
 ::: tip
-**This is a work in progress.**
+You're seeing the <b>new documentation suite</b> for [<b>fastify-vite 2.2.0-beta.26</b>](https://www.npmjs.com/package/fastify-vite).
 
-You're seeing the <b>new documentation suite</b> for [<b>fastify-vite 2.2.0-beta.25</b>](https://www.npmjs.com/package/fastify-vite).
-
-Right now only the [vue-base](https://github.com/terixjs/flavors/tree/main/vue-base) and [react-base](https://github.com/terixjs/flavors/tree/main/react-base) boilerplates are fully tested. 
-
-Please [report issues on GitHub](https://github.com/terixjs/fastify-vite/).
+**This is a work in progress.** Please [report issues on GitHub](https://github.com/terixjs/fastify-vite/).
 :::
 
 <style>
