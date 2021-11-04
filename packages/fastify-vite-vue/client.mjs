@@ -13,26 +13,8 @@ const kAPI = Symbol.for('kAPI')
 const kFirstRender = Symbol('kFirstRender')
 
 const isServer = typeof window === 'undefined'
-const fetch = isServer ? () => {} : window.fetch
 
-if (!isServer) {
-  let firstRender = true
-  Object.defineProperty(window, kFirstRender, {
-    get () {
-      return firstRender
-    },
-    set (v) {
-      firstRender = v
-      return firstRender
-    },
-  })
-}
-
-if (!isServer) {
-  window.requestIdleCallback(() => {
-    window[kFirstRender] = false
-  })
-}
+let firstRender = !isServer
 
 function useHydration ({ getData, getPayload } = {}) {
   const globalProps = useGlobalProperties()
@@ -45,6 +27,7 @@ function useHydration ({ getData, getPayload } = {}) {
     $payloadPath: globalProps.$payloadPath,
     $api: globalProps.$api,
   }
+
   globalProps.$data = undefined
   globalProps.$payload = undefined
 
@@ -52,26 +35,32 @@ function useHydration ({ getData, getPayload } = {}) {
     return hydration
   } else {
     const state = reactive(hydration)
-    if (window[kFirstRender]) {
+    if (firstRender) {
       return state
     }
     if (getPayload || getData) {
       let promise
       if (getPayload) {
         const getPayloadFromClient = async () => {
-          const response = await fetch(hydration.$payloadPath(hydration.$static))
+          const response = await window.fetch(hydration.$payloadPath(hydration.$static))
           const json = await response.json()
           return json
         }
         state.$loading = true
-        promise = getPayloadFromClient(hydration).then(($payload) => {
+        promise = getPayloadFromClient({
+          fetch: window.fetch,
+          ...hydration
+        }).then(($payload) => {
           state.$payload = $payload
           state.$loading = false
           return state
         })
       } else if (getData) {
         state.$loading = true
-        promise = getData(hydration).then(($data) => {
+        promise = getData({
+          fetch: window.fetch,
+          ...hydration
+        }).then(($data) => {
           state.$data = $data
           state.$loading = false
           return state
@@ -96,7 +85,7 @@ function useHydration ({ getData, getPayload } = {}) {
 async function hydrate (app) {
   let $payload
   if (window[kStaticPayload]) {
-    const staticPayloadResponse = await fetch(window[kStaticPayload])
+    const staticPayloadResponse = await window.fetch(window[kStaticPayload])
     $payload = await staticPayloadResponse.json()
   } else {
     $payload = window[kPayload]
@@ -128,7 +117,7 @@ async function hydrate (app) {
     $api: new Proxy({ ...window[kAPI] }, {
       get: manifetch({
         prefix: '',
-        fetch: (...args) => fetch(...args),
+        fetch: (...args) => window.fetch(...args),
       }),
     }),
   }
@@ -153,10 +142,17 @@ function hydrateRoutes (globImports) {
   })
 }
 
+function hydrationDone () {
+  if (firstRender) {
+    firstRender = false
+  }
+}
+
 export {
   useGlobalProperties,
   useHydration,
   hydrate,
   hydrateRoutes,
+  hydrationDone,
   isServer,
 }

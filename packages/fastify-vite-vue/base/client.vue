@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <Suspense>
+    <Suspense @resolve="hydrationDone">
       <component :key="$route.path" :is="Component" />
     </Suspense>
   </router-view>
@@ -9,6 +9,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import { useRoute } from 'vue-router'
+import { hydrationDone } from 'fastify-vite-vue/client.mjs'
 import head from '@app/head.js'
 
 export default {
@@ -16,6 +17,13 @@ export default {
   	if (head) {
   		useHead(head)
   	}
-  }
+    return { hydrationDone }
+  },
 }
 </script>
+
+<style>
+* {
+  font-family: sans-serif;
+}
+</style>

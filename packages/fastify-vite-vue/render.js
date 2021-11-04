@@ -59,8 +59,8 @@ function getHydrationScript (req, context, hydration, routes) {
   if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
     if (routes) {
-      const clientRoutes = routes.map(({ path, componentPath, getData }) => {
-        return { path, componentPath, getData }
+      const clientRoutes = routes.map(({ path, componentPath }) => {
+        return { path, componentPath }
       })
       hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
     }

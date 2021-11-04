@@ -30,7 +30,12 @@ async function generateRoute (request, path, options) {
       await writeFile(jsonPath, JSON.stringify(json, null, 2))
     }
     await writeFile(htmlPath, html)
-    return { htmlPath, url: path, html: htmlWithPayload, json }
+    return {
+      file: htmlPath,
+      url: path,
+      html: htmlWithPayload,
+      json,
+    }
   } catch (err) {
     console.error(err)
   }

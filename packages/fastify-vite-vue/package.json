@@ -17,7 +17,7 @@
     "base/head.js",
     "base/index.html",
     "base/routes.js",
-    "client.js",
+    "client.mjs",
     "entry.js",
     "handler.js",
     "html.js",

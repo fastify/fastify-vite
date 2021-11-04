@@ -16,7 +16,7 @@
     "base/index.html",
     "base/routes.js",
     "context.js",
-    "client.js",
+    "client.mjs",
     "entry.js",
     "handler.js",
     "html.js",

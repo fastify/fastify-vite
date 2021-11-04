@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs react-api",
+    "devinstall": "zx ../../devinstall.mjs react-data",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
@@ -11,7 +11,7 @@
   "dependencies": {
     "fastify": "^3.17.0",
     "fastify-api": "^0.2.0",
-    "fastify-vite": "^2.2.0-beta.2",
-    "fastify-vite-react": "^2.2.0-beta.2"
+    "fastify-vite": "^2.2.0-beta.26",
+    "fastify-vite-react": "^2.2.0-beta.26"
   }
 }

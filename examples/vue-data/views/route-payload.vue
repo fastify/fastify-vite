@@ -13,7 +13,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useHydration } from 'fastify-vite-vue/client'
+import { useHydration } from 'fastify-vite-vue/client.mjs'
 
 export const path = '/route-payload'
 

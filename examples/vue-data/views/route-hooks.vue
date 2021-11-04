@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { useHydration, isServer } from 'fastify-vite-vue/client'
+import { useHydration, isServer } from 'fastify-vite-vue/client.mjs'
 
 export const path = '/route-hooks'
 

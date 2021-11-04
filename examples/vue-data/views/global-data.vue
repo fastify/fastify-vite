@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { useHydration } from 'fastify-vite-vue/client'
+import { useHydration } from 'fastify-vite-vue/client.mjs'
 
 export const path = '/global-data'
 

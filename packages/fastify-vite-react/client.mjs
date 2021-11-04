@@ -14,24 +14,7 @@ const kFirstRender = Symbol.for('kFirstRender')
 const isServer = typeof window === 'undefined'
 const fetch = isServer ? () => {} : window.fetch
 
-if (!isServer) {
-  let firstRender = true
-  Object.defineProperty(window, kFirstRender, {
-    get () {
-      return firstRender
-    },
-    set (v) {
-      firstRender = v
-      return firstRender
-    },
-  })
-}
-
-if (!isServer) {
-  window.requestIdleCallback(() => {
-    window[kFirstRender] = false
-  })
-}
+let firstRender = !isServer
 
 function useHydration ({ getData, getPayload } = {}) {
   const context = useContext(Context)
@@ -40,9 +23,6 @@ function useHydration ({ getData, getPayload } = {}) {
   } else {
     const [state, setter] = useState(context)
     useEffect(() => {
-      if (window[kFirstRender]) {
-        return
-      }
       if (getPayload) {
         const getPayloadFromClient = async () => {
           const response = await fetch(context.$payloadPath())
@@ -52,12 +32,16 @@ function useHydration ({ getData, getPayload } = {}) {
         setter({ ...state, $loading: true })
         getPayloadFromClient(context).then(($payload) => {
           setter({ ...state, $payload, $loading: false })
+          hydrationDone()
         })
       } else if (getData) {
         setter({ ...state, $loading: true })
         getData(context).then(($data) => {
           setter({ ...state, $data, $loading: false })
+          hydrationDone()
         })
+      } else {
+        hydrationDone()
       }
     }, [])
     const update = (payload) => {
@@ -120,6 +104,12 @@ function hydrateRoutes (globImports) {
     route.component = lazy(() => globImports[route.componentPath]())
     return route
   })
+}
+
+function hydrationDone () {
+  if (firstRender) {
+    firstRender = false
+  }
 }
 
 export {

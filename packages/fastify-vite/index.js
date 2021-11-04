@@ -5,6 +5,7 @@ const { createServer } = require('vite')
 const matchit = require('matchit')
 const Fastify = require('fastify')
 const middie = require('middie')
+const { fetch } = require('undici')
 const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
 
@@ -20,6 +21,21 @@ async function fastifyVite (fastify, options) {
   } catch (err) {
     console.error(err)
     process.exit(1)
+  }
+
+  if (options.suppressExperimentalWarnings) {
+    // See https://github.com/nodejs/node/issues/30810
+    const { emitWarning } = process
+
+    process.emitWarning = (warning, ...args) => {
+      if (args[0] === 'ExperimentalWarning') {
+        return
+      }
+      if (args[0] && typeof args[0] === 'object' && args[0].type === 'ExperimentalWarning') {
+        return
+      }
+      return emitWarning(warning, ...args)
+    }
   }
 
   if (options.generate.enabled) {
@@ -103,6 +119,7 @@ async function fastifyVite (fastify, options) {
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
+                fetch,
               },
             )
           },
@@ -119,6 +136,7 @@ async function fastifyVite (fastify, options) {
                 reply,
                 $api: this.api && this.api.client,
                 fastify: this,
+                fetch,
               },
             )
           },
@@ -130,6 +148,7 @@ async function fastifyVite (fastify, options) {
             reply,
             $api: this.api && this.api.client,
             fastify: this,
+            fetch,
           })
         })
       }
@@ -215,9 +234,9 @@ async function fastifyVite (fastify, options) {
         const path = req.raw.url
         const result = await generateRoute(fastify.inject({ url: path }), path, options)
         if (result) {
-          reply.send(`Generated fresh static page for ${
+          reply.send(`Generated fresh static page for URL ${
             req.raw.url
-          } for build on ${
+          } for build at ${
             fastify.vite.options.distDir
           }`)
           generated(result, fastify.vite.options.distDir)
