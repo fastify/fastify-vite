@@ -42,7 +42,7 @@
     "@vue/server-renderer": "3.2.19",
     "@vueuse/head": "0.6.0",
     "devalue": "2.0.1",
-    "manifetch": "^0.0.2",
+    "manifetch": "^0.0.3",
     "vite-plugin-blueprint": "^0.0.4",
     "vue": "3.2.19",
     "vue-router": "4.0.10"

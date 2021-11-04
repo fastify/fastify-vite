@@ -13,12 +13,12 @@ function flattenPaths (view) {
   return paths
 }
 
-function getRoutes (views) {
+function getRoutes (views, ssr) {
   const routes = []
-  for (const view of Object.values(views)) {
+  for (const [componentPath, view] of Object.entries(views)) {
     for (const path of flattenPaths(view)) {
       const { default: component, ...viewProps } = view
-      routes.push({ path, component, ...viewProps })
+      routes.push({ path, componentPath, component, ...viewProps })
     }
   }
   return routes.sort((a, b) => {

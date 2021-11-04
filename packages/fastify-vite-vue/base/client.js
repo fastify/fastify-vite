@@ -14,5 +14,5 @@ export function createApp (ctx) {
   const router = createRouter({ history, routes })
   app.use(router)
   app.use(head)
-  return { ctx, app, head, router }
+  return { ctx, app, head, router, routes }
 }

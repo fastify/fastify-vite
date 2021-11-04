@@ -7,7 +7,7 @@ const { ContextProvider } = require('./context')
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
     const { entry, hydration } = options
-    const { App, router, context } = createApp({
+    const { App, router, routes, context } = createApp({
       fastify,
       req,
       reply,
@@ -20,7 +20,7 @@ function createRenderFunction (createApp) {
 
     const app = App()
     const element = renderElement(req.url, app, context, router)
-    const hydrationScript = getHydrationScript(req, context, hydration)
+    const hydrationScript = getHydrationScript(req, context, hydration, routes)
 
     return {
       entry: entry.client,
@@ -33,7 +33,7 @@ function createRenderFunction (createApp) {
 
 module.exports = { createRenderFunction }
 
-function getHydrationScript (req, context, hydration) {
+function getHydrationScript (req, context, hydration, routes) {
   const globalData = req.$global
   const data = req.$data
   const payload = req.$payload
@@ -41,8 +41,14 @@ function getHydrationScript (req, context, hydration) {
 
   let hydrationScript = ''
 
-  if (globalData || data || payload || api) {
+  if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
+    if (routes) {
+      const clientRoutes = routes.map(({ path, componentPath, getData }) => {
+        return { path, componentPath, getData }
+      })
+      hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
+    }
     if (globalData) {
       hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
     }

@@ -6,6 +6,13 @@ const { compileIndexHtml } = require('./html')
 
 module.exports = {
   path: resolve(__dirname),
+  blueprint: [
+    'entry/client.jsx',
+    'entry/server.jsx',
+    'client.jsx',
+    'index.html',
+    'routes.js',
+  ],
   options,
   compileIndexHtml,
   getHandler,
