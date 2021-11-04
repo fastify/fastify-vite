@@ -1,7 +1,7 @@
 import manifetch from 'manifetch/index.mjs'
 import { useContext, useState, useEffect, lazy } from 'react'
 import { useParams } from 'react-router-dom'
-import { Context } from 'fastify-vite-react/context'
+import { Context, ContextProvider } from 'fastify-vite-react/context'
 
 const kRoutes = Symbol.for('kRoutes')
 const kData = Symbol.for('kData')
@@ -113,6 +113,9 @@ function hydrationDone () {
     firstRender = false
   }
 }
+
+// To circumvent Vite's warning of an unused import
+const _ContextProvider = ContextProvider
 
 export {
   isServer,

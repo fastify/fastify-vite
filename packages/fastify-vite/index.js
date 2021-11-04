@@ -38,7 +38,7 @@ async function fastifyVite (fastify, options) {
     }
   }
 
-  if (options.generate.enabled) {
+  if (options.generate.enabled || options.generate.server.enabled) {
     await build(options)
     options.dev = false
     options.recalcDist()
@@ -196,7 +196,7 @@ async function fastifyVite (fastify, options) {
       await build(fastify.vite.options)
       process.exit()
     }
-    if (fastify.vite.options.generate.enabled) {
+    if (fastify.vite.options.generate.enabled || fastify.vite.options.generate.server.enabled) {
       const { generated } = fastify.vite.options.generate
       const paths = []
       if (typeof fastify.vite.options.generate.paths === 'function') {
@@ -227,7 +227,7 @@ async function fastifyVite (fastify, options) {
     }
 
     if (fastify.vite.options.generate.server.enabled) {
-      const { generated } = fastify.vite.options.generate.server
+      const { generated } = fastify.vite.options.generate
       const { port } = fastify.vite.options.generate.server
       const builder = Fastify()
       builder.get('*', async (req, reply) => {
