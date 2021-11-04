@@ -1,8 +1,8 @@
-const manifetch = require('manifetch')
+import manifetch from 'manifetch/index.mjs'
+import { getCurrentInstance, reactive } from 'vue'
+import { useRoute } from 'vue-router'
 
-const { useContext, useState, useEffect, lazy, Suspense, Fragment } = require('react')
-const { useParams } = require('react-router-dom')
-const { Context, ContextProvider } = require('fastify-vite-react/context')
+const { assign } = Object
 
 const kRoutes = Symbol.for('kRoutes')
 const kData = Symbol.for('kData')
@@ -10,7 +10,7 @@ const kPayload = Symbol.for('kPayload')
 const kStaticPayload = Symbol.for('kStaticPayload')
 const kGlobal = Symbol.for('kGlobal')
 const kAPI = Symbol.for('kAPI')
-const kFirstRender = Symbol.for('kFirstRender')
+const kFirstRender = Symbol('kFirstRender')
 
 const isServer = typeof window === 'undefined'
 const fetch = isServer ? () => {} : window.fetch
@@ -35,36 +35,61 @@ if (!isServer) {
 }
 
 function useHydration ({ getData, getPayload } = {}) {
-  const context = useContext(Context)
+  const globalProps = useGlobalProperties()
+  const hydration = {
+    params: globalProps.params,
+    $static: globalProps.$static,
+    $global: globalProps.$global,
+    $data: globalProps.$data,
+    $payload: globalProps.$payload,
+    $payloadPath: globalProps.$payloadPath,
+    $api: globalProps.$api,
+  }
+  globalProps.$data = undefined
+  globalProps.$payload = undefined
+
   if (isServer) {
-    return [context]
+    return hydration
   } else {
-    const [state, setter] = useState(context)
-    useEffect(() => {
-      if (window[kFirstRender]) {
-        return
-      }
+    const state = reactive(hydration)
+    if (window[kFirstRender]) {
+      return state
+    }
+    if (getPayload || getData) {
+      let promise
       if (getPayload) {
         const getPayloadFromClient = async () => {
-          const response = await fetch(context.$payloadPath())
+          const response = await fetch(hydration.$payloadPath(hydration.$static))
           const json = await response.json()
           return json
         }
-        setter({ ...state, $loading: true })
-        getPayloadFromClient(context).then(($payload) => {
-          setter({ ...state, $payload, $loading: false })
+        state.$loading = true
+        promise = getPayloadFromClient(hydration).then(($payload) => {
+          state.$payload = $payload
+          state.$loading = false
+          return state
         })
       } else if (getData) {
-        setter({ ...state, $loading: true })
-        getData(context).then(($data) => {
-          setter({ ...state, $data, $loading: false })
+        state.$loading = true
+        promise = getData(hydration).then(($data) => {
+          state.$data = $data
+          state.$loading = false
+          return state
         })
       }
-    }, [])
-    const update = (payload) => {
-      setter({ ...state, ...payload })
+      for (const key in hydration) {
+        Object.defineProperty(promise, key, {
+          enumerable: true,
+          get: () => state[key],
+          set: (value) => {
+            state[key] = value
+            return state[key]
+          },
+        })
+      }
+      return promise
     }
-    return [state, update]
+    return state
   }
 }
 
@@ -78,11 +103,12 @@ async function hydrate (app) {
   }
   let params
   try {
-    params = useParams()
+    params = useRoute().params
   } catch {
-    // In case app is running without React Router
+    // In case app is running without Vue Router
   }
-  const context = {
+
+  const hydration = {
     params,
     $payload,
     $payloadPath: (staticPayload) => {
@@ -106,36 +132,31 @@ async function hydrate (app) {
       }),
     }),
   }
+  assign(app.config.globalProperties, hydration)
   delete window[kGlobal]
   delete window[kData]
   delete window[kPayload]
   delete window[kStaticPayload]
   delete window[kAPI]
-  return context
 }
 
-async function hydrateRoutes () {
+function useGlobalProperties () {
+  return getCurrentInstance().appContext.app.config.globalProperties
+}
+
+function hydrateRoutes (globImports) {
   const routes = window[kRoutes]
   delete window[kRoutes]
-  return Promise.all(routes.map(async (route) => {
-    route.component = isServer
-      ? await import(route.componentPath)
-      : lazy(() => import(route.componentPath))
+  return routes.map((route) => {
+    route.component = globImports[route.componentPath]
     return route
-  }))
+  })
 }
 
-let SuspenseSSR = Suspense
-
-if (isServer) {
-  SuspenseSSR = Fragment
-}
-
-module.exports = {
-  isServer,
+export {
+  useGlobalProperties,
   useHydration,
   hydrate,
   hydrateRoutes,
-  ContextProvider,
-  SuspenseSSR,
+  isServer,
 }

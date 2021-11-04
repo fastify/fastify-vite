@@ -8,7 +8,7 @@ const empty = {}
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
     const { entry, distManifest, hydration } = options
-    const { ctx, app, head, router } = createApp({ fastify, req, reply })
+    const { ctx, app, head, routes, router } = await createApp({ fastify, req, reply })
 
     // On the client, hydrate() from fastify-vite/client repeats these steps
     assign(app.config.globalProperties, {
@@ -27,7 +27,7 @@ function createRenderFunction (createApp) {
     const element = await renderToString(app, ctx)
     const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
     const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
-    const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration)
+    const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration, routes)
 
     return {
       head: {
@@ -49,15 +49,21 @@ module.exports = {
   createRenderFunction,
 }
 
-function getHydrationScript (req, context, hydration) {
+function getHydrationScript (req, context, hydration, routes) {
   const globalData = req[hydration.global]
   const data = req[hydration.data] || context[hydration.data]
   const payload = req[hydration.payload] || context[hydration.payload]
   const api = req.api ? req.api.meta : null
 
   let hydrationScript = ''
-  if (globalData || data || payload || api) {
+  if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
+    if (routes) {
+      const clientRoutes = routes.map(({ path, componentPath, getData }) => {
+        return { path, componentPath, getData }
+      })
+      hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
+    }
     if (globalData) {
       hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
     }
