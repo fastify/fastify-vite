@@ -1,6 +1,7 @@
-const { resolve } = require('path')
+const { resolve, parse } = require('path')
 const { readFile, writeFile } = require('fs').promises
 const { existsSync } = require('fs')
+const { ensureDir } = require('fs-extra')
 const { createServer } = require('vite')
 const matchit = require('matchit')
 const Fastify = require('fastify')
@@ -182,12 +183,17 @@ async function fastifyVite (fastify, options) {
   fastify.vite.ready = async () => {
     await fastify.ready()
     if (fastify.vite.options.eject) {
+      const force = process.argv.includes('--force')
       for (const blueprintFile of renderer.blueprint) {
-        if (!existsSync(resolve(options.root, blueprintFile))) {
+        if (force || !existsSync(resolve(options.root, blueprintFile))) {
+          const filePath = resolve(options.root, blueprintFile)
+          const fileDir = parse(filePath).dir
+          await ensureDir(fileDir)
           await writeFile(
-            resolve(options.root, blueprintFile),
-            await readFile(resolve(renderer.path, blueprintFile)),
+            filePath,
+            await readFile(resolve(renderer.path, 'base', blueprintFile)),
           )
+          console.log(`Ejected ${filePath}.`)
         }
       }
       process.exit()

@@ -16,6 +16,7 @@
 // The check for 'build' in argv happens in fastifyVite.app(),
 // which then uses the function exported by this file.
 
+const { move } = require('fs-extra')
 const { build: viteBuild, mergeConfig } = require('vite')
 const { join } = require('path')
 
@@ -28,16 +29,18 @@ async function build (options) {
       ssrManifest: true,
     },
   })
+  const serverOutDir = `${outDir}/server`
   const server = mergeConfig(vite, {
     build: {
       ssr: true,
-      outDir: `${outDir}/server`,
+      outDir: serverOutDir,
       rollupOptions: {
         input: join(options.root, options.entry.server),
       },
     },
   })
   await Promise.all([viteBuild(client), viteBuild(server)])
+  await move(join(serverOutDir, 'server.js'), join(serverOutDir, 'server.cjs'))
   console.log(`Generated ${outDir}/client and ${outDir}/server.`)
 }
 
