@@ -1,4 +1,4 @@
-import { useHydration } from 'fastify-vite-react/client'
+import { useHydration } from 'fastify-vite-react/client.mjs'
 
 export const path = '/route-hooks'
 

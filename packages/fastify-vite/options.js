@@ -10,7 +10,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const defaults = {
   dev,
   // Prevents ExperimentalWarning messages due to use of undici etc
-  supressExperimentalWarnings: true,
+  suppressExperimentalWarnings: true,
   // If true, causes the Fastify server boot to halt after onReady
   build: process.argv.includes('build'),
   // If true, extracts the base blueprint files from the renderer adapter

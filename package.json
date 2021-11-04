@@ -4,6 +4,8 @@
     "lint": "eslint examples packages --ext .js,.jsx --fix"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
     "desm": "^1.1.0",
     "eslint": "^7.28.0",
     "eslint-config-standard": "^16.0.2",

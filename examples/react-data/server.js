@@ -1,21 +1,17 @@
-const fastify = require('fastify')()
-const fastifyVite = require('fastify-vite')
-const fastifyViteReact = require('fastify-vite-react')
-const fastifyApi = require('fastify-api')
+
+import Fastify from 'fastify'
+import FastifyAPI from 'fastify-api'
+import FastifyVite from 'fastify-vite'
+import renderer from 'fastify-vite-react'
 
 async function main () {
-  await fastify.register(fastifyApi)
-  await fastify.register(fastifyVite, {
-    api: true,
-    root: __dirname,
-    renderer: fastifyViteReact,
-    entry: {
-      client: '/entry/client.jsx',
-      server: '/entry/server.jsx',
-    },
-  })
+  const app = Fastify()
+  const root = import.meta.url
 
-  fastify.api(({ get }) => ({
+  await app.register(FastifyAPI)
+  await app.register(FastifyVite, { root, renderer })
+
+  app.api(({ get }) => ({
     echo: get('/echo/:msg', ({ msg }, req, reply) => {
       reply.send({ msg })
     }),
@@ -24,26 +20,16 @@ async function main () {
     }),
   }))
 
-  fastify.get('/favicon.ico', (_, reply) => {
-    reply.code(404)
-    reply.send('')
-  })
+  app.vite.global = { foobar: 123 }
 
-  fastify.vite.global = { foobar: 123 }
-
-  return fastify
+  await app.vite.ready()
+  return app
 }
 
-if (require.main === module) {
-  fastifyVite.app(main, (fastify) => {
-    fastify.listen(3000, (err, address) => {
-      if (err) {
-        console.error(err)
-        process.exit(1)
-      }
-      console.log(`Server listening on ${address}`)
-    })
-  })
+if (!process.argv.includes('test')) {
+  const app = await main()
+  const address = await app.listen(3000)
+  console.log(`Listening at ${address}.`)
 }
 
-module.exports = main
+export default main

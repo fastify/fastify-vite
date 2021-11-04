@@ -5,9 +5,9 @@ import FastifyVite from 'fastify-vite'
 import renderer from 'fastify-vite-vue'
 
 async function main () {
-  const app = Fastify({ logger: true })
+  const app = Fastify()
   const root = import.meta.url
-  
+
   await app.register(FastifyAPI)
   await app.register(FastifyVite, { root, renderer })
 
@@ -19,7 +19,7 @@ async function main () {
       reply.send('string response')
     }),
   }))
-  
+
   app.vite.global = { foobar: 123 }
 
   await app.vite.ready()
@@ -28,7 +28,8 @@ async function main () {
 
 if (!process.argv.includes('test')) {
   const app = await main()
-  await app.listen(3000)
+  const address = await app.listen(3000)
+  console.log(`Listening at ${address}.`)
 }
 
 export default main

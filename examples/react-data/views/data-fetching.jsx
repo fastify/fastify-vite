@@ -1,14 +1,13 @@
-import { useHydration, isServer } from 'fastify-vite-react/client'
-import ky from 'ky-universal'
+import { useHydration, isServer } from 'fastify-vite-react/client.mjs'
 
 export const path = '/data-fetching'
 
-export async function getData ({ req }) {
+export async function getData ({ req, fetch }) {
   return {
     message: isServer
       ? req.query?.message ?? 'Hello from server'
       : 'Hello from client',
-    result: await ky('https://httpbin.org/json').json(),
+    result: await fetch('https://httpbin.org/json').then(r => r.json()),
   }
 }
 
