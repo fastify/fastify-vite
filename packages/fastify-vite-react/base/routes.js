@@ -1,3 +1,6 @@
-import { loadRoutes } from 'fastify-vite-react/app'
+import { getRoutes } from 'fastify-vite/app'
+import { hydrateRoutes } from 'fastify-vite-react/client'
 
-export default loadRoutes(import.meta.globEager('/views/*.jsx'))
+export default import.meta.env.SSR
+  ? () => getRoutes(import.meta.globEager('/views/*.jsx'))
+  : async () => getRoutes(await hydrateRoutes())

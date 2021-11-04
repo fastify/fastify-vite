@@ -1,7 +1,6 @@
-const { parse, resolve } = require('path')
+const { resolve } = require('path')
 const { readFile, writeFile } = require('fs').promises
-const { ensureDir } = require('fs-extra')
-const { mkdirSync, existsSync } = require('fs')
+const { existsSync } = require('fs')
 const { createServer } = require('vite')
 const matchit = require('matchit')
 const Fastify = require('fastify')
@@ -10,7 +9,7 @@ const fastifyPlugin = require('fastify-plugin')
 const fastifyStatic = require('fastify-static')
 
 const { build } = require('./build')
-const { extractPayload } = require('./static')
+const { generateRoute } = require('./static')
 const { processOptions } = require('./options')
 
 async function fastifyVite (fastify, options) {
@@ -58,7 +57,7 @@ async function fastifyVite (fastify, options) {
     }
     const entry = await renderer.dev.getEntry(options, vite)
     handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
-    routes = entry.routes
+    routes = await entry.routes()
   } else {
     // For production you get the distribution version of the render function
     const { assetsDir } = options.vite.build
@@ -73,7 +72,7 @@ async function fastifyVite (fastify, options) {
     })
     const template = await renderer.compileIndexHtml(options.distIndex)
     const entry = await renderer.getEntry(options)
-    routes = entry.routes
+    routes = await entry.routes()
     handler = renderer.getHandler(fastify, options, entry.render, template)
   }
 
@@ -163,11 +162,23 @@ async function fastifyVite (fastify, options) {
 
   fastify.vite.ready = async () => {
     await fastify.ready()
+    if (fastify.vite.options.eject) {
+      for (const blueprintFile of renderer.blueprint) {
+        if (!existsSync(resolve(options.root, blueprintFile))) {
+          await writeFile(
+            resolve(options.root, blueprintFile),
+            await readFile(resolve(renderer.path, blueprintFile)),
+          )
+        }
+      }
+      process.exit()
+    }
     if (fastify.vite.options.build) {
       await build(fastify.vite.options)
       process.exit()
     }
     if (fastify.vite.options.generate.enabled) {
+      const { generated } = fastify.vite.options.generate
       const paths = []
       if (typeof fastify.vite.options.generate.paths === 'function') {
         await fastify.vite.options.generate.paths(path => paths.push(path))
@@ -184,32 +195,9 @@ async function fastifyVite (fastify, options) {
       const tasks = []
       for (const path of paths) {
         tasks.push(async () => {
-          try {
-            const { payload: htmlWithPayload } = await fastify.inject({ url: path })
-            const name = path.slice(1)
-            let htmlPath
-            let jsonPath
-            let jsonURL
-            if (name) {
-              jsonURL = `${name}/index.json`
-              htmlPath = resolve(options.distDir, 'client', `${name}/index.html`)
-              jsonPath = resolve(options.distDir, 'client', jsonURL)
-            } else {
-              jsonURL = 'index.json'
-              htmlPath = resolve(options.distDir, 'client', 'index.html')
-              jsonPath = resolve(options.distDir, 'client', jsonURL)
-            }
-            const { html, json } = extractPayload(htmlWithPayload, `/${jsonURL}`)
-            const { dir } = parse(htmlPath)
-            if (!existsSync(dir)) {
-              await ensureDir(dir)
-            }
-            if (json) {
-              await writeFile(jsonPath, JSON.stringify(json, null, 2))
-            }
-            await writeFile(htmlPath, html)
-          } catch (err) {
-            console.error(err)
+          const result = await generateRoute(fastify.inject({ url: path }), path, options)
+          if (result) {
+            generated(result, fastify.vite.options.distDir)
           }
         })
       }
@@ -220,24 +208,20 @@ async function fastifyVite (fastify, options) {
     }
 
     if (fastify.vite.options.generate.server.enabled) {
-      const { port, generated } = fastify.vite.options.generate.server
+      const { generated } = fastify.vite.options.generate.server
+      const { port } = fastify.vite.options.generate.server
       const builder = Fastify()
       builder.get('*', async (req, reply) => {
         const path = req.raw.url
-        const { payload } = await fastify.inject({ url: path })
-        const name = path.slice(1) || 'index'
-        const htmlPath = resolve(options.distDir, 'client', `${name}.html`)
-        const { dir } = parse(htmlPath)
-        if (!existsSync(dir)) {
-          mkdirSync(dir)
+        const result = await generateRoute(fastify.inject({ url: path }), path, options)
+        if (result) {
+          reply.send(`Generated fresh static page for ${
+            req.raw.url
+          } for build on ${
+            fastify.vite.options.distDir
+          }`)
+          generated(result, fastify.vite.options.distDir)
         }
-        await writeFile(htmlPath, payload)
-        reply.send(`Generated fresh static page for ${
-          req.raw.url
-        } for build on ${
-          fastify.vite.options.distDir
-        }`)
-        generated({ path: htmlPath, url: path, html: payload })
       })
       // @Matteo
       //

@@ -1,8 +1,7 @@
-const manifetch = require('manifetch')
-
-const { useContext, useState, useEffect, lazy, Suspense, Fragment } = require('react')
-const { useParams } = require('react-router-dom')
-const { Context, ContextProvider } = require('fastify-vite-react/context')
+import manifetch from 'manifetch/index.mjs'
+import { useContext, useState, useEffect, lazy } from 'react'
+import { useParams } from 'react-router-dom'
+import { Context, ContextProvider } from 'fastify-vite-react/context'
 
 const kRoutes = Symbol.for('kRoutes')
 const kData = Symbol.for('kData')
@@ -117,25 +116,17 @@ async function hydrate (app) {
 async function hydrateRoutes () {
   const routes = window[kRoutes]
   delete window[kRoutes]
-  return Promise.all(routes.map(async (route) => {
-    route.component = isServer
-      ? await import(route.componentPath)
-      : lazy(() => import(route.componentPath))
+  const globImports = import.meta.glob('/views/*.jsx')
+  return routes.map((route) => {
+    route.component = lazy(() => globImports[route.componentPath]())
     return route
-  }))
+  })
 }
 
-let SuspenseSSR = Suspense
-
-if (isServer) {
-  SuspenseSSR = Fragment
-}
-
-module.exports = {
+export {
   isServer,
   useHydration,
   hydrate,
   hydrateRoutes,
   ContextProvider,
-  SuspenseSSR,
 }
