@@ -116,12 +116,11 @@ async function hydrate (app) {
 async function hydrateRoutes () {
   const routes = window[kRoutes]
   delete window[kRoutes]
-  return Promise.all(routes.map(async (route) => {
-    route.component = isServer
-      ? await import(route.componentPath)
-      : lazy(() => import(route.componentPath))
+  const globImports = import.meta.glob('/views/*.jsx')
+  return routes.map((route) => {
+    route.component = lazy(() => globImports[route.componentPath]())
     return route
-  }))
+  })
 }
 
 export {

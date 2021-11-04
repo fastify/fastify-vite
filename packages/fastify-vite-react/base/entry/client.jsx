@@ -2,13 +2,14 @@ import ReactDOM from 'react-dom'
 import { ContextProvider, hydrate } from 'fastify-vite-react/client.mjs'
 import { createApp } from '@app/client.jsx'
 
-const { App, router: Router } = createApp()
+const { App, routes, router: Router } = createApp()
 
-hydrate().then((hydration) => {
+hydrate().then(async (hydration) => {
+  const app = App(await routes())
   ReactDOM.hydrate(
     <Router>
       <ContextProvider context={hydration}>
-        {App()}
+        {app}
       </ContextProvider>
     </Router>,
     document.getElementById('app'),

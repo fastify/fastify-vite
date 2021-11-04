@@ -13,7 +13,7 @@ export function createApp (context) {
   }
 }
 
-function App (props) {
+function App (routes, props) {
   return (
     <>
       <Helmet>

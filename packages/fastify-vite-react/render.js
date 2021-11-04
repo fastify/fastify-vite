@@ -18,9 +18,10 @@ function createRenderFunction (createApp) {
       $api: req.api && req.api.client,
     })
 
-    const app = App()
+    const resolvedRoutes = await routes()
+    const app = App(resolvedRoutes)
     const element = renderElement(req.url, app, context, router)
-    const hydrationScript = getHydrationScript(req, context, hydration, routes)
+    const hydrationScript = getHydrationScript(req, context, hydration, resolvedRoutes)
 
     return {
       entry: entry.client,
