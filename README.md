@@ -24,7 +24,7 @@ npm install fastify-vite@2.2.0
 
 # Contributors
 
-- [Jonas Galvez](https://twitter.com/anothergalvez) — **[Helloprint](https://helloprint.com)**
+- [Jonas Galvez](https://twitter.com/anothergalvez) — **[NearForm](https://nearform.com)**
 - [Paul Isache](https://twitter.com/paul_isache) — **[NearForm](https://nearform.com)**
 - [Rafael Gonzaga](https://twitter.com/_rafaelgss) — **[NearForm](https://nearform.com)**
 - [Ilya Semenov](https://github.com/IlyaSemenov) - **[SOUTH](https://south.io)**
