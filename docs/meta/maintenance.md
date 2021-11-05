@@ -4,11 +4,11 @@ This section is mostly a checklist for myself but hopefully it can be tweaked to
 
 Up until the 2.2.0 release, <b>fastify-vite</b> had essentially no proper release management, with no clear guidelines set. Also early adopters ended up using forked versions of their own to address random issues that were present in the first releases.
 
-Moving forward (as of November 1, 2021), these are the general maintenance guidelines:
+Moving forward (as of November 5, 2021), these are the general maintenance guidelines:
 
 - Keep versioning synchronised between <b>fastify-vite</b> and renderer adapters.
 - Do one **minor** release at the turn of every month.
-  - Starting with 2.2.0, which was released on November 1, 2021.
+  - Starting with 2.2.0, which was released on November 5, 2021.
 - Do as many **patch** releases as time allows with hotfixes for any issues uncovered.
 - Check open bug reports, both on GitHub and on Fastify's and Vite's Discord servers.
 - Check Vite, Vue and React latest releases, breaking changes etc.
