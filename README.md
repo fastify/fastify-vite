@@ -8,7 +8,7 @@
 
 **[Dive into the documentation](https://fastify-vite.dev/)**.
 
-<a href="https://fastify-vite.dev"><img width="70%" src="https://fastify-vite.dev/cover.png"></a>
+<a href="https://fastify-vite.dev"><img width="70%" src="https://user-images.githubusercontent.com/12291/140739914-f5801ee1-c8b5-48f8-914f-ddf988da6f18.png"></a>
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
