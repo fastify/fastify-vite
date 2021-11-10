@@ -1,3 +1,4 @@
+import React from 'react'
 import { useHydration, isServer } from 'fastify-vite-react/client.mjs'
 
 export const path = '/data-fetching'
