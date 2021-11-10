@@ -1,4 +1,4 @@
-import { Suspense, Fragment } from 'react'
+import React, { Suspense, Fragment } from 'react'
 import { Helmet } from 'react-helmet'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { StaticRouter } from 'react-router'

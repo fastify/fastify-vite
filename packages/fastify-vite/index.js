@@ -50,47 +50,49 @@ async function fastifyVite (fastify, options) {
 
   // We'll want access to this later
   let handler
-  let routes
   let vite
+  let routes = []
 
-  // Setup appropriate Vite route handler
-  if (options.dev) {
-    // For dev you get more detailed logging and hot reload
-    vite = await createServer({
-      server: { middlewareMode: 'ssr' },
-      ...options.vite,
-    })
-    await fastify.register(middie)
-    fastify.use(vite.middlewares)
-    const indexHtmlPath = resolve(options.root, 'index.html')
-    if (!existsSync(indexHtmlPath)) {
-      const baseIndexHtmlPath = resolve(renderer.path, 'base', 'index.html')
-      await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
+  if (!options.eject) {
+    // Setup appropriate Vite route handler
+    if (options.dev) {
+      // For dev you get more detailed logging and hot reload
+      vite = await createServer({
+        server: { middlewareMode: 'ssr' },
+        ...options.vite,
+      })
+      await fastify.register(middie)
+      fastify.use(vite.middlewares)
+      const indexHtmlPath = resolve(options.root, 'index.html')
+      if (!existsSync(indexHtmlPath)) {
+        const baseIndexHtmlPath = resolve(renderer.path, 'base', 'index.html')
+        await writeFile(indexHtmlPath, await readFile(baseIndexHtmlPath, 'utf8'))
+      }
+      const getTemplate = async (url) => {
+        const indexHtml = await readFile(indexHtmlPath, 'utf8')
+        const transformedHtml = await vite.transformIndexHtml(url, indexHtml)
+        return await renderer.compileIndexHtml(transformedHtml)
+      }
+      const entry = await renderer.dev.getEntry(options, vite)
+      handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
+      routes = await entry.routes()
+    } else if (!options.eject) {
+      // For production you get the distribution version of the render function
+      const { assetsDir } = options.vite.build
+      // We also register fastify-static to serve all static files
+      // in production (dev server takes of this)
+      // Note: this is just to ensure it works, for a real world
+      // production deployment, you'll want to capture those paths in
+      // Nginx or just serve them from a CDN instead
+      await fastify.register(fastifyStatic, {
+        root: resolve(options.distDir, `client/${assetsDir}`),
+        prefix: `/${assetsDir}`,
+      })
+      const template = await renderer.compileIndexHtml(options.distIndex)
+      const entry = await renderer.getEntry(options)
+      routes = await entry.routes()
+      handler = renderer.getHandler(fastify, options, entry.render, template)
     }
-    const getTemplate = async (url) => {
-      const indexHtml = await readFile(indexHtmlPath, 'utf8')
-      const transformedHtml = await vite.transformIndexHtml(url, indexHtml)
-      return await renderer.compileIndexHtml(transformedHtml)
-    }
-    const entry = await renderer.dev.getEntry(options, vite)
-    handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
-    routes = await entry.routes()
-  } else {
-    // For production you get the distribution version of the render function
-    const { assetsDir } = options.vite.build
-    // We also register fastify-static to serve all static files
-    // in production (dev server takes of this)
-    // Note: this is just to ensure it works, for a real world
-    // production deployment, you'll want to capture those paths in
-    // Nginx or just serve them from a CDN instead
-    await fastify.register(fastifyStatic, {
-      root: resolve(options.distDir, `client/${assetsDir}`),
-      prefix: `/${assetsDir}`,
-    })
-    const template = await renderer.compileIndexHtml(options.distIndex)
-    const entry = await renderer.getEntry(options)
-    routes = await entry.routes()
-    handler = renderer.getHandler(fastify, options, entry.render, template)
   }
 
   // Sets fastify.vite.get() helper which uses

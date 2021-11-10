@@ -17,9 +17,6 @@ module.exports = {
       'object-assign',
     ],
   },
-  esbuild: {
-    jsxInject: 'import React from \'react\'\n',
-  },
   plugins: [
     viteReactRefresh(),
     viteBlueprint({
