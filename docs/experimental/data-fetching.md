@@ -145,6 +145,15 @@ export default {
 </script>
 ```
 
+If you're using Vue + TS, you might need to import the client file with its explicit extension, e.g.:
+```vue
+<script lang="ts">
+import { useHydration, isServer } from 'fastify-vite-vue/client.mjs'
+...
+</script>
+
+```
+
 Notice how this example uses [fetch-undici](https://www.npmjs.com/package/fetch-undici) to provide isomorphic access to [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
 To recap:
