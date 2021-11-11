@@ -75,7 +75,9 @@ async function fastifyVite (fastify, options) {
       }
       const entry = await renderer.dev.getEntry(options, vite)
       handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
-      routes = await entry.routes()
+      if (entry.routes) {
+        routes = await entry.routes()
+      }
     } else if (!options.eject) {
       // For production you get the distribution version of the render function
       const { assetsDir } = options.vite.build
@@ -90,7 +92,9 @@ async function fastifyVite (fastify, options) {
       })
       const template = await renderer.compileIndexHtml(options.distIndex)
       const entry = await renderer.getEntry(options)
-      routes = await entry.routes()
+      if (entry.routes) {
+        routes = await entry.routes()
+      }
       handler = renderer.getHandler(fastify, options, entry.render, template)
     }
   }
