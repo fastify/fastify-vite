@@ -8,7 +8,9 @@
 
 **[Dive into the documentation](https://fastify-vite.dev/)**.
 
-<a href="https://fastify-vite.dev"><img width="70%" src="https://user-images.githubusercontent.com/12291/140739914-f5801ee1-c8b5-48f8-914f-ddf988da6f18.png"></a>
+**[Introducing Blueprints for fastify-vite](https://www.youtube.com/watch?v=IEgev8aC8AE)**. 
+
+<a href="https://fastify-vite.dev"><img width="70%" src="https://user-images.githubusercontent.com/12291/140742728-9aab5ae1-faa9-4bb8-b467-19c7e6072bcd.png"></a>
 
 [fastify]: http://fastify.io/
 [vite]: http://vitejs.dev/
@@ -19,7 +21,7 @@
 # Install
 
 ```bash
-npm install fastify-vite@2.2.0
+npm install fastify-vite@2.2.1
 ```
 
 # Contributors
