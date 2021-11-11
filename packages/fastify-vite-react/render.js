@@ -18,7 +18,10 @@ function createRenderFunction (createApp) {
       $api: req.api && req.api.client,
     })
 
-    const resolvedRoutes = await routes()
+    let resolvedRoutes
+    if (typeof routes === 'function') {
+      resolvedRoutes = await routes()
+    }
     const app = App(resolvedRoutes)
     const element = renderElement(req.url, app, context, router)
     const hydrationScript = getHydrationScript(req, context, hydration, resolvedRoutes)
