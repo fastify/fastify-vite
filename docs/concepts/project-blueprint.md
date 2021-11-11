@@ -88,17 +88,14 @@ Here's what the setup looks like for <b>fastify-vite-vue</b>:
 
 So what you see in the root directory may just be `index.html` and `server.html`, but the application is booting with all the files from the renderer adapter's base folder. To override any of the files, just place a file with the same name at the root directory, and that will be used instead.
 
-You can also turn off blueprint files entirely:
+You can also turn off blueprint files entirely by providing your own `vite.config.js` without `vite-plugin-blueprint`. You can start off with the original from your renderer adapter:
 
-```js
-await app.register(FastifyVite, {
-  ...
-  blueprint: false,
-  ...
-})
+```bash
+cp node_modules/fastify-vite-vue/vite.js vite.config.js
+cp node_modules/fastify-vite-react/vite.js vite.config.js
 ```
 
-If you do this, you're required to provide all files for your application yourself, namely, `index.html` and the client and server entry points, and all their dependencies.
+If you do this (remove `vite-plugin-blueprint`), you're required to provide base files for your application yourself, namely, the client and server entry points, and all their dependencies.
 
 You can also use the `eject` command to extract all files from the renderer adapter `base` folder into your application's root directory, make it easy to tweak things. You'll want to do this at the outset of development if you know you'll be heavily customizing them.
 
