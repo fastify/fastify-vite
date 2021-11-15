@@ -1,4 +1,4 @@
-import { readdirSync, existsSync } from 'fs'
+import { readdirSync, existsSync, writeFile, readFile } from 'fs/promises'
 import { join } from 'path'
 import { dirname } from 'desm'
 
@@ -60,10 +60,10 @@ async function parseArgv () {
 }
 
 async function readJSON(path) {
-  const json = await fs.readFile(path, 'utf8')
+  const json = await readFile(path, 'utf8')
   return JSON.parse(json)
 }
 
 async function writeJSON(path, contents) {
-  await fs.writeFile(path, contents)
+  await writeFile(path, contents)
 }
