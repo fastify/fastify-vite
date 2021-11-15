@@ -8,6 +8,6 @@
   - Add Undici fetch() examples
   - Add Redis examples
   - Add WindiCSS example
-  - Add ElementUI example
+  - Add ElementPlus example
   - Add Storyblok example
   - Add Contentful example  
