@@ -1,23 +1,24 @@
 const { packIsland } = require('./islands.js')
 const { onIdle, onMedia, onDisplay } = require('./client.js')
 
-function flattenPaths (view) {
-  const paths = []
-  if (view.path && Array.isArray(view.path)) {
-    for (const path of view.path) {
-      paths.push(path)
-    }
-  } else if (view.path) {
-    paths.push(view.path)
+function flattenPaths (viewPath) {
+  if (!viewPath) {
+    return []
   }
-  return paths
+  if (typeof viewPath === 'string') {
+    return [viewPath]
+  }
+  if (Array.isArray(viewPath)) {
+    return viewPath;
+  }
+  return []
 }
 
 function getRoutes (views, ssr) {
   const routes = []
   for (const [componentPath, view] of Object.entries(views)) {
-    for (const path of flattenPaths(view)) {
-      const { default: component, ...viewProps } = view
+    const { default: component, ...viewProps } = view
+    for (const path of flattenPaths(view.path)) {
       routes.push({ path, componentPath, component, ...viewProps })
     }
   }
