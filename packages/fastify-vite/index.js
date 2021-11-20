@@ -200,6 +200,7 @@ async function fastifyVite (fastify, options) {
   }
 
   fastify.vite.commands = async () => {
+    await fastify.ready()
     if (fastify.vite.options.eject) {
       const force = process.argv.includes('--force')
       for (const blueprintFile of renderer.blueprint) {
