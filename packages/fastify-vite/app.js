@@ -9,7 +9,7 @@ function flattenPaths (viewPath) {
     return [viewPath]
   }
   if (Array.isArray(viewPath)) {
-    return viewPath;
+    return viewPath
   }
   return []
 }

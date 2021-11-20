@@ -42,7 +42,7 @@ async function build (options) {
   await Promise.all([viteBuild(client), viteBuild(server)])
   await move(join(serverOutDir, 'server.js'), join(serverOutDir, 'server.cjs'))
   console.log(`Generated ${outDir}/client and ${outDir}/server.`)
-  process.exit(0);
+  process.exit(0)
 }
 
 module.exports = { build }
