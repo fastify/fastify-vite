@@ -21,7 +21,7 @@
 # Install
 
 ```bash
-npm install fastify-vite@2.2.2
+npm install fastify-vite
 ```
 
 # Contributors
