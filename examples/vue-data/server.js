@@ -22,7 +22,7 @@ async function main () {
 
   app.vite.global = { foobar: 123 }
 
-  await app.vite.ready()
+  await app.vite.commands()
   return app
 }
 

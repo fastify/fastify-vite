@@ -15,6 +15,17 @@ const { generateRoute } = require('./static')
 const { processOptions } = require('./options')
 
 async function fastifyVite (fastify, options) {
+  let viteReady
+  const isViteReady = new Promise((resolve) => {
+    viteReady = resolve
+  })
+
+  fastify.decorate('vite', {
+    ready () {
+      return isViteReady
+    },
+  })
+
   // Run options through Vite to get all Vite defaults taking vite.config.js
   // into account and ensuring options.root and options.vite.root are the same
   try {
@@ -99,9 +110,11 @@ async function fastifyVite (fastify, options) {
     }
   }
 
+  viteReady()
+
   // Sets fastify.vite.get() helper which uses
   // a wrapper for setting a route with a data() handler
-  fastify.decorate('vite', {
+  Object.assign(fastify.vite, {
     handler,
     options,
     global: undefined,
@@ -186,7 +199,7 @@ async function fastifyVite (fastify, options) {
     })
   }
 
-  fastify.vite.ready = async () => {
+  fastify.vite.commands = async () => {
     await fastify.ready()
     if (fastify.vite.options.eject) {
       const force = process.argv.includes('--force')

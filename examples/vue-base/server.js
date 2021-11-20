@@ -8,7 +8,7 @@ async function main () {
   const root = import.meta.url
 
   await app.register(FastifyVite, { root, renderer })
-  await app.vite.ready()
+  await app.vite.commands()
 
   return app
 }

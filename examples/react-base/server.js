@@ -1,19 +1,20 @@
-const fastify = require('fastify')()
-const fastifyVite = require('fastify-vite')
-const fastifyViteReact = require('fastify-vite-react')
+const Fastify = require('fastify')
+const FastifyVite = require('fastify-vite')
+const FastifyViteReact = require('fastify-vite-react')
 
 async function main () {
-  await fastify.register(fastifyVite, {
+  const app = Fastify()
+  await app.register(FastifyVite, {
     root: __dirname,
-    renderer: fastifyViteReact,
+    renderer: FastifyViteReact,
   })
-  await fastify.vite.ready()
-  return fastify
+  await app.vite.commands()
+  return app
 }
 
 if (require.main === module) {
-  main().then((fastify) => {
-    fastify.listen(3000, (err, address) => {
+  main().then((app) => {
+    app.listen(3000, (err, address) => {
       if (err) {
         console.error(err)
         process.exit(1)

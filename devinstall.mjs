@@ -1,12 +1,11 @@
-import { readdirSync, existsSync, writeFile, readFile } from 'fs/promises'
-import { join } from 'path'
-import { dirname } from 'desm'
+
+import { fileURLToPath } from 'url'
 
 $.quote = s => s
 
 const { entries } = Object
 
-let root = dirname(import.meta.url)
+let root = fileURLToPath(path.dirname(import.meta.url))
 let [example, exRoot, deps] = await parseArgv(root)
 
 let pkgInfos = {}
@@ -37,7 +36,7 @@ for (let pkg of deps.local) {
 
 async function getDeps (example, exRoot) {
   const examplePackage = await readJSON(`${root}/${exRoot}/package.dist.json`)
-  const pkgInfo = readdirSync(join(root, 'packages'))
+  const pkgInfo = await fs.readdir(path.join(root, 'packages'))
   return {
     local: Object.keys(examplePackage.dependencies).filter(dep => pkgInfo.includes(dep)),
     external: Object.keys(examplePackage.dependencies).filter(dep => !pkgInfo.includes(dep))
@@ -47,12 +46,12 @@ async function getDeps (example, exRoot) {
 async function parseArgv () {
   const example = process.argv[3]
   const exRoot = `examples/${example}`
-  const deps = await getDeps(join(exRoot, 'package.dist.json'), exRoot)
+  const deps = await getDeps(path.join(exRoot, 'package.dist.json'), exRoot)
   if (!example) {
     console.error('Usage: npm run devinstall -- <dir>')
     process.exit(1)
   }
-  if (!existsSync(join(root, exRoot))) {
+  if (!await fs.stat(path.join(root, exRoot)).catch(() => false)) {
     console.error(`Directory ${join(root, exRoot)} does not exist.`)
     process.exit(1)    
   }
@@ -60,10 +59,10 @@ async function parseArgv () {
 }
 
 async function readJSON(path) {
-  const json = await readFile(path, 'utf8')
+  const json = await fs.readFile(path, 'utf8')
   return JSON.parse(json)
 }
 
 async function writeJSON(path, contents) {
-  await writeFile(path, contents)
+  await fs.writeFile(path, contents)
 }
