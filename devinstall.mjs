@@ -51,7 +51,7 @@ async function parseArgv () {
     console.error('Usage: npm run devinstall -- <dir>')
     process.exit(1)
   }
-  if (!await fs.stat(path.join(root, exRoot))) {
+  if (!await fs.stat(path.join(root, exRoot)).catch(() => false)) {
     console.error(`Directory ${join(root, exRoot)} does not exist.`)
     process.exit(1)    
   }
