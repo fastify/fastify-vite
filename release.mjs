@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'fs/promises'
+import { dirname } from 'path'
 import semver from 'semver'
 
 const releaseType = process.argv[3]
@@ -15,8 +16,9 @@ for (const examplePackage of await globby('examples/*/package.json')) {
   await writeFile(examplePackage, JSON.stringify(pkgInfo, null, 2))
 }
 
-for (const rendererPackage of await globby('packages/fastify-vite-*/package.json')) {
+for (const rendererPackage of await globby('packages/fastify-vite*/package.json')) {
   const pkgInfo = JSON.parse(await readFile(rendererPackage, 'utf8'))
   pkgInfo.version = newVersion
   await writeFile(rendererPackage, JSON.stringify(pkgInfo, null, 2))
+  await $`npm publish ./${dirname(rendererPackage)}`
 }
