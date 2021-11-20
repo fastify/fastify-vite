@@ -4,6 +4,7 @@ const Item = (text, link) => ({ text, link })
 const Quickstart = [
   Item('Vue 3+', '/quickstart/vue'),
   Item('React 17+', '/quickstart/react'),
+  Item('Debugging', '/quickstart/debugging'),
 ]
 
 const Concepts = [

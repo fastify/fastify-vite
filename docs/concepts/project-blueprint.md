@@ -12,7 +12,7 @@ import renderer from '<renderer-adapter>'
 
 const app = Fastify()
 await app.register(FastifyVite, { renderer, root: import.meta.url })
-await app.vite.ready()
+await app.vite.commands()
 ```
 
 Where `<renderer-adapter>` varies according to what framework you're using.
