@@ -35,7 +35,7 @@
     "type": "git",
     "url": "git+https://github.com/terixjs/fastify-vite.git"
   },
-  "version": "2.3.0",
+  "version": "2.3.1",
   "dependencies": {
     "@vitejs/plugin-vue": "1.9.3",
     "@vitejs/plugin-vue-jsx": "1.2.0",

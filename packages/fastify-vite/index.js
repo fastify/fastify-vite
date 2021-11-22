@@ -69,8 +69,11 @@ async function fastifyVite (fastify, options) {
     if (options.dev) {
       // For dev you get more detailed logging and hot reload
       vite = await createServer({
-        server: { middlewareMode: 'ssr' },
         ...options.vite,
+        server: {
+          middlewareMode: 'ssr',
+          ...options.vite.server,
+        },
       })
       await fastify.register(middie)
       fastify.use(vite.middlewares)
