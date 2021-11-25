@@ -1,5 +1,5 @@
-import React, { Suspense, Fragment } from 'solid-js'
-import { Title, Style } from 'solid-meta'
+import { Suspense, Fragment } from 'solid-js'
+import { Title, Style, MetaProvider } from 'solid-meta'
 import { Router, Route, Switch } from 'solid-app-router'
 import routes from '@app/routes.js'
 
@@ -14,7 +14,7 @@ export function createApp (context) {
 
 function App (routes, props) {
   return (
-    <>
+    <MetaProvider>
       <Title>fastify-vite-react examples</Title>
       <Style>{`
       #app {
@@ -70,6 +70,6 @@ function App (routes, props) {
             </Switch>
           </Suspense>
       }
-    </>
+    </MetaProvider>
   )
 }
