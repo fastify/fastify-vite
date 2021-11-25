@@ -1,5 +1,5 @@
 import { hydrate as hydrateSolid } from 'solid-js/web'
-import { ContextProvider, hydrate } from 'fastify-vite-react/client.mjs'
+import { ContextProvider, hydrate } from 'fastify-vite-solidjs/client.mjs'
 import { createApp } from '@app/client.jsx'
 
 const { App, routes, router: Router } = createApp()
