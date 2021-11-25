@@ -1,5 +1,5 @@
 import manifetch from 'manifetch/index.mjs'
-import { useContext, createSignal, onMount, lazy } from 'solid-js';
+import { useContext, createSignal, onMount, lazy } from 'solid-js'
 import { isServer } from 'solid-js/web'
 import { useParams } from 'solid-app-router'
 import { Context, ContextProvider } from 'fastify-vite-solid/context'
