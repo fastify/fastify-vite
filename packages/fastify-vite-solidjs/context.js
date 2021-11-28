@@ -1,4 +1,5 @@
-const { createContext, createComponent } = require('solid-js/web')
+const { createComponent } = require('solid-js/web')
+const { createContext } = require('solid-js')
 
 const Context = createContext({})
 

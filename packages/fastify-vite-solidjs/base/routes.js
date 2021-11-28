@@ -1,5 +1,5 @@
 import { getRoutes } from 'fastify-vite/app'
-import { hydrateRoutes } from 'fastify-vite-solid/client.mjs'
+import { hydrateRoutes } from 'fastify-vite-solidjs/client.mjs'
 
 export default import.meta.env.SSR
   ? () => getRoutes(import.meta.globEager('/views/*.jsx'))

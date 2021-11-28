@@ -1,7 +1,14 @@
 const { createComponent, renderToString } = require('solid-js/web')
 const devalue = require('devalue')
-const { renderTags } = require('solid-meta')
 const { ContextProvider } = require('./context')
+
+function renderTags (tags) {
+  return tags.map(tag => {
+    const keys = Object.keys(tag.props)
+    const props = keys.map(k => k === 'children' ? '' : ` ${k}="${tag.props[k]}"`).join('')
+    return tag.props.children ? `<${tag.tag} data-sm=""${props}>${tag.props.children}</${tag.tag}>` : `<${tag.tag} data-sm=""${props}/>`
+  }).join('')
+}
 
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
