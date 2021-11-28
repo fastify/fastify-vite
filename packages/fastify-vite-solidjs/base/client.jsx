@@ -1,6 +1,6 @@
-import { Suspense, Fragment } from 'solid-js'
-import { Title, Style, MetaProvider } from 'solid-meta'
-import { Router, Route, Switch } from 'solid-app-router'
+import { Suspense } from 'solid-js'
+// import { Title, Style, MetaProvider } from 'solid-meta'
+import { Router, Route, Routes } from 'solid-app-router'
 import routes from '@app/routes.js'
 
 export function createApp (context) {
@@ -14,8 +14,8 @@ export function createApp (context) {
 
 function App (routes, props) {
   return (
-    <MetaProvider>
-      <Title>fastify-vite-react examples</Title>
+    <>
+      {/* <Title>fastify-vite-react examples</Title>
       <Style>{`
       #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -44,11 +44,10 @@ function App (routes, props) {
         font-size:  1rem;
         color: #555;
       }
-      `}</Style>
+      `}</Style> */}
       <h1>Examples</h1>
       {import.meta.env.SSR
-        ? <Fragment>
-            <Switch>
+        ? <Routes>
               {routes.map(({ path, component: RouteComp }) => {
                 return (
                   <Route key={path} path={path}>
@@ -56,10 +55,9 @@ function App (routes, props) {
                   </Route>
                 )
               })}
-            </Switch>
-          </Fragment>
+            </Routes>
         : <Suspense fallback={<div/>}>
-            <Switch>
+            <Routes>
               {routes.map(({ path, component: RouteComp }) => {
                 return (
                   <Route key={path} path={path}>
@@ -67,9 +65,9 @@ function App (routes, props) {
                   </Route>
                 )
               })}
-            </Switch>
+            </Routes>
           </Suspense>
       }
-    </MetaProvider>
+    </>
   )
 }
