@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs solid-base",
+    "devinstall": "zx ../../devinstall.mjs solid-base fastify-vite-solid",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"

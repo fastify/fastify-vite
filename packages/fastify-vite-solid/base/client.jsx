@@ -12,10 +12,7 @@ export function createApp (context) {
   }
 }
 
-function App (routes, props) {
-  return (
-    <>
-      {/* <Title>fastify-vite-react examples</Title>
+      /*<Title>fastify-vite-solid examples</Title>
       <Style>{`
       #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -44,30 +41,19 @@ function App (routes, props) {
         font-size:  1rem;
         color: #555;
       }
-      `}</Style> */}
+      `}</Style>*/
+
+        // {routes.map(({ path, component: RouteComp }) => {
+        //   return <Route path={path} element={<RouteComp />} />
+        // })}
+
+function App (routes) {
+  return (
+    <>
       <h1>Examples</h1>
-      {import.meta.env.SSR
-        ? <Routes>
-              {routes.map(({ path, component: RouteComp }) => {
-                return (
-                  <Route key={path} path={path}>
-                    <RouteComp {...props} />
-                  </Route>
-                )
-              })}
-            </Routes>
-        : <Suspense fallback={<div/>}>
-            <Routes>
-              {routes.map(({ path, component: RouteComp }) => {
-                return (
-                  <Route key={path} path={path}>
-                    <RouteComp {...props} />
-                  </Route>
-                )
-              })}
-            </Routes>
-          </Suspense>
-      }
+      <Routes>
+        <Route path="/" element={routes[0].component} />
+      </Routes>
     </>
   )
 }

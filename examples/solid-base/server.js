@@ -1,6 +1,6 @@
 const Fastify = require('fastify')
 const FastifyVite = require('fastify-vite')
-const FastifyViteSolid = require('fastify-vite-solidjs')
+const FastifyViteSolid = require('fastify-vite-solid')
 
 async function main () {
   const app = Fastify()
