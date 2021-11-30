@@ -30,7 +30,7 @@ npm install fastify-vite
 - [Paul Isache](https://twitter.com/paul_isache) — **[NearForm](https://nearform.com)**
 - [Rafael Gonzaga](https://twitter.com/_rafaelgss) — **[NearForm](https://nearform.com)**
 - [Ilya Semenov](https://github.com/IlyaSemenov) - **[SOUTH](https://south.io)**
-- [David Meir-Levy](https://github.com/davidmeirlevy) - **[https://www.davidlevy.co.il/](https://www.davidlevy.co.il/)**
+- [David Meir-Levy](https://github.com/davidmeirlevy) - **[Greenpress](https://github.com/greenpress/greenpress)**
 
 # License
 
