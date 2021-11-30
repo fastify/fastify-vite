@@ -1,4 +1,4 @@
-const { createElement, renderToString } = require('solid-js/web')
+const { createComponent, renderToStringAsync } = require('solid-js/web')
 const devalue = require('devalue')
 const { ContextProvider } = require('./context')
 
@@ -29,7 +29,8 @@ function createRenderFunction (createApp) {
       resolvedRoutes = await routes()
     }
     console.log('resolvedRoutes', resolvedRoutes)
-    const element = renderElement(req.url, () => App(resolvedRoutes), context, router)
+    console.log('App', App.toString())
+    const element = await renderElement(req.url, App, context, router, resolvedRoutes)
     const hydrationScript = getHydrationScript(req, context, hydration, resolvedRoutes)
 
     return {
@@ -77,20 +78,28 @@ function getHydrationScript (req, context, hydration, routes) {
   return hydrationScript
 }
 
-function renderElement (url, app, context, Router) {
-  console.log('renderElement()', Router)
-  if (Router) {
-    console.log('!')
-    return renderToString(
-      createElement(Router, {
-        children:createElement(ContextProvider, {
-          children: app()
-        })
+function renderElement (url, app, context, router, routes) {
+  if (router) {
+    return renderToStringAsync(() =>
+      createComponent(ContextProvider, {
+        value: context,
+        get children () {
+          return createComponent(router, {
+            get children() {
+              return createComponent(app, { routes })
+            }
+          })
+        }
       })
     )
   } else {
-    return renderToString(
-      h(ContextProvider, { context }, app()),
+    return renderToStringAsync(() =>
+      createComponent(ContextProvider, {
+        value: context,
+        get children () {
+          return createComponent(app)
+        },
+      }),
     )
   }
 }

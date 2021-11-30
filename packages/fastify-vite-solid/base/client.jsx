@@ -47,12 +47,12 @@ export function createApp (context) {
         //   return <Route path={path} element={<RouteComp />} />
         // })}
 
-function App (routes) {
+function App (props) {
   return (
     <>
       <h1>Examples</h1>
       <Routes>
-        <Route path="/" element={routes[0].component} />
+        <Route path="/" element={props.routes[0].component} />
       </Routes>
     </>
   )

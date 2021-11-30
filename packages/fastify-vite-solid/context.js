@@ -3,11 +3,8 @@ const { createContext } = require('solid-js')
 
 const Context = createContext({})
 
-function ContextProvider ({ children, context }) {
-  return createComponent(Context.Provider, {
-    value: context,
-    children: children,
-  })
+function ContextProvider (options) {
+  return createComponent(Context.Provider, options)
 }
 
 module.exports = { ContextProvider, Context }
