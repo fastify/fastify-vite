@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs solidjs-base",
+    "devinstall": "zx ../../devinstall.mjs solid-base",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
@@ -11,6 +11,6 @@
   "dependencies": {
     "fastify": "^3.17.0",
     "fastify-vite": "^2.3.1",
-    "fastify-vite-solidjs": "^2.3.1"
+    "fastify-vite-solid": "^2.3.1"
   }
 }
