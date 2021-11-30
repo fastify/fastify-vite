@@ -6,7 +6,7 @@ export default function Index () {
   return (
     <>
       <h1>Index Page</h1>
-      <p>Go to <Link to="/about">/about</Link></p>
+      <p>Go to <Link href="/about">/about</Link></p>
     </>
   )
 }
