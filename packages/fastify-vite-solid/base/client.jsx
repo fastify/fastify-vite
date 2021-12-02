@@ -52,7 +52,11 @@ function App (props) {
     <>
       <h1>Examples</h1>
       <Routes>
-        <Route path="/" element={props.routes[0].component} />
+        {props.routes.map(({ path, component: RouteComp }) => {
+          return (
+            <Route path={path} component={RouteComp} />
+          )
+        })}
       </Routes>
     </>
   )
