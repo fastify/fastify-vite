@@ -14,12 +14,11 @@ const kFirstRender = Symbol('kFirstRender')
 
 const isServer = typeof window === 'undefined'
 
-let firstRender = !isServer
+export let firstRender = !isServer
 
 function useHydration ({ getData, getPayload } = {}) {
   const globalProps = useGlobalProperties()
   const hydration = {
-    params: globalProps.params,
     $static: globalProps.$static,
     $global: globalProps.$global,
     $data: globalProps.$data,
@@ -90,15 +89,7 @@ async function hydrate (app) {
   } else {
     $payload = window[kPayload]
   }
-  let params
-  try {
-    params = useRoute().params
-  } catch {
-    // In case app is running without Vue Router
-  }
-
   const hydration = {
-    params,
     $payload,
     $payloadPath: (staticPayload) => {
       if (staticPayload) {
@@ -121,12 +112,12 @@ async function hydrate (app) {
       }),
     }),
   }
-  assign(app.config.globalProperties, hydration)
-  delete window[kGlobal]
-  delete window[kData]
-  delete window[kPayload]
-  delete window[kStaticPayload]
-  delete window[kAPI]
+  // assign(app.config.globalProperties, hydration)
+  // delete window[kGlobal]
+  // delete window[kData]
+  // delete window[kPayload]
+  // delete window[kStaticPayload]
+  // delete window[kAPI]
 }
 
 function useGlobalProperties () {

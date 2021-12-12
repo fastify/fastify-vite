@@ -8,10 +8,10 @@ const empty = {}
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
     const { entry, distManifest, hydration } = options
-    const { ctx, app, head, routes, router } = await createApp({ fastify, req, reply })
-
-    // On the client, hydrate() from fastify-vite/client repeats these steps
-    assign(app.config.globalProperties, {
+    const { ctx, app, head, routes, router } = await createApp({
+      fastify,
+      req,
+      reply,
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],
       [hydration.data]: req[hydration.data],
@@ -59,8 +59,13 @@ function getHydrationScript (req, context, hydration, routes) {
   if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
     if (routes) {
-      const clientRoutes = routes.map(({ path, componentPath }) => {
-        return { path, componentPath }
+      const clientRoutes = routes.map(({ path, getPayload, getData, componentPath }) => {
+        return {
+          hasPayload: !!getPayload,
+          hasData: !!getData,
+          path,
+          componentPath,
+        }
       })
       hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
     }
