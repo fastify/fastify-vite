@@ -9,7 +9,7 @@
 <script>
 import { useHead } from '@vueuse/head'
 import { useRoute } from 'vue-router'
-import { hydrationDone } from 'fastify-vite-vue/client.mjs'
+import { hydrationDone } from 'fastify-vite-vue/app'
 import head from '@app/head.js'
 
 export default {

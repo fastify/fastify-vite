@@ -37,14 +37,14 @@
   },
   "version": "2.3.1",
   "dependencies": {
-    "@vitejs/plugin-vue": "1.9.3",
-    "@vitejs/plugin-vue-jsx": "1.2.0",
-    "@vue/server-renderer": "3.2.19",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "@vitejs/plugin-vue-jsx": "^1.3.1",
+    "@vue/server-renderer": "^3.2.24",
     "@vueuse/head": "0.6.0",
     "devalue": "2.0.1",
     "manifetch": "^0.0.3",
     "vite-plugin-blueprint": "^0.0.4",
-    "vue": "3.2.19",
+    "vue": "^3.2.24",
     "vue-router": "4.0.10"
   }
 }
