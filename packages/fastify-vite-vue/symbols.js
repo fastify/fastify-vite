@@ -8,6 +8,9 @@ const kAPI = Symbol.for('kAPI')
 const kIsomorphic = Symbol('kIsomorphic')
 const kFirstRender = Symbol('kFirstRender')
 
+const kFuncValue = Symbol('kFuncValue')
+const kFuncExecuted = Symbol('kFuncExecuted')
+
 module.exports = {
   kRoutes,
   kData,
@@ -17,4 +20,6 @@ module.exports = {
   kAPI,
   kIsomorphic,
   kFirstRender,
+  kFuncValue,
+  kFuncExecuted,
 }
