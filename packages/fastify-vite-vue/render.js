@@ -1,9 +1,6 @@
 const { renderToString } = require('@vue/server-renderer')
 const { renderHeadToString } = require('@vueuse/head')
 const devalue = require('devalue')
-const { assign } = Object
-
-const empty = {}
 
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
@@ -25,7 +22,7 @@ function createRenderFunction (createApp) {
     }
 
     const element = await renderToString(app, ctx)
-    const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
+    const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : {}
     const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
     const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration, routes)
 
