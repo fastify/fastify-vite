@@ -9,7 +9,6 @@
   "deprecated": false,
   "description": "Vue renderer for fastify-vite.",
   "files": [
-    "app.js",
     "base/client.js",
     "base/client.vue",
     "base/entry/client.js",
@@ -17,7 +16,8 @@
     "base/head.js",
     "base/index.html",
     "base/routes.js",
-    "client.mjs",
+    "app.js",
+    "routing.js",
     "entry.js",
     "handler.js",
     "html.js",

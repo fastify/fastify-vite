@@ -30,7 +30,6 @@ export function getData () {
   }
 }
 
-
 export default {
   setup () {
     return useData()
