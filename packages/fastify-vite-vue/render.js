@@ -57,7 +57,12 @@ function getHydrationScript (req, context, hydration, routes) {
   if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
     if (routes) {
-      const clientRoutes = routes.map(({ path, getPayload, getData, componentPath }) => {
+      const clientRoutes = routes.map(({
+        path,
+        getPayload,
+        getData,
+        componentPath
+      }) => {
         return {
           hasPayload: !!getPayload,
           hasData: !!getData,
@@ -65,23 +70,23 @@ function getHydrationScript (req, context, hydration, routes) {
           componentPath,
         }
       })
-      hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
+      hydrationScript += addHydration('kRoutes', clientRoutes)
     }
-    if (globalData) {
-      hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
-    }
-    if (data) {
-      hydrationScript += `window[Symbol.for('kData')] = ${devalue(data)}\n`
-    }
-    if (payload) {
-      hydrationScript += `window[Symbol.for('kPayload')] = ${devalue(payload)}\n`
-    }
-    if (api) {
-      hydrationScript += `window[Symbol.for('kAPI')] = ${devalue(api)}\n`
-    }
+    hydrationScript += addHydration('kGlobal', globalData)
+    hydrationScript += addHydration('kData', data)
+    hydrationScript += addHydration('kPayload', payload)
+    hydrationScript += addHydration('kAPI', api)
     hydrationScript += '</script>'
   }
   return hydrationScript
+}
+
+function addHydration (key, hydration) {
+  if (hydration) {
+    return `window[Symbol.for('${key}')] = ${devalue(hydration)}\n`
+  } else {
+    return ''
+  }
 }
 
 function renderPreloadLinks (modules, manifest) {
