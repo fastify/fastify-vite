@@ -28,14 +28,20 @@ function createBeforeEachHandler (resolvedRoutes) {
   } = makeRouteLookups(resolvedRoutes)
   return async (to) => {
     const ctx = useIsomorphic({ params: to.params })
-    const { hasPayload, hasData, component } = getRouteMeta(to, routeMap, parsedRoutes)
+    const {
+      hasPayload,
+      hasData,
+      component,
+    } = getRouteMeta(to, routeMap, parsedRoutes)
+    if (!component) {
+      return false
+    }
     if (!!window[kStaticPayload] && hasPayload) {
       try {
         const response = await window.fetch(getPayloadPath(to))
         ctx.$payload = await response.json()
       } catch (error) {
-        console.error(error)
-        ctx.$error.getPayload = error
+        ctx.$errors.getPayload = error
       }
     } else if (!appState[kFirstRender] && (hasPayload || hasData)) {
       if (hasPayload) {
@@ -43,7 +49,7 @@ function createBeforeEachHandler (resolvedRoutes) {
           const response = await window.fetch(getPayloadPath(to))
           ctx.$payload = await response.json()
         } catch (error) {
-          ctx.$error.getPayload = error
+          ctx.$errors.getPayload = error
         }
       }
       if (hasData) {
@@ -51,7 +57,7 @@ function createBeforeEachHandler (resolvedRoutes) {
         try {
           ctx.$data = await getData(ctx)
         } catch (error) {
-          ctx.$error.getData = error
+          ctx.$errors.getData = error
         }
       }
     }
@@ -66,7 +72,7 @@ module.exports = {
 
 function getRouteMeta (route, map, parsed) {
   const match = matchRoute(route.path, parsed)
-  return map[match[0].old]
+  return (match.length > 0 && map[match[0].old]) || {}
 }
 
 function makeRouteLookups (resolvedRoutes) {

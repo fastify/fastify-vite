@@ -1,4 +1,4 @@
-const { getCurrentInstance } = require('vue')
+const { reactive, getCurrentInstance } = require('vue')
 const manifetch = require('manifetch')
 
 const { useSSRContext } = require('vue')
@@ -21,19 +21,21 @@ function useIsomorphic (append) {
   if (isServer) {
     const ssrContext = useSSRContext()
     return Object.assign({
-      $error: {},
+      $error: ssrContext.req.$error,
+      $errors: ssrContext.$errors,
       $payload: ssrContext.$payload,
-      // TODO
       $global: ssrContext.$global,
       $data: ssrContext.$data,
       $api: ssrContext.$api,
     }, append)
   } else {
     if (!appState[kIsomorphic]) {
-      appState[kIsomorphic] = {}
+      appState[kIsomorphic] = reactive({
+        $error: null,
+        $errors: {},
+      })
     }
     Object.assign(appState[kIsomorphic], {
-      $error: {},
       $global: window[kGlobal],
       $api: new Proxy({ ...window[kAPI] }, {
         get: manifetch({
@@ -61,19 +63,21 @@ function hydrationDone () {
 }
 
 function usePayload () {
-  const { $error, $payload } = useIsomorphic()
-  if ('getPayload' in $error) {
-    throw $error.getPayload
+  const ctx = useIsomorphic()
+  if ('getPayload' in ctx.$errors) {
+    ctx.$error = ctx.$errors.getPayload
+    return false
   }
-  return $payload
+  return ctx.$payload
 }
 
 function useData () {
-  const { $error, $data } = useIsomorphic()
-  if ('getData' in $error) {
-    throw $error.getData
+  const ctx = useIsomorphic()
+  if ('getData' in ctx.$errors) {
+    ctx.$error = ctx.$errors.getData
+    return
   }
-  return $data
+  return ctx.$data
 }
 
 function useGlobalProperties () {

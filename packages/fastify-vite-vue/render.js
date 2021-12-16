@@ -14,6 +14,7 @@ function createRenderFunction (createApp) {
       [hydration.data]: req[hydration.data],
       $payloadPath: () => `/-/payload${req.routerPath}`,
       $api: req.api && req.api.client,
+      $errors: {},
     })
 
     if (router) {
