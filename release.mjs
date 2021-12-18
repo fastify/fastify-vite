@@ -14,7 +14,7 @@ if (process.argv.includes('--test')) {
   await main()
 }
 
-async function bump (currentRelease, releaseType, tag) {
+function bump (currentRelease, releaseType, tag) {
   const supportedReleaseTypes = ['patch', 'minor', 'major']
 
   let [
@@ -76,24 +76,24 @@ async function main () {
   }
 }
 
-async function test () {
-  await check('patch', async (assert) => {
-    assert.is(await bump('0.0.1', 'patch') , '0.0.2')
+function test () {
+  check('patch', ({is}) => {
+    is(bump('0.0.1', 'patch') , '0.0.2')
   })
-  await check('minor', async (assert) => {
-    assert.is(await bump('0.0.1', 'minor') , '0.1.0')
+  check('minor', ({is}) => {
+    is(bump('0.0.1', 'minor') , '0.1.0')
   })
-  await check('major', async (assert) => {
-    assert.is(await bump('0.0.1', 'major') , '1.0.0')
+  check('major', ({is}) => {
+    is(bump('0.0.1', 'major') , '1.0.0')
   })
-  await check('new premajor', async (assert) => {
-    assert.is(await bump('0.0.1', 'premajor', 'alpha') , '1.0.0-alpha.0')
+  check('new premajor', ({is}) => {
+    is(bump('0.0.1', 'premajor', 'alpha') , '1.0.0-alpha.0')
   })
-  await check('premajor increment', async (assert) => {
-    assert.is(await bump('1.0.0-alpha.0', 'premajor') , '1.0.0-alpha.1')
+  check('premajor increment', ({is}) => {
+    is(bump('1.0.0-alpha.0', 'premajor') , '1.0.0-alpha.1')
   })
-  await check('premajor to major', async (assert) => {
-    assert.is(await bump('1.0.0-alpha.0', 'major') , '1.0.0')
+  check('premajor to major', ({is}) => {
+    is(bump('1.0.0-alpha.0', 'major') , '1.0.0')
   })
 }
 
