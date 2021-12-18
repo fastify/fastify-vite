@@ -13,8 +13,11 @@
     "base/client.vue",
     "base/entry/client.js",
     "base/entry/server.js",
+    "base/index.css",
     "base/head.js",
     "base/index.html",
+    "base/error.vue",
+    "base/router.vue",
     "base/routes.js",
     "app.js",
     "routing.js",
@@ -25,6 +28,7 @@
     "options.js",
     "render.js",
     "server.js",
+    "symbols.js",
     "vite.js"
   ],
   "homepage": "https://github.com/terixjs/fastify-vite/tree/main/packages/fastify-vite-vue",
@@ -35,7 +39,7 @@
     "type": "git",
     "url": "git+https://github.com/terixjs/fastify-vite.git"
   },
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "dependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
     "@vitejs/plugin-vue-jsx": "^1.3.1",
