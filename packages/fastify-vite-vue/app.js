@@ -1,31 +1,94 @@
-const { values } = Object
+const { reactive, getCurrentInstance } = require('vue')
+const manifetch = require('manifetch')
 
-function loadRoutes (views) {
-  const routes = []
-  for (const view of values(views)) {
-    if (view.path && Array.isArray(view.path)) {
-      routes.push(
-        ...view.path.map((path) => {
-          const { default: component, ...viewProps } = view
-          return { path, component, ...viewProps }
-        }),
-      )
-    } else if (view.path) {
-      const { path, default: component, ...viewProps } = view
-      routes.push({ path, component, ...viewProps })
-    } else {
-      throw new Error('View components need to export a `path` property.')
-    }
-  }
-  return routes.sort((a, b) => {
-    if (b.path > a.path) {
-      return 1
-    } else if (a.path > b.path) {
-      return -1
-    } else {
-      return 0
-    }
-  })
+const { useSSRContext } = require('vue')
+const {
+  kData,
+  kPayload,
+  kGlobal,
+  kAPI,
+  kIsomorphic,
+  kFirstRender,
+} = require('./symbols.js')
+
+const isServer = typeof window === 'undefined'
+const appState = {
+  [kIsomorphic]: null,
+  [kFirstRender]: !isServer,
 }
 
-module.exports = { loadRoutes }
+function useIsomorphic (append) {
+  if (isServer) {
+    const ssrContext = useSSRContext()
+    return Object.assign({
+      $error: ssrContext.req.$error,
+      $errors: ssrContext.$errors,
+      $payload: ssrContext.$payload,
+      $global: ssrContext.$global,
+      $data: ssrContext.$data,
+      $api: ssrContext.$api,
+    }, append)
+  } else {
+    if (!appState[kIsomorphic]) {
+      appState[kIsomorphic] = reactive({
+        $error: null,
+        $errors: {},
+      })
+    }
+    Object.assign(appState[kIsomorphic], {
+      $global: window[kGlobal],
+      $api: new Proxy({ ...window[kAPI] }, {
+        get: manifetch({
+          prefix: '',
+          fetch: (...args) => window.fetch(...args),
+        }),
+      }),
+    }, append)
+    if (!appState[kIsomorphic].$data) {
+      appState[kIsomorphic].$data = window[kData]
+      delete window[kData]
+    }
+    if (!appState[kIsomorphic].$payload) {
+      appState[kIsomorphic].$payload = window[kPayload]
+      delete window[kPayload]
+    }
+    return appState[kIsomorphic]
+  }
+}
+
+function hydrationDone () {
+  if (appState[kFirstRender]) {
+    appState[kFirstRender] = false
+  }
+}
+
+function usePayload () {
+  const ctx = useIsomorphic()
+  if ('getPayload' in ctx.$errors) {
+    ctx.$error = ctx.$errors.getPayload
+    return false
+  }
+  return ctx.$payload
+}
+
+function useData () {
+  const ctx = useIsomorphic()
+  if ('getData' in ctx.$errors) {
+    ctx.$error = ctx.$errors.getData
+    return
+  }
+  return ctx.$data
+}
+
+function useGlobalProperties () {
+  return getCurrentInstance().appContext.app.config.globalProperties
+}
+
+module.exports = {
+  useIsomorphic,
+  usePayload,
+  useData,
+  appState,
+  hydrationDone,
+  useGlobalProperties,
+}

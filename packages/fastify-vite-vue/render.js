@@ -1,22 +1,20 @@
 const { renderToString } = require('@vue/server-renderer')
 const { renderHeadToString } = require('@vueuse/head')
 const devalue = require('devalue')
-const { assign } = Object
-
-const empty = {}
 
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
     const { entry, distManifest, hydration } = options
-    const { ctx, app, head, routes, router } = await createApp({ fastify, req, reply })
-
-    // On the client, hydrate() from fastify-vite/client repeats these steps
-    assign(app.config.globalProperties, {
+    const { ctx, app, head, routes, router } = await createApp({
+      fastify,
+      req,
+      reply,
       [hydration.global]: req[hydration.global],
       [hydration.payload]: req[hydration.payload],
       [hydration.data]: req[hydration.data],
       $payloadPath: () => `/-/payload${req.routerPath}`,
       $api: req.api && req.api.client,
+      $errors: {},
     })
 
     if (router) {
@@ -25,7 +23,7 @@ function createRenderFunction (createApp) {
     }
 
     const element = await renderToString(app, ctx)
-    const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : empty
+    const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : {}
     const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
     const hydrationScript = getHydrationScript(req, app.config.globalProperties, hydration, routes)
 
@@ -59,26 +57,36 @@ function getHydrationScript (req, context, hydration, routes) {
   if (routes || globalData || data || payload || api) {
     hydrationScript += '<script>'
     if (routes) {
-      const clientRoutes = routes.map(({ path, componentPath }) => {
-        return { path, componentPath }
+      const clientRoutes = routes.map(({
+        path,
+        getPayload,
+        getData,
+        componentPath
+      }) => {
+        return {
+          hasPayload: !!getPayload,
+          hasData: !!getData,
+          path,
+          componentPath,
+        }
       })
-      hydrationScript += `window[Symbol.for('kRoutes')] = ${devalue(clientRoutes)}\n`
+      hydrationScript += addHydration('kRoutes', clientRoutes)
     }
-    if (globalData) {
-      hydrationScript += `window[Symbol.for('kGlobal')] = ${devalue(globalData)}\n`
-    }
-    if (data) {
-      hydrationScript += `window[Symbol.for('kData')] = ${devalue(data)}\n`
-    }
-    if (payload) {
-      hydrationScript += `window[Symbol.for('kPayload')] = ${devalue(payload)}\n`
-    }
-    if (api) {
-      hydrationScript += `window[Symbol.for('kAPI')] = ${devalue(api)}\n`
-    }
+    hydrationScript += addHydration('kGlobal', globalData)
+    hydrationScript += addHydration('kData', data)
+    hydrationScript += addHydration('kPayload', payload)
+    hydrationScript += addHydration('kAPI', api)
     hydrationScript += '</script>'
   }
   return hydrationScript
+}
+
+function addHydration (key, hydration) {
+  if (hydration) {
+    return `window[Symbol.for('${key}')] = ${devalue(hydration)}\n`
+  } else {
+    return ''
+  }
 }
 
 function renderPreloadLinks (modules, manifest) {
