@@ -71,7 +71,7 @@ async function main () {
     pkgInfo.version = newVersion
     await fs.writeFile(rendererPackage, JSON.stringify(pkgInfo, null, 2))
     if (!dry && !process.argv.includes('--dry')) {
-      await $`npm publish ./${dirname(rendererPackage)}`
+      await $`npm publish ./${path.dirname(rendererPackage)}`
     }
   }
 }
