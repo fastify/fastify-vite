@@ -61,7 +61,7 @@ function getHydrationScript (req, context, hydration, routes) {
         path,
         getPayload,
         getData,
-        componentPath
+        componentPath,
       }) => {
         return {
           hasPayload: !!getPayload,

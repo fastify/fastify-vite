@@ -28,6 +28,7 @@ function bump (currentRelease, releaseType, tag) {
   if (currentTag) {
     if (releaseType === 'premajor') {
       bumped = `${parsedRelease}-${currentTag}.${++tagVersion}`
+      tag = currentTag
     } else if (releaseType === 'major') {
       bumped = parsedRelease
     } else {
@@ -44,7 +45,7 @@ function bump (currentRelease, releaseType, tag) {
     throw new Error(`Supported release types: ${supportedReleaseTypes.join(', ')}.`)
   }
 
-  return bumped
+  return [bumped, tag]
 }
 
 async function main () {
@@ -54,7 +55,7 @@ async function main () {
 
   const { dry, tag } = parseFlags()
   const pkgInfo = await fs.readFile('packages/fastify-vite/package.json', 'utf8')
-  const newVersion = await bump(JSON.parse(pkgInfo).version, process.argv[3], tag)
+  const [newVersion, newTag] = await bump(JSON.parse(pkgInfo).version, process.argv[3], tag)
 
   for (const examplePackage of await globby('examples/*/package.json')) {
     const pkgInfo = JSON.parse(await fs.readFile(examplePackage, 'utf8'))
@@ -71,7 +72,11 @@ async function main () {
     pkgInfo.version = newVersion
     await fs.writeFile(rendererPackage, JSON.stringify(pkgInfo, null, 2))
     if (!dry && !process.argv.includes('--dry')) {
-      await $`npm publish ./${path.dirname(rendererPackage)}`
+      if (newTag) {
+        await $`npm publish ./${path.dirname(rendererPackage)} --tag ${newTag}`
+      } else {
+        await $`npm publish ./${path.dirname(rendererPackage)}`
+      }
     }
   }
 }
