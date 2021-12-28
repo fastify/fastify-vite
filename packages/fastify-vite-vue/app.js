@@ -1,11 +1,11 @@
-const { reactive, getCurrentInstance } = require('vue')
+const { reactive, getCurrentInstance, useSSRContext } = require('vue')
+const { useRoute } = require('vue-router')
 const manifetch = require('manifetch')
-
-const { useSSRContext } = require('vue')
 const {
   kData,
   kPayload,
   kGlobal,
+  kStaticPayload,
   kAPI,
   kIsomorphic,
   kFirstRender,
@@ -84,11 +84,32 @@ function useGlobalProperties () {
   return getCurrentInstance().appContext.app.config.globalProperties
 }
 
+function usePayloadPath (route) {
+  if (window[kStaticPayload]) {
+    let { pathname } = Object.assign({}, document.location)
+    if (pathname.endsWith('/')) {
+      pathname = `${pathname}index`
+    }
+    return `${pathname.replace('.html', '')}/index.json`
+  } else {
+    return `/-/payload${route.path}`
+  }
+}
+
+async function fetchPayload (route) {
+  const payloadURL = usePayloadPath(route)
+  const response = await window.fetch(payloadURL)
+  return response.json()
+}
+
 module.exports = {
   useIsomorphic,
   usePayload,
   useData,
+  useRoute,
   appState,
   hydrationDone,
   useGlobalProperties,
+  usePayloadPath,
+  fetchPayload,
 }

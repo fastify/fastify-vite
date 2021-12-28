@@ -3,7 +3,7 @@ const {
   match: matchRoute,
 } = require('matchit')
 const { getRoutes } = require('fastify-vite/app')
-const { appState, useIsomorphic } = require('./app')
+const { appState, useIsomorphic, getPayloadPath } = require('./app')
 const {
   kRoutes,
   kFirstRender,
@@ -68,6 +68,7 @@ module.exports = {
   getRoutes,
   hydrateRoutes,
   createBeforeEachHandler,
+  getPayloadPath,
 }
 
 function getRouteMeta (route, map, parsed) {
@@ -83,18 +84,6 @@ function makeRouteLookups (resolvedRoutes) {
     parsed.push(parseRoute(route.path))
   }
   return { map, parsed }
-}
-
-function getPayloadPath (route) {
-  if (window[kStaticPayload]) {
-    let { pathname } = Object.assign({}, document.location)
-    if (pathname.endsWith('/')) {
-      pathname = `${pathname}index`
-    }
-    return `${pathname.replace('.html', '')}/index.json`
-  } else {
-    return `/-/payload${route.path}`
-  }
 }
 
 function memoized (func) {
