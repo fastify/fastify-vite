@@ -1,68 +1,48 @@
 
-import { fileURLToPath } from 'url'
+const root = path.resolve(__dirname)
+const { name: example } = path.parse(process.cwd())
+const exRoot = path.resolve(__dirname, 'examples', example)
 
-$.quote = s => s
-
-const { entries } = Object
-
-let root = fileURLToPath(path.dirname(import.meta.url))
-let [example, exRoot, deps] = await parseArgv(root)
-
-let pkgInfos = {}
-
-await cd(root)
+if (!fs.existsSync(exRoot)) {
+  console.log('Must be called from a directory under examples/.')
+  process.exit()
+}
 
 await $`rm -rf ${exRoot}/node_modules/vite`
 await $`rm -rf ${exRoot}/node_modules/.vite`
 
-for (let pkg of deps.local) {
-  await $`rm -rf ${exRoot}/node_modules/${pkg}`
-  let pkgRoot = `${root}/packages/${pkg}`
-  let pkgInfo = await readJSON(`${pkgRoot}/package.json`)
-  pkgInfos[pkg] = pkgInfo
-  const subDeps = entries(pkgInfo.dependencies).map(([n, v]) => `${n}@${v}`)
-  await cd(`${root}/${exRoot}`)
-  await $`npm install --silent --force ${deps.external.join(' ')} ${subDeps.join(' ')}`
-  await cd(root)
-}
+const deps = require(path.join(exRoot, 'package.deps.json'))
+const localPackages = fs.readdirSync(path.join(root, 'packages'))
 
-// Hard copy packages after all calls to npm install have ended
-// If you run npm install on the example folder, you also need to run devinstall again
-for (let pkg of deps.local) {
-  await $`rm -r ${root}/${exRoot}/node_modules/${pkg}`
-  await $`cp -r ${root}/packages/${pkg} ${root}/${exRoot}/node_modules/${pkg}`
-  await $`cp ${root}/${exRoot}/package.dist.json ${root}/${exRoot}/package.json`
-}
+const externalDeps = Object.fromEntries(Object.entries(deps).filter(([dep]) => {
+  return !localPackages.includes(dep)
+}))
 
-async function getDeps (example, exRoot) {
-  const examplePackage = await readJSON(`${root}/${exRoot}/package.dist.json`)
-  const pkgInfo = await fs.readdir(path.join(root, 'packages'))
-  return {
-    local: Object.keys(examplePackage.dependencies).filter(dep => pkgInfo.includes(dep)),
-    external: Object.keys(examplePackage.dependencies).filter(dep => !pkgInfo.includes(dep))
+const devDeps = Object.fromEntries(Object.entries(deps).filter(([dep]) => {
+  return localPackages.includes(dep)
+}))
+
+for (const devDep of Object.keys(devDeps)) {
+  for (const [dep, version] of Object.entries(
+    require(path.join(root, 'packages', devDep, 'package.json')).dependencies)
+  ) {
+    externalDeps[dep] = version
   }
 }
 
-async function parseArgv () {
-  const example = process.argv[3]
-  const exRoot = `examples/${example}`
-  const deps = await getDeps(path.join(exRoot, 'package.dist.json'), exRoot)
-  if (!example) {
-    console.error('Usage: npm run devinstall -- <dir>')
-    process.exit(1)
-  }
-  if (!await fs.stat(path.join(root, exRoot)).catch(() => false)) {
-    console.error(`Directory ${join(root, exRoot)} does not exist.`)
-    process.exit(1)    
-  }
-  return [example, exRoot, deps]
+await updateDeps(exRoot, externalDeps)
+await $`npm install -f`
+
+for (const devDep of Object.keys(devDeps)) {
+  await $`cp -r ${root}/packages/${devDep} ${exRoot}/node_modules/${devDep}`
 }
 
-async function readJSON(path) {
-  const json = await fs.readFile(path, 'utf8')
-  return JSON.parse(json)
-}
-
-async function writeJSON(path, contents) {
-  await fs.writeFile(path, contents)
+async function updateDeps(exRoot, dependencies) {
+  await fs.writeFile(
+    path.join(exRoot, 'package.json'),
+    JSON.stringify({
+      ...require(path.join(exRoot, 'package.json')),
+      dependencies,
+    }, null, 2)
+  )
 }
