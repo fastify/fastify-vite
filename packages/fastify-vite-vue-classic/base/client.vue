@@ -1,10 +1,5 @@
 <template>
-  <template v-if="error">
-    <Error :error="error" />
-  </template>
-  <template v-else>
-    <Router />
-  </template>
+  <component :is="component" :error="error" />
 </template>
 
 <script>
@@ -22,7 +17,15 @@ export default {
     Error,
     Router,
   },
+  data: () => ({
+    component: null,
+    error: null,
+  }),
+  errorCaptured (error) {
+    this.error = error
+  },
   created () {
+    this.component = this.error ? 'Error' : 'Router'
     // // const ctx = useIsomorphic()
 
     // // if (typeof head?.default === 'function') {

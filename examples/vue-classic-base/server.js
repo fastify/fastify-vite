@@ -7,8 +7,6 @@ async function main () {
   const app = Fastify()
   const root = import.meta.url
 
-  app.get('/', (_, reply) => reply.redirect('/one'))
-
   await app.register(FastifyVite, { root, renderer })
   await app.vite.commands()
 
