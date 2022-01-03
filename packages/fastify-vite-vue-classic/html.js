@@ -2,13 +2,14 @@ const unescapedBacktick = /(?<!\\)`/g
 
 function compileIndexHtml (source) {
   const indexHtml = (
-    '(function (req, { attrs, head, element, hydration }) {\n' +
+    '(function (req, { element, hydration }) {\n' +
+    `  head = {}\n` + 
     `  return \`${
       source
         // eslint-disable-next-line no-template-curly-in-string
-        .replace('<html>', '<html${attrs.html ? attrs.html : \'\'}>')
+        // .replace('<html>', '<html${attrs.html ? attrs.html : \'\'}>')
         // eslint-disable-next-line no-template-curly-in-string
-        .replace('<body>', '<body${attrs.body ? attrs.body : \'\'}>')
+        // .replace('<body>', '<body${attrs.body ? attrs.body : \'\'}>')
         .replace(unescapedBacktick, '\\`')
     }\`\n` +
     '})'
