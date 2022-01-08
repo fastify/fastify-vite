@@ -215,7 +215,7 @@ async function fastifyVite (fastify, options) {
             filePath,
             await readFile(resolve(renderer.path, 'base', blueprintFile)),
           )
-          console.log(`Ejected ${filePath}.`)
+          console.log(`ℹ ejected ${filePath}.`)
         }
       }
       process.exit()
@@ -262,11 +262,7 @@ async function fastifyVite (fastify, options) {
         const path = req.raw.url
         const result = await generateRoute(fastify.inject({ url: path }), path, options)
         if (result) {
-          reply.send(`Generated fresh static page for URL ${
-            req.raw.url
-          } for build at ${
-            fastify.vite.options.distDir
-          }`)
+          reply.send(`ℹ regenerated ${req.raw.url}`)
           generated(result, fastify.vite.options.distDir)
         }
       })
@@ -283,7 +279,7 @@ async function fastifyVite (fastify, options) {
             console.error(err)
             process.exit(1)
           }
-          console.log(`Generate Server listening on ${address}`)
+          console.log(`ℹ generate server listening on ${address}`)
         })
       })
     }
