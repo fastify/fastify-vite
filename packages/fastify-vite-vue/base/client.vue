@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { ref, computed, onErrorCaptured } from 'vue'
+import { computed, onErrorCaptured } from 'vue'
 import { useHead } from '@vueuse/head'
 import { useIsomorphic } from 'fastify-vite-vue/app'
 
