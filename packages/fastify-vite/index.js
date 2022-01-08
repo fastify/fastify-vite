@@ -244,11 +244,14 @@ async function fastifyVite (fastify, options) {
         tasks.push(async () => {
           const result = await generateRoute(fastify.inject({ url: path }), path, options)
           if (result) {
-            generated(result, fastify.vite.options.distDir)
+            generated(fastify, result, fastify.vite.options.distDir)
           }
         })
       }
       await Promise.all(tasks.map(task => task()))
+      if (fastify.vite.options.generate.done) {
+        await fastify.vite.options.generate.done(fastify)
+      }
       if (!fastify.vite.options.generate.server.enabled) {
         process.exit()
       }
@@ -263,7 +266,7 @@ async function fastifyVite (fastify, options) {
         const result = await generateRoute(fastify.inject({ url: path }), path, options)
         if (result) {
           reply.send(`ℹ regenerated ${req.raw.url}`)
-          generated(result, fastify.vite.options.distDir)
+          generated(fastify, result, fastify.vite.options.distDir)
         }
       })
       // @Matteo
