@@ -228,7 +228,7 @@ async function fastifyVite (fastify, options) {
       const { generated } = fastify.vite.options.generate
       const paths = []
       if (typeof fastify.vite.options.generate.paths === 'function') {
-        await fastify.vite.options.generate.paths(path => paths.push(path))
+        await fastify.vite.options.generate.paths(fastify, (path) => paths.push(path))
       } else if (Array.isArray(fastify.vite.options.generate.paths)) {
         paths.push(...fastify.vite.options.generate.paths)
       } else {
