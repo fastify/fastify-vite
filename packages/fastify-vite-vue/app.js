@@ -90,7 +90,7 @@ function usePayloadPath (route) {
     if (pathname.endsWith('/')) {
       pathname = `${pathname}index`
     }
-    return `${pathname.replace('.html', '')}/index.json`
+    return `${pathname.replace('.html', '')}.json`
   } else {
     return `/-/payload${route.path}`
   }
