@@ -222,7 +222,9 @@ async function fastifyVite (fastify, options) {
     }
     if (fastify.vite.options.build) {
       await build(fastify.vite.options)
-      process.exit()
+      setImmediate(() => {
+        process.exit()
+      })
     }
     if (fastify.vite.options.generate.enabled || fastify.vite.options.generate.server.enabled) {
       const { generated } = fastify.vite.options.generate
@@ -253,7 +255,9 @@ async function fastifyVite (fastify, options) {
         await fastify.vite.options.generate.done(fastify)
       }
       if (!fastify.vite.options.generate.server.enabled) {
-        process.exit()
+        setImmediate(() => {
+          process.exit(0)
+        })
       }
     }
 
@@ -280,7 +284,9 @@ async function fastifyVite (fastify, options) {
         builder.listen(port, (err, address) => {
           if (err) {
             console.error(err)
-            process.exit(1)
+            setImmediate(() => {
+              process.exit(1)
+            })
           }
           console.log(`ℹ generate server listening on ${address}`)
         })
