@@ -24,7 +24,7 @@ await app.listen(3000)
 With that, create a view at `views/index.jsx`:
 
 ```jsx
-import React from 'react'
+import * as React from 'react'
 
 export default function Index () {
   return <h1>Hello World</h1>
