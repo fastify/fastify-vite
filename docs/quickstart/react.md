@@ -1,7 +1,7 @@
 # React 17+
 
 <div class="inline-code"><code>
-npm i <b>fastify</b> <b>fastify-vite</b> <b>fastify-vite-react</b> --save
+npm i <b>fastify</b> <b>fastify-vite</b> <b>fastify-vite-react</b> <b>react</b> <b>react-dom</b> --save
 </code></div>
 
 ## Minimal Boilerplate
@@ -24,6 +24,8 @@ await app.listen(3000)
 With that, create a view at `views/index.jsx`:
 
 ```jsx
+import React from 'react'
+
 export default function Index () {
   return <h1>Hello World</h1>
 }
@@ -32,7 +34,8 @@ export const path = '/'
 ```
 
 ::: tip
-View files can be named anything, in the examples `index.jsx` is always associated to `/` as a convention.
+View files can be named anything, in the examples `index.jsx` is always associated to `/` as a convention. <br />
+Please note that the view files must use the `.jsx` extension.
 :::
 
 And then, assuming you have saved the first snippet as `app.mjs`:
