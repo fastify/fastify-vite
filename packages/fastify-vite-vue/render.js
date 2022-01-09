@@ -72,10 +72,12 @@ function getHydrationScript (req, context, hydration, routes) {
       })
       hydrationScript += addHydration('kRoutes', clientRoutes)
     }
+    hydrationScript += addHydration('kAPI', api)
     hydrationScript += addHydration('kGlobal', globalData)
     hydrationScript += addHydration('kData', data)
+    hydrationScript += '</script>'
+    hydrationScript += '<script data-payload=true>'
     hydrationScript += addHydration('kPayload', payload)
-    hydrationScript += addHydration('kAPI', api)
     hydrationScript += '</script>'
   }
   return hydrationScript

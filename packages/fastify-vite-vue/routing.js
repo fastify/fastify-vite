@@ -3,7 +3,7 @@ const {
   match: matchRoute,
 } = require('matchit')
 const { getRoutes } = require('fastify-vite/app')
-const { appState, useIsomorphic, getPayloadPath } = require('./app')
+const { appState, useIsomorphic, usePayloadPath } = require('./app')
 const {
   kRoutes,
   kFirstRender,
@@ -38,7 +38,7 @@ function createBeforeEachHandler (resolvedRoutes) {
     }
     if (!!window[kStaticPayload] && hasPayload) {
       try {
-        const response = await window.fetch(getPayloadPath(to))
+        const response = await window.fetch(usePayloadPath(to))
         ctx.$payload = await response.json()
       } catch (error) {
         ctx.$errors.getPayload = error
@@ -46,7 +46,7 @@ function createBeforeEachHandler (resolvedRoutes) {
     } else if (!appState[kFirstRender] && (hasPayload || hasData)) {
       if (hasPayload) {
         try {
-          const response = await window.fetch(getPayloadPath(to))
+          const response = await window.fetch(usePayloadPath(to))
           ctx.$payload = await response.json()
         } catch (error) {
           ctx.$errors.getPayload = error
@@ -68,7 +68,7 @@ module.exports = {
   getRoutes,
   hydrateRoutes,
   createBeforeEachHandler,
-  getPayloadPath,
+  usePayloadPath,
 }
 
 function getRouteMeta (route, map, parsed) {
