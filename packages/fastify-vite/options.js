@@ -25,7 +25,7 @@ const defaults = {
   // Static generation options
   generate: {
     enabled: process.argv.includes('generate'),
-    generated ({ url, file, html, json }, distDir) {
+    generated (_, { url, file, html, json }, distDir) {
       console.log(`ℹ generated ${url}`)
     },
     server: {
