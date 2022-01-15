@@ -1,0 +1,5 @@
+{
+  "fastify": "^3.17.0",
+  "fastify-vite": "^3.0.0-alpha.3",
+  "fastify-vite-vue-classic": "^3.0.0-alpha.3"
+}

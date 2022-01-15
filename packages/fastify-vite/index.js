@@ -215,20 +215,22 @@ async function fastifyVite (fastify, options) {
             filePath,
             await readFile(resolve(renderer.path, 'base', blueprintFile)),
           )
-          console.log(`Ejected ${filePath}.`)
+          console.log(`ℹ ejected ${filePath}.`)
         }
       }
       process.exit()
     }
     if (fastify.vite.options.build) {
       await build(fastify.vite.options)
-      process.exit()
+      setImmediate(() => {
+        process.exit()
+      })
     }
     if (fastify.vite.options.generate.enabled || fastify.vite.options.generate.server.enabled) {
       const { generated } = fastify.vite.options.generate
       const paths = []
       if (typeof fastify.vite.options.generate.paths === 'function') {
-        await fastify.vite.options.generate.paths(path => paths.push(path))
+        await fastify.vite.options.generate.paths(fastify, (path) => paths.push(path))
       } else if (Array.isArray(fastify.vite.options.generate.paths)) {
         paths.push(...fastify.vite.options.generate.paths)
       } else {
@@ -244,13 +246,18 @@ async function fastifyVite (fastify, options) {
         tasks.push(async () => {
           const result = await generateRoute(fastify.inject({ url: path }), path, options)
           if (result) {
-            generated(result, fastify.vite.options.distDir)
+            generated(fastify, result, fastify.vite.options.distDir)
           }
         })
       }
       await Promise.all(tasks.map(task => task()))
+      if (fastify.vite.options.generate.done) {
+        await fastify.vite.options.generate.done(fastify)
+      }
       if (!fastify.vite.options.generate.server.enabled) {
-        process.exit()
+        setImmediate(() => {
+          process.exit(0)
+        })
       }
     }
 
@@ -262,12 +269,8 @@ async function fastifyVite (fastify, options) {
         const path = req.raw.url
         const result = await generateRoute(fastify.inject({ url: path }), path, options)
         if (result) {
-          reply.send(`Generated fresh static page for URL ${
-            req.raw.url
-          } for build at ${
-            fastify.vite.options.distDir
-          }`)
-          generated(result, fastify.vite.options.distDir)
+          reply.send(`ℹ regenerated ${req.raw.url}`)
+          generated(fastify, result, fastify.vite.options.distDir)
         }
       })
       // @Matteo
@@ -281,9 +284,11 @@ async function fastifyVite (fastify, options) {
         builder.listen(port, (err, address) => {
           if (err) {
             console.error(err)
-            process.exit(1)
+            setImmediate(() => {
+              process.exit(1)
+            })
           }
-          console.log(`Generate Server listening on ${address}`)
+          console.log(`ℹ generate server listening on ${address}`)
         })
       })
     }

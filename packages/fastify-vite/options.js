@@ -25,12 +25,8 @@ const defaults = {
   // Static generation options
   generate: {
     enabled: process.argv.includes('generate'),
-    generated ({ url, file, html, json }, distDir) {
-      console.log(`Generated static page for URL ${
-        url
-      } for build at ${
-        distDir
-      }`)
+    generated (_, { url, file, html, json }, distDir) {
+      console.log(`ℹ generated ${url}`)
     },
     server: {
       port: 5000,
