@@ -1,4 +1,5 @@
 
+import chokidar from 'chokidar'
 const root = path.resolve(__dirname)
 const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'examples', example)
@@ -11,38 +12,43 @@ if (!fs.existsSync(exRoot)) {
 await $`rm -rf ${exRoot}/node_modules/vite`
 await $`rm -rf ${exRoot}/node_modules/.vite`
 
-const deps = require(path.join(exRoot, 'package.deps.json'))
+const template = require(path.join(exRoot, 'package.json'))
 const localPackages = fs.readdirSync(path.join(root, 'packages'))
 
-const externalDeps = Object.fromEntries(Object.entries(deps).filter(([dep]) => {
-  return !localPackages.includes(dep)
-}))
+const { external, local } = template
+const dependencies = { ...external, ...local }
 
-const devDeps = Object.fromEntries(Object.entries(deps).filter(([dep]) => {
-  return localPackages.includes(dep)
-}))
-
-for (const devDep of Object.keys(devDeps)) {
+for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(
-    require(path.join(root, 'packages', devDep, 'package.json')).dependencies)
+    require(path.join(root, 'packages', localDep, 'package.json')).dependencies)
   ) {
-    externalDeps[dep] = version
+    dependencies[dep] = version
   }
 }
 
-await updateDeps(exRoot, externalDeps)
+await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
 
-for (const devDep of Object.keys(devDeps)) {
-  await $`cp -r ${root}/packages/${devDep} ${exRoot}/node_modules/${devDep}`
+const watchers = []
+
+for (const localDep of Object.keys(local)) {
+  await $`cp -r ${root}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
+  setImmediate(() => {
+    const watcher = chokidar.watch(`${root}/packages/${localDep}`, {
+      ignored: [/node_modules/],
+      ignoreInitial: true,
+    })
+    const changed = () => $`cp -r ${root}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
+    watcher.on('add', changed)
+    watcher.on('unlink', changed)
+    watcher.on('change', changed)
+    watchers.push(changed)
+  })
 }
 
-async function updateDeps(exRoot, dependencies) {
+async function createPackageFile(exRoot, dependencies) {
   await fs.writeFile(
     path.join(exRoot, 'package.json'),
-    JSON.stringify({
-      ...require(path.join(exRoot, 'package.json')),
-      dependencies,
-    }, null, 2)
+    JSON.stringify({ ...template, dependencies }, null, 2)
   )
 }
