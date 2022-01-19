@@ -1,19 +1,18 @@
 {
-  "type": "module",
-  "name": "vue-base",
+  "name": "react-base",
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs vue-base",
+    "devinstall": "zx ../../devinstall.mjs solid-base fastify-vite-solid",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
   },
-  "dependencies": {
+  "external": {
     "fastify": "^3.17.0"
   },
-  "localDependencies": {
-    "fastify-vite": "^3.0.0-alpha.12",
-    "fastify-vite-vue": "^3.0.0-alpha.12"
+  "local": {
+    "fastify-vite": "^2.3.1",
+    "fastify-vite-solid": "^2.3.1"
   }
 }

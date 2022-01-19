@@ -1,18 +1,18 @@
 {
-  "name": "react-base",
+  "name": "react-example",
   "private": true,
   "scripts": {
     "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs solid-base fastify-vite-solid",
+    "devinstall": "zx ../../devinstall.mjs react-base",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
   },
-  "dependencies": {
+  "external": {
     "fastify": "^3.17.0"
   },
-  "localDependencies": {
-    "fastify-vite": "^2.3.1",
-    "fastify-vite-solid": "^2.3.1"
+  "local": {
+    "fastify-vite": "^3.0.0-alpha.12",
+    "fastify-vite-react": "^3.0.0-alpha.12"
   }
 }
