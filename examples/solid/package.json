@@ -2,8 +2,8 @@
   "name": "react-base",
   "private": true,
   "scripts": {
-    "dev": "node server",
-    "devinstall": "zx ../../devinstall.mjs solid-base fastify-vite-solid",
+    "dev": "npm run devinstall && node server.js",
+    "devinstall": "zx ../../devinstall.mjs solid",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"

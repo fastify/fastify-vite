@@ -3,8 +3,8 @@
   "name": "vue-classic-example",
   "private": true,
   "scripts": {
-    "devinstall": "zx ../../devinstall.mjs .",
-    "dev": "node server.js",
+    "dev": "npm run devinstall && node server.js",
+    "devinstall": "zx ../../devinstall.mjs vue-classic",
     "build": "node server.js build",
     "start": "cross-env NODE_ENV=production node server.js"
   },
