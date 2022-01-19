@@ -2,7 +2,7 @@
   "name": "react-example",
   "private": true,
   "scripts": {
-    "dev": "npm run devinstall && node server.js",
+    "dev": "npm run devinstall -- node server.js",
     "devinstall": "zx ../../devinstall.mjs react",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",

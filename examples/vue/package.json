@@ -3,8 +3,7 @@
   "name": "vue-base",
   "private": true,
   "scripts": {
-    "dev": "npm run devinstall && node server",
-    "devinstall": "zx ../../devinstall.mjs vue",
+    "dev": "zx ../../devinstall.mjs vue -- node server.js",
     "build": "node server build",
     "serve": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server"
