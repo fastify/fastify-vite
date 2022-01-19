@@ -1,12 +1,17 @@
 {
   "type": "module",
-  "name": "vue-classic-base",
+  "name": "vue-classic-example",
   "private": true,
   "scripts": {
     "devinstall": "zx ../../devinstall.mjs .",
     "dev": "node server.js",
     "build": "node server.js build",
     "start": "cross-env NODE_ENV=production node server.js"
+  },
+  "localDependencies": {
+    "fastify": "^3.17.0",
+    "fastify-vite": "^3.0.0-alpha.3",
+    "fastify-vite-vue-classic": "^3.0.0-alpha.3"
   },
   "dependencies": {
     "fastify": "^3.17.0",
