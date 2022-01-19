@@ -9,7 +9,9 @@
     "debug": "node --inspect-brk server"
   },
   "dependencies": {
-    "fastify": "^3.17.0",
+    "fastify": "^3.17.0"
+  },
+  "localDependencies": {
     "fastify-vite": "^2.3.1",
     "fastify-vite-solid": "^2.3.1"
   }
