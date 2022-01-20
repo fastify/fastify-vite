@@ -16,8 +16,7 @@ await $`rm -rf ${exRoot}/node_modules/.vite`
 const template = require(path.join(exRoot, 'package.json'))
 const localPackages = fs.readdirSync(path.join(root, 'packages'))
 
-const { external, local } = template
-const dependencies = { ...external, ...local }
+const { external: dependencies, local } = template
 
 for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(

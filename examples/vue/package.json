@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "zx ../../devinstall.mjs vue -- node server.js",
     "build": "node server build",
-    "serve": "cross-env NODE_ENV=production node server",
+    "serve": "cross-env NODE_ENV=production node server.js",
     "debug": "node --inspect-brk server"
   },
   "external": {

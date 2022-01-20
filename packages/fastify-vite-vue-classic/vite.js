@@ -1,4 +1,4 @@
-const { createVuePlugin } = require('./plugin')
+const { createVuePlugin } = require('vite-plugin-vue2')
 const viteBlueprint = require('vite-plugin-blueprint')
 
 const dev = process.env.NODE_ENV !== 'production'
