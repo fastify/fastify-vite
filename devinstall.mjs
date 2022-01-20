@@ -16,7 +16,8 @@ await $`rm -rf ${exRoot}/node_modules/.vite`
 const template = require(path.join(exRoot, 'package.json'))
 const localPackages = fs.readdirSync(path.join(root, 'packages'))
 
-const { external: dependencies, local } = template
+const { external, local } = template
+const dependencies = { ...external }
 
 for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(
@@ -28,8 +29,6 @@ for (const localDep of Object.keys(local)) {
 
 await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
-
-const watchers = []
 
 for (const localDep of Object.keys(local)) {
   await $`cp -r ${root}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
@@ -44,7 +43,6 @@ for (const localDep of Object.keys(local)) {
   watcher.on('add', changed('A'))
   watcher.on('unlink', changed('D'))
   watcher.on('change', changed('M'))
-  watchers.push(changed)
 }
 
 await $`${command}`
