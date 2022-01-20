@@ -64,6 +64,7 @@
     "slash": "3.0.0",
     "source-map": "^0.7.3",
     "vite-plugin-blueprint": "^0.0.4",
+    "vite-plugin-vue2": "^1.9.2",
     "vue": "^2.6.14",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.5.3",
