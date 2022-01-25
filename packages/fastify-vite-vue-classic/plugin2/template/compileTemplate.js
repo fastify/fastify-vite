@@ -1,58 +1,23 @@
-import {
-  VueTemplateCompiler,
-  VueTemplateCompilerOptions,
-  ErrorWithRange,
-} from './types'
-
-import assetUrlsModule, {
-  AssetURLOptions,
-  TransformAssetUrlsOptions,
-} from './assetUrl'
+import assetUrlsModule from './assetUrl'
 import srcsetModule from './srcset'
 
 import consolidate from 'consolidate'
 import transpile from 'vue-template-es2015-compiler'
 
-export interface TemplateCompileOptions {
-  source: string
-  filename: string
-  compiler: VueTemplateCompiler
-  compilerOptions?: VueTemplateCompilerOptions
-  transformAssetUrls?: AssetURLOptions | boolean
-  transformAssetUrlsOptions?: TransformAssetUrlsOptions
-  preprocessLang?: string
-  preprocessOptions?: any
-  transpileOptions?: any
-  isProduction?: boolean
-  isFunctional?: boolean
-  optimizeSSR?: boolean
-  prettify?: boolean
-}
-
-export interface TemplateCompileResult {
-  ast: Object | undefined
-  code: string
-  source: string
-  tips: (string | ErrorWithRange)[]
-  errors: (string | ErrorWithRange)[]
-}
-
-export function compileTemplate(
-  options: TemplateCompileOptions
-): TemplateCompileResult {
+export function compileTemplate (options) {
   const { preprocessLang } = options
   const preprocessor =
-    preprocessLang && consolidate[preprocessLang as keyof typeof consolidate]
+    preprocessLang && consolidate[preprocessLang]
   if (preprocessor) {
     return actuallyCompile(
       Object.assign({}, options, {
         source: preprocess(options, preprocessor),
-      })
+      }),
     )
   } else if (preprocessLang) {
     return {
       ast: {},
-      code: `var render = function () {}\n` + `var staticRenderFns = []\n`,
+      code: 'var render = function () {}\n' + 'var staticRenderFns = []\n',
       source: options.source,
       tips: [
         `Component ${options.filename} uses lang ${preprocessLang} for template. Please install the language preprocessor.`,
@@ -66,10 +31,7 @@ export function compileTemplate(
   }
 }
 
-function preprocess(
-  options: TemplateCompileOptions,
-  preprocessor: any
-): string {
+function preprocess (options, preprocessor) {
   let { source, filename, preprocessOptions } = options
   if (options.preprocessLang === 'pug') {
     preprocessOptions = {
@@ -82,30 +44,28 @@ function preprocess(
     {
       filename,
     },
-    preprocessOptions
+    preprocessOptions,
   )
 
   // Consolidate exposes a callback based API, but the callback is in fact
   // called synchronously for most templating engines. In our case, we have to
   // expose a synchronous API so that it is usable in Jest transforms (which
   // have to be sync because they are applied via Node.js require hooks)
-  let res: any, err
+  let res, err
   preprocessor.render(
     source,
     finalPreprocessOptions,
-    (_err: Error | null, _res: string) => {
+    (_err, _res) => {
       if (_err) err = _err
       res = _res
-    }
+    },
   )
 
   if (err) throw err
   return res
 }
 
-function actuallyCompile(
-  options: TemplateCompileOptions
-): TemplateCompileResult {
+function actuallyCompile (options) {
   const {
     source,
     compiler,
@@ -138,13 +98,13 @@ function actuallyCompile(
 
   const { ast, render, staticRenderFns, tips, errors } = compile(
     source,
-    finalCompilerOptions
+    finalCompilerOptions,
   )
 
   if (errors && errors.length) {
     return {
       ast,
-      code: `var render = function () {}\n` + `var staticRenderFns = []\n`,
+      code: 'var render = function () {}\n' + 'var staticRenderFns = []\n',
       source,
       tips,
       errors,
@@ -156,8 +116,8 @@ function actuallyCompile(
       }),
     })
 
-    const toFunction = (code: string): string => {
-      return `function (${isFunctional ? `_h,_vm` : ``}) {${code}}`
+    const toFunction = (code) => {
+      return `function (${isFunctional ? '_h,_vm' : ''}) {${code}}`
     }
 
     // transpile code with vue-template-es2015-compiler, which is a forked
@@ -166,8 +126,8 @@ function actuallyCompile(
       transpile(
         `var __render__ = ${toFunction(render)}\n` +
           `var __staticRenderFns__ = [${staticRenderFns.map(toFunction)}]`,
-        finalTranspileOptions
-      ) + `\n`
+        finalTranspileOptions,
+      ) + '\n'
 
     // #23 we use __render__ to avoid `render` not being prefixed by the
     // transpiler when stripping with, but revert it back to `render` to
@@ -177,7 +137,7 @@ function actuallyCompile(
     if (!isProduction) {
       // mark with stripped (this enables Vue to use correct runtime proxy
       // detection)
-      code += `render._withStripped = true`
+      code += 'render._withStripped = true'
 
       if (prettify) {
         try {
@@ -185,15 +145,15 @@ function actuallyCompile(
             semi: false,
             parser: 'babel',
           })
-        } catch (e: any) {
+        } catch (e) {
           if (e.code === 'MODULE_NOT_FOUND') {
             tips.push(
               'The `prettify` option is on, but the dependency `prettier` is not found.\n' +
-                'Please either turn off `prettify` or manually install `prettier`.'
+                'Please either turn off `prettify` or manually install `prettier`.',
             )
           }
           tips.push(
-            `Failed to prettify component ${options.filename} template source after compilation.`
+            `Failed to prettify component ${options.filename} template source after compilation.`,
           )
         }
       }

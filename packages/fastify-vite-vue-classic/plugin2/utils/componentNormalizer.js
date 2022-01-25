@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file (except for modules).

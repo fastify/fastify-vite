@@ -1,21 +1,20 @@
 import path from 'path'
 import slash from 'slash'
 import hash from 'hash-sum'
-import { parse, SFCDescriptor } from '@vue/component-compiler-utils'
+import { parse } from '@vue/component-compiler-utils'
 import * as vueTemplateCompiler from 'vue-template-compiler'
-import { ResolvedOptions } from '../index'
 
-const cache = new Map<string, SFCDescriptor>()
-const prevCache = new Map<string, SFCDescriptor | undefined>()
+const cache = new Map()
+const prevCache = new Map()
 
-export function createDescriptor(
-  source: string,
-  filename: string,
-  { root, isProduction, vueTemplateOptions }: ResolvedOptions
+export function createDescriptor (
+  source,
+  filename,
+  { root, isProduction, vueTemplateOptions },
 ) {
   const descriptor = parse({
     source,
-    compiler: vueTemplateOptions?.compiler || (vueTemplateCompiler as any),
+    compiler: vueTemplateOptions?.compiler || vueTemplateCompiler,
     filename,
     sourceRoot: root,
     needMap: true,
@@ -30,15 +29,15 @@ export function createDescriptor(
   return descriptor
 }
 
-export function getPrevDescriptor(filename: string) {
+export function getPrevDescriptor (filename) {
   return prevCache.get(slash(filename))
 }
 
-export function setPrevDescriptor(filename: string, entry: SFCDescriptor) {
+export function setPrevDescriptor (filename, entry) {
   prevCache.set(slash(filename), entry)
 }
 
-export function getDescriptor(filename: string, errorOnMissing = true) {
+export function getDescriptor (filename, errorOnMissing = true) {
   const descriptor = cache.get(slash(filename))
   if (descriptor) {
     return descriptor
@@ -46,11 +45,11 @@ export function getDescriptor(filename: string, errorOnMissing = true) {
   if (errorOnMissing) {
     throw new Error(
       `${filename} has no corresponding SFC entry in the cache. ` +
-        `This is a vite-plugin-vue2 internal error, please open an issue.`
+        'This is a vite-plugin-vue2 internal error, please open an issue.',
     )
   }
 }
 
-export function setDescriptor(filename: string, entry: SFCDescriptor) {
+export function setDescriptor (filename, entry) {
   cache.set(slash(filename), entry)
 }

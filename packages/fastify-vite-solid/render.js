@@ -2,13 +2,13 @@ const { createComponent, renderToStringAsync } = require('solid-js/web')
 const devalue = require('devalue')
 const { ContextProvider } = require('./context')
 
-function renderTags (tags) {
-  return tags.map(tag => {
-    const keys = Object.keys(tag.props)
-    const props = keys.map(k => k === 'children' ? '' : ` ${k}="${tag.props[k]}"`).join('')
-    return tag.props.children ? `<${tag.tag} data-sm=""${props}>${tag.props.children}</${tag.tag}>` : `<${tag.tag} data-sm=""${props}/>`
-  }).join('')
-}
+// function renderTags (tags) {
+//   return tags.map(tag => {
+//     const keys = Object.keys(tag.props)
+//     const props = keys.map(k => k === 'children' ? '' : ` ${k}="${tag.props[k]}"`).join('')
+//     return tag.props.children ? `<${tag.tag} data-sm=""${props}>${tag.props.children}</${tag.tag}>` : `<${tag.tag} data-sm=""${props}/>`
+//   }).join('')
+// }
 
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
@@ -37,7 +37,7 @@ function createRenderFunction (createApp) {
       entry: entry.client,
       hydration: hydrationScript,
       element,
-      meta: {} // renderTags(),
+      meta: {}, // renderTags(),
     }
   }
 }
@@ -85,12 +85,12 @@ function renderElement (url, app, context, router, routes) {
         value: context,
         get children () {
           return createComponent(router, {
-            get children() {
+            get children () {
               return createComponent(app, { routes })
-            }
+            },
           })
-        }
-      })
+        },
+      }),
     )
   } else {
     return renderToStringAsync(() =>

@@ -1,4 +1,6 @@
-import { Suspense } from 'solid-js'
+/* eslint-disable react/jsx-key */
+
+// import { Suspense } from 'solid-js'
 // import { Title, Style, MetaProvider } from 'solid-meta'
 import { Router, Route, Routes } from 'solid-app-router'
 import routes from '@app/routes.js'
@@ -12,7 +14,7 @@ export function createApp (context) {
   }
 }
 
-      /*<Title>fastify-vite-solid examples</Title>
+/* <Title>fastify-vite-solid examples</Title>
       <Style>{`
       #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -41,11 +43,11 @@ export function createApp (context) {
         font-size:  1rem;
         color: #555;
       }
-      `}</Style>*/
+      `}</Style> */
 
-        // {routes.map(({ path, component: RouteComp }) => {
-        //   return <Route path={path} element={<RouteComp />} />
-        // })}
+// {routes.map(({ path, component: RouteComp }) => {
+//   return <Route path={path} element={<RouteComp />} />
+// })}
 
 function App (props) {
   return (

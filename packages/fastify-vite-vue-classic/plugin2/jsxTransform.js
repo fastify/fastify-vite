@@ -1,12 +1,12 @@
 import { transform } from '@babel/core'
 
 // todo hmr
-export function transformVueJsx(
-  code: string,
-  id: string,
-  jsxOptions?: Record<string, any>
+export function transformVueJsx (
+  code,
+  id,
+  jsxOptions,
 ) {
-  const plugins: any[] = [
+  const plugins = [
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
     [
       require.resolve('@babel/plugin-proposal-class-properties'),
@@ -28,10 +28,10 @@ export function transformVueJsx(
     plugins,
     babelrc: false,
     configFile: false,
-  })!
+  })
 
   return {
-    code: result.code as string,
-    map: result.map as any,
+    code: result.code,
+    map: result.map,
   }
 }
