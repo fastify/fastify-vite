@@ -1,15 +1,9 @@
 // vue compiler module for transforming `img:srcset` to a number of `require`s
 
-import { urlToRequire, ASTNode } from './utils'
-import { TransformAssetUrlsOptions } from './assetUrl'
+import { urlToRequire } from './utils'
 
-interface ImageCandidate {
-  require: string
-  descriptor: string
-}
-
-export default (transformAssetUrlsOptions?: TransformAssetUrlsOptions) => ({
-  postTransformNode: (node: ASTNode) => {
+export default (transformAssetUrlsOptions) => ({
+  postTransformNode: (node) => {
     transform(node, transformAssetUrlsOptions)
   },
 })
@@ -17,10 +11,7 @@ export default (transformAssetUrlsOptions?: TransformAssetUrlsOptions) => ({
 // http://w3c.github.io/html/semantics-embedded-content.html#ref-for-image-candidate-string-5
 const escapedSpaceCharacters = /( |\\t|\\n|\\f|\\r)+/g
 
-function transform(
-  node: ASTNode,
-  transformAssetUrlsOptions?: TransformAssetUrlsOptions
-) {
+function transform (node, transformAssetUrlsOptions) {
   const tags = ['img', 'source']
 
   if (tags.indexOf(node.tag) !== -1 && node.attrs) {
@@ -34,7 +25,7 @@ function transform(
           return
         }
 
-        const imageCandidates: ImageCandidate[] = value
+        const imageCandidates = value
           .substr(1, value.length - 2)
           .split(',')
           .map((s) => {
@@ -59,7 +50,7 @@ function transform(
         const code = imageCandidates
           .map(
             ({ require, descriptor }) =>
-              `${require} + "${descriptor ? ' ' + descriptor : ''}, " + `
+              `${require} + "${descriptor ? ' ' + descriptor : ''}, " + `,
           )
           .join('')
           .slice(0, -6)

@@ -3,9 +3,9 @@ import { createRollupError } from './utils/error'
 import { compileTemplate } from './template/compileTemplate'
 import hash from 'hash-sum'
 
-export function compileSFCTemplate(
+export function compileSFCTemplate (
   source,
-  block
+  block,
   filename,
   { isProduction, vueTemplateOptions = {} },
   pluginContext,
@@ -35,7 +35,7 @@ export function compileSFCTemplate(
       pluginContext.warn({
         id: filename,
         message: typeof warn === 'string' ? warn : warn.msg,
-      })
+      }),
     )
   }
 
@@ -52,7 +52,7 @@ export function compileSFCTemplate(
           createRollupError(filename, {
             message: msg,
             frame: generateCodeFrame(source, start, end),
-          })
+          }),
         )
       } else {
         pluginContext.error({
@@ -66,12 +66,12 @@ export function compileSFCTemplate(
   // rewrite require calls to import on build
   return {
     code:
-      transformRequireToImport(code) + `\nexport { render, staticRenderFns }`,
+      transformRequireToImport(code) + '\nexport { render, staticRenderFns }',
     map: null,
   }
 }
 
-export function transformRequireToImport(code) {
+export function transformRequireToImport (code) {
   const imports = {}
   let strImports = ''
 
@@ -85,7 +85,7 @@ export function transformRequireToImport(code) {
       }
 
       return imports[name]
-    }
+    },
   )
 
   return strImports + code

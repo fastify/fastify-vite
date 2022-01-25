@@ -1,20 +1,7 @@
-import { TransformAssetUrlsOptions } from './assetUrl'
-import { UrlWithStringQuery, parse as uriParse } from 'url'
+// eslint-disable-next-line node/no-deprecated-api
+import { parse as uriParse } from 'url'
 
-export interface Attr {
-  name: string
-  value: string
-}
-
-export interface ASTNode {
-  tag: string
-  attrs: Attr[]
-}
-
-export function urlToRequire(
-  url: string,
-  transformAssetUrlsOption: TransformAssetUrlsOptions = {}
-): string {
+export function urlToRequire (url, transformAssetUrlsOption) {
   const returnValue = `"${url}"`
   if (
     isExternalUrl(url) ||
@@ -52,21 +39,21 @@ export function urlToRequire(
   return returnValue
 }
 
-export function isHashUrl(url: string): boolean {
+export function isHashUrl (url) {
   return url.startsWith('#')
 }
 
 const externalRE = /^(https?:)?\/\//
-export function isExternalUrl(url: string): boolean {
+export function isExternalUrl (url) {
   return externalRE.test(url)
 }
 
 const dataUrlRE = /^\s*data:/i
-export function isDataUrl(url: string): boolean {
+export function isDataUrl (url) {
   return dataUrlRE.test(url)
 }
 
-export function isAbsolute(url: string): boolean {
+export function isAbsolute (url) {
   return url.startsWith('/')
 }
 
@@ -74,13 +61,13 @@ export function isAbsolute(url: string): boolean {
  * vuejs/component-compiler-utils#22 Support uri fragment in transformed require
  * @param urlString an url as a string
  */
-function parseUriParts(urlString: string): UrlWithStringQuery {
+function parseUriParts (urlString) {
   // initialize return value
-  const returnValue: UrlWithStringQuery = uriParse('')
+  const returnValue = uriParse('')
   if (urlString) {
     // A TypeError is thrown if urlString is not a string
     // @see https://nodejs.org/api/url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost
-    if ('string' === typeof urlString) {
+    if (typeof urlString === 'string') {
       // check is an uri
       return uriParse(urlString) // take apart the uri
     }

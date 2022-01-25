@@ -7,11 +7,11 @@ import fs from 'fs'
 import { SourceMapGenerator } from 'source-map'
 import * as Vite from 'vite'
 
-export async function transformMain(
-  code: string,
-  filePath: string,
-  options: ResolvedOptions,
-  pluginContext: TransformPluginContext
+export async function transformMain (
+  code,
+  filePath,
+  options,
+  pluginContext,
 ) {
   const descriptor = createDescriptor(code, filePath, options)
 
@@ -22,7 +22,7 @@ export async function transformMain(
   const { code: templateCode, templateRequest } = await genTemplateRequest(
     filePath,
     descriptor,
-    pluginContext
+    pluginContext,
   )
   // script
   const scriptVar = '__vue2_script'
@@ -31,7 +31,7 @@ export async function transformMain(
     descriptor,
     filePath,
     options,
-    pluginContext
+    pluginContext,
   )
   // style
   const cssModuleVar = '__cssModules'
@@ -39,7 +39,7 @@ export async function transformMain(
     cssModuleVar,
     descriptor,
     filePath,
-    pluginContext
+    pluginContext,
   )
 
   let result =
@@ -53,13 +53,13 @@ var __component__ = /*#__PURE__*/__vue2_normalizer(
   __vue2_script,
   __vue2_render,
   __vue2_staticRenderFns,
-  ${hasFunctional ? `true` : `false`},
+  ${hasFunctional ? 'true' : 'false'},
   __vue2_injectStyles,
-  ${scoped ? JSON.stringify(descriptor.id) : `null`},
+  ${scoped ? JSON.stringify(descriptor.id) : 'null'},
   null,
   null
 )
-  `.trim() + `\n`
+  `.trim() + '\n'
 
   result += `
 function __vue2_injectStyles (context) {
@@ -75,13 +75,13 @@ function __vue2_injectStyles (context) {
     // Expose the file's full path in development, so that it can be opened
     // from the devtools.
     result += `\n__component__.options.__file = ${JSON.stringify(
-      path.relative(options.root, filePath).replace(/\\/g, '/')
+      path.relative(options.root, filePath).replace(/\\/g, '/'),
     )}`
   }
   // else if (options.exposeFilename) {
-  // 	// Libraries can opt-in to expose their components' filenames in production builds.
-  // 	// For security reasons, only expose the file's basename in production.
-  // 	code += `\n__component__.options.__file = ${JSON.stringify(filePath)}`
+  //   // Libraries can opt-in to expose their components' filenames in production builds.
+  //   // For security reasons, only expose the file's basename in production.
+  //   code += `\n__component__.options.__file = ${JSON.stringify(filePath)}`
   // }
 
   if (options.devServer && !options.isProduction) {
@@ -89,7 +89,7 @@ function __vue2_injectStyles (context) {
       options.root,
       descriptor.id,
       !!hasFunctional,
-      templateRequest
+      templateRequest,
     )
   }
 
@@ -105,7 +105,7 @@ function __vue2_injectStyles (context) {
     map = JSON.parse(emptyMapGen.toString())
   }
 
-  result += `\nexport default /*#__PURE__*/(function () { return __component__.exports })()`
+  result += '\nexport default /*#__PURE__*/(function () { return __component__.exports })()'
   return {
     code: result,
     map,
@@ -114,12 +114,12 @@ function __vue2_injectStyles (context) {
 
 const exportDefaultClassRE = /export\s+default\s+class\s+([\w$]+)/
 
-async function genScriptCode(
+async function genScriptCode (
   scriptVar,
   descriptor,
   filename,
   options,
-  pluginContext
+  pluginContext,
 ) {
   const { script } = descriptor
   let scriptCode = `const ${scriptVar} = {}`
@@ -138,7 +138,7 @@ async function genScriptCode(
       if (classMatch) {
         scriptCode = `${script.content.replace(
           exportDefaultClassRE,
-          `class $1`
+          'class $1',
         )}\nconst ${scriptVar} = ${classMatch[1]}`
       } else {
         scriptCode = rewriteDefault(script.content, scriptVar)
@@ -147,12 +147,12 @@ async function genScriptCode(
       if (script.lang === 'ts') {
         // transformWithEsbuild has been exported since vite@2.6.0-beta.0
         const transformWithEsbuild =
-          Vite.transformWithEsbuild ?? options.devServer!.transformWithEsbuild
+          Vite.transformWithEsbuild ?? options.devServer.transformWithEsbuild
         const result = await transformWithEsbuild(
           scriptCode,
           filename,
           { loader: 'ts', target: options.target },
-          map
+          map,
         )
         scriptCode = result.code
         map = result.map
@@ -168,7 +168,7 @@ async function genScriptCode(
       const src = script.src || filename
       const langFallback = (script.src && path.extname(src).slice(1)) || 'js'
       const attrsQuery = attrsToQuery(script.attrs, langFallback)
-      const srcQuery = script.src ? `&src` : ``
+      const srcQuery = script.src ? '&src' : ''
       const from = script.src ? `&from=${encodeURIComponent(filename)}` : ''
       const query = `?vue&type=script${srcQuery}${from}${attrsQuery}`
       const request = JSON.stringify(src + query)
@@ -178,37 +178,37 @@ async function genScriptCode(
   }
   return {
     scriptCode,
-    map: map as any,
+    map,
   }
 }
 
-async function genTemplateRequest(
-  filename: string,
-  descriptor: SFCDescriptor,
-  pluginContext: TransformPluginContext
+async function genTemplateRequest (
+  filename,
+  descriptor,
+  pluginContext,
 ) {
   const template = descriptor.template
   if (!template) {
-    return { code: `let __vue2_render, __vue2_staticRenderFns` }
+    return { code: 'let __vue2_render, __vue2_staticRenderFns' }
   }
   const src = template.src || filename
-  const srcQuery = template.src ? `&src` : ``
+  const srcQuery = template.src ? '&src' : ''
   const from = template.src ? `&from=${encodeURIComponent(filename)}` : ''
   const attrsQuery = attrsToQuery(template.attrs, 'js', true)
   const query = `?vue${from}&type=template${srcQuery}${attrsQuery}`
   const templateRequest = src + query
   return {
     code: `import { render as __vue2_render, staticRenderFns as __vue2_staticRenderFns } from ${JSON.stringify(
-      templateRequest
+      templateRequest,
     )}`,
     templateRequest,
   }
 }
 
-async function genCustomBlockCode(
-  filename: string,
-  descriptor: SFCDescriptor,
-  pluginContext: TransformPluginContext
+async function genCustomBlockCode (
+  filename,
+  descriptor,
+  pluginContex,
 ) {
   let code = ''
   await Promise.all(
@@ -218,9 +218,9 @@ async function genCustomBlockCode(
       const src = blockSrc || filename
       const attrsQuery = attrsToQuery(
         block.attrs,
-        path.extname(blockSrc) || block.type
+        path.extname(blockSrc) || block.type,
       )
-      const srcQuery = block.attrs.src ? `&src` : ``
+      const srcQuery = block.attrs.src ? '&src' : ''
       const from = block.attrs.src
         ? `&from=${encodeURIComponent(filename)}`
         : ''
@@ -228,16 +228,16 @@ async function genCustomBlockCode(
       const request = JSON.stringify(src + query)
       code += `import block${index} from ${request}\n`
       code += `if (typeof block${index} === 'function') block${index}(__component__)\n`
-    })
+    }),
   )
   return code
 }
 
-function genHmrCode(
-  root: string,
-  id: string,
-  functional: boolean,
-  templateRequest?: string
+function genHmrCode (
+  root,
+  id,
+  functional,
+  templateRequest,
 ) {
   const idJSON = JSON.stringify(id)
   return `\n/* hot reload */
@@ -256,7 +256,7 @@ if(!import.meta.env.SSR && __VUE_HMR_RUNTIME__.compatible){
    ${
      templateRequest
        ? `import.meta.hot.accept(${JSON.stringify(
-           normalizeDevPath(root, templateRequest)
+           normalizeDevPath(root, templateRequest),
          )}, (update) => {
       __VUE_HMR_RUNTIME__.rerender(${idJSON}, update)
    })`
@@ -265,19 +265,19 @@ if(!import.meta.env.SSR && __VUE_HMR_RUNTIME__.compatible){
 }`
 }
 
-async function genStyleRequest(
-  cssModuleVar: string,
-  descriptor: SFCDescriptor,
-  filename: string,
-  pluginContext: TransformPluginContext
+async function genStyleRequest (
+  cssModuleVar,
+  descriptor,
+  filename,
+  pluginContext,
 ) {
-  let scoped: boolean = false
+  let scoped = false
   let stylesCode = ''
   for (let i = 0; i < descriptor.styles.length; i++) {
     const style = descriptor.styles[i]
     const src = style.src || filename
     const attrsQuery = attrsToQuery(style.attrs, 'css')
-    const srcQuery = style.src ? `&src` : ``
+    const srcQuery = style.src ? '&src' : ''
     const from = style.src ? `&from=${encodeURIComponent(filename)}` : ''
     const query = `?vue&type=style&index=${i}${from}${srcQuery}`
     const styleRequest = src + query + attrsQuery
@@ -287,7 +287,7 @@ async function genStyleRequest(
         i,
         styleRequest,
         style.module,
-        cssModuleVar
+        cssModuleVar,
       )
     } else {
       stylesCode += `\nimport ${JSON.stringify(styleRequest)}`
@@ -297,12 +297,12 @@ async function genStyleRequest(
   return { scoped, stylesCode }
 }
 
-function genCSSModulesCode(
-  index: number,
-  request: string,
-  moduleName: string | boolean,
-  cssModuleVar: string
-): string {
+function genCSSModulesCode (
+  index,
+  request,
+  moduleName,
+  cssModuleVar,
+) {
   const styleVar = `__style${index}`
   const exposedName = typeof moduleName === 'string' ? moduleName : '$style'
   // inject `.module` before extension so vite handles it as css module
@@ -317,23 +317,23 @@ function genCSSModulesCode(
 // if the user happen to add them as attrs
 const ignoreList = ['id', 'index', 'src', 'type', 'lang', 'module']
 
-function attrsToQuery(
-  attrs: SFCBlock['attrs'],
-  langFallback?: string,
-  forceLangFallback = false
-): string {
-  let query = ``
+function attrsToQuery (
+  attrs,
+  langFallback,
+  forceLangFallback,
+) {
+  let query = ''
   for (const name in attrs) {
     const value = attrs[name]
     if (!ignoreList.includes(name)) {
       query += `&${qs.escape(name)}${
-        value ? `=${qs.escape(String(value))}` : ``
+        value ? `=${qs.escape(String(value))}` : ''
       }`
     }
   }
   if (langFallback || attrs.lang) {
     query +=
-      `lang` in attrs
+      'lang' in attrs
         ? forceLangFallback
           ? `&lang.${langFallback}`
           : `&lang.${attrs.lang}`
@@ -342,9 +342,9 @@ function attrsToQuery(
   return query
 }
 
-export const FS_PREFIX = `/@fs/`
+export const FS_PREFIX = '/@fs/'
 
-function normalizeDevPath(root, id) {
+function normalizeDevPath (root, id) {
   if (id.startsWith(root + '/')) {
     return id.slice(root.length)
   } else if (fs.existsSync(cleanUrl(id))) {

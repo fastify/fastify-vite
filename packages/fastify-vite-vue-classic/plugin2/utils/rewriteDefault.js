@@ -1,4 +1,4 @@
-import { parse, ParserPlugin } from '@babel/parser'
+import { parse } from '@babel/parser'
 import MagicString from 'magic-string'
 
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
@@ -8,11 +8,11 @@ const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
  * Utility for rewriting `export default` in a script block into a variable
  * declaration so that we can inject things into it
  */
-export function rewriteDefault(
-  input: string,
-  as: string,
-  parserPlugins?: ParserPlugin[]
-): string {
+export function rewriteDefault (
+  input,
+  as,
+  parserPlugins,
+) {
   if (!hasDefaultExport(input)) {
     return input + `\nconst ${as} = {}`
   }
@@ -31,7 +31,7 @@ export function rewriteDefault(
   }).program.body
   ast.forEach((node) => {
     if (node.type === 'ExportDefaultDeclaration') {
-      s.overwrite(node.start!, node.declaration.start!, `const ${as} = `)
+      s.overwrite(node.start, node.declaration.start, `const ${as} = `)
     }
     if (node.type === 'ExportNamedDeclaration') {
       node.specifiers.forEach((specifier) => {
@@ -40,11 +40,11 @@ export function rewriteDefault(
           specifier.exported.type === 'Identifier' &&
           specifier.exported.name === 'default'
         ) {
-          const end = specifier.end!
+          const end = specifier.end
           s.overwrite(
-            specifier.start!,
+            specifier.start,
             input.charAt(end) === ',' ? end + 1 : end,
-            ``
+            '',
           )
           s.append(`\nconst ${as} = ${specifier.local.name}`)
         }
@@ -54,6 +54,6 @@ export function rewriteDefault(
   return s.toString()
 }
 
-export function hasDefaultExport(input: string): boolean {
+export function hasDefaultExport (input) {
   return defaultExportRE.test(input) || namedDefaultExportRE.test(input)
 }

@@ -1,22 +1,8 @@
 // vue compiler module for transforming `<tag>:<attribute>` to `require`
 
-import { urlToRequire, ASTNode, Attr } from './utils'
+import { urlToRequire } from './utils'
 
-export interface AssetURLOptions {
-  [name: string]: string | string[]
-}
-
-export interface TransformAssetUrlsOptions {
-  /**
-   * @deprecated
-   * If base is provided, instead of transforming relative asset urls into
-   * imports, they will be directly rewritten to absolute urls.
-   */
-  base?: string
-  forceRequire?: boolean
-}
-
-const defaultOptions: AssetURLOptions = {
+const defaultOptions = {
   audio: 'src',
   video: ['src', 'poster'],
   source: 'src',
@@ -25,49 +11,38 @@ const defaultOptions: AssetURLOptions = {
   use: ['xlink:href', 'href'],
 }
 
-export default (
-  userOptions?: AssetURLOptions,
-  transformAssetUrlsOption?: TransformAssetUrlsOptions
-) => {
+export default (userOptions, transformAssetUrlsOption) => {
   const options = userOptions
     ? Object.assign({}, defaultOptions, userOptions)
     : defaultOptions
 
   return {
-    postTransformNode: (node: ASTNode) => {
+    postTransformNode: (node) => {
       transform(node, options, transformAssetUrlsOption)
     },
   }
 }
 
-function transform(
-  node: ASTNode,
-  options: AssetURLOptions,
-  transformAssetUrlsOption?: TransformAssetUrlsOptions
-) {
+function transform (node, options, transformAssetUrlsOption) {
   for (const tag in options) {
     if ((tag === '*' || node.tag === tag) && node.attrs) {
       const attributes = options[tag]
       if (typeof attributes === 'string') {
         node.attrs.some((attr) =>
-          rewrite(attr, attributes, transformAssetUrlsOption)
+          rewrite(attr, attributes, transformAssetUrlsOption),
         )
       } else if (Array.isArray(attributes)) {
         attributes.forEach((item) =>
           node.attrs.some((attr) =>
-            rewrite(attr, item, transformAssetUrlsOption)
-          )
+            rewrite(attr, item, transformAssetUrlsOption),
+          ),
         )
       }
     }
   }
 }
 
-function rewrite(
-  attr: Attr,
-  name: string,
-  transformAssetUrlsOption?: TransformAssetUrlsOptions
-) {
+function rewrite (attr, name, transformAssetUrlsOption) {
   if (attr.name === name) {
     const value = attr.value
     // only transform static URLs

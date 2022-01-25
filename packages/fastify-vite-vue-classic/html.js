@@ -3,7 +3,7 @@ const unescapedBacktick = /(?<!\\)`/g
 function compileIndexHtml (source) {
   const indexHtml = (
     '(function (req, { element, hydration }) {\n' +
-    `  head = {}\n` + 
+    '  head = {}\n' +
     `  return \`${
       source
         // eslint-disable-next-line no-template-curly-in-string
