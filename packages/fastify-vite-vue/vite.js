@@ -40,4 +40,11 @@ module.exports = {
     outDir: 'dist',
     minify: !dev,
   },
+  ssr: {
+    external: [
+      'fastify-vite-vue/routing',
+      'fastify-vite-vue/app',
+      'fastify-vite-vue/server'
+    ]
+  }
 }
