@@ -1,16 +1,16 @@
-import _debug from 'debug'
-import {
+const _debug = require('debug')
+const debug = _debug('vite:hmr')
+
+const {
   createDescriptor,
   getDescriptor,
   setPrevDescriptor,
-} from './utils/descriptorCache'
-
-const debug = _debug('vite:hmr')
+} = require('./utils/descriptorCache')
 
 /**
  * Vite-specific HMR handling
  */
-export async function handleHotUpdate (
+async function handleHotUpdate (
   { file, modules, read, server },
   options,
 ) {
@@ -121,6 +121,10 @@ export async function handleHotUpdate (
     debug(`[vue:update(${updateType.join('&')})] ${file}`)
   }
   return [...affectedModules].filter(Boolean)
+}
+
+module.exports = {
+  handleHotUpdate,
 }
 
 function isEqualBlock (a, b) {

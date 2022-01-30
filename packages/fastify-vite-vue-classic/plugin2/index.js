@@ -1,19 +1,19 @@
-import { normalizeComponentCode } from './utils/componentNormalizer'
-import { vueHotReloadCode } from './utils/vueHotReload'
-import fs from 'fs'
-import { parseVueRequest } from './utils/query'
-import { createFilter } from '@rollup/pluginutils'
-import { transformMain } from './main'
-import { compileSFCTemplate } from './template'
-import { getDescriptor } from './utils/descriptorCache'
-import { transformStyle } from './style'
-import { handleHotUpdate } from './hmr'
-import { transformVueJsx } from './jsxTransform'
+const { normalizeComponentCode } = require('./utils/componentNormalizer.js')
+const { vueHotReloadCode } = require('./utils/vueHotReload.js')
+const fs = require('fs')
+const { parseVueRequest } = require('./utils/query.js')
+const { createFilter } = require('@rollup/pluginutils')
+const { transformMain } = require('./main.js')
+const { compileSFCTemplate } = require('./template.js')
+const { getDescriptor } = require('./utils/descriptorCache.js')
+const { transformStyle } = require('./style.js')
+const { handleHotUpdate } = require('./hmr.js')
+const { transformVueJsx } = require('./jsxTransform.js')
 
-export const vueComponentNormalizer = '/vite/vueComponentNormalizer'
-export const vueHotReload = '/vite/vueHotReload'
+const vueComponentNormalizer = '/vite/vueComponentNormalizer'
+const vueHotReload = '/vite/vueHotReload'
 
-export function createVuePlugin (rawOptions) {
+function createVuePlugin (rawOptions) {
   const options = {
     isProduction: process.env.NODE_ENV === 'production',
     ...rawOptions,
@@ -138,4 +138,8 @@ export function createVuePlugin (rawOptions) {
       }
     },
   }
+}
+
+module.exports = {
+  createVuePlugin,
 }

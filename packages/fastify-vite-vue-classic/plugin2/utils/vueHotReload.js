@@ -1,6 +1,6 @@
 /* eslint-disable no-tabs */
 
-export const vueHotReloadCode = `
+exports.vueHotReloadCode = `
 var Vue // late bind
 var version
 var __VUE_HMR_RUNTIME__ = Object.create(null)

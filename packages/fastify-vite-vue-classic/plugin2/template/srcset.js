@@ -1,8 +1,8 @@
 // vue compiler module for transforming `img:srcset` to a number of `require`s
 
-import { urlToRequire } from './utils'
+const { urlToRequire } = require('./utils')
 
-export default (transformAssetUrlsOptions) => ({
+module.exports = (transformAssetUrlsOptions) => ({
   postTransformNode: (node) => {
     transform(node, transformAssetUrlsOptions)
   },

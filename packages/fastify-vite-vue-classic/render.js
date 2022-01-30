@@ -6,7 +6,7 @@ function createRenderFunction (createApp) {
   const renderer = createRenderer()
   return async function render (fastify, req, reply, url, options) {
     const { entry, /* distManifest, */hydration } = options
-    const { ctx, app, /* head, */routes, router } = await createApp({
+    const { ctx, app, head, routes, router } = await createApp({
       fastify,
       req,
       reply,
@@ -24,15 +24,23 @@ function createRenderFunction (createApp) {
     }
 
     const element = await renderer.renderToString(app, ctx)
+    const headTags = context.head.inject()
+    // title, htmlAttrs, headAttrs, bodyAttrs, link, style, script, noscript, meta
     // const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : {}
     // const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
     const hydrationScript = getHydrationScript(req, ctx, hydration, routes)
 
     return {
-      // head: {
-      //   preload: preloadLinks,
-      //   tags: headTags,
-      // },
+      title: headTags.title,
+      head: {
+        // preload: preloadLinks,
+        tags: [
+          ...headTags.noscript,        
+          ...headTags.link,
+          ...headTags.script,
+          ...headTags.meta,
+        ],
+      },
       // attrs: {
       //   html: htmlAttrs,
       //   body: bodyAttrs,

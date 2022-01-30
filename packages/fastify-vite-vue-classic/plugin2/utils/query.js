@@ -1,6 +1,6 @@
-import qs from 'querystring'
+const qs = require('querystring')
 
-export function parseVueRequest (id) {
+function parseVueRequest (id) {
   const [filename, rawQuery] = id.split('?', 2)
   const query = qs.parse(rawQuery)
   if (query.vue != null) {
@@ -19,4 +19,8 @@ export function parseVueRequest (id) {
     filename,
     query,
   }
+}
+
+module.exports = {
+  parseVueRequest,
 }
