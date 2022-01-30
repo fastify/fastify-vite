@@ -59,9 +59,10 @@ async function main () {
 
   for (const examplePackage of await globby('examples/*/package.json')) {
     const pkgInfo = JSON.parse(await fs.readFile(examplePackage, 'utf8'))
-    for (const [dep, version] of Object.entries(pkgInfo.dependencies)) {
+    console.log('pkgInfo', pkgInfo)
+    for (const [dep, version] of Object.entries(pkgInfo.local)) {
       if (dep.includes('fastify-vite')) {
-        pkgInfo.dependencies[dep] = `^${newVersion}`
+        pkgInfo.local[dep] = `^${newVersion}`
       }
     }
     await fs.writeFile(examplePackage, JSON.stringify(pkgInfo, null, 2))
