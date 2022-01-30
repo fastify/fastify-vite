@@ -1,9 +1,9 @@
-import * as vueTemplateCompiler from 'vue-template-compiler'
-import { createRollupError } from './utils/error'
-import { compileTemplate } from './template/compileTemplate'
-import hash from 'hash-sum'
+const vueTemplateCompiler = require('vue-template-compiler')
+const { createRollupError } = require('./utils/error.js')
+const { compileTemplate } = require('./template/compileTemplate.js')
+const hash = require('hash-sum')
 
-export function compileSFCTemplate (
+function compileSFCTemplate (
   source,
   block,
   filename,
@@ -71,7 +71,7 @@ export function compileSFCTemplate (
   }
 }
 
-export function transformRequireToImport (code) {
+function transformRequireToImport (code) {
   const imports = {}
   let strImports = ''
 
@@ -89,4 +89,9 @@ export function transformRequireToImport (code) {
   )
 
   return strImports + code
+}
+
+module.exports = {
+  compileSFCTemplate,
+  transformRequireToImport,
 }

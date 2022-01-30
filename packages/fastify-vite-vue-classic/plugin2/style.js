@@ -1,6 +1,6 @@
-import { compileStyle } from '@vue/component-compiler-utils'
+const { compileStyle } = require('@vue/component-compiler-utils')
 
-export async function transformStyle (
+async function transformStyle (
   code,
   filename,
   descriptor,
@@ -30,4 +30,8 @@ export async function transformStyle (
     code: result.code,
     map: result.map,
   }
+}
+
+module.exports = {
+  transformStyle,
 }

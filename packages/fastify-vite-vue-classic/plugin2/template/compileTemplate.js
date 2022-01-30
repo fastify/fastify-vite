@@ -1,10 +1,10 @@
-import assetUrlsModule from './assetUrl'
-import srcsetModule from './srcset'
+const assetUrlsModule = require('./assetUrl')
+const srcsetModule = require('./srcset')
 
-import consolidate from 'consolidate'
-import transpile from 'vue-template-es2015-compiler'
+const consolidate = require('consolidate')
+const transpile = require('vue-template-es2015-compiler')
 
-export function compileTemplate (options) {
+function compileTemplate (options) {
   const { preprocessLang } = options
   const preprocessor =
     preprocessLang && consolidate[preprocessLang]
@@ -167,4 +167,8 @@ function actuallyCompile (options) {
       errors,
     }
   }
+}
+
+module.exports = {
+ compileTemplate, 
 }

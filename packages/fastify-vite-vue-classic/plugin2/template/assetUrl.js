@@ -1,6 +1,6 @@
 // vue compiler module for transforming `<tag>:<attribute>` to `require`
 
-import { urlToRequire } from './utils'
+const { urlToRequire } = require('./utils')
 
 const defaultOptions = {
   audio: 'src',
@@ -11,7 +11,7 @@ const defaultOptions = {
   use: ['xlink:href', 'href'],
 }
 
-export default (userOptions, transformAssetUrlsOption) => {
+module.exports = (userOptions, transformAssetUrlsOption) => {
   const options = userOptions
     ? Object.assign({}, defaultOptions, userOptions)
     : defaultOptions
@@ -28,9 +28,10 @@ function transform (node, options, transformAssetUrlsOption) {
     if ((tag === '*' || node.tag === tag) && node.attrs) {
       const attributes = options[tag]
       if (typeof attributes === 'string') {
-        node.attrs.some((attr) =>
-          rewrite(attr, attributes, transformAssetUrlsOption),
-        )
+        // eslint-disable-next-line array-callback-return
+        node.attrs.some((attr) => {
+          rewrite(attr, attributes, transformAssetUrlsOption)
+        })
       } else if (Array.isArray(attributes)) {
         attributes.forEach((item) =>
           node.attrs.some((attr) =>

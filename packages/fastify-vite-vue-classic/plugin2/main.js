@@ -1,13 +1,15 @@
-import { rewriteDefault } from './utils/rewriteDefault'
-import { vueHotReload, vueComponentNormalizer } from './index'
-import qs from 'querystring'
-import { createDescriptor } from './utils/descriptorCache'
-import path from 'path'
-import fs from 'fs'
-import { SourceMapGenerator } from 'source-map'
-import * as Vite from 'vite'
+const { rewriteDefault } = require('./utils/rewriteDefault')
+const qs = require('querystring')
+const { createDescriptor } = require('./utils/descriptorCache')
+const path = require('path')
+const fs = require('fs')
+const { SourceMapGenerator } = require('source-map')
+const Vite = require('vite')
 
-export async function transformMain (
+const vueComponentNormalizer = '/vite/vueComponentNormalizer'
+const vueHotReload = '/vite/vueHotReload'
+
+async function transformMain (
   code,
   filePath,
   options,
@@ -342,7 +344,7 @@ function attrsToQuery (
   return query
 }
 
-export const FS_PREFIX = '/@fs/'
+const FS_PREFIX = '/@fs/'
 
 function normalizeDevPath (root, id) {
   if (id.startsWith(root + '/')) {
@@ -353,8 +355,16 @@ function normalizeDevPath (root, id) {
   return id
 }
 
-export const queryRE = /\?.*$/
-export const hashRE = /#.*$/
+const queryRE = /\?.*$/
+const hashRE = /#.*$/
 
-export const cleanUrl = (url) =>
+const cleanUrl = (url) =>
   url.replace(hashRE, '').replace(queryRE, '')
+
+module.exports = {
+  FS_PREFIX,
+  transformMain,
+  queryRE,
+  hashRE,
+  cleanUrl,
+}

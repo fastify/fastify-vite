@@ -1,7 +1,7 @@
-import { transform } from '@babel/core'
+const { transform } = require('@babel/core')
 
 // todo hmr
-export function transformVueJsx (
+function transformVueJsx (
   code,
   id,
   jsxOptions,
@@ -34,4 +34,8 @@ export function transformVueJsx (
     code: result.code,
     map: result.map,
   }
+}
+
+module.exports = {
+  transformVueJsx,
 }

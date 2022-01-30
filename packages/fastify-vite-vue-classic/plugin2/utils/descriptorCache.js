@@ -1,13 +1,13 @@
-import path from 'path'
-import slash from 'slash'
-import hash from 'hash-sum'
-import { parse } from '@vue/component-compiler-utils'
-import * as vueTemplateCompiler from 'vue-template-compiler'
+const path = require('path')
+const slash = require('slash')
+const hash = require('hash-sum')
+const { parse } = require('@vue/component-compiler-utils')
+const vueTemplateCompiler = require('vue-template-compiler')
 
 const cache = new Map()
 const prevCache = new Map()
 
-export function createDescriptor (
+function createDescriptor (
   source,
   filename,
   { root, isProduction, vueTemplateOptions },
@@ -29,15 +29,15 @@ export function createDescriptor (
   return descriptor
 }
 
-export function getPrevDescriptor (filename) {
+function getPrevDescriptor (filename) {
   return prevCache.get(slash(filename))
 }
 
-export function setPrevDescriptor (filename, entry) {
+function setPrevDescriptor (filename, entry) {
   prevCache.set(slash(filename), entry)
 }
 
-export function getDescriptor (filename, errorOnMissing = true) {
+function getDescriptor (filename, errorOnMissing = true) {
   const descriptor = cache.get(slash(filename))
   if (descriptor) {
     return descriptor
@@ -50,6 +50,14 @@ export function getDescriptor (filename, errorOnMissing = true) {
   }
 }
 
-export function setDescriptor (filename, entry) {
+function setDescriptor (filename, entry) {
   cache.set(slash(filename), entry)
+}
+
+module.exports = {
+  createDescriptor,
+  getPrevDescriptor,
+  setPrevDescriptor,
+  getDescriptor,
+  setDescriptor,
 }

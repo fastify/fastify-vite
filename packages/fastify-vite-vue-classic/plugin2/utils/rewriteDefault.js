@@ -1,5 +1,5 @@
-import { parse } from '@babel/parser'
-import MagicString from 'magic-string'
+const { parse } = require('@babel/parser')
+const MagicString = require('magic-string')
 
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
 const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
@@ -8,7 +8,7 @@ const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
  * Utility for rewriting `export default` in a script block into a variable
  * declaration so that we can inject things into it
  */
-export function rewriteDefault (
+function rewriteDefault (
   input,
   as,
   parserPlugins,
@@ -54,6 +54,11 @@ export function rewriteDefault (
   return s.toString()
 }
 
-export function hasDefaultExport (input) {
+function hasDefaultExport (input) {
   return defaultExportRE.test(input) || namedDefaultExportRE.test(input)
+}
+
+module.exports = {
+  rewriteDefault,
+  hasDefaultExport,
 }

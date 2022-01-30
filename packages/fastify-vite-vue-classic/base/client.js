@@ -32,5 +32,6 @@ export async function createApp (ctx) {
       }
     })
   }
-  return { ctx, app, /* head, */router, routes: resolvedRoutes }
+  const head = app.$meta // for consistency with Vue 3 adapter
+  return { ctx, app, head, router, routes: resolvedRoutes }
 }

@@ -1,7 +1,7 @@
 // eslint-disable-next-line node/no-deprecated-api
-import { parse as uriParse } from 'url'
+const { parse: uriParse } = require('url')
 
-export function urlToRequire (url, transformAssetUrlsOption) {
+function urlToRequire (url, transformAssetUrlsOption) {
   const returnValue = `"${url}"`
   if (
     isExternalUrl(url) ||
@@ -39,22 +39,30 @@ export function urlToRequire (url, transformAssetUrlsOption) {
   return returnValue
 }
 
-export function isHashUrl (url) {
+function isHashUrl (url) {
   return url.startsWith('#')
 }
 
 const externalRE = /^(https?:)?\/\//
-export function isExternalUrl (url) {
+
+function isExternalUrl (url) {
   return externalRE.test(url)
 }
 
 const dataUrlRE = /^\s*data:/i
-export function isDataUrl (url) {
+function isDataUrl (url) {
   return dataUrlRE.test(url)
 }
 
-export function isAbsolute (url) {
+function isAbsolute (url) {
   return url.startsWith('/')
+}
+
+module.exports = {
+  urlToRequire,
+  isHashUrl,
+  isExternalUrl,
+  isAbsolute,
 }
 
 /**
