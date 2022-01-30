@@ -32,7 +32,8 @@ async function fastifyVite (fastify, options) {
     options = await processOptions(options)
   } catch (err) {
     console.error(err)
-    process.exit(1)
+    setImmediate(() => process.exit(1))
+    return
   }
 
   if (options.suppressExperimentalWarnings) {
@@ -51,8 +52,10 @@ async function fastifyVite (fastify, options) {
   }
 
   if (options.generate.enabled || options.generate.server.enabled) {
+    console.log('await build(options)')
     await build(options)
     options.dev = false
+    console.log('options.recalcDist()')
     options.recalcDist()
   }
 
@@ -64,7 +67,10 @@ async function fastifyVite (fastify, options) {
   let vite
   let routes = []
 
-  if (!options.eject) {
+  if (options.build) {
+    await build(options)
+    setImmediate(() => process.exit())
+  } else if (!options.eject) {
     // Setup appropriate Vite route handler
     if (options.dev) {
       // For dev you get more detailed logging and hot reload
@@ -219,12 +225,6 @@ async function fastifyVite (fastify, options) {
         }
       }
       process.exit()
-    }
-    if (fastify.vite.options.build) {
-      await build(fastify.vite.options)
-      setImmediate(() => {
-        process.exit()
-      })
     }
     if (fastify.vite.options.generate.enabled || fastify.vite.options.generate.server.enabled) {
       const { generated } = fastify.vite.options.generate
