@@ -84,7 +84,7 @@ function processOptions (options) {
       options.distDir = resolve(options.root, options.vite.build.outDir)
       const distIndex = resolve(options.distDir, 'client/index.html')
       if (!existsSync(distIndex)) {
-        throw new Error('Missing production client/index.html — did you build first?')
+        return
       }
       options.distIndex = readFileSync(distIndex, 'utf8')
       options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))
