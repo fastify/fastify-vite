@@ -27,8 +27,8 @@ export const onSend = packIsland('#app', loadJavaScriptOnlyAfter10Seconds)
 
 See full example [here](https://github.com/terixjs/fastify-vite/tree/main/examples/vue-island).
 
-This functionality is **framework-agnostic** and also works with [<b>generate</b>](http://localhost:4000/guide/deployment.html#static-generation) and [<b>generate-server</b>](http://localhost:4000/guide/deployment.html#generate-server).
+This functionality is **framework-agnostic** and also works with [<b>generate</b>](../deployment/static-generation.md) and [<b>generate-server</b>](../deployment/generate-server.md).
 
-::: tip 
+::: tip
 The compiler backing `packIsland` is just a **proof-of-concept**. The final implementation will use `ctx.modules` from Vite directly rather than trying to parse out all the generated markup.
 :::
