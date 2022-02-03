@@ -1,5 +1,9 @@
-
+import path from 'path'
+import fs from 'fs'
+import { fileURLToPath } from 'url'
 import chokidar from 'chokidar'
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'examples', example)
 const command = process.argv.slice(5)
