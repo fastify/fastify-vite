@@ -38,6 +38,10 @@ const availableSlots = computed(() => {
 			key: 'sh',
 			displayText: 'Terminal',
 		},
+	{
+	  key: 'vue',
+	  displayText: 'Vue',
+	},
 	].filter(({ key }) => slots.value[key])
 })
 
@@ -59,6 +63,10 @@ function copy () {
 	border: 1px solid var(--code-inline-bg-color);
 	border-radius: 5px;
 	margin-top: 1em;
+}
+
+.code-box :deep(pre) {
+		padding: 0 1.25rem;
 }
 
 .heading {
