@@ -9,6 +9,6 @@
     "convert-svg-to-png": "^0.5.0",
     "klaw": "^4.0.1",
     "postcss-nesting": "^8.0.1",
-    "vitepress": "^0.16.1"
+    "vitepress": "^0.21.6"
   }
 }

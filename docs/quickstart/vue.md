@@ -1,8 +1,11 @@
 # Vue 3+
 
-<div class="inline-code"><code>
+
+<CodeBox title="Install Dependencies">
+<template v-slot:sh>
 npm i <b>fastify</b> <b>fastify-vite</b> <b>fastify-vite-vue</b> --save
-</code></div>
+</template>
+</CodeBox>
 
 ## Minimal Boilerplate
 
