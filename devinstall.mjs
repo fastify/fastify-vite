@@ -1,6 +1,8 @@
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs/promises'
+import { existsSync } from 'fs'
 import { fileURLToPath } from 'url'
+import { $ } from 'zx'
 import chokidar from 'chokidar'
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -8,7 +10,7 @@ const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'examples', example)
 const command = process.argv.slice(5)
 
-if (!fs.existsSync(exRoot)) {
+if (!existsSync(exRoot)) {
   console.log('Must be called from a directory under examples/.')
   process.exit()
 }
@@ -16,15 +18,15 @@ if (!fs.existsSync(exRoot)) {
 await $`rm -rf ${exRoot}/node_modules/vite`
 await $`rm -rf ${exRoot}/node_modules/.vite`
 
-const template = require(path.join(exRoot, 'package.json'))
-const localPackages = fs.readdirSync(path.join(__dirname, 'packages'))
+const template = JSON.parse(await fs.readFile(path.join(exRoot, 'package.json')))
+const localPackages = await fs.readdir(path.join(__dirname, 'packages'))
 
 const { external, local } = template
 const dependencies = { ...external }
 
 for (const localDep of Object.keys(local)) {
   for (const [dep, version] of Object.entries(
-    require(path.join(__dirname, 'packages', localDep, 'package.json')).dependencies)
+	  JSON.parse(await fs.readFile(path.join(__dirname, 'packages', localDep, 'package.json'))).dependencies)
   ) {
     dependencies[dep] = version
   }
