@@ -1,5 +1,4 @@
-import { getRoutes } from 'fastify-vite/app'
-import { hydrateRoutes } from 'fastify-vite-vue/client.mjs'
+import { getRoutes, hydrateRoutes } from 'fastify-vite-vue/routing'
 
 export default import.meta.env.SSR
   ? () => getRoutes(import.meta.globEager('/views/*.vue'))

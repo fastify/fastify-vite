@@ -1,68 +1,60 @@
-
+import path from 'path'
+import fs from 'fs/promises'
+import { existsSync } from 'fs'
 import { fileURLToPath } from 'url'
+import { $ } from 'zx'
+import chokidar from 'chokidar'
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-$.quote = s => s
+const { name: example } = path.parse(process.cwd())
+const exRoot = path.resolve(__dirname, 'examples', example)
+const command = process.argv.slice(5)
 
-const { entries } = Object
-
-let root = fileURLToPath(path.dirname(import.meta.url))
-let [example, exRoot, deps] = await parseArgv(root)
-
-let pkgInfos = {}
-
-await cd(root)
+if (!existsSync(exRoot)) {
+  console.log('Must be called from a directory under examples/.')
+  process.exit()
+}
 
 await $`rm -rf ${exRoot}/node_modules/vite`
 await $`rm -rf ${exRoot}/node_modules/.vite`
 
-for (let pkg of deps.local) {
-  await $`rm -rf ${exRoot}/node_modules/${pkg}`
-  let pkgRoot = `${root}/packages/${pkg}`
-  let pkgInfo = await readJSON(`${pkgRoot}/package.json`)
-  pkgInfos[pkg] = pkgInfo
-  const subDeps = entries(pkgInfo.dependencies).map(([n, v]) => `${n}@${v}`)
-  await cd(`${root}/${exRoot}`)
-  await $`npm install --silent --force ${deps.external.join(' ')} ${subDeps.join(' ')}`
-  await cd(root)
-}
+const template = JSON.parse(await fs.readFile(path.join(exRoot, 'package.json')))
+const localPackages = await fs.readdir(path.join(__dirname, 'packages'))
 
-// Hard copy packages after all calls to npm install have ended
-// If you run npm install on the example folder, you also need to run devinstall again
-for (let pkg of deps.local) {
-  await $`rm -r ${root}/${exRoot}/node_modules/${pkg}`
-  await $`cp -r ${root}/packages/${pkg} ${root}/${exRoot}/node_modules/${pkg}`
-  await $`cp ${root}/${exRoot}/package.dist.json ${root}/${exRoot}/package.json`
-}
+const { external, local } = template
+const dependencies = { ...external }
 
-async function getDeps (example, exRoot) {
-  const examplePackage = await readJSON(`${root}/${exRoot}/package.dist.json`)
-  const pkgInfo = await fs.readdir(path.join(root, 'packages'))
-  return {
-    local: Object.keys(examplePackage.dependencies).filter(dep => pkgInfo.includes(dep)),
-    external: Object.keys(examplePackage.dependencies).filter(dep => !pkgInfo.includes(dep))
+for (const localDep of Object.keys(local)) {
+  for (const [dep, version] of Object.entries(
+	  JSON.parse(await fs.readFile(path.join(__dirname, 'packages', localDep, 'package.json'))).dependencies)
+  ) {
+    dependencies[dep] = version
   }
 }
 
-async function parseArgv () {
-  const example = process.argv[3]
-  const exRoot = `examples/${example}`
-  const deps = await getDeps(path.join(exRoot, 'package.dist.json'), exRoot)
-  if (!example) {
-    console.error('Usage: npm run devinstall -- <dir>')
-    process.exit(1)
+await createPackageFile(exRoot, dependencies)
+await $`npm install -f`
+
+for (const localDep of Object.keys(local)) {
+  await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
+  const changed = (reason) => async (path) => {
+    console.log(`ℹ ${reason} ${path}`)
+    await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
   }
-  if (!await fs.stat(path.join(root, exRoot)).catch(() => false)) {
-    console.error(`Directory ${join(root, exRoot)} does not exist.`)
-    process.exit(1)    
-  }
-  return [example, exRoot, deps]
+  const watcher = chokidar.watch(`${__dirname}/packages/${localDep}`, {
+    ignored: [/node_modules/],
+    ignoreInitial: true,
+  })
+  watcher.on('add', changed('A'))
+  watcher.on('unlink', changed('D'))
+  watcher.on('change', changed('M'))
 }
 
-async function readJSON(path) {
-  const json = await fs.readFile(path, 'utf8')
-  return JSON.parse(json)
-}
+await $`${command}`
 
-async function writeJSON(path, contents) {
-  await fs.writeFile(path, contents)
+async function createPackageFile(exRoot, dependencies) {
+  await fs.writeFile(
+    path.join(exRoot, 'package.json'),
+    JSON.stringify({ ...template, dependencies }, null, 2)
+  )
 }

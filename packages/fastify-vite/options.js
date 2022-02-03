@@ -25,12 +25,8 @@ const defaults = {
   // Static generation options
   generate: {
     enabled: process.argv.includes('generate'),
-    generated ({ url, file, html, json }, distDir) {
-      console.log(`Generated static page for URL ${
-        url
-      } for build at ${
-        distDir
-      }`)
+    generated (_, { url, file, html, json }, distDir) {
+      console.log(`ℹ generated ${url}`)
     },
     server: {
       port: 5000,
@@ -88,7 +84,7 @@ function processOptions (options) {
       options.distDir = resolve(options.root, options.vite.build.outDir)
       const distIndex = resolve(options.distDir, 'client/index.html')
       if (!existsSync(distIndex)) {
-        throw new Error('Missing production client/index.html — did you build first?')
+        return
       }
       options.distIndex = readFileSync(distIndex, 'utf8')
       options.distManifest = require(resolve(options.distDir, 'client/ssr-manifest.json'))

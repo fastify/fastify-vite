@@ -26,7 +26,10 @@ module.exports = {
         ['client.js'],
         ['client.vue'],
         ['head.js'],
+        ['error.vue'],
+        ['router.vue'],
         ['routes.js'],
+        ['index.css'],
       ],
     }),
   ],
@@ -37,4 +40,11 @@ module.exports = {
     outDir: 'dist',
     minify: !dev,
   },
+  ssr: {
+    external: [
+      'fastify-vite-vue/routing',
+      'fastify-vite-vue/app',
+      'fastify-vite-vue/server'
+    ]
+  }
 }

@@ -14,7 +14,7 @@ function flattenPaths (viewPath) {
   return []
 }
 
-function getRoutes (views, ssr) {
+function getRoutes (views) {
   const routes = []
   for (const [componentPath, view] of Object.entries(views)) {
     const { default: component, ...viewProps } = view

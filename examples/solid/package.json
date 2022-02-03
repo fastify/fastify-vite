@@ -1,0 +1,16 @@
+{
+  "name": "react-base",
+  "private": true,
+  "scripts": {
+    "dev": "zx ../../devinstall.mjs solid -- node server.js",
+    "build": "node server build",
+    "serve": "cross-env NODE_ENV=production node server.js"
+  },
+  "external": {
+    "fastify": "^3.17.0"
+  },
+  "local": {
+    "fastify-vite": "^3.0.0-alpha.13",
+    "fastify-vite-solid": "^3.0.0-alpha.13"
+  }
+}
