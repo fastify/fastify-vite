@@ -1,12 +1,19 @@
 # Vue 3+
 
-<div class="inline-code"><code>
+
+<CodeBox title="Install Dependencies">
+<template v-slot:sh>
 npm i <b>fastify</b> <b>fastify-vite</b> <b>fastify-vite-vue</b> --save
-</code></div>
+</template>
+</CodeBox>
 
 ## Minimal Boilerplate
 
 Below is a minimal script to boot a Fastify server with an integrated Vite app:
+
+<CodeBox title="server.js">
+<template v-slot:js>
+<MarkdownInVue>
 
 ```js
 import Fastify from 'fastify'
@@ -21,7 +28,16 @@ await app.vite.commands()
 await app.listen(3000)
 ```
 
+</MarkdownInVue>
+</template>
+</CodeBox>
+
 With that, create a view at `views/index.vue`:
+
+
+<CodeBox title="views/index.vue">
+<template v-slot:vue>
+<MarkdownInVue>
 
 ```vue
 <template>
@@ -33,15 +49,21 @@ export const path = '/'
 </script>
 ```
 
+</MarkdownInVue>
+</template>
+</CodeBox>
+
 ::: tip
 View files can be named anything, in the examples `index.vue` is always associated to `/` as a convention.
 :::
 
 And then, assuming you have saved the first snippet as `app.mjs`:
 
-<div class="inline-code"><code>
+<CodeBox title="Run Application">
+<template v-slot:sh>
 node app.mjs
-</code></div>
+</template>
+</CodeBox>
 
 Take note that `root` and `renderer` are <b>fastify-vite</b>'s only required plugin options. The first is the [Vite application root](https://vitejs.dev/config/#root) and the second determines what [renderer adapter](/concepts/renderer-adapters) to use.
 
