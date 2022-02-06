@@ -1,7 +1,7 @@
-// https://github.com/vueuse/head#useheadhead-headobject--refheadobject
+// https://vue-meta.nuxtjs.org/api/#metainfo-properties
 
 // This file can either have individual exports matching the
-// properties of @vueuse/useHead's HeadObject type (linked above)
+// properties of vue-meta's metaInfo properties (linked above)
 
 export const title = null
 export const base = null
@@ -12,6 +12,7 @@ export const style = []
 export const script = []
 
 export const htmlAttrs = {}
+export const headAttrs = {}
 export const bodyAttrs = {}
 
 // Or a default export with the same properties
@@ -24,6 +25,7 @@ export default {
   style: [],
   script: [],
   htmlAttrs: {},
+  headAttrs: {},
   bodyAttrs: {},
 }
 

@@ -8,7 +8,9 @@ import { hydrationDone } from 'fastify-vite-vue-classic/app'
 import baseLayout from '@app/client.vue'
 import loadRoutes from '@app/routes.js'
 
-Vue.use(Meta)
+Vue.use(Meta, {
+  keyName: 'head',
+})
 Vue.use(Router)
 
 export async function createApp (ctx) {
@@ -32,6 +34,6 @@ export async function createApp (ctx) {
       }
     })
   }
-  const head = app.$meta // for consistency with Vue 3 adapter
-  return { ctx, app, head, router, routes: resolvedRoutes }
+  ctx.meta = app.$meta()
+  return { ctx, app, router, routes: resolvedRoutes }
 }

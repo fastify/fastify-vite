@@ -11,6 +11,9 @@
 export const path = '/'
 
 export default {
+  head: {
+    title: 'hello!',
+  },
   data () {
     return {
       links: [

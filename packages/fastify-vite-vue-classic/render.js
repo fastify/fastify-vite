@@ -23,11 +23,15 @@ function createRenderFunction (createApp) {
       await new Promise(resolve => router.onReady(resolve))
     }
 
+    ctx.meta = app.$meta()
     const element = await renderer.renderToString(app, ctx)
-    const headTags = context.head.inject()
-    // title, htmlAttrs, headAttrs, bodyAttrs, link, style, script, noscript, meta
-    // const { headTags, htmlAttrs, bodyAttrs } = head ? renderHeadToString(head) : {}
+    const headTags = ctx.meta.inject()
+    console.log('headTags', headTags)
+    
+    // Vue 2: title, htmlAttrs, headAttrs, bodyAttrs, link, style, script, noscript, meta
+    // Vue 3: headTags, htmlAttrs, bodyAttrs
     // const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
+
     const hydrationScript = getHydrationScript(req, ctx, hydration, routes)
 
     return {
