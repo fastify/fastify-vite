@@ -107,5 +107,6 @@ select {
 	cursor: pointer;
 	margin: 0;
 	padding: 10px;
+	overflow: auto;
 }
 </style>
