@@ -6,7 +6,7 @@ function createRenderFunction (createApp) {
   const renderer = createRenderer()
   return async function render (fastify, req, reply, url, options) {
     const { entry, /* distManifest, */hydration } = options
-    const { ctx, app, head, routes, router } = await createApp({
+    const { ctx, app, routes, router } = await createApp({
       fastify,
       req,
       reply,
@@ -25,30 +25,30 @@ function createRenderFunction (createApp) {
 
     ctx.meta = app.$meta()
     const element = await renderer.renderToString(app, ctx)
-    const headTags = ctx.meta.inject()
-    console.log('headTags', headTags)
+    const meta = ctx.meta.inject()
+    console.log('meta', meta)
     
     // Vue 2: title, htmlAttrs, headAttrs, bodyAttrs, link, style, script, noscript, meta
     // Vue 3: headTags, htmlAttrs, bodyAttrs
-    // const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
 
+    // const preloadLinks = renderPreloadLinks(ctx.modules, distManifest)
     const hydrationScript = getHydrationScript(req, ctx, hydration, routes)
 
     return {
-      title: headTags.title,
+      title: meta.title.text(),
       head: {
         // preload: preloadLinks,
         tags: [
-          ...headTags.noscript,        
-          ...headTags.link,
-          ...headTags.script,
-          ...headTags.meta,
-        ],
+          meta.noscript.text(),        
+          meta.link.text(),
+          meta.script.text(),
+          meta.meta.text(),
+        ].join('\n'),
       },
-      // attrs: {
-      //   html: htmlAttrs,
-      //   body: bodyAttrs,
-      // },
+      attrs: {
+        html: meta.htmlAttrs.text(),
+        body: meta.bodyAttrs.text(),
+      },
       entry: entry.client,
       hydration: hydrationScript,
       element,
