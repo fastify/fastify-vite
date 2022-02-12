@@ -5,7 +5,7 @@ import check from 'brittle'
 import semver from 'semver'
 
 const help = (
-  'Usage: npx zx release.mjs [patch|minor|major|premajor] [--alpha|--beta] [--dry]'
+  'Usage: npx zx release.mjs [patch|minor|major|premajor] [--next|--alpha|--beta] [--dry]'
 )
 
 if (process.argv.includes('--test')) {
@@ -59,7 +59,6 @@ async function main () {
 
   for (const examplePackage of await globby('examples/*/package.json')) {
     const pkgInfo = JSON.parse(await fs.readFile(examplePackage, 'utf8'))
-    console.log('pkgInfo', pkgInfo)
     for (const [dep, version] of Object.entries(pkgInfo.local)) {
       if (dep.includes('fastify-vite')) {
         pkgInfo.local[dep] = `^${newVersion}`
@@ -84,27 +83,33 @@ async function main () {
 
 function test () {
   check('patch', ({is}) => {
-    is(bump('0.0.1', 'patch') , '0.0.2')
+    is(bump('0.0.1', 'patch')[0], '0.0.2')
   })
   check('minor', ({is}) => {
-    is(bump('0.0.1', 'minor') , '0.1.0')
+    is(bump('0.0.1', 'minor')[0], '0.1.0')
   })
   check('major', ({is}) => {
-    is(bump('0.0.1', 'major') , '1.0.0')
+    is(bump('0.0.1', 'major')[0], '1.0.0')
   })
   check('new premajor', ({is}) => {
-    is(bump('0.0.1', 'premajor', 'alpha') , '1.0.0-alpha.0')
+    is(bump('0.0.1', 'premajor', 'next')[0], '1.0.0-next.0')
+  })
+  check('new premajor', ({is}) => {
+    is(bump('0.0.1', 'premajor', 'alpha')[0], '1.0.0-alpha.0')
   })
   check('premajor increment', ({is}) => {
-    is(bump('1.0.0-alpha.0', 'premajor') , '1.0.0-alpha.1')
+    is(bump('1.0.0-next.0', 'premajor')[0], '1.0.0-next.1')
+  })
+  check('premajor increment', ({is}) => {
+    is(bump('1.0.0-alpha.0', 'premajor')[0], '1.0.0-alpha.1')
   })
   check('premajor to major', ({is}) => {
-    is(bump('1.0.0-alpha.0', 'major') , '1.0.0')
+    is(bump('1.0.0-alpha.0', 'major')[0], '1.0.0')
   })
 }
 
 function extractTag (version) {
-  const match = version.match(/^(.+?)(?:-((?:alpha)|(?:beta))\.(\d+))?$/)
+  const match = version.match(/^(.+?)(?:-((?:next)|(?:alpha)|(?:beta))\.(\d+))?$/)
   if (match) {
     return [match[1], match[2], Number(match[3])]
   } else {
@@ -114,10 +119,11 @@ function extractTag (version) {
 
 function parseFlags () {
   const dry = process.argv.includes('--dry')
+  const next = process.argv.includes('--next')  
   const alpha = process.argv.includes('--alpha')
   const beta = process.argv.includes('--beta')
   return {
     dry,
-    tag: (alpha && 'alpha') || (beta && 'beta') || null,
+    tag: (next && 'next') || (alpha && 'alpha') || (beta && 'beta') || null,
   }
 }
