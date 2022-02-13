@@ -140,8 +140,7 @@ async function fastifyVite (fastify, options) {
       if (getData) {
         preHandler.push(
           async function (req, reply) {
-            req[options.hydration.data] = await getData.call(
-              this,
+            req[options.hydration.data] = await getData(
               {
                 req,
                 params: req.params,
@@ -157,8 +156,7 @@ async function fastifyVite (fastify, options) {
       if (getPayload) {
         preHandler.push(
           async function (req, reply) {
-            req[options.hydration.payload] = await getPayload.call(
-              this,
+            req[options.hydration.payload] = await getPayload(
               {
                 req,
                 params: req.params,
@@ -171,7 +169,7 @@ async function fastifyVite (fastify, options) {
           },
         )
         fastify.get(`/-/payload${url}`, async function (req, reply) {
-          return getPayload.call(this, {
+          return getPayload({
             req,
             params: req.params,
             reply,
