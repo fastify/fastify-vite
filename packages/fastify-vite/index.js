@@ -69,7 +69,7 @@ async function fastifyVite (fastify, options) {
 
   if (options.build) {
     await build(options)
-    setImmediate(() => process.exit())
+    setImmediate(() => process.exit(0))
   } else if (!options.eject) {
     // Setup appropriate Vite route handler
     if (options.dev) {
