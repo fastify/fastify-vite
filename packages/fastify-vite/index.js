@@ -210,19 +210,21 @@ async function fastifyVite (fastify, options) {
     await fastify.ready()
     if (fastify.vite.options.eject) {
       const force = process.argv.includes('--force')
-      for (const blueprintFile of renderer.blueprint) {
-        if (force || !existsSync(resolve(options.root, blueprintFile))) {
-          const filePath = resolve(options.root, blueprintFile)
-          const fileDir = parse(filePath).dir
-          await ensureDir(fileDir)
-          await writeFile(
-            filePath,
-            await readFile(resolve(renderer.path, 'base', blueprintFile)),
-          )
-          console.log(`ℹ ejected ${filePath}.`)
-        }
-      }
-      process.exit()
+      await Promise.all(
+        renderer.blueprint.map(async blueprintFile => {
+          if (force || !existsSync(resolve(options.root, blueprintFile))) {
+            const filePath = resolve(options.root, blueprintFile)
+            const fileDir = parse(filePath).dir
+            await ensureDir(fileDir)
+            await writeFile(
+              filePath,
+              await readFile(resolve(renderer.path, 'base', blueprintFile)),
+            )
+            console.log(`ℹ ejected ${filePath}.`)
+          }
+        }),
+      )
+      process.exit(0)
     }
     if (fastify.vite.options.generate.enabled || fastify.vite.options.generate.server.enabled) {
       const { generated } = fastify.vite.options.generate
@@ -239,16 +241,12 @@ async function fastifyVite (fastify, options) {
         )
       }
 
-      const tasks = []
-      for (const path of paths) {
-        tasks.push(async () => {
-          const result = await generateRoute(fastify.inject({ url: path }), path, options)
-          if (result) {
-            generated(fastify, result, fastify.vite.options.distDir)
-          }
-        })
-      }
-      await Promise.all(tasks.map(task => task()))
+      await Promise.all(paths.map(async path => {
+        const result = await generateRoute(fastify.inject({ url: path }), path, options)
+        if (result) {
+          generated(fastify, result, fastify.vite.options.distDir)
+        }
+      }))
       if (fastify.vite.options.generate.done) {
         await fastify.vite.options.generate.done(fastify)
       }
