@@ -215,11 +215,15 @@ async function fastifyVite (fastify, options) {
           if (force || !existsSync(resolve(options.root, blueprintFile))) {
             const filePath = resolve(options.root, blueprintFile)
             const fileDir = parse(filePath).dir
-            await ensureDir(fileDir)
-            await writeFile(
-              filePath,
-              await readFile(resolve(renderer.path, 'base', blueprintFile)),
-            )
+            try {
+              await ensureDir(fileDir)
+              await writeFile(
+                filePath,
+                await readFile(resolve(renderer.path, 'base', blueprintFile)),
+              )
+            } catch {
+              throw new Error(`failed to eject file: ${blueprintFile} to ${filePath}`)
+            }
             console.log(`ℹ ejected ${filePath}.`)
           }
         }),
