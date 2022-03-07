@@ -9,7 +9,7 @@ import { useData } from 'fastify-vite-vue/app'
 // How this view is registered as a route
 export const path = '/five'
 
-export function getData () {
+export function useData () {
 	throw new Error('Error from getData')
 }
 
