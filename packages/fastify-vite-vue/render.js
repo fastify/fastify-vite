@@ -5,7 +5,7 @@ const devalue = require('devalue')
 function createRenderFunction (createApp) {
   return async function render (fastify, req, reply, url, options) {
     const { entry, distManifest, hydration } = options
-    const { ctx, app, head, routes, router } = await createApp({
+    const { ctx, app, head, routes, router, ...extra } = await createApp({
       fastify,
       req,
       reply,
@@ -39,6 +39,7 @@ function createRenderFunction (createApp) {
       entry: entry.client,
       hydration: hydrationScript,
       element,
+      extra,
     }
   }
 }
