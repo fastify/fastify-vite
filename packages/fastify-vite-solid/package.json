@@ -34,7 +34,7 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "version": "3.0.0-next.6",
+  "version": "3.0.0-next.7",
   "dependencies": {
     "devalue": "2.0.1",
     "manifetch": "^0.0.3",
