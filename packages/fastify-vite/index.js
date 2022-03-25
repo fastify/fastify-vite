@@ -52,10 +52,8 @@ async function fastifyVite (fastify, options) {
   }
 
   if (options.generate.enabled || options.generate.server.enabled) {
-    console.log('await build(options)')
     await build(options)
     options.dev = false
-    console.log('options.recalcDist()')
     options.recalcDist()
   }
 
