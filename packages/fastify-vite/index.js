@@ -3,7 +3,6 @@ const { readFile, writeFile } = require('fs').promises
 const { existsSync } = require('fs')
 const { ensureDir } = require('fs-extra')
 const { createServer } = require('vite')
-const devalue = require('devalue')
 const matchit = require('matchit')
 const Fastify = require('fastify')
 const middie = require('middie')
@@ -90,7 +89,7 @@ async function fastifyVite (fastify, options) {
       const getTemplate = async (url) => {
         const indexHtml = await readFile(indexHtmlPath, 'utf8')
         const transformedHtml = await vite.transformIndexHtml(url, indexHtml)
-        return await renderer.compileIndexHtml(transformedHtml, { devalue })
+        return await renderer.compileIndexHtml(transformedHtml)
       }
       const entry = await renderer.dev.getEntry(options, vite)
       handler = renderer.dev.getHandler(fastify, options, entry.getRender, getTemplate, vite)
@@ -109,7 +108,7 @@ async function fastifyVite (fastify, options) {
         root: resolve(options.distDir, `client/${assetsDir}`),
         prefix: `/${assetsDir}`,
       })
-      const template = await renderer.compileIndexHtml(options.distIndex, { devalue })
+      const template = await renderer.compileIndexHtml(options.distIndex)
       const entry = await renderer.getEntry(options)
       if (entry.routes) {
         routes = await entry.routes()

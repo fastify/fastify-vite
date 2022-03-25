@@ -1,10 +1,12 @@
+const devalue = require('devalue')
+
 function getHandler (fastify, options, render, template) {
   return async function (req, reply) {
     try {
       const url = req.raw.url
       const fragments = await render(fastify, req, reply, url, options)
       reply.type('text/html')
-      reply.send(template(req, fragments))
+      reply.send(template(req, fragments, { devalue }))
     } catch (e) {
       reply.code(500)
       reply.send(e.stack)
@@ -20,7 +22,7 @@ function getDevHandler (fastify, options, getRender, getTemplate, viteDevServer)
       const template = await getTemplate(url)
       const fragments = await render(fastify, req, reply, url, options)
       reply.type('text/html')
-      reply.send(template(req, fragments))
+      reply.send(template(req, fragments, { devalue }))
       return reply
     } catch (e) {
       viteDevServer.ssrFixStacktrace(e)

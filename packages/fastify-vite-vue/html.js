@@ -1,8 +1,8 @@
 const unescapedBacktick = /(?<!\\)`/g
 
-function compileIndexHtml (source, { devalue }) {
+function compileIndexHtml (source) {
   const indexHtml = (
-    '(function (req, { attrs, head, element, hydration, ...extra }) {\n' +
+    '(function (req, { attrs, head, element, hydration, ...extra }, { devalue }) {\n' +
     `  return \`${
       source
         // eslint-disable-next-line no-template-curly-in-string

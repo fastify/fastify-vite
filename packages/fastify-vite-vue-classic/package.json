@@ -39,7 +39,7 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "version": "3.0.0-next.5",
+  "version": "3.0.0-next.6",
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@babel/parser": "^7.15.8",
