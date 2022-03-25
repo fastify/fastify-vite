@@ -1,4 +1,3 @@
-const devalue = require('devalue')
 const unescapedBacktick = /(?<!\\)`/g
 
 function compileIndexHtml (source, { devalue }) {
@@ -15,7 +14,7 @@ function compileIndexHtml (source, { devalue }) {
     '})'
   )
   // eslint-disable-next-line no-eval
-  return (0, eval)(indexHtml, { devalue })
+  return (0, eval)(indexHtml)
 }
 
 module.exports = { compileIndexHtml }

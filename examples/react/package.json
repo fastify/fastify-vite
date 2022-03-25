@@ -10,7 +10,7 @@
     "fastify": "^3.17.0"
   },
   "local": {
-    "fastify-vite": "^3.0.0-next.4",
-    "fastify-vite-react": "^3.0.0-next.4"
+    "fastify-vite": "^3.0.0-next.5",
+    "fastify-vite-react": "^3.0.0-next.5"
   }
 }
