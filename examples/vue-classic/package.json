@@ -8,8 +8,8 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "local": {
-    "fastify-vite": "^3.0.0-next.7",
-    "fastify-vite-vue-classic": "^3.0.0-next.7"
+    "fastify-vite": "^3.0.0-next.8",
+    "fastify-vite-vue-classic": "^3.0.0-next.8"
   },
   "external": {
     "fastify": "^3.17.0",
