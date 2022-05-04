@@ -1,16 +1,47 @@
 {
-  "name": "react-base",
-  "private": true,
   "scripts": {
-    "dev": "zx ../../devinstall.mjs solid -- node server.js",
-    "build": "node server build",
-    "serve": "cross-env NODE_ENV=production node server.js"
+    "lint": "eslint . --ext js --fix"
   },
-  "external": {
-    "fastify": "^3.17.0"
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "local": {
-    "fastify-vite": "^3.0.0-next.8",
-    "fastify-vite-solid": "^3.0.0-next.8"
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "SolidJS renderer for fastify-vite.",
+  "files": [
+    "app.js",
+    "base/client.jsx",
+    "base/entry/client.jsx",
+    "base/entry/server.jsx",
+    "base/index.html",
+    "base/routes.js",
+    "context.js",
+    "client.mjs",
+    "entry.js",
+    "handler.js",
+    "html.js",
+    "index.js",
+    "options.js",
+    "render.js",
+    "server.js",
+    "vite.js"
+  ],
+  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vite-solid",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "fastify-vite-solid",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "version": "3.0.0-next.8",
+  "dependencies": {
+    "devalue": "2.0.1",
+    "manifetch": "^0.0.3",
+    "solid-app-router": "^0.1.13",
+    "solid-js": "^1.2.5",
+    "solid-meta": "^0.27.2",
+    "vite-plugin-blueprint": "^0.0.4",
+    "vite-plugin-solid": "2.1.2"
   }
 }

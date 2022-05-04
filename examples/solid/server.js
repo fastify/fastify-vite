@@ -1,27 +1,28 @@
-const Fastify = require('fastify')
-const FastifyVite = require('fastify-vite')
-const FastifyViteSolid = require('fastify-vite-solid')
+const { useContext, isServer } = require('solid-js/web')
+const { createRenderFunction } = require('./render')
+const { Context } = require('./context')
 
-async function main () {
-  const app = Fastify()
-  await app.register(FastifyVite, {
-    root: __dirname,
-    renderer: FastifyViteSolid,
-  })
-  await app.vite.commands()
-  return app
+function useRequest () {
+  if (isServer) {
+    return useContext(Context).req
+  }
 }
 
-if (require.main === module) {
-  main().then((app) => {
-    app.listen(3000, (err, address) => {
-      if (err) {
-        console.error(err)
-        process.exit(1)
-      }
-      console.log(`Server listening on ${address}`)
-    })
-  })
+function useReply () {
+  if (isServer) {
+    return useContext(Context).reply
+  }
 }
 
-module.exports = main
+function useFastify () {
+  if (isServer) {
+    return useContext(Context).fastify
+  }
+}
+
+module.exports = {
+  createRenderFunction,
+  useRequest,
+  useReply,
+  useFastify,
+}
