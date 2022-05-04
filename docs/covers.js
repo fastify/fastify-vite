@@ -166,36 +166,36 @@ const svg = (title) => (
 
 const titleRe = /<title>(.*?) \| fastify-vite<\/title>/
 
-async function main() {
-   const converter = createConverter()
-   const htmls = await walkRead(path.resolve(__dirname,'.vitepress', 'dist'), [/\.html$/])
-   if (!existsSync(path.resolve(__dirname, 'covers'))) {
-      await fs.mkdir(path.resolve(__dirname, 'covers'))
-   }
-   for (const html of htmls) {
-      if (html.name === 'index.html') {
-         continue
-      }
-      const title = html.contents.match(titleRe)[1]
-      const pngName = `${path.parse(html.name).name}.png`
-      const pngPath = path.join(
-         path.resolve(__dirname, 'covers'),
-         pngName
-      )
-      if (!existsSync(pngPath)) {
-         const png = await converter.convert(svg(title))
-         await fs.writeFile(pngPath, png)
-      }
-      for (const re of [
-         /<meta property="og:image" content="([^"]+)">/g,
-         /<meta name="twitter:image" content="([^"]+)">/g
-      ]) {
-         html.contents = html.contents.replace(re, (...m) => {
-            return m[0].replace(m[1], `https://fastify-vite.dev/${pngName}`)
-         })
-      }
-      await fs.writeFile(path.join(__dirname, '.vitepress', 'dist', html.name), html.contents)
-   }
+async function main () {
+  const converter = createConverter()
+  const htmls = await walkRead(path.resolve(__dirname, '.vitepress', 'dist'), [/\.html$/])
+  if (!existsSync(path.resolve(__dirname, 'covers'))) {
+    await fs.mkdir(path.resolve(__dirname, 'covers'))
+  }
+  for (const html of htmls) {
+    if (html.name === 'index.html') {
+      continue
+    }
+    const title = html.contents.match(titleRe)[1]
+    const pngName = `${path.parse(html.name).name}.png`
+    const pngPath = path.join(
+      path.resolve(__dirname, 'covers'),
+      pngName,
+    )
+    if (!existsSync(pngPath)) {
+      const png = await converter.convert(svg(title))
+      await fs.writeFile(pngPath, png)
+    }
+    for (const re of [
+      /<meta property="og:image" content="([^"]+)">/g,
+      /<meta name="twitter:image" content="([^"]+)">/g,
+    ]) {
+      html.contents = html.contents.replace(re, (...m) => {
+        return m[0].replace(m[1], `https://fastify-vite.dev/${pngName}`)
+      })
+    }
+    await fs.writeFile(path.join(__dirname, '.vitepress', 'dist', html.name), html.contents)
+  }
 }
 
 async function walkRead (dir, patterns) {
@@ -215,5 +215,5 @@ async function walkRead (dir, patterns) {
 }
 
 if (require.main === module) {
-   main().then(() => process.exit())
+  main().then(() => process.exit())
 }

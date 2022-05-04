@@ -1,0 +1,7 @@
+{{#expect ssrContext, element }}
+<!DOCTYPE html>
+<script type="module">
+window.ssrContext = {{{ ssrContext }}}
+</script>
+<main>{{{ element }}}</main>
+<script type="module" src="/entry/client.js"></script>
