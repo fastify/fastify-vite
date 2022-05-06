@@ -1,6 +1,5 @@
 const middie = require('middie')
 const { createServer } = require('vite')
-const { compileIndexHtml } = require('../html')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (options) {
@@ -23,32 +22,28 @@ async function setup (options) {
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
 
-  const _compileIndexHtml = options.renderer.compileIndexHtml ?? compileIndexHtml
-
   // In development mode, template is passed as an async function, which is
   // called on every request to ensure the newest index.html version is loaded
   const getTemplate = async (url) => {
     const indexHtml = await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(url, indexHtml)
-    return await _compileIndexHtml(transformedHtml)
+    return await options.compileIndexHtml(transformedHtml)
   }
 
-  const _getEntry = options.renderer.getEntry ?? getEntry
-  const _getHandler = options.renderer.getHandler ?? getHandler
-
-  const { routes, render: getRender } = await _getEntry(options, options.renderer.createRenderFunction, this.devServer)
-  const handler = _getHandler(this.scope, options, getRender, getTemplate, this.devServer)
+  const { getHandler, createRenderFunction } = Object.assign({ getHandler: _getHandler }, options)
+  const { routes, render: getRender } = await loadServerEntry(options, createRenderFunction, this.devServer)
+  const handler = getHandler(this.scope, options, getRender, getTemplate, this.devServer)
 
   return { routes, handler }
 
   // Loads the Vite application server entry.
-  // getEntry() must produce an object with a render function and
+  // loadServerEntry() must produce an object with a render function and
   // optionally, a routes array. The official adapters will
   // automatically load view files from the views/ folder and
   // provide them in the routes array. The routes array is then used
   // to register an individual Fastify route for each of the views.
-  async function getEntry (options, createRenderFunction, devServer) {
-    const modulePath = resolve(options.vite.root, options.renderer.serverEntryPoint.replace(/^\/+/, ''))
+  async function loadServerEntry (options, createRenderFunction, devServer) {
+    const modulePath = resolve(options.vite.root, options.serverEntryPoint.replace(/^\/+/, ''))
     const entryModule = await devServer.ssrLoadModule(modulePath)
     let entry = entryModule.default ?? entryModule
     if (typeof entry === 'function') {
@@ -56,7 +51,7 @@ async function setup (options) {
     }
     return {
       routes: typeof entry.routes === 'function'
-        ? await entry.routes?.()
+        ? await entry.routes()
         : entry.routes,
       // In development mode, render is an async function so it
       // can always return the freshest version of the render
@@ -75,15 +70,18 @@ async function setup (options) {
 
   // Creates a route handler function set up for integration with
   // the Vite Dev Server and hot reload of index.html
-  function getHandler (scope, options, getRender, getTemplate, viteDevServer) {
+  function _getHandler (scope, options, getRenderApp, getRenderIndexHtml, viteDevServer) {
     return async function (req, reply) {
       try {
-        const render = await getRender()
+        const renderApp = await getRenderApp()
         const url = req.raw.url
-        const template = await getTemplate(url)
-        const fragments = await render(scope, req, reply, url, options)
+        const renderIndexHtml = await getRenderIndexHtml(url)
+        const indexHtmlContext = await renderApp(scope, req, reply, url, options)
         reply.type('text/html')
-        reply.send(template(req, fragments))
+        indexHtmlContext.fastify = scope
+        indexHtmlContext.req = req
+        indexHtmlContext.reply = reply        
+        reply.send(renderIndexHtml(indexHtmlContext))
         return reply
       } catch (error) {
         viteDevServer.ssrFixStacktrace(error)
