@@ -1,30 +1,39 @@
-const { useContext } = require('react')
-const { createRenderFunction } = require('./render')
-const { Context } = require('./context')
+import Fastify from 'fastify'
+import FastifyVite from 'fastify-vite'
+import { dirname } from 'path'
+import { renderToString } from '@vue/server-renderer'
 
-const isServer = typeof window === 'undefined'
+const app = Fastify()
 
-function useRequest () {
-  if (isServer) {
-    return useContext(Context).req
-  }
-}
+app.decorate('todoList', [
+  'Do laundry',
+  'Respond to emails',
+  'Write report',
+])
 
-function useReply () {
-  if (isServer) {
-    return useContext(Context).reply
-  }
-}
+await app.register(FastifyVite, {
+  dev: process.argv.includes('--dev'),
+  configRoot: dirname(new URL(import.meta.url).pathname),
+  createRenderFunction (createApp) {
+    return async function (fastify, req, reply, url, config) {
+      const { ctx, app, router } = await createApp({
+        todoList: fastify.todoList,
+      })
+      router.push(url)
+      await router.isReady()
+      const element = await renderToString(app, ctx)
+      return {
+        ssrContext: JSON.stringify(ctx),
+        element,
+      }
+    }
+  },
+})
 
-function useFastify () {
-  if (isServer) {
-    return useContext(Context).fastify
-  }
-}
+app.post('/add', (req, reply) => {
+  app.todoList.push(req.body.item)
+  reply.send(0)
+})
 
-module.exports = {
-  createRenderFunction,
-  useRequest,
-  useReply,
-  useFastify,
-}
+await app.vite.ready()
+await app.listen(3000)

@@ -1,48 +1,17 @@
 {
+  "type": "module",
+  "local": {
+    "fastify-vite": "^3.0.0-beta.9"
+  },
   "scripts": {
-    "lint": "eslint . --ext js --fix"
+    "dev": "node server.js dev",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --ssr /entry/server.js --outDir dist/server"
   },
-  "bugs": {
-    "url": "https://github.com/terixjs/fastify-vite/issues"
-  },
-  "bundleDependencies": false,
-  "deprecated": false,
-  "description": "React renderer for fastify-vite.",
-  "files": [
-    "app.js",
-    "base/client.jsx",
-    "base/entry/client.jsx",
-    "base/entry/server.jsx",
-    "base/index.html",
-    "base/routes.js",
-    "context.js",
-    "client.mjs",
-    "entry.js",
-    "handler.js",
-    "html.js",
-    "index.js",
-    "options.js",
-    "render.js",
-    "server.js",
-    "vite.js"
-  ],
-  "homepage": "https://github.com/terixjs/fastify-vite/tree/main/packages/fastify-vite-react",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "fastify-vite-react",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/terixjs/fastify-vite.git"
-  },
-  "version": "3.0.0-next.8",
   "dependencies": {
-    "@vitejs/plugin-react-refresh": "1.3.1",
-    "devalue": "2.0.1",
-    "manifetch": "^0.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0",
-    "vite-plugin-blueprint": "^0.0.4"
+    "fastify-vite": "^3.0.0-beta.9",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0"
   }
 }

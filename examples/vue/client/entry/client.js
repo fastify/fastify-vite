@@ -1,4 +1,7 @@
-import { createApp } from './app'
-const { app, router } = await createApp()
+import { createApp } from './app.js'
 
-router.isReady().then(() => app.mount('main'))
+createApp().then(({ app, router }) => {
+  router.isReady().then(() => {
+    app.mount('main')
+  })
+})
