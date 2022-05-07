@@ -49,7 +49,7 @@ async function setup (options) {
       const indexHtmlContext = await renderApp(scope, req, reply, url, options)
       indexHtmlContext.fastify = scope
       indexHtmlContext.req = req
-      indexHtmlContext.reply = reply      
+      indexHtmlContext.reply = reply
       reply.type('text/html')
       reply.send(renderIndexHtml(indexHtmlContext))
     }

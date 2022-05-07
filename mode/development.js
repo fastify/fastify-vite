@@ -80,7 +80,7 @@ async function setup (options) {
         reply.type('text/html')
         indexHtmlContext.fastify = scope
         indexHtmlContext.req = req
-        indexHtmlContext.reply = reply        
+        indexHtmlContext.reply = reply
         reply.send(renderIndexHtml(indexHtmlContext))
         return reply
       } catch (error) {

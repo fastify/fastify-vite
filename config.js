@@ -19,7 +19,7 @@ class Config {
   }
 
   // The renderer adapter to use
-  renderer = null
+  renderer = {}
   // Can override all rendering settings bellow
   //
   // Function to create SSR render function from server bundle
@@ -46,7 +46,22 @@ class Config {
 async function configure (options = {}) {
   const [vite, viteConfig] = await resolveViteConfig(options.configRoot)
   const bundle = await resolveBundle({ ...options, vite })
-  return Object.assign(new Config(), { ...options, vite, viteConfig, bundle })
+  const config = Object.assign(new Config(), {
+    ...options,
+    vite,
+    viteConfig,
+    bundle,
+  })
+  for (const setting of [
+    'compileIndexHtml',
+    'createHandler',
+    'createRenderFunction',
+    'clientEntryPoint',
+    'serverEntryPoint',
+  ]) {
+    config[setting] = config.renderer[setting] ?? config[setting]
+  }
+  return config
 }
 
 async function resolveViteConfig (configRoot) {

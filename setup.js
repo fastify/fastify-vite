@@ -24,19 +24,5 @@ async function ensureConfigFile (base, { root, renderer }) {
   return targetPath
 }
 
-// Not sure if I'm gonna need this, so keeping it here for now.
-
-// const { stringify } = require('json5')
-// function appendToConfig (source, config = {}) {
-//   config = stringify(config, null, 2)
-//   const replacer = (m) => {
-//     return `${m}\n${config.split(/\r?\n/).slice(1, -1).join('\n')}`
-//   }
-//   return source
-//     .replace(/export default defineConfig\(\{/, replacer)
-//     .replace(/export default \{/, replacer)
-//     .replace(/export default defineConfig\(\{/, replacer)
-// }
-
 module.exports = { ensureConfigFile, ejectBlueprint }
 module.exports.default = module.exports
