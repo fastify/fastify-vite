@@ -7,7 +7,7 @@ const createHistory = import.meta.env.SSR
   ? createMemoryHistory
   : createWebHistory
 
-export async function createApp (ctx) {
+export default async function createApp (ctx) {
   const app = createSSRApp(App)
   const router = createRouter({
     history: createHistory(),

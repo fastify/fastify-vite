@@ -35,8 +35,9 @@ await app.register(FastifyVite, {
 })
 
 app.setErrorHandler((err, req, reply) => {
-  console.log(err)
-  reply.send('check logs')
+  console.error(err)
+  reply.code(500)
+  reply.send('Check logs!')
 })
 
 app.post('/add', (req, reply) => {

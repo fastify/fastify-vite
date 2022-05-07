@@ -7,7 +7,7 @@ const Router = import.meta.env.SSR
   ? StaticRouter
   : BrowserRouter
 
-export function createApp (ctx) {
+export default function createApp (ctx) {
   return {
     ctx,
     routes,

@@ -1,28 +1,53 @@
-const { useContext, isServer } = require('solid-js/web')
-const { createRenderFunction } = require('./render')
-const { Context } = require('./context')
+import Fastify from 'fastify'
+import FastifyVite from 'fastify-vite'
+import { dirname } from 'path'
+import { createComponent, renderToStringAsync } from 'solid-js/web'
+import devalue from 'devalue'
 
-function useRequest () {
-  if (isServer) {
-    return useContext(Context).req
-  }
-}
+const app = Fastify()
 
-function useReply () {
-  if (isServer) {
-    return useContext(Context).reply
-  }
-}
+app.decorate('todoList', [
+  'Do laundry',
+  'Respond to emails',
+  'Write report',
+])
 
-function useFastify () {
-  if (isServer) {
-    return useContext(Context).fastify
-  }
-}
+await app.register(FastifyVite, {
+  dev: process.argv.includes('--dev'),
+  configRoot: dirname(new URL(import.meta.url).pathname),
+  serverEntryPoint: '/entry/server.jsx',
+  clientEntryPoint: '/entry/client.jsx',
+  createRenderFunction (createApp, { Context }) {
+    return async function render (server, req, reply, url, options) {
+      const data = { todoList: server.todoList }
+      const app = createApp({ server, data, req, reply })
+      const element = renderToStringAsync(() => {
+        return createComponent(Context.Provider, {
+          value: app.ctx,
+          get children () {
+            return createComponent(app.Router, {
+              get children () {
+                return createComponent(app.Element, { routes: app.routes })
+              },
+            })
+          },
+        })
+      })
+      return { hydration: devalue(app.ctx.data), element }
+    }
+  },
+})
 
-module.exports = {
-  createRenderFunction,
-  useRequest,
-  useReply,
-  useFastify,
-}
+app.setErrorHandler((err, req, reply) => {
+  console.error(err)
+  reply.code(500)
+  reply.send('Check logs!')
+})
+
+app.post('/add', (req, reply) => {
+  app.todoList.push(req.body.item)
+  reply.send(0)
+})
+
+await app.vite.ready()
+await app.listen(3000)

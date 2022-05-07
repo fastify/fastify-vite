@@ -1,25 +1,24 @@
-import React from 'react'
-import { useContext, useState, useRef } from 'react'
+import { useContext, createSignal, For } from 'solid-js'
 import ky from 'ky-universal'
 import Context from '/entry/context.js'
 
 export default function Index (props) {
+	let input
   const { todoList: raw } = import.meta.env.SSR
     ? useContext(Context).data
     : window.hydration
-  const [todoList, setTodoList] = useState(raw)
-  const input = useRef(null)
+  const [todoList, setTodoList] = createSignal(raw)
   const addItem = async () => {
-    const json = { item: input.current.value }
+    const json = { item: input.value }
     await ky.post('/add', { json }).json()
-    setTodoList(list => [...list, input.current.value])
-    input.current.value = ''
+    setTodoList(list => [...list, input.value])
+    input.value = ''
   }
   return (
     <>
-      <ul>{
-        todoList.map((item, i) => <li key={`item-${i}`}>{item}</li>)
-      }</ul>
+      <ul>
+      	<For each={todoList}>{(item) => <li>{item}</li>}</For>
+      </ul>
       <input ref={input} />
       <button onClick={addItem}>Add</button>
     </>

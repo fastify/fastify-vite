@@ -1,0 +1,7 @@
+{{#expect hydration, element }}
+<!DOCTYPE html>
+<script>
+window.hydration = {{{ hydration }}}
+</script>
+<main>{{{ element }}}</main>
+<script type="module" src="/entry/client.jsx"></script>
