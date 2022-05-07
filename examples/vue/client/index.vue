@@ -17,7 +17,7 @@ export default {
 		const item = ref('')
 		const addItem = async () => {
     	const json = { item: item.value }
-      const status = await ky.post('/add', { json }).json()
+      await ky.post('/add', { json }).json()
       todoList.push(item.value)
       item.value = ''
     }

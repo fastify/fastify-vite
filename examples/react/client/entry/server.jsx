@@ -1,8 +1,10 @@
-import { createRenderFunction } from 'fastify-vite-react/server'
-import { createApp } from '@app/client.jsx'
-import routes from '@app/routes.js'
+import { createApp } from './app.jsx'
+import Context from './context.js'
+import routes from './routes.js'
 
-export default {
+console.log(Context)
+
+export default (createRenderFunction) => ({
   routes,
-  render: createRenderFunction(createApp),
-}
+  render: createRenderFunction(createApp, { Context }),
+})

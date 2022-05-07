@@ -1,13 +1,7 @@
+{{#expect hydration, element }}
 <!DOCTYPE html>
-<html>
-<head>
-${helmet.title.toString()}
-${helmet.script.toString()}
-${helmet.style.toString()}
-</head>
-<body>
-${hydration}
-<div id="app">${element}</div>
-<script type="module" src="@app/entry/client.jsx"></script>
-</body>
-</html>
+<script>
+window.hydration = {{{ hydration }}}
+</script>
+<main>{{{ element }}}</main>
+<script type="module" src="/entry/client.jsx"></script>

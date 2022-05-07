@@ -1,17 +1,14 @@
-import ReactDOM from 'react-dom'
-import { ContextProvider, hydrate } from 'fastify-vite-react/client.mjs'
-import { createApp } from '@app/client.jsx'
+import { hydrateRoot } from 'react-dom/client'
+import { createApp } from './app.jsx'
+import Context from './context.js'
 
-const { App, routes, router: Router } = createApp()
+const { Element, Router, routes } = createApp()
 
-hydrate().then(async (hydration) => {
-  const app = App(await routes())
-  ReactDOM.hydrate(
+hydrateRoot(
+  document.querySelector('main'),
+  <Context.Provider value={window.hydration}>  
     <Router>
-      <ContextProvider context={hydration}>
-        {app}
-      </ContextProvider>
-    </Router>,
-    document.getElementById('app'),
-  )
-})
+      {Element(routes)}
+    </Router>
+  </Context.Provider>
+)

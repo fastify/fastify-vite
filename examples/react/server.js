@@ -1,7 +1,9 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
 import { dirname } from 'path'
-import { renderToString } from '@vue/server-renderer'
+import { renderToString } from 'react-dom/server'
+import { createElement } from 'react'
+import devalue from 'devalue'
 
 const app = Fastify()
 
@@ -14,20 +16,27 @@ app.decorate('todoList', [
 await app.register(FastifyVite, {
   dev: process.argv.includes('--dev'),
   configRoot: dirname(new URL(import.meta.url).pathname),
-  createRenderFunction (createApp) {
-    return async function (fastify, req, reply, url, config) {
-      const { ctx, app, router } = await createApp({
-        todoList: fastify.todoList,
-      })
-      router.push(url)
-      await router.isReady()
-      const element = await renderToString(app, ctx)
-      return {
-        ssrContext: JSON.stringify(ctx),
-        element,
-      }
+  serverEntryPoint: '/entry/server.jsx',
+  clientEntryPoint: '/entry/client.jsx',
+  createRenderFunction (createApp, { Context }) {
+    return async function render (server, req, reply, url, options) {
+      const data = { todoList: server.todoList }
+      const app = createApp({ server, data, req, reply })
+      const element = renderToString(
+        createElement(Context.Provider, {
+          value: app.ctx,
+        }, createElement(app.Router, {
+          location: url,
+        }, app.Element(app.routes))),
+      )
+      return { hydration: devalue(app.ctx.data), element }
     }
   },
+})
+
+app.setErrorHandler((err, req, reply) => {
+  console.log(err)
+  reply.send('check logs')
 })
 
 app.post('/add', (req, reply) => {

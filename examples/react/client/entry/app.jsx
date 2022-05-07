@@ -1,30 +1,27 @@
-import React, { Suspense, Fragment } from 'react'
-import { Helmet } from 'react-helmet'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { StaticRouter } from 'react-router'
-import routes from '@app/routes.js'
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { StaticRouter } from 'react-router-dom/server'
+import routes from './routes.js'
 
-export function createApp (context) {
+const Router = import.meta.env.SSR
+  ? StaticRouter
+  : BrowserRouter
+
+export function createApp (ctx) {
   return {
-    App,
+    ctx,
     routes,
-    router: import.meta.env.SSR ? StaticRouter : BrowserRouter,
-    context,
+    Element,
+    Router,
   }
 }
 
-function App (routes, props) {
+function Element (routes) {
   return (
-    <>
-      <Switch>
-        {routes.map(({ path, component: RouteComp }) => {
-          return (
-            <Route key={path} path={path}>
-              <RouteComp {...props} />
-            </Route>
-          )
-        })}
-      </Switch>
-    </>
+    <Routes>{
+      routes.map(({ path, component: Component }) => {
+        return <Route key={path} path={path} element={<Component />} />
+      })
+    }</Routes>
   )
 }
