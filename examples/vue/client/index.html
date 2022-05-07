@@ -1,7 +1,7 @@
-{{#expect ssrContext, element }}
+{{#expect hydration, element }}
 <!DOCTYPE html>
 <script>
-window.ssrContext = {{{ ssrContext }}}
+window.hydration = {{{ hydration }}}
 </script>
 <main>{{{ element }}}</main>
 <script type="module" src="/entry/client.js"></script>

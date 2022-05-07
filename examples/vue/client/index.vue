@@ -4,15 +4,22 @@
 	</ul>
 	<input v-model="item">
   <button @click="addItem">Add</button>
+  <p>
+  	<router-link to="/other">Go to another page</router-link>
+  </p>
 </template>
 
 <script>
 import ky from 'ky-universal'
-import { reactive, ref, useSSRContext } from 'vue'
+import { reactive, ref } from 'vue'
+import { useRouteData } from '/entry/app'
 
 export default {
-	setup () {
-		const { todoList: raw } = import.meta.env.SSR ? useSSRContext() : window.ssrContext
+	async setup () {
+		const { todoList: raw } = await useRouteData(async () => {
+			console.log('data', await ky.get('/data').json())
+			return ky.get('/data').json()
+		})
 		const todoList = reactive(raw)
 		const item = ref('')
 		const addItem = async () => {

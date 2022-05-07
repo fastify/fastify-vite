@@ -1,6 +1,7 @@
-import { createApp } from './app'
+import createApp from './app'
+import routes from './routes.js'
 
 export default (createRenderFunction) => ({
-  routes: [{ path: '/*' }],
+  routes,
   render: createRenderFunction(createApp),
 })

@@ -1,7 +1,7 @@
-import { createApp } from './app.js'
+import createApp from './app.js'
 
-createApp().then(({ app, router }) => {
+createApp().then(({ instance, router }) => {
   router.isReady().then(() => {
-    app.mount('main')
+    instance.mount('main')
   })
 })

@@ -1,20 +1,40 @@
-import { createSSRApp } from 'vue'
+import { createSSRApp, useSSRContext } from 'vue'
 import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import App from './app.vue'
-import Index from '../index.vue'
+import routes from './routes.js'
 
 const createHistory = import.meta.env.SSR
   ? createMemoryHistory
   : createWebHistory
 
 export default async function createApp (ctx) {
-  const app = createSSRApp(App)
+  const instance = createSSRApp(App)
   const router = createRouter({
     history: createHistory(),
-    routes: [
-      { path: '/', component: Index },
-    ],
+    routes,
   })
-  app.use(router)
-  return { ctx, app, router }
+  if (!import.meta.env.SSR) {
+    let firstRender = true
+    router.afterEach(() => {
+      if (firstRender) {
+        firstRender = false
+        return
+      }
+      window.hydration = undefined
+    })
+  }
+  instance.use(router)
+  return { ctx, instance, router }
+}
+
+export async function useRouteData (hydrator) {
+  if (import.meta.env.SSR) {
+    return useSSRContext().data
+  } 
+  const data = window.hydration
+  if (data) {
+    return data
+  } else if (hydrator) {
+    return await hydrator()
+  }
 }
