@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server'
 import { RouteContext, RouteContextProvider } from './context.jsx'
 import routes from './routes.js'
@@ -20,35 +20,35 @@ export function createRouter (routeState, url) {
 
 export function useRouteState (stateLoader) {
   const ssrRouteState = useContext(RouteContext)
-  const [state, update] = useState(
+  const [routeState, update] = useState(
     import.meta.env.SSR
       ? { ...ssrRouteState, loading: false }
-      : { ...window.routeState, loading: !window.routeState }
+      : { ...window.routeState, loading: !window.routeState },
   )
   useEffect(() => {
-    if (!state.loading) {
+    if (!routeState.loading) {
       return
     }
     stateLoader().then((updatedState) => {
-      update(state => ({
-        ...state,
+      update(routeState => ({
+        ...routeState,
         ...updatedState,
         loading: false,
       }))
     }).catch((error) => {
-      update(state => ({
-        ...state,
+      update(routeState => ({
+        ...routeState,
         loading: false,
-        error
+        error,
       }))
     })
   }, [])
-  return [state, {
+  return [routeState, {
     setState (...args) {
       update(...args)
     },
     setData (setter) {
-      update({ data: setter(state.data) })
+      update({ data: setter(routeState.data) })
     },
     setError (setter) {
       update({ error: setter() })

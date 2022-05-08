@@ -12,8 +12,8 @@
     },    
   },
   extends: [
-    'standard',
     'plugin:react/recommended',
+    'standard',
   ],
   plugins: [
     'react',

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useContext, useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import ky from 'ky-universal'
 import { useRouteState } from '/entry/app.jsx'
@@ -13,7 +12,7 @@ export default function Index (props) {
     const json = { item: input.current.value }
     await ky.post('/add', { json }).json()
     setData(({ todoList }) => ({
-      todoList: [...todoList, input.current.value]
+      todoList: [...todoList, input.current.value],
     }))
     input.current.value = ''
   }
@@ -23,10 +22,14 @@ export default function Index (props) {
   return (
     <>
       <ul>{
-        state.data.todoList.map((item, i) => <li key={`item-${i}`}>{item}</li>)
+        state.data.todoList.map((item, i) => {
+          return <li key={`item-${i}`}>{item}</li>
+        })
       }</ul>
-      <input ref={input} />
-      <button onClick={addItem}>Add</button>
+      <form>
+        <input ref={input} />
+        <button onClick={addItem}>Add</button>
+      </form>
       <p>
         <Link to="/other">Go to another page</Link>
       </p>

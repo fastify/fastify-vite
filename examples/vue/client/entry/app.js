@@ -1,4 +1,4 @@
-import { createSSRApp, useSSRContext } from 'vue'
+import { createSSRApp, useSSRContext, reactive } from 'vue'
 import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import App from './app.vue'
 import routes from './routes.js'
@@ -7,7 +7,7 @@ const createHistory = import.meta.env.SSR
   ? createMemoryHistory
   : createWebHistory
 
-export default async function createApp (ctx) {
+export async function createApp (ctx, url) {
   const instance = createSSRApp(App)
   const router = createRouter({
     history: createHistory(),
@@ -20,16 +20,39 @@ export default async function createApp (ctx) {
         firstRender = false
         return
       }
-      window.hydration = undefined
+      window.routeState = undefined
     })
   }
   instance.use(router)
+  if (url) {
+    router.push(url)
+    await router.isReady()
+  }
   return { ctx, instance, router }
 }
 
-export async function useRouteData (hydrator) {
+export function useRouteState (stateLoader) {
   if (import.meta.env.SSR) {
-    return useSSRContext().data
+    return reactive({ ...useSSRContext(), loading: false })
   }
-  return window.hydration ?? await hydrator()
+  const routeState = reactive({
+    ...window.routeState,
+    loading: !window.routeState,
+    error: null,
+  })
+  if (!routeState.loading) {
+    return routeState
+  }
+  stateLoader().then((updatedState) => {
+    Object.assign(routeState, {
+      ...updatedState,
+      loading: false,
+    })
+  }).catch((error) => {
+    Object.assign(routeState, {
+      loading: false,
+      error,
+    })
+  })
+  return routeState
 }

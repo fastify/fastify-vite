@@ -1,7 +1,7 @@
-{{#expect hydration, element }}
+{{#expect routeState, element }}
 <!DOCTYPE html>
 <script>
-window.hydration = {{{ hydration }}}
+window.routeState = {{{ routeState }}}
 </script>
 <main>{{{ element }}}</main>
 <script type="module" src="/entry/client.js"></script>

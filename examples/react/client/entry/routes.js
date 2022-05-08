@@ -9,5 +9,5 @@ export default [
   {
     path: '/other',
     component: Other,
-  }
+  },
 ]

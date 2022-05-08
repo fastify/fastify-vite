@@ -1,33 +1,39 @@
 <template>
-	<ul>
-		<li v-for="item in todoList">{{ item }}</li>
-	</ul>
-	<input v-model="item">
-  <button @click="addItem">Add</button>
-  <p>
-  	<router-link to="/other">Go to another page</router-link>
-  </p>
+	<p v-if="state.loading">
+		Loading...
+	</p>
+	<template v-else>
+		<ul>
+			<li v-for="item in state.data.todoList">{{ item }}</li>
+		</ul>
+		<form>
+		  <input v-model="item">
+	    <button @click="addItem">Add</button>
+	  </form>
+	  <p>
+	  	<router-link to="/other">Go to another page</router-link>
+	  </p>
+	</template>
 </template>
 
 <script>
 import ky from 'ky-universal'
 import { reactive, ref } from 'vue'
-import { useRouteData } from '/entry/app'
+import { useRouteState } from '/entry/app.js'
 
 export default {
 	async setup () {
-		const { todoList: raw } = await useRouteData(() => {
-			return ky.get('/data').json()
+		const state = useRouteState(() => {
+			return ky.get('/state').json()
 		})
-		const todoList = reactive(raw)
 		const item = ref('')
 		const addItem = async () => {
     	const json = { item: item.value }
       await ky.post('/add', { json }).json()
-      todoList.push(item.value)
+      state.todoList.push(item.value)
       item.value = ''
     }
-    return { todoList, item, addItem }
+    return { state, item, addItem }
    }
 }
 </script>

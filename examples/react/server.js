@@ -3,7 +3,6 @@ import { dirname } from 'path'
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
 import { renderToString } from 'react-dom/server'
-import { createElement } from 'react'
 import devalue from 'devalue'
 
 const server = Fastify()
@@ -30,15 +29,17 @@ server.get('/state', async (_, reply) => {
   await setTimeout(1500)
   reply.send({
     data: {
-      todoList: server.todoList
+      todoList: server.todoList,
     },
     // If todoList came from a remote source and there the
     // a possibility a loading error, you could relay
     // the error to the client route state here
-    error: undefined
+    error: undefined,
   })
 })
 
+// Automatically registers all routes from client/entry/routes.js
+// And uses the render() function created by createRenderFunction() to do SSR
 await server.register(FastifyVite, {
   dev: process.argv.includes('--dev'),
   configRoot: dirname(new URL(import.meta.url).pathname),
@@ -48,14 +49,14 @@ await server.register(FastifyVite, {
     return async function render (server, req, reply, url, options) {
       const data = { todoList: server.todoList }
       const element = renderToString(
-        createRouter({ data, server, req, reply }, url)
+        createRouter({ data, server, req, reply }, url),
       )
-      return { 
-        // If todoList came from a remote source and there the
+      return {
+        // If data.todoList came from a remote source and there the
         // a possibility a loading error, you could relay
         // the error to the client route state here
-        routeState: devalue({ data, error: null }), 
-        element
+        routeState: devalue({ data, error: null }),
+        element,
       }
     }
   },

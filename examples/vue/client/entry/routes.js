@@ -4,10 +4,10 @@ import Other from '/other.vue'
 export default [
   {
     path: '/',
-    component: Index
+    component: Index,
   },
   {
     path: '/other',
-    component: Other
+    component: Other,
   },
 ]
