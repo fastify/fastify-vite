@@ -6,7 +6,7 @@ export const RouteContext = createContext({})
 export function RouteContextProvider ({ ctx, children }) {
   const location = useLocation()
   useEffect(() => {
-    window.hydration = undefined
+    window.routeState = undefined
   }, [location])
   return (
     <RouteContext.Provider value={ctx}>

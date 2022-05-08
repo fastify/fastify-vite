@@ -1,14 +1,9 @@
 import { hydrateRoot } from 'react-dom/client'
-import createApp from './app.jsx'
-import { RouteContextProvider } from './context.jsx'
-
-const { Element, Router, routes } = createApp()
+import { createRouter } from './app.jsx'
 
 hydrateRoot(
   document.querySelector('main'),
-  <Router>
-    <RouteContextProvider ctx={window.routeContext}>
-      <Element routes={routes} />
-    </RouteContextProvider>
-  </Router>,
+  // No need to pass url as second parameter
+  // here since BrowserRouter is used on the client
+  createRouter(window.routeState)
 )

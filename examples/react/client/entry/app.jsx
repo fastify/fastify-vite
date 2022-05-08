@@ -1,61 +1,62 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server'
-import { RouteContext } from './context.jsx'
+import { RouteContext, RouteContextProvider } from './context.jsx'
 import routes from './routes.js'
 
 const Router = import.meta.env.SSR
   ? StaticRouter
   : BrowserRouter
 
-export default function createApp (ctx) {
-  return {
-    ctx,
-    routes,
-    Element,
-    Router,
-  }
+export function createRouter (routeState, url) {
+  return (
+    <Router location={url}>
+      <RouteContextProvider ctx={routeState}>
+        <RouteComponents routes={routes} />
+      </RouteContextProvider>
+    </Router>
+  )
 }
 
-export function useRouteState (dataLoader) {
+export function useRouteState (stateLoader) {
   const ssrRouteState = useContext(RouteContext)
-  const [routeState, update] = useState(
+  const [state, update] = useState(
     import.meta.env.SSR
       ? { ...ssrRouteState, loading: false }
-      : { ...window.hydration, loading: !window.hydration }
+      : { ...window.routeState, loading: !window.routeState }
   )
   useEffect(() => {
-    if (!routeState.loading) {
+    if (!state.loading) {
       return
     }
-    dataLoader().then((data) => {
-      update(routeState => ({
-        ...routeState,
-        data,
+    stateLoader().then((updatedState) => {
+      update(state => ({
+        ...state,
+        ...updatedState,
         loading: false,
       }))
     }).catch((error) => {
-      update(routeState => ({
-        ...routeState,
+      update(state => ({
+        ...state,
         loading: false,
         error
       }))
     })
-  })
-  return [routeState, {
-    setRouteState (setter) {
-      update(setter(routeState))
+  }, [])
+  return [state, {
+    setState (...args) {
+      update(...args)
     },
-    setRouteData (setter) {
-      update({ data: setter(routeState.data) })
+    setData (setter) {
+      update({ data: setter(state.data) })
     },
-    setRouteError (setter) {
-      update({ data: setter(routeState.data) })
+    setError (setter) {
+      update({ error: setter() })
     },
   }]
 }
 
-function Element (props) {
+function RouteComponents (props) {
   return (
     <Routes>{
       props.routes.map(({ path, component: Component }) => {
