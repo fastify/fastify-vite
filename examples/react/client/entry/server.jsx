@@ -1,8 +1,8 @@
 import createApp from './app.jsx'
-import Context from './context.js'
+import { RouteContextProvider } from './context.jsx'
 import routes from './routes.js'
 
 export default (createRenderFunction) => ({
   routes,
-  render: createRenderFunction(createApp, { Context }),
+  render: createRenderFunction(createApp, { RouteContextProvider }),
 })

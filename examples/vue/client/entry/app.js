@@ -30,11 +30,6 @@ export default async function createApp (ctx) {
 export async function useRouteData (hydrator) {
   if (import.meta.env.SSR) {
     return useSSRContext().data
-  } 
-  const data = window.hydration
-  if (data) {
-    return data
-  } else if (hydrator) {
-    return await hydrator()
   }
+  return window.hydration ?? await hydrator()
 }

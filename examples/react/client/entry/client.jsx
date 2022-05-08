@@ -1,14 +1,14 @@
-import { hydrate } from 'solid-js/web'
+import { hydrateRoot } from 'react-dom/client'
 import createApp from './app.jsx'
-import Context from './context.js'
+import { RouteContextProvider } from './context.jsx'
 
 const { Element, Router, routes } = createApp()
 
-hydrate(
-  <Context.Provider context={window.hydration}>  
-    <Router>
+hydrateRoot(
+  document.querySelector('main'),
+  <Router>
+    <RouteContextProvider ctx={window.routeContext}>
       <Element routes={routes} />
-    </Router>
-  </Context.Provider>,
-  document.querySelector('main'),  
+    </RouteContextProvider>
+  </Router>,
 )

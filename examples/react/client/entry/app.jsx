@@ -1,6 +1,7 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React, { useContext, useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server'
+import { RouteContext } from './context.jsx'
 import routes from './routes.js'
 
 const Router = import.meta.env.SSR
@@ -16,10 +17,48 @@ export default function createApp (ctx) {
   }
 }
 
-function Element (routes) {
+export function useRouteState (dataLoader) {
+  const ssrRouteState = useContext(RouteContext)
+  const [routeState, update] = useState(
+    import.meta.env.SSR
+      ? { ...ssrRouteState, loading: false }
+      : { ...window.hydration, loading: !window.hydration }
+  )
+  useEffect(() => {
+    if (!routeState.loading) {
+      return
+    }
+    dataLoader().then((data) => {
+      update(routeState => ({
+        ...routeState,
+        data,
+        loading: false,
+      }))
+    }).catch((error) => {
+      update(routeState => ({
+        ...routeState,
+        loading: false,
+        error
+      }))
+    })
+  })
+  return [routeState, {
+    setRouteState (setter) {
+      update(setter(routeState))
+    },
+    setRouteData (setter) {
+      update({ data: setter(routeState.data) })
+    },
+    setRouteError (setter) {
+      update({ data: setter(routeState.data) })
+    },
+  }]
+}
+
+function Element (props) {
   return (
     <Routes>{
-      routes.map(({ path, component: Component }) => {
+      props.routes.map(({ path, component: Component }) => {
         return <Route key={path} path={path} element={<Component />} />
       })
     }</Routes>

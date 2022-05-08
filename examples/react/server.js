@@ -1,6 +1,7 @@
+import { setTimeout } from 'timers/promises'
+import { dirname } from 'path'
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import { dirname } from 'path'
 import { renderToString } from 'react-dom/server'
 import { createElement } from 'react'
 import devalue from 'devalue'
@@ -13,23 +14,36 @@ app.decorate('todoList', [
   'Write report',
 ])
 
+app.get('/data', async (_, reply) => {
+  await setTimeout(1500)
+  reply.send({ todoList: app.todoList })
+})
+
 await app.register(FastifyVite, {
   dev: process.argv.includes('--dev'),
   configRoot: dirname(new URL(import.meta.url).pathname),
   serverEntryPoint: '/entry/server.jsx',
   clientEntryPoint: '/entry/client.jsx',
-  createRenderFunction (createApp, { Context }) {
+  createRenderFunction (createApp, { RouteContextProvider }) {
     return async function render (server, req, reply, url, options) {
       const data = { todoList: server.todoList }
-      const app = createApp({ server, data, req, reply })
+      const app = createApp({ data, server, req, reply })
       const element = renderToString(
-        createElement(Context.Provider, {
-          value: app.ctx,
-        }, createElement(app.Router, {
+        createElement(app.Router, {
           location: url,
-        }, app.Element(app.routes))),
+        }, createElement(RouteContextProvider, {
+          ctx: app.ctx,
+        }, app.Element({
+          routes: app.routes
+        })))
       )
-      return { hydration: devalue(app.ctx.data), element }
+      return { 
+        hydration: devalue({
+          data: app.ctx.data,
+          error: undefined,
+        }), 
+        element
+      }
     }
   },
 })

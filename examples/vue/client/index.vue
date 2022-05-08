@@ -16,8 +16,7 @@ import { useRouteData } from '/entry/app'
 
 export default {
 	async setup () {
-		const { todoList: raw } = await useRouteData(async () => {
-			console.log('data', await ky.get('/data').json())
+		const { todoList: raw } = await useRouteData(() => {
 			return ky.get('/data').json()
 		})
 		const todoList = reactive(raw)
