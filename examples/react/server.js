@@ -47,10 +47,13 @@ await server.register(FastifyVite, {
   clientEntryPoint: '/entry/client.jsx',
   createRenderFunction (createRouter) {
     return async function render (server, req, reply, url, options) {
+      // Server data, could be coming from a remote resource
+      // or be populated by an onRequest or preHandler Fastify hook
       const data = { todoList: server.todoList }
-      const element = renderToString(
-        createRouter({ data, server, req, reply }, url),
-      )
+      // Creates React router element with all the SSR context it needs
+      const router = createRouter({ data, server, req, reply }, url)
+      // Perform SSR, i.e., turn router into an HTML fragment
+      const element = renderToString(router)
       return {
         // If data.todoList came from a remote source and there the
         // a possibility a loading error, you could relay

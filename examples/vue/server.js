@@ -43,9 +43,14 @@ await server.register(FastifyVite, {
   configRoot: dirname(new URL(import.meta.url).pathname),
   createRenderFunction (createApp) {
     return async function (server, req, reply, url, config) {
+      // Server data, could be coming from a remote resource
+      // or be populated by an onRequest or preHandler Fastify hook
       const data = { todoList: server.todoList }
+      // Creates Vue application instance with all the SSR context it needs
       const app = await createApp({ data, server, req, reply }, url)
+      // Perform SSR, i.e., turn app.instance into an HTML fragment
       const element = await renderToString(app.instance, app.ctx)
+      // Return variables to index.html template function
       return {
         // If data.todoList came from a remote source and there the
         // a possibility a loading error, you could relay
