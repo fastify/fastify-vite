@@ -21,12 +21,14 @@ async function setup (options) {
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
 
-  const { getHandler, createRenderFunction } = Object.assign({ getHandler: _getHandler }, options)
-  const { routes, render: renderApp } = await loadServerEntry(options, createRenderFunction)
-  const renderIndexHtml = await options.compileIndexHtml(options.bundle.indexHtml)
-  const handler = getHandler(this.scope, options, renderApp, renderIndexHtml)
-
-  return { routes, handler }
+  const serverEntryPoint = await loadServerEntry(options)
+  // Create vite.render, vite.routes and vite.handler references
+  Object.assign(this, , {
+    handler: options.createRouteHandler(this.scope, options),
+  })
+  
+  this.scope.decorateReply('render', render)
+  this.scope.decorateReply('html', await options.createHtmlFunction(options.bundle.indexHtml))
 
   async function loadServerEntry (options, createRenderFunction) {
     // Load production template source only once in prod
@@ -40,18 +42,6 @@ async function setup (options) {
         ? await entry.routes?.()
         : entry.routes,
       render: entry.render,
-    }
-  }
-
-  function _getHandler (scope, options, renderApp, renderIndexHtml) {
-    return async function (req, reply) {
-      const url = req.raw.url
-      const indexHtmlContext = await renderApp(scope, req, reply, url, options)
-      indexHtmlContext.fastify = scope
-      indexHtmlContext.req = req
-      indexHtmlContext.reply = reply
-      reply.type('text/html')
-      reply.send(renderIndexHtml(indexHtmlContext))
     }
   }
 }

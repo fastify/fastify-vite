@@ -32,6 +32,10 @@ async function setup (options) {
 
   const { getHandler, createRenderFunction } = Object.assign({ getHandler: _getHandler }, options)
   const { routes, render: getRender } = await loadServerEntry(options, createRenderFunction, this.devServer)
+
+  this.scope.decorateReply('render', render)
+  this.scope.decorateReply('html', await createHtmlFunction(options.bundle.indexHtml))
+
   const handler = getHandler(this.scope, options, getRender, getTemplate, this.devServer)
 
   return { routes, handler }

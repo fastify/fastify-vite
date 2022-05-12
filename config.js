@@ -27,8 +27,11 @@ class Config {
   // Vite entry points for server and client bundles
   serverEntryPoint = '/entry/server.js'
   clientEntryPoint = '/entry/client.js'
+  setupClient (client) {
+
+  },
   // Compile index.html into a templating function
-  compileIndexHtml (source) {
+  createHtmlFunction (source) {
     // Use tempura by default
     // https://github.com/lukeed/tempura
     const template = compile(source)
@@ -36,9 +39,22 @@ class Config {
   }
 
   // Function to create the instance.vite.route() method
-  createRouteFunction (scope, handler) {
+  createRouteFunction (scope) {
     return (url, routeOptions = {}) => {
-      scope.route({ url, handler, method: 'GET', ...routeOptions })
+      scope.route({ url, handler: scope.vite.handler, method: 'GET', ...routeOptions })
+    }
+  }
+
+  // Function to create instance.vite.handler() method (route handler)
+  createHandler (scope, options) {
+    return async function (req, reply) {
+      const url = req.raw.url
+      const indexHtmlContext = await reply.renderApp(scope, req, reply, url, options)
+      indexHtmlContext.fastify = scope
+      indexHtmlContext.req = req
+      indexHtmlContext.reply = reply
+      reply.type('text/html')
+      reply.send(reply.renderIndexHtml(indexHtmlContext))
     }
   }
 }
