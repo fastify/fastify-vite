@@ -1,13 +1,12 @@
-import Index from '../index.jsx'
-import Other from '../other.jsx'
+import React from 'react'
 
 export default [
   {
     path: '/',
-    component: Index,
+    component: React.lazy(() => import('/views/index.jsx')),
   },
   {
     path: '/other',
-    component: Other,
+    component: React.lazy(() => import('/views/other.jsx')),
   },
 ]
