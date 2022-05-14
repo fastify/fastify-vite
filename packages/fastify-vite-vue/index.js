@@ -27,7 +27,7 @@ function createDataHydration (router, key) {
 
 async function useDataLoader (loader) {
   const hydration = inject(hydrationKey)
-  let state = {
+  const state = {
     ...hydration,
     loading: !hydration,
     error: null,
@@ -44,10 +44,10 @@ async function useDataLoader (loader) {
     ssrContext[hydrationKey] = state.data
     return {
       data: ssrContext[hydrationKey],
-      loading: false
+      loading: false,
     }
   } else {
-    
+
   }
   return state
 }
@@ -57,5 +57,5 @@ module.exports = {
   createRouter,
   createDataHydration,
   hydrationKey,
-  useData
+  useData,
 }

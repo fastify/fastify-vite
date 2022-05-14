@@ -1,6 +1,6 @@
-const { join, resolve } = require('path')
+const { join, resolve, parse, dirname } = require('path')
 const { writeFile, readFile } = require('fs/promises')
-const { existsSync } = require('fs')
+const { existsSync, lstatSync } = require('fs')
 const { ensureDir } = require('fs-extra')
 const klaw = require('klaw')
 
@@ -19,11 +19,14 @@ async function * walk (dir, ignorePatterns = []) {
 }
 
 module.exports = {
+  parse,
   join,
   resolve,
   walk,
+  dirname,
   write: writeFile,
   read: readFile,
   exists: existsSync,
+  stat: lstatSync,
   ensure: ensureDir,
 }

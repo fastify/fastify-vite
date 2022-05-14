@@ -8,7 +8,8 @@
   "files": [
     "mode/development.js",
     "mode/production.js",
-    "app.js",
+    "plugin.js",
+    "html.js",
     "config.js",
     "generate.js",
     "html.js",
@@ -17,6 +18,10 @@
     "routing.js",
     "setup.js"
   ],
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.js"
+  },
   "homepage": "https://github.com/fastify/fastify-vite",
   "license": "MIT",
   "main": "index.js",

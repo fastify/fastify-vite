@@ -3,16 +3,16 @@ function createHtmlTemplateFunction (source) {
   const interpolated = ['']
   const params = []
 
-  let cursor = 0
-  let cut = null
-  let range
-
   for (const match of source.matchAll(/<!--\s*([\w]+)\s*-->/g)) {
     ranges.set(match.index, {
       param: match[1],
-      end: match.index + match[0].length
+      end: match.index + match[0].length,
     })
   }
+
+  let cursor = 0
+  const cut = null
+  let range = null
 
   for (let i = 0; i < source.length; i++) {
     if (i === cut) {
@@ -21,21 +21,24 @@ function createHtmlTemplateFunction (source) {
     } else if (ranges.get(i)) {
       range = ranges.get(i)
       params.push(range.param)
-      interpolated.push(param(range.param))
+      interpolated.push({ param: range.param })
       i = range.end
       interpolated.push('')
       cursor += 2
     }
     interpolated[cursor] += source[i]
   }
+
   return (0, eval)(
-    `(function ({ ${params.join(', ')} }) {\n` +
-    `  return \`${interpolated.map(s => serialize(s)).join('')}\`\n` +
-    `})`
+    `(function ({ ${params.join(', ')} }) {` +
+    `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
+    '})',
   )
 }
 
-module.exports = { createHtmlTemplateFunction }
+module.exports = {
+  createHtmlTemplateFunction,
+}
 
 function serialize (frag) {
   if (typeof frag === 'object') {
@@ -43,8 +46,4 @@ function serialize (frag) {
   } else {
     return frag
   }
-}
-
-function param (param) {
-  return { param }
 }

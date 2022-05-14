@@ -3,6 +3,9 @@ const { exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 async function setup (config) {
+  if (!config.bundle) {
+    throw new Error('No distribution bundle found.')
+  }
   // For production you get the distribution version of the render function
   const { assetsDir } = config.vite.build
 
@@ -26,8 +29,8 @@ async function setup (config) {
   const client = await config.prepareClient(clientModule)
 
   // Create route handler and route error handler functions
-  const handler = await config.createRouteHandler(this.scope, client, config)
-  const errorHandler = await config.createErrorHandler(this.scope, client, config)
+  const handler = await config.createRouteHandler(this.scope, config)
+  const errorHandler = await config.createErrorHandler(this.scope, config)
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply('html', await config.createHtmlFunction(

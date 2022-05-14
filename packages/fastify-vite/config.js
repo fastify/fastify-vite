@@ -1,13 +1,14 @@
 const { resolveConfig } = require('vite')
-const { join, resolve, exists, read } = require('./ioutils')
+const { fileURLToPath } = require('url')
+const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction: _createHtmlTemplateFunction } = require('./html')
 
 class Config {
   // Whether or not to enable Vite's Dev Server
-  dev = false
+  dev = process.argv.includes('--dev')
 
   // Vite's configuration file location
-  configRoot = null
+  root = null
 
   // Vite's resolved config
   vite = null
@@ -33,21 +34,22 @@ class Config {
   // also referred to as the server entry point
   clientModule = null
 
-  async prepareClient ({ routes, render }, scope, config) {
+  async prepareClient ({ routes, ...others }, scope, config) {
     if (typeof routes === 'function') {
       routes = await routes()
     }
-    return { routes, render }
+    return { routes, ...others }
   }
 
-  // Compile index.html into templating function, 
+  // Compile index.html into templating function,
   // used by createHtmlFunction() by default
   createHtmlTemplateFunction = _createHtmlTemplateFunction
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
-    const indexHtmlTemplate = createHtmlTemplateFunction(source)
+    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     return function (ctx) {
+      this.type('text/html')
       this.send(indexHtmlTemplate(ctx))
     }
   }
@@ -66,14 +68,17 @@ class Config {
   // Function to create the route handler passed to createRoute
   createRouteHandler (scope, options) {
     return async function (req, reply) {
-      const fragments = await reply.render()
+      const fragments = await reply.render(scope, req, reply)
       reply.html(fragments)
     }
   }
 
   // Function to create the route errorHandler passed to createRoute
-  createErrorHandler (scope) {
+  createErrorHandler (scope, config) {
     return (error, req, reply) => {
+      if (config.dev) {
+        console.error(error)
+      }
       scope.vite.devServer.ssrFixStacktrace(error)
       scope.errorHandler(error, req, reply)
     }
@@ -81,7 +86,8 @@ class Config {
 }
 
 async function configure (options = {}) {
-  const [vite, viteConfig] = await resolveViteConfig(options.configRoot)
+  const root = resolveRoot(options.root)
+  const [vite, viteConfig] = await resolveViteConfig(root)
   const clientModule = resolveClientModule(vite.root)
   const bundle = await resolveBundle({ ...options, vite })
   const config = Object.assign(new Config(), {
@@ -92,11 +98,14 @@ async function configure (options = {}) {
     clientModule,
   })
   for (const setting of [
-    'compileIndexHtml',
-    'createHandler',
+    'clientModule',
+    'createErrorHandler',
+    'createHtmlFunction',
+    'createHtmlTemplateFunction',
     'createRenderFunction',
-    'clientEntryPoint',
-    'serverEntryPoint',
+    'createRoute',
+    'createRouteHandler',
+    'prepareClient'
   ]) {
     config[setting] = config.renderer[setting] ?? config[setting]
   }
@@ -106,7 +115,6 @@ async function configure (options = {}) {
 function resolveClientModule (root) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
     const indexFile = join(root, `index.${ext}`)
-    console.log('indexFile', indexFile)
     if (exists(indexFile)) {
       return `/index.${ext}`
     }
@@ -114,9 +122,20 @@ function resolveClientModule (root) {
   return null
 }
 
-async function resolveViteConfig (configRoot) {
+function resolveRoot (root) {
+  if (root.startsWith('file:')) {
+    root = fileURLToPath(root)
+  }
+  if (stat(root).isFile()) {
+    return dirname(root)
+  } else {
+    return root
+  }
+}
+
+async function resolveViteConfig (root) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
-    const configFile = join(configRoot, `vite.config.${ext}`)
+    const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       return [
         await resolveConfig({ configFile }, 'build', 'production'),
@@ -143,33 +162,17 @@ async function resolveBundle ({ dev, vite }) {
   return bundle
 }
 
-async function resolveBuildCommands (configRoot, renderer) {
-  const [vite] = await resolveViteConfig(configRoot)
+async function resolveBuildCommands (root, renderer) {
+  const [vite] = await resolveViteConfig(root)
   return [
     ['build', '--outDir', `${vite.build.outDir}/client`, '--ssrManifest'],
     ['build', '--ssr', renderer.serverEntryPoint, '--outDir', `${vite.build.outDir}/server`],
   ]
 }
 
-function viteESModuleSSR () {
-  return {
-    name: 'vite-es-module-ssr',
-    config (config, { command }) {
-      if (command === 'build' && config.build?.ssr) {
-        config.build.rollupOptions = {
-          output: {
-            format: 'es',
-          },
-        }
-      }
-    },
-  }
-}
-
 module.exports = {
   configure,
   resolveBundle,
   resolveBuildCommands,
-  viteESModuleSSR,
 }
 module.exports.default = module.exports
