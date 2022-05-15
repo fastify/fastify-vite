@@ -68,8 +68,8 @@ class Config {
   // Function to create the route handler passed to createRoute
   createRouteHandler (scope, options) {
     return async function (req, reply) {
-      const fragments = await reply.render(scope, req, reply)
-      reply.html(fragments)
+      const page = await reply.render(scope, req, reply)
+      reply.html(page)
     }
   }
 

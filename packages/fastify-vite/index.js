@@ -2,9 +2,10 @@
 
 const fp = require('fastify-plugin')
 
+// const { WrapStream, WrapStream2 } = require('./stream')
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
 const { configure, resolveBuildCommands } = require('./config')
-
+const { createHtmlTemplateFunction } = require('./html')
 const kSetup = Symbol('kSetup')
 const kOptions = Symbol('kOptions')
 
@@ -42,6 +43,9 @@ function fastifyVite (scope, options, done) {
 }
 
 module.exports = fp(fastifyVite)
+// module.exports.WrapStream = WrapStream
+// module.exports.WrapStream2 = WrapStream2
+module.exports.createHtmlTemplateFunction = createHtmlTemplateFunction
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ejectBlueprint = ejectBlueprint
 module.exports.resolveBuildCommands = resolveBuildCommands

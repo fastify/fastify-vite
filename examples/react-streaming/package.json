@@ -1,33 +1,28 @@
 {
   "type": "module",
-  "local": {
-    "fastify-vite": "^3.0.0-beta.9"
-  },
   "scripts": {
-    "dev": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
+    "dev": "node server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --ssr /entry/server.js --outDir dist/server"
-  },
-  "external": {
-    "devalue": "^2.0.1",
-    "jotai": "^1.6.6",
-    "ky-universal": "^0.10.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.3.2"
   },
-  "dependencies": {
-    "devalue": "^2.0.1",
-    "jotai": "^1.6.6",
-    "ky-universal": "^0.10.1",
-    "react": "^18.1.0",
+  "local": {
+    "fastify-vite": "^3.0.0-beta.18"
+  },
+  "external": {
     "react-dom": "^18.1.0",
-    "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
+    "jotai": "^1.6.6",
+    "devalue": "^2.0.1"
+  },
+  "dependencies": {
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "jotai": "^1.6.6",
+    "devalue": "^2.0.1",
     "@fastify/static": "^5.0.0",
     "fastify": "^3.17.0",
     "fs-extra": "^10.0.0",
