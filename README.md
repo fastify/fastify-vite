@@ -70,7 +70,9 @@ In this example, we're conditioning the development mode to the presence of a `-
 
 Since this example is using ES module syntax and it is *not* processed by Vite, we can't just use `__dirname`. But **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths.
 
-As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered for them to be available in **`fastify-vite`**'s plugin scope.
+As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
+
+This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered for them to be available in **`fastify-vite`**'s plugin scope.
 
 ### Vite's project root
 
@@ -119,10 +121,7 @@ Next we have the **client entry point**, which is the code that **mounts** the R
 import { hydrateRoot } from 'react-dom/client'
 import { createApp } from './base.jsx'
 
-hydrateRoot(
-  document.querySelector('main'),
-  createApp()
-)
+hydrateRoot(document.querySelector('main'), createApp())
 ```
 
 > If we were to skip **server-side rendering** (also possible!) and go straight to client-side rendering, we'd use the [`createRoot()`](https://reactjs.org/docs/react-dom-client.html#createroot) function from `react-dom`, but in this case, so we expect React to find readily available markup delivered by the server, we use [`hydrateRoot()`](https://reactjs.org/docs/react-dom-client.html#hydrateroot).
@@ -132,9 +131,7 @@ Now, let's see `client/index.js`:
 ```js
 import { createApp } from './base.jsx'
 
-export default {
-  createApp,
-}
+export default { createApp }
 ```
 
 All it does is make the `createApp()` function available to the server-side code. In order to create `reply.render()`, **`fastify-vite`** expects you to provide a `createRenderFunction()` function as a plugin option. This function receives as first parameter the default export from your client module (`client/index.js` above).
@@ -171,7 +168,7 @@ server.get('/', (req, reply) => {
 })
 ```
 
-#### That's what's required to get a SSR function for your Vite-bundled application and sent it through a route handler — but there's a big question left to answer: how does that HTML fragment end up in `index.html`? How does `reply.html()` work?
+That's what's required to get a SSR function for your Vite-bundled application and sent it through a route handler — but there's a big question left to answer: how does that HTML fragment end up in `index.html`? How does `reply.html()` work?
 
 ### Creating reply.html(), the HTML rendering function
 
@@ -183,7 +180,9 @@ Let's shift attention to `client/index.html` now:
 <script type="module" src="/mount.js"></script>
 ```
 
-As per Vite's documentation, `index.html` is a special file made part of the module resolution graph. It's how Vite finds all the code that runs client-side. When you run the `vite build` command, `index.html` is what Vite automatically looks for. Given this special nature, you probably want to keep it as simple as possible, using HTML comments to specify content placeholders. That's the pattern used across the official SSR examples from [Vite's playground](https://github.com/vitejs/vite/tree/main/packages/playground).
+As per Vite's documentation, `index.html` is a special file made part of the module resolution graph. It's how Vite finds all the code that runs client-side. 
+
+When you run the `vite build` command, `index.html` is what Vite automatically looks for. Given this special nature, you probably want to keep it as simple as possible, using HTML comments to specify content placeholders. That's the pattern used across the official SSR examples from [Vite's playground](https://github.com/vitejs/vite/tree/main/packages/playground).
 
 Before we dive into `reply.html()`, you should know **`fastify-vite`** packs a helper function that turns an HTML document with placeholders indicated by comments into a precompiled templating function:
 
@@ -194,7 +193,9 @@ const template = createHtmlTemplateFunction('<main><!-- foobar --></main>')
 const html = template({ foobar: 'This will be inserted '})
 ```
 
-By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is decorated as `reply.html()`. Here's how `createHtmlFunction()` is defined by default:
+By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is decorated as `reply.html()`. 
+
+Here's how `createHtmlFunction()` is defined by default:
 
 ```js
 function createHtmlFunction (source, scope, config) {
@@ -290,7 +291,11 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 }
 ```
 
-#### You can consider **`fastify-vite`** a **microframework for building frameworks**. With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios, for example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. In fact, this is one of many others examples planned to demonstrate **`fastify-vite`**'s power.
+## ⁂
+
+You can consider **`fastify-vite`** a **microframework for building frameworks**. With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios.
+
+For example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. In fact, this is one of many others examples planned to demonstrate **`fastify-vite`**'s power.
 
 ## License
 
