@@ -16,8 +16,8 @@ It is focused on architectural primitives rather than specific framework-specifi
 
 It automates a few aspects of the setup, such as:
 
-- Compile your Vite application's `index.html` into a templating function for page-level setup.
-- Toggle Vite's development server on and off, i.e., run in development or production mode.
+- Compiling your Vite application's `index.html` into a templating function for page-level setup.
+- Toggling Vite's development server on and off, i.e., run in development or production mode.
 - Sharing routes at the client level (i.e., VueRouter or ReactRouter routes) to Fastify so an server-side routes can be automatically registered for them, allowing you to leverage Fastify's route-level hooks for them individually.
 
 The new documentation is still in progress. See the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) for now.
