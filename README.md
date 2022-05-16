@@ -30,6 +30,25 @@ npm i fastify-vite --save
 
 ## Usage
 
+First you need to import the **fastify-vite** Vite plugin (`fastify-vite/plugin`) in your `vite.config.js` file:
+
+```js
+// Import other plugins
+import viteFastify from 'fastify-vite/plugin'
+
+export default {
+  root: join(__dirname, 'client'),
+  plugins: [
+    // Register other plugins
+    viteFastify()
+  ]
+}
+```
+
+> Note that even though `__dirname` isn't available in ES modules, Vite polyfills it you for you.
+
+This file is loaded by **`fastify-vite`** to learn about your Vite application setup. The project **root** of your Vite application is treated like a module, so by default, **`fastify-vite`** will try to load `<project-root>/index.js`. If you're coming from the SSR examples from the Vite playground, this is the equivalent of the **server entry point**.
+
 ```js
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
