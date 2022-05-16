@@ -84,7 +84,7 @@ It's very important to understand those subtleties before getting started.
 
 ### Creating reply.render(), the server-side rendering (SSR) function
 
-**`fastify-vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. Let's talk about `reply.render()` first, and how to create it. To understand this fully, let's examine `examples/react-vanilla`, an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
+**`fastify-vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. Let's talk about `reply.render()` first, and how to create it. To understand this fully, let's examine [`examples/react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
 
 This basic example has the following structure:
 
