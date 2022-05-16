@@ -1,49 +1,51 @@
 const { resolveConfig } = require('vite')
 const { fileURLToPath } = require('url')
 const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
-const { createHtmlTemplateFunction: _createHtmlTemplateFunction } = require('./html')
+const { createHtmlTemplateFunction } = require('./html')
 
-class Config {
+const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server
-  dev = process.argv.includes('--dev')
+  dev: process.argv.includes('--dev'),
 
   // Vite's configuration file location
-  root = null
+  root: null,
 
   // Vite's resolved config
-  vite = null
+  vite: null,
 
-  // Vite's config path
-  viteConfig = null
+  // Vite's config path.
+  // Automatically computed from root after resolveConfig()
+  viteConfig: null,
 
-  // Vite's distribution bundle info,
-  // automatically computed from Vite's default settings
-  bundle = {
+  // Vite's distribution bundle info.
+  // Automatically computed from Vite's default settings
+  bundle: {
     manifest: null,
     indexHtml: null,
     dir: null,
-  }
+  },
 
   // Single object that can override all rendering settings that follow
-  renderer = {}
+  renderer: {},
 
   // Function to create SSR render function from server bundle
-  createRenderFunction = null
+  createRenderFunction: null,
 
   // Module bridging client code to the server,
-  // also referred to as the server entry point
-  clientModule = null
+  // also referred to as the server entry point.
+  // Automatically resolved from /index.js if unset
+  clientModule: null,
 
   async prepareClient ({ routes, ...others }, scope, config) {
     if (typeof routes === 'function') {
       routes = await routes()
     }
     return { routes, ...others }
-  }
+  },
 
   // Compile index.html into templating function,
   // used by createHtmlFunction() by default
-  createHtmlTemplateFunction = _createHtmlTemplateFunction
+  createHtmlTemplateFunction,
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
@@ -52,7 +54,7 @@ class Config {
       this.type('text/html')
       this.send(indexHtmlTemplate(ctx))
     }
-  }
+  },
 
   // Function to register server routes for client routes
   createRoute ({ handler, errorHandler, route }, scope, config) {
@@ -63,7 +65,7 @@ class Config {
       errorHandler,
       ...route,
     })
-  }
+  },
 
   // Function to create the route handler passed to createRoute
   createRouteHandler (scope, options) {
@@ -71,7 +73,7 @@ class Config {
       const page = await reply.render(scope, req, reply)
       reply.html(page)
     }
-  }
+  },
 
   // Function to create the route errorHandler passed to createRoute
   createErrorHandler (scope, config) {
@@ -82,11 +84,11 @@ class Config {
       scope.vite.devServer.ssrFixStacktrace(error)
       scope.errorHandler(error, req, reply)
     }
-  }
+  },
 }
 
 async function configure (options = {}) {
-  const defaultConfig = new Config()
+  const defaultConfig = Object.create(DefaultConfig)
   const root = resolveRoot(options.root)
   const [vite, viteConfig] = await resolveViteConfig(root)
   const clientModule = defaultConfig.clientModule ?? resolveClientModule(vite.root)

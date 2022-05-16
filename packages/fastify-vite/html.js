@@ -29,6 +29,7 @@ function createHtmlTemplateFunction (source) {
     interpolated[cursor] += source[i]
   }
 
+  // eslint-disable-next-line no-eval
   return (0, eval)(
     `(function ({ ${params.join(', ')} }) {` +
     `return \`${interpolated.map(s => serialize(s)).join('')}\`` +

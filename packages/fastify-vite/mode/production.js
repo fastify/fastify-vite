@@ -1,5 +1,4 @@
-const { resolve } = require('path')
-const { exists, basename } = require('../ioutils')
+const { resolve, join, exists, basename } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 async function setup (config) {
@@ -50,8 +49,8 @@ async function setup (config) {
 
   // Loads the Vite application server entry point for the client
   async function loadClient () {
-    const serverFile = `server/${basename(config.clientModule)}`
-    const serverBundle = await import(resolve(config.bundle.dir))
+    const serverFile = join('server', basename(config.clientModule))
+    const serverBundle = await import(resolve(config.bundle.dir, serverFile))
     return serverBundle.default ?? serverBundle
   }
 }

@@ -1,4 +1,4 @@
-const { join, resolve, parse, dirname } = require('path')
+const { join, resolve, parse, dirname, basename } = require('path')
 const { writeFile, readFile } = require('fs/promises')
 const { existsSync, lstatSync } = require('fs')
 const { ensureDir } = require('fs-extra')
@@ -24,6 +24,7 @@ module.exports = {
   resolve,
   walk,
   dirname,
+  basename,
   write: writeFile,
   read: readFile,
   exists: existsSync,

@@ -1,10 +1,13 @@
 {
+  "scripts": {
+    "lint": "eslint . --ext .js --fix"
+  },
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
   "bundleDependencies": false,
   "deprecated": false,
-  "description": "Fastify plugin to serve Vite SSR applications.",
+  "description": "Fastify plugin for server-side rendering (SSR) applications based on Vite.",
   "files": [
     "mode/development.js",
     "mode/production.js",
@@ -30,7 +33,7 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "version": "3.0.0-beta.18",
+  "version": "3.0.0-beta.19",
   "dependencies": {
     "@fastify/static": "^5.0.0",
     "fastify": "^3.17.0",
@@ -43,5 +46,12 @@
     "tempura": "^0.4.0",
     "undici": "^4.9.5",
     "vite": "^2.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
   }
 }
