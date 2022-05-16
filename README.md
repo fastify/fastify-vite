@@ -18,7 +18,7 @@ It automates a few aspects of the setup, such as:
 
 - Compiling your Vite application's `index.html` into a templating function for page-level setup.
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
-- Sharing routes at the client level (i.e., VueRouter or ReactRouter routes) to Fastify so an server-side routes can be automatically registered for them, allowing you to leverage Fastify's route-level hooks for them individually.
+- Sharing routes at the client level (i.e., `VueRouter` or `ReactRouter` routes) to Fastify so an server-side routes can be automatically registered for them, allowing you to leverage Fastify's route-level hooks for them individually.
 
 The new documentation is still in progress. See the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) for now.
 
@@ -238,7 +238,9 @@ If unset, **`fastify-vite`** will automatically try to resolve `index.js` from y
 
 ### `prepareClient({ routes, ...others }, scope, config)`
 
-As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`fastify-vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (VueRouter, ReactRouter etc). That's why `prepareClient()` is implemented that way by default.
+As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. 
+
+See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`fastify-vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (`VueRouter`, `ReactRouter` etc). That's why `prepareClient()` is implemented that way by default.
 
 See the [`react-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-hydration) and [`vue-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/vue-hydration) examples to see how the same `routes.js` file is used to set up ReactRouter and VueRouter, and the associated Fastify routes.
 
@@ -297,7 +299,9 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 
 ## ⁂
 
-You can consider **`fastify-vite`** a **microframework for building frameworks**. With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios.
+You can consider **`fastify-vite`** a **microframework for building frameworks**. 
+
+With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios.
 
 For example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. In fact, this is one of many others examples planned to demonstrate **`fastify-vite`**'s power.
 
