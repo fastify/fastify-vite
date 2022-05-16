@@ -19,7 +19,7 @@
     "eslint-plugin-react": "^7.29.4"
   },
   "local": {
-    "fastify-vite": "^3.0.0-beta.18"
+    "fastify-vite": "^3.0.0-beta.19"
   },
   "external": {
     "react-dom": "^18.1.0",
@@ -28,6 +28,7 @@
     "devalue": "^2.0.1"
   },
   "dependencies": {
+    "fastify-vite": "^3.0.0-beta.19",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "jotai": "^1.6.6",
