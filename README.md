@@ -47,7 +47,27 @@ export default {
 
 > Note that even though `__dirname` isn't available in ES modules, Vite polyfills it you for you.
 
-This file is loaded by **`fastify-vite`** to learn about your Vite application setup. The project **root** of your Vite application is treated like a module, so by default, **`fastify-vite`** will try to load `<project-root>/index.js`. If you're coming from the SSR examples from the Vite playground, this is the equivalent of the **server entry point**.
+Next you need to tell **`fastify-vite`** where to load `vite.config.js` from, for example the current directory:
+
+```js
+import Fastify from 'fastify'
+import FastifyVite from 'fastify-vite'
+
+const server = Fastify()
+
+await server.register(FastifyVite, {
+  root: import.meta.url, 
+})
+
+await server.vite.ready()
+await server.listen(3000)
+```
+
+> Since this example is using ES module syntax and it is *not* processed by Vite, we can't just use `__dirname`. But **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths.
+
+The project **root** of your Vite application is treated like a module, so by default, **`fastify-vite`** will try to load `<project-root>/index.js`. If you're coming from the SSR examples from the Vite playground, this is the equivalent of the **server entry point**. 
+
+> This is why it's also recommended you keep your client application source code **separate** from server files. In the `vite.config.js` previously shown, the project **root** is set as `client`.
 
 ```js
 import Fastify from 'fastify'
