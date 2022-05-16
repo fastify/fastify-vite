@@ -213,7 +213,7 @@ function createHtmlFunction (source, scope, config) {
 
 You can see that default definition (and many others) in **`fastify-vite`**'s [internal `config.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L51) file. 
 
-Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to reply.html(), which uses the precompiled templating function based on `index.html`.
+Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to `reply.html()`, which uses the precompiled templating function based on `index.html`.
 
 In some cases, it's very likely you'll want to provide your own `createHtmlFunction()` option through **`fastify-vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example demonstrates a custom implementation that works with a stream instead of a raw string.
 
