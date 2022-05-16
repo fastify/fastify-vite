@@ -10,7 +10,11 @@ Find below the **`README`** for the upcoming 3.x release line, **currently in be
 
 # fastify-vite [![NPM version](https://img.shields.io/npm/v/fastify-vite.svg?style=flat)](https://www.npmjs.com/package/fastify-vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-This plugin lets you load a **client application module** and set it up for **Server-Side Rendering (SSR)** with Fastify. It is focused on architectural primitives rather than specific framework-specific features. It automates a few aspects of the setup, such as:
+This plugin lets you load a **client application module** and set it up for **Server-Side Rendering (SSR)** with Fastify. 
+
+It is focused on architectural primitives rather than specific framework-specific features.
+
+It automates a few aspects of the setup, such as:
 
 - Compile your Vite application's `index.html` into a templating function for page-level setup.
 - Toggle Vite's development server on and off, i.e., run in development or production mode.
