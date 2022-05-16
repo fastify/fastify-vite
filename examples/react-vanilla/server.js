@@ -1,11 +1,18 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import renderer from './renderer.js'
+import { renderToString } from 'react-dom/server'
 
 const server = Fastify()
 const root = import.meta.url
 
-await server.register(FastifyVite, { root, renderer })
+await server.register(FastifyVite, { 
+  root, 
+  createRenderFunction ({ createApp }) {
+    return {
+      element: renderToString(createApp())
+    }
+  }
+})
 
 await server.vite.ready()
 await server.listen(3000)

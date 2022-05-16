@@ -1,0 +1,11 @@
+{
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'standard',
+  ],
+  rules: {
+    'import/no-absolute-path': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/html-closing-bracket-newline': 'off'
+  }
+}
