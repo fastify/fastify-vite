@@ -2,7 +2,6 @@
 
 const fp = require('fastify-plugin')
 
-// const { WrapStream, WrapStream2 } = require('./stream')
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
 const { configure, resolveBuildCommands } = require('./config')
 const { createHtmlTemplateFunction } = require('./html')

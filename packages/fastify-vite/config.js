@@ -86,11 +86,12 @@ class Config {
 }
 
 async function configure (options = {}) {
+  const defaultConfig = new Config()
   const root = resolveRoot(options.root)
   const [vite, viteConfig] = await resolveViteConfig(root)
-  const clientModule = resolveClientModule(vite.root)
+  const clientModule = defaultConfig.clientModule ?? resolveClientModule(vite.root)
   const bundle = await resolveBundle({ ...options, vite })
-  const config = Object.assign(new Config(), {
+  const config = Object.assign(defaultConfig, {
     ...options,
     vite,
     viteConfig,
