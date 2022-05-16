@@ -12,12 +12,10 @@
 </template>
 
 <script>
-import state from '/state'
-
 export default {
+  inject: ['state'],
   data: () => ({
   	item: '',
-  	state,
   }),
   methods: {
 		async addItem () {

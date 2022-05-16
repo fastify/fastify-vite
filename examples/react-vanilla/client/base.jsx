@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server'
 import { Provider as StateProvider } from 'jotai'
 
-import { SSRContextProvider } from './context.jsx'
 import routes from './routes.js'
 import { todoList } from './state.js'
 
@@ -16,13 +15,11 @@ export function createApp (ctx, url) {
   	]}>
 	  	<Suspense>
 		  	<Router location={url}>
-			    <SSRContextProvider ctx={ctx}>
-				    <Routes>{
-				      routes.map(({ path, component: Component }) => {
-				        return <Route key={path} path={path} element={<Component />} />
-				      })
-				    }</Routes>
-			    </SSRContextProvider>
+			    <Routes>{
+			      routes.map(({ path, component: Component }) => {
+			        return <Route key={path} path={path} element={<Component />} />
+			      })
+			    }</Routes>
 			  </Router>
 			</Suspense>
 		</StateProvider>

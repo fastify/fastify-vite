@@ -1,9 +1,10 @@
 import { reactive } from 'vue'
 
-export default reactive({
-  todoList: [
-    'Do laundry',
-    'Respond to emails',
-    'Write report',
-  ]
+const state = reactive({
+  todoList: [],
 })
+
+export default (initialValues) => {
+  Object.assign(state, initialValues)
+  return state
+}
