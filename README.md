@@ -303,7 +303,7 @@ You can consider **`fastify-vite`** a **microframework for building frameworks**
 
 With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios.
 
-For example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. In fact, this is one of many others examples planned to demonstrate **`fastify-vite`**'s power.
+For example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. In fact, this is one of many examples planned to demonstrate **`fastify-vite`**'s power.
 
 ## License
 
