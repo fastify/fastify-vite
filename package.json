@@ -1,7 +1,4 @@
 {
-  "scripts": {
-    "lint": "eslint . --ext .js,.jsx --fix"
-  },
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
@@ -43,18 +40,7 @@
     "vite": "^2.9.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.16.0",
-    "@babel/preset-react": "^7.16.0",
-    "brittle": "^2.0.0",
-    "desm": "^1.1.0",
-    "eslint": "^7.28.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.24.0",
-    "semver": "^7.3.5",
     "tap": "^14.11.0",
-    "zx": "^4.2.0"
+    "zx": "^4.3.0"
   }
 }

@@ -11,7 +11,7 @@ const Router = import.meta.env.SSR ? StaticRouter : BrowserRouter
 export function createApp (ctx, url) {
   return (
   	<StateProvider initialValues={[
-  		[todoList, ctx.data.todoList]
+  		[todoList, ctx.data.todoList],
   	]}>
 	  	<Suspense>
 		  	<Router location={url}>
@@ -23,5 +23,5 @@ export function createApp (ctx, url) {
 			  </Router>
 			</Suspense>
 		</StateProvider>
-	)
+  )
 }

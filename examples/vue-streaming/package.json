@@ -4,7 +4,8 @@
     "dev": "node server.js --dev",
     "devinstall": "zx ../../devinstall.mjs vue-vanilla -- node server.js --dev",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --ssr /index.js --outDir dist/server"
+    "build:server": "vite build --ssr /index.js --outDir dist/server",
+    "lint": "eslint . --ext .js,.vue --fix"
   },
   "local": {
     "fastify-vite": "3.0.0-beta.18"
@@ -15,7 +16,15 @@
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.2"
+    "@babel/eslint-parser": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@vitejs/plugin-vue": "^2.3.2",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-vue": "^8.7.1"
   },
   "dependencies": {
     "@vue/server-renderer": "^3.2.33",

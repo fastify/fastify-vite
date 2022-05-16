@@ -1,9 +1,9 @@
-// Helpers from the Node.js stream library 
+// Helpers from the Node.js stream library
 // used to prepend and append chunks the body stream
 import { Readable } from 'node:stream'
 
 // React 18's preferred server-side rendering function,
-// which enables the combination of React.lazy() and Suspense 
+// which enables the combination of React.lazy() and Suspense
 import { renderToNodeStream } from '@vue/server-renderer'
 
 // fastify-vite's minimal HTML templating function,
@@ -11,7 +11,7 @@ import { renderToNodeStream } from '@vue/server-renderer'
 // and returns a function with the generated code
 import { createHtmlTemplateFunction } from 'fastify-vite'
 
-// Used to safely serialize JavaScript into 
+// Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
 
@@ -27,7 +27,7 @@ function createHtmlFunction (source, scope, config) {
   const headTemplate = createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {
     const head = headTemplate({
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`
+      hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
     })
     this.type('text/html')
     const readable = Readable
@@ -46,7 +46,7 @@ function createRenderFunction ({ createApp }) {
         'Do laundry',
         'Respond to emails',
         'Write report',
-      ]
+      ],
     }
     // Creates main React component with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.url)

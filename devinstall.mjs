@@ -2,7 +2,6 @@
 /* globals $,path,fs */
 /* eslint-disable node/no-path-concat */
 
-import chokidar from 'chokidar'
 const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'examples', example)
 const command = process.argv.slice(5)

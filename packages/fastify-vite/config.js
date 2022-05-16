@@ -106,7 +106,7 @@ async function configure (options = {}) {
     'createRenderFunction',
     'createRoute',
     'createRouteHandler',
-    'prepareClient'
+    'prepareClient',
   ]) {
     config[setting] = config.renderer[setting] ?? config[setting]
   }

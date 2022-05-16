@@ -1,16 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAtom } from 'jotai'
 import { todoList } from '/state.js'
 
 export default function Index (props) {
   const [state, updateState] = useAtom(todoList)
-  const input = useRef(null)
+  const [input, setInput] = useState(null)
   const addItem = async () => {
     updateState((todoList) => {
-      return [...todoList, input.current.value]
+      return [...todoList, input.value]
     })
-    input.current.value = ''
+    input.value = ''
   }
   return (
     <>
@@ -20,7 +20,7 @@ export default function Index (props) {
         })
       }</ul>
       <div>
-        <input ref={input} />
+        <input ref={setInput} />
         <button onClick={addItem}>Add</button>
       </div>
       <p>

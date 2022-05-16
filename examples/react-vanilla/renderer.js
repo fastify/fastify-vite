@@ -1,7 +1,7 @@
 // React 18's non-streaming server-side rendering function
 import { renderToString } from 'react-dom/server'
 
-// Used to safely serialize JavaScript into 
+// Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
 
@@ -18,7 +18,7 @@ function createRenderFunction ({ createApp }) {
         'Do laundry',
         'Respond to emails',
         'Write report',
-      ]
+      ],
     }
     // Creates main React component with all the SSR context it needs
     const app = createApp({ data, server, req, reply }, req.url)
@@ -28,7 +28,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`
+      hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
     }
   }
 }

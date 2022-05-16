@@ -51,7 +51,7 @@ async function setup (config) {
   // Loads the Vite application server entry point for the client
   async function loadClient () {
     const serverFile = `server/${basename(config.clientModule)}`
-    const serverBundle = await import(resolve(config.bundle.dir, ))
+    const serverBundle = await import(resolve(config.bundle.dir))
     return serverBundle.default ?? serverBundle
   }
 }

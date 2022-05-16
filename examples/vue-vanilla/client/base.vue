@@ -1,7 +1,10 @@
 <template>
   <router-view v-slot="{ Component }">
     <Suspense>
-      <component :key="$route.path" :is="Component" />
+      <component
+        :is="Component"
+        :key="$route.path"
+      />
     </Suspense>
   </router-view>
 </template>
