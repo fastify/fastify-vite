@@ -47,7 +47,7 @@ export default {
 
 > Note that even though `__dirname` isn't available in ES modules, Vite polyfills it you for you.
 
-Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from, for example the current directory:
+Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
 
 ```js
 import Fastify from 'fastify'
