@@ -57,3 +57,29 @@ await server.listen(3000)
 - `root`: the location of your `vite.config.js` file (`import.meta.url` is treated like `__dirname`)
 - `createRenderFunction`: create `reply.render()` method based on the client bundle
 
+## Configuration
+
+All steps of the setup can be configured isolatedly. Below is a diagram of the execution flow of configuration functions:
+
+```
+├─ prepareClient()
+│  ├─ createHtmlFunction()
+│  ├─ createRenderFunction()
+│  ├─ createRouteHandler()
+│  └─ createErrorHandler()
+└─ createRoute()
+```
+
+### `clientModule`
+
+### `prepareClient({ routes, ...others }, scope, config)`
+
+### `createHtmlFunction(source, scope, config)`
+
+### `createRenderFunction(clientModule, scope, config)`
+
+### `createRouteHandler(scope, options)`
+
+### `createErrorHandler(scope, config)`
+
+### `createRoute({ handler, errorHandler, route }, scope, config)`
