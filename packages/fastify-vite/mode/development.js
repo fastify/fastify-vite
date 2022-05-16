@@ -48,7 +48,7 @@ async function setup (config) {
 
   // Create route handler and route error handler functions
   const handler = await config.createRouteHandler(client, this.scope, config)
-  const errorHandler = await config.createErrorHandler(this.scope, config)
+  const errorHandler = await config.createErrorHandler(client, this.scope, config)
 
   return { routes: client.routes, handler, errorHandler }
 }

@@ -29,20 +29,20 @@ async function setup (config) {
   const client = await config.prepareClient(clientModule)
 
   // Create route handler and route error handler functions
-  const handler = await config.createRouteHandler(this.scope, config)
-  const errorHandler = await config.createErrorHandler(this.scope, config)
+  const handler = await config.createRouteHandler(client, this.scope, config)
+  const errorHandler = await config.createErrorHandler(client, this.scope, config)
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply('html', await config.createHtmlFunction(
-    this.scope,
     config.bundle.indexHtml,
+    this.scope,
     config,
   ))
 
   // Set reply.render() function with the client module production bundle
   this.scope.decorateReply('render', await config.createRenderFunction(
-    this.scope,
     client,
+    this.scope,
     config,
   ))
 
