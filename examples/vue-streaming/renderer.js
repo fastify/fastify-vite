@@ -18,7 +18,7 @@ import devalue from 'devalue'
 // The fastify-vite renderer overrides
 export default {
   createHtmlFunction,
-  createRenderFunction,
+  createRenderFunction
 }
 
 // The return value of this function gets registered as reply.html()
@@ -27,7 +27,7 @@ function createHtmlFunction (source, scope, config) {
   const headTemplate = createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {
     const head = headTemplate({
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
+      hydration: `<script>window.hydration = ${devalue({ data })}</script>`
     })
     this.type('text/html')
     const readable = Readable
@@ -45,8 +45,8 @@ function createRenderFunction ({ createApp }) {
       todoList: [
         'Do laundry',
         'Respond to emails',
-        'Write report',
-      ],
+        'Write report'
+      ]
     }
     // Creates main React component with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.url)

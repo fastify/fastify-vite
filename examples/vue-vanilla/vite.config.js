@@ -9,6 +9,6 @@ export default {
   plugins: [
     viteVue(),
     // viteVueJsx(),
-    viteFastify(),
-  ],
+    viteFastify()
+  ]
 }

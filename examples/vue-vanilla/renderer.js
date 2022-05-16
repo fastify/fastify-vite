@@ -16,8 +16,8 @@ function createRenderFunction ({ createApp }) {
       todoList: [
         'Do laundry',
         'Respond to emails',
-        'Write report',
-      ],
+        'Write report'
+      ]
     }
     // Creates Vue application instance with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.raw.url)
@@ -28,7 +28,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
+      hydration: `<script>window.hydration = ${devalue({ data })}</script>`
     }
   }
 }

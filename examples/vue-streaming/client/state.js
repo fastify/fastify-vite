@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 
 const state = reactive({
-  todoList: [],
+  todoList: []
 })
 
 export default (initialValues) => {

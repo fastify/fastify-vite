@@ -1,10 +1,10 @@
 export default [
   {
     path: '/',
-    component: () => import('/views/index.vue'),
+    component: () => import('/views/index.vue')
   },
   {
     path: '/other',
-    component: () => import('/views/other.vue'),
-  },
+    component: () => import('/views/other.vue')
+  }
 ]

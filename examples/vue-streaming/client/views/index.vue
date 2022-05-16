@@ -1,13 +1,21 @@
 <template>
-	<ul>
-		<li v-for="item in state.todoList">{{ item }}</li>
-	</ul>
-	<div>
-	  <input v-model="item">
-    <button @click="addItem">Add</button>
+  <ul>
+    <li
+      v-for="(listItem, i) in state.todoList"
+      :key="`item-${i}`">
+      {{ listItem }}
+    </li>
+  </ul>
+  <div>
+    <input v-model="item">
+    <button @click="addItem">
+      Add
+    </button>
   </div>
   <p>
-  	<router-link to="/other">Go to another page</router-link>
+    <router-link to="/other">
+      Go to another page
+    </router-link>
   </p>
 </template>
 
@@ -15,13 +23,13 @@
 export default {
   inject: ['state'],
   data: () => ({
-  	item: '',
+    item: ''
   }),
   methods: {
-		async addItem () {
-     	this.state.todoList.push(this.item)
+    async addItem () {
+      this.state.todoList.push(this.item)
       this.item = ''
     }
-  },
+  }
 }
 </script>

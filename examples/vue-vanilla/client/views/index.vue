@@ -2,8 +2,7 @@
   <ul>
     <li
       v-for="(listItem, i) in state.todoList"
-      :key="`item-${i}`"
-    >
+      :key="`item-${i}`">
       {{ listItem }}
     </li>
   </ul>
@@ -24,13 +23,13 @@
 export default {
   inject: ['state'],
   data: () => ({
-  	item: '',
+    item: ''
   }),
   methods: {
-		async addItem () {
-     	this.state.todoList.push(this.item)
+    async addItem () {
+      this.state.todoList.push(this.item)
       this.item = ''
     }
-  },
+  }
 }
 </script>
