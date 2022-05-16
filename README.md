@@ -170,7 +170,9 @@ server.get('/', (req, reply) => {
 })
 ```
 
-That's what's required to get a SSR function for your Vite-bundled application and sent it through a route handler — but there's a big question left to answer: how does that HTML fragment end up in `index.html`? How does `reply.html()` work?
+That's what's required to get a SSR function for your Vite-bundled application and sent it through a route handler — but there's a big question left to answer: how does that HTML fragment end up in `index.html`? 
+
+How does `reply.html()` work?
 
 ### Creating reply.html(), the HTML rendering function
 
