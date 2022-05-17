@@ -150,8 +150,10 @@ const server = Fastify()
 await server.register(FastifyVite, { 
   root: import.meta.url, 
   createRenderFunction ({ createApp }) {
-    return {
-      element: renderToString(createApp())
+    return () => {
+      return {
+        element: renderToString(createApp())
+      }
     }
   }
 })
