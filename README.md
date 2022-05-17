@@ -10,7 +10,7 @@ Find below the **`README`** for the upcoming 3.x release line, **currently in be
 
 # fastify-vite [![NPM version](https://img.shields.io/npm/v/fastify-vite.svg?style=flat)](https://www.npmjs.com/package/fastify-vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-This plugin lets you load a **client application module** and set it up for **Server-Side Rendering (SSR)** with Fastify. 
+This plugin lets you load a **Vite client application** and set it up for **Server-Side Rendering (SSR)** with Fastify. 
 
 It is focused on architectural primitives rather than specific framework-specific features.
 
@@ -20,7 +20,7 @@ It automates a few aspects of the setup, such as:
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
 - Sharing routes at the client level (History API-based) to Fastify so server-side routes can be automatically registered for them.
 
-The new documentation is still in progress. See the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) for now.
+This README contains all the documentation. Also see the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
 
 ## Install
 
@@ -47,7 +47,7 @@ export default {
 
 > Note that even though `__dirname` isn't available in ES modules, Vite polyfills it you for you.
 
-Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
+Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which case Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
 
 ```js
 import Fastify from 'fastify'
