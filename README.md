@@ -18,7 +18,7 @@ It automates a few aspects of the setup, such as:
 
 - Compiling your Vite application's `index.html` into a templating function for page-level setup.
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
-- Sharing routes at the client level (i.e., `VueRouter` or `ReactRouter` routes) to Fastify so an server-side routes can be automatically registered for them, allowing you to leverage Fastify's route-level hooks for them individually.
+- Sharing routes at the client level (History API-based) to Fastify so server-side routes can be automatically registered for them.
 
 The new documentation is still in progress. See the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) for now.
 
@@ -216,6 +216,46 @@ You can see that default definition (and many others) in **`fastify-vite`**'s [i
 Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to `reply.html()`, which uses the precompiled templating function based on `index.html`.
 
 In some cases, it's very likely you'll want to provide your own `createHtmlFunction()` option through **`fastify-vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example demonstrates a custom implementation that works with a stream instead of a raw string.
+
+## Deployment
+
+If you try to run any of the examples without the `--dev` flag, you'll be greeted with an error message:
+
+```
+% node server.js
+/../node_modules/fastify-vite/mode/production.js:6
+    throw new Error('No distribution bundle found.')
+          ^
+
+Error: No distribution bundle found.
+```
+
+This means you're trying to run **`fastify-vite`** in production mode, in which case a **distribution bundle** is assumed to exist. To build your client application code in preparation for **`fastify-vite`**, you must run two `vite build` commands, one for the actual client bundle, that gets delivered to the browser, and another for the server-side version of it (what **`fastify-vite`** sees as the *_client module_*, or *_server entry point_*).
+
+Assuming your Vite **project root** is client, these are the `scripts` you need to add to `package.json`:
+
+```json
+"build": "npm run build:client && npm run build:server",
+"build:client": "vite build --outDir dist/client --ssrManifest",
+"build:server": "vite build --outDir dist/server --ssr /index.js",
+```
+
+After running `npm run build` on [`react-vanilla`](), for example, you should see a new `client/dist` folder.
+
+
+```diff
+  ├── client
++ │    ├── dist
+  │    ├── base.jsx
+  │    ├── index.html
+  │    ├── index.js
+  │    └── mount.js
+  ├── package.json
+  ├── server.js
+  └── vite.config.js
+```
+
+That's where the production bundle of your Vite application is located, so this folder needs to exist before you can run a Fastify server with **`fastify-vite`** in production mode.
 
 ## Configuration
 
