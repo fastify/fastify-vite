@@ -20,7 +20,7 @@ It automates a few aspects of the setup, such as:
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
 - Integrate routing at the client level (History API-based) with Fastify server-side routing.
 
-This README contains all the documentation. Also see the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
+This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
 
 ## Install
 
