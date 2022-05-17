@@ -48,7 +48,7 @@ function createRenderFunction ({ createApp }) {
         'Write report'
       ]
     }
-    // Creates main React component with all the SSR context it needs
+    // Creates Vue app instance with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.url)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     const stream = renderToNodeStream(app.instance, app.ctx)
