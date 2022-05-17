@@ -1,6 +1,6 @@
 **fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed **Fastify DX**. 
 
-## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to be notified when the public beta is out.
+## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear Fastify DX news.
 
 The 2.x release line has been deprecated and is no longer maintained. Find the legacy documentation [here](https://github.com/fastify/fastify-vite/releases/tag/v2.3.1).
 
