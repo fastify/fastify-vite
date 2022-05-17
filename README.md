@@ -341,7 +341,7 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 
 ## ⁂
 
-You can consider **`fastify-vite`** a **microframework for building frameworks**. 
+You can consider **`fastify-vite`** a **microframework for building full stack frameworks**. 
 
 With configuration functions hooking into every step of the setup process, you can easily implement advanced automation for a number of scenarios.
 
