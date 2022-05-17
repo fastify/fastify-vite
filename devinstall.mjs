@@ -16,7 +16,7 @@ await $`rm -rf ${exRoot}/node_modules/.vite`
 
 const template = require(path.join(exRoot, 'package.json'))
 
-const { external, local } = template
+const { external, local } = template.devInstall
 const dependencies = { ...external }
 
 for (const localDep of Object.keys(local)) {
@@ -47,8 +47,9 @@ try {
 }
 
 async function createPackageFile (exRoot, dependencies) {
+  const { type, scripts, devDependencies, devInstall } = template
   await fs.writeFile(
     path.join(exRoot, 'package.json'),
-    JSON.stringify({ ...template, dependencies }, null, 2),
+    JSON.stringify({ type, scripts, dependencies, devDependencies, devInstall }, null, 2),
   )
 }
