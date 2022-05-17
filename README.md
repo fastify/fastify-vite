@@ -259,8 +259,6 @@ That's where the production bundle of your Vite application is located, so this 
 
 Also note that in **production mode**, **`fastify-vite`** will serve static assets from your Vite application via [`@fastify/static`](https://github.com/fastify/fastify-static) automatically, but you should consider using a CDN for those files if you can, or just serve through Nginx  instead of directly through Node.js. A detailed guide on how to set this up will be added soon.
 
-In **production mode**, 
-
 ## Configuration
 
 The essential configuration options are `root`, `dev` and `createRenderFunction()`. Following the conventions covered in the previous section, setting those is enough to get most simple apps working well. But all steps of the setup can be configured isolatedly. 
