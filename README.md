@@ -234,7 +234,7 @@ Error: No distribution bundle found.
 
 This means you're trying to run **`fastify-vite`** in production mode, in which case a **distribution bundle** is assumed to exist. To build your client application code in preparation for **`fastify-vite`**, you must run two `vite build` commands, one for the actual client bundle, that gets delivered to the browser, and another for the server-side version of it (what **`fastify-vite`** sees as the *_client module_*, or *_server entry point_*).
 
-Assuming your Vite **project root** is client, these are the `scripts` you need to add to `package.json`:
+Assuming you're using the default `clientModule` resolution (`/index.js`), these are the `scripts` needed in `package.json`:
 
 ```json
 "build": "npm run build:client && npm run build:server",
