@@ -219,7 +219,7 @@ In some cases, it's very likely you'll want to provide your own `createHtmlFunct
 
 ## Deployment
 
-If you try to run any of the examples without the `--dev` flag, you'll be greeted with an error message:
+If you try to run any of the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) without the `--dev` flag, you'll be greeted with an error message:
 
 ```
 % node server.js
@@ -240,7 +240,7 @@ Assuming your Vite **project root** is client, these are the `scripts` you need 
 "build:server": "vite build --outDir dist/server --ssr /index.js",
 ```
 
-After running `npm run build` on [`react-vanilla`](), for example, you should see a new `client/dist` folder.
+After running `npm run build` on [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), for example, you should see a new `client/dist` folder.
 
 
 ```diff
@@ -256,6 +256,10 @@ After running `npm run build` on [`react-vanilla`](), for example, you should se
 ```
 
 That's where the production bundle of your Vite application is located, so this folder needs to exist before you can run a Fastify server with **`fastify-vite`** in production mode.
+
+Also note that in **production mode**, **`fastify-vite`** will serve static assets from your Vite application via [`@fastify/static`](https://github.com/fastify/fastify-static) automatically, but you should consider using a CDN for those files if you can, or just serve through Nginx  instead of directly through Node.js. A detailed guide on how to set this up will be added soon.
+
+In **production mode**, 
 
 ## Configuration
 
