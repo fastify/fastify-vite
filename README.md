@@ -12,7 +12,7 @@ Find below the **`README`** for the upcoming 3.x release line, **currently in be
 
 This plugin lets you load a **Vite client application** and set it up for **Server-Side Rendering (SSR)** with Fastify. 
 
-It is focused on architectural primitives rather than specific framework-specific features.
+It is focused on architectural primitives rather than framework-specific features.
 
 It automates a few aspects of the setup, such as:
 
