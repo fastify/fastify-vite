@@ -18,7 +18,7 @@ It automates a few aspects of the setup, such as:
 
 - Compiling your Vite application's `index.html` into a templating function for page-level setup.
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
-- Integrate routing at the client level (History API-based) with Fastify server-side routing.
+- Integrating routing at the client level (History API-based) with Fastify server-side routing.
 
 This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
 
