@@ -1,6 +1,6 @@
 **fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed **Fastify DX**. 
 
-## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to be notified when the public beta is out.
+## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear Fastify DX news.
 
 The 2.x release line has been deprecated and is no longer maintained. Find the legacy documentation [here](https://github.com/fastify/fastify-vite/releases/tag/v2.3.1).
 
@@ -12,15 +12,15 @@ Find below the **`README`** for the upcoming 3.x release line, **currently in be
 
 This plugin lets you load a **Vite client application** and set it up for **Server-Side Rendering (SSR)** with Fastify. 
 
-It is focused on architectural primitives rather than specific framework-specific features.
+It is focused on architectural primitives rather than framework-specific features.
 
 It automates a few aspects of the setup, such as:
 
 - Compiling your Vite application's `index.html` into a templating function for page-level setup.
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
-- Integrate routing at the client level (History API-based) with Fastify server-side routing.
+- Integrating routing at the client level (History API-based) with Fastify server-side routing.
 
-This README contains all the documentation. Also see the the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
+This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
 
 ## Install
 
@@ -45,7 +45,7 @@ export default {
 }
 ```
 
-> Note that even though `__dirname` isn't available in ES modules, Vite polyfills it you for you.
+> Note that even though `__dirname` isn't available in ES modules, Vite polyfills it for you.
 
 Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which case Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
 

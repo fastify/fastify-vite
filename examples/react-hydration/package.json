@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "fastify-vite": "^3.0.0-beta.19",
+    "fastify-vite": "^3.0.0-beta.20",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "jotai": "^1.6.6",
