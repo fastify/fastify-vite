@@ -33,7 +33,7 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "version": "3.0.0-beta.19",
+  "version": "3.0.0-beta.20",
   "dependencies": {
     "@fastify/static": "^5.0.0",
     "fastify": "^3.17.0",
