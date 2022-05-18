@@ -298,12 +298,12 @@ As covered previously, this is the function that creates the `reply.html()` meth
 
 As covered previously, this is the function that creates the `reply.render()` method.
 
-### `createRouteHandler(scope, options)`
+### `createRouteHandler(client, scope, options)`
 
 This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L71) below:
 
 ```js
-function createRouteHandler (scope, options) {
+function createRouteHandler (client, scope, options) {
   return async function (req, reply) {
     const page = await reply.render(scope, req, reply)
     reply.html(page)
@@ -311,12 +311,12 @@ function createRouteHandler (scope, options) {
 }
 ```
 
-### `createErrorHandler(scope, config)`
+### `createErrorHandler(client, scope, config)`
 
 This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L79) below:
 
 ```js
-function createErrorHandler (scope, config) {
+function createErrorHandler (client, scope, config) {
   return (error, req, reply) => {
     if (config.dev) {
       console.error(error)

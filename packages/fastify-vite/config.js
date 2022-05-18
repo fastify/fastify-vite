@@ -68,7 +68,7 @@ const DefaultConfig = {
   },
 
   // Function to create the route handler passed to createRoute
-  createRouteHandler (scope, options) {
+  createRouteHandler (client, scope, config) {
     return async function (req, reply) {
       const page = await reply.render(scope, req, reply)
       reply.html(page)
@@ -76,7 +76,7 @@ const DefaultConfig = {
   },
 
   // Function to create the route errorHandler passed to createRoute
-  createErrorHandler (scope, config) {
+  createErrorHandler (client, scope, config) {
     return (error, req, reply) => {
       if (config.dev) {
         console.error(error)
