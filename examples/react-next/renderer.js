@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server'
 import devalue from 'devalue'
 
 // The fastify-vite renderer overrides
-export default { 
+export default {
   createRenderFunction,
   createRoute,
   createErrorHandler,
@@ -14,23 +14,24 @@ export default {
 
 function createRoute ({ handler, errorHandler, route }, scope, config) {
   if (route.getServerSideProps) {
+    // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
       reply.send(await route.getServerSideProps({
         req,
-        reply,
-        server: scope,
+        ky: scope.ky,
       }))
     })
   }
   scope.get(route.path, {
+    // If getServerSideProps is provided,
+    // make sure it runs before the SSR route handler
     ...route.getServerSideProps && {
       async preHandler (req, reply) {
         req.serverSideProps = await route.getServerSideProps({
           req,
-          reply,
-          server: scope,
+          ky: scope.ky,
         })
-      }
+      },
     },
     handler,
     errorHandler,

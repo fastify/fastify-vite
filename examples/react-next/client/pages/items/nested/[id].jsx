@@ -1,15 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export function getServerSideProps () {
-	return {
-		todoList: [
-      'Do laundry',
-      'Respond to emails',
-      'Write report',
-    ]
-	}
+export async function getServerSideProps ({ req, ky }) {
+  const todoList = await ky('api/todo-list').json()
+  return { item: todoList[req.params.id] }
 }
 
-export default function () {
-	return <p>/views/items/nested/[id].jsx</p>
+export default function NestedItem ({ item }) {
+  return (
+    <>
+      <p>{ item }</p>
+      <p>
+        <Link to="/">Go to the index</Link>
+      </p>
+    </>
+  )
 }

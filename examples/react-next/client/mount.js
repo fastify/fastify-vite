@@ -8,7 +8,3 @@ hydrateRoot(
   // here since BrowserRouter is used on the client
   createApp(),
 )
-
-requestIdleCallback(() => {
-  window.hydration = {}
-})
