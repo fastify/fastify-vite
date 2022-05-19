@@ -80,8 +80,8 @@ const DefaultConfig = {
     return (error, req, reply) => {
       if (config.dev) {
         console.error(error)
+        scope.vite.devServer.ssrFixStacktrace(error);
       }
-      scope.vite.devServer.ssrFixStacktrace(error)
       scope.errorHandler(error, req, reply)
     }
   },
