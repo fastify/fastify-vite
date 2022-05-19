@@ -88,11 +88,12 @@ const DefaultConfig = {
 }
 
 async function configure (options = {}) {
-  const defaultConfig = Object.create(DefaultConfig)
+  const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
-  const [vite, viteConfig] = await resolveViteConfig(root)
+  const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
+  const [vite, viteConfig] = await resolveViteConfig(root, dev)
   const clientModule = defaultConfig.clientModule ?? resolveClientModule(vite.root)
-  const bundle = await resolveBundle({ ...options, vite })
+  const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
     ...options,
     vite,
@@ -136,12 +137,16 @@ function resolveRoot (root) {
   }
 }
 
-async function resolveViteConfig (root) {
+async function resolveViteConfig (root, dev) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
     const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       return [
-        await resolveConfig({ configFile }, 'build', 'production'),
+        await resolveConfig(
+          { configFile },
+          "build",
+          dev ? "development" : "production"
+        ),
         configFile,
       ]
     }
