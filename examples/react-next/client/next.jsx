@@ -100,6 +100,9 @@ function fetchWithSuspense (path) {
     if (loader.suspended) {
       throw loader.promise
     }
+    // Remove from suspenseMap now that we have data
+    suspenseMap.delete(path)
+
     return loader.data
   } else {
     loader = {
