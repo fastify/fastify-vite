@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import { createComponent, renderToStringAsync } from 'solid-js/web'
+import { renderToStringAsync } from 'solid-js/web'
 
 const server = Fastify()
 const root = import.meta.url
