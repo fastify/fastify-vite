@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import { renderToString } from 'react-dom/server'
+import { renderToStringAsync } from 'solid-js/web'
 
 const server = Fastify()
 const root = import.meta.url
@@ -10,7 +10,7 @@ await server.register(FastifyVite, {
   createRenderFunction ({ createApp }) {
     return () => {
       return {
-        element: renderToString(createApp())
+        element: renderToStringAsync(createApp())
       }
     }
   }

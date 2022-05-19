@@ -1,7 +1,7 @@
-import { hydrateRoot } from 'react-dom/client'
+import { hydrate } from 'solid-js/web'
 import { createApp } from './base.jsx'
 
-hydrateRoot(
-  document.querySelector('main'),
-  createApp()
+hydrate(
+  createApp(),
+  document.querySelector('main'),  
 )
