@@ -1,7 +1,7 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import ky from 'ky-universal'
 import renderer from './renderer.js'
+import ky from 'ky-universal'
 
 const server = Fastify({ ignoreTrailingSlash: true })
 const root = import.meta.url

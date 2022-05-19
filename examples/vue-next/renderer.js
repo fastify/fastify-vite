@@ -1,5 +1,5 @@
-// React 18's non-streaming server-side rendering function
-import { renderToString } from 'react-dom/server'
+// Vue 3's non-streaming server-side rendering function
+import { renderToString } from '@vue/server-renderer'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
@@ -8,7 +8,7 @@ import devalue from 'devalue'
 // The fastify-vite renderer overrides
 export default {
   createRenderFunction,
-  createRoute,
+  createRoute
 }
 
 function createRoute ({ handler, errorHandler, route }, scope, config) {
@@ -17,7 +17,7 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
     scope.get(`/json${route.path}`, async (req, reply) => {
       reply.send(await route.getServerSideProps({
         req,
-        ky: scope.ky,
+        ky: scope.ky
       }))
     })
   }
@@ -28,33 +28,31 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
       async preHandler (req, reply) {
         req.serverSideProps = await route.getServerSideProps({
           req,
-          ky: scope.ky,
+          ky: scope.ky
         })
-      },
+      }
     },
     handler,
     errorHandler,
-    ...route,
+    ...route
   })
 }
 
 function createRenderFunction ({ createApp }) {
-  // createApp is exported by client/index.js
-  return function (server, req, reply) {
+  return async function (server, req, reply) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const serverSideProps = req.serverSideProps
-    // Creates main React component with all the SSR context it needs
-    const app = createApp({ serverSideProps, server, req, reply }, req.url)
+    // Creates Vue application instance with all the SSR context it needs
+    const app = await createApp({ serverSideProps, server, req, reply }, req.raw.url)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
-    const element = renderToString(app)
+    const element = await renderToString(app.instance, app.ctx)
+    // Return variables to index.html template function
     return {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${
-        devalue({ serverSideProps })
-      }</script>`,
+      hydration: `<script>window.hydration = ${devalue({ serverSideProps })}</script>`
     }
   }
 }

@@ -1,6 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+<script>
 export async function getServerSideProps ({ req, ky }) {
   if (Math.random() > 0.5) {
     throw new Error('This error was intentionally thrown')
@@ -9,14 +7,18 @@ export async function getServerSideProps ({ req, ky }) {
   const todoList = await ky('api/todo-list').json()
   return { item: todoList[req.params.id] }
 }
+</script>
 
-export default function Item ({ item }) {
-  return (
-    <>
-      <p>{ item }</p>
-      <p>
-        <Link to="/">Go to the index</Link>
-      </p>
-    </>
-  )
-}
+<template>
+  <p v-if="$error">
+    Error: {{ $error }}
+  </p>
+  <p v-else>
+    {{ $serverSideProps.item }}
+  </p>
+  <p>
+    <router-link to="/">
+      Go to the index
+    </router-link>
+  </p>
+</template>
