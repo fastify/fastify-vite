@@ -6,7 +6,7 @@ import viteFastify from 'fastify-vite/plugin'
 export default {
   root: join(dirname(new URL(import.meta.url).pathname), 'client'),
   plugins: [
-    viteSolid(),
+    viteSolid({ ssr: true }),
     viteFastify(),
   ],
 }
