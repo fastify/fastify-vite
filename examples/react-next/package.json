@@ -9,12 +9,12 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "devalue": "^2.0.1",
-    "fastify-vite": "^3.0.0-beta.19",
-    "jotai": "^1.6.6",
-    "ky-universal": "^0.10.1",
+    "fastify-vite": "^3.0.0-beta.21",
     "react-dom": "^18.1.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "jotai": "^1.6.6",
+    "devalue": "^2.0.1",
+    "ky-universal": "^0.10.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -35,7 +35,8 @@
       "react-dom": "^18.1.0",
       "react-router-dom": "^6.3.0",
       "jotai": "^1.6.6",
-      "devalue": "^2.0.1"
+      "devalue": "^2.0.1",
+      "ky-universal": "^0.10.1"
     }
   }
 }

@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js,.vue --fix",
   },
   "dependencies": {
-    "fastify-vite": "3.0.0-beta.20",
+    "fastify-vite": "3.0.0-beta.21",
     "@vue/server-renderer": "^3.2.33",
     "devalue": "^2.0.1",
     "vue-router": "^4.0.15"
