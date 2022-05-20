@@ -1,0 +1,41 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs svelte-hydration -- node server.js --dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr /index.js",
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "dependencies": {
+    "@fastify/static": "^5.0.0",
+    "devalue": "^2.0.1",
+    "fastify": "^3.17.0",
+    "fastify-vite": "^3.0.0-beta.21",
+    "fs-extra": "^10.0.0",
+    "klaw": "^4.0.1",
+    "middie": "^5.2.0",
+    "svelte-routing": "^1.6.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.44",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-solid": "^0.4.7",
+    "vite": "^2.9.9",
+    "vite-plugin-solid": "^2.2.6"
+  },
+  "devInstall": {
+    "local": {
+      "fastify-vite": "^3.0.0-beta.21"
+    },
+    "external": {
+      "devalue": "^2.0.1"
+    }
+  }
+}
