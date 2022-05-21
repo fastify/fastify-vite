@@ -9,7 +9,5 @@
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'import/no-absolute-path': 'off',
-    'solid/reactivity': 'off',
-    'solid/no-destructure': 'off'
   },
 }

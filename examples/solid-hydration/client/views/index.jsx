@@ -1,9 +1,10 @@
 import { For } from 'solid-js'
 import { Link } from 'solid-app-router'
 
-export default function Index ({ state }) {
+export default function Index (props) {
   let input
-  const [{ todoList }, { addItem }] = state
+  // eslint-disable-next-line solid/reactivity
+  const [{ todoList }, { addItem }] = props.state
   return (
     <>
       <ul>
