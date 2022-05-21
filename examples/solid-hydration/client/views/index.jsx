@@ -1,3 +1,4 @@
+import { For } from 'solid-js'
 import { Link } from 'solid-app-router'
 
 export default function Index ({ state }) {
@@ -5,11 +6,11 @@ export default function Index ({ state }) {
   const [{ todoList }, { addItem }] = state
   return (
     <>
-      <ul>{
-        todoList().map((item, i) => {
-          return <li>{item}</li>
-        })
-      }</ul>
+      <ul>
+        <For each={todoList()}>{(item, i) =>
+          <li>{item}</li>
+        }</For>
+      </ul>
       <div>
         <input ref={input} />
         <button onClick={() => {
