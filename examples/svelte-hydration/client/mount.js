@@ -2,6 +2,6 @@ import Base from './base.svelte'
 
 new Base({
   target: document.querySelector('main'),
-  props: { data: window.hydration.data },
+  props: window.hydration,
   hydrate: true,
 })

@@ -22,7 +22,6 @@ function createRenderFunction ({ Base }) {
       url: req.url,
       data,
     })
-    console.log('element', element)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
     return {
       // Server-side rendered HTML fragment

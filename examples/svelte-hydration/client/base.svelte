@@ -1,16 +1,18 @@
 <script>
 import './base.css'
 import routes from './routes.js'
+import { todoList } from './state.js'
 import { Router, Route } from 'svelte-routing'
 
 export let url = ""
-export let data = null
+export let data
+
+// Hydrate todoList from the SSR context data
+$todoList = [...$todoList, ...data.todoList]
 </script>
 
 <Router url="{url}">
   {#each routes as { path, component: Component }}
-    <Route path="{path}">
-      <Component data="{data}" />
-    </Route>
+    <Route path="{path}" component="{Component}" />
   {/each}
 </Router>
