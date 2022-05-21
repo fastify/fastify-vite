@@ -1,12 +1,18 @@
-import { Router } from 'solid-app-router'
-export function createApp () {
-  return App
+import { Router, Routes, Route } from 'solid-app-router'
+import routes from './routes.js'
+
+export function createApp ({ data }) {
+  return <App data={data} />
 }
 
-function App () {
+export function App ({ data }) {
   return (
     <Router>
-      <p>Hello world from Solid and fastify-vite!</p>
+      <Routes>{
+        routes.map(({ path, component: Component }) => {
+          return <Route path={path} element={<Component data={data} />} />
+        })
+      }</Routes>
     </Router>
   )
 }

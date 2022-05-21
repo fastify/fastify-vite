@@ -1,24 +1,11 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import { renderToStringAsync } from 'solid-js/web'
+import renderer from './renderer.js'
 
 const server = Fastify()
 const root = import.meta.url
 
-await server.register(FastifyVite, { 
-  root, 
-  createRenderFunction ({ createApp }) {
-    return async () => {
-      return {
-        element: await renderToStringAsync(createApp())
-      }
-    }
-  }
-})
-
-server.get('/', async (req, reply) => {
-  reply.html(await reply.render())
-})
+await server.register(FastifyVite, { root, renderer }) 
 
 await server.vite.ready()
 await server.listen(3000)

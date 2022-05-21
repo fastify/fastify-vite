@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "devalue": "^2.0.1",
     "solid-js": "^1.4.2",
     "solid-app-router": "^0.3.3",
     "@fastify/static": "^5.0.0",
@@ -30,9 +31,10 @@
   },
   "devInstall": {
     "local": {
-      "fastify-vite": "^3.0.0-beta.19"
+      "fastify-vite": "^3.0.0-beta.21"
     },
     "external": {
+      "devalue": "^2.0.1",
       "solid-js": "^1.4.2",
       "solid-app-router": "^0.3.3"
     }

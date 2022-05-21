@@ -9,4 +9,7 @@ export default {
     viteSolid({ ssr: true }),
     viteFastify(),
   ],
+  ssr: {
+    noExternal: ['solid-app-router'],
+  }
 }
