@@ -9,15 +9,9 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "fastify-vite": "^3.0.0-beta.21",
     "devalue": "^2.0.1",
-    "solid-js": "^1.4.2",
-    "solid-app-router": "^0.3.3",
-    "@fastify/static": "^5.0.0",
-    "fastify": "^3.17.0",
-    "fs-extra": "^10.0.0",
-    "klaw": "^4.0.1",
-    "middie": "^5.2.0",
-    "vite": "^2.9.1"
+    "solid-app-router": "^0.3.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -35,7 +29,6 @@
     },
     "external": {
       "devalue": "^2.0.1",
-      "solid-js": "^1.4.2",
       "solid-app-router": "^0.3.3"
     }
   }
