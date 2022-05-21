@@ -11,5 +11,5 @@ export default {
   ],
   ssr: {
     noExternal: ['solid-app-router'],
-  }
+  },
 }
