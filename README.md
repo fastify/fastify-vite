@@ -377,6 +377,12 @@ For example, collecting a Next-like `getServerSideProps()` function from every r
 
 See this **[blog post](https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/)** for a walkthrough doing just that.
 
+## Meta
+
+Created by [Jonas Galvez](https://hire.jonasgalvez.com.br/), Open Source Maintainer and Engineering Manager at [NearForm](https://www.nearform.com).
+
+This project is sponsored by [NearForm](https://www.nearform.com) and maintained with the help of [David Meir-Levy](https://github.com/davidmeirlevy).
+
 ## License
 
 MIT
