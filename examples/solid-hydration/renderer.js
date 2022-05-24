@@ -1,4 +1,4 @@
-import { renderToStringAsync } from 'solid-js/web'
+import { renderToStringAsync, generateHydrationScript } from 'solid-js/web'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
@@ -28,6 +28,8 @@ function createRenderFunction ({ createApp }) {
       element,
       // The SSR context data is also passed to the template, inlined for hydration
       hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
+      // Required by Solid
+      hydrationScript: generateHydrationScript()
     }
   }
 }
