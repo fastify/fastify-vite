@@ -55,7 +55,7 @@ First you need to import the **fastify-vite** Vite plugin (`fastify-vite/plugin`
 import viteFastify from 'fastify-vite/plugin'
 
 export default {
-  root: join(__dirname, 'client'),
+  root: join(dirname(new URL(import.meta.url).pathname), 'client'),
   plugins: [
     // Register other plugins
     viteFastify()
@@ -63,7 +63,7 @@ export default {
 }
 ```
 
-> Note that even though `__dirname` isn't available in ES modules, Vite polyfills it for you.
+> Note that `__dirname` isn't available in ES modules, that's why we get it from `import.meta.url`.
 
 Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which case Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
 
@@ -86,7 +86,7 @@ In this example, we're conditioning the development mode to the presence of a `-
 
 > **`fastify-vite`**'s default value for the `dev` configuration option is actually what you see in the snippet above, a CLI argument check for `--dev`. That's why you don't see it set in any of the [**`examples/`**](), they're just following the convention.
 
-Since this example is using ES module syntax and it is *not* processed by Vite, we can't just use `__dirname`. But **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths.
+For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
 
