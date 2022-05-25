@@ -80,7 +80,7 @@ const DefaultConfig = {
     return (error, req, reply) => {
       if (config.dev) {
         console.error(error)
-        scope.vite.devServer.ssrFixStacktrace(error);
+        scope.vite.devServer.ssrFixStacktrace(error)
       }
       scope.errorHandler(error, req, reply)
     }
@@ -92,14 +92,12 @@ async function configure (options = {}) {
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
   const [vite, viteConfig] = await resolveViteConfig(root, dev)
-  const clientModule = defaultConfig.clientModule ?? resolveClientModule(vite.root)
   const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
     ...options,
     vite,
     viteConfig,
     bundle,
-    clientModule,
   })
   for (const setting of [
     'clientModule',
@@ -113,6 +111,7 @@ async function configure (options = {}) {
   ]) {
     config[setting] = config.renderer[setting] ?? config[setting]
   }
+  config.clientModule ??= resolveClientModule(vite.root)
   return config
 }
 
@@ -144,8 +143,8 @@ async function resolveViteConfig (root, dev) {
       return [
         await resolveConfig(
           { configFile },
-          "build",
-          dev ? "development" : "production"
+          'build',
+          dev ? 'development' : 'production',
         ),
         configFile,
       ]
