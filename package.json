@@ -1,5 +1,5 @@
 {
-  "private": "true",
+  "name": "fastify-vite",
   "devDependencies": {
     "tap": "^14.11.0",
     "zx": "^4.3.0"
