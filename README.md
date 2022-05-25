@@ -1,6 +1,6 @@
-**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed **Fastify DX**. 
+**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed [**Fastify DX**](https://github.com/fastify/fastify-dx). 
 
-## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear Fastify DX news.
+## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear [Fastify DX](https://github.com/fastify/fastify-dx) news.
 
 The 2.x release line has been deprecated and is no longer maintained. Find the legacy documentation [here](https://github.com/fastify/fastify-vite/releases/tag/v2.3.1).
 
@@ -38,7 +38,7 @@ After many iterations, [fastify-vite]() evolved to become a highly configurable 
 
 > “Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.” ― Edsger W. Dijkstra
 
-The one thing **[fastify-vite](https://github.com/fastify/fastify-vite)** doesn't do is provide an API out of the box for how route modules can control HTML shell, rendering and data fetching aspects of an individual web page. It provides you with an API to implement your own. That's an area that will be addressed by the upcoming **Fastify DX** toolset.
+The one thing **[fastify-vite](https://github.com/fastify/fastify-vite)** doesn't do is provide an API out of the box for how route modules can control HTML shell, rendering and data fetching aspects of an individual web page. It provides you with an API to implement your own. That's an area that will be addressed by the upcoming [**Fastify DX**](https://github.com/fastify/fastify-dx) toolset.
 
 ## Install
 
