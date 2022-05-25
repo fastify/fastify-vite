@@ -28,7 +28,9 @@ The late 2010s saw the dawn of the age of the **SSR framework**. Since **server-
 
 > **[1]** SSR in this context refers to the server-side rendering **of client-side JavaScript** to produce on the server the same markup that is dynamically rendered by the browser, so client-side JavaScript doesn't have to spend time rendering the same fragment twice.
 
-First came [Next.js](https://nextjs.org/) (React) and [Nuxt.js](https://nuxtjs.org/) (Vue) back in 2016, and in recent times, [SvelteKit](https://kit.svelte.dev/) (Svelte) and [Remix](https://remix.run/) (React). There are many others, but presently these are the ones that have amassed the largest user bases. Between 2018 and 2020 I was a core contributor to Nuxt.js and acquired a deep understanding of the complexities and challenges involved. 
+First came [Next.js](https://nextjs.org/) (React) and [Nuxt.js](https://nuxtjs.org/) (Vue) back in 2016, and in recent times, [SvelteKit](https://kit.svelte.dev/) (Svelte) and [Remix](https://remix.run/) (React). There are many others, but presently these are the ones that have amassed the largest user bases. 
+
+Between 2018 and 2020 I was a core contributor to Nuxt.js and acquired a deep understanding of the complexities and challenges involved. 
 
 At some point in between debugging server integration and SSR performance issues in my Nuxt.js applications, it ocurred to me that for optimal performance, safety and flexibility, frameworks [would be better off](https://hire.jonasgalvez.com.br/2022/may/02/the-thing-about-fastify/) building on top of [Fastify](https://fastify.io/) rather than trying to incorporate their own backend mechanics with built-in Express-like servers. 
 
