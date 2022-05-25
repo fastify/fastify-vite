@@ -88,7 +88,7 @@ In this example, we're conditioning the development mode to the presence of a `-
 
 > **`fastify-vite`**'s default value for the `dev` configuration option is actually what you see in the snippet above, a CLI argument check for `--dev`. That's why you don't see it set in any of the [**`examples/`**](), they're just following the convention.
 
-For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
+For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directories. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
 
