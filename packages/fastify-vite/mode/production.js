@@ -45,7 +45,7 @@ async function setup (config) {
     config,
   ))
 
-  return { routes: client.routes, handler, errorHandler }
+  return { client, routes: client.routes, handler, errorHandler }
 
   // Loads the Vite application server entry point for the client
   async function loadClient () {

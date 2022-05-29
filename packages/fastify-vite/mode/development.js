@@ -50,7 +50,7 @@ async function setup (config) {
   const handler = await config.createRouteHandler(client, this.scope, config)
   const errorHandler = await config.createErrorHandler(client, this.scope, config)
 
-  return { routes: client.routes, handler, errorHandler }
+  return { client, routes: client.routes, handler, errorHandler }
 }
 
 module.exports = setup
