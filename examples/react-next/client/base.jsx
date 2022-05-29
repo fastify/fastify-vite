@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { StaticRouter } from 'react-router-dom/server'
+import { StaticRouter } from 'react-router-dom/server.mjs'
 
 import routes from './routes.js'
 import { PageManager } from './next.jsx'
