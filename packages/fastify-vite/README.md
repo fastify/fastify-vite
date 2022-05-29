@@ -1,6 +1,6 @@
-**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed **Fastify DX**. 
+**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed [**Fastify DX**](https://github.com/fastify/fastify-dx). 
 
-## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear Fastify DX news.
+## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear [Fastify DX](https://github.com/fastify/fastify-dx) news.
 
 The 2.x release line has been deprecated and is no longer maintained. Find the legacy documentation [here](https://github.com/fastify/fastify-vite/releases/tag/v2.3.1).
 
@@ -22,6 +22,26 @@ It automates a few aspects of the setup, such as:
 
 This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
 
+## Background
+
+The late 2010s saw the dawn of the age of the **SSR framework**. Since **server-side rendering** (SSR) is just [too complex and often requires a great deal of preparation](https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/) to get right — starting from the fact that people (to this date!) [still disagree](https://news.ycombinator.com/item?id=31224226) on what SSR actually is<sup>**[1]**</sup>, specialized frameworks started appearing to meet the inevitable demand for tools that spared developers of the boilerplate work and let them jump straight into their application code, without caring for underlying implementation details. 
+
+> **[1]** SSR in this context refers to the server-side rendering **of client-side JavaScript** to produce on the server the same markup that is dynamically rendered by the browser, so client-side JavaScript doesn't have to spend time rendering the same fragment twice.
+
+First came [Next.js](https://nextjs.org/) (React) and [Nuxt.js](https://nuxtjs.org/) (Vue) back in 2016, and in recent times, [SvelteKit](https://kit.svelte.dev/) (Svelte) and [Remix](https://remix.run/) (React). There are many others, but presently these are the ones that have amassed the largest user bases. 
+
+Between 2018 and 2020 I was a core contributor to Nuxt.js and acquired a deep understanding of the complexities and challenges involved. 
+
+At some point in between debugging server integration and SSR performance issues in my Nuxt.js applications, it ocurred to me that for optimal performance, safety and flexibility, frameworks [would be better off](https://hire.jonasgalvez.com.br/2022/may/02/the-thing-about-fastify/) building on top of [Fastify](https://fastify.io/) rather than trying to incorporate their own backend mechanics with built-in Express-like servers. 
+
+That's when I started working on [fastify-vite](https://github.com/fastify/fastify-vite), a Fastify plugin to integrate with [Vite](https://vitejs.dev/)-bundled client applications. At least Nuxt.js and SvelteKit seem to agree that building on top of Vite is a good idea — the Vite ecosystem is a solid base for addressing a lot of core, foundational aspects of frameworks, not only bringing a lot of flexibility to the build process (through Vite plugins), but also providing developer experience features such as **hot module reload**.
+
+After many iterations, [fastify-vite]() evolved to become a highly configurable approach for integrating Vite within Fastify applications. Focusing now on architectural primitives, such as dependency injection and route registration, it's conceivably feasible to reimplement any framework with it. To demonstrate this level of flexibility, I [reimplemented two Next.js essential features for both React and Vue](https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/).
+
+> “Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.” ― Edsger W. Dijkstra
+
+The one thing **[fastify-vite](https://github.com/fastify/fastify-vite)** doesn't do is provide an API out of the box for how route modules can control HTML shell, rendering and data fetching aspects of an individual web page. It provides you with an API to implement your own. That's an area that will be addressed by the upcoming [**Fastify DX**](https://github.com/fastify/fastify-dx) toolset.
+
 ## Install
 
 ```
@@ -37,7 +57,7 @@ First you need to import the **fastify-vite** Vite plugin (`fastify-vite/plugin`
 import viteFastify from 'fastify-vite/plugin'
 
 export default {
-  root: join(__dirname, 'client'),
+  root: join(dirname(new URL(import.meta.url).pathname), 'client'),
   plugins: [
     // Register other plugins
     viteFastify()
@@ -45,7 +65,7 @@ export default {
 }
 ```
 
-> Note that even though `__dirname` isn't available in ES modules, Vite polyfills it for you.
+> Note that `__dirname` isn't available in ES modules, that's why we get it from `import.meta.url`.
 
 Next you need to tell **`fastify-vite`** whether or not it's supposed to run in development mode, in which case Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
 
@@ -68,7 +88,7 @@ In this example, we're conditioning the development mode to the presence of a `-
 
 > **`fastify-vite`**'s default value for the `dev` configuration option is actually what you see in the snippet above, a CLI argument check for `--dev`. That's why you don't see it set in any of the [**`examples/`**](), they're just following the convention.
 
-Since this example is using ES module syntax and it is *not* processed by Vite, we can't just use `__dirname`. But **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths.
+For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directories. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
 
@@ -358,6 +378,12 @@ With configuration functions hooking into every step of the setup process, you c
 For example, collecting a Next-like `getServerSideProps()` function from every route component and registering an associated payload API endpoint for every route through `createRoute()`. 
 
 See this **[blog post](https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/)** for a walkthrough doing just that.
+
+## Meta
+
+Created by [Jonas Galvez](https://hire.jonasgalvez.com.br/), Open Source Maintainer and Engineering Manager at [NearForm](https://www.nearform.com).
+
+This project is sponsored by [NearForm](https://www.nearform.com) and maintained with the help of [David Meir-Levy](https://github.com/davidmeirlevy).
 
 ## License
 
