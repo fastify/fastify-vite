@@ -1,6 +1,6 @@
-**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed **Fastify DX**. 
+**fastify-vite** is changing rapidly and is now part of a bigger endeavour dubbed [**Fastify DX**](https://github.com/fastify/fastify-dx). 
 
-## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear Fastify DX news.
+## Subscribe to [this newsletter](https://www.getrevue.co/profile/fastify-dx) to hear [Fastify DX](https://github.com/fastify/fastify-dx) news.
 
 The 2.x release line has been deprecated and is no longer maintained. Find the legacy documentation [here](https://github.com/fastify/fastify-vite/releases/tag/v2.3.1).
 
@@ -28,7 +28,9 @@ The late 2010s saw the dawn of the age of the **SSR framework**. Since **server-
 
 > **[1]** SSR in this context refers to the server-side rendering **of client-side JavaScript** to produce on the server the same markup that is dynamically rendered by the browser, so client-side JavaScript doesn't have to spend time rendering the same fragment twice.
 
-First came [Next.js](https://nextjs.org/) (React) and [Nuxt.js](https://nuxtjs.org/) (Vue) back in 2016, and in recent times, [SvelteKit](https://kit.svelte.dev/) (Svelte) and [Remix](https://remix.run/) (React). There are many others, but presently these are the ones that have amassed the largest user bases. Between 2018 and 2020 I was a core contributor to Nuxt.js and acquired a deep understanding of the complexities and challenges involved. 
+First came [Next.js](https://nextjs.org/) (React) and [Nuxt.js](https://nuxtjs.org/) (Vue) back in 2016, and in recent times, [SvelteKit](https://kit.svelte.dev/) (Svelte) and [Remix](https://remix.run/) (React). There are many others, but presently these are the ones that have amassed the largest user bases. 
+
+Between 2018 and 2020 I was a core contributor to Nuxt.js and acquired a deep understanding of the complexities and challenges involved. 
 
 At some point in between debugging server integration and SSR performance issues in my Nuxt.js applications, it ocurred to me that for optimal performance, safety and flexibility, frameworks [would be better off](https://hire.jonasgalvez.com.br/2022/may/02/the-thing-about-fastify/) building on top of [Fastify](https://fastify.io/) rather than trying to incorporate their own backend mechanics with built-in Express-like servers. 
 
@@ -38,7 +40,7 @@ After many iterations, [fastify-vite]() evolved to become a highly configurable 
 
 > “Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.” ― Edsger W. Dijkstra
 
-The one thing **[fastify-vite](https://github.com/fastify/fastify-vite)** doesn't do is provide an API out of the box for how route modules can control HTML shell, rendering and data fetching aspects of an individual web page. It provides you with an API to implement your own. That's an area that will be addressed by the upcoming **Fastify DX** toolset.
+The one thing **[fastify-vite](https://github.com/fastify/fastify-vite)** doesn't do is provide an API out of the box for how route modules can control HTML shell, rendering and data fetching aspects of an individual web page. It provides you with an API to implement your own. That's an area that will be addressed by the upcoming [**Fastify DX**](https://github.com/fastify/fastify-dx) toolset.
 
 ## Install
 
@@ -86,7 +88,7 @@ In this example, we're conditioning the development mode to the presence of a `-
 
 > **`fastify-vite`**'s default value for the `dev` configuration option is actually what you see in the snippet above, a CLI argument check for `--dev`. That's why you don't see it set in any of the [**`examples/`**](), they're just following the convention.
 
-For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directory paths. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
+For setting `root`, **`fastify-vite`** is smart enough to recognize file URLs, so it parses and treats them as directories. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
 
