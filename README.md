@@ -53,6 +53,7 @@ npm i fastify-vite --save
 First you need to import the **fastify-vite** Vite plugin (`fastify-vite/plugin`) in your `vite.config.js` file:
 
 ```js
+import { dirname } from 'path'
 // Import other plugins
 import viteFastify from 'fastify-vite/plugin'
 
