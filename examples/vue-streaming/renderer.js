@@ -2,8 +2,7 @@
 // used to prepend and append chunks the body stream
 import { Readable } from 'node:stream'
 
-// React 18's preferred server-side rendering function,
-// which enables the combination of React.lazy() and Suspense
+// Vue 3's streaming server-side rendering function for Node.js
 import { renderToNodeStream } from '@vue/server-renderer'
 
 // fastify-vite's minimal HTML templating function,
