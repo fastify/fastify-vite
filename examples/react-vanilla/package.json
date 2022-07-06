@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node server.js --dev",
-    "devinstall": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
+    "dev": "node ./server.js --dev",
+    "devinstall": "zx ../../devinstall.mjs react-vanilla -- node ./server.js --dev",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr /index.js",
