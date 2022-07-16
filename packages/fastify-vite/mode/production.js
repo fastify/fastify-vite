@@ -1,4 +1,4 @@
-const { resolve, join, exists, basename } = require('../ioutils')
+const { parse, resolve, join, exists, basename } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 function fileUrl (str) {
@@ -64,7 +64,7 @@ async function setup (config) {
 
   // Loads the Vite application server entry point for the client
   async function loadClient () {
-    const serverFile = join('server', basename(config.clientModule))
+    const serverFile = join('server', `${parse(config.clientModule).name}.js`)
     // Use file path on Windows
     const serverBundlePath = process.platform === 'win32'
       ? fileUrl(resolve(config.bundle.dir, serverFile))
