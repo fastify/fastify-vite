@@ -1,4 +1,4 @@
-const { parse, resolve, join, exists, basename } = require('../ioutils')
+const { parse, resolve, join, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 function fileUrl (str) {
