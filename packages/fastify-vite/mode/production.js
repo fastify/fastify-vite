@@ -1,19 +1,19 @@
 const { resolve, join, exists, basename } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
-function fileUrl(str) {
-  if (typeof str !== "string") {
-    throw new Error("Expected a string");
+function fileUrl (str) {
+  if (typeof str !== 'string') {
+    throw new Error('Expected a string')
   }
 
-  let pathName = resolve(str).replace(/\\/g, "/");
+  let pathName = resolve(str).replace(/\\/g, '/')
 
   // Windows drive letter must be prefixed with a slash
-  if (pathName[0] !== "/") {
-    pathName = "/" + pathName;
+  if (pathName[0] !== '/') {
+    pathName = `/${pathName}`;
   }
 
-  return encodeURI("file://" + pathName);
+  return encodeURI(`file://${pathName}`);
 }
 
 async function setup (config) {
@@ -65,12 +65,11 @@ async function setup (config) {
   // Loads the Vite application server entry point for the client
   async function loadClient () {
     const serverFile = join('server', basename(config.clientModule))
-    // on windows use file path
-    const serverBundlePath =
-        process.platform === "win32"
-            ? fileUrl(resolve(config.bundle.dir, serverFile))
-            : resolve(config.bundle.dir, serverFile);
-    const serverBundle = await import(serverBundlePath);
+    // Use file path on Windows
+    const serverBundlePath = process.platform === 'win32'
+      ? fileUrl(resolve(config.bundle.dir, serverFile))
+      : resolve(config.bundle.dir, serverFile)
+    const serverBundle = await import(serverBundlePath)
     return serverBundle.default ?? serverBundle
   }
 }
