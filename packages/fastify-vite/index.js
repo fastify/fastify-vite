@@ -12,6 +12,7 @@ class Vite {
   constructor (scope, options) {
     // Hold reference to Fastify encapsulation context
     this.scope = scope
+    this.createServer = options.createServer
     this[kOptions] = options
   }
 
@@ -26,7 +27,7 @@ class Vite {
       : require('./mode/production')
     // Private reference to user-provided plugin options
     // Get handler function and routes based on the Vite server bundle
-    const { client, routes, handler, errorHandler } = await this[kSetup](this.config)
+    const { client, routes, handler, errorHandler } = await this[kSetup](this.config, this.createServer)
     // Register individual Fastify routes for each the client-provided routes
     if (routes && typeof routes[Symbol.iterator] === 'function') {
       for (const route of routes) {

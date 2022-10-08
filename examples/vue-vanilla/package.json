@@ -9,13 +9,19 @@
     "lint": "eslint . --ext .js,.vue --fix"
   },
   "dependencies": {
-    "fastify-vite": "3.0.0-beta.21",
-    "@vue/server-renderer": "^3.2.33"
+    "vue": "^3.2.40",
+    "vite": "^2.9.1",
+    "@fastify/static": "^5.0.0",
+    "fastify": "^3.17.0",
+    "fs-extra": "^10.0.0",
+    "klaw": "^4.0.1",
+    "middie": "^5.2.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
-    "@vitejs/plugin-vue": "^2.3.2",
+    "@vitejs/plugin-vue": "^3.1.2",
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -28,7 +34,8 @@
       "fastify-vite": "3.0.0-beta.19"
     },
     "external": {
-      "@vue/server-renderer": "^3.2.33"
+      "vue": "^3.2.40",
+      "vite": "^3.1.4"
     }
   }
 }
