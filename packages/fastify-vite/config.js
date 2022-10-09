@@ -137,15 +137,11 @@ function resolveRoot (root) {
 }
 
 async function resolveViteConfig (root, dev) {
-  for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
+  for (const ext of ['js', 'mjs', 'ts']) {
     const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       return [
-        await resolveConfig(
-          { configFile },
-          'build',
-          dev ? 'development' : 'production',
-        ),
+        await import(configFile).then(m => m.default),
         configFile,
       ]
     }

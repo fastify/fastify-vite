@@ -1,19 +1,15 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
-import { createServer } from 'vite'
-
-import { dirname, resolve } from 'path'
-const __dirname = dirname(new URL(import.meta.url).pathname)
+import { renderToString } from 'vue/server-renderer'
 
 async function main () {
   const server = Fastify()
 
   await server.register(FastifyVite, { 
-    createServer,    
     root: import.meta.url,
     async createRenderFunction ({ createApp }) {
       return async () => ({
-        element: '', // await renderToString(createApp())
+        element: await renderToString(createApp())
       })
     }
   })

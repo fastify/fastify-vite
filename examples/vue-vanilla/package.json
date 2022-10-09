@@ -9,8 +9,8 @@
     "lint": "eslint . --ext .js,.vue --fix"
   },
   "dependencies": {
+    "vite": "^3.1.6",
     "vue": "^3.2.40",
-    "vite": "^2.9.1",
     "@fastify/static": "^5.0.0",
     "fastify": "^3.17.0",
     "fs-extra": "^10.0.0",
@@ -31,11 +31,11 @@
   },
   "devInstall": {
     "local": {
-      "fastify-vite": "3.0.0-beta.19"
+      "fastify-vite": "3.0.0-beta.24"
     },
     "external": {
-      "vue": "^3.2.40",
-      "vite": "^3.1.4"
+      "vite": "^3.1.6",
+      "vue": "^3.2.40"
     }
   }
 }
