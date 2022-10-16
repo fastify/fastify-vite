@@ -1,15 +1,20 @@
+import { resolve, dirname } from 'path'
 import { svelte as viteSvelte } from '@sveltejs/vite-plugin-svelte'
 import viteFastify from 'fastify-vite/plugin'
 
-// @type {import('vite').UserConfig}
+const path = new URL(import.meta.url).pathname
+const root = resolve(dirname(path), 'client')
+
+const plugins = [
+  viteSvelte({
+    compilerOptions: {
+      hydratable: true,
+    }
+  }),
+  viteFastify()
+]
+
 export default {
-  root: './client',
-  plugins: [
-    viteSvelte({
-      compilerOptions: {
-        hydratable: true,
-      }
-    }),
-    viteFastify(),
-  ],
+  root,
+  plugins
 }

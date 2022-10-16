@@ -1,11 +1,16 @@
+import { resolve, dirname } from 'path'
 import viteReact from '@vitejs/plugin-react'
 import viteFastify from 'fastify-vite/plugin'
 
-// @type {import('vite').UserConfig}
+const path = new URL(import.meta.url).pathname
+const root = resolve(dirname(path), 'client')
+
+const plugins = [
+  viteReact({ jsxRuntime: 'classic' }),
+  viteFastify(),
+]
+
 export default {
-  root: './client',
-  plugins: [
-    viteReact({ jsxRuntime: 'classic' }),
-    viteFastify(),
-  ],
+  root,
+  plugins
 }
