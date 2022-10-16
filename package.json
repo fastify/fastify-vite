@@ -1,7 +1,11 @@
 {
+  "scripts": {
+    "test": "vitest run examples/*/*.test.js"
+  },
   "name": "fastify-vite",
   "devDependencies": {
-    "tap": "^14.11.0",
+    "execa": "^6.1.0",
+    "vitest": "^0.24.0",
     "zx": "^4.3.0"
   }
 }
