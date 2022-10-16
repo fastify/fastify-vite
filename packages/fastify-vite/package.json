@@ -35,8 +35,7 @@
   },
   "version": "3.0.0-beta.24",
   "dependencies": {
-    "@fastify/static": "^5.0.0",
-    "fastify": "^3.17.0",
+    "@fastify/static": "^6.5.0",
     "fs-extra": "^10.0.0",
     "klaw": "^4.0.1",
     "middie": "^5.2.0",

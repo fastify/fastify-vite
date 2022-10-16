@@ -140,8 +140,16 @@ async function resolveViteConfig (root, dev) {
   for (const ext of ['js', 'mjs', 'ts']) {
     const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
+      const resolvedConfig = await resolveConfig({
+        configFile
+      }, 'serve', dev ? 'development' : 'production')
       return [
-        await import(configFile).then(m => m.default),
+        Object.assign(await import(configFile).then(m => m.default), {
+          build: {
+            assetsDir: resolvedConfig.build.assetsDir,
+            outDir: resolvedConfig.build.outDir
+          },
+        }),
         configFile,
       ]
     }
