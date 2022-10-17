@@ -3,7 +3,7 @@
 import { Readable } from 'node:stream'
 
 // Vue 3's streaming server-side rendering function for Node.js
-import { renderToNodeStream } from '@vue/server-renderer'
+import { renderToNodeStream } from 'vue/server-renderer'
 
 // fastify-vite's minimal HTML templating function,
 // which extracts interpolation variables from comments
