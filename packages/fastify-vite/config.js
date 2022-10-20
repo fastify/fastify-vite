@@ -72,6 +72,7 @@ const DefaultConfig = {
     return async function (req, reply) {
       const page = await reply.render(scope, req, reply)
       reply.html(page)
+      return reply
     }
   },
 
