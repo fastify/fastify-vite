@@ -3,28 +3,39 @@ import FastifyVite from 'fastify-vite'
 import renderer from './renderer.js'
 import ky from 'ky-universal'
 
-const server = Fastify({ ignoreTrailingSlash: true })
-const root = import.meta.url
+export async function main (dev) {
+  const server = Fastify({ ignoreTrailingSlash: true })
 
-server.decorate('ky', ky.create({
-  prefixUrl: 'http://localhost:3000/',
-}))
+  server.decorate('ky', ky.create({
+    prefixUrl: 'http://localhost:3000/',
+  }))
 
-server.get('/api/todo-list', (_, reply) => {
-  reply.send([
-    'Do laundry',
-    'Respond to emails',
-    'Write report',
-  ])
-})
+  server.get('/api/todo-list', (_, reply) => {
+    reply.send([
+      'Do laundry',
+      'Respond to emails',
+      'Write report',
+    ])
+  })
 
-server.setErrorHandler((err, req, reply) => {
-  console.error(err)
-  reply.code(500)
-  reply.send(err)
-})
+  server.setErrorHandler((err, req, reply) => {
+    console.error(err)
+    reply.code(500)
+    reply.send(err)
+  })
 
-await server.register(FastifyVite, { root, renderer })
+  await server.register(FastifyVite, {
+    dev: dev ?? process.argv.includes('--dev'),
+    root: import.meta.url,
+    renderer
+  })
 
-await server.vite.ready()
-await server.listen(3000)
+  await server.vite.ready()
+
+  return server
+}
+
+if (process.argv[1] === new URL(import.meta.url).pathname) {
+  const server = await main()
+  await server.listen({ port: 3000 })
+}

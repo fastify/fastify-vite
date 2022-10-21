@@ -9,16 +9,20 @@
     "lint": "eslint . --ext .js,.vue --fix"
   },
   "dependencies": {
-    "@vue/server-renderer": "^3.2.33",
+    "fastify": "^4.7.0",
+    "vite": "^3.1.6",
+    "vue": "^3.2.40",
     "devalue": "^2.0.1",
-    "fastify-vite": "3.0.0-beta.21",
+    "vue-router": "^4.1.5",
     "ky-universal": "^0.10.1",
-    "vue-router": "^4.0.15"
+    "@fastify/static": "^6.5.0",
+    "fs-extra": "^10.0.0",
+    "klaw": "^4.0.1",
+    "middie": "^5.2.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
-    "@babel/preset-react": "^7.16.0",
-    "@vitejs/plugin-vue": "^2.3.2",
+    "@vitejs/plugin-vue": "^3.1.2",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -28,12 +32,14 @@
   },
   "devInstall": {
     "local": {
-      "fastify-vite": "3.0.0-beta.19"
+      "fastify-vite": "3.0.0-beta.24"
     },
     "external": {
-      "@vue/server-renderer": "^3.2.33",
+      "fastify": "^4.7.0",
+      "vite": "^3.1.6",
+      "vue": "^3.2.40",
       "devalue": "^2.0.1",
-      "vue-router": "^4.0.15",
+      "vue-router": "^4.1.5",
       "ky-universal": "^0.10.1"
     }
   }

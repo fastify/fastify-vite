@@ -1,12 +1,18 @@
 import Fastify from 'fastify'
 import FastifyVite from 'fastify-vite'
+import { createReadStream } from 'fs'
 import renderer from './renderer.js'
+import { resolve } from 'path'
 
 export async function main (dev) {
   const server = Fastify()
   const root = import.meta.url
   
-  await server.register(FastifyVite, { dev, root, renderer })
+  await server.register(FastifyVite, {
+    dev: dev ?? process.argv.includes('--dev'),
+    root,
+    renderer
+  })
 
   server.setErrorHandler((err, req, reply) => {
     console.error(err)
@@ -14,6 +20,10 @@ export async function main (dev) {
   })
 
   await server.vite.ready()
+
+  server.get('/something', (req, reply) => {
+    reply.send(createReadStream(resolve('./server.js')))
+  })
 
   return server
 }
