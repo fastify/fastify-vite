@@ -36,7 +36,15 @@ const DefaultConfig = {
   // Automatically resolved from /index.js if unset
   clientModule: null,
 
-  async prepareClient ({ routes, ...others }, scope, config) {
+  // If true, disables SSR and disables loading of `clientModule`
+  // This lets you automate integration with a SPA Vite bundle
+  spa: false,
+
+  async prepareClient (clientModule, scope, config) {
+    if (!clientModule) {
+      return null
+    }
+    const { routes, ...others } = clientModule
     if (typeof routes === 'function') {
       routes = await routes()
     }
@@ -49,6 +57,12 @@ const DefaultConfig = {
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
+    if (config.spa) {
+      return function () {
+        this.type('text/html')
+        this.send(indexHtmlTemplate({ element: '' }))
+      }
+    }
     const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     return function (ctx) {
       this.type('text/html')
@@ -112,7 +126,11 @@ async function configure (options = {}) {
   ]) {
     config[setting] = config.renderer[setting] ?? config[setting]
   }
-  config.clientModule ??= resolveClientModule(vite.root)
+  if (config.spa) {
+    config.createRenderFunction = () => {}
+  } else {
+    config.clientModule ??= resolveClientModule(vite.root)
+  }
   return config
 }
 

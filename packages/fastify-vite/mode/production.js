@@ -64,6 +64,9 @@ async function setup (config) {
 
   // Loads the Vite application server entry point for the client
   async function loadClient () {
+    if (config.spa) {
+      return null
+    }
     const serverFile = join('server', `${parse(config.clientModule).name}.js`)
     // Use file path on Windows
     const serverBundlePath = process.platform === 'win32'

@@ -21,6 +21,9 @@ async function setup (config) {
 
   // Loads the Vite application server entry point for the client
   const loadClient = async () => {
+    if (config.spa) {
+      return null
+    }
     const modulePath = resolve(config.vite.root, config.clientModule.replace(/^\/+/, ''))
     const entryModule = await this.devServer.ssrLoadModule(modulePath)
     return entryModule.default ?? entryModule
