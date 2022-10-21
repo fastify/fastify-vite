@@ -2,6 +2,20 @@
 /* globals $,path,fs */
 /* eslint-disable node/no-path-concat */
 
+if (process.argv.includes('--all')) {
+  $.verbose = false
+  const examples = await fs.readdir('examples')
+  for (const example of examples) {
+    if (example.match(/\.DS_Store/)) {
+      continue
+    }
+    cd(path.join(__dirname, `examples/${example}`))
+    console.log(`Preparing ./examples/${example}`)
+    await $`npm run devinstall`
+  }
+  process.exit()
+}
+
 const { name: example } = path.parse(process.cwd())
 const exRoot = path.resolve(__dirname, 'examples', example)
 const command = process.argv.slice(5)
@@ -40,11 +54,11 @@ for (const localDep of Object.keys(local)) {
   }
 }
 
-try {
-  await $`${command}`
-} finally {
-  setImmediate(() => process.exit(0))
-}
+// try {
+//   await $`${command}`
+// } finally {
+//   setImmediate(() => process.exit(0))
+// }
 
 async function createPackageFile (exRoot, dependencies) {
   const { type, scripts, devDependencies, devInstall } = template
