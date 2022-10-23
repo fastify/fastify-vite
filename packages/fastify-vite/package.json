@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "vitest run",
     "lint": "eslint . --ext .js --fix"
   },
   "bugs": {

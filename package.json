@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "vitest run examples/*/*.test.js --no-threads"
+    "test": "vitest run --no-threads"
   },
   "name": "fastify-vite",
   "devDependencies": {

@@ -162,8 +162,12 @@ async function resolveViteConfig (root, dev) {
       const resolvedConfig = await resolveConfig({
         configFile
       }, 'serve', dev ? 'development' : 'production')
+      let userConfig = await import(configFile).then(m => m.default)
+      if (userConfig.default) {
+        userConfig = userConfig.default
+      }
       return [
-        Object.assign(await import(configFile).then(m => m.default), {
+        Object.assign(userConfig, {
           build: {
             assetsDir: resolvedConfig.build.assetsDir,
             outDir: resolvedConfig.build.outDir

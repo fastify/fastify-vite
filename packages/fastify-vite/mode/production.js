@@ -67,11 +67,20 @@ async function setup (config) {
     if (config.spa) {
       return null
     }
-    const serverFile = join('server', `${parse(config.clientModule).name}.js`)
-    // Use file path on Windows
-    const serverBundlePath = process.platform === 'win32'
-      ? fileUrl(resolve(config.bundle.dir, serverFile))
-      : resolve(config.bundle.dir, serverFile)
+    const serverFiles = [
+      join('server', `${parse(config.clientModule).name}.js`),
+      join('server', `${parse(config.clientModule).name}.mjs`)
+    ]
+    let serverBundlePath
+    for (const serverFile of serverFiles) {
+      // Use file path on Windows
+      serverBundlePath = process.platform === 'win32'
+        ? fileUrl(resolve(config.bundle.dir, serverFile))
+        : resolve(config.bundle.dir, serverFile)
+      if (await exists(serverBundlePath)) {
+        break
+      }
+    }
     const serverBundle = await import(serverBundlePath)
     return serverBundle.default ?? serverBundle
   }

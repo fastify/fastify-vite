@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr ./index.js",
+    "build": "npm run build:client && npm run build:server"
+  }
+}
