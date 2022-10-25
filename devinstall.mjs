@@ -18,7 +18,7 @@ if (process.argv.includes('--cleanup')) {
       ...pkg.devInstall.external
     }
     delete pkg.scripts['dependencies']
-    pkg.dependencies['fastify-vite'] = '^3.0.0'
+    pkg.dependencies['@fastify/vite'] = '^3.0.0'
     await fs.writeFile(path.join(__dirname, `examples/${example}/package.json`), JSON.stringify(pkg, null, 2))
     // await fs.writeFile(path.join(__dirname, `examples/${example}/vitest.config.js`), vitestConf)
     // $.verbose = true

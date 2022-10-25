@@ -17,7 +17,8 @@
     "fs-extra": "^10.0.0",
     "klaw": "^4.0.1",
     "middie": "^5.2.0",
-    "fastify-vite": "^3.0.0"
+    "fastify-vite": "^3.0.0",
+    "@fastify/vite": "^3.0.0"
   },
   "devDependencies": {
     "svelte-navigator": "^3.2.2",
