@@ -20,7 +20,8 @@
     "@fastify/static": "^6.5.0",
     "fs-extra": "^10.0.0",
     "klaw": "^4.0.1",
-    "middie": "^5.2.0"
+    "middie": "^5.2.0",
+    "fastify-vite": "^3.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",

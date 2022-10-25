@@ -4,6 +4,31 @@
 
 const vitestConf = await fs.readFile(path.join(__dirname, `vitest.config.js`), 'utf8')
 
+if (process.argv.includes('--cleanup')) {
+  await $`rm -rf packages/fastify-vite/node_modules`
+  const examples = await fs.readdir('examples')
+  for (const example of examples) {
+    if (example.match(/\.DS_Store/)) {
+      continue
+    }
+    cd(path.join(__dirname, `examples/${example}`))
+    const pkg = await require(path.join(__dirname, `examples/${example}/package.json`))
+    pkg.scripts['dependencies'] = {
+      ...pkg.devInstall.local,
+      ...pkg.devInstall.external
+    }
+    delete pkg.scripts['dependencies']
+    pkg.dependencies['fastify-vite'] = '^3.0.0'
+    await fs.writeFile(path.join(__dirname, `examples/${example}/package.json`), JSON.stringify(pkg, null, 2))
+    // await fs.writeFile(path.join(__dirname, `examples/${example}/vitest.config.js`), vitestConf)
+    // $.verbose = true
+    // await $`npm run test`
+  }
+  // cd('../../packages/fastify-vite')
+  // await $`npm install`
+  process.exit()
+}
+
 if (process.argv.includes('--all')) {
   await $`rm -rf packages/fastify-vite/node_modules`
   const examples = await fs.readdir('examples')
