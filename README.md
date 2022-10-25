@@ -1,6 +1,6 @@
 <br>
 
-# fastify-vite [![NPM version](https://img.shields.io/npm/v/fastify-vite.svg?style=flat)](https://www.npmjs.com/package/fastify-vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
+# fastify-vite [![NPM version](https://img.shields.io/npm/v/@fastify/vite.svg?style=flat)](https://www.npmjs.com/package/fastify-vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 This plugin lets you load a **Vite client application** and set it up for **Server-Side Rendering (SSR)** with Fastify. Alternatively, it can also just serve as a convenience to serve a static Vite **SPA** application through Fastify, automating both the usage of Vite's development server for hot reload and the loading of the production bundle.
 
