@@ -49,6 +49,9 @@ const server = Fastify()
 await server.register(FastifyVite, {
   dev: process.argv.includes('--dev'),
   root: import.meta.url, 
+  createRenderFunction () {
+    // Covered further below in this README
+  }
 })
 
 await server.vite.ready()
@@ -358,9 +361,9 @@ See this **[blog post](https://hire.jonasgalvez.com.br/2022/may/18/building-a-mi
 
 ## Meta
 
-Created by [Jonas Galvez](https://hire.jonasgalvez.com.br/), Open Source Maintainer and Engineering Manager at [NearForm](https://www.nearform.com).
+Created by [Jonas Galvez](https://hire.jonasgalvez.com.br/), Principal Engineer on Open Source at [NodeSource](https://www.nodesource.com).
 
-This project is sponsored by [NearForm](https://www.nearform.com) and maintained with the help of [David Meir-Levy](https://github.com/davidmeirlevy).
+This project is sponsored by [NodeSource](https://www.nodesource.com), [NearForm](https://www.nearform.com) and maintained with the help of [these brilliant contributors](https://github.com/fastify/fastify-vite/graphs/contributors).
 
 ## License
 
