@@ -1,5 +1,5 @@
 <script>
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 </script>
 
 <p>This page is just for demonstrating client-side navigation.</p>

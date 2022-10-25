@@ -22,18 +22,16 @@ npm i fastify-vite --save
 
 ## Usage
 
-First you need to import the **fastify-vite** Vite plugin (`fastify-vite/plugin`) in your `vite.config.js` file:
+First you need to make sure you have `root` correctly set up in your `vite.config.js` file:
 
 ```js
 import { join, dirname } from 'path'
-// Import other plugins
-import viteFastify from 'fastify-vite/plugin'
+// Import plugins
 
 export default {
   root: join(dirname(new URL(import.meta.url).pathname), 'client'),
   plugins: [
-    // Register other plugins
-    viteFastify()
+    // Register plugins
   ]
 }
 ```

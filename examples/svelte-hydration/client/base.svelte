@@ -2,7 +2,7 @@
 import './base.css'
 import routes from './routes.js'
 import { todoList } from './state.js'
-import { Router, Route } from 'svelte-routing'
+import { Router, Route } from "svelte-navigator";
 
 export let url = ""
 export let data

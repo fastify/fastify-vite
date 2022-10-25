@@ -1,5 +1,5 @@
 <script>
-import { Link } from 'svelte-routing'
+import { Link } from 'svelte-navigator'
 import { todoList } from '../state.js'
 
 export let value

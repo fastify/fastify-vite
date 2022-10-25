@@ -2,8 +2,10 @@
 /* globals $,path,fs */
 /* eslint-disable node/no-path-concat */
 
+const vitestConf = await fs.readFile(path.join(__dirname, `vitest.config.js`), 'utf8')
+
 if (process.argv.includes('--all')) {
-  $.verbose = false
+  await $`rm -rf packages/fastify-vite/node_modules`
   const examples = await fs.readdir('examples')
   for (const example of examples) {
     if (example.match(/\.DS_Store/)) {
@@ -11,8 +13,17 @@ if (process.argv.includes('--all')) {
     }
     cd(path.join(__dirname, `examples/${example}`))
     console.log(`Preparing ./examples/${example}`)
+    $.verbose = false
     await $`npm run devinstall`
+    const pkg = await require(path.join(__dirname, `examples/${example}/package.json`))
+    pkg.scripts['test'] = 'vitest run'
+    await fs.writeFile(path.join(__dirname, `examples/${example}/package.json`), JSON.stringify(pkg, null, 2))
+    await fs.writeFile(path.join(__dirname, `examples/${example}/vitest.config.js`), vitestConf)
+    $.verbose = true
+    await $`npm run test`
   }
+  cd('../../packages/fastify-vite')
+  await $`npm install`
   process.exit()
 }
 

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run --no-threads --root=.",
     "lint": "eslint . --ext .js --fix"
   },
   "bugs": {
@@ -23,8 +23,7 @@
     "setup.js"
   ],
   "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin.js"
+    ".": "./index.js"
   },
   "homepage": "https://github.com/fastify/fastify-vite",
   "license": "MIT",
@@ -34,7 +33,7 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "version": "3.0.0-beta.25",
+  "version": "3.0.0-beta.26",
   "dependencies": {
     "fastify": "^4.7.0",
     "vite": "^3.1.6",
