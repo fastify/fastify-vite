@@ -9,6 +9,7 @@ async function setup (config) {
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = {
+    configFile: false,
     ...config.vite,
     server: {
       middlewareMode: true,
