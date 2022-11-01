@@ -16,9 +16,7 @@
     "@fastify/static": "^6.5.0",
     "fs-extra": "^10.0.0",
     "klaw": "^4.0.1",
-    "middie": "^5.2.0",
-    "fastify-vite": "^3.0.0",
-    "@fastify/vite": "^3.0.0"
+    "middie": "^5.2.0"
   },
   "devDependencies": {
     "svelte-navigator": "^3.2.2",
@@ -33,7 +31,7 @@
   },
   "devInstall": {
     "local": {
-      "fastify-vite": "^3.0.0-beta.25"
+      "@fastify/vite": "^3.0.1"
     },
     "external": {
       "devalue": "^2.0.1"

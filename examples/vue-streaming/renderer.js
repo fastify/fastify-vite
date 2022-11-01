@@ -5,16 +5,16 @@ import { Readable } from 'node:stream'
 // Vue 3's streaming server-side rendering function for Node.js
 import { renderToNodeStream } from 'vue/server-renderer'
 
-// fastify-vite's minimal HTML templating function,
+// @fastify/vite's minimal HTML templating function,
 // which extracts interpolation variables from comments
 // and returns a function with the generated code
-import { createHtmlTemplateFunction } from 'fastify-vite'
+import { createHtmlTemplateFunction } from '@fastify/vite'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
 
-// The fastify-vite renderer overrides
+// The @fastify/vite renderer overrides
 export default {
   createHtmlFunction,
   createRenderFunction

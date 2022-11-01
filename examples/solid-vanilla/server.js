@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
+import FastifyVite from '@fastify/vite'
 import { renderToStringAsync } from 'solid-js/web'
 
 export async function main (dev) {

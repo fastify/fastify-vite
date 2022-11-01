@@ -1,1 +1,1 @@
-<p>Hello world from Solid and fastify-vite!</p>
+<p>Hello world from Solid and @fastify/vite!</p>

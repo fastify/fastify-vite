@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
+import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 import ky from 'ky-universal'
 

@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
+import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
 
 export async function main (dev) {

@@ -4,7 +4,7 @@ import { renderToStringAsync, generateHydrationScript } from 'solid-js/web'
 // <script> tags, preventing a few types of attack
 import devalue from 'devalue'
 
-// The fastify-vite renderer overrides
+// The @fastify/vite renderer overrides
 export default { createRenderFunction }
 
 function createRenderFunction ({ createApp }) {

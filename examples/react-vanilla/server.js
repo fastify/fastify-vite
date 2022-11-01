@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import FastifyVite from 'fastify-vite'
+import FastifyVite from '@fastify/vite'
 import { renderToString } from 'react-dom/server'
 
 export async function main (dev) {
