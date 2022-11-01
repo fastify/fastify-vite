@@ -13,12 +13,14 @@ if (process.argv.includes('--cleanup')) {
     }
     cd(path.join(__dirname, `examples/${example}`))
     const pkg = await require(path.join(__dirname, `examples/${example}/package.json`))
-    pkg.scripts['dependencies'] = {
-      ...pkg.devInstall.local,
-      ...pkg.devInstall.external
-    }
-    delete pkg.scripts['dependencies']
-    pkg.dependencies['@fastify/vite'] = '^3.0.0'
+    delete pkg.devInstall.local['fastify-vite']
+    pkg.devInstall.local['@fastify/vite'] = '^3.0.1'
+    // pkg.scripts['dependencies'] = {
+    //   ...pkg.devInstall.local,
+    //   ...pkg.devInstall.external
+    // }
+    // delete pkg.scripts['dependencies']
+    // pkg.dependencies['@fastify/vite'] = '^3.0.1'
     await fs.writeFile(path.join(__dirname, `examples/${example}/package.json`), JSON.stringify(pkg, null, 2))
     // await fs.writeFile(path.join(__dirname, `examples/${example}/vitest.config.js`), vitestConf)
     // $.verbose = true
@@ -40,7 +42,7 @@ if (process.argv.includes('--all')) {
     console.log(`Preparing ./examples/${example}`)
     $.verbose = false
     await $`npm run devinstall`
-    const pkg = await require(path.join(__dirname, `examples/${example}/package.json`))
+    const pkg = require(path.join(__dirname, `examples/${example}/package.json`))
     pkg.scripts['test'] = 'vitest run'
     await fs.writeFile(path.join(__dirname, `examples/${example}/package.json`), JSON.stringify(pkg, null, 2))
     await fs.writeFile(path.join(__dirname, `examples/${example}/vitest.config.js`), vitestConf)
@@ -69,9 +71,14 @@ const template = require(path.join(exRoot, 'package.json'))
 const { external, local } = template.devInstall
 const dependencies = { ...external }
 
+const localDepMap = {
+  '@fastify/vite': 'fastify-vite'
+}
+
 for (const localDep of Object.keys(local)) {
+  console.log('localDep', localDep)
   for (const [dep, version] of Object.entries(
-    require(path.join(__dirname, 'packages', localDep, 'package.json')).dependencies || [])
+    require(path.join(__dirname, 'packages', localDepMap[localDep], 'package.json')).dependencies || [])
   ) {
     if (!Object.keys(local).includes(dep)) {
       dependencies[dep] = version
@@ -84,10 +91,7 @@ await $`npm install -f`
 
 for (const localDep of Object.keys(local)) {
   await $`rm -rf ${exRoot}/node_modules/${localDep}`
-  await $`cp -r ${__dirname}/packages/${localDep} ${exRoot}/node_modules/${localDep}`
-  if (localDep === 'fastify-dx') {
-    await $`ln -s ${exRoot}/node_modules/${localDep}/index.mjs ${exRoot}/node_modules/.bin/dx`
-  }
+  await $`cp -r ${__dirname}/packages/${localDepMap[localDep]} ${exRoot}/node_modules/${localDep}`
 }
 
 // try {
