@@ -65,7 +65,7 @@ async function setup (config) {
   // Loads the Vite application server entry point for the client
   async function loadClient () {
     if (config.spa) {
-      return null
+      return {}
     }
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),

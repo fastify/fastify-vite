@@ -57,13 +57,13 @@ const DefaultConfig = {
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
+    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
         this.type('text/html')
         this.send(indexHtmlTemplate({ element: '' }))
       }
     }
-    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     return function (ctx) {
       this.type('text/html')
       this.send(indexHtmlTemplate(ctx))
