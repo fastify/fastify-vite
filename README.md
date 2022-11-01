@@ -1,6 +1,6 @@
 <br>
 
-# @fastify/vite [![NPM version](https://img.shields.io/npm/v/@fastify/vite.svg?style=flat)](https://www.npmjs.com/package/fastify-vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
+# @fastify/vite [![NPM version](https://img.shields.io/npm/v/@fastify/vite.svg?style=flat)](https://www.npmjs.com/package/@fastify/vite) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 This plugin lets you load a **Vite client application** and set it up for **Server-Side Rendering (SSR)** with Fastify. Alternatively, it can also just serve as a convenience to serve a static Vite **SPA** application through Fastify, automating both the usage of Vite's development server for hot reload and the loading of the production bundle.
 
@@ -12,7 +12,7 @@ It automates a few aspects of the setup, such as:
 - Toggling Vite's development server on and off, i.e., run in development or production mode.
 - Integrating routing at the client level (History API-based) with Fastify server-side routing.
 
-This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
+This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/@fastify/vite/tree/dev/examples).
 
 ## Install
 
@@ -82,7 +82,7 @@ It's very important to understand those subtleties before getting started.
 
 **`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. Let's talk about `reply.render()` first, and how to create it. 
 
-To understand this fully, let's examine [`examples/react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
+To understand this fully, let's examine [`examples/react-vanilla`](https://github.com/fastify/@fastify/vite/tree/dev/examples/react-vanilla), an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
 
 This basic example has the following structure:
 
@@ -106,7 +106,7 @@ import React from 'react'
 
 export function createApp () {
   return (
-    <p>Hello world from React and fastify-vite!</p>
+    <p>Hello world from React and @fastify/vite!</p>
   )
 }
 ```
@@ -207,19 +207,19 @@ function createHtmlFunction (source, scope, config) {
 }
 ```
 
-You can see that default definition (and many others) in **`@fastify/vite`**'s [internal `config.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L51) file. 
+You can see that default definition (and many others) in **`@fastify/vite`**'s [internal `config.js`](https://github.com/fastify/@fastify/vite/blob/dev/packages/@fastify/vite/config.js#L51) file. 
 
-Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to `reply.html()`, which uses the precompiled templating function based on `index.html`.
+Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/@fastify/vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to `reply.html()`, which uses the precompiled templating function based on `index.html`.
 
-In some cases, it's very likely you'll want to provide your own `createHtmlFunction()` option through **`@fastify/vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example demonstrates a custom implementation that works with a stream instead of a raw string.
+In some cases, it's very likely you'll want to provide your own `createHtmlFunction()` option through **`@fastify/vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/@fastify/vite/tree/dev/examples/react-vanilla) example demonstrates a custom implementation that works with a stream instead of a raw string.
 
 ## Deployment
 
-If you try to run any of the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) without the `--dev` flag, you'll be greeted with an error message:
+If you try to run any of the [`examples/`](https://github.com/fastify/@fastify/vite/tree/dev/examples) without the `--dev` flag, you'll be greeted with an error message:
 
 ```
 % node server.js
-/../node_modules/fastify-vite/mode/production.js:6
+/../node_modules/@fastify/vite/mode/production.js:6
     throw new Error('No distribution bundle found.')
           ^
 
@@ -236,7 +236,7 @@ Assuming you're using the default `clientModule` resolution (`/index.js`), these
 "build:server": "vite build --outDir dist/server --ssr /index.js",
 ```
 
-After running `npm run build` on [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), for example, you should see a new `client/dist` folder.
+After running `npm run build` on [`react-vanilla`](https://github.com/fastify/@fastify/vite/tree/dev/examples/react-vanilla), for example, you should see a new `client/dist` folder.
 
 
 ```diff
@@ -280,9 +280,9 @@ If unset, **`@fastify/vite`** will automatically try to resolve `index.js` from 
 
 As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. 
 
-See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (`VueRouter`, `ReactRouter` etc). That's why `prepareClient()` is implemented that way by default.
+See its default definition [here](https://github.com/fastify/@fastify/vite/blob/dev/packages/@fastify/vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (`VueRouter`, `ReactRouter` etc). That's why `prepareClient()` is implemented that way by default.
 
-See the [`react-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-hydration) and [`vue-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/vue-hydration) examples to see how the same `routes.js` file is used to set up ReactRouter and VueRouter, and the associated Fastify routes.
+See the [`react-hydration`](https://github.com/fastify/@fastify/vite/tree/dev/examples/react-hydration) and [`vue-hydration`](https://github.com/fastify/@fastify/vite/tree/dev/examples/vue-hydration) examples to see how the same `routes.js` file is used to set up ReactRouter and VueRouter, and the associated Fastify routes.
 
 ### `createHtmlFunction(source, scope, config)`
 
@@ -294,7 +294,7 @@ As covered previously, this is the function that creates the `reply.render()` me
 
 ### `createRouteHandler(client, scope, options)`
 
-This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L71) below:
+This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/@fastify/vite/blob/dev/packages/@fastify/vite/config.js#L71) below:
 
 ```js
 function createRouteHandler (client, scope, options) {
@@ -307,7 +307,7 @@ function createRouteHandler (client, scope, options) {
 
 ### `createErrorHandler(client, scope, config)`
 
-This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L79) below:
+This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/@fastify/vite/blob/dev/packages/@fastify/vite/config.js#L79) below:
 
 ```js
 function createErrorHandler (client, scope, config) {
@@ -323,7 +323,7 @@ function createErrorHandler (client, scope, config) {
 
 ### `createRoute({ handler, errorHandler, route }, scope, config)`
 
-Finally, this configuration function is responsible for actually registering an individual Fastify route for each of your client-level routes. See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L60) below:
+Finally, this configuration function is responsible for actually registering an individual Fastify route for each of your client-level routes. See its [default definition](https://github.com/fastify/@fastify/vite/blob/dev/packages/@fastify/vite/config.js#L60) below:
 
 ```js
 function createRoute ({ handler, errorHandler, route }, scope, config) {
@@ -341,13 +341,13 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 
 A single configuration object which can be used to set all of the settings above. 
 
-You can see it in the streaming [examples/](https://github.com/fastify/fastify-vite/tree/dev/examples).
+You can see it in the streaming [examples/](https://github.com/fastify/@fastify/vite/tree/dev/examples).
 
 ### `spa`
 
 **Disables SSR** and just sets up integration for delivering a static SPA application. When set to `true`, `clientModule` resolution is disabled and the `Reply.html()` method doesn't require a context object with variables for the `index.html` template.
 
-You can see it in the streaming [examples/](https://github.com/fastify/fastify-vite/tree/dev/examples).
+You can see it in the streaming [examples/](https://github.com/fastify/@fastify/vite/tree/dev/examples).
 
 ## ⁂
 
@@ -363,7 +363,7 @@ See this **[blog post](https://hire.jonasgalvez.com.br/2022/may/18/building-a-mi
 
 Created by [Jonas Galvez](https://hire.jonasgalvez.com.br/), Principal Engineer on Open Source at [NodeSource](https://www.nodesource.com).
 
-This project is sponsored by [NodeSource](https://www.nodesource.com), [NearForm](https://www.nearform.com) and maintained with the help of [these brilliant contributors](https://github.com/fastify/fastify-vite/graphs/contributors).
+This project is sponsored by [NodeSource](https://www.nodesource.com), [NearForm](https://www.nearform.com) and maintained with the help of [these brilliant contributors](https://github.com/fastify/@fastify/vite/graphs/contributors).
 
 ## License
 

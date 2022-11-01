@@ -2,7 +2,7 @@
   "scripts": {
     "test": "vitest run --no-threads"
   },
-  "name": "fastify-vite",
+  "private": "true",
   "devDependencies": {
     "execa": "^6.1.0",
     "vitest": "^0.24.0",
