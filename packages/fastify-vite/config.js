@@ -44,7 +44,7 @@ const DefaultConfig = {
     if (!clientModule) {
       return null
     }
-    const { routes, ...others } = clientModule
+    let { routes, ...others } = clientModule
     if (typeof routes === 'function') {
       routes = await routes()
     }
