@@ -44,7 +44,7 @@ const DefaultConfig = {
     if (!clientModule) {
       return null
     }
-    const routes = typeof clietModule.routes === 'function' 
+    const routes = typeof clientModule.routes === 'function' 
       ? await clientModule.routes()
       : clientModule.routes
     return Object.assign({}, clientModule, { routes })
