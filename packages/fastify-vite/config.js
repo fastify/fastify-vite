@@ -44,11 +44,10 @@ const DefaultConfig = {
     if (!clientModule) {
       return null
     }
-    let { routes, ...others } = clientModule
-    if (typeof routes === 'function') {
-      routes = await routes()
-    }
-    return { routes, ...others }
+    const routes = typeof clietModule.routes === 'function' 
+      ? await clientModule.routes()
+      : clientModule.routes
+    return Object.assign({}, clientModule, { routes })
   },
 
   // Compile index.html into templating function,
