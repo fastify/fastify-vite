@@ -106,6 +106,7 @@ async function configure (options = {}) {
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
   const [vite, viteConfig] = await resolveViteConfig(root, dev)
+  const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
     ...options,
@@ -179,7 +180,7 @@ async function resolveViteConfig (root, dev) {
   return [null, null]
 }
 
-async function resolveBundle ({ dev, vite }) {
+async function resolveSSRBundle ({ dev, vite }) {
   const bundle = {}
   if (!dev) {
     bundle.dir = resolve(vite.root, vite.build.outDir)
@@ -189,6 +190,21 @@ async function resolveBundle ({ dev, vite }) {
     }
     bundle.indexHtml = await read(indexHtmlPath, 'utf8')
     bundle.manifest = require(resolve(bundle.dir, 'client/ssr-manifest.json'))
+  } else {
+    bundle.manifest = []
+  }
+  return bundle
+}
+
+async function resolveSPABundle ({ dev, vite }) {
+  const bundle = {}
+  if (!dev) {
+    bundle.dir = resolve(vite.root, vite.build.outDir)
+    const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
+    if (!exists(indexHtmlPath)) {
+      return
+    }
+    bundle.indexHtml = await read(indexHtmlPath, 'utf8')
   } else {
     bundle.manifest = []
   }
@@ -205,7 +221,8 @@ async function resolveBuildCommands (root, renderer) {
 
 module.exports = {
   configure,
-  resolveBundle,
+  resolveSSRBundle,
+  resolveSPABundle,
   resolveBuildCommands,
 }
 module.exports.default = module.exports

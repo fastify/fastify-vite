@@ -25,8 +25,13 @@ async function setup (config) {
 
   const clientDist = resolve(config.bundle.dir, 'client')
   const serverDist = resolve(config.bundle.dir, 'server')
-  if (!exists(clientDist) || !exists(serverDist)) {
-    throw new Error('No distribution bundle found.')
+  if (!exists(clientDist)) {
+    throw new Error('No client distribution bundle found.')
+  }
+
+  
+  if (!config.spa && !exists(serverDist)) {
+    throw new Error('No server distribution bundle found.')
   }
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
