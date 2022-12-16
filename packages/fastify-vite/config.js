@@ -165,6 +165,13 @@ async function resolveViteConfig (root, dev) {
       if (userConfig.default) {
         userConfig = userConfig.default
       }
+      if (typeof userConfig === 'function') {
+        userConfig = await userConfig({
+          command: 'serve',
+          mode: dev ? 'development' : 'proudction',
+          ssrBuild: false,
+        });
+      }
       return [
         Object.assign(userConfig, {
           build: {
