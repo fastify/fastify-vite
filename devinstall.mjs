@@ -35,6 +35,12 @@ if (process.argv.includes('--all')) {
   await $`rm -rf packages/fastify-vite/node_modules`
   const examples = await fs.readdir('examples')
   for (const example of examples) {
+    if (example.match(/react\-next/)) {
+      continue
+    }
+    if (example.match(/vue\-next/)) {
+      continue 
+    }
     if (example.match(/\.DS_Store/)) {
       continue
     }

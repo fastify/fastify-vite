@@ -12,7 +12,7 @@ export function makeIndexTest ({ main, dev }) {
    }
 }
 
-export function makeBuildTest ({ cwd, clientModules, serverModules }) {
+export function makeSSRBuildTest ({ cwd, clientModules, serverModules }) {
   return async () => {
     const {
       scripts: {
@@ -26,5 +26,15 @@ export function makeBuildTest ({ cwd, clientModules, serverModules }) {
   
     expect(clientStdout).toContain(`✓ ${clientModules} modules transformed`)
     expect(serverStdout).toContain(`✓ ${serverModules} modules transformed`)
+  }
+}
+
+export function makeSPABuildTest ({ cwd, clientModules }) {
+  return async () => {
+    const { scripts: { build } } = JSON.parse(
+      await readFile(join(cwd, 'package.json'), 'utf8')
+    )
+    const { stdout } = await execaCommand(`npx ${build}`, { cwd })
+    expect(stdout).toContain(`✓ ${clientModules} modules transformed`)
   }
 }

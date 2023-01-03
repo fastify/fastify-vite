@@ -5,7 +5,7 @@
   "private": "true",
   "devDependencies": {
     "execa": "^6.1.0",
-    "vitest": "^0.24.0",
+    "vitest": "^0.24.5",
     "zx": "^4.3.0"
   }
 }
