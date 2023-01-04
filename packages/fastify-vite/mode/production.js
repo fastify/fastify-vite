@@ -23,13 +23,15 @@ async function setup (config) {
   // For production you get the distribution version of the render function
   const { assetsDir } = config.vite.build
 
-  const clientDist = resolve(config.bundle.dir, 'client')
-  const serverDist = resolve(config.bundle.dir, 'server')
+  const clientDist = config.spa
+    ? resolve(config.bundle.dir)
+    : resolve(config.bundle.dir, 'client')
+
   if (!exists(clientDist)) {
     throw new Error('No client distribution bundle found.')
   }
 
-  
+  const serverDist = resolve(config.bundle.dir, 'server')
   if (!config.spa && !exists(serverDist)) {
     throw new Error('No server distribution bundle found.')
   }
@@ -74,7 +76,7 @@ async function setup (config) {
     }
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
-      join('server', `${parse(config.clientModule).name}.mjs`)
+      join('server', `${parse(config.clientModule).name}.mjs`),
     ]
     let serverBundlePath
     for (const serverFile of serverFiles) {

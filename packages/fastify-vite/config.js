@@ -44,7 +44,7 @@ const DefaultConfig = {
     if (!clientModule) {
       return null
     }
-    const routes = typeof clientModule.routes === 'function' 
+    const routes = typeof clientModule.routes === 'function'
       ? await clientModule.routes()
       : clientModule.routes
     return Object.assign({}, clientModule, { routes })
@@ -160,7 +160,7 @@ async function resolveViteConfig (root, dev) {
     const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       const resolvedConfig = await resolveConfig({
-        configFile
+        configFile,
       }, 'serve', dev ? 'development' : 'production')
       let userConfig = await import(configFile).then(m => m.default)
       if (userConfig.default) {
@@ -170,7 +170,7 @@ async function resolveViteConfig (root, dev) {
         Object.assign(userConfig, {
           build: {
             assetsDir: resolvedConfig.build.assetsDir,
-            outDir: resolvedConfig.build.outDir
+            outDir: resolvedConfig.build.outDir,
           },
         }),
         configFile,
@@ -200,7 +200,7 @@ async function resolveSPABundle ({ dev, vite }) {
   const bundle = {}
   if (!dev) {
     bundle.dir = resolve(vite.root, vite.build.outDir)
-    const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
+    const indexHtmlPath = resolve(bundle.dir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
     }
@@ -211,18 +211,9 @@ async function resolveSPABundle ({ dev, vite }) {
   return bundle
 }
 
-async function resolveBuildCommands (root, renderer) {
-  const [vite] = await resolveViteConfig(root)
-  return [
-    ['build', '--outDir', `${vite.build.outDir}/client`, '--ssrManifest'],
-    ['build', '--ssr', renderer.serverEntryPoint, '--outDir', `${vite.build.outDir}/server`],
-  ]
-}
-
 module.exports = {
   configure,
   resolveSSRBundle,
   resolveSPABundle,
-  resolveBuildCommands,
 }
 module.exports.default = module.exports
