@@ -3,7 +3,7 @@
 const fp = require('fastify-plugin')
 
 const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const { configure, resolveBuildCommands } = require('./config')
+const { configure } = require('./config')
 const { createHtmlTemplateFunction } = require('./html')
 const { ensureESMBuild } = require('./vite')
 
@@ -50,5 +50,4 @@ module.exports.ensureESMBuild = ensureESMBuild
 module.exports.createHtmlTemplateFunction = createHtmlTemplateFunction
 module.exports.ensureConfigFile = ensureConfigFile
 module.exports.ejectBlueprint = ejectBlueprint
-module.exports.resolveBuildCommands = resolveBuildCommands
 module.exports.default = module.exports

@@ -1,8 +1,7 @@
-import { join, resolve, dirname } from 'node:path'
 import { expect, test } from 'vitest'
 
-import { main as esmServer } from './fixtures/esm/server.js' 
-import { main as cjsServer } from './fixtures/cjs/server.js' 
+import { main as esmServer } from './fixtures/esm/server.js'
+import { main as cjsServer } from './fixtures/cjs/server.js'
 
 test('esm - should register development server in development mode', async () => {
   const server = await esmServer(true)
@@ -18,12 +17,11 @@ test('esm - should not register development server in production mode', async ()
 test('esm - should add Reply decorators', async () => {
   const server = await esmServer(true)
   server.get('/', (_, reply) => {
-    expect(reply.html).toBeDefined()  
-    expect(reply.render).toBeDefined()  
+    expect(reply.html).toBeDefined()
+    expect(reply.render).toBeDefined()
   })
   await server.vite.devServer.close()
 })
-
 
 test('cjs - should register development server in development mode', async () => {
   const server = await cjsServer(true)
@@ -39,8 +37,8 @@ test('cjs - should not register development server in production mode', async ()
 test('cjs - should add Reply decorators', async () => {
   const server = await cjsServer(true)
   server.get('/', (_, reply) => {
-    expect(reply.html).toBeDefined()  
-    expect(reply.render).toBeDefined()  
+    expect(reply.html).toBeDefined()
+    expect(reply.render).toBeDefined()
   })
   await server.vite.devServer.close()
 })

@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "node server.js --dev",
     "devinstall": "zx ../../devinstall.mjs react-vanilla -- node server.js --dev",
-    "build": "vite build --outDir dist/client",
+    "build": "vite build",
     "lint": "eslint . --ext .js,.jsx --fix",
     "test": "vitest run"
   },
