@@ -12,7 +12,7 @@ export async function main (dev) {
     root: import.meta.url,
     createRenderFunction () {
       return () => {}
-    }
+    },
   })
 
   await server.vite.ready()
