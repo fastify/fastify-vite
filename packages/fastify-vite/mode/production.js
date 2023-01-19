@@ -37,9 +37,11 @@ async function setup (config) {
   }
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
-  await this.scope.register(FastifyStatic, {
-    root: resolve(clientDist, assetsDir),
-    prefix: `/${assetsDir}`,
+  await this.scope.register(async function staticContext (scope) {
+    await scope.register(FastifyStatic, {
+      root: resolve(clientDist, assetsDir),
+      prefix: `/${assetsDir}`,
+    })
   })
   // Note: this is just to ensure it works, for a real world
   // production deployment, you'll want to capture those paths in
