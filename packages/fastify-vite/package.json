@@ -36,7 +36,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.4",
+  "version": "3.0.5",
   "dependencies": {
     "fastify": "^4.7.0",
     "vite": "^3.1.6",
