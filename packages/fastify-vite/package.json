@@ -6,7 +6,7 @@
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "bundleDependencies": false,
+  "bundleDependencies": [],
   "deprecated": false,
   "description": "Fastify plugin for server-side rendering (SSR) applications based on Vite.",
   "files": [
@@ -38,12 +38,12 @@
   },
   "version": "3.0.5",
   "dependencies": {
+    "@fastify/static": "^6.6.1",
     "fastify": "^4.7.0",
-    "vite": "^3.1.6",
-    "@fastify/static": "^6.5.0",
     "fs-extra": "^10.0.0",
     "klaw": "^4.0.1",
-    "middie": "^5.2.0"
+    "middie": "^5.2.0",
+    "vite": "^3.1.6"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
