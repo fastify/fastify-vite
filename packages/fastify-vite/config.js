@@ -129,7 +129,7 @@ async function configure (options = {}) {
   if (config.spa) {
     config.createRenderFunction = () => {}
   } else {
-    config.clientModule ||= resolveClientModule(vite.root)
+    config.clientModule = config.clientModule || resolveClientModule(vite.root)
   }
   return config
 }
