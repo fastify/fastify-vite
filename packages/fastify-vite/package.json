@@ -36,7 +36,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.5",
+  "version": "3.0.6",
   "dependencies": {
     "@fastify/static": "^6.6.1",
     "fastify": "^4.7.0",
