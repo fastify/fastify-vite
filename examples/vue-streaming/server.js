@@ -9,7 +9,7 @@ export async function main (dev) {
   const root = import.meta.url
   
   await server.register(FastifyVite, {
-    dev: dev ?? process.argv.includes('--dev'),
+    dev: dev || process.argv.includes('--dev'),
     root,
     renderer
   })

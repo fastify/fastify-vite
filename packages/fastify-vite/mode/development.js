@@ -27,7 +27,7 @@ async function setup (config) {
     }
     const modulePath = resolve(config.vite.root, config.clientModule.replace(/^\/+/, ''))
     const entryModule = await this.devServer.ssrLoadModule(modulePath)
-    return entryModule.default ?? entryModule
+    return entryModule.default || entryModule
   }
 
   // Initialize Reply prototype decorations

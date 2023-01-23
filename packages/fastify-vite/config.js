@@ -124,12 +124,12 @@ async function configure (options = {}) {
     'createRouteHandler',
     'prepareClient',
   ]) {
-    config[setting] = config.renderer[setting] ?? config[setting]
+    config[setting] = config.renderer[setting] || config[setting]
   }
   if (config.spa) {
     config.createRenderFunction = () => {}
   } else {
-    config.clientModule ??= resolveClientModule(vite.root)
+    config.clientModule ||= resolveClientModule(vite.root)
   }
   return config
 }

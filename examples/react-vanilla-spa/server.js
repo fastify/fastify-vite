@@ -6,7 +6,7 @@ export async function main (dev) {
 
   await server.register(FastifyVite, {
     root: import.meta.url,
-    dev: dev ?? process.argv.includes('--dev'),
+    dev: dev || process.argv.includes('--dev'),
     spa: true,
   })
 

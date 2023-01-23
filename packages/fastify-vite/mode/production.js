@@ -91,7 +91,7 @@ async function setup (config) {
       }
     }
     const serverBundle = await import(serverBundlePath)
-    return serverBundle.default ?? serverBundle
+    return serverBundle.default || serverBundle
   }
 }
 

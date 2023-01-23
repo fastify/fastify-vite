@@ -25,7 +25,7 @@ export async function main (dev) {
   })
 
   await server.register(FastifyVite, {
-    dev: dev ?? process.argv.includes('--dev'),
+    dev: dev || process.argv.includes('--dev'),
     root: import.meta.url,
     renderer
   })
