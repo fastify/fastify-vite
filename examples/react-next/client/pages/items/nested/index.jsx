@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export async function getServerSideProps ({ ky }) {
+export async function getServerSideProps ({ fetch }) {
   return {
-    todoList: await ky('api/todo-list').json(),
+    todoList: await fetchJSON('/api/todo-list')),
   }
 }
 

@@ -10,5 +10,8 @@ const plugins = [
 
 export default {
   root,
-  plugins
+  plugins,
+  server: {
+    hmr: !!process.env.TEST,
+  },
 }

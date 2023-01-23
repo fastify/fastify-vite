@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "test": "vitest run --no-threads"
+    "test": "vitest run"
   },
   "private": "true",
   "devDependencies": {
     "execa": "^6.1.0",
-    "vitest": "^0.24.5",
+    "vitest": "^0.27.2",
     "zx": "^4.3.0"
   }
 }

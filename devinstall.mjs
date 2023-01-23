@@ -81,16 +81,6 @@ const localDepMap = {
   '@fastify/vite': 'fastify-vite'
 }
 
-for (const localDep of Object.keys(local)) {
-  console.log('localDep', localDep)
-  for (const [dep, version] of Object.entries(
-    require(path.join(__dirname, 'packages', localDepMap[localDep], 'package.json')).dependencies || [])
-  ) {
-    if (!Object.keys(local).includes(dep)) {
-      dependencies[dep] = version
-    }
-  }
-}
 
 await createPackageFile(exRoot, dependencies)
 await $`npm install -f`
