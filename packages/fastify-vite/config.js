@@ -157,11 +157,14 @@ function resolveRoot (root) {
 
 async function resolveViteConfig (root, dev) {
   for (const ext of ['js', 'mjs', 'ts']) {
-    const configFile = join(root, `vite.config.${ext}`)
+    let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       const resolvedConfig = await resolveConfig({
         configFile,
       }, 'serve', dev ? 'development' : 'production')
+      if (process.platform === 'win32') {
+        configFile = `file://${configFile}`
+      }
       let userConfig = await import(configFile).then(m => m.default)
       if (userConfig.default) {
         userConfig = userConfig.default
