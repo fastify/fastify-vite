@@ -84,7 +84,7 @@ async function setup (config) {
     for (const serverFile of serverFiles) {
       // Use file path on Windows
       serverBundlePath = process.platform === 'win32'
-        ? fileUrl(resolve(config.bundle.dir, serverFile))
+        ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
         : resolve(config.bundle.dir, serverFile)
       if (await exists(serverBundlePath)) {
         break
