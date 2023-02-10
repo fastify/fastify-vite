@@ -1,4 +1,4 @@
-const middie = require('middie')
+const middie = require('@fastify/middie')
 const { createServer } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
