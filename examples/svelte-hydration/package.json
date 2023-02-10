@@ -10,11 +10,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fastify/vite": "^3.0.8",
     "devalue": "^2.0.1",
     "fastify": "^4.7.0",
     "vite": "^3.1.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "svelte-navigator": "^3.2.2",
     "@babel/eslint-parser": "^7.16.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.9",
@@ -23,7 +25,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-solid": "^0.4.7"
+    "eslint-plugin-solid": "^0.4.7",
+    "vitest": "^0.28.4"
   },
   "devInstall": {
     "local": {
