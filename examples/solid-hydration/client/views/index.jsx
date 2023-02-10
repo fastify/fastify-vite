@@ -1,5 +1,5 @@
+import { Link } from '@solidjs/router'
 import { For } from 'solid-js'
-import { Link } from 'solid-app-router'
 
 export default function Index (props) {
   let input

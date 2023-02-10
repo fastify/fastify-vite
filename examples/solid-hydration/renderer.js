@@ -2,12 +2,10 @@ import { renderToStringAsync, generateHydrationScript } from 'solid-js/web'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
-import devalue from 'devalue'
+import { uneval } from 'devalue'
 
 // The @fastify/vite renderer overrides
-export default { createRenderFunction }
-
-function createRenderFunction ({ createApp }) {
+export function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
   return async function (server, req, reply) {
     // Server data that we want to be used for SSR
@@ -27,7 +25,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`,
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
       // Required by Solid
       hydrationScript: generateHydrationScript()
     }

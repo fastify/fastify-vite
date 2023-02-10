@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import renderer from './renderer.js'
+import { join } from 'node:path'
+import { createRenderFunction } from './renderer.js'
 
 export async function main (dev) {
   const server = Fastify()
@@ -8,7 +9,7 @@ export async function main (dev) {
   await server.register(FastifyVite, {
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
-    renderer
+    createRenderFunction
   })
 
   await server.vite.ready()
@@ -16,7 +17,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] === join(process.cwd(), 'server.js')) {
   const server = await main()
   await server.listen({ port: 3000 })
 }
