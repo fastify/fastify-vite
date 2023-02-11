@@ -12,7 +12,7 @@
   "dependencies": {
     "@fastify/vite": "^3.0.8",
     "@solidjs/router": "^0.7.0",
-    "devalue": "^4.2.3",
+    "devalue": "^4.3.0",
     "fastify": "^4.13.0",
     "solid-js": "^1.6.10",
     "vite": "^4.1.1",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
-    "eslint": "^8.33.0",
+    "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
