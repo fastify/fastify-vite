@@ -32,18 +32,5 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "vitest": "^0.28.4"
-  },
-  "devInstall": {
-    "local": {
-      "@fastify/vite": "^3.0.1"
-    },
-    "external": {
-      "react-dom": "^18.1.0",
-      "react-router-dom": "^6.3.0",
-      "jotai": "^1.6.6",
-      "devalue": "^2.0.1",
-      "fastify": "^4.7.0",
-      "vite": "^3.1.6"
-    }
   }
 }

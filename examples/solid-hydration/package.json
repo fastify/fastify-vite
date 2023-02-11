@@ -29,14 +29,5 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-solid": "^0.9.4",
     "vitest": "^0.28.4"
-  },
-  "devInstall": {
-    "local": {
-      "@fastify/vite": "^3.0.8"
-    },
-    "external": {
-      "@solidjs/router": "^0.7.0",
-      "devalue": "^4.2.3"
-    }
   }
 }

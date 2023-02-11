@@ -29,13 +29,5 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-svelte": "^2.18.0",
     "vitest": "^0.28.4"
-  },
-  "devInstall": {
-    "local": {
-      "@fastify/vite": "^3.0.1"
-    },
-    "external": {
-      "devalue": "^2.0.1"
-    }
   }
 }
