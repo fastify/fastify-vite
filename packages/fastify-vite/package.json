@@ -40,11 +40,9 @@
   "dependencies": {
     "@fastify/middie": "^8.1.0",
     "@fastify/static": "^6.6.1",
-    "fastify": "^4.7.0",
     "fastify-plugin": "^4.5.0",
     "fs-extra": "^10.0.0",
-    "klaw": "^4.0.1",
-    "vite": "^3.1.6"
+    "klaw": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
@@ -52,5 +50,9 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1"
+  },
+  "peerDependencies": {
+    "fastify": "^4",
+    "vite": "^4"
   }
 }
