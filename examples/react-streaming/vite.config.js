@@ -1,7 +1,8 @@
 import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'node:url'
 import viteReact from '@vitejs/plugin-react'
 
-const path = new URL(import.meta.url).pathname
+const path = fileURLToPath(new URL(import.meta.url))
 const root = resolve(dirname(path), 'client')
 
 const plugins = [
