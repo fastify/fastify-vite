@@ -25,7 +25,7 @@ npm i @fastify/vite --save
 First you need to make sure you have `root` correctly set up in your `vite.config.js` file:
 
 ```js
-import { join, dirname } from 'path'
+import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 // Import plugins
 

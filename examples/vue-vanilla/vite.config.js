@@ -1,4 +1,4 @@
-import { resolve, dirname } from 'path'
+import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import vuePlugin from '@vitejs/plugin-vue'
 

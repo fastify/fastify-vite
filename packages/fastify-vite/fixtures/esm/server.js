@@ -1,5 +1,5 @@
+import { createRequire } from 'node:module'
 import Fastify from 'fastify'
-import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const fastifyVite = require('../../index.js')

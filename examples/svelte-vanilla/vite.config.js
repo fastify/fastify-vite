@@ -1,4 +1,4 @@
-import { resolve, dirname } from 'path'
+import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { svelte as viteSvelte } from '@sveltejs/vite-plugin-svelte'
 import { ensureESMBuild } from '@fastify/vite'

@@ -1,9 +1,9 @@
+import { createReadStream } from 'node:fs'
+import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import { createReadStream } from 'fs'
 import renderer from './renderer.js'
-import { resolve } from 'path'
 
 export async function main (dev) {
   const server = Fastify()

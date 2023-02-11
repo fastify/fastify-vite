@@ -1,5 +1,5 @@
+const { fileURLToPath } = require('node:url')
 const { resolveConfig } = require('vite')
-const { fileURLToPath } = require('url')
 const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
 
