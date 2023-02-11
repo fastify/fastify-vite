@@ -6,5 +6,5 @@ hydrateRoot(
   document.querySelector('main'),
   // No need to pass url as second parameter
   // here since BrowserRouter is used on the client
-  createApp(window.hydration),
+  createApp(window.hydration)
 )

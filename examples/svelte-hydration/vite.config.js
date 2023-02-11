@@ -9,7 +9,7 @@ const root = resolve(dirname(path), 'client')
 const plugins = [
   viteSvelte({
     compilerOptions: {
-      hydratable: true,
+      hydratable: true
     }
   }),
   ensureESMBuild()

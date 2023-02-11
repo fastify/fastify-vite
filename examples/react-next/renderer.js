@@ -8,7 +8,7 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default {
   createRenderFunction,
-  createRoute,
+  createRoute
 }
 
 function createRoute ({ handler, errorHandler, route }, scope, config) {
@@ -17,7 +17,7 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
     scope.get(`/json${route.path}`, async (req, reply) => {
       reply.send(await route.getServerSideProps({
         req,
-        ky: scope.ky,
+        ky: scope.ky
       }))
     })
   }
@@ -28,13 +28,13 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
       async preHandler (req, reply) {
         req.serverSideProps = await route.getServerSideProps({
           req,
-          ky: scope.ky,
+          ky: scope.ky
         })
-      },
+      }
     },
     handler,
     errorHandler,
-    ...route,
+    ...route
   })
 }
 
@@ -52,9 +52,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${
-        uneval({ serverSideProps })
-      }</script>`,
+      hydration: `<script>window.hydration = ${uneval({ serverSideProps })}</script>`
     }
   }
 }

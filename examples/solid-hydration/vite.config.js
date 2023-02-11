@@ -4,11 +4,11 @@ import viteSolid from 'vite-plugin-solid'
 const root = join(process.cwd(), 'client')
 
 const plugins = [
-  viteSolid({ ssr: true }),
+  viteSolid({ ssr: true })
 ]
 
 const ssr = {
-  noExternal: ['@solidjs/router'],
+  noExternal: ['@solidjs/router']
 }
 
 export default {

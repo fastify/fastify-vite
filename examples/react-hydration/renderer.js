@@ -17,8 +17,8 @@ function createRenderFunction ({ createApp }) {
       todoList: [
         'Do laundry',
         'Respond to emails',
-        'Write report',
-      ],
+        'Write report'
+      ]
     }
     // Creates main React component with all the SSR context it needs
     const app = createApp({ data, server, req, reply }, req.url)
@@ -28,7 +28,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
     }
   }
 }

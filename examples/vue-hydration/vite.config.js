@@ -7,10 +7,10 @@ const path = fileURLToPath(new URL(import.meta.url))
 const root = resolve(dirname(path), 'client')
 
 const plugins = [
-  vuePlugin(),
+  vuePlugin()
 ]
 
-export default { 
+export default {
   root,
   plugins
 }

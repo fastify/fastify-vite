@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server'
 export async function main (dev) {
   const server = Fastify()
 
-  await server.register(FastifyVite, { 
+  await server.register(FastifyVite, {
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
     createRenderFunction ({ createApp }) {

@@ -14,8 +14,8 @@ export function createRenderFunction ({ createApp }) {
       todoList: [
         'Do laundry',
         'Respond to emails',
-        'Write report',
-      ],
+        'Write report'
+      ]
     }
     // Creates main React component with all the SSR context it needs
     const app = createApp({ data, server, req, reply })

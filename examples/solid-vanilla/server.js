@@ -12,7 +12,7 @@ export async function main (dev) {
     createRenderFunction ({ createApp }) {
       return async () => {
         return {
-          element: await renderToStringAsync(createApp()),
+          element: await renderToStringAsync(createApp())
         }
       }
     }

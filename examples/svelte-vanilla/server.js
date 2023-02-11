@@ -6,7 +6,7 @@ export async function main (dev) {
   const server = Fastify()
   const root = import.meta.url
 
-  await server.register(FastifyVite, { 
+  await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
     root,
     createRenderFunction ({ Page }) {

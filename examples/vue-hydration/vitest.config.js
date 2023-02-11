@@ -5,6 +5,6 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   root: dirname(fileURLToPath(new URL(import.meta.url))),
   test: {
-    testTimeout: 15000,
+    testTimeout: 15000
   }
 })
