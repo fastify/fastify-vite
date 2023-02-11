@@ -17,7 +17,7 @@ This README contains all the documentation. Also see the working [`examples/`](h
 ## Install
 
 ```
-npm i @fastify/vite --save
+npm i @fastify/vite fastify vite --save
 ```
 
 ## Usage

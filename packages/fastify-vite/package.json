@@ -42,8 +42,7 @@
     "@fastify/static": "^6.6.1",
     "fastify-plugin": "^4.5.0",
     "fs-extra": "^10.0.0",
-    "klaw": "^4.0.1",
-    "vite": "^3.1.6"
+    "klaw": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
@@ -53,6 +52,7 @@
     "eslint-plugin-promise": "^4.3.1"
   },
   "peerDependencies": {
-    "fastify": "^4"
+    "fastify": "^4",
+    "vite": "^4"
   }
 }
