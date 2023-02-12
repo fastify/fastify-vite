@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'

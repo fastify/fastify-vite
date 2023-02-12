@@ -1,3 +1,4 @@
+#!/usr/bin/env zx
 
 /* globals $,path,fs */
 /* eslint-disable node/no-path-concat */
