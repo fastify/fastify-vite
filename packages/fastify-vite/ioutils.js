@@ -29,5 +29,5 @@ module.exports = {
   read: readFile,
   exists: existsSync,
   stat: lstatSync,
-  ensure: ensureDir,
+  ensure: ensureDir
 }

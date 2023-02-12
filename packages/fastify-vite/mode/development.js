@@ -13,9 +13,9 @@ async function setup (config) {
     ...config.vite,
     server: {
       middlewareMode: true,
-      ...config.vite.server,
+      ...config.vite.server
     },
-    appType: 'custom',
+    appType: 'custom'
   }
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)

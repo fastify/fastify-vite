@@ -9,7 +9,7 @@ async function main (dev) {
     root: __dirname,
     createRenderFunction () {
       return () => {}
-    },
+    }
   })
 
   await server.vite.ready()

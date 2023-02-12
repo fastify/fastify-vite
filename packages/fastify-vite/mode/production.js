@@ -40,7 +40,7 @@ async function setup (config) {
   await this.scope.register(async function staticContext (scope) {
     await scope.register(FastifyStatic, {
       root: resolve(clientDist, assetsDir),
-      prefix: `/${assetsDir}`,
+      prefix: `/${assetsDir}`
     })
   })
   // Note: this is just to ensure it works, for a real world
@@ -59,14 +59,14 @@ async function setup (config) {
   this.scope.decorateReply('html', await config.createHtmlFunction(
     config.bundle.indexHtml,
     this.scope,
-    config,
+    config
   ))
 
   // Set reply.render() function with the client module production bundle
   this.scope.decorateReply('render', await config.createRenderFunction(
     client,
     this.scope,
-    config,
+    config
   ))
 
   return { client, routes: client.routes, handler, errorHandler }
@@ -78,7 +78,7 @@ async function setup (config) {
     }
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
-      join('server', `${parse(config.clientModule).name}.mjs`),
+      join('server', `${parse(config.clientModule).name}.mjs`)
     ]
     let serverBundlePath
     for (const serverFile of serverFiles) {
