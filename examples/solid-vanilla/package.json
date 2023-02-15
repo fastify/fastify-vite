@@ -10,15 +10,13 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fastify/vite": "^3.0.8",
     "fastify": "^4.13.0",
-    "solid-js": "^1.6.10",
-    "vite": "^4.1.1",
-    "vite-plugin-solid": "^2.5.0"
+    "solid-js": "^1.6.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
+    "@fastify/vite": "^3.0.8",
     "babel-preset-solid": "^1.6.10",
     "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
@@ -27,6 +25,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-solid": "^0.9.4",
+    "vite": "^4.1.1",
+    "vite-plugin-solid": "^2.5.0",
     "vitest": "^0.28.4"
   }
 }

@@ -10,20 +10,19 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fastify/vite": "^3.0.8",
-    "@vitejs/plugin-react": "^3.1.0",
     "devalue": "^4.3.0",
     "fastify": "^4.13.0",
     "jotai": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1",
-    "vite": "^4.1.1"
+    "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
+    "@fastify/vite": "^3.0.8",
+    "@vitejs/plugin-react": "^3.1.0",
     "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -31,6 +30,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
+    "vite": "^4.1.1",
     "vitest": "^0.28.4"
   }
 }
