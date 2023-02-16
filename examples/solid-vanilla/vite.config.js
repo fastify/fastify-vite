@@ -1,11 +1,10 @@
-import { resolve, dirname } from 'path'
+import { join } from 'node:path'
 import viteSolid from 'vite-plugin-solid'
 
-const path = new URL(import.meta.url).pathname
-const root = resolve(dirname(path), 'client')
+const root = join(process.cwd(), 'client')
 
 const plugins = [
-  viteSolid({ ssr: true }),
+  viteSolid({ ssr: true })
 ]
 
 export default {

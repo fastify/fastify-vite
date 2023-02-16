@@ -1,8 +1,8 @@
 import { createSSRApp } from 'vue'
-import { 
-  createRouter, 
-  createMemoryHistory, 
-  createWebHistory 
+import {
+  createRouter,
+  createMemoryHistory,
+  createWebHistory
 } from 'vue-router'
 
 import base from './base.vue'

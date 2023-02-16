@@ -1,4 +1,4 @@
-const { parse: parsePath } = require('path')
+const { parse: parsePath } = require('node:path')
 const { join, walk, ensure, exists, write, read } = require('./ioutils')
 
 async function ejectBlueprint (base, { root, renderer }) {

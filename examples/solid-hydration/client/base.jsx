@@ -1,5 +1,5 @@
+import { Router, Routes, Route } from '@solidjs/router'
 import { createContext, useContext, createSignal } from 'solid-js'
-import { Router, Routes, Route } from 'solid-app-router'
 import routes from './routes.js'
 
 export function createApp (props) {
@@ -18,7 +18,7 @@ export function StateProvider (props) {
   const state = [{ todoList }, {
     addItem (item) {
       setTodoList(todoList => [...todoList, item])
-    },
+    }
   }]
   return (
     <State.Provider value={state}>

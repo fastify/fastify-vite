@@ -1,10 +1,11 @@
 import { join, resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { beforeAll, afterAll, assert, expect, test } from 'vitest'
 import { makeSSRBuildTest, makeIndexTest } from '../../testing.js'
-import { main } from './server.js' 
+import { main } from './server.js'
 
-const cwd = dirname(new URL(import.meta.url).pathname)
+const cwd = dirname(fileURLToPath(new URL(import.meta.url)))
 
 test('render index page in development', makeIndexTest({ main, dev: true }))
-test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 25, serverModules: 23 }))
+test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 15, serverModules: 10 }))
 test('render index page in production', makeIndexTest({ main }))

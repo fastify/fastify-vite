@@ -1,4 +1,4 @@
-const middie = require('middie')
+const middie = require('@fastify/middie')
 const { createServer } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
@@ -13,9 +13,9 @@ async function setup (config) {
     ...config.vite,
     server: {
       middlewareMode: true,
-      ...config.vite.server,
+      ...config.vite.server
     },
-    appType: 'custom',
+    appType: 'custom'
   }
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
@@ -27,7 +27,7 @@ async function setup (config) {
     }
     const modulePath = resolve(config.vite.root, config.clientModule.replace(/^\/+/, ''))
     const entryModule = await this.devServer.ssrLoadModule(modulePath)
-    return entryModule.default ?? entryModule
+    return entryModule.default || entryModule
   }
 
   // Initialize Reply prototype decorations
@@ -55,7 +55,7 @@ async function setup (config) {
   const handler = await config.createRouteHandler(client, this.scope, config)
   const errorHandler = await config.createErrorHandler(client, this.scope, config)
 
-  return { client, routes: client.routes, handler, errorHandler }
+  return { client, routes: client?.routes, handler, errorHandler }
 }
 
 module.exports = setup

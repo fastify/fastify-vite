@@ -1,5 +1,5 @@
+const { fileURLToPath } = require('node:url')
 const { resolveConfig } = require('vite')
-const { fileURLToPath } = require('url')
 const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
 
@@ -22,7 +22,7 @@ const DefaultConfig = {
   bundle: {
     manifest: null,
     indexHtml: null,
-    dir: null,
+    dir: null
   },
 
   // Single object that can override all rendering settings that follow
@@ -76,7 +76,7 @@ const DefaultConfig = {
       method: 'GET',
       handler,
       errorHandler,
-      ...route,
+      ...route
     })
   },
 
@@ -98,7 +98,7 @@ const DefaultConfig = {
       }
       scope.errorHandler(error, req, reply)
     }
-  },
+  }
 }
 
 async function configure (options = {}) {
@@ -112,7 +112,7 @@ async function configure (options = {}) {
     ...options,
     vite,
     viteConfig,
-    bundle,
+    bundle
   })
   for (const setting of [
     'clientModule',
@@ -122,14 +122,14 @@ async function configure (options = {}) {
     'createRenderFunction',
     'createRoute',
     'createRouteHandler',
-    'prepareClient',
+    'prepareClient'
   ]) {
-    config[setting] = config.renderer[setting] ?? config[setting]
+    config[setting] = config.renderer[setting] || config[setting]
   }
   if (config.spa) {
     config.createRenderFunction = () => {}
   } else {
-    config.clientModule ??= resolveClientModule(vite.root)
+    config.clientModule = config.clientModule || resolveClientModule(vite.root)
   }
   return config
 }
@@ -157,11 +157,14 @@ function resolveRoot (root) {
 
 async function resolveViteConfig (root, dev) {
   for (const ext of ['js', 'mjs', 'ts']) {
-    const configFile = join(root, `vite.config.${ext}`)
+    let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       const resolvedConfig = await resolveConfig({
-        configFile,
+        configFile
       }, 'serve', dev ? 'development' : 'production')
+      if (process.platform === 'win32') {
+        configFile = `file://${configFile}`
+      }
       let userConfig = await import(configFile).then(m => m.default)
       if (userConfig.default) {
         userConfig = userConfig.default
@@ -170,10 +173,10 @@ async function resolveViteConfig (root, dev) {
         Object.assign(userConfig, {
           build: {
             assetsDir: resolvedConfig.build.assetsDir,
-            outDir: resolvedConfig.build.outDir,
-          },
+            outDir: resolvedConfig.build.outDir
+          }
         }),
-        configFile,
+        configFile
       ]
     }
   }
@@ -214,6 +217,6 @@ async function resolveSPABundle ({ dev, vite }) {
 module.exports = {
   configure,
   resolveSSRBundle,
-  resolveSPABundle,
+  resolveSPABundle
 }
 module.exports.default = module.exports

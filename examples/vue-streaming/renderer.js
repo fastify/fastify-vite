@@ -12,7 +12,7 @@ import { createHtmlTemplateFunction } from '@fastify/vite'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
-import devalue from 'devalue'
+import { uneval } from 'devalue'
 
 // The @fastify/vite renderer overrides
 export default {
@@ -26,7 +26,7 @@ function createHtmlFunction (source, scope, config) {
   const headTemplate = createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {
     const head = headTemplate({
-      hydration: `<script>window.hydration = ${devalue({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
     })
     this.type('text/html')
     const readable = Readable
