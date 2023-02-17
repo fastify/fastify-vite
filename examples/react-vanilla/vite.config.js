@@ -12,11 +12,4 @@ const plugins = [
 export default {
   root,
   plugins,
-  server: {
-    hmr: !!process.env.TEST,
-  },
 }
-
-console.log(JSON.stringify({
-    hmr: !!process.env.TEST,
-  }))

@@ -1,10 +1,28 @@
 import { join, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { beforeAll, afterAll, assert, expect, test } from 'vitest'
+import { beforeAll, afterAll, assert, expect, test, vi } from 'vitest'
+import { WebSocketServer } from 'ws'
 import { makeSSRBuildTest, makeIndexTest } from '../../testing.js'
 import { main } from './server.js'
 
 const cwd = dirname(fileURLToPath(new URL(import.meta.url)))
+
+let spy
+
+beforeAll(() => {
+  vi.mock('ws', () => ({
+    WebSocketServer: () => {
+      console.log('Foobar')
+      return ({
+        on: () => {}
+      })
+    }
+  }))
+})
+
+afterAll(() => {
+  vi.restoreAllMocks()
+})
 
 test('render index page in development', makeIndexTest({ main, dev: true }))
 test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 25, serverModules: 2 }))
