@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
-    "devinstall": "zx ../../devinstall.mjs vue-vanilla -- node server.js --dev",
+    "start": "node server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr ./index.js",
@@ -10,13 +10,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fastify/vite": "^3.0.8",
     "fastify": "^4.13.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
-    "@fastify/vite": "^3.0.8",
     "@vitejs/plugin-vue": "^4.0.0",
     "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
