@@ -16,9 +16,9 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
-    "@fastify/vite": "^3.0.8",
+    "@fastify/vite": "workspace:^3.0.8",
     "@vitejs/plugin-vue": "^4.0.0",
     "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
@@ -27,7 +27,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.9.0",
-    "vite": "^4.1.1",
-    "vitest": "^0.28.4"
+    "vite": "^4.1.4",
+    "vitest": "^0.28.5"
   }
 }
