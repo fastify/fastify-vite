@@ -6,5 +6,6 @@ export default defineConfig({
   root: dirname(fileURLToPath(new URL(import.meta.url))),
   test: {
     testTimeout: 15000,
-  }
+    threads: false,
+  },
 })
