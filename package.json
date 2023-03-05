@@ -4,7 +4,7 @@
   },
   "private": "true",
   "devDependencies": {
-    "vitest": "^0.27.2",
+    "vitest": "^0.27.3"
   },
   "pnpm": {
     "peerDependencyRules": {
