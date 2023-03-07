@@ -2,7 +2,7 @@ import { join, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { beforeAll, afterAll, assert, expect, test, vi } from 'vitest'
 import { WebSocketServer } from 'ws'
-import { makeSSRBuildTest, makeIndexTest } from '../../testing.js'
+import { makeSSRBuildTest, makeIndexTest } from '../test-factories.js'
 
 const cwd = dirname(fileURLToPath(new URL(import.meta.url)))
 
