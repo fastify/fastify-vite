@@ -8,7 +8,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "fastify": "^4.13.0",
+    "@fastify/vite": "workspace:^3.0.8",
+    "fastify": "^4.14.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -16,9 +17,8 @@
     "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
-    "@fastify/vite": "workspace:^3.0.8",
     "@vitejs/plugin-react": "^3.1.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",

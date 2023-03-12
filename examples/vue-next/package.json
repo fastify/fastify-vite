@@ -10,9 +10,10 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fastify/vite": "workspace:^3.0.8",    
     "@vue/server-renderer": "^3.2.47",
     "devalue": "^4.3.0",
-    "fastify": "^4.13.0",
+    "fastify": "^4.14.1",
     "ky": "^0.33.2",
     "ky-universal": "^0.11.0",
     "vue": "^3.2.47",
@@ -21,9 +22,8 @@
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
-    "@fastify/vite": "workspace:^3.0.8",
     "@vitejs/plugin-vue": "^4.0.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
