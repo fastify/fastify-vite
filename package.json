@@ -4,7 +4,7 @@
   },
   "private": "true",
   "devDependencies": {
-    "execa": "^7.0.0",
+    "execa": "^7.1.0",
     "vitest": "^0.27.3"
   },
   "pnpm": {
