@@ -1,5 +1,4 @@
 const middie = require('@fastify/middie')
-const { createServer } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (config) {
@@ -17,6 +16,7 @@ async function setup (config) {
     },
     appType: 'custom'
   }
+  const { createServer } = require('vite')
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
 
