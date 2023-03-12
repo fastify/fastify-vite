@@ -1,9 +1,10 @@
 import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  root: dirname(new URL(import.meta.url).pathname),
+  root: dirname(fileURLToPath(new URL(import.meta.url))),
   test: {
-    testTimeout: 15000,
+    testTimeout: 15000
   }
 })

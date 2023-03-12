@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
-    "devinstall": "zx ../../devinstall.mjs solid-vanilla -- node server.js --dev",
+    "start": "node server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr ./index.js",
@@ -10,30 +10,23 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fastify/vite": "^3.0.8",
-    "fastify": "^4.13.0",
-    "solid-js": "^1.6.10",
-    "vite": "^4.1.1",
-    "vite-plugin-solid": "^2.5.0"
+    "@fastify/vite": "workspace:^3.0.8",
+    "fastify": "^4.14.1",
+    "solid-js": "^1.6.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
-    "eslint": "^8.33.0",
+    "babel-preset-solid": "^1.6.13",
+    "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-solid": "^0.9.4",
-    "vitest": "^0.28.4"
-  },
-  "devInstall": {
-    "local": {
-      "@fastify/vite": "^3.0.8"
-    },
-    "external": {
-      "solid-js": "^1.6.10"
-    }
+    "vite": "^4.1.4",
+    "vite-plugin-solid": "^2.6.1",
+    "vitest": "^0.28.5"
   }
 }

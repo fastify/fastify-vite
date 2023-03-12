@@ -1,6 +1,6 @@
-const { join, resolve, parse, dirname, basename } = require('path')
-const { writeFile, readFile } = require('fs/promises')
-const { existsSync, lstatSync } = require('fs')
+const { existsSync, lstatSync } = require('node:fs')
+const { writeFile, readFile } = require('node:fs/promises')
+const { join, resolve, parse, dirname, basename } = require('node:path')
 const { ensureDir } = require('fs-extra')
 const klaw = require('klaw')
 
@@ -29,5 +29,5 @@ module.exports = {
   read: readFile,
   exists: existsSync,
   stat: lstatSync,
-  ensure: ensureDir,
+  ensure: ensureDir
 }

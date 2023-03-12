@@ -5,10 +5,11 @@ import { execaCommand } from 'execa'
 
 export function makeIndexTest ({ main, dev }) {
   return async () => {
+    const pluginFn = main.default || main
     const server = await main(dev)
+    await server.vite.devServer?.close()
     const response = await server.inject({ method: 'GET', url: '/' })
     expect(response.statusCode).toBe(200)
-    await server.vite.devServer?.close()
    }
 }
 
@@ -23,7 +24,7 @@ export function makeSSRBuildTest ({ cwd, clientModules, serverModules }) {
     
     const { stdout: clientStdout } = await execaCommand(`npx ${buildClient}`, { cwd })
     const { stdout: serverStdout } = await execaCommand(`npx ${buildServer}`, { cwd })
-  
+
     expect(clientStdout).toContain(`✓ ${clientModules} modules transformed`)
     expect(serverStdout).toContain(`✓ ${serverModules} modules transformed`)
   }

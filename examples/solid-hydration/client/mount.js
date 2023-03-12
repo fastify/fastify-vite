@@ -4,5 +4,5 @@ import { createApp } from './base.jsx'
 
 hydrate(
   createApp(window.hydration),
-  document.querySelector('main'),
+  document.querySelector('main')
 )

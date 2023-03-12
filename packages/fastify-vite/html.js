@@ -6,7 +6,7 @@ function createHtmlTemplateFunction (source) {
   for (const match of source.matchAll(/<!--\s*([\w]+)\s*-->/g)) {
     ranges.set(match.index, {
       param: match[1],
-      end: match.index + match[0].length,
+      end: match.index + match[0].length
     })
   }
 
@@ -33,12 +33,12 @@ function createHtmlTemplateFunction (source) {
   return (0, eval)(
     `(function ({ ${params.join(', ')} }) {` +
     `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
-    '})',
+    '})'
   )
 }
 
 module.exports = {
-  createHtmlTemplateFunction,
+  createHtmlTemplateFunction
 }
 
 function serialize (frag) {

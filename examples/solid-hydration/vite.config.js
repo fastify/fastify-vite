@@ -1,14 +1,16 @@
-import { join } from 'node:path'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import viteSolid from 'vite-plugin-solid'
 
-const root = join(process.cwd(), 'client')
+const path = fileURLToPath(new URL(import.meta.url))
+const root = resolve(dirname(path), 'client')
 
 const plugins = [
-  viteSolid({ ssr: true }),
+  viteSolid({ ssr: true })
 ]
 
 const ssr = {
-  noExternal: ['@solidjs/router'],
+  noExternal: ['@solidjs/router']
 }
 
 export default {

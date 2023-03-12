@@ -1,8 +1,10 @@
+#!/usr/bin/env node
+import { createReadStream } from 'node:fs'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import { createReadStream } from 'fs'
 import renderer from './renderer.js'
-import { resolve } from 'path'
 
 export async function main (dev) {
   const server = Fastify()
@@ -28,7 +30,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] === fileURLToPath(new URL(import.meta.url))) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

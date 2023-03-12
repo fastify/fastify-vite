@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import { join } from 'node:path'
 import { renderToStringAsync } from 'solid-js/web'
 
 export async function main (dev) {
@@ -12,7 +13,7 @@ export async function main (dev) {
     createRenderFunction ({ createApp }) {
       return async () => {
         return {
-          element: await renderToStringAsync(createApp()),
+          element: await renderToStringAsync(createApp())
         }
       }
     }
@@ -26,7 +27,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === join(process.cwd(), 'server.js')) {
+if (process.argv[1] === fileURLToPath(new URL(import.meta.url))) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

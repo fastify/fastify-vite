@@ -19,7 +19,7 @@ export function getPageRoutes (importMap) {
       // The React component (default export)
       component: importMap[path].default,
       // The getServerSideProps individual export
-      getServerSideProps: importMap[path].getServerSideProps,
+      getServerSideProps: importMap[path].getServerSideProps
     }))
 }
 
@@ -41,7 +41,7 @@ export function PageManager ({ routes, ctx }) {
 function Page ({
   ctx,
   hasServerSideProps,
-  component: Component,
+  component: Component
 }) {
   // If running on the server...
   // See if we already have serverSideProps populated
@@ -109,7 +109,7 @@ function fetchWithSuspense (path) {
       suspended: true,
       error: null,
       data: null,
-      promise: null,
+      promise: null
     }
     loader.promise = fetch(`/json${path}`)
       .then((response) => response.json())

@@ -18,7 +18,7 @@ export function StateProvider (props) {
   const state = [{ todoList }, {
     addItem (item) {
       setTodoList(todoList => [...todoList, item])
-    },
+    }
   }]
   return (
     <State.Provider value={state}>

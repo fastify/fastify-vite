@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import { join } from 'node:path'
+
 import { createRenderFunction } from './renderer.js'
 
 export async function main (dev) {
@@ -17,7 +19,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === join(process.cwd(), 'server.js')) {
+if (process.argv[1] === fileURLToPath(new URL(import.meta.url))) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

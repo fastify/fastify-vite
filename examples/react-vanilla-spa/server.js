@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
@@ -7,7 +9,7 @@ export async function main (dev) {
   await server.register(FastifyVite, {
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
-    spa: true,
+    spa: true
   })
 
   server.get('/', (req, reply) => {
@@ -18,7 +20,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] === fileURLToPath(new URL(import.meta.url))) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

@@ -5,11 +5,11 @@ function ensureESMBuild () {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {
           output: {
-            format: 'es',
-          },
+            format: 'es'
+          }
         }
       }
-    },
+    }
   }
 }
 

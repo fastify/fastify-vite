@@ -1,11 +1,17 @@
 {
   "scripts": {
-    "test": "vitest run --no-threads"
+    "test": "vitest run"
   },
   "private": "true",
   "devDependencies": {
-    "execa": "^6.1.0",
-    "vitest": "^0.24.5",
-    "zx": "^4.3.0"
+    "execa": "^7.1.0",
+    "vitest": "^0.27.3"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "typescript"
+      ]
+    }
   }
 }
