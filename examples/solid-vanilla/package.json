@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "fastify": "^4.13.0",
-    "solid-js": "^1.6.11"
+    "solid-js": "^1.6.11",
+    "@fastify/vite": "workspace:^3.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
-    "@fastify/vite": "workspace:^3.0.8",
     "babel-preset-solid": "^1.6.10",
     "eslint": "^8.34.0",
     "eslint-config-standard": "^17.0.0",
