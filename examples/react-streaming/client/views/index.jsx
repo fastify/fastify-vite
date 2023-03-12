@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAtom } from 'jotai'
-import { todoList } from './state.js'
+import { todoList } from '../state.js'
 
 export default function Index (props) {
   const [state, updateState] = useAtom(todoList)

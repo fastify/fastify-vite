@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export async function getServerSideProps ({ fetchJSON }) {
   return {
-    todoList: await fetchJSON('/api/todo-list')),
+    todoList: await fetchJSON('/api/todo-list'),
   }
 }
 
