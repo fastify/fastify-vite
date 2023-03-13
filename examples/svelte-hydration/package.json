@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fastify/vite": "workspace:^3.0.8",
+    "@fastify/vite": "workspace:^4.0.0",
     "devalue": "^4.3.0",
     "fastify": "^4.14.1",
     "svelte": "^3.56.0",
