@@ -1,10 +1,14 @@
 const middie = require('@fastify/middie')
 const { join, resolve, read } = require('../ioutils')
 
-async function setup (config) {
+async function setup (resolvedConfig) {
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
   await this.scope.register(middie)
+
+  // We make this mutable in case config 
+  // is provided through a custom Vite dev server
+  let config = resolvedConfig
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = {
@@ -12,12 +16,19 @@ async function setup (config) {
     ...config.vite,
     server: {
       middlewareMode: true,
-      ...config.vite.server
+      ...config.vite?.server
     },
     appType: 'custom'
   }
-  const { createServer } = require('vite')
-  this.devServer = await createServer(devServerOptions)
+  if (config.server) {
+    this.devServer = await config.server(devServerOptions)
+    if (!config.vite) {
+      config.vite = this.devServer.config
+    }
+  } else {
+    const { createServer } = require('vite')
+    this.devServer = await createServer(devServerOptions)
+  }
   this.scope.use(this.devServer.middlewares)
 
   // Loads the Vite application server entry point for the client
@@ -37,7 +48,9 @@ async function setup (config) {
   // Load fresh index.html template and client module before every request
   this.scope.addHook('onRequest', async (req, reply) => {
     const indexHtmlPath = join(config.vite.root, 'index.html')
-    const indexHtml = await read(indexHtmlPath, 'utf8')
+    const indexHtml = config.prepareHtml
+      ? await config.prepareHtml(await read(indexHtmlPath, 'utf8'))
+      : await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(req.url, indexHtml)
     const clientModule = await loadClient()
     const client = await config.prepareClient(clientModule, this.scope, config)
