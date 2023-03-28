@@ -1,0 +1,32 @@
+{
+  "type": "module",
+  "name": "slidev-single",
+  "dependencies": {
+    "@antfu/utils": "^0.7.2",
+    "@fastify/vite": "workspace:^4.0.0",
+    "@slidev/cli": "^0.40.5",
+    "@slidev/client": "^0.40.5",
+    "fastify": "^4.14.1",
+    "global-dirs": "^3.0.1",
+    "is-installed-globally": "^0.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resolve": "^1.22.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "^8.36.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "postcss": "^8.4.21",
+    "vite": "^4.1.4",
+    "vitest": "^0.28.5"
+  }
+}
