@@ -9,7 +9,6 @@ async function setup (config) {
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = mergeConfig(
-    config.vite,
     defineConfig({
       configFile: false,
       server: {
@@ -19,7 +18,8 @@ async function setup (config) {
         }
       },
       appType: 'custom'
-    })
+    }),
+    config.vite
   )
 
   const { createServer } = require('vite')
