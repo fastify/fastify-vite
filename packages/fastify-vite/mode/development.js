@@ -1,4 +1,5 @@
 const middie = require('@fastify/middie')
+const { mergeConfig, defineConfig } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (config) {
@@ -7,15 +8,20 @@ async function setup (config) {
   await this.scope.register(middie)
 
   // Create and enable Vite's Dev Server middleware
-  const devServerOptions = {
-    configFile: false,
-    ...config.vite,
-    server: {
-      middlewareMode: true,
-      ...config.vite.server
-    },
-    appType: 'custom'
-  }
+  const devServerOptions = mergeConfig(
+    defineConfig({
+      configFile: false,
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server: this.scope.server
+        }
+      },
+      appType: 'custom'
+    }),
+    config.vite
+  )
+
   const { createServer } = require('vite')
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
