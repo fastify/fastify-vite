@@ -6,9 +6,9 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
 import {
-  resolveImportPath, 
-  resolveOptions, 
-  getIndexHtml,
+  resolveImportPath, // Non-public
+  resolveOptions, // Non-public
+  getIndexHtml, // Non-public
   createServer
 } from './slidev.js'
 

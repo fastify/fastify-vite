@@ -1,10 +1,10 @@
-const middie = require('@fastify/middie')
+const FastifyExpress = require('@fastify/express')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (resolvedConfig) {
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
-  await this.scope.register(middie)
+  await this.scope.register(FastifyExpress)
 
   // We make this mutable in case config 
   // is provided through a custom Vite dev server
@@ -29,7 +29,19 @@ async function setup (resolvedConfig) {
     const { createServer } = require('vite')
     this.devServer = await createServer(devServerOptions)
   }
-  this.scope.use(this.devServer.middlewares)
+  // this.devServer.middlewares.use((req, res, next) => {
+  //   console.log(req)
+  //   next()
+  // })
+  // console.log(this.devServer.middlewares)
+  for (const { route, handle } of this.devServer.middlewares.stack) {
+    if (route === '') {
+      console.log(handle.toString())
+      this.scope.use(handle)
+    } else {
+      this.scope.use(route, handle)
+    }
+  }
 
   // Loads the Vite application server entry point for the client
   const loadClient = async () => {
