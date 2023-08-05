@@ -105,7 +105,7 @@ async function configure (options = {}) {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const [vite, viteConfig] = await resolveViteConfig(root, dev)
+  const [vite, viteConfig] = await resolveViteConfig(root, dev, options.spa)
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
@@ -155,19 +155,28 @@ function resolveRoot (root) {
   }
 }
 
-async function resolveViteConfig (root, dev) {
+async function resolveViteConfig (root, dev, isSpa) {
+  const command = 'serve'
+  const mode = dev ? 'development' : 'production'
   for (const ext of ['js', 'mjs', 'ts']) {
     let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       const resolvedConfig = await resolveConfig({
         configFile
-      }, 'serve', dev ? 'development' : 'production')
+      }, command, mode)
       if (process.platform === 'win32') {
         configFile = `file://${configFile}`
       }
       let userConfig = await import(configFile).then(m => m.default)
       if (userConfig.default) {
         userConfig = userConfig.default
+      }
+      if (typeof userConfig === 'function') {
+        userConfig = userConfig({
+          command,
+          mode,
+          ssrBuild: !isSpa,
+        })
       }
       return [
         Object.assign(userConfig, {
