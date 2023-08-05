@@ -45,7 +45,9 @@ function fastifyVite (scope, options, done) {
   done()
 }
 
-module.exports = fp(fastifyVite)
+module.exports = fp(fastifyVite, {
+  name: '@fastify/vite'
+})
 module.exports.ensureESMBuild = ensureESMBuild
 module.exports.createHtmlTemplateFunction = createHtmlTemplateFunction
 module.exports.ensureConfigFile = ensureConfigFile

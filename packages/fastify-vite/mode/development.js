@@ -1,47 +1,33 @@
-const FastifyExpress = require('@fastify/express')
+const middie = require('@fastify/middie')
+const { mergeConfig, defineConfig } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (resolvedConfig) {
   // Middie seems to work well for running Vite's development server
-  // Unsure if fastify-express is warranted here
-  await this.scope.register(FastifyExpress)
+  await this.scope.register(middie)
 
   // We make this mutable in case config 
   // is provided through a custom Vite dev server
   let config = resolvedConfig
 
   // Create and enable Vite's Dev Server middleware
-  const devServerOptions = {
-    configFile: false,
-    ...config.vite,
-    server: {
-      middlewareMode: true,
-      ...config.vite?.server
-    },
-    appType: 'custom'
-  }
-  if (config.server) {
-    this.devServer = await config.server(devServerOptions)
-    if (!config.vite) {
-      config.vite = this.devServer.config
-    }
-  } else {
-    const { createServer } = require('vite')
-    this.devServer = await createServer(devServerOptions)
-  }
-  // this.devServer.middlewares.use((req, res, next) => {
-  //   console.log(req)
-  //   next()
-  // })
-  // console.log(this.devServer.middlewares)
-  for (const { route, handle } of this.devServer.middlewares.stack) {
-    if (route === '') {
-      console.log(handle.toString())
-      this.scope.use(handle)
-    } else {
-      this.scope.use(route, handle)
-    }
-  }
+  const devServerOptions = mergeConfig(
+    defineConfig({
+      configFile: false,
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server: this.scope.server
+        }
+      },
+      appType: 'custom'
+    }),
+    config.vite
+  )
+
+  const { createServer } = require('vite')
+  this.devServer = await createServer(devServerOptions)
+  this.scope.use(this.devServer.middlewares)
 
   // Loads the Vite application server entry point for the client
   const loadClient = async () => {
