@@ -38,11 +38,13 @@
   },
   "version": "4.0.0",
   "dependencies": {
+    "@fastify/express": "^2.3.0",
     "@fastify/middie": "^8.1.0",
     "@fastify/static": "^6.9.0",
     "fastify-plugin": "^4.5.0",
     "fs-extra": "^10.1.0",
-    "klaw": "^4.1.0"
+    "klaw": "^4.1.0",
+    "vite": "^4.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

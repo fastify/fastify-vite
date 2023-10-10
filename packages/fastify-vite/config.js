@@ -50,6 +50,9 @@ const DefaultConfig = {
     return Object.assign({}, clientModule, { routes })
   },
 
+  // Preprocess index.html if needed
+  prepareHtml: null,
+
   // Compile index.html into templating function,
   // used by createHtmlFunction() by default
   createHtmlTemplateFunction,
@@ -122,6 +125,7 @@ async function configure (options = {}) {
     'createRenderFunction',
     'createRoute',
     'createRouteHandler',
+    'prepareHtml',
     'prepareClient'
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
