@@ -175,7 +175,7 @@ async function resolveViteConfig (root, dev, isSpa) {
         userConfig = userConfig({
           command,
           mode,
-          ssrBuild: !isSpa,
+          ssrBuild: !isSpa
         })
       }
       return [
