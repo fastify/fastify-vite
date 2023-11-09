@@ -135,7 +135,7 @@ async function configure (options = {}) {
 }
 
 function resolveClientModule (root) {
-  for (const ext of ['js', 'mjs', 'ts', 'cjs']) {
+  for (const ext of ['js', 'mjs', 'ts', 'cjs', 'jsx', 'tsx']) {
     const indexFile = join(root, `index.${ext}`)
     if (exists(indexFile)) {
       return `/index.${ext}`
