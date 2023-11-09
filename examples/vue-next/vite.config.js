@@ -10,7 +10,7 @@ const plugins = [
   vuePlugin()
 ]
 
-export default {
+export default defineConfig({
   root,
   plugins
-}
+})
