@@ -2,6 +2,7 @@
 import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
+
 import renderer from './renderer.js'
 
 export async function main (dev) {

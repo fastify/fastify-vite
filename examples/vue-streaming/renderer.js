@@ -8,7 +8,7 @@ import { renderToNodeStream } from 'vue/server-renderer'
 // @fastify/vite's minimal HTML templating function,
 // which extracts interpolation variables from comments
 // and returns a function with the generated code
-import { createHtmlTemplateFunction } from '@fastify/vite'
+import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
