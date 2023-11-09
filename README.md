@@ -33,7 +33,7 @@ import { fileURLToPath } from 'node:url'
 // Import plugins
 
 export default {
-  root: join(dirname(fileURLToPath(new URL(import.meta.url))), 'client'),
+  root: join(dirname(fileURLToPath(import.meta.url)), 'client'),
   plugins: [
     // Register plugins
   ]
@@ -191,7 +191,7 @@ When you run the `vite build` command, `index.html` is what Vite automatically l
 Before we dive into `reply.html()`, you should know **`@fastify/vite`** packs a helper function that turns an HTML document with placeholders indicated by comments into a precompiled templating function:
 
 ```js
-import { createHtmlTemplateFunction } from '@fastify/vite'
+import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 
 const template = createHtmlTemplateFunction('<main><!-- foobar --></main>')
 const html = template({ foobar: 'This will be inserted '})
