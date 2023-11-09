@@ -1,11 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-
-const { ensureConfigFile, ejectBlueprint } = require('./setup')
 const { configure } = require('./config')
-const { createHtmlTemplateFunction } = require('./html')
-const { ensureESMBuild } = require('./vite')
 
 const kSetup = Symbol('kSetup')
 const kOptions = Symbol('kOptions')
@@ -48,8 +44,4 @@ function fastifyVite (scope, options, done) {
 module.exports = fp(fastifyVite, {
   name: '@fastify/vite'
 })
-module.exports.ensureESMBuild = ensureESMBuild
-module.exports.createHtmlTemplateFunction = createHtmlTemplateFunction
-module.exports.ensureConfigFile = ensureConfigFile
-module.exports.ejectBlueprint = ejectBlueprint
-module.exports.default = module.exports
+
