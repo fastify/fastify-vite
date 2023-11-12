@@ -172,7 +172,7 @@ async function resolveViteConfig (root, dev, isSpa) {
         userConfig = userConfig.default
       }
       if (typeof userConfig === 'function') {
-        userConfig = userConfig({
+        userConfig = await userConfig({
           command,
           mode,
           ssrBuild: !isSpa
