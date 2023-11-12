@@ -10,6 +10,7 @@
   "deprecated": false,
   "description": "Fastify plugin for server-side rendering (SSR) applications based on Vite.",
   "files": [
+    "types/index.d.ts",
     "mode/development.js",
     "mode/production.js",
     "vite.js",
@@ -37,7 +38,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "5.0.0",
+  "version": "5.0.1",
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",
