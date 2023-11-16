@@ -2,7 +2,6 @@ import { createRequire } from 'module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 
 const require = createRequire(import.meta.url)
-const pkg = require('vitepress/package.json')
 
 export default defineConfig({
   lang: 'en-US',
@@ -42,21 +41,23 @@ export default defineConfig({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/reference/': { base: '/reference/', items: sidebarReference() }
+      '/vue/': { base: '/vue/', items: sidebarVue() },
+      '/react/': { base: '/react/', items: sidebarReact() },
+      '/config/': { base: '/config/', items: sidebarConfig() }
     },
 
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      pattern: 'https://github.com/fastify/fastify-vite/edit/main/docs/:path',
       text: 'Edit this page on GitHub'
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/fastify/fastify-vite' }
     ],
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-present Evan You'
+      copyright: 'Copyright © 2021-present Jonas gALVEZ'
     },
 
     search: {
@@ -68,10 +69,6 @@ export default defineConfig({
       }
     },
 
-    carbonAds: {
-      code: 'CEBDT27Y',
-      placement: 'vuejsorg'
-    }
   }
 })
 
@@ -79,26 +76,13 @@ function nav(): DefaultTheme.NavItem[] {
   return [
     {
       text: 'Guide',
-      link: '/guide/what-is-vitepress',
+      link: '/guide/getting-started',
       activeMatch: '/guide/'
     },
     {
-      text: 'Reference',
-      link: '/reference/site-config',
-      activeMatch: '/reference/'
-    },
-    {
-      text: pkg.version,
-      items: [
-        {
-          text: 'Changelog',
-          link: 'https://github.com/vuejs/vitepress/blob/main/CHANGELOG.md'
-        },
-        {
-          text: 'Contributing',
-          link: 'https://github.com/vuejs/vitepress/blob/main/.github/contributing.md'
-        }
-      ]
+      text: 'Configuration',
+      link: '/config/index',
+      activeMatch: '/config/'
     }
   ]
 }
@@ -111,78 +95,157 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Getting Started', link: 'getting-started' },
-        { text: 'Project Structure', link: 'getting-started' },
-        { text: 'Rendering Function', link: 'getting-started' },
-        { text: 'Templating Function', link: 'getting-started' },
-        { text: 'Building & Deployment', link: 'getting-started' },
-        { text: 'Framework Shells', link: 'getting-started' },
+        { text: 'Project Structure', link: 'project-structure' },
+        { text: 'Rendering Function', link: 'rendering-function' },
+        { text: 'Templating Function', link: 'templating-function' },
+        { text: 'Building & Deployment', link: 'building-and-deployment' },
+        { text: 'Framework Shells', link: 'framework-shells' },
+      ]
+    },
+    {
+      text: '@fastify/vue',
+      collapsed: true,
+      items: [
+        { base: '/vue/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/vue/', text: 'Basic Setup', link: 'basic-setup' },
+        { base: '/vue/', text: 'Project Structure', link: 'project-structure' },
+        { base: '/vue/', text: 'Rendering Modes', link: 'rendering-modes' },
+        { base: '/vue/', text: 'Routing Modes', link: 'routing-modes' },
+        { base: '/vue/', text: 'Data Fetching', link: 'data-fetching' },
+        { base: '/vue/', text: 'Route Layouts', link: 'route-layouts' },
+        { base: '/vue/', text: 'Route Context', link: 'route-context' },
+        { base: '/vue/', text: 'onEnter Event', link: 'onenter-event' },
+        { base: '/vue/', text: 'Head Management', link: 'head-management' },
+        { base: '/vue/', text: 'Virtual Modules', link: 'virtual-moduless' },
+      ]
+    },
+    {
+      text: '@fastify/react',
+      collapsed: true,
+      items: [
+        { base: '/react/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/react/', text: 'Basic Setup', link: 'basic-setup' },
+        { base: '/react/', text: 'Project Structure', link: 'project-structure' },
+        { base: '/react/', text: 'Rendering Modes', link: 'rendering-modes' },
+        { base: '/react/', text: 'Routing Modes', link: 'routing-modes' },
+        { base: '/react/', text: 'Data Fetching', link: 'data-fetching' },
+        { base: '/react/', text: 'Route Layouts', link: 'route-layouts' },
+        { base: '/react/', text: 'Route Context', link: 'route-context' },
+        { base: '/react/', text: 'onEnter Event', link: 'onenter-event' },
+        { base: '/react/', text: 'Head Management', link: 'head-management' },
+        { base: '/react/', text: 'Virtual Modules', link: 'virtual-moduless' },
+      ]
+    },
+    { text: 'Configuration', base: '/config/', link: 'index' }
+  ]
+}
+
+function sidebarVue(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: 'Introduction',
+      collapsed: false,
+      items: [
+        { base: '/guide/', text: 'Getting Started', link: 'getting-started' },
+        { base: '/guide/', text: 'Project Structure', link: 'project-structure' },
+        { base: '/guide/', text: 'Rendering Function', link: 'rendering-function' },
+        { base: '/guide/', text: 'Templating Function', link: 'templating-function' },
+        { base: '/guide/', text: 'Building & Deployment', link: 'building-and-deployment' },
+        { base: '/guide/', text: 'Framework Shells', link: 'framework-shells' },
       ]
     },
     {
       text: '@fastify/vue',
       collapsed: false,
       items: [
-        { text: 'Basic Setup', link: '' },
-        { text: 'Project Structure', link: '' },
-        { text: 'Rendering Modes', link: '' },
-        { text: 'Routing Modes', link: '' },
-        { text: 'Data Fetching', link: '' },
-        { text: 'Route Layouts', link: '' },
-        { text: 'Route Context', link: '' },
-        { text: 'onEnter Event', link: '' },
-        { text: 'Head Management', link: '' },
-        { text: 'Virtual Modules', link: '' },
+        { text: 'What\'s Included', link: 'whats-included' },
+        { text: 'Basic Setup', link: 'basic-setup' },
+        { text: 'Project Structure', link: 'project-structure' },
+        { text: 'Rendering Modes', link: 'rendering-modes' },
+        { text: 'Routing Modes', link: 'routing-modes' },
+        { text: 'Data Fetching', link: 'data-fetching' },
+        { text: 'Route Layouts', link: 'route-layouts' },
+        { text: 'Route Context', link: 'route-context' },
+        { text: 'onEnter Event', link: 'onenter-event' },
+        { text: 'Head Management', link: 'head-management' },
+        { text: 'Virtual Modules', link: 'virtual-moduless' },
       ]
     },
     {
       text: '@fastify/react',
-      collapsed: false,
+      collapsed: true,
       items: [
-        { text: '@fastify/vue', link: '' },
-        { text: 'Basic Setup', link: '' },
-        { text: 'Project Structure', link: '' },
-        { text: 'Rendering Modes', link: '' },
-        { text: 'Routing Modes', link: '' },
-        { text: 'Data Fetching', link: '' },
-        { text: 'Route Layouts', link: '' },
-        { text: 'Route Context', link: '' },
-        { text: 'onEnter Event', link: '' },
-        { text: 'Head Management', link: '' },
-        { text: 'Virtual Modules', link: '' },
+        { base: '/react/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/react/', text: 'Basic Setup', link: 'basic-setup' },
+        { base: '/react/', text: 'Project Structure', link: 'project-structure' },
+        { base: '/react/', text: 'Rendering Modes', link: 'rendering-modes' },
+        { base: '/react/', text: 'Routing Modes', link: 'routing-modes' },
+        { base: '/react/', text: 'Data Fetching', link: 'data-fetching' },
+        { base: '/react/', text: 'Route Layouts', link: 'route-layouts' },
+        { base: '/react/', text: 'Route Context', link: 'route-context' },
+        { base: '/react/', text: 'onEnter Event', link: 'onenter-event' },
+        { base: '/react/', text: 'Head Management', link: 'head-management' },
+        { base: '/react/', text: 'Virtual Modules', link: 'virtual-moduless' },
       ]
     },
-    { text: 'Configuration', base: '/configuration/', link: 'site-config' }
+    { text: 'Configuration', base: '/config/', link: 'index' }    
   ]
 }
 
-function sidebarReference(): DefaultTheme.SidebarItem[] {
+function sidebarReact(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'Reference',
+      text: '@fastify/vue',
+      collapsed: true,
       items: [
-        { text: 'Site Config', link: 'site-config' },
-        { text: 'Frontmatter Config', link: 'frontmatter-config' },
-        { text: 'Runtime API', link: 'runtime-api' },
-        { text: 'CLI', link: 'cli' },
-        {
-          text: 'Default Theme',
-          base: '/reference/default-theme-',
-          items: [
-            { text: 'Overview', link: 'config' },
-            { text: 'Nav', link: 'nav' },
-            { text: 'Sidebar', link: 'sidebar' },
-            { text: 'Home Page', link: 'home-page' },
-            { text: 'Footer', link: 'footer' },
-            { text: 'Layout', link: 'layout' },
-            { text: 'Badge', link: 'badge' },
-            { text: 'Team Page', link: 'team-page' },
-            { text: 'Prev / Next Links', link: 'prev-next-links' },
-            { text: 'Edit Link', link: 'edit-link' },
-            { text: 'Last Updated Timestamp', link: 'last-updated' },
-            { text: 'Search', link: 'search' },
-            { text: 'Carbon Ads', link: 'carbon-ads' }
-          ]
-        }
+        { base: '/vue/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/vue/', text: 'Basic Setup', link: 'basic-setup' },
+        { base: '/vue/', text: 'Project Structure', link: 'project-structure' },
+        { base: '/vue/', text: 'Rendering Modes', link: 'rendering-modes' },
+        { base: '/vue/', text: 'Routing Modes', link: 'routing-modes' },
+        { base: '/vue/', text: 'Data Fetching', link: 'data-fetching' },
+        { base: '/vue/', text: 'Route Layouts', link: 'route-layouts' },
+        { base: '/vue/', text: 'Route Context', link: 'route-context' },
+        { base: '/vue/', text: 'onEnter Event', link: 'onenter-event' },
+        { base: '/vue/', text: 'Head Management', link: 'head-management' },
+        { base: '/vue/', text: 'Virtual Modules', link: 'virtual-moduless' },
+      ]
+    },
+    {
+      text: '@fastify/react',
+      collapsed: true,
+      items: [
+        { text: 'What\'s Included', link: 'whats-included' },
+        { text: 'Basic Setup', link: 'basic-setup' },
+        { text: 'Project Structure', link: 'project-structure' },
+        { text: 'Rendering Modes', link: 'rendering-modes' },
+        { text: 'Routing Modes', link: 'routing-modes' },
+        { text: 'Data Fetching', link: 'data-fetching' },
+        { text: 'Route Layouts', link: 'route-layouts' },
+        { text: 'Route Context', link: 'route-context' },
+        { text: 'onEnter Event', link: 'onenter-event' },
+        { text: 'Head Management', link: 'head-management' },
+        { text: 'Virtual Modules', link: 'virtual-moduless' },
+      ]
+    },
+    { text: 'Configuration', base: '/config/', link: 'index' }
+  ]
+}
+
+function sidebarConfig(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: 'Configuration',
+      items: [
+        { text: 'clientModule', link: 'clientModule' },
+        { text: 'prepareClient', link: 'prepareClient' },
+        { text: 'createRenderFunction', link: 'createRenderFunction' },
+        { text: 'createHtmlFunction', link: 'createHtmlFunction' },
+        { text: 'createRouteHandler', link: 'createRouteHandler' },
+        { text: 'createErrorHandler', link: 'createErrorHandler' },
+        { text: 'createRoute', link: 'createRoute' },
+        { text: 'renderer', link: 'renderer' },
+        { text: 'spa', link: 'spa' },
       ]
     }
   ]

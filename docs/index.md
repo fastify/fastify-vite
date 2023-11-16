@@ -10,6 +10,12 @@ hero:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
+    - theme: brand
+      text: "@fastify/vue"
+      link: /guide/getting-starte      
+    - theme: brand
+      text: "@fastify/react"
+      link: /guide/getting-starte     
     - theme: alt
       text: View on GitHub
       link: https://github.com/vuejs/vitepress
@@ -21,18 +27,18 @@ title: VitePress
 titleTemplate: Vite & Vue Powered Static Site Generator
 
 features:
-  - icon: .
+  - icon: 🐅
     title: Fastify-first
     details: Your Fastify server instance stays in control of how the Vite frontend is attached.
-  - icon: .
+  - icon: ⚡
     title: Developer-friendly
     details: Seamlessly switch between development mode with hot reload and production mode shipping your static bundle.
-  - icon: .
+  - icon: 🌐
+    title: Universal route modules
+    details: Bundles Vue and React renderers featuring the same minimal API providing essential Nuxt and Next-like features.
+  - icon: 🛠
     title: Framework toolbox
     details: Granular configuration options to customize loading of Vite modules allow you to build your own framework.
-  - icon: 🚀
-    title: Vue & React
-    details: "Automatic routing, isomorphic route context and data fetching, route layouts and more."
 ---
 
 <style>

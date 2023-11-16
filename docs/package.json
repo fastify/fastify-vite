@@ -8,5 +8,9 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@docsearch/css": "^3.5.2",
+    "@vueuse/core": "^10.6.1"
   }
 }
