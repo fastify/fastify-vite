@@ -12,6 +12,10 @@
 
 This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, and also automatically serve its static bundle, inferred from the Vite configuration file.
 
+All topics in this documentation section cover @fastify/vite from the ground up, targeted at those building their own customized setups on top of it.
+
+If you're coming from Next.js or Nuxt.js and looking for a practical Fastify-flavored replacement, jump straight to the @fastify/react or @fastify/vue documentation sections. These packages are **renderers** for @fastify/vite that reimplement most essential features and a few more.
+
 ## Why not a framework?
 
 The key principle behind **@fastify/vite** is minimalism, based on the belief that [Fastify][fastify] and [Vite][vite] alone are good enough core foundations. 

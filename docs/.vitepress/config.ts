@@ -102,7 +102,12 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
             { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
           ],
         },
-        { text: 'Rendering Function', link: 'rendering-function' },
+        { text: 'Rendering Function', link: 'rendering-function',
+          items: [
+            { text: 'Vanilla example', link: 'rendering-function#vanilla-example' },
+            { text: 'Routing integration', link: 'rendering-function#routing-integration' },
+          ],
+        },
         { text: 'Templating Function', link: 'templating-function' },
         { text: 'Building & Deployment', link: 'building-and-deployment' },
         { text: 'Framework Shells', link: 'framework-shells' },

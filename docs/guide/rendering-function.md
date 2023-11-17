@@ -1,10 +1,12 @@
+[ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
+
 # Rendering Function
 
-**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
+If you're looking to perform [Server-Side Rendering (SSR)][ssr-1], or simply want to automatically register additional API routes based on your client appication routes, among many other potential scenarios, you'll need to provide your Fastify server instance with access to your client application.
 
-This section explores how to define `reply.render()`.
+For example, if you're looking to perform SSR on a React application, you'll need access to your main React component on the server so you can use [`renderToString()`](https://react.dev/reference/react-dom/server/renderToString) (or [`renderToPipeableStream()`](https://react.dev/reference/react-dom/server/renderToPipeableStream) in an ideal scenario).
 
-> Tto learn about `reply.html()` check out [Templating Function](/guide/templating-function).
+## Vanilla example
 
 Consider the project layout from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
 
@@ -32,6 +34,16 @@ export function createApp () {
   )
 }
 ```
+
+## Routing integration
+
+
+**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
+
+This section explores how to define `reply.render()`.
+
+> Tto learn about `reply.html()` check out [Templating Function](/guide/templating-function).
+
 
 Next we have the **client entry point**, which is the code that **mounts** the React instance to the **server-side rendered HTML element**. It is aptly named `client/mount.js`:
 
