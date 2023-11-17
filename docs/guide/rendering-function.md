@@ -1,6 +1,9 @@
 # Rendering Function
 
-**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. Let's talk about `reply.render()` first, and how to create it. 
+**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. This section explores how to define `reply.render()`.
+
+The [**project root**](https://vitejs.dev/guide/#index-html-and-project-root) of your Vite application is treated like a module, so by default, **`@fastify/vite`** will try to load `<project-root>/index.js`. If you're coming from the SSR examples from the [Vite playground](https://github.com/vitejs/vite/tree/main/packages/playground), this is the equivalent of the **server entry point**. 
+
 
 To understand this fully, let's examine [`examples/react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
 

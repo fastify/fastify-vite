@@ -94,8 +94,14 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
       text: 'Introduction',
       collapsed: false,
       items: [
-        { text: 'Getting Started', link: 'getting-started' },
-        { text: 'Project Structure', link: 'project-structure' },
+        { text: 'Getting Started', link: 'getting-started',
+          items: [
+            { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
+            { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
+            { text: 'Directory structure', link: 'getting-started#directory-structure' },
+            { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
+          ],
+        },
         { text: 'Rendering Function', link: 'rendering-function' },
         { text: 'Templating Function', link: 'templating-function' },
         { text: 'Building & Deployment', link: 'building-and-deployment' },

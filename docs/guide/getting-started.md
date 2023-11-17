@@ -4,28 +4,158 @@
 [nuxt]: https://nuxt.com/
 [fastify-vite]: https://fastify-vite.dev
 [fastify-static]: https://github.com/fastify/fastify-static
+[fastify-cli]: https://github.com/fastify/fastify-cli
+[ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
+[ssr-2]: https://www.patterns.dev/react/server-side-rendering
 
 # Getting Started
 
-This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, and also automatically serve its static bundle, inferred from the Vite configuration file. 
+This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, and also automatically serve its static bundle, inferred from the Vite configuration file.
 
-If you want to have access to your client module on the server for SSR or other purposes, @fastify-vite offers granular hooks to help you set up a rendering function, a HTML templating function and register server-side routes for your client routes. It comes with sensible defaults for each of these hooks, 
+## Why not a framework?
 
+The key principle behind **@fastify/vite** is minimalism, based on the belief that [Fastify][fastify] and [Vite][vite] alone are good enough core foundations. 
+
+Instead of adopting the arbitrary semantics and runtime of a full-blown SSR framework like [Next.js][next] or [Nuxt.js][nuxt], the idea is to **just use Fastify** for your backend needs, and **just use Vite** to build your client application, and still be able to run them together in a happy [modular monolith](https://blog.platformatic.dev/build-and-deploy-a-modular-monolith-with-platformatic).
+
+Your client application can be written of course in whatever framework you like, without losing the ability to also perform SSR if needed. 
+
+In addition to the basic integration building blocks required to run Vite's development server as a middleware and serving your Vite application's production bundle, this plugin offers granular hooks that let you customize your Fastify server according to what your client application module provides, allowing you to essentially **build your own framework**.
+
+> You can read about creating a mini Next.js using [@fastify/vite][fastify-vite] here:
+>
+> https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/
+
+For Vue and React users, [@fastify/vue](/vue/whats-included) and [@fastify/react](/react/whats-included/) are available as starting points featuring essential features from Nuxt.js and Next.js such as **SSR data fetching** and **seamless SSR-to-CSR navigation**, where client-side navigation and rendering takes over after SSR for the first render.
+
+These packages are implemented the same way, following the **universal route module** specification found in [Framework Shells](/guide/framework-shells). And most importantly, these packages are implemented using only the hooks provided by **@fastify/vite**.
+
+## A quick walkthrough
+
+The vanilla React SPA Single Page Application project [available in `examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla-spa) is a good starting point to demonstrate the basics of @fastify/vite. The only difference from this to running Vite's own development server directly is that it's executed as a middleware for the Fastify server, allowing other code and custom routes to be added. Vite's development server middleware only runs if you enable it, otherwise it will serve the production bundle (result of running `vite build`), whose location is automatically inferred from the Vite configuration file.
+
+This basic SPA setup requires a Vite configuration file, the Fastify server file and the appropriate commands in `package.json` to run the server in **development and production modes**, and to **build** your Vite application. 
+
+To run this project, `fastify`, `@fastify/vite`, `react` and `react-dom` are the only dependencies required. Vite is only required in development.
+
+
+::: code-group
+```bash [npm]
+npm i fastify @fastify/vite react react-dom
+npm i vite -D
 ```
-├─ prepareClient()
-│  └─ createHtmlFunction()
-│      └─ createRenderFunction()
-│          └─ createRouteHandler()
-│              └─ createErrorHandler()
-└─ createRoute()
+```bash [pnpm]
+pnpm add fastify @fastify/vite react react-dom
+pnpm add vite -D
+```
+```bash [yarn]
+yarn add fastify @fastify/vite react react-dom
+yarn add vite -D
+```
+:::
+
+In `server.js`, notice how starting the development mode is conditioned to the presence of a `--dev` CLI argument passed to the Node.js process — could also be an environment variable. The default value for the `dev` configuration option is actually what you see in this snippet, a CLI argument check for `--dev`. All `server.js` files in the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) are **using this default behavior**.
+
+::: code-group
+```js [server.js]
+import Fastify from 'fastify'
+import FastifyVite from '@fastify/vite'
+
+const server = Fastify()
+
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  dev: dev || process.argv.includes('--dev'),
+  spa: true
+})
+
+server.get('/', (req, reply) => {
+  reply.html()
+})
+
+await server.vite.ready()
+await server.listen({ port: 3000 })
+```
+:::
+
+This Fastify server only has a root route and it replies with the result of `reply.html()`. This `html()` method is added by `@fastify/vite`, using the result of the `createHtmlFunction()` configuration hook, and will seamlessly serve either the development or production version of your `index.html`, according to the `dev` configuration setting passed to the `@fastify/vite` plugin options, with or without a server-side rendered markup.
+
+As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered first.
+
+In `vite.config.js`, notice how the Vite project root is set to `./client`, and in `server.js`, how just passing `import.meta.url` is enough to let `@fastify/vite` know where to look for your Vite configuration file.
+
+::: code-group
+```js [vite.config.js]
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import viteReact from '@vitejs/plugin-react'
+
+const path = fileURLToPath(import.meta.url)
+const root = resolve(dirname(path), 'client')
+
+const plugins = [
+  viteReact({ jsxRuntime: 'classic' })
+]
+
+export default { root, plugins }
+```
+:::
+
+In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite. 
+
+::: code-group
+```json [package.json]
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "node server.js",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@fastify/vite": "latest",
+    "fastify": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}
+```
+:::
+
+Then for the client code, cleanly separated in the `client/` directory, you have `index.html` loading `mount.js`, `base.jsx` with a React component and `mount.js` loading it. Notice that Vite requires you to have an `index.html` file as it's [the front-and-central build entry point](https://vitejs.dev/guide/#index-html-and-project-root).
+
+::: code-group
+```html [client/index.html]
+<!DOCTYPE html>
+<main><!-- element --></main>
+<script type="module" src="/mount.js"></script>
 ```
 
+```js [client/mount.js]
+import { createRoot } from 'react-dom/client'
+import { createApp } from './base.jsx'
 
+const root = createRoot(document.querySelector('main'))
+root.render(createApp())
+```
 
+```jsx [client/base.jsx]
+import React from 'react'
 
-## Basic setup
+export function createApp () {
+  return (
+    <p>Hello world from React and @fastify/vite!</p>
+  )
+}
+```
+:::
 
-Regardless of whether you want to perform SSR or simply deliver a SPA bundle to the browser, projects using `@fastify/vite` will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vitejs.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vitejs.dev/config/).
+## Directory structure
+
+This is what the directory structure for the example above looks like:
 
 ```text{1,5,6}
 ├── server.js
@@ -37,94 +167,29 @@ Regardless of whether you want to perform SSR or simply deliver a SPA bundle to 
 └── package.json
 ```
 
-## SPA example
-
-## SSR example
-
-
-
-That means you can use it to set up an application that serves a static bundle generated from Vite, but also have access to it on the server in order to automatically set up server routes, data fetching and perform Server Side Rendering (SSR).
-
-In a nutshell, this plugin lets you build your own [Next.js][next] or [Nuxt.js][next] on top of Fastify. You can read about creating a mini Next.js using [@fastify/vite][fastify-vite] here:
-
-> https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/
-
-If you don't need SSR, it can also just serve as a convenience to serve your static Vite bundle through Fastify via [@fastify/static][fastify-static], automatically inferring your bundle's output directory from your Vite configuration file, and still allowing you to leverage Vite's development server for hot reload.
+In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`.  This is the recommended approach. 
 
 ::: warning
-**Don't serve static assets via Node.js in production**! Override static asset requests to a web server such as [NGINX](https://www.nginx.com/) or use [Vite's advanced base options](https://vitejs.dev/guide/build.html#advanced-base-options) to configure a CDN.
+It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines your **project root** in Vite's context.
 :::
+
+Regardless of whether you want to simply deliver a SPA bundle to the browser or perform SSR, projects using `@fastify/vite` will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vitejs.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vitejs.dev/config/).
 
 ## Architectural primitives
 
-It is focused on architectural primitives while employing a few conventions to enable granular control of how your Vite module is exposed to Fastify. 
+If you want to have access to your client module on the server for SSR or other purposes, **@fastify/vite** offers granular hooks that let you set up a rendering function (receiving access to to your Vite application module), a HTML templating function and register server-side routes for your client routes. The diagram below shows the order of execution of each available hook.
 
-For instance, if your Vite module exports a `routes` array with objects containing a `path` property, it will automatically loop through it and run [`createRoute()`](/config/createRoute) for each entry. This can allow you to automatically register a server route for each of your client application routes, or multiple server routes, like registering an additional data fetching endpoint for each of your client routes. 
-
-::: info
-That's essentially what Next.js does for making things like `getServerSideProps()` work: for each client route, an additional data-only route is also registered automatically. I've demonstrated how to reimplement this in **@fastify/vite** in the [react-next](https://github.com/fastify/fastify-vite/tree/dev/examples/react-next) example.
-:::
-
-- Compiling your Vite application's `index.html` into a templating function for page-level setup.
-- Toggling Vite's development server on and off, i.e., run in development or production mode.
-- Integrating routing at the client level (History API-based) with Fastify server-side routing.
-
-This README contains all the documentation. Also see the working [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
-
-## Install
-
-```
-npm i fastify --save
-```
-```
-npm i @fastify/vite vite --save-dev
+```text
+├─ prepareClient()
+│  └─ createHtmlFunction()
+│      └─ createRenderFunction()
+│          └─ createRouteHandler()
+│              └─ createErrorHandler()
+└─ createRoute()
 ```
 
-## Usage
+You can consider these **architectural primitives** for building your own framework. Nearly all of them come with sensible defaults that you probably won't need to change for basic use cases, the exception being `createRenderFunction()`. For setting up SSR, you need to tell Fastify how to create a rendering function for your client application, that is, a function that will produce on the server, the same HTML markup your client application would on the client, so it can deliver it [prerendered for speed][ssr-2].
 
-First you need to make sure you have `root` correctly set up in your `vite.config.js` file:
+> If you're new to SSR, consider reading [this step-by-step introduction][ssr-1].
 
-```js
-import { join, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-// Import plugins
-
-export default {
-  root: join(dirname(fileURLToPath(import.meta.url)), 'client'),
-  plugins: [
-    // Register plugins
-  ]
-}
-```
-
-> Note that `__dirname` isn't available in ES modules, that's why we get it from `import.meta.url`.
-
-Next you need to tell **`@fastify/vite`** whether or not it's supposed to run in development mode, in which case Vite's development server is enabled for hot reload — and also, where to load `vite.config.js` from (`root`):
-
-```js
-import Fastify from 'fastify'
-import FastifyVite from '@fastify/vite'
-
-const server = Fastify()
-
-await server.register(FastifyVite, {
-  dev: process.argv.includes('--dev'),
-  root: import.meta.url, 
-  createRenderFunction () {
-    // Covered further below in this README
-  }
-})
-
-await server.vite.ready()
-await server.listen({ port: 3000 })
-```
-
-In this example, we're conditioning the development mode to the presence of a `--dev` CLI argument passed to the Node.js process — could be an environment variable. 
-
-> **`@fastify/vite`**'s default value for the `dev` configuration option is actually what you see in the snippet above, a CLI argument check for `--dev`. That's why you don't see it set in any of the [**`examples/`**](), they're just following the convention.
-
-For setting `root`, **`@fastify/vite`** is smart enough to recognize file URLs, so it parses and treats them as directories. In this snippet above, passing `import.meta.url` works the same as passing `__dirname` if it was a CJS module.
-
-As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. 
-
-This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered for them to be available in **`@fastify/vite`**'s plugin scope.
+[In the next section](/guide/rendering-function), `createRenderFunction()` is explored using both simple and advanced (Nuxt.js and Next.js-like) examples.
