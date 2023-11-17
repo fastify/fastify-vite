@@ -8,13 +8,13 @@
 [ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
 [ssr-2]: https://www.patterns.dev/react/server-side-rendering
 
+> All topics in this documentation section **cover @fastify/vite from the ground up**, targeted at those building their own customized setups with it. If you're coming from [Next.js][next] or [Nuxt.js][nuxt] and are looking for a practical Fastify-flavored replacement, jump straight to the [@fastify/react](/react/) or [@fastify/vue](/vue/]) documentation sections.
+
+<br>
+
 # Getting Started
 
 This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, and also automatically serve its static bundle, inferred from the Vite configuration file.
-
-All topics in this documentation section cover @fastify/vite from the ground up, targeted at those building their own customized setups on top of it.
-
-If you're coming from Next.js or Nuxt.js and looking for a practical Fastify-flavored replacement, jump straight to the @fastify/react or @fastify/vue documentation sections. These packages are **renderers** for @fastify/vite that reimplement most essential features and a few more.
 
 ## Why not a framework?
 

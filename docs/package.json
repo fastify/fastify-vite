@@ -2,7 +2,9 @@
   "type": "module",
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",
-    "vitepress": "1.0.0-rc.25"
+    "mermaid": "^10.6.1",
+    "vitepress": "1.0.0-rc.25",
+    "vitepress-plugin-mermaid": "^2.0.15"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -10,7 +12,12 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@braintree/sanitize-url": "^6.0.4",
     "@docsearch/css": "^3.5.2",
-    "@vueuse/core": "^10.6.1"
+    "@vueuse/core": "^10.6.1",
+    "cytoscape": "^3.27.0",
+    "cytoscape-cose-bilkent": "^4.1.0",
+    "dayjs": "^1.11.10",
+    "debug": "^4.3.4"
   }
 }

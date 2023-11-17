@@ -6,7 +6,22 @@ If you're looking to perform [Server-Side Rendering (SSR)][ssr-1], or simply wan
 
 For example, if you're looking to perform SSR on a React application, you'll need access to your main React component on the server so you can use [`renderToString()`](https://react.dev/reference/react-dom/server/renderToString) (or [`renderToPipeableStream()`](https://react.dev/reference/react-dom/server/renderToPipeableStream) in an ideal scenario).
 
+The way to accomplish this is by providing a [`createRenderFunction()`](http://localhost:5173/config/createRenderFunction) hook to your **@fastify/vite** plugin options. It will receive as the first parameter a reference to your **Vite application module**, i.e., your client application. The function returned by it will be added ([decorated](https://fastify.dev/docs/v2.15.x/Documentation/Decorators/)) to the `Reply` class as `render()` in your Fastify plugin scope.
+
+```mermaid
+flowchart TD
+    A[clientModule is loaded] --> C["createRenderFunction(clientModule) executes and returns function"]
+    C -->E["Returned function becomes Reply.render(), added via scope.decorateReply()"]
+```
+
+
+**`@fastify/vite`** treats your Vite project root as a JavaScript module, so it'll automatically look for `index.js` as the **server entry point**, that is, the module that's gets [bundled for production](https://vitejs.dev/guide/ssr.html#building-for-production) in [**SSR mode**](https://vitejs.dev/config/build-options.html#build-ssr) by Vite.
+
+This is what **Vite application module** or **client module** refers to. You can change this behavior via the [`clientModule`](/config/clientModule) configuration option, which lets you specify a custom module path for `@fastify/vite` to load. 
+
 ## Vanilla example
+
+The best way to understand it is by following an example.
 
 Consider the project layout from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
 
@@ -21,7 +36,9 @@ Consider the project layout from the [`react-vanilla`](https://github.com/fastif
 └── vite.config.js
 ```
 
-The first thing to know is that **`@fastify/vite`** treats your Vite project root as a JavaScript module, so it'll automatically look for `index.js` as the **server entry point**, that is, the module that's gets [bundled for production](https://vitejs.dev/guide/ssr.html#building-for-production) in **_SSR mode_** by Vite.
+
+
+> Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
 
 The React component to be server-side rendered is in `client/base.jsx`:
 

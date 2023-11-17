@@ -7,3 +7,21 @@
   clip-path: inset(50%);
   overflow: hidden;
 }
+
+.mermaid svg {
+  display: inline-block;
+}
+
+.mermaid {
+  text-align: center;
+  width: 100%;
+  height: auto;
+}
+
+/*.mermaid-rendering-func svg { 
+  transform: scale(1.8); 
+}
+*/
+.highlight {
+  font-size: 1.1em;
+}
