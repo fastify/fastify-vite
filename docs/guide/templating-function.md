@@ -1,6 +1,10 @@
 # Templating Function
 
-Let's shift attention to `client/index.html` now:
+**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
+
+This section explores how to define `reply.html()` — to learn about `reply.render()` check out [Rendering Function](/guide/rendering-function).
+
+Let's shift attention to [`client/index.html`]() from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
 
 ```html
 <!DOCTYPE html>

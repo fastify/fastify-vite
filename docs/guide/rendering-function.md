@@ -1,16 +1,15 @@
 # Rendering Function
 
-**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. This section explores how to define `reply.render()`.
+**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
 
-The [**project root**](https://vitejs.dev/guide/#index-html-and-project-root) of your Vite application is treated like a module, so by default, **`@fastify/vite`** will try to load `<project-root>/index.js`. If you're coming from the SSR examples from the [Vite playground](https://github.com/vitejs/vite/tree/main/packages/playground), this is the equivalent of the **server entry point**. 
+This section explores how to define `reply.render()`.
 
+> Tto learn about `reply.html()` check out [Templating Function](/guide/templating-function).
 
-To understand this fully, let's examine [`examples/react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), an educational example demonstrating the absolute minimum glue code for making client-level code available for server-side rendering. 
-
-This basic example has the following structure:
+Consider the project layout from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
 
 ```
-├── client
+├── client/
 │    ├── base.jsx
 │    ├── index.html
 │    ├── index.js
@@ -20,7 +19,7 @@ This basic example has the following structure:
 └── vite.config.js
 ```
 
-The first thing to remember is that **`@fastify/vite`** treats your Vite project root as a JavaScript module, so it'll automatically look for `index.js` as the **server entry point**, that is, the module that's gets [bundled for production](https://vitejs.dev/guide/ssr.html#building-for-production) in **_SSR mode_** by Vite.
+The first thing to know is that **`@fastify/vite`** treats your Vite project root as a JavaScript module, so it'll automatically look for `index.js` as the **server entry point**, that is, the module that's gets [bundled for production](https://vitejs.dev/guide/ssr.html#building-for-production) in **_SSR mode_** by Vite.
 
 The React component to be server-side rendered is in `client/base.jsx`:
 
