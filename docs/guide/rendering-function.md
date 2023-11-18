@@ -2,11 +2,11 @@
 
 # Rendering Function
 
-If you're looking to perform [Server-Side Rendering (SSR)][ssr-1], or simply want to automatically register additional API routes based on your client appication routes, among many other potential scenarios, you'll need to provide your Fastify server instance with access to your client application.
+If you're looking to perform [Server-Side Rendering (SSR)][ssr-1], or simply want to automatically register additional API routes based on your client application routes, among many other potential scenarios, you'll need to provide your Fastify server instance with access to your client application.
 
 For example, if you're looking to perform SSR on a React application, you'll need access to your main React component on the server so you can use [`renderToString()`](https://react.dev/reference/react-dom/server/renderToString) (or [`renderToPipeableStream()`](https://react.dev/reference/react-dom/server/renderToPipeableStream) in an ideal scenario).
 
-A way to accomplish this is by providing a [`createRenderFunction()`](http://localhost:5173/config/createRenderFunction) hook to your **@fastify/vite** plugin options. You can also have access to it using [`prepareClient()`](), which is the first hook that is executed and can be used to determine exactly what is passed to `createRenderFunction()`.
+A way to accomplish this is by providing a [`createRenderFunction()`](http://localhost:5173/config/createRenderFunction) hook to your **@fastify/vite** plugin options. You can also have access to it using [`prepareClient()`](), which is the first hook that is executed and can be used to alter what is passsed to `createRenderFunction()`, but that's rarely needed. The default behavior of `prepareClient()` is to just load the module as-is.
 
 To illustrate, a snippet from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) SSR example:
 
@@ -28,8 +28,8 @@ It will receive as the first parameter a reference to your **Vite application mo
 
 ```mermaid
 flowchart TD
-    A[clientModule is loaded] --> C["createRenderFunction(clientModule) executes and returns function"]
-    C -->E["Returned function becomes Reply.render(), added via scope.decorateReply()"]
+    A(clientModule is loaded) --> C("createRenderFunction(clientModule) executes and returns function")
+    C -->E("Returned function becomes Reply.render(), added via scope.decorateReply()")
 ```
 
 
@@ -69,6 +69,21 @@ export function createApp () {
   )
 }
 ```
+:::
+
+The React component to be server-side rendered is in `client/base.jsx`. **It's important to understand** that the same code needs to be available for both CSR and SSR. Unless you're delivering pages with static markup (no JavaScript), SSR just means the client code runs on the server first where markup is pre-rendered for the client, but the client still needs all the code to perform CSR as usual, i.e., it needs to run your client application code.
+
+The only difference is that it won't have to **re-render** **pre-rendered** markup sent by the server. That's where the client hydration APIs for each framework come into play. Vue has `createSSRApp()`, React has `hydrateRoot()` and every other framework that supports SSR has equivalent methods.
+
+::: info
+The [Vue 3 SSR documentation](https://vuejs.org/guide/scaling-up/ssr.html) has a **concise explanation** that **applies to all other frameworks**:
+
+> _To make the client-side app interactive, Vue needs to perform the hydration step. During hydration, it creates the same Vue application that was run on the server, matches each component to the DOM nodes it should control, and attaches DOM event listeners._
+:::
+
+In the react-vanilla example, both `client/mount.js` and `client/index.js` load `client/base.jsx`. The first is loaded by `client/index.html` and used for CSR and the latter is loaded by `@fastify/vite` and provided to the `prepareClient()` and `createRenderFunction()` hooks.
+
+::: code-group
 ```js [client/mount.js]
 import { hydrateRoot } from 'react-dom/client'
 import { createApp } from './base.jsx'
@@ -91,34 +106,14 @@ export default { createApp }
 ```
 :::
 
-The React component to be server-side rendered is in `client/base.jsx`. **It's important to understand** that the same code needs to be available for both CSR and SSR. Unless you're delivering pages with static markup (no JavaScript), SSR just means the client code runs on the server first where markup is pre-rendered for the client, but the client still needs all the code to perform CSR as usual, i.e., it needs to run your client application code.
-
-The only difference is that it won't have to **re-render** **pre-rendered** markup sent by the server. That's where the client hydration APIs for each framework come into play. Vue has `createSSRApp()`, React has `hydrateRoot()` and every other framework that supports SSR has equivalent methods.
-
-::: info
-The [Vue 3 SSR documentation](https://vuejs.org/guide/scaling-up/ssr.html) has a **concise explanation**:
-
-> _To make the client-side app interactive, Vue needs to perform the hydration step. During hydration, it creates the same Vue application that was run on the server, matches each component to the DOM nodes it should control, and attaches DOM event listeners._
-:::
-
-
-- For CSR (Client-Side Rendering): 
-  - `client/base.jsx` is imported by `client/mount.js`.
-  - `client/mount.js` is imported by `client/index.html`.
- 
-- For SSR (Server-Side Rendering):
-  - `client/base.jsx` is imported by `client/index.js`.
-  - `client/index.js` is loaded by `@fastify/vite`.
-  - `client/index.js` is passed to `createRenderFunction()`
-  - Function returned by `createRenderFunction()` becomes `reply.render()`
-
 ```mermaid
 flowchart TD
     A[client/base.jsx] -->|Client-Side Rendering| B(client/mount.js)
     A -->|Server-Side Rendering| C(client/index.js)
     B -->D(client/index.html)
-    C -->|Loaded and provided to| E("createRenderFunction(clientModule)")
-    E --> F("reply.render()")
+    C -->|Loaded and provided to| E("prepareClient(clientModule)")
+    E --> F("createRenderFunction(clientModule)")
+    F --> G("reply.render()")
 ```
 
 
