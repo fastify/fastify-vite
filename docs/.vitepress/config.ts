@@ -13,7 +13,8 @@ export default withMermaid({
   cleanUrls: true,
 
   markdown: {
-    math: true
+    math: true,
+    theme: 'poimandres',
   },
 
   sitemap: {

@@ -17,15 +17,16 @@ flowchart TD
 
 **`@fastify/vite`** treats your Vite project root as a JavaScript module, so it'll automatically look for `index.js` as the **server entry point**, that is, the module that's gets [bundled for production](https://vitejs.dev/guide/ssr.html#building-for-production) in [**SSR mode**](https://vitejs.dev/config/build-options.html#build-ssr) by Vite.
 
-This is what **Vite application module** or **client module** refers to. You can change this behavior via the [`clientModule`](/config/clientModule) configuration option, which lets you specify a custom module path for `@fastify/vite` to load. 
+This is what **Vite application module** or **client module** refers to. You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/clientModule) configuration option, which lets you specify a custom module path for `@fastify/vite` to load. 
+
+> Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
 
 ## Vanilla example
 
-The best way to understand it is by following an example.
-
+The best way to really grasp `createRenderFunction()` is by exploring an example.
 Consider the project layout from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
 
-```
+```text
 ├── client/
 │    ├── base.jsx
 │    ├── index.html
@@ -36,13 +37,41 @@ Consider the project layout from the [`react-vanilla`](https://github.com/fastif
 └── vite.config.js
 ```
 
+> Test configuration files from the example were omitted for brevity.
 
+The React component to be server-side rendered is in `client/base.jsx`. **It's vital to understand here** that the same code needs to be available for both CSR and SSR. Unless you're delivering pages with static markup (no JavaScript), SSR just means the client code runs on the server first where markup is pre-rendered for the client, but the client still needs all the code to perform CSR as usual, i.e., it needs to run your client application code.
 
-> Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
+The only difference is that it won't have to **re-render** **pre-rendered** markup sent by the server. That's where the client hydration APIs for each framework come into place. Vue has `createSSRApp()`, React has `hydrateRoot()` and every other framework that supports SSR has equivalent methods.
 
-The React component to be server-side rendered is in `client/base.jsx`:
+- For CSR (Client-Side Rendering): 
+  - `client/base.jsx` is imported by `client/mount.js`.
+  - `client/mount.js` is imported by `client/index.html`.
+ 
+- For SSR (Server-Side Rendering):
+  `client/mount.js`
+  - which is loaded by `@fastify/vite`
+  - and provided to `createRenderFunction()`
 
-```jsx
+```mermaid
+flowchart TD
+    A[client/base.jsx] -->|Client-Side Rendering| B(client/mount.js)
+    A -->|Server-Side Rendering| C(client/index.js)
+    B -->D(client/index.html)
+    C -->|Loaded and provided to| E("createRenderFunction(clientModule)")
+    E --> F("reply.render()")
+```
+
+::: info
+If you're new to the mechanics of SSR, client hydration can be confusing. 
+
+The Vue 3 SSR documentation has a **concise explanation**:
+
+> _To make the client-side app interactive, Vue needs to perform the hydration step. During hydration, it creates the same Vue application that was run on the server, matches each component to the DOM nodes it should control, and attaches DOM event listeners._
+
+:::
+
+::: code-group
+```jsx [client/base.jsx]
 import React from 'react'
 
 export function createApp () {
@@ -51,9 +80,29 @@ export function createApp () {
   )
 }
 ```
+```js [client/mount.js]
+import { hydrateRoot } from 'react-dom/client'
+import { createApp } from './base.jsx'
+
+const mountElement = document.querySelector('main')
+
+// hydrateRoot() avoids re-rendering prerendered markup
+hydrateRoot(mountElement, createApp())
+```
+```html [client/index.html]
+<!DOCTYPE html>
+<main><!-- element --></main>
+<script type="module" src="/mount.js"></script>
+```
+```js [client/index.js]
+import { createApp } from './base.jsx'
+
+// Provides function needed to perform SSR
+export default { createApp }
+```
+:::
 
 ## Routing integration
-
 
 **`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
 
