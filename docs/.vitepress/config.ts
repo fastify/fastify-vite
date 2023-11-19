@@ -104,22 +104,18 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
             { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
           ],
         },
-        { text: 'Rendering Function', link: 'rendering-function',
-          items: [
-            { text: 'Vanilla example', link: 'rendering-function#vanilla-example' },
-            { text: 'Routing integration', link: 'rendering-function#routing-integration' },
-          ],
-        },
+        { text: 'Rendering Function', link: 'rendering-function', },
+        { text: 'Router Integration', link: 'router-integration', },
         { text: 'Templating Function', link: 'templating-function' },
-        { text: 'Building & Deployment', link: 'building-and-deployment' },
-        { text: 'Framework Shells', link: 'framework-shells' },
+        { text: 'Build and Deploy', link: 'build-and-deploy' },
+        { text: 'Core Renderers', link: 'core-renderers' },
       ]
     },
     {
       text: '@fastify/vue',
       collapsed: true,
       items: [
-        { base: '/vue/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/vue/', text: 'What\'s Included', link: 'index' },
         { base: '/vue/', text: 'Basic Setup', link: 'basic-setup' },
         { base: '/vue/', text: 'Project Structure', link: 'project-structure' },
         { base: '/vue/', text: 'Rendering Modes', link: 'rendering-modes' },
@@ -164,14 +160,14 @@ function sidebarVue(): DefaultTheme.SidebarItem[] {
         { base: '/guide/', text: 'Rendering Function', link: 'rendering-function' },
         { base: '/guide/', text: 'Templating Function', link: 'templating-function' },
         { base: '/guide/', text: 'Building & Deployment', link: 'building-and-deployment' },
-        { base: '/guide/', text: 'Framework Shells', link: 'framework-shells' },
+        { base: '/guide/', text: 'Framework Shells', link: 'core-renderers' },
       ]
     },
     {
       text: '@fastify/vue',
       collapsed: false,
       items: [
-        { text: 'What\'s Included', link: 'whats-included' },
+        { text: 'What\'s Included', link: 'index' },
         { text: 'Basic Setup', link: 'basic-setup' },
         { text: 'Project Structure', link: 'project-structure' },
         { text: 'Rendering Modes', link: 'rendering-modes' },
@@ -211,7 +207,7 @@ function sidebarReact(): DefaultTheme.SidebarItem[] {
       text: '@fastify/vue',
       collapsed: true,
       items: [
-        { base: '/vue/', text: 'What\'s Included', link: 'whats-included' },
+        { base: '/vue/', text: 'What\'s Included', link: 'index' },
         { base: '/vue/', text: 'Basic Setup', link: 'basic-setup' },
         { base: '/vue/', text: 'Project Structure', link: 'project-structure' },
         { base: '/vue/', text: 'Rendering Modes', link: 'rendering-modes' },
@@ -228,7 +224,7 @@ function sidebarReact(): DefaultTheme.SidebarItem[] {
       text: '@fastify/react',
       collapsed: true,
       items: [
-        { text: 'What\'s Included', link: 'whats-included' },
+        { text: 'What\'s Included', link: 'index' },
         { text: 'Basic Setup', link: 'basic-setup' },
         { text: 'Project Structure', link: 'project-structure' },
         { text: 'Rendering Modes', link: 'rendering-modes' },

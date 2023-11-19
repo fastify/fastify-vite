@@ -1,46 +1,49 @@
+<!--@include: ./parts/links.md-->
+<!--@include: ./parts/notice.md-->
+
 # Templating Function
 
-**`@fastify/vite`** automatically [decorates](https://www.fastify.io/docs/latest/Reference/Decorators/) the Fastify [Reply](https://www.fastify.io/docs/latest/Reference/Reply/) class with two additional methods, `reply.render()` and `reply.html()`. 
-
-This section explores how to define `reply.html()` — to learn about `reply.render()` check out [Rendering Function](/guide/rendering-function).
-
-Let's shift attention to [`client/index.html`]() from the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example:
-
-```html
-<!DOCTYPE html>
-<main><!-- element --></main>
-<script type="module" src="/mount.js"></script>
-```
-
-As per Vite's documentation, `index.html` is a special file made part of the module resolution graph. It's how Vite finds all the code that runs client-side. 
+As per Vite's documentation, `index.html` is a special file made part of the module resolution graph. It's how Vite finds all the code that is supposed to run.
 
 When you run the `vite build` command, `index.html` is what Vite automatically looks for. Given this special nature, you probably want to keep it as simple as possible, using HTML comments to specify content placeholders. That's the pattern used across the official SSR examples from [Vite's playground](https://github.com/vitejs/vite/tree/main/packages/playground).
 
-Before we dive into `reply.html()`, you should know **`@fastify/vite`** packs a helper function that turns an HTML document with placeholders indicated by comments into a precompiled templating function:
+**`@fastify/vite`** will automatically add ([decorate](https://fastify.dev/docs/latest/Reference/Decorators/)) a `html()` method on the **Fastify** `Reply` class. This method sends your Vite project's `index.html` to the client with the appropriate media tyope (`text/html`). But it can also replace variable placeholders in your `index.html`. That's because **`@fastify/vite`** packs a helper function that **turns an HTML document with placeholders indicated by HTML comments into a precompiled templating function**:
 
 ```js
 import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 
-const template = createHtmlTemplateFunction('<main><!-- foobar --></main>')
-const html = template({ foobar: 'This will be inserted '})
+const template = createHtmlTemplateFunction(
+  '<main><!-- foobar --></main>'
+)
+console.log(
+  template({ foobar: 'This will be inserted' })
+)
 ```
 
-By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is decorated as `reply.html()`. 
+The snippet above prints out `<main>This will be inserted</main>`.
 
-Here's how `createHtmlFunction()` is defined by default:
+By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is registered as `reply.html()`. In the snippet below you can see how `createHtmlFunction()` is defined by default in `@fastify/vite`. 
+
+Notice that `createHtmlTemplateFunction()` is not only a utility you can import from `@fastify/vite/utils`, but is also set as configuration hook within `@fastify/vite`. If you want to use a different templating engine, just provide a different `createHtmlTemplateFunction()` implementation and it will be automatically used by the [**default definition of `createHtmlFunction()`**](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L58):
 
 ```js
 function createHtmlFunction (source, scope, config) {
   const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
-  return function (ctx) {
+  if (config.spa) {
+    return function () {
+      this.type('text/html')
+      this.send(indexHtmlTemplate({ element: '' }))
+      return this
+    }
+  }
+  return async function (ctx) {
     this.type('text/html')
-    this.send(indexHtmlTemplate(ctx))
+    this.send(indexHtmlTemplate(ctx ?? await this.render()))
+    return this
   }
 }
 ```
 
-You can see that default definition (and many others) in **`@fastify/vite`**'s [internal `config.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L51) file. 
+Notice that if no parameter is passed to `reply.html()`, it will automatically run `reply.render()` and use its result implicitly. 
 
-Looking at the default `createHtmlFunction()` above, you can probably guess how the [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example works now. The result of `render()` is a simple object with variables to be passed to `reply.html()`, which uses the precompiled templating function based on `index.html`.
-
-In some cases, it's very likely you'll want to provide your own `createHtmlFunction()` option through **`@fastify/vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla) example demonstrates a custom implementation that works with a stream instead of a raw string.
+In many cases, it's very likely you'll want to provide your own `createHtmlFunction()` hook through **`@fastify/vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/vue-streaming) example demonstrates a custom implementation that works with a stream instead of a raw string. And of course the core renders [`@fastify/vue`][fastify-vue] and [`@fastify/react`][fastify-react] have their own implementations as well.

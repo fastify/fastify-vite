@@ -6,7 +6,23 @@ import { renderToString } from '@vue/server-renderer'
 import { uneval } from 'devalue'
 
 // The @fastify/vite renderer overrides
-export default { createRenderFunction }
+export default { createRenderFunction, createRoute }
+
+async function foobarHook (req) {
+  req.server.log.info(`Hello from ${req.url} and foobarHook`)
+}
+
+function createRoute ({ handler, errorHandler, route }, scope, config) {
+  scope.route({
+    url: route.path,
+    method: 'GET',
+    handler,
+    errorHandler,
+    ...route.triggerFoobarHook && {
+      onRequest: foobarHook,
+    }
+  })
+}
 
 function createRenderFunction ({ createApp }) {
   return async function (server, req, reply) {
@@ -32,3 +48,17 @@ function createRenderFunction ({ createApp }) {
     }
   }
 }
+```
+```js [client/routes.js]
+export default [
+  {
+    path: '/',
+    component: () => import('./views/index.vue'),
+    triggerFoobarHook: true,
+  },
+  {
+    path: '/other',
+    component: () => import('./views/other.vue')
+  }
+]
+```

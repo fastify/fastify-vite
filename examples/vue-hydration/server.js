@@ -1,21 +1,20 @@
-#!/usr/bin/env node
 import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 
 export async function main (dev) {
-  const server = Fastify()
+  const server = Fastify({
+    logger: {
+      transport: {
+        target: '@fastify/one-line-logger',
+      },
+    },
+  })
 
   await server.register(FastifyVite, { 
     root: import.meta.url,
-    dev: dev || process.argv.includes('--dev'),
     renderer,
-  })
-
-  server.setErrorHandler((err, req, reply) => {
-    console.error(err)
-    reply.send(err)
   })
 
   await server.vite.ready()

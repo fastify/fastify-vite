@@ -1,16 +1,5 @@
-[vite]: https://vitejs.dev/
-[fastify]: https://fastify.dev/
-[next]: https://nextjs.org/
-[nuxt]: https://nuxt.com/
-[fastify-vite]: https://fastify-vite.dev
-[fastify-static]: https://github.com/fastify/fastify-static
-[fastify-cli]: https://github.com/fastify/fastify-cli
-[ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
-[ssr-2]: https://www.patterns.dev/react/server-side-rendering
-
-> All topics in this documentation section **cover @fastify/vite from the ground up**, targeted at those building their own customized setups with it. If you're coming from [Next.js][next] or [Nuxt.js][nuxt] and are looking for a practical Fastify-flavored replacement, jump straight to the [@fastify/react](/react/) or [@fastify/vue](/vue/]) documentation sections.
-
-<br>
+<!--@include: ./parts/links.md-->
+<!--@include: ./parts/notice.md-->
 
 # Getting Started
 
@@ -184,12 +173,12 @@ Regardless of whether you want to simply deliver a SPA bundle to the browser or 
 If you want to have access to your client module on the server for SSR or other purposes, **@fastify/vite** offers granular hooks that let you set up a rendering function (receiving access to to your Vite application module), a HTML templating function and register server-side routes for your client routes. The diagram below shows the order of execution of each available hook.
 
 ```text
-├─ prepareClient()
-│  └─ createHtmlFunction()
-│      └─ createRenderFunction()
-│          └─ createRouteHandler()
-│              └─ createErrorHandler()
-└─ createRoute()
+└─ prepareClient()
+   └─ createHtmlFunction()
+      └─ createRenderFunction()
+         └─ createRouteHandler()
+            └─ createErrorHandler()
+               └─ createRoute()
 ```
 
 You can consider these **architectural primitives** for building your own framework. Nearly all of them come with sensible defaults that you probably won't need to change for basic use cases, the exception being `createRenderFunction()`. For setting up SSR, you need to tell Fastify how to create a rendering function for your client application, that is, a function that will produce on the server, the same HTML markup your client application would on the client, so it can deliver it [prerendered for speed][ssr-2].

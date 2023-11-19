@@ -1,7 +1,8 @@
 export default [
   {
     path: '/',
-    component: () => import('./views/index.vue')
+    component: () => import('./views/index.vue'),
+    triggerFoobarHook: true,
   },
   {
     path: '/other',

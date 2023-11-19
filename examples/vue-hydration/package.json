@@ -10,6 +10,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fastify/one-line-logger": "^1.2.0",
     "@fastify/vite": "workspace:^",
     "@vue/server-renderer": "^3.3.8",
     "devalue": "^4.3.2",

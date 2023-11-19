@@ -1,5 +1,5 @@
-[ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
-[react-vanilla]: https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla
+<!--@include: ./parts/links.md-->
+<!--@include: ./parts/notice.md-->
 
 # Rendering Function
 
@@ -16,7 +16,6 @@ To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
 ```js {4-9}
   await server.register(FastifyVite, {
     root: import.meta.url,
-    dev: dev || process.argv.includes('--dev'),
     createRenderFunction ({ createApp }) {
       return () => {
         return {
@@ -35,10 +34,7 @@ This is what **Vite application module** or **client module** refers to.
 
 You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/clientModule) configuration option, which lets you specify a custom module path for **`@fastify/vite`** to load.  Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
 
-## Vanilla example
-
-The best way to really grasp `createRenderFunction()` is by exploring an example.
-Consider the project layout from the [`react-vanilla`][react-vanilla] example:
+The best way to really grasp `createRenderFunction()` is by exploring an example. Consider the project layout from the [`react-vanilla`][react-vanilla] example:
 
 ```text
 ├── client/
@@ -129,7 +125,7 @@ const server = Fastify()
 
 await server.register(FastifyVite, {
   root: import.meta.url,
-  dev: dev || process.argv.includes('--dev'),
+  dev: process.argv.includes('--dev'),
   createRenderFunction ({ createApp }) {
     return () => {
       return {
@@ -149,11 +145,4 @@ await server.listen({ port: 3000 })
 :::
 
 What is see above is a simplified version (without imports and the adjustments for easier testing) from the [`react-vanilla`][react-vanilla] SSR example.
-
-## Routing integration
-
-[react-router]: https://reactrouter.com/en/main
-[vue-router]: https://router.vuejs.org/
-
-There are a couple of problems with the setup in all the vanilla SSR examples. they are meant to be simple and educational in nature, not the basis for real world applications. First and more obvious, it's missing a client-side router like [React Router][react-router] or [Vue Router][vue-router], so you can only really render a single route.
 

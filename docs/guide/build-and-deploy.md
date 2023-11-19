@@ -1,3 +1,5 @@
+<!--@include: ./parts/links.md-->
+<!--@include: ./parts/notice.md-->
 
 ## Deployment
 
