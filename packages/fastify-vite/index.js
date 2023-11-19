@@ -44,4 +44,3 @@ function fastifyVite (scope, options, done) {
 module.exports = fp(fastifyVite, {
   name: '@fastify/vite'
 })
-

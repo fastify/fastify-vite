@@ -1,4 +1,3 @@
-
 module.exports = {
   root: __dirname,
   server: {
