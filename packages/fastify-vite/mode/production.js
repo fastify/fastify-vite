@@ -39,7 +39,7 @@ async function setup (config) {
   // in production (dev server takes of this)
   await this.scope.register(async function staticContext (scope) {
     await scope.register(FastifyStatic, {
-      root: resolve(clientDist, assetsDir),
+      root: [resolve(clientDist, assetsDir), resolve(serverDist, assetsDir)],
       prefix: `/${assetsDir}`
     })
   })
