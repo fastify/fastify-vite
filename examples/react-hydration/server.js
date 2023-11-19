@@ -18,7 +18,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === fileURLToPath(new URL(import.meta.url))) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

@@ -65,7 +65,7 @@ const DefaultConfig = {
     }
     return function (ctx) {
       this.type('text/html')
-      this.send(indexHtmlTemplate(ctx))
+      this.send(indexHtmlTemplate(ctx ?? this.render()))
     }
   },
 

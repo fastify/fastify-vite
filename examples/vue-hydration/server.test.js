@@ -4,7 +4,7 @@ import { beforeEach, afterEach, assert, expect, test } from 'vitest'
 import { makeSSRBuildTest, makeIndexTest } from '../test-factories.js'
 import { main } from './server.js'
 
-const cwd = dirname(fileURLToPath(new URL(import.meta.url)))
+const cwd = dirname(fileURLToPath(import.meta.url))
 
 test('render index page in development', makeIndexTest({ main, dev: true }))
 test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 31, serverModules: 9 }))

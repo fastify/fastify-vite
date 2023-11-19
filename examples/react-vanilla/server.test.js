@@ -4,7 +4,7 @@ import { beforeAll, afterAll, assert, expect, test, vi } from 'vitest'
 import { WebSocketServer } from 'ws'
 import { makeSSRBuildTest, makeIndexTest } from '../test-factories.js'
 
-const cwd = dirname(fileURLToPath(new URL(import.meta.url)))
+const cwd = dirname(fileURLToPath(import.meta.url))
 
 let main
 let spy

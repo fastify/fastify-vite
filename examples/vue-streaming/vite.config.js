@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 
-const path = fileURLToPath(new URL(import.meta.url))
+const path = fileURLToPath(import.meta.url)
 const root = resolve(dirname(path), 'client')
 
 const plugins = [
