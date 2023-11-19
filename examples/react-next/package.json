@@ -18,7 +18,7 @@
     "ky-universal": "^0.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
+    "react-router-dom": "^6.19.0",
     "undici": "^5.27.2"
   },
   "devDependencies": {
@@ -26,14 +26,14 @@
     "@babel/eslint-parser": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
     "@vitejs/plugin-react": "^3.1.0",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
-    "vite": "^4.5.0",
+    "vite": "^5.0.0",
     "vitest": "^0.28.5"
   }
 }

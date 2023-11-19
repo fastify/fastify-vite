@@ -13,7 +13,7 @@ export async function main (dev) {
   })
 
   server.get('/', (req, reply) => {
-    reply.html()
+    return reply.html()
   })
 
   await server.vite.ready()

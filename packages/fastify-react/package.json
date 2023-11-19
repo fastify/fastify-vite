@@ -1,0 +1,57 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "type": "module",
+  "main": "index.js",
+  "name": "@fastify/react",
+  "version": "0.1.1",
+  "files": [
+    "virtual/create.jsx",
+    "virtual/create.tsx",
+    "virtual/root.jsx",
+    "virtual/root.tsx",
+    "virtual/layouts.js",
+    "virtual/layouts/default.jsx",
+    "virtual/context.js",
+    "virtual/context.ts",
+    "virtual/mount.js",
+    "virtual/mount.ts",
+    "virtual/resource.js",
+    "virtual/core.jsx",
+    "virtual/routes.js",
+    "index.js",
+    "plugin.cjs",
+    "server/context.js",
+    "server/stream.js"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.cjs"
+  },
+  "dependencies": {
+    "devalue": "^2.0.1",
+    "history": "^5.3.0",
+    "minipass": "^3.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
+    "unihead": "^0.0.6",
+    "valtio": "^1.7.2"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@vitejs/plugin-react": "^2.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.29.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

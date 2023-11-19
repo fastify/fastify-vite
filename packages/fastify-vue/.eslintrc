@@ -1,0 +1,10 @@
+{
+  extends: [
+    'plugin:vue/recommended',
+    'standard',
+  ],
+  rules: {
+    'comma-dangle': ['error', 'always-multiline'],
+    'import/no-absolute-path': 'off',
+  },
+}

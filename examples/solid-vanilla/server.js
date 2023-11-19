@@ -19,8 +19,8 @@ export async function main (dev) {
     }
   })
 
-  server.get('/', async (req, reply) => {
-    reply.html(await reply.render())
+  server.get('/', (req, reply) => {
+    return reply.html()
   })
 
   await server.vite.ready()

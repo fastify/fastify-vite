@@ -4,8 +4,6 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
 
-console.log('FastifyVite', FastifyVite)
-
 export async function main (dev) {
   const server = Fastify()
 
@@ -26,8 +24,8 @@ export async function main (dev) {
 
   await server.vite.ready()
 
-  server.get('/', async (req, reply) => {
-    reply.html(await reply.render())
+  server.get('/', (req, reply) => {
+    return reply.html()
   })
 
   return server

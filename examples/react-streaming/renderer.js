@@ -35,6 +35,7 @@ function createHtmlFunction (source, scope, config) {
       // Errors from React SSR can be captured here
       .on('error', console.log)
     this.send(readable)
+    return this
   }
 }
 

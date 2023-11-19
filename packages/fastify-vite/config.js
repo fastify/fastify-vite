@@ -61,11 +61,13 @@ const DefaultConfig = {
       return function () {
         this.type('text/html')
         this.send(indexHtmlTemplate({ element: '' }))
+        return this
       }
     }
-    return function (ctx) {
+    return async function (ctx) {
       this.type('text/html')
-      this.send(indexHtmlTemplate(ctx ?? this.render()))
+      this.send(indexHtmlTemplate(ctx ?? await this.render()))
+      return this
     }
   },
 
@@ -84,8 +86,7 @@ const DefaultConfig = {
   createRouteHandler (client, scope, config) {
     return async function (req, reply) {
       const page = await reply.render(scope, req, reply)
-      reply.html(page)
-      return reply
+      return reply.html(page)
     }
   },
 
@@ -201,7 +202,15 @@ async function resolveSSRBundle ({ dev, vite }) {
       return
     }
     bundle.indexHtml = await read(indexHtmlPath, 'utf8')
-    bundle.manifest = require(resolve(bundle.dir, 'client/ssr-manifest.json'))
+    // SSR manifest location altered between Vite v4 and v5
+    const v4SSRManifestPath = resolve(bundle.dir, 'client/ssr-manifest.json')
+    // See https://github.com/vitejs/vite/pull/14230
+    const ssrManifestPath = resolve(bundle.dir, 'client/.vite/ssr-manifest.json')
+    if (exists(v4SSRManifestPath)) {
+      bundle.manifest = require(v4SSRManifestPath)
+    } else if (exists(ssrManifestPath)) {
+      bundle.manifest = require(ssrManifestPath)
+    }
   } else {
     bundle.manifest = []
   }

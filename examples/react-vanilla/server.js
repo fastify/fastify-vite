@@ -20,7 +20,7 @@ export async function main (dev) {
   })
 
   server.get('/', (req, reply) => {
-    reply.html(reply.render())
+    return reply.html()
   })
 
   await server.vite.ready()
