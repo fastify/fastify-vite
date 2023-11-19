@@ -1,7 +1,7 @@
 /* global $paramPattern */
 
 export default import.meta.env.SSR
-  ? createRoutes(import.meta.globEager('$globPattern'))
+  ? createRoutes(import.meta.glob('$globPattern', { eager: true }))
   : hydrateRoutes(import.meta.glob('$globPattern'))
 
 async function createRoutes (from, { param } = { param: $paramPattern }) {
