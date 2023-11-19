@@ -21,7 +21,7 @@ In addition to the basic integration building blocks required to run Vite's deve
 
 For Vue and React users, [@fastify/vue](/vue/whats-included) and [@fastify/react](/react/whats-included/) are available as starting points featuring essential features from Nuxt.js and Next.js such as **SSR data fetching** and **seamless SSR-to-CSR navigation**, where client-side navigation and rendering takes over after SSR for the first render.
 
-These packages are implemented the same way, following the **universal route module** specification found in [Framework Shells](/guide/framework-shells). And most importantly, these packages are implemented using only the hooks provided by **@fastify/vite**.
+These packages are implemented the same way, following the specification found in [Core Renderers](/guide/core-renderers). And most importantly, these packages are implemented using only the hooks provided by **@fastify/vite**.
 
 ## A quick walkthrough
 
@@ -63,7 +63,7 @@ await server.register(FastifyVite, {
 })
 
 server.get('/', (req, reply) => {
-  reply.html()
+  return reply.html()
 })
 
 await server.vite.ready()

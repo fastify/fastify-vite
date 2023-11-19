@@ -154,16 +154,23 @@ function sidebarVue(): DefaultTheme.SidebarItem[] {
     {
       text: 'Introduction',
       collapsed: false,
+      base: '/guide/',
       items: [
-        { base: '/guide/', text: 'Getting Started', link: 'getting-started' },
-        { base: '/guide/', text: 'Project Structure', link: 'project-structure' },
-        { base: '/guide/', text: 'Rendering Function', link: 'rendering-function' },
-        { base: '/guide/', text: 'Templating Function', link: 'templating-function' },
-        { base: '/guide/', text: 'Building & Deployment', link: 'building-and-deployment' },
-        { base: '/guide/', text: 'Framework Shells', link: 'core-renderers' },
+        { text: 'Getting Started', link: 'getting-started',
+          items: [
+            { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
+            { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
+            { text: 'Directory structure', link: 'getting-started#directory-structure' },
+            { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
+          ],
+        },
+        { text: 'Rendering Function', link: 'rendering-function', },
+        { text: 'Router Integration', link: 'router-integration', },
+        { text: 'Templating Function', link: 'templating-function' },
+        { text: 'Build and Deploy', link: 'build-and-deploy' },
+        { text: 'Core Renderers', link: 'core-renderers' },
       ]
-    },
-    {
+    },    {
       text: '@fastify/vue',
       collapsed: false,
       items: [
@@ -244,7 +251,6 @@ function sidebarReact(): DefaultTheme.SidebarItem[] {
 function sidebarConfig(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: 'Configuration',
       items: [
         { text: 'clientModule', link: 'clientModule' },
         { text: 'prepareClient', link: 'prepareClient' },
@@ -256,6 +262,22 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
         { text: 'renderer', link: 'renderer' },
         { text: 'spa', link: 'spa' },
       ]
-    }
+    },
+    {
+      text: '@fastify/vue',
+      collapsed: true,
+      items: [
+        { text: 'Project Structure', link: 'vue/project-structure' },
+        { text: 'Vite Plugin', link: 'vue/vite-plugin' },
+      ]
+    },
+    {
+      text: '@fastify/react',
+      collapsed: true,
+      items: [
+        { text: 'Project Structure', link: 'react/project-structure' },
+        { text: 'Vite Plugin', link: 'react/vite-plugin' },
+      ]
+    },
   ]
 }

@@ -1,3 +1,5 @@
+[vue]: https://vuejs.org/
+[react]: https://react.dev/
 [fastify-cli]: https://github.com/fastify/fastify-cli
 [fastify-static]: https://github.com/fastify/fastify-static
 [fastify-vite]: https://fastify-vite.dev

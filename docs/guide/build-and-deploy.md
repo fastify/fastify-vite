@@ -1,7 +1,7 @@
 <!--@include: ./parts/links.md-->
 <!--@include: ./parts/notice.md-->
 
-## Deployment
+# Deployment
 
 If you try to run any of the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) without the `--dev` flag, you'll be greeted with an error message:
 
