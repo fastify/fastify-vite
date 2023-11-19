@@ -1,8 +1,9 @@
 const middie = require('@fastify/middie')
-const { mergeConfig, defineConfig } = require('vite')
 const { join, resolve, read } = require('../ioutils')
 
 async function setup (config) {
+  const { createServer, mergeConfig, defineConfig } = await import('vite')
+
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
   await this.scope.register(middie)
@@ -22,7 +23,6 @@ async function setup (config) {
     config.vite
   )
 
-  const { createServer } = require('vite')
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
 
