@@ -1,5 +1,6 @@
+<!--@include: ../guide/parts/links.md-->
 
-## Universal Route Enter Event
+# onEnter Event
 
 ### `onEnter(ctx)`
 

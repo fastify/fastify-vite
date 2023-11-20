@@ -4,9 +4,11 @@
 
 **`@fastify/vue`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [Vue][vue].
 
-It implements all of the features specified in [**Core Renderers**](/guide/core-renderers).
+It implements all of the features specified in [**Core Renderers**](/guide/core-renderers). 
 
-- [Project Structure]() covers
+Below is an overview of all individual documentation topics and the order in which it makes the most sense to read them.
+
+- [Project Structure]() covers the structure of a **`@fastify/vue`** project, configuration, special folders and others conventions employed.
 - [Rendering Modes]() covers
 - [Routing Modes]() covers
 - [Data Fetching]() covers
@@ -14,11 +16,10 @@ It implements all of the features specified in [**Core Renderers**](/guide/core-
 - [Route Context]() covers
 - [onEnter Event]() covers
 - [Head Management]() covers
-- [Virtual Modules]() covers
-
-## Basic setup
 
 ## Starter template
+
+Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
 - [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](https://github.com/jonathantneal), which enables [several modern CSS features](https://preset-env.cssdb.org/), such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
 

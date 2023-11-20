@@ -1,28 +1,8 @@
+<!--@include: ../guide/parts/links.md-->
 
-## Route Context
+# Route Context
 
-### Initialization module
-  
 The starter template includes a sample `context.js` file. This file is optional and can be safely removed. If it's present, Fastify DX automatically loads it and uses it to do any RouteContext extensions or data injections you might need. If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of it as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/).
-
-**Consuming the route context:**
-
-```js
-import { 
-  useRouteContext
-} from '/dx:core.js'
-
-// ...
-const { 
-  state, 
-  actions
-} = useRouteContext()
-
-// ...
-actions.addTodoItem(state, value)
-```
-
-See the [full example](https://github.com/fastify/fastify-dx/blob/main/starters/vue/client/pages/using-store.vue) in the starter template.
 
 This example demonstrates how to use it to set up an universally available (SSR and CSR) `$fetch` function (using [`ky-universal`](https://www.npmjs.com/package/ky-universal)) and also export some store actions. They're all made available by `useRouteContext()`, covered next.
 

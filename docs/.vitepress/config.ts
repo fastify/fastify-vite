@@ -177,7 +177,14 @@ function sidebarVue(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'Getting Started', link: 'index' },
         { text: 'Project Structure', link: 'project-structure' },
-        { text: 'Rendering Modes', link: 'rendering-modes' },
+        { text: 'Rendering Modes', link: 'rendering-modes',
+          items: [
+            { text: 'Universal', link: 'rendering-modes#universal' },
+            { text: 'Client Only', link: 'rendering-modes#clientOnly', },
+            { text: 'Server Only', link: 'rendering-modes#serverOnly', },
+            { text: 'Streaming', link: 'rendering-modes#streaming', }
+          ],
+        },
         { text: 'Routing Modes', link: 'routing-modes' },
         { text: 'Data Fetching', link: 'data-fetching' },
         { text: 'Route Layouts', link: 'route-layouts' },

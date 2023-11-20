@@ -1,5 +1,6 @@
+<!--@include: ../guide/parts/links.md-->
 
-## Project Structure
+# Project Structure
 
 The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue) looks like this:
 
@@ -11,15 +12,10 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/v
 │    ├── root.vue
 │    ├── index.html
 │    ├── layouts/
-│    │    ├── default.vue
-│    │    └── auth.vue
+│    │    └── default.vue
 │    └── pages/
-│          ├── index.vue
-│          ├── client-only.vue
-│          ├── server-only.vue
-│          ├── streaming.vue
-│          ├── using-data.vue
-│          └── using-store.vue
+│          ├── examples/
+│          └── index.vue
 ├── vite.config.js
 └── package.json
 ```

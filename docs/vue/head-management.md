@@ -1,5 +1,6 @@
+<!--@include: ../guide/parts/links.md-->
 
-## Meta Tags
+# Head Management
 
 Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
 
