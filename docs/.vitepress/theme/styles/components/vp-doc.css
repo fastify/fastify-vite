@@ -93,6 +93,10 @@
   line-height: 28px;
 }
 
+.vp-doc table p {
+  line-height: 18px;
+}
+
 .vp-doc blockquote {
   margin: 16px 0;
   border-left: 2px solid var(--vp-c-divider);
@@ -176,19 +180,19 @@
 .vp-doc th,
 .vp-doc td {
   border: 1px solid var(--vp-c-divider);
-  padding: 8px 16px;
+  padding: 4px 10px;
 }
 
 .vp-doc th {
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--vp-c-text-2);
   background-color: var(--vp-c-bg-soft);
 }
 
 .vp-doc td {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /**

@@ -92,165 +92,27 @@ function nav(): DefaultTheme.NavItem[] {
 /* prettier-ignore */
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
-    {
-      text: 'Introduction',
-      collapsed: false,
-      items: [
-        { text: 'Getting Started', link: 'getting-started',
-          items: [
-            { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
-            { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
-            { text: 'Directory structure', link: 'getting-started#directory-structure' },
-            { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
-          ],
-        },
-        { text: 'Rendering Function', link: 'rendering-function', },
-        { text: 'Router Integration', link: 'router-integration', },
-        { text: 'Templating Function', link: 'templating-function' },
-        { text: 'Build and Deploy', link: 'build-and-deploy' },
-        { text: 'Core Renderers', link: 'core-renderers' },
-      ]
-    },
-    {
-      text: '@fastify/vue',
-      collapsed: true,
-      base: '/vue/',
-      items: [
-        { text: 'Getting Started', link: 'index' },
-        { text: 'Project Structure', link: 'project-structure' },
-        { text: 'Rendering Modes', link: 'rendering-modes' },
-        { text: 'Routing Modes', link: 'routing-modes' },
-        { text: 'Data Fetching', link: 'data-fetching' },
-        { text: 'Route Layouts', link: 'route-layouts' },
-        { text: 'Route Context', link: 'route-context' },
-        { text: 'onEnter Event', link: 'onenter-event' },
-        { text: 'Head Management', link: 'head-management' },
-        { text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
-    {
-      text: '@fastify/react',
-      collapsed: true,
-      base: '/react/',
-      items: [
-        { text: 'Getting Started', link: 'index' },
-        { text: 'Project Structure', link: 'project-structure' },
-        { text: 'Rendering Modes', link: 'rendering-modes' },
-        { text: 'Routing Modes', link: 'routing-modes' },
-        { text: 'Data Fetching', link: 'data-fetching' },
-        { text: 'Route Layouts', link: 'route-layouts' },
-        { text: 'Route Context', link: 'route-context' },
-        { text: 'onEnter Event', link: 'onenter-event' },
-        { text: 'Head Management', link: 'head-management' },
-        { text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
+    Guide(),
+    Vue(true),
+    React(true),
     { text: 'Configuration', base: '/config/', link: 'index' }
   ]
 }
 
 function sidebarVue(): DefaultTheme.SidebarItem[] {
   return [
-    {
-      text: 'Introduction',
-      collapsed: false,
-      base: '/guide/',
-      items: [
-        { text: 'Getting Started', link: 'getting-started',
-          items: [
-            { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
-            { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
-            { text: 'Directory structure', link: 'getting-started#directory-structure' },
-            { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
-          ],
-        },
-        { text: 'Rendering Function', link: 'rendering-function', },
-        { text: 'Router Integration', link: 'router-integration', },
-        { text: 'Templating Function', link: 'templating-function' },
-        { text: 'Build and Deploy', link: 'build-and-deploy' },
-        { text: 'Core Renderers', link: 'core-renderers' },
-      ]
-    },
-    {
-      text: '@fastify/vue',
-      collapsed: true,
-      items: [
-        { text: 'Getting Started', link: 'index' },
-        { text: 'Project Structure', link: 'project-structure' },
-        { text: 'Rendering Modes', link: 'rendering-modes',
-          items: [
-            { text: 'Universal', link: 'rendering-modes#universal' },
-            { text: 'Client Only', link: 'rendering-modes#clientOnly', },
-            { text: 'Server Only', link: 'rendering-modes#serverOnly', },
-            { text: 'Streaming', link: 'rendering-modes#streaming', }
-          ],
-        },
-        { text: 'Routing Modes', link: 'routing-modes' },
-        { text: 'Data Fetching', link: 'data-fetching' },
-        { text: 'Route Layouts', link: 'route-layouts' },
-        { text: 'Route Context', link: 'route-context' },
-        { text: 'onEnter Event', link: 'onenter-event' },
-        { text: 'Head Management', link: 'head-management' },
-        { text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
-    {
-      text: '@fastify/react',
-      collapsed: true,
-      items: [
-        { base: '/react/', text: 'What\'s Included', link: 'whats-included' },
-        { base: '/react/', text: 'Basic Setup', link: 'basic-setup' },
-        { base: '/react/', text: 'Project Structure', link: 'project-structure' },
-        { base: '/react/', text: 'Rendering Modes', link: 'rendering-modes' },
-        { base: '/react/', text: 'Routing Modes', link: 'routing-modes' },
-        { base: '/react/', text: 'Data Fetching', link: 'data-fetching' },
-        { base: '/react/', text: 'Route Layouts', link: 'route-layouts' },
-        { base: '/react/', text: 'Route Context', link: 'route-context' },
-        { base: '/react/', text: 'onEnter Event', link: 'onenter-event' },
-        { base: '/react/', text: 'Head Management', link: 'head-management' },
-        { base: '/react/', text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
+    Guide(true),
+    Vue(),
+    React(true),
     { text: 'Configuration', base: '/config/', link: 'index' }    
   ]
 }
 
 function sidebarReact(): DefaultTheme.SidebarItem[] {
   return [
-    {
-      text: '@fastify/vue',
-      collapsed: true,
-      items: [
-        { base: '/vue/', text: 'What\'s Included', link: 'index' },
-        { base: '/vue/', text: 'Basic Setup', link: 'basic-setup' },
-        { base: '/vue/', text: 'Project Structure', link: 'project-structure' },
-        { base: '/vue/', text: 'Rendering Modes', link: 'rendering-modes' },
-        { base: '/vue/', text: 'Routing Modes', link: 'routing-modes' },
-        { base: '/vue/', text: 'Data Fetching', link: 'data-fetching' },
-        { base: '/vue/', text: 'Route Layouts', link: 'route-layouts' },
-        { base: '/vue/', text: 'Route Context', link: 'route-context' },
-        { base: '/vue/', text: 'onEnter Event', link: 'onenter-event' },
-        { base: '/vue/', text: 'Head Management', link: 'head-management' },
-        { base: '/vue/', text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
-    {
-      text: '@fastify/react',
-      collapsed: true,
-      items: [
-        { text: 'What\'s Included', link: 'index' },
-        { text: 'Basic Setup', link: 'basic-setup' },
-        { text: 'Project Structure', link: 'project-structure' },
-        { text: 'Rendering Modes', link: 'rendering-modes' },
-        { text: 'Routing Modes', link: 'routing-modes' },
-        { text: 'Data Fetching', link: 'data-fetching' },
-        { text: 'Route Layouts', link: 'route-layouts' },
-        { text: 'Route Context', link: 'route-context' },
-        { text: 'onEnter Event', link: 'onenter-event' },
-        { text: 'Head Management', link: 'head-management' },
-        { text: 'Virtual Modules', link: 'virtual-moduless' },
-      ]
-    },
+    Guide(true),
+    Vue(true),
+    React(),
     { text: 'Configuration', base: '/config/', link: 'index' }
   ]
 }
@@ -287,4 +149,78 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
       ]
     },
   ]
+}
+
+function Guide (collapsed = false) {
+  return {
+    collapsed,
+    text: 'Introduction',
+    base: '/guide/',
+    items: [
+      { text: 'Getting Started', link: 'getting-started',
+        items: [
+          { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
+          { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
+          { text: 'Directory structure', link: 'getting-started#directory-structure' },
+          { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
+        ],
+      },
+      { text: 'Rendering Function', link: 'rendering-function', },
+      { text: 'Router Integration', link: 'router-integration', },
+      { text: 'Templating Function', link: 'templating-function' },
+      { text: 'Build and Deploy', link: 'build-and-deploy' },
+      { text: 'Core Renderers', link: 'core-renderers' },
+    ]
+  }
+}
+
+function Vue (collapsed = false) {
+  return {
+    text: '@fastify/vue',
+    collapsed: true,
+    base: '/vue/',
+    items: [
+      { text: 'Getting Started', link: 'index' },
+      { text: 'Project Structure', link: 'project-structure' },
+      { 
+        text: 'Router Setup', 
+        link: 'router-setup',
+        items: [
+          { text: 'Routes location', link: 'router-setup#routes-location' },
+          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
+        ],
+      },
+      { 
+        text: 'Route Modules', 
+        link: 'route-modules',
+        items: [
+          { text: 'Data fetching', link: 'route-modules#data-fetching' },
+          { text: 'Page metadata', link: 'route-modules#page-metadata' },
+          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
+        ],        
+      },
+      { text: 'Route Layouts', link: 'route-layouts' },
+      { text: 'Route Context', link: 'route-context' },
+      { text: 'Rendering Modes', link: 'rendering-modes' },      
+    ]
+  }
+}
+
+function React (collapsed = false) {
+  return {
+    text: '@fastify/react',
+    collapsed: true,
+    base: '/react/',
+    items: [
+      { text: 'Getting Started', link: 'index' },
+      { text: 'Project Structure', link: 'project-structure' },
+      { text: 'Router Setup', link: 'router-setup' },
+      { text: 'Rendering Modes', link: 'rendering-modes' },
+      { text: 'Data Fetching', link: 'data-fetching' },
+      { text: 'Route Layouts', link: 'route-layouts' },
+      { text: 'Route Context', link: 'route-context' },
+      { text: 'onEnter Event', link: 'onenter-event' },
+      { text: 'Head Management', link: 'head-management' },
+    ]
+  }
 }

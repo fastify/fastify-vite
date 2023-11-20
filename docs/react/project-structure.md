@@ -42,8 +42,6 @@ The `client/index.html` file is the [root HTML template of the application](http
 > You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. 
 
 This files links to `/dx:mount.js`, which is a virtual module provided by Fastify DX. 
-
-Virtual modules are covered [here][virtual-modules].
   
 The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [here][routing-config].
 
