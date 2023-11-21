@@ -1,5 +1,4 @@
 const { fileURLToPath } = require('node:url')
-const { resolveConfig } = require('vite')
 const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
 
@@ -162,6 +161,7 @@ async function resolveViteConfig (root, dev, isSpa) {
   for (const ext of ['js', 'mjs', 'ts']) {
     let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
+      const { resolveConfig } = await import('vite')
       const resolvedConfig = await resolveConfig({
         configFile
       }, command, mode)
