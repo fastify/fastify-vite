@@ -2,14 +2,40 @@
 
 # Project Structure
 
-The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/vue) looks like this:
+A minimal `@fastify/vite` project may look like the following:
 
-```
+```text
 ├── server.js
 ├── client/
 │    ├── index.js
-│    ├── context.js
+│    ├── index.html
+│    ├── pages/
+│    │    └── index.vue
+│    └── assets/
+│          └── logo.svg
+├── vite.config.js
+└── package.json
+```
+
+In this example, `server.js` is the Fastify server and also the place where both `@fastify/vite` and `@fastify/vue` are imported to set up your application. 
+
+Like in any `@fastify/vite` application, `client/index.js` are the portions of your client code that get loaded by the server, and `index.html` needs to exist as the [front-and-central entry point](https://vitejs.dev/guide/#index-html-and-project-root) of your application. In `vite.config.js`, `@fastify/vue/plugin` needs to be registered so that [**smart imports**](/vue/project-structure#smart-imports) can work. 
+
+[vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue
+
+This example is actually provided as the [vue-base][vue-base] starter.
+
+## Smart Imports
+
+```text {3-7}
+├── server.js
+├── client/
+│    ├── core.js
+│    ├── create.js
+│    ├── mount.js
+│    ├── index.js
 │    ├── root.vue
+│    ├── context.js
 │    ├── index.html
 │    ├── layouts/
 │    │    └── default.vue
@@ -22,9 +48,7 @@ The [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/v
   
 Several internal files are provided as virtual modules by Fastify DX. They are located inside the `@fastify/vue` package in `node_modules`, and dynamically loaded so you don't have to worry about them unless you want them overriden. 
 
-In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. Find the detailed rundown of all virtual modules [here][virtual-modules].
-
-[virtual-modules]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/virtual-modules.md
+In this case, placing a file with the same name as the registered virtual module in your Vite project root will override it. 
 
 The `server.js` file is your application entry point. It's the file that runs everything. It boots a Fastify server configured with [**fastify-vite**](https://github.com/fastify/fastify-vite) and **Fastify DX for Vue** as a renderer adapter to **fastify-vite**. 
 
@@ -39,8 +63,6 @@ The `client/index.html` file is the [root HTML template of the application](http
 > You can expand this file with additional `<meta>` and `<link>` tags if you wish, provided you don't remove any of the placeholders. 
 
 This files links to `/dx:mount.js`, which is a virtual module provided by Fastify DX. 
-
-Virtual modules are covered [here][virtual-modules].
   
 The `client/pages/` directory contains your route modules, whose paths are dynamically inferred from the directory structure itself. You can change this behavior easily. More on this [here][routing-config].
 

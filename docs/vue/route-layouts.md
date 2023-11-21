@@ -1,19 +1,24 @@
+# Route Layouts
 
-## Route Layouts
+`@fastify/vue` will automatically load layouts from the `layouts/` folder. 
 
-Fastify DX will automatically load layouts from the `layouts/` folder. By default, `/dx:layouts/default.vue` is used — that is, if a project is missing a `layouts/defaults.vue` file, the one provided by Fastify DX is used instead. 
+By default, the `/dx:layouts/default.vue` [**smart import**](/vue/project-structure#smart-imports) is used. If a project is missing `/layouts/defaults.vue` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
-See the section on [Virtual Modules](https://github.com/fastify/fastify-dx/blob/main/docs/vue/virtual-modules.md) to learn more about this.
+```vue
+<template>
+  <div class="layout">
+    <slot></slot>
+  </div>
+</template>
+```
 
 You assign a layout to a route by exporting `layout`. 
-
-See [`pages/using-auth.vue`](https://github.com/fastify/fastify-dx/blob/main/starters/vue/pages/using-auth.vue) in the starter template:
 
 ```js
 export const layout = 'auth'
 ```
 
-That'll will cause the route to be wrapped in the layout component exported by [`layouts/auth.vue`](https://github.com/fastify/fastify-dx/blob/main/starters/vue/layouts/auth.vue):
+That'll will cause the route to be wrapped in the layout component exported by a Vue component placed in `layouts/auth.vue`. Below is a simple example:
 
 ```vue
 <template>
@@ -43,4 +48,4 @@ export default {
 </script>
 ```
 
-Note that like routes, it has access to `useRouteContext()`.
+Like route modules, layouts can use `useRouteContext()`.

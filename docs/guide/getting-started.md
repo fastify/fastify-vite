@@ -71,7 +71,7 @@ await server.listen({ port: 3000 })
 ```
 :::
 
-This Fastify server only has a root route and it replies with the result of `reply.html()`. This `html()` method is added by `@fastify/vite`, using the result of the `createHtmlFunction()` configuration hook, and will seamlessly serve either the development or production version of your `index.html`, according to the `dev` configuration setting passed to the `@fastify/vite` plugin options, with or without a server-side rendered markup.
+This Fastify server only has a root route and it replies with the result of `reply.html()`. This `html()` method is added by `@fastify/vite`, using the result of the `createHtmlFunction()` configuration hook, and will seamlessly serve either the development or production version of your `index.html`, according to the `dev` configuration setting passed to the `@fastify/vite` plugin options, with or without server-side rendered markup.
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered first.
 

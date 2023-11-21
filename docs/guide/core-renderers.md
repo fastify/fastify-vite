@@ -23,8 +23,11 @@ Bullet points are used for clarity.
 
 - Route modules **must** have a **universal context object** that is shared between client and server. This means this object needs to be embedded into the HTML document and made part of the client hydration phase.
 
-- It **must** be possible for **route modules** to export a function that is run on the server before the component, but can also run on the client via an API request, similar to the way `getServerSideProps()` works in **Next.js**. The **core renderer** **must** store data retrieved on the server in the universal route context object, assumed to be part of the client hydration phase.
-  > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a `getData()` function, which runs on the server during SSR and also on-demand during CSR navigation via an API endpoint that gets automatically registered via [`createRoute()`](/config/createRoute).
+- It **must** be possible for **route modules** to export a function that runs on the server before the component, but can also run on the client via an API request, similar to the way `getServerSideProps()` works in **Next.js**. The **core renderer** **must** store data retrieved on the server in the universal route context object, assumed to be part of the client hydration phase.
+  > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a [`getData()`]() function, which runs on the server during SSR and also on-demand during CSR navigation via an API endpoint that gets automatically registered via [`createRoute()`](/config/createRoute).
+
+- It **must** be possible for **route modules** to export a function to set HTML page metadata (`<title>` and `<meta>` tags) seamlessly (SSR and CSR).
+  > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a [`getMeta()`]()function, which runs on the server during SSR writings tags directly to the `index.html` template, but also dynamically on-demand during CSR navigation.
 
 - Route modules **may** be able to define a **layout component**, and that be automatically loaded and made available to wrap them.
   > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a `layout` flag set to a string matching a component under the `layouts/` directory.

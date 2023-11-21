@@ -105,9 +105,13 @@ Enables **streaming** server-side rendering.
 
 ## Data fetching
 
-This hook is set up in a way that it runs server-side before any SSR takes place, so any data fetched is made available to the route component before it starts rendering. During first render, any data retrieved on the server is automatically sent to be hydrated on the client so no new requests are made. Then, during client-side navigation (post first-render), a JSON request is fired to an endpoint automatically registered for running the `getData()` function for that route on the server.
+**`@fastify/vue`** implements the `getServerSideProps()` style of data fetching via the `getData()` route module export. 
 
-The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context](https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-context.md) object and is accessible from `getMeta()` and `onEnter()` hooks and also via the `useRouteContext()` hook.
+It will run server-side before any SSR takes place, so any data fetched is made available to the route component (on the [route context](/vue/route-context)) before it even starts to render. During first render, any data retrieved on the server is automatically sent to the client for hydration, as part of the the route context.
+
+During client-side navigation (post first-render), a JSON request is fired to an internal endpoint **automatically registered** by `@fastify/vite` for running the `getData()` function for that route on the server, exactly the same way `getServerSideProps()` works in **Next.js**.
+
+The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context](/vue/route-context) object and is accessible from `getMeta()` and `onEnter()` functions and also via the `useRouteContext()` hook.
 
 ```vue
 <template>
@@ -134,14 +138,23 @@ export default {
 
 ## Page metadata
 
-Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX renders `<head>` elements independently from the SSR phase. This allows you to fetch data for populating the first `<meta>` tags and stream them right away to the client, and only then perform SSR.
+**`@fastify/vue`** renders `<head>` elements **independently** from SSR. This allows you to fetch data for populating `<meta>` tags first, stream them right away to the client, and only then perform SSR.
 
-> Additional `<link>` preload tags can be produced from the SSR phase. This is **not currently implemented** in this **alpha release** but is a planned feature. If you can't wait for it, you can roll out your own (and perhaps contribute your solution) by providing your own [`createHtmlFunction()`](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-vue/index.js#L57) to [@fastify/vite](https://github.com/fastify/fastify-vite).
+> Under the hood, it uses the [`unihead`](https://github.com/galvez/unihead) library, which has a SSR function and a browser library that allows for dynamic changes during client-side navigation. This is a very small library built specifically for `@fastify/vite` core renderers, and used in the current implementation of `createHtmlFunction()` for `@fastify/vue`. This may change in the futuree as other libraries are considered, but for most use cases it should be enough.
 
+To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the interface expected by [unihead](https://github.com/galvez/unihead):
 
-To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the format expected by [unihead](https://github.com/galvez/unihead), the underlying library used by Fastify DX.
-  
-It receives the [route context](https://github.com/fastify/fastify-dx/blob/main/packages/fastify-vue/README.md#route-context) as first parameter and runs after `getData()`, allowing you to access any `data` populated by these other functions to generate your tags.
+```ts
+interface RouteMeta {
+  title?: string | null,
+  html?: Record<string, string> | null
+  body?: Record<string, string> | null
+  meta?: Record<string, string>[] | null,
+  link?: Record<string, string>[] | null,
+}
+```
+
+It receives the [route context](/vue/route-context) as first parameter and runs right after `getData()`, giving you access to `data` when generate your tags.
 
 ```vue
 <template>
@@ -149,11 +162,19 @@ It receives the [route context](https://github.com/fastify/fastify-dx/blob/main/
 </template>
 
 <script>
+export function getData () {
+  return {
+    page: {
+      title: 'Page title',
+    }
+  }
+}
+
 export function getMeta (ctx) {
   return {
-    title: 'Route Title',
+    title: ctx.data.page.title,
     meta: [
-      { name: 'twitter:title', value: 'Route Title' },
+      { name: 'twitter:title', value: ctx.data.page.title },
     ]
   }
 }
@@ -162,9 +183,9 @@ export function getMeta (ctx) {
 
 ## The onEnter event
 
-If a route module exports a `onEnter()` function, it's executed before the route renders, both in SSR and client-side navigation. That is, the first time a route render on the server, onEnter() runs on the server. Then, since it already ran on the server, it doesn't run again on the client for that first route. But if you navigate to another route on the client using `<Link>`, it runs normally as you'd expect.
+The `onEnter()` function export is executed **just before** the route renders, **both in SSR and during client-side navigation**. That is, the first time a route renders on the server, `onEnter()` runs on the server. Then, since it already ran on the server, **it doesn't run again on the client for that first route**. But if you navigate to another route on the client using `<router-link>`, it triggered again.
 
-It receives the [universal route context][route-context] as first parameter, so you can make changes to `data`, `meta` and `state` if needed.
+It receives the [route context](/vue/route-context) as first parameter, so you can use it to make changes to `data`, `meta` and `state` if needed.
 
 [route-context]: https://github.com/fastify/fastify-dx/blob/main/docs/vue/route-context.md
 
@@ -182,4 +203,4 @@ export function onEnter (ctx) {
 </script>
 ```
 
-The example demonstrates how to turn off SSR and downgrade to CSR-only, assuming you have a `pressureHandler` configured in [`underpressure`](https://github.com/fastify/under-pressure) to set a `underPressure` flag on your server instance.
+The snippet above demonstrates how to turn off SSR and downgrade to CSR-only, assuming you have a `pressureHandler` configured in [`underpressure`](https://github.com/fastify/under-pressure) to set a `underPressure` flag on your Fastify server instance.

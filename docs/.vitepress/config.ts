@@ -176,8 +176,8 @@ function Guide (collapsed = false) {
 
 function Vue (collapsed = false) {
   return {
+    collapsed,
     text: '@fastify/vue',
-    collapsed: true,
     base: '/vue/',
     items: [
       { text: 'Getting Started', link: 'index' },
@@ -199,8 +199,8 @@ function Vue (collapsed = false) {
           { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
         ],        
       },
+      { text: 'Route Context', link: 'route-context' },      
       { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Route Context', link: 'route-context' },
       { text: 'Rendering Modes', link: 'rendering-modes' },      
     ]
   }
@@ -208,8 +208,8 @@ function Vue (collapsed = false) {
 
 function React (collapsed = false) {
   return {
+    collapsed,
     text: '@fastify/react',
-    collapsed: true,
     base: '/react/',
     items: [
       { text: 'Getting Started', link: 'index' },
