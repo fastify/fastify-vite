@@ -1,7 +1,7 @@
 import Head from 'unihead/client'
-import create from '/dx:create.js'
-import routesPromise from '/dx:routes.js'
-import * as context from '/dx:context.js'
+import create from '/:create.js'
+import routesPromise from '/:routes.js'
+import * as context from '/:context.js'
 
 mount('main')
 

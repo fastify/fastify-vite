@@ -2,7 +2,7 @@
 
 `@fastify/vue` will automatically load layouts from the `layouts/` folder. 
 
-By default, the `/dx:layouts/default.vue` [**smart import**](/vue/project-structure#smart-imports) is used. If a project is missing `/layouts/defaults.vue` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
+By default, the `/:layouts/default.vue` [**smart import**](/vue/project-structure#smart-imports) is used. If a project is missing `/layouts/defaults.vue` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
 ```vue
 <template>
@@ -34,7 +34,7 @@ That'll will cause the route to be wrapped in the layout component exported by a
 </template>
 
 <script>
-import { useRouteContext } from '/dx:core.js'
+import { useRouteContext } from '/:core.js'
 
 export default {
   setup () {

@@ -334,6 +334,10 @@
   --vp-code-tab-active-bar-color: var(--vp-c-brand-1);
 }
 
+.dark {
+  --vp-code-tab-bg: #f6f6f7;
+}
+
 /**
  * Component: Button
  * -------------------------------------------------------------------------- */

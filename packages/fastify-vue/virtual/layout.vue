@@ -6,9 +6,9 @@
 
 <script>
 import { inject } from 'vue'
-import { routeLayout } from '/dx:core.js'
+import { routeLayout } from '/:core.js'
 
-import * as DefaultLayout from '/dx:layouts/default.vue'
+import * as DefaultLayout from '/:layouts/default.vue'
 const appLayouts = import.meta.globEager('/layouts/*.vue')
 
 appLayouts['/layouts/default.vue'] ??= DefaultLayout

@@ -2,8 +2,8 @@ const { readFileSync, existsSync } = require('fs')
 const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 
-function viteVueFastifyDX (config = {}) {  
-  const prefix = /^\/?dx:/
+function viteFastifyVue (config = {}) {  
+  const prefix = /^\/:/
   const routing = Object.assign({
     globPattern: '/pages/**/*.vue',
     paramPattern: /\[(\w+)\]/,
@@ -106,4 +106,4 @@ function viteVueFastifyDX (config = {}) {
   }
 }
 
-module.exports = viteVueFastifyDX
+module.exports = viteFastifyVue

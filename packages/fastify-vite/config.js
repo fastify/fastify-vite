@@ -114,6 +114,10 @@ async function configure (options = {}) {
     viteConfig,
     bundle
   })
+  if (typeof config.renderer === 'string') {
+    const { default: renderer } = await import(config.renderer)
+    config.renderer = renderer
+  }
   for (const setting of [
     'clientModule',
     'createErrorHandler',

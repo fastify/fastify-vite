@@ -14,7 +14,10 @@ export default withMermaid({
 
   markdown: {
     math: true,
-    theme: 'poimandres',
+    theme: {
+      light: 'min-light',
+      dark: 'dracula',
+    }
   },
 
   sitemap: {
@@ -120,32 +123,44 @@ function sidebarReact(): DefaultTheme.SidebarItem[] {
 function sidebarConfig(): DefaultTheme.SidebarItem[] {
   return [
     {
+      'text': 'Base options',
+      'link': 'index#base-options',
+      collapsed: false,
       items: [
-        { text: 'clientModule', link: 'clientModule' },
-        { text: 'prepareClient', link: 'prepareClient' },
-        { text: 'createRenderFunction', link: 'createRenderFunction' },
-        { text: 'createHtmlFunction', link: 'createHtmlFunction' },
-        { text: 'createRouteHandler', link: 'createRouteHandler' },
-        { text: 'createErrorHandler', link: 'createErrorHandler' },
-        { text: 'createRoute', link: 'createRoute' },
-        { text: 'renderer', link: 'renderer' },
-        { text: 'spa', link: 'spa' },
+        { text: 'root', link: 'index#root' },
+        { text: 'dev', link: 'index#dev' },
+        { text: 'spa', link: 'index#spa' },
+        { text: 'renderer', link: 'index#renderer' },
+      ],
+    },
+    {
+      'text': 'Renderer options',
+      'link': 'index#renderer-options',
+      collapsed: false,
+      items: [
+        { text: 'clientModule', link: 'index#clientmodule' },
+        { text: 'prepareClient', link: 'index#prepareclient' },
+        { text: 'createRenderFunction', link: 'index#createrenderfunction' },
+        { text: 'createHtmlFunction', link: 'index#createhtmlfunction' },
+        { text: 'createRouteHandler', link: 'index#createroutehandler' },
+        { text: 'createErrorHandler', link: 'index#createerrorhandler' },
+        { text: 'createRoute', link: 'index#createroute' },
       ]
     },
     {
       text: '@fastify/vue',
       collapsed: true,
       items: [
-        { text: 'Project Structure', link: 'vue/project-structure' },
         { text: 'Vite Plugin', link: 'vue/vite-plugin' },
+        { text: 'Virtual Modules', link: 'vue/virtual-modules' },
       ]
     },
     {
       text: '@fastify/react',
       collapsed: true,
       items: [
-        { text: 'Project Structure', link: 'react/project-structure' },
         { text: 'Vite Plugin', link: 'react/vite-plugin' },
+        { text: 'Virtual Modules', link: 'react/virtual-modules' },
       ]
     },
   ]
@@ -181,7 +196,15 @@ function Vue (collapsed = false) {
     base: '/vue/',
     items: [
       { text: 'Getting Started', link: 'index' },
-      { text: 'Project Structure', link: 'project-structure' },
+      { 
+        text: 'Project Structure', 
+        link: 'project-structure',
+        items: [
+          { text: 'Essential files', link: 'project-structure#essential-files' },
+          { text: 'Smart imports', link: 'project-structure#smart-imports' },
+          { text: 'Special directories', link: 'project-structure#special-directories' }
+        ]
+      },
       { 
         text: 'Router Setup', 
         link: 'router-setup',
@@ -199,7 +222,15 @@ function Vue (collapsed = false) {
           { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
         ],        
       },
-      { text: 'Route Context', link: 'route-context' },      
+      { 
+        text: 'Route Context',
+        link: 'route-context',
+        items: [
+          { text: 'Init module', link: 'route-context#init-module' },
+          { text: 'Access hook', link: 'route-context#access-hook' },
+          { text: 'Execution order', link: 'route-context#execution-order' }
+        ]
+      },
       { text: 'Route Layouts', link: 'route-layouts' },
       { text: 'Rendering Modes', link: 'rendering-modes' },      
     ]

@@ -8,12 +8,14 @@ The route paths are **dynamically inferred from the directory structure**, very 
 
 Alternatively, you can also export a `path` constant from your route modules, in which case it will be used to **override the dynamically inferred paths**:
 
-```jsx
-export const path = '/my-page'
+```vue
+<template>
+  <p>Route with path export</p>
+</template>
 
-export defaut function MyPage () {
-  return <p>Route with path export</p>
-}
+<script>
+export const path = '/my-page'
+</script>
 ```
 
 ## Routes location
@@ -23,12 +25,14 @@ You can also change the glob pattern used to determine where to route modules fr
 In your Vite configuration file:
 
 ```js
-import viteFastifyReact from '@fastify/react/plugin'
-// ...
-const plugins = [
-  // ...
-  viteFastifyReact({ globPattern: '/views/**/*.jsx' }),
-]
+import viteFastifyVue from '@fastify/vue/plugin'
+
+export default {
+  plugins: [
+    // ...
+    viteFastifyVue({ globPattern: '/views/**/*.vue' }),
+  ]
+}
 ```
 
 ## Dynamic parameters
@@ -38,10 +42,13 @@ Dynamic route parameters follow the [Next.js convention](https://nextjs.org/docs
 In your Vite configuration file:
 
 ```js
-import viteFastifyVue from '@fastify/react/plugin'
-// ...
-const plugins = [
-  // ...
-  viteFastifyReact({ paramPattern: /\$(\w+)/ }),
-]
+import viteFastifyVue from '@fastify/vue/plugin'
+
+export default {
+  plugins: [
+    // ...
+    viteFastifyVue({ paramPattern: /\$(\w+)/ }),
+  ],
+}
 ```
+

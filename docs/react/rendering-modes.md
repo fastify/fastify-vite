@@ -1,73 +1,69 @@
 
+
 # Rendering modes
 
-Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/main/URMA.md), Fastify DX's route modules can be set for universal rendering (SSR + CSR hydration, the default behavior), SSR in streaming mode, SSR only (client gets no JavaScript) or CSR only (SSR fully disabled).
+[Route modules](/vue/route-modules)'s default rendering mode is **Seamless SSR to CSR**, akin to **Nuxt.js** and **Next.js**), but it can be customized as follows.
 
-## Universal
+## Server only
 
-## `streaming`
+If a route module exports `serverOnly` set to `true`, only SSR will take place. 
 
-If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means if you have components depending on asynchronous resources and `<Suspense>` sections with defined fallback components, they will be streamed right way while the resources finish processing.
-
-```jsx
-import React, { Suspense } from 'react'
-
-export const streaming = true
-
-export default function Index () {
-  return (
-    <Suspense fallback={<p>Waiting for content</p>}>
-      <Message />
-    </Suspense>
-  )
-}
-
-function Message () {
-  const message = afterSeconds({
-    id: 'index', 
-    message: 'Delayed by Suspense API',
-    seconds: 5
-  })
-  return <p>{message}</p>
-}
-```
-
-[See the full example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/streaming.jsx) in the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
-
-
-## `serverOnly`
-
-If a route module exports `serverOnly` set to `true`, only SSR will take place. The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
+The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
-This differs from [React Server Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but whose server-only rendering is more granular (available for any route child component) and fully controlled by React.
+```vue
+<template>
+  <p>This route is rendered on the server only!</p>
+</template>
 
-```jsx
+<script>
 export const serverOnly = true
-  
-export function Index () {
-  return <p>No JavaScript sent to the browser.</p>
-}
+</script>
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/server-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/server-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
 
-## `clientOnly`
+## Client only
 
 If a route module exports `clientOnly` set to `true`, no SSR will take place, only data fetching and data hydration. The client gets the empty container element (the one that wraps `<!-- element -->` in `index.html`) and all rendering takes place on the client only.
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but rendering is more granular (available for any route child component) and fully controlled by React.
+```vue
+<template>
+  <p>This route is rendered on the client only!</p>
+</template>
 
-```jsx
+<script>
 export const clientOnly = true
-  
-export function Index () {
-  return <p>No pre-rendered HTML sent to the browser.</p>
-}
+</script>
 ```
 
-[This example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/client-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
+[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/client-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
+
+## Streaming
+
+If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means the result of all server-side rendering gets streamed as it takes place, even if you have asynchronous Vue components. Note that differently from React, Vue **will not** stream a Suspense block's `#fallback` template.
+
+```vue
+<template>
+  <Message :secs="2" />
+  <Message :secs="4" />
+  <Message :secs="6" />
+</template>
+
+<script>
+import Message from '/components/Message.vue'
+
+export const streaming = true
+
+export default {
+  components: { Message },
+}
+</script>
+```
+
+[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/streaming.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
+
 

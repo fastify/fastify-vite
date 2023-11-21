@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node server.js",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr /index.js",
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "dependencies": {
+    "@fastify/one-line-logger": "latest",
+    "@fastify/vite": "workspace:^",
+    "@fastify/vue": "workspace:^",
+    "fastify": "latest",
+    "unihead": "latest",
+    "vite": "^5.0.1",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "@vitejs/plugin-vue": "^4.5.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-vue": "^8.7.1",
+    "postcss-preset-env": "^7.7.1",
+    "unocss": "^0.37.4"
+  }
+}

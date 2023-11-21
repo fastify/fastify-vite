@@ -5,7 +5,7 @@ export function configure (app) {
 </script>
 
 <script setup>
-import Layout from '/dx:layout.vue'
+import Layout from '/:layout.vue'
 </script>
 
 <template>
