@@ -244,14 +244,43 @@ function React (collapsed = false) {
     base: '/react/',
     items: [
       { text: 'Getting Started', link: 'index' },
-      { text: 'Project Structure', link: 'project-structure' },
-      { text: 'Router Setup', link: 'router-setup' },
-      { text: 'Rendering Modes', link: 'rendering-modes' },
-      { text: 'Data Fetching', link: 'data-fetching' },
+      { 
+        text: 'Project Structure', 
+        link: 'project-structure',
+        items: [
+          { text: 'Essential files', link: 'project-structure#essential-files' },
+          { text: 'Smart imports', link: 'project-structure#smart-imports' },
+          { text: 'Special directories', link: 'project-structure#special-directories' }
+        ]
+      },
+      { 
+        text: 'Router Setup', 
+        link: 'router-setup',
+        items: [
+          { text: 'Routes location', link: 'router-setup#routes-location' },
+          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
+        ],
+      },
+      { 
+        text: 'Route Modules', 
+        link: 'route-modules',
+        items: [
+          { text: 'Data fetching', link: 'route-modules#data-fetching' },
+          { text: 'Page metadata', link: 'route-modules#page-metadata' },
+          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
+        ],        
+      },
+      { 
+        text: 'Route Context',
+        link: 'route-context',
+        items: [
+          { text: 'Init module', link: 'route-context#init-module' },
+          { text: 'Access hook', link: 'route-context#access-hook' },
+          { text: 'Execution order', link: 'route-context#execution-order' }
+        ]
+      },
       { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Route Context', link: 'route-context' },
-      { text: 'onEnter Event', link: 'onenter-event' },
-      { text: 'Head Management', link: 'head-management' },
+      { text: 'Rendering Modes', link: 'rendering-modes' },      
     ]
   }
 }

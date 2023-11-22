@@ -2,81 +2,89 @@
 
 # Getting Started
 
-**`@fastify/vue`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [Vue][vue].
+**`@fastify/vue`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [Vue][vue]. It is accompanied by **`@fastify/vue/plugin`**, a Vite plugin that complements the renderer package.
 
-It implements all of the features specified in [**Core Renderers**](/guide/core-renderers). 
+It implements all of the features specified in [**Core Renderers**](/guide/core-renderers), including [**automated routing**](/vue/router-setup), [**universal data fetching**](/vue/route-modules#data-fetching) and [**head management**](/vue/route-modules#page-metadata). It's meant to be a lightweight Fastify-flavored replacement to **Nuxt.js** and other full blown SSR Vue frameworks. It is **Fastify-first** in the sense that your Fastify server is responsible for setting everything up via **`@fastify/vite`**.
 
 Below is an overview of all individual documentation topics and the order in which it makes the most sense to read them.
 
-- [Project Structure]() covers the structure of a **`@fastify/vue`** project, configuration, special folders and others conventions employed.
-- [Rendering Modes]() covers
-- [Routing Modes]() covers
-- [Data Fetching]() covers
-- [Route Layouts]() covers
-- [Route Context]() covers
-- [onEnter Event]() covers
-- [Head Management]() covers
+- [Project Structure](/vue/project-structure) covers the structure of a **`@fastify/vue`** project, configuration, special folders and others conventions employed.
+- [Router Setup](/vue/router-setup) covers how route modules get registered as actual routes, both on the server and the client.
+- [Route Modules](/vue/route-modules) covers what makes up route modules, what special exports they have and how they work. 
+- [Route Context](/vue/route-context) covers the universal **route context** initialization module and the `useRouteContext()` hook, available to all route modules and route layouts.
+- [Route Layouts](/vue/route-layouts) covers **route layout modules**.
+- [Rendering Modes](/vue/rendering-modes) covers all different route module **rendering modes**.
 
-## Starter template
+## Starter templates
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-- [**PostCSS Preset Env**](https://www.npmjs.com/package/postcss-preset-env) by [**Jonathan Neal**](https://github.com/jonathantneal), which enables [several modern CSS features](https://preset-env.cssdb.org/), such as [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/).
 
-- [**UnoCSS**](https://github.com/unocss/unocss) by [**Anthony Fu**](https://antfu.me/), which supports all [Tailwind utilities](https://uno.antfu.me/) and many other goodies through its [default preset](https://github.com/unocss/unocss/tree/main/packages/preset-uno). 
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign=top>
 
-- [**VueUse**](https://vueuse.org/) by [**Anthony Fu**](https://antfu.me/), which provides an extremely rich set of utilities — they're not included in the project build unless explicitly imported and used.
+[`vue-base`]()
 
+</td>
+<td>
 
+The **vue-base** starter template includes just about the minimum set of files to get your `@fastify/vue` application going. 
 
+It contains no embedded examples other than `pages/index.vue`, and no additional dependencies.
 
-## Basic setup
+### Download
 
-**@fastify/vue** follows [@fastify/vite](https://github.com/fastify/fastify-vite)'s convention of having a `client` folder with an `index.js` file, which is automatically resolved as your `clientModule` setting. 
+We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-::: code-group
-```js [server.js]
-import Fastify from 'fastify'
-import FastifyVite from '@fastify/vite'
-import FastifyVue from '@fastify/vue'
-
-const server = Fastify()
-
-await server.register(FastifyVite, { 
-  root: import.meta.url, 
-  renderer: FastifyVue,
-})
-
-await server.vite.ready()
-await server.listen(3000)
+```bash
+npx giget gh:fastify/fastify-vite/starters/vue-base .
 ```
 
-```js [vite.config.js]
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+### Dependencies
 
-import viteVue from '@vitejs/plugin-vue'
-import viteFastifyVue from '@fastify/vue/plugin'
-import unocss from 'unocss/vite'
+- [**`fastify`**](https://github.com/fastify/fastify) as the **Node.js** server.
 
-const path = fileURLToPath(import.meta.url)
+- [**`vite`**](https://vitejs.dev/) for the client application bundling.
 
-const root = join(dirname(path), 'client')
-const plugins = [
-  viteVue(), 
-  viteVueFastifyDX(), 
-  unocss()
-]
+- [**`vue`**](https://vuejs.org/) as the client application framework.
 
-export default { root, plugins }
-```
-:::
+- [**`vue-router`**](https://router.vuejs.org/) for the client application routing.
 
+- [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
 
-## Package Scripts
+- [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
 
-`npm run dev` boots the development server.
-  
-`npm run build` creates the production bundle.
-  
-`npm run serve` serves the production bundle.
+- [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
+
+- [**`@vitejs/plugin-vue`**]() for Vue support in Vite.
+
+- [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
+
+</td>
+</tr>
+<tr>
+<td>
+
+[`vue-kitchenkink`]()
+
+</td>
+<td>
+
+- [**`@vueuse/core`**](https://vueuse.org/) for its rich set of utilities.
+
+- [**`unocss`**](https://github.com/unocss/unocss) for [Tailwind](https://unocss.dev/presets/wind) support and many other CSS goodies.
+
+- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/) support.
+
+</td>
+</tr>
+</tbody>
+</table>
