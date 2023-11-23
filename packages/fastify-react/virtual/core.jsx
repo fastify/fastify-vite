@@ -3,8 +3,8 @@ import { useLocation, BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
 import { proxy, useSnapshot } from 'valtio'
-import { waitResource, waitFetch } from '/dx:resource.js'
-import layouts from '/dx:layouts.js'
+import { waitResource, waitFetch } from '/:resource.js'
+import layouts from '/:layouts.js'
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
@@ -14,41 +14,13 @@ export function useRouteContext () {
   const routeContext = useContext(RouteContext)
   if (routeContext.state) {
     routeContext.snapshot = isServer
-      ? routeContext.state
-      : useSnapshot(routeContext.state)
+      ? routeContext.state ?? {}
+      : useSnapshot(routeContext.state ?? {})
   }
   return routeContext
 }
 
-export function DXApp ({
-  url,
-  routes,
-  head,
-  routeMap,
-  ctxHydration,
-}) {
-  return (
-    <Router location={url}>
-      <Routes>{
-        routes.map(({ path, component: Component }) =>
-          <Route
-            key={path}
-            path={path}
-            element={
-              <DXRoute
-                head={head}
-                ctxHydration={ctxHydration}
-                ctx={routeMap[path]}>
-                <Component />
-              </DXRoute>
-            } />,
-        )
-      }</Routes>
-    </Router>
-  )
-}
-
-export function DXRoute ({ head, ctxHydration, ctx, children }) {
+export function AppRoute ({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
@@ -58,8 +30,8 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
         ...ctx,
         ...ctxHydration,
         state: isServer
-          ? ctxHydration.state
-          : proxy(ctxHydration.state),
+          ? ctxHydration.state ?? {}
+          : proxy(ctxHydration.state ?? {}),
       }}>
         <Layout>
           {children}
@@ -134,8 +106,8 @@ export function DXRoute ({ head, ctxHydration, ctx, children }) {
       ...ctxHydration,
       ...ctx,
       state: isServer
-        ? ctxHydration.state
-        : proxy(ctxHydration.state),
+        ? ctxHydration.state ?? {}
+        : proxy(ctxHydration.state ?? {}),
     }}>
       <Layout>
         {children}

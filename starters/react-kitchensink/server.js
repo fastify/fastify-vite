@@ -1,23 +1,19 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import FastifyReact from '@fastify/react'
 
-const server = Fastify()
-
-await server.register(FastifyVite, { 
-  // This is in fact the default behavior
-  // from @fastify/vite for enabling Vite's 
-  // development server, but it is explictly shown
-  // here in case you need it to be enabled differently.
-  dev: process.argv.includes('--dev'),
-  // The location of your Vite configuration file
-  root: import.meta.url, 
-  // The Fastify DX renderer for @fastify/vite
-  renderer: FastifyReact,
+const server = Fastify({
+  logger: {
+    transport: {
+      target: '@fastify/one-line-logger'
+    }
+  }
 })
 
-// This ensures Vite's development server
-// is properly initialized when dev mode is enabled.
+await server.register(FastifyVite, { 
+  root: import.meta.url, 
+  renderer: '@fastify/react',
+})
+
 await server.vite.ready()
 
 server.decorate('db', {

@@ -1,8 +1,8 @@
-import routes from '/dx:routes.js'
-import create from '/dx:create.jsx'
+import routes from '/:routes.js'
+import create from '/:create.jsx'
 
 export default { 
-  context: import('/dx:context.js'), 
+  context: import('/:context.js'), 
   routes,
   create,
 }

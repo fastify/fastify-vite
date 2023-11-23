@@ -29,6 +29,7 @@ Planned for the next major release:
 
 - TypeScript rewrite and full set of types.
 - New examples featuring full TypeScript support.
+- Framework agnostic primitives for server actions.
 
 </td>
 </tr>

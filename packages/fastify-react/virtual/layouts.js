@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-const DefaultLayout = () => import('/dx:layouts/default.jsx')
+const DefaultLayout = () => import('/:layouts/default.jsx')
 
 const appLayouts = import.meta.glob('/layouts/*.jsx')
 

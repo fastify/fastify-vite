@@ -1,7 +1,7 @@
 
 // Helper to make the stream returned renderToPipeableStream()
 // behave like an event emitter and facilitate error handling in Fastify
-import Minipass from 'minipass'
+import { Minipass } from 'minipass'
 
 // React 18's preferred server-side rendering function,
 // which enables the combination of React.lazy() and Suspense

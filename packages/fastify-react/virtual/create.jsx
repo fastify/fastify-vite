@@ -1,4 +1,4 @@
-import Root from '/dx:root.jsx'
+import Root from '/:root.jsx'
 
 export default function create ({ url, ...serverInit }) {
   return (

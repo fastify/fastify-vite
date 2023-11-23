@@ -3,7 +3,7 @@ const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 
 function viteReactFastifyDX (config = {}) {  
-  const prefix = /^\/?dx:/
+  const prefix = /^\/:/
   const routing = Object.assign({
     globPattern: '/pages/**/*.(jsx|tsx)',
     paramPattern: /\[(\w+)\]/,
@@ -11,18 +11,13 @@ function viteReactFastifyDX (config = {}) {
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js', 
-    'mount.ts', 
     'resource.js',
-    'resource.ts',
     'routes.js',
     'layouts.js',
     'create.jsx',
-    'create.tsx',
     'root.jsx',
-    'root.tsx',
     'layouts/',
     'context.js',
-    'context.ts',
     'core.jsx'
   ]
   virtualModules.includes = function (virtual) {
@@ -79,7 +74,7 @@ function viteReactFastifyDX (config = {}) {
   }
 
   return {
-    name: 'vite-plugin-react-fastify-dx',
+    name: 'vite-plugin-fastify-react',
     config (config, { command }) {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {

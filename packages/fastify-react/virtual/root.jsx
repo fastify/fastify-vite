@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Router, DXRoute } from '/dx:core.jsx'
+import { Router, AppRoute } from '/:core.jsx'
 
 export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
   return (
@@ -12,12 +12,12 @@ export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
               key={path}
               path={path}
               element={
-                <DXRoute
+                <AppRoute
                   head={head}
                   ctxHydration={ctxHydration}
                   ctx={routeMap[path]}>
                   <Component />
-                </DXRoute>
+                </AppRoute>
               } />,
           )
         }</Routes>

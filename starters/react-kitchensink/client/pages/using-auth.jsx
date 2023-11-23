@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/:core.jsx'
 
 export const layout = 'auth'
 

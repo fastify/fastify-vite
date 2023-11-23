@@ -1,8 +1,8 @@
 import Head from 'unihead/client'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
-import create from '/dx:create.jsx'
-import routesPromise from '/dx:routes.js'
+import create from '/:create.jsx'
+import routesPromise from '/:routes.js'
 
 mount('main')
 
@@ -10,7 +10,7 @@ async function mount (target) {
   if (typeof target === 'string') {
     target = document.querySelector(target)
   }
-  const context = await import('/dx:context.js')
+  const context = await import('/:context.js')
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise

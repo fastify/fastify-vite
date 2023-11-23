@@ -1,6 +1,6 @@
 import logo from '/assets/logo.svg'
 import { Link } from 'react-router-dom'
-import { isServer, useRouteContext } from '/dx:core.jsx'
+import { isServer, useRouteContext } from '/:core.jsx'
 
 export function getMeta () {
   return {

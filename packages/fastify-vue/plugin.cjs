@@ -76,7 +76,7 @@ function viteFastifyVue (config = {}) {
   }
 
   return {
-    name: 'vite-plugin-vue-fastify-dx',
+    name: 'vite-plugin-fastify-vue',
     config (config, { isSsrBuild, command }) {
       if (command === 'build') {
         config.build.rollupOptions = {

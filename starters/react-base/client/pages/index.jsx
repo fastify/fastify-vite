@@ -11,7 +11,7 @@ export default function Index () {
   return (
     <>
       <p>{message}</p>
-      <img src={logo} />
-    </p>
+      <img style={{width: '100%'}} src={logo} />
+    </>
   )
 }
