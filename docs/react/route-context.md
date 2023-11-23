@@ -86,7 +86,7 @@ export const actions = {
 ```jsx [client/pages/using-data.jsx]
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/:core.jsx'
 
 export function getMeta () {
   return { title: 'Todo List — Using Data' }
@@ -135,7 +135,7 @@ export default function Index (props) {
 ```jsx [client/pages/using-store.jsx]
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/:core.jsx'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
@@ -177,7 +177,7 @@ export default function Index (props) {
 As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, implemented in the `core.js` internal file and made available via `/:core.js` [smart import](/react/project-structure#smart-imports), which allows it to be shadowed by your own implementation in your project directory.
 
 ```js
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/:core.jsx'
 
 export default function Index (props) {
   const { ... } = useRouteContext()

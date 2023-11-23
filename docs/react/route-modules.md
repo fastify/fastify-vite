@@ -114,7 +114,7 @@ During client-side navigation (post first-render), a JSON request is fired to an
 The objet returned by `getData()` gets automatically assigned as `data` in the [universal route context](/react/route-context) object and is accessible from `getMeta()` and `onEnter()` functions and also via the `useRouteContext()` hook.
 
 ```jsx
-import { useRouteContext } from '/dx:core.jsx'
+import { useRouteContext } from '/:core.jsx'
 
 export function getData (ctx) {
   return {
