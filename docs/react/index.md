@@ -36,15 +36,15 @@ Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't r
 </td>
 <td>
 
-The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. 
-
-It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
+The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
 
 ### Download
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-`giget gh:fastify/fastify-vite/starters/react-base .`
+```
+giget gh:fastify/fastify-vite/starters/react-base .
+```
 
 ### Dependencies
 
@@ -53,11 +53,17 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 - [**`vite`**](https://vitejs.dev/) for the client application bundling.
 
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
+  - And its peer dependencies:
+    - **`devalue`**
+    - **`history`**
+    - **`minipass`**
+    - **`react`**
+    - **`react-dom`**
+    - **`reactr-router`**
+    - **`unihead`**
+    - **`valtio`**
 
 - [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
-  - includes **`react`**, **`react-dom`** and **`react-router`**
-
-- [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
 
 - [**`@vitejs/plugin-react`**](https://github.com/vitejs/vite-plugin-react) for Vue support in Vite.
 
@@ -68,7 +74,7 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 <tr>
 <td valign=top>
 
-<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-kitchensink</code></a>
+<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 </td>
 <td>
@@ -80,7 +86,9 @@ The **react-kitchensink** starter template includes all of **react-base** plus a
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-`giget gh:fastify/fastify-vite/starters/react-kitchensink .`
+```
+giget gh:fastify/fastify-vite/starters/react-kitchensink .
+```
 
 ### Dependencies
 

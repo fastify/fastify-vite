@@ -44,7 +44,9 @@ It contains no embedded examples other than `pages/index.vue`, and no additional
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-`giget gh:fastify/fastify-vite/starters/vue-base .`
+```
+giget gh:fastify/fastify-vite/starters/vue-base .
+```
 
 ### Dependencies
 
@@ -55,9 +57,11 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
 
 - [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
-  - includes **`vue`** and **`vue-router`**
-
-- [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
+  - And its peer dependencies:
+    - **`devalue`**
+    - **`unihead`**
+    - **`vue`**
+    - **`vue-router`**
 
 - [**`@vitejs/plugin-vue`**](https://github.com/vitejs/vite-plugin-vue) for Vue support in Vite.
 
@@ -80,7 +84,9 @@ The **vue-kitchensink** starter template includes all of **vue-base** plus a sam
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-`giget gh:fastify/fastify-vite/starters/vue-kitchensink .`
+```
+giget gh:fastify/fastify-vite/starters/vue-kitchensink .
+```
 
 ### Dependencies
 
