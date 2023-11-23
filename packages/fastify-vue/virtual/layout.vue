@@ -9,7 +9,7 @@ import { inject } from 'vue'
 import { routeLayout } from '/:core.js'
 
 import * as DefaultLayout from '/:layouts/default.vue'
-const appLayouts = import.meta.globEager('/layouts/*.vue')
+const appLayouts = import.meta.glob('/layouts/*.vue', { eager: true })
 
 appLayouts['/layouts/default.vue'] ??= DefaultLayout
 

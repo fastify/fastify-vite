@@ -30,7 +30,7 @@ Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't r
 <tr>
 <td valign=top>
 
-<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-base</code></a>
+<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
 
 
 </td>
@@ -68,12 +68,12 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 <tr>
 <td valign=top>
 
-<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-kitchensink</code></a>
+<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-kitchensink</code></a>
 
 </td>
 <td>
 
-The **vue-kitchensink** starter template includes all of **vue-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
+The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
 
 ### Download

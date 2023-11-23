@@ -7,11 +7,11 @@ import { Readable } from 'stream'
 import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 
 // Vue 3's SSR functions
-import { renderToString, renderToNodeStream } from '@vue/server-renderer'
+import { renderToString, renderToNodeStream } from 'vue/server-renderer'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
-import devalue from 'devalue'
+import * as devalue from 'devalue'
 
 // Small SSR-ready library used to generate
 // <title>, <meta> and <link> elements
@@ -79,8 +79,8 @@ export function createHtmlFunction (source, scope, config) {
         ...!context.serverOnly && {
           hydration: (
             '<script>\n' +
-            `window.route = ${devalue(context.toJSON())}\n` +
-            `window.routes = ${devalue(routes.toJSON())}\n` +
+            `window.route = ${devalue.uneval(context.toJSON())}\n` +
+            `window.routes = ${devalue.uneval(routes.toJSON())}\n` +
             '</script>'
           )
         }

@@ -1,4 +1,6 @@
 {
+  "name": "vue-base",
+  "description": "The vue-base starter template for @fastify/vue",
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
@@ -12,11 +14,11 @@
     "@fastify/one-line-logger": "latest",
     "@fastify/vite": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "fastify": "latest",
-    "unihead": "latest",
-    "vite": "latest",
-    "vue": "latest",
-    "vue-router": "latest"
+    "fastify": "^4.24.3",
+    "unihead": "^0.0.6",
+    "vite": "^5.0.2",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -26,7 +28,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^8.7.1",
-    "postcss-preset-env": "^7.7.1"
+    "eslint-plugin-vue": "^8.7.1"
   }
 }

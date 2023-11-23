@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "@fastify/vite"
   text: "Titans Combined"
-  tagline: Cleanly and elegantly integrate <b>Fastify</b> and <b>Vite</b> to create a <b>minimal</b>, <b>low overhead</b>, <b>blazing fast™</b> setup for <b>full stack monoliths</b>.
+  tagline: Cleanly and elegantly integrate <b><a href="https://fastify.dev/" target="_blank">Fastify</a></b> and <b><a href="https://vitejs.dev/" target="_blank">Vite</a></b> to create a <b>minimal</b>, <b>low overhead</b>, <b>blazing fast™</b> setup for <b>full stack monoliths</b>.
   actions:
     - theme: brand
       text: Get Started

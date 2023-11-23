@@ -26,11 +26,10 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
-    "@vue/server-renderer": "latest",
     "devalue": "latest",
     "unihead": "^0.0.6",
-    "vue": "latest",
-    "vue-router": "latest"
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "latest",
