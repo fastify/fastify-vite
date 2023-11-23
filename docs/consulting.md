@@ -25,7 +25,7 @@ I'm a **Principal Engineer** at [feature.fm](https://www.feature.fm/). Previousl
 ## Pricing
 
 - **1-hour** slot for **$250**.
-- **3-hour** slot for **$500**.
+- **3-hour** slot for **$650**.
 - **5-hour** slot for **$1000**.
 
 ## Booking
