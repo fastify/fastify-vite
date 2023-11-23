@@ -77,12 +77,28 @@ function viteFastifyVue (config = {}) {
 
   return {
     name: 'vite-plugin-vue-fastify-dx',
-    config (config, { command }) {
-      if (command === 'build' && config.build?.ssr) {
+    config (config, { isSsrBuild, command }) {
+      if (command === 'build') {
         config.build.rollupOptions = {
+          input: isSsrBuild ? '/index.js' : '/index.html',
           output: {
             format: 'es',
           },
+          onwarn (warning, rollupWarn) {
+            if (
+              !(
+                warning.code == 'PLUGIN_WARNING' && 
+                warning.message?.includes?.('dynamic import will not move module into another chunk')
+              )
+              &&
+              !(
+                warning.code == 'UNUSED_EXTERNAL_IMPORT' && 
+                warning.exporter === 'vue'
+              )
+            ) {
+              rollupWarn(warning)
+            }
+          }
         }
       }
     },
