@@ -3,7 +3,7 @@
 
 # Getting Started
 
-This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, and also automatically serve its static bundle, inferred from the Vite configuration file.
+This [Fastify][fastify] plugin allows you to run Vite's development server as middleware, **expose** your [Vite][vite] application to your Fastify application, configuration hooks to **ease router integration** and **other customizations**, and also automatically serve Vite builds, inferred from a Vite configuration file.
 
 ## Why not a framework?
 

@@ -2,7 +2,7 @@
 
 # Route Context
 
-In **`@fastify/vue`** applications, the **route context** is an object available in every [**route module**](/vue/route-modules) and [**layout module**](/route-layouts). It is populated via the [**route context initialization module**](/vue/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.js` smart import — a default implementation is provided by **`@fastivy/vue`** but you can extend or create your own by providing your own implementation of the `core.js` file.
+In **`@fastify/vue`** applications, the **route context** is an object available in every [**route module**](/vue/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/vue/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.js` smart import — a default implementation is provided by **`@fastivy/vue`** but you can extend or create your own by providing your own implementation of the `core.js` file.
 
 This route context implementation is extremely simple and deliberately limited to essential features. Its goal is to be easy to understand, extend or completely modify if needed. Note that some aspects of this implementation are tightly coupled to the server. In **`@fastify/vue`**'s source code, you can see the implementation of [`server/context.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/server/context.js) and [its use in `createRoute()`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/index.js) that first populates the route context object on the server and prepares it for hydration.
 
@@ -32,7 +32,9 @@ await server.register(FastifyVite, {
 
 If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of `context.js` as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/), in the way it **runs twice**, once on the server before SSR, and another on the client during the hydration phase. And also because it can be used to make dependencies available to all route modules and initializes the **global state**.
 
-The `client/context.js` file you see below is taken from the [`vue-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template, which includes everything from [`vue-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base) plus a few example pages demonstrating all of **`@fastify/vue`**'s features. See all also the page examples in the other snippet tabs demonstrating different uses of it.
+The `client/context.js` file you see below is taken from the [`vue-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template, which includes everything from [`vue-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base) plus a few example pages demonstrating all of **`@fastify/vue`**'s features. 
+
+Make sure to see the page examples in the other snippet tabs:
 
 ::: code-group
 ```js [client/context.js]

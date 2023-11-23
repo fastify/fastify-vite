@@ -257,7 +257,7 @@ The core files of **`@fastify/vue`** that make all of that (and a bit more) work
 
 <div style="font-size: 1.2em !important">
 
-The way this work is via the `/:` prefix.
+The way this works is via the `/:` prefix.
 
 </div>
 

@@ -26,14 +26,15 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
-    "@vue/server-renderer": "^3.2.33",
-    "devalue": "^2.0.1",
-    "vue-router": "^4.0.15",
-    "unihead": "^0.0.6"
+    "@vue/server-renderer": "latest",
+    "devalue": "latest",
+    "unihead": "^0.0.6",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.16.0",
-    "@vitejs/plugin-vue": "^2.3.2",
+    "@babel/eslint-parser": "latest",
+    "@vitejs/plugin-vue": "latest",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -42,8 +43,7 @@
     "eslint-plugin-vue": "^8.7.1"
   },
   "peerDependencies": {
-    "@fastify/vite": "workspace:^",
-    "vue": "latest"
+    "@fastify/vite": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

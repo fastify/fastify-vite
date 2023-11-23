@@ -5,26 +5,26 @@ layout: home
 hero:
   name: "@fastify/vite"
   text: "Titans Combined"
-  tagline: Cleanly and minimally integrate <b>Fastify</b> and <b>Vite</b> to create a <b>blazing fast™</b> and <b>low overhead</b> setup for <b>full stack monoliths</b>.
+  tagline: Cleanly and elegantly integrate <b>Fastify</b> and <b>Vite</b> to create a <b>minimal</b>, <b>low overhead</b>, <b>blazing fast™</b> setup for <b>full stack monoliths</b>.
   actions:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
     - theme: brand
       text: "@fastify/vue"
-      link: /guide/getting-starte      
+      link: /vue/index
     - theme: brand
       text: "@fastify/react"
-      link: /guide/getting-starte     
+      link: /react/index
     - theme: alt
       text: View on GitHub
-      link: https://github.com/vuejs/vitepress
+      link: https://github.com/fastify/fastify-vite
   image:
     src: /fastify-vite.svg
-    alt: VitePress
+    alt: "@fastify/vite"
 
-title: VitePress
-titleTemplate: Vite & Vue Powered Static Site Generator
+title: "@fastify/vite"
+titleTemplate: Fastify plugin for Vite integration
 
 features:
   - icon: 🐅

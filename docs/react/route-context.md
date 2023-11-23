@@ -2,16 +2,16 @@
 
 # Route Context
 
-In **`@fastify/vue`** applications, the **route context** is an object available in every [**route module**](/vue/route-modules) and [**layout module**](/route-layouts). It is populated via the [**route context initialization module**](/vue/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.js` smart import — a default implementation is provided by **`@fastivy/vue`** but you can extend or create your own by providing your own implementation of the `core.js` file.
+In **`@fastify/react`** applications, the **route context** is an object available in every [**route module**](/react/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/react/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.jsx` smart import — a default implementation is provided by **`@fastivy/react`** but you can extend or create your own by providing your own implementation of the `core.js` file.
 
-This route context implementation is extremely simple and deliberately limited to essential features. Its goal is to be easy to understand, extend or completely modify if needed. Note that some aspects of this implementation are tightly coupled to the server. In **`@fastify/vue`**'s source code, you can see the implementation of [`server/context.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/server/context.js) and [its use in `createRoute()`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/index.js) that first populates the route context object on the server and prepares it for hydration.
+This route context implementation is extremely simple and deliberately limited to essential features. Its goal is to be easy to understand, extend or completely modify if needed. Note that some aspects of this implementation are tightly coupled to the server. In **`@fastify/react`**'s source code, you can see the implementation of [`server/context.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-react/server/context.js) and [its use in `createRoute()`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-react/index.js) that first populates the route context object on the server and prepares it for hydration.
 
-Replacing the default route context implementation with your own would require you to also provide your own `createRoute()` implementation, based on the original one. In this case, instead of passing `@fastify/vue` to the `renderer` plugin option from `@fastify/vite`, you would first import it so you can easily extend it. This is an example of the depth of extensibility of `@fastify/vue`.
+Replacing the default route context implementation with your own would require you to also provide your own `createRoute()` implementation, based on the original one. In this case, instead of passing `@fastify/react` to the `renderer` plugin option from `@fastify/vite`, you would first import it so you can easily extend it. This is an example of the depth of extensibility of `@fastify/react`.
 
 ```js
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-import FastifyVue from '@fastify/vue'
+import FastifyReact from '@fastify/react'
 
 const server  = Fastify()
 await server.register(FastifyVite, {
@@ -28,11 +28,13 @@ await server.register(FastifyVite, {
 
 ## Init module
 
-`@fastify/vue` projects can have a special `context.js` file, which is used to populate the **route context**. The way it populates it is by first running its default export, which is expected to be a function, and if there's a `state()` function export, also running it and populating the **global state**. With the exception of the `default` export and the `state` named export, all other named exports from this file are added to the **route context** as-is.
+`@fastify/react` projects can have a special `context.js` file, which is used to populate the **route context**. The way it populates it is by first running its default export, which is expected to be a function, and if there's a `state()` function export, also running it and populating the **global state**. With the exception of the `default` export and the `state` named export, all other named exports from this file are added to the **route context** as-is.
 
-If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of `context.js` as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/), in the way it **runs twice**, once on the server before SSR, and another on the client during the hydration phase. And also because it can be used to make dependencies available to all route modules and initializes the **global state**.
+> If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of `context.js` as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/), in the way it **runs twice**, once on the server before SSR, and another on the client during the hydration phase. And also because it can be used to make dependencies available to all route modules and initializes the **global state**.
 
-The `client/context.js` file you see below is taken from the [`vue-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template, which includes everything from [`vue-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base) plus a few example pages demonstrating all of **`@fastify/vue`**'s features. See all also the page examples in the other snippet tabs demonstrating different uses of it.
+The `client/context.js` file you see below is taken from the [`react-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template, which includes everything from [`react-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-base) plus a few example pages demonstrating all of **`@fastify/react`**'s features. 
+
+Make sure to see the page examples in the other snippet tabs:
 
 ::: code-group
 ```js [client/context.js]
@@ -81,34 +83,10 @@ export const actions = {
 }
 ```
 
-```vue [client/pages/using-data.vue]
-<template>
-  <h2>Todo List — Using Data</h2>
-  <ul>
-    <li 
-      v-for="(item, i) in todoList"
-      :key="`item-${i}`">
-      {{ item }}
-    </li>
-  </ul>
-  <div>
-    <input v-model="inputValue" />
-    <button @click="addItem">Add</button>
-  </div>
-  <p>
-    <router-link to="/">Go back to the index</router-link>
-  </p>
-  <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do 
-  list will be lost, because they're bound to this route component only.</p>
-  <p>See the <router-link to="/using-store">/using-store</router-link> example to learn 
-  how to use the application global state for it.
-  </p>
-</template>
-
-<script>
-import { ref, reactive } from 'vue'
-import { useRouteContext } from '/:core.js'
+```jsx [client/pages/using-data.jsx]
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useRouteContext } from '/dx:core.jsx'
 
 export function getMeta () {
   return { title: 'Todo List — Using Data' }
@@ -120,75 +98,90 @@ export function getData ({ server }) {
   }
 }
 
-export default {
-  setup () {
-    const { data } = useRouteContext()
-    const inputValue = ref(null)
-    const todoList = reactive(data.todoList)
-    const addItem = () => {
-      todoList.push(inputValue.value)
-      inputValue.value = ''
-    }
-    return { inputValue, todoList, addItem }
+export default function Index (props) {
+  const {data} = useRouteContext()
+  const [todoList, updateTodoList] = useState(data.todoList)
+  const [input, setInput] = useState(null)
+  const addItem = (value) => {
+    updateTodoList(list => [...list, value])
+    input.value = ''
   }
+  return (
+    <>
+      <h2>Todo List — Using Data</h2>
+      <ul>{
+        todoList.map((item, i) => {
+          return <li key={`item-${i}`}>{item}</li>
+        })
+      }</ul>
+      <div>
+        <input ref={setInput} />
+        <button onClick={() => addItem(input.value)}>Add</button>
+      </div>
+      <p>
+        <Link to="/">Go back to the index</Link>
+      </p>
+      <p>⁂</p>
+      <p>When you navigate away from this route, any additions to the to-do 
+      list will be lost, because they're bound to this route component only.</p>
+      <p>See the <Link to="/using-store">/using-store</Link> example to learn 
+      how to use the application global state for it.
+      </p>
+    </>
+  )
 }
-</script>
 ```
 
-```vue [client/pages/using-store.vue]
-<template>
-  <h2>Todo List — Using Store</h2>
-  <ul>
-    <li 
-      v-for="(item, i) in state.todoList"
-      :key="`item-${i}`">
-      {{ item }}
-    </li>
-  </ul>
-  <div>
-    <input v-model="inputValue" />
-    <button @click="addItem">Add</button>
-  </div>
-  <p>
-    <router-link to="/">Go back to the index</router-link>
-  </p>
-  <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do 
-  list are not lost, because they're bound to the global application state.</p>
-</template>
-
-<script>
-import { ref } from 'vue'
-import { useRouteContext } from '/:core.js'
+```jsx [client/pages/using-store.jsx]
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useRouteContext } from '/dx:core.jsx'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
 }
 
-export default {
-  setup () {
-    const inputValue = ref(null)
-    const { state, actions } = useRouteContext()
-    const addItem = async () => {
-      await actions.todoList.add(state, inputValue.value)
-      inputValue.value = ''
-    }
-    return { state, inputValue, addItem }
-  },
+export default function Index (props) {
+  const {snapshot, state, actions} = useRouteContext()
+  const [input, setInput] = useState(null)
+  const addItem = async (value) => {
+    await actions.todoList.add(state, value)
+    input.value = ''
+  }
+  return (
+    <>
+      <h2>Todo List — Using Store</h2>
+      <ul>{
+        snapshot.todoList.map((item, i) => {
+          return <li key={`item-${i}`}>{item}</li>
+        })
+      }</ul>
+      <div>
+        <input ref={setInput} />
+        <button onClick={() => addItem(input.value)}>Add</button>
+      </div>
+      <p>
+        <Link to="/">Go back to the index</Link>
+      </p>
+      <p>⁂</p>
+      <p>When you navigate away from this route, any additions to the to-do 
+      list are not lost, because they're bound to the global application state.</p>
+    </>
+  )
 }
-</script>
 ```
 :::
 
 ## Access hook
 
-As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, implemented in the `core.js` internal file and made available via `/:core.js` [smart import](/vue/project-structure#smart-imports), which allows it to be shadowed by your own implementation in your project directory.
+As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, implemented in the `core.js` internal file and made available via `/:core.js` [smart import](/react/project-structure#smart-imports), which allows it to be shadowed by your own implementation in your project directory.
 
 ```js
-<script setup>
-import { useRouteContext } from '/:core.js'
-const { ... } = useRouteContext()
-</script>
+import { useRouteContext } from '/dx:core.jsx'
+
+export default function Index (props) {
+  const { ... } = useRouteContext()
+  // ...
 ```
 
 This hook can be used in any Vue component to retrieve a reference to the current route context. By default, it includes the following properties:
@@ -225,7 +218,7 @@ On the client, this becomes a Vue `reactive()` object.
 
 Automatically populated by the `getData()` function. 
 
-Covered in [Data fetching](/vue/route-modules#data-fetching).
+Covered in [Data fetching](/react/route-modules#data-fetching).
 
 </td>
 </tr>
@@ -237,7 +230,7 @@ Covered in [Data fetching](/vue/route-modules#data-fetching).
 </td>
 <td>
 
-Universal page metadata function, covered in [Page metadata](/vue/route-modules#page-metadata).
+Universal page metadata function, covered in [Page metadata](/react/route-modules#page-metadata).
 
 </td>
 </tr>
@@ -294,7 +287,7 @@ Enables **streaming** server-side rendering.
 
 ## Execution order
 
-This graph illustrates the hook execution order, from [**route context initialization**](/vue/route-context#init-module) to the **route module** `getData()`, `getMeta()` and `onEnter()` exports.
+This graph illustrates the hook execution order, from [**route context initialization**](/react/route-context#init-module) to the **route module** `getData()`, `getMeta()` and `onEnter()` exports.
 
 ```mermaid
 flowchart TD

@@ -41,6 +41,7 @@ const showFooter = computed(() => {
       </div>
     </div>
 
+    <!--
     <nav v-if="control.prev?.link || control.next?.link" class="prev-next">
       <div class="pager">
         <a v-if="control.prev?.link" class="pager-link prev" :href="normalizeLink(control.prev.link)">
@@ -55,6 +56,7 @@ const showFooter = computed(() => {
         </a>
       </div>
     </nav>
+    -->
   </footer>
 </template>
 

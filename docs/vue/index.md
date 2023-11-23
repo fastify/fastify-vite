@@ -19,11 +19,10 @@ Below is an overview of all individual documentation topics and the order in whi
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-
 <table>
 <thead>
 <tr>
-<th>Export</th>
+<th>Template</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -31,7 +30,8 @@ Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't r
 <tr>
 <td valign=top>
 
-[`vue-base`]()
+<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-base</code></a>
+
 
 </td>
 <td>
@@ -44,9 +44,7 @@ It contains no embedded examples other than `pages/index.vue`, and no additional
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
-```bash
-npx giget gh:fastify/fastify-vite/starters/vue-base .
-```
+`giget gh:fastify/fastify-vite/starters/vue-base .`
 
 ### Dependencies
 
@@ -64,19 +62,32 @@ npx giget gh:fastify/fastify-vite/starters/vue-base .
 
 - [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
 
-- [**`@vitejs/plugin-vue`**]() for Vue support in Vite.
+- [**`@vitejs/plugin-vue`**](https://github.com/vitejs/vite-plugin-vue) for Vue support in Vite.
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
 </td>
 </tr>
 <tr>
-<td>
+<td valign=top>
 
-[`vue-kitchenkink`]()
+<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-kitchensink</code></a>
 
 </td>
 <td>
+
+The **vue-kitchensink** starter template includes all of **vue-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
+
+
+### Download
+
+We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
+
+`giget gh:fastify/fastify-vite/starters/vue-kitchensink .`
+
+### Dependencies
+
+All dependencies from **vue-base** plus:
 
 - [**`@vueuse/core`**](https://vueuse.org/) for its rich set of utilities.
 

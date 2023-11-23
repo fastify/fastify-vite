@@ -10,26 +10,7 @@ Following the [URMA specification](https://github.com/fastify/fastify-dx/blob/ma
 If a route module exports `streaming` set to `true`, SSR will take place in **streaming mode**. That means if you have components depending on asynchronous resources and `<Suspense>` sections with defined fallback components, they will be streamed right way while the resources finish processing.
 
 ```jsx
-import React, { Suspense } from 'react'
 
-export const streaming = true
-
-export default function Index () {
-  return (
-    <Suspense fallback={<p>Waiting for content</p>}>
-      <Message />
-    </Suspense>
-  )
-}
-
-function Message () {
-  const message = afterSeconds({
-    id: 'index', 
-    message: 'Delayed by Suspense API',
-    seconds: 5
-  })
-  return <p>{message}</p>
-}
 ```
 
 [See the full example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/streaming.jsx) in the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
@@ -44,11 +25,6 @@ You should use this setting to deliver lighter pages when there's no need to run
 This differs from [React Server Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but whose server-only rendering is more granular (available for any route child component) and fully controlled by React.
 
 ```jsx
-export const serverOnly = true
-  
-export function Index () {
-  return <p>No JavaScript sent to the browser.</p>
-}
 ```
 
 [This example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/server-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).
@@ -62,11 +38,6 @@ You can use this setting to save server resources on internal pages where SSR ma
 This differs from [React Client Components](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md), which are also supported, but rendering is more granular (available for any route child component) and fully controlled by React.
 
 ```jsx
-export const clientOnly = true
-  
-export function Index () {
-  return <p>No pre-rendered HTML sent to the browser.</p>
-}
 ```
 
 [This example](https://github.com/fastify/fastify-dx/blob/main/starters/react/client/pages/client-only.jsx) is part of the [starter template](https://github.com/fastify/fastify-dx/tree/dev/starters/react).

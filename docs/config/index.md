@@ -4,26 +4,34 @@
 
 ### `root`
 
+The location of your Vite configuration file.
+
+It works with `import.meta.url` too.
+
 ### `dev`
+
+Enables Vite's development server if set to `true`.
 
 ### `spa`
 
-**Disables SSR** and just sets up integration for delivering a static SPA application. When set to `true`, `clientModule` resolution is disabled and the `Reply.html()` method doesn't require a context object with variables for the `index.html` template.
+When set to `true`, **disables SSR** and just sets up integration for delivering a static SPA application.
+
+`clientModule` resolution is disabled and the `Reply.html()` method doesn't require a context object with variables for the `index.html` template. 
+
+This can be customized however by providing your own `createHtmlFunction()`.
 
 ### `renderer`
 
-A single configuration object which can be used to set all of the settings above. 
+A single configuration object which can be used to set all [Renderer options](/config/#renderer-options). 
 
 - `clientModule`
-  'createErrorHandler',
-  'createHtmlFunction',
-  'createHtmlTemplateFunction',
-  'createRenderFunction',
-  'createRoute',
-  'createRouteHandler',
-  'prepareClient'
-
-  
+- `createErrorHandler`
+- `createHtmlFunction`
+- `createHtmlTemplateFunction`
+- `createRenderFunction`
+- `createRoute`
+- `createRouteHandler`
+- `prepareClient`
 
 ## Renderer options
 
@@ -35,65 +43,28 @@ If unset, **`@fastify/vite`** will automatically try to resolve `index.js` from 
 
 As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. 
 
-See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (`VueRouter`, `ReactRouter` etc). That's why `prepareClient()` is implemented that way by default.
-
-See the [`react-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-hydration) and [`vue-hydration`](https://github.com/fastify/fastify-vite/tree/dev/examples/vue-hydration) examples to see how the same `routes.js` file is used to set up ReactRouter and VueRouter, and the associated Fastify routes.
+See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (**Vue Router**, **React Router** etc). That's why `prepareClient()` is implemented that way by default.
 
 ### `createRenderFunction`
 
 This configuration function creates the `reply.render()` method.
 
+It's covered in detail in **[Rendering function](/guide/rendering-function)**.
+
 ### `createHtmlFunction`
 
 This configuration function creates the `reply.html()` method.
 
+It's covered in detail in **[Templating function](/guide/rendering-function)**.
+
 ### `createRouteHandler`
 
-# `createRouteHandler(client, scope, options)`
-
-This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L71) below:
-
-```js
-function createRouteHandler (client, scope, options) {
-  return async function (req, reply) {
-    const page = await reply.render(scope, req, reply)
-    reply.html(page)
-  }
-}
-```
-
+This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available).
 
 ### `createErrorHandler`
 
-This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array (if available). See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L79) below:
-
-```js
-function createErrorHandler (client, scope, config) {
-  return (error, req, reply) => {
-    if (config.dev) {
-      console.error(error)
-      scope.vite.devServer.ssrFixStacktrace(error)
-    }
-    scope.errorHandler(error, req, reply)
-  }
-}
-```
-
+This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array.
 
 ### `createRoute`
 
-# `createRoute({ handler, errorHandler, route }, scope, config)`
-
-Finally, this configuration function is responsible for actually registering an individual Fastify route for each of your client-level routes. See its [default definition](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L60) below:
-
-```js
-function createRoute ({ handler, errorHandler, route }, scope, config) {
-  scope.route({
-    url: route.path,
-    method: 'GET',
-    handler,
-    errorHandler,
-    ...route,
-  })
-}
-```
+this configuration function is responsible for actually registering an individual Fastify route for each of your client-level routes.
