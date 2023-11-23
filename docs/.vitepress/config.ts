@@ -207,7 +207,8 @@ function Guide (collapsed = false) {
       { text: 'Router Integration', link: 'router-integration', },
       { text: 'Templating Function', link: 'templating-function' },
       { text: 'Build and Deploy', link: 'build-and-deploy' },
-      { text: 'Core Renderers', link: 'core-renderers' }
+      { text: 'Core Renderers', link: 'core-renderers' },
+      { text: 'Known Limitations', link: 'known-limitations' }
     ]
   }
 }
@@ -218,7 +219,13 @@ function Vue (collapsed = false) {
     text: '@fastify/vue',
     base: '/vue/',
     items: [
-      { text: 'Getting Started', link: 'index' },
+      { 
+        text: 'Getting Started', 
+        link: 'index',
+        items: [
+          { text: 'Starter templates', link: 'index#starter-templates' }
+        ],
+      },
       { 
         text: 'Project Structure', 
         link: 'project-structure',
@@ -266,7 +273,13 @@ function React (collapsed = false) {
     text: '@fastify/react',
     base: '/react/',
     items: [
-      { text: 'Getting Started', link: 'index' },
+      { 
+        text: 'Getting Started',
+        link: 'index',
+        items: [
+          { text: 'Starter templates', link: 'index#starter-templates' },
+        ],
+      },
       { 
         text: 'Project Structure', 
         link: 'project-structure',

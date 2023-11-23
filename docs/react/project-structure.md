@@ -168,7 +168,7 @@ export default {
 ```
 ```js [client/index.js]
 import routes from '/:routes.js'
-import create from '/:create.js'
+import create from '/:create.jsx'
 
 export default { 
   context: import('/:context.js'), 
@@ -191,37 +191,29 @@ export default {
 <script type="module" src="/:mount.js"></script>
 </html>
 ```
-```vue [client/pages/index.vue]
-<template>
-  <h1>{{ message }}</h1>
-  <p><img :src="logo" /></p>
-</template>
-
-<script setup>
+```vue [client/pages/index.jsx]
 import logo from '/assets/logo.svg'
 
-const message = 'Welcome to @fastify/react!'
-</script>
-
-<script>
 export function getMeta () {
   return {
     title: 'Welcome to @fastify/react!'
   }
 }
-</script>
 
-<style scoped>
-img {
-  width: 100%;
+export default function Index () {
+  const message = 'Welcome to @fastify/react!'
+  return (
+    <>
+      <p>{message}</p>
+      <img src={logo} />
+    </p>
+  )
 }
-</style>
-```
 :::
 
-[vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue
+[react-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/react-base
 
-This example is actually provided as the [vue-base][vue-base] starter. 
+This example is actually provided as the [react-base][react-base] starter. 
 
 In this example, `server.js` is the Fastify server and also the place where both `@fastify/vite` and `@fastify/react` are imported to set up your application. 
 
@@ -237,11 +229,11 @@ What you saw above already is the minimal boilerplate for a fully functioning `@
 
 The core files of **`@fastify/react`** that make all of that (and a bit more) work don't have to exist in your project directory, but are loaded nonetheless:
 
-```text {3-8,10-11}
+```text {3-8,11-12}
 ├── server.js
 ├── client/
-│    ├── core.js
-│    ├── create.js
+│    ├── core.jsx
+│    ├── create.jsxx
 │    ├── mount.js
 │    ├── resource.js
 │    ├── root.jsx
@@ -249,9 +241,9 @@ The core files of **`@fastify/react`** that make all of that (and a bit more) wo
 │    ├── index.js
 │    ├── index.html
 │    ├── layouts/
-│    │    └── default.vue
+│    │    └── default.jsx
 │    └── pages/
-│          └── index.vue
+│          └── index.jsx
 ├── vite.config.js
 └── package.json
 ```
@@ -262,7 +254,7 @@ The way this works is via the `/:` prefix.
 
 </div>
 
-Notice how `client/index.html` imports the Vue application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.js` and the [route context](/react/route-context) initialization module from `/:context.js`. 
+Notice how `client/index.html` imports the React application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.jsx` and the [route context](/react/route-context) initialization module from `/:context.js`. 
 
 What this prefix does is **first check if the file exists** in your Vite project root directory, **and if not**, provide the **default versions** stored inside the `@fastify/react` package instead.
   
@@ -329,13 +321,6 @@ Utilities to enable suspensed state in data fetching.
 <tr>
 <td>
 
-The Vite application mount script, imported by `index.html`.
-
-</td>
-</tr>
-<tr>
-<td>
-
 `/:root.jsx`
 
 </td>
@@ -378,8 +363,9 @@ The graph below indicates the relationships between them:
 
 ```mermaid
 flowchart TD
-    V("/:root.vue") --> B
-    A("/:core.js") --> B("/:create.js")
+    R("/:resource.js") --> A
+    V("/:root.jsx") --> B
+    A("/:core.jsx") --> B("/:create.jsx")
     C("/:routes.js") --> D
     C --> E
     B --> D("/:mount.js")

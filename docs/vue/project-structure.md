@@ -219,7 +219,7 @@ img {
 ```
 :::
 
-[vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue
+[vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base
 
 This example is actually provided as the [vue-base][vue-base] starter. 
 

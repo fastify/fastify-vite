@@ -52,13 +52,10 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 
 - [**`vite`**](https://vitejs.dev/) for the client application bundling.
 
-- [**`vue`**](https://vuejs.org/) as the client application framework.
-
-- [**`vue-router`**](https://router.vuejs.org/) for the client application routing.
-
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
 
 - [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
+  - includes **`vue`** and **`vue-router`**
 
 - [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
 
@@ -99,3 +96,11 @@ All dependencies from **vue-base** plus:
 </tr>
 </tbody>
 </table>
+
+## Known Limitations
+
+- It's currently impossible to run **multiple** Vite development server middleware in your Fastify server, which means `@fastify/vite` can **only be registered once**. Configuration for this is somewhat tricky and there isn't documentation on how to do it. Once [#108](https://github.com/fastify/fastify-vite/pull/108) is completed and merged, it will open the path to have a Vite development server factory that can create instances on-demand, but that approach still remains to be tested.
+
+  If you're looking into a microfrontend setup, consider [this approach](https://dev.to/getjv/react-micro-frontends-with-vite-5442).
+
+- `@fastify/vue` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/vue/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer. SPA support is planned for the next major release, see the [project roadmap](/roadmap).

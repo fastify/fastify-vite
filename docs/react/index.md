@@ -55,7 +55,8 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
 
 - [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
-
+  - includes **`react`**, **`react-dom`** and **`react-router`**
+  - 
 - [**`unihead`**](https://github.com/galvez/unihead) for `<head>` management.
 
 - [**`@vitejs/plugin-react`**](https://github.com/vitejs/vite-plugin-react) for Vue support in Vite.
