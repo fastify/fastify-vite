@@ -48,7 +48,11 @@ export default withMermaid({
       '/guide/': { base: '/guide/', items: sidebarGuide() },
       '/vue/': { base: '/vue/', items: sidebarVue() },
       '/react/': { base: '/react/', items: sidebarReact() },
-      '/config/': { base: '/config/', items: sidebarConfig() }
+      '/config/': { base: '/config/', items: sidebarConfig() },
+      '/roadmap': { base: '/guide/', items: sidebarGuide() },
+      '/contributing': { base: '/guide/', items: sidebarGuide() },
+      '/sponsoring': { base: '/guide/', items: sidebarGuide() },
+      '/consulting': { base: '/guide/', items: sidebarGuide() },
     },
 
     editLink: {
@@ -96,27 +100,27 @@ function nav(): DefaultTheme.NavItem[] {
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
     Guide(),
-    ...Common(),
     Vue(true),
     React(true),
+    ...Common(),
   ]
 }
 
 function sidebarVue(): DefaultTheme.SidebarItem[] {
   return [
     Guide(true),
-    ...Common(),
     Vue(),
     React(true),
+    ...Common(),
   ]
 }
 
 function sidebarReact(): DefaultTheme.SidebarItem[] {
   return [
     Guide(true),
-    ...Common(),    
     Vue(true),
     React(),
+    ...Common(),
   ]
 }
 
@@ -192,7 +196,7 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
 function Guide (collapsed = false) {
   return {
     collapsed,
-    text: 'Introduction',
+    text: 'Guide',
     base: '/guide/',
     items: [
       { text: 'Getting Started', link: 'getting-started',
@@ -223,7 +227,8 @@ function Vue (collapsed = false) {
         text: 'Getting Started', 
         link: 'index',
         items: [
-          { text: 'Starter templates', link: 'index#starter-templates' }
+          { text: 'Starter templates', link: 'index#starter-templates' },
+          { text: 'Known Limitations', link: 'index#known-limitations' }
         ],
       },
       { 
@@ -278,6 +283,7 @@ function React (collapsed = false) {
         link: 'index',
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
+          { text: 'Known Limitations', link: 'index#known-limitations' }
         ],
       },
       { 
@@ -324,7 +330,9 @@ function React (collapsed = false) {
 function Common () {
   return [
     { text: 'Configuration', base: '/config/', link: 'index' },
-    { text: 'Roadmap', base: '/roadmap/', link: 'index' },
-    { text: 'Contributing', base: '/contributing/', link: 'index' }
+    { text: 'Roadmap', base: '/', link: 'roadmap' },
+    { text: 'Contributing', base: '/', link: 'contributing' },
+    { text: 'Sponsoring', base: '/', link: 'sponsoring' },
+    { text: 'Consulting', base: '/', link: 'consulting' }
   ]
 }

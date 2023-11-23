@@ -2,7 +2,7 @@
 
 # Core Renderers
 
-As part of the [`@fastify/vite`][fastify-vite] project, the [`@fastify/vue`][fastify-vue] and [`@fastify/react`][fastify-react] official renderers are provided featuring support for the latest versions of Vue and React, respectively. They aim to be minimal and extensible **application shells** matching the essentials features of [Nuxt.js][nuxt] and [Next.js][next] and a little more.
+As part of the [`@fastify/vite`][fastify-vite] project, the [`@fastify/vue`][fastify-vue] and [`@fastify/react`][fastify-react] official renderers are provided featuring support for the latest versions of Vue and React, respectively. They aim to be minimal and extensible **application shells** matching the essential features of [Nuxt.js][nuxt] and [Next.js][next] and a little more.
 
 This document serves as a **living specification** of all the features core **`@fastify/vite`** renderers should aim to implement and how. 
 
