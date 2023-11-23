@@ -80,7 +80,7 @@ function viteFastifyVue (config = {}) {
     config (config, { isSsrBuild, command }) {
       if (command === 'build') {
         config.build.rollupOptions = {
-          input: isSsrBuild ? '/index.js' : '/index.html',
+          input: isSsrBuild ? config.build.ssr : '/index.html',
           output: {
             format: 'es',
           },

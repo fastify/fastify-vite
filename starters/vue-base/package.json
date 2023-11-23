@@ -13,7 +13,7 @@
   "dependencies": {
     "@fastify/one-line-logger": "latest",
     "@fastify/vite": "workspace:^",
-    "@fastify/vue": "0.2.0-rc.2",
+    "@fastify/vue": "workspace:^",
     "fastify": "^4.24.3",
     "unihead": "^0.0.6",
     "vue": "^3.3.8",  
