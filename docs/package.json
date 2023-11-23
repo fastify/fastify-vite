@@ -14,10 +14,14 @@
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.4",
     "@docsearch/css": "^3.5.2",
+    "@docsearch/js": "^3.5.2",
     "@vueuse/core": "^10.6.1",
+    "@vueuse/integrations": "^10.6.1",
     "cytoscape": "^3.27.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "dayjs": "^1.11.10",
-    "debug": "^4.3.4"
+    "debug": "^4.3.4",
+    "mark.js": "^8.11.1",
+    "minisearch": "^6.3.0"
   }
 }

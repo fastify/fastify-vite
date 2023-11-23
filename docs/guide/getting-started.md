@@ -19,7 +19,7 @@ In addition to the basic integration building blocks required to run Vite's deve
 >
 > https://hire.jonasgalvez.com.br/2022/may/18/building-a-mini-next-js/
 
-For Vue and React users, [@fastify/vue](/vue/whats-included) and [@fastify/react](/react/whats-included/) are available as starting points featuring essential features from Nuxt.js and Next.js such as **SSR data fetching** and **seamless SSR-to-CSR navigation**, where client-side navigation and rendering takes over after SSR for the first render.
+For Vue and React users, [@fastify/vue](/vue/) and [@fastify/react](/react/) are available as starting points featuring essential features from Nuxt.js and Next.js such as **SSR data fetching** and **seamless SSR-to-CSR navigation**, where client-side navigation and rendering takes over after SSR for the first render.
 
 These packages are implemented the same way, following the specification found in [Core Renderers](/guide/core-renderers). And most importantly, these packages are implemented using only the hooks provided by **@fastify/vite**.
 

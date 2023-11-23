@@ -32,7 +32,7 @@ To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
 
 This is what **Vite application module** or **client module** refers to. 
 
-You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/clientModule) configuration option, which lets you specify a custom module path for **`@fastify/vite`** to load.  Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
+You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/#clientmodule) configuration option, which lets you specify a custom module path for **`@fastify/vite`** to load.  Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
 
 The best way to really grasp `createRenderFunction()` is by exploring an example. Consider the project layout from the [`react-vanilla`][react-vanilla] example:
 

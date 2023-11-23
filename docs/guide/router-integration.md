@@ -37,9 +37,9 @@ await server.listen({ port: 3000 })
 ```
 :::
 
-Secondly, there's only one option set other than `root`, and that is [`renderer`](/config/renderer). This is a convenience wrapper object to nearly all configuration options (except `root`, `dev`, `spa` and `renderer` itself), so you can package `@fastify/vite` configurations as packages, as is the case for the `@fastify/vue` and `@fastify/react` core renderer packages.
+Secondly, there's only one option set other than `root`, and that is [`renderer`](/config/#renderer). This is a convenience wrapper object to nearly all configuration options (except `root`, `dev`, `spa` and `renderer` itself), so you can package `@fastify/vite` configurations as packages, as is the case for the `@fastify/vue` and `@fastify/react` core renderer packages.
 
-In this setup, we're leveraging [`createRoute()`](/config/createRoute) and [`createRenderFunction()`](/config/createRenderFunction) to customize the way routes are registered and to define a rendering function that embeds server-side data on the final HTML document so it can part of the **hydration** process on the client.
+In this setup, we're leveraging [`createRoute()`](/config/#createroute) and [`createRenderFunction()`](/config/#createrenderfunction) to customize the way routes are registered and to define a rendering function that embeds server-side data on the final HTML document so it can part of the **hydration** process on the client.
 
 ::: code-group
 ```js [renderer.js]
@@ -107,9 +107,9 @@ export default {
 <script type="module" src="/mount.js"></script>
 :::
 
-The key thing to understand in this example is that **`@fastify/vite`** automatically executes [`createRoute()`](/config/createRoute) **for each of the routes defined** in the **`routes`** key from your client module default export. 
+The key thing to understand in this example is that **`@fastify/vite`** automatically executes [`createRoute()`](/config/#createroute) **for each of the routes defined** in the **`routes`** key from your client module default export. 
 
-As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/createRoute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which *also* imports `client/base.js`.
+As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/#createroute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which *also* imports `client/base.js`.
 
 ```mermaid
 flowchart TD
