@@ -17,7 +17,7 @@ const server  = Fastify()
 await server.register(FastifyVite, {
   root: import.meta.url,
   renderer: {
-    ...FastifyVue,
+    ...FastifyReact,
     createRoute () {
       // Your custom create Route implementation
     }
@@ -184,7 +184,7 @@ export default function Index (props) {
   // ...
 ```
 
-This hook can be used in any Vue component to retrieve a reference to the current route context. By default, it includes the following properties:
+This hook can be used in any React component to retrieve a reference to the current route context. By default, it includes the following properties:
 
 <table>
 <thead>
@@ -204,7 +204,7 @@ This hook can be used in any Vue component to retrieve a reference to the curren
 
 Automatically populated by the **route context** initialization module.
 
-On the client, this becomes a Vue `reactive()` object.
+On the client, this becomes a [valtio](https://github.com/pmndrs/valtio) object.
 
 </td>
 </tr>
