@@ -1,4 +1,3 @@
-
 const fetchMap = new Map()
 const resourceMap = new Map()
 

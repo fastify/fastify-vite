@@ -78,7 +78,7 @@ export function createHtmlFunction (source, scope, config) {
             `window.route = ${devalue.uneval(context.toJSON())}\n` +
             `window.routes = ${devalue.uneval(routes.toJSON())}\n` +
             '</script>'
-          )
+          ),
         },
       }),
     }))

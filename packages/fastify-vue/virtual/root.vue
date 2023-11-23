@@ -1,11 +1,11 @@
 <script>
-export function configure (app) {
-  // Extend Vue application instance here
-}
 </script>
 
 <script setup>
 import Layout from '/:layout.vue'
+export function configure (app) {
+  // Extend Vue application instance here
+}
 </script>
 
 <template>

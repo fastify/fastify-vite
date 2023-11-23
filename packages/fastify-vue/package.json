@@ -1,11 +1,12 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "eslint . --ext .js,.vue --fix"
   },
   "type": "module",
   "main": "index.js",
   "name": "@fastify/vue",
-  "version": "0.1.0",
+  "description": "The official @fastify/vite renderer for Vue",
+  "version": "0.2.0-rc.1",
   "files": [
     "virtual/create.js",
     "virtual/root.vue",

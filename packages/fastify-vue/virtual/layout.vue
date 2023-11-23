@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line vue/multi-word-component-names -->
   <component :is="layout">
     <slot />
   </component>
@@ -14,14 +15,14 @@ const appLayouts = import.meta.glob('/layouts/*.vue', { eager: true })
 appLayouts['/layouts/default.vue'] ??= DefaultLayout
 
 export default {
-  setup: () => ({
-    layout: inject(routeLayout)
-  }),
   components: Object.fromEntries(
     Object.keys(appLayouts).map((path) => {
       const name = path.slice(9, -4)
       return [name, appLayouts[path].default]
-    })
-  )
+    }),
+  ),
+  setup: () => ({
+    layout: inject(routeLayout),
+  }),
 }
 </script>

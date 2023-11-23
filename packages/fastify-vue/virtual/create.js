@@ -21,7 +21,7 @@ export default async function create (ctx) {
   const layoutRef = ref(ctxHydration.layout ?? 'default')
 
   instance.config.globalProperties.$isServer = isServer
-  
+
   instance.provide(routeLayout, layoutRef)
   if (!isServer && ctxHydration.state) {
     ctxHydration.state = reactive(ctxHydration.state)

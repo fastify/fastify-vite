@@ -1,4 +1,3 @@
-
 // Helper to make the stream returned renderToPipeableStream()
 // behave like an event emitter and facilitate error handling in Fastify
 import { Minipass } from 'minipass'

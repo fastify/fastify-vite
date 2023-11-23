@@ -6,5 +6,6 @@
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'import/no-absolute-path': 'off',
+    'vue/multi-word-component-names': 'off',
   },
 }

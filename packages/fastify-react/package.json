@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "name": "@fastify/react",
-  "version": "0.2.0",
+  "description": "The official @fastify/vite renderer for React",
+  "version": "0.2.0-rc.1",
   "files": [
     "virtual/create.jsx",
     "virtual/create.tsx",
