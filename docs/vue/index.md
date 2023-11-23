@@ -45,7 +45,7 @@ It contains no embedded examples other than `pages/index.vue`, and no additional
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/vue-base .
+giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 ```
 
 ### Dependencies
@@ -85,7 +85,7 @@ The **vue-kitchensink** starter template includes all of **vue-base** plus a sam
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/vue-kitchensink .
+giget gh:fastify/fastify-vite/starters/vue-kitchensink#dev your-app
 ```
 
 ### Dependencies

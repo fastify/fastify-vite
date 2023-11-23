@@ -43,7 +43,7 @@ The **react-base** starter template includes just about the minimum set of files
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/react-base .
+giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 ```
 
 ### Dependencies
@@ -87,7 +87,7 @@ The **react-kitchensink** starter template includes all of **react-base** plus a
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/react-kitchensink .
+giget gh:fastify/fastify-vite/starters/react-kitchensink#dev your-app
 ```
 
 ### Dependencies
