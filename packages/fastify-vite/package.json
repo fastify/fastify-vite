@@ -8,7 +8,7 @@
   },
   "bundleDependencies": [],
   "deprecated": false,
-  "description": "Fastify plugin for server-side rendering (SSR) applications based on Vite.",
+  "description": "Official Fastify plugin for Vite integration.",
   "files": [
     "types/index.d.ts",
     "mode/development.js",
@@ -38,7 +38,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "5.0.2",
+  "version": "5.0.3",
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",
