@@ -25,7 +25,7 @@ These packages are implemented the same way, following the specification found i
 
 ## A quick walkthrough
 
-The vanilla React SPA Single Page Application project [available in `examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla-spa) is a good starting point to demonstrate the basics of @fastify/vite. The only difference from this to running Vite's own development server directly is that it's executed as a middleware for the Fastify server, allowing other code and custom routes to be added. Vite's development server middleware only runs if you enable it, otherwise it will serve the production bundle (result of running `vite build`), whose location is automatically inferred from the Vite configuration file.
+The vanilla React SPA (Single Page Application) project [available in `examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla-spa) is a good starting point to demonstrate the basics of @fastify/vite. The only difference from this to running Vite's own development server directly is that it's executed as a middleware for the Fastify server, allowing other code and custom routes to be added. Vite's development server middleware only runs if you enable it, otherwise it will serve the production bundle (result of running `vite build`), whose location is automatically inferred from the Vite configuration file.
 
 This basic SPA setup requires a Vite configuration file, the Fastify server file and the appropriate commands in `package.json` to run the server in **development and production modes**, and to **build** your Vite application. 
 
