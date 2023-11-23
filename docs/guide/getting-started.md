@@ -58,7 +58,7 @@ const server = Fastify()
 
 await server.register(FastifyVite, {
   root: import.meta.url,
-  dev: dev || process.argv.includes('--dev'),
+  dev: process.argv.includes('--dev'),
   spa: true
 })
 
