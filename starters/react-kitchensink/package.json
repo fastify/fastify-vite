@@ -25,7 +25,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "latest",
     "@babel/preset-react": "latest",
-    "@vitejs/plugin-react": "latest",
+    "@vitejs/plugin-react": "^4.2.0",
     "eslint": "latest",
     "eslint-config-standard": "latest",
     "eslint-plugin-import": "latest",
