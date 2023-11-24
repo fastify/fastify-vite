@@ -26,7 +26,7 @@ const { state } = useRouteContext()
 
 if (isServer) {
   // State is automatically hydrated on the client
-  state.message = 'Welcome to Fastify DX for Vue!'
+  state.message = 'Welcome to @fastify/vue!'
 }
 
 const message = state.message
@@ -35,7 +35,7 @@ const message = state.message
 <script>
 export function getMeta () {
   return {
-    title: 'Welcome to Fastify DX!'
+    title: 'Welcome to @fastify/vue!'
   }
 }
 </script>

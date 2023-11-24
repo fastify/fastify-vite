@@ -4,7 +4,7 @@ import { isServer, useRouteContext } from '/:core.jsx'
 
 export function getMeta () {
   return {
-    title: 'Welcome to Fastify DX!'
+    title: 'Welcome to @fastify/react!'
   }
 }
 
@@ -12,7 +12,7 @@ export default function Index () {
   const { snapshot, state } = useRouteContext()
   if (isServer) {
     // State is automatically hydrated on the client
-    state.message = 'Welcome to Fastify DX for React!'
+    state.message = 'Welcome to @fastify/react!'
   }
   return (
     <>
