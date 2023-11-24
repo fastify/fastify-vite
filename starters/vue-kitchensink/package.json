@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^5.0.3",
+    "@fastify/vite": "^5.0.4",
     "@fastify/vue": "^0.2.0",
     "fastify": "latest",
     "unihead": "^0.0.6",
