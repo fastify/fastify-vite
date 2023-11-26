@@ -26,12 +26,12 @@ Support for other JavaScript environments with HTTP support based on the [Fetch]
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-## <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
 
 
 The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
 
-### Download
+#### Download
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
@@ -39,7 +39,7 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 ```
 
-### Dependencies
+#### Dependencies
 
 - [**`fastify`**](https://github.com/fastify/fastify) as the **Node.js** server.
 
@@ -62,12 +62,12 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
-## <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
 
-### Download
+#### Download
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
@@ -75,7 +75,7 @@ We recommend using [`giget`](https://github.com/unjs/giget) to download straight
 giget gh:fastify/fastify-vite/starters/react-kitchensink#dev your-app
 ```
 
-### Dependencies
+#### Dependencies
 
 All dependencies from **react-base** plus:
 
