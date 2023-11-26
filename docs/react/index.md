@@ -4,16 +4,16 @@
 
 **`@fastify/react`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [Vue][vue]. It is accompanied by **`@fastify/react/plugin`**, a Vite plugin that complements the renderer package.
 
-It implements all of the features specified in [**Core Renderers**](/guide/core-renderers), including [**automated routing**](/vue/router-setup), [**universal data fetching**](/vue/route-modules#data-fetching) and [**head management**](/vue/route-modules#page-metadata). It's meant to be a lightweight Fastify-flavored replacement to **Next.js** and other full blown SSR Vue frameworks. It is **Fastify-first** in the sense that your Fastify server is responsible for setting everything up via **`@fastify/vite`**.
+It implements all of the features specified in [**Core Renderers**](/guide/core-renderers), including [**automated routing**](/react/router-setup), [**universal data fetching**](/react/route-modules#data-fetching) and [**head management**](/react/route-modules#page-metadata). It's meant to be a lightweight Fastify-flavored replacement to **Next.js** and other full blown SSR React frameworks. It is **Fastify-first** in the sense that your Fastify server is responsible for setting everything up via **`@fastify/vite`**.
 
 Below is an overview of all individual documentation topics and the order in which it makes the most sense to read them.
 
-- [Project Structure](/vue/project-structure) covers the structure of a **`@fastify/react`** project, configuration, special folders and others conventions employed.
-- [Router Setup](/vue/router-setup) covers how route modules get registered as actual routes, both on the server and the client.
-- [Route Modules](/vue/route-modules) covers what makes up route modules, what special exports they have and how they work. 
-- [Route Context](/vue/route-context) covers the universal **route context** initialization module and the `useRouteContext()` hook, available to all route modules and route layouts.
-- [Route Layouts](/vue/route-layouts) covers **route layout modules**.
-- [Rendering Modes](/vue/rendering-modes) covers all different route module **rendering modes**.
+- [Project Structure](/react/project-structure) covers the structure of a **`@fastify/react`** project, configuration, special folders and others conventions employed.
+- [Router Setup](/react/router-setup) covers how route modules get registered as actual routes, both on the server and the client.
+- [Route Modules](/react/route-modules) covers what makes up route modules, what special exports they have and how they work. 
+- [Route Context](/react/route-context) covers the universal **route context** initialization module and the `useRouteContext()` hook, available to all route modules and route layouts.
+- [Route Layouts](/react/route-layouts) covers **route layout modules**.
+- [Rendering Modes](/react/rendering-modes) covers all different route module **rendering modes**.
 
 ## Starter templates
 
@@ -63,9 +63,9 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
     - **`unihead`**
     - **`valtio`**
 
-- [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
+- [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-react) for the React application shell.
 
-- [**`@vitejs/plugin-react`**](https://github.com/vitejs/vite-plugin-react) for Vue support in Vite.
+- [**`@vitejs/plugin-react`**](https://github.com/vitejs/vite-plugin-react) for React support in Vite.
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
@@ -109,6 +109,6 @@ All dependencies from **react-base** plus:
 
   If you're looking into a microfrontend setup, consider [this approach](https://dev.to/getjv/react-micro-frontends-with-vite-5442).
 
-- `@fastify/vue` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/vue/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer. SPA support is planned for the next major release, see the [project roadmap](/roadmap).
+- `@fastify/react` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/react/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer. SPA support is planned for the next major release, see the [project roadmap](/roadmap).
 
 - There's not hot reload for the `context.js` file. This should be addressed in the next major release, see the [project roadmap](/roadmap).
