@@ -15,7 +15,7 @@ Below is an overview of all individual documentation topics and the order in whi
 - [Route Layouts](/vue/route-layouts) covers **route layout modules**.
 - [Rendering Modes](/vue/rendering-modes) covers all different route module **rendering modes**.
 
-## Runtime Requirements
+## Runtime requirements
 
 - [Node.js](https://nodejs.org/en/) v18 — you should upgrade to [v20 LTS](https://nodejs.org/en/blog/announcements/v20-release-announce) to benefit from [massive performance improvements](https://blog.rafaelgss.dev/state-of-nodejs-performance-2023)!
 - We recommend PNPM as a package manager.
@@ -80,7 +80,7 @@ All dependencies from **vue-base** plus:
 
 - [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/) support.
 
-## Known Limitations
+## Known limitations
 
 - It's currently impossible to run **multiple** Vite development server middleware in your Fastify server, which means `@fastify/vite` can **only be registered once**. Configuration for this is somewhat tricky and there isn't documentation on how to do it. Once [#108](https://github.com/fastify/fastify-vite/pull/108) is completed and merged, it will open the path to have a Vite development server factory that can create instances on-demand, but that approach still remains to be tested.
 
