@@ -21,22 +21,19 @@ export default withMermaid({
   },
 
   sitemap: {
-    hostname: 'https://vitepress.dev',
-    transformItems(items) {
-      return items.filter((item) => !item.url.includes('migration'))
-    }
+    hostname: 'https://fastify-vite.dev',
   },
 
   /* prettier-ignore */
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
+    // ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
+    // ['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
     ['meta', { name: 'theme-color', content: '#5f67ee' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'en' }],
-    ['meta', { name: 'og:site_name', content: 'VitePress' }],
-    ['meta', { name: 'og:image', content: 'https://vitepress.dev/vitepress-og.jpg' }],
-    ['script', { src: 'https://cdn.usefathom.com/script.js', 'data-site': 'AZBRSFGG', 'data-spa': 'auto', defer: '' }]
+    ['meta', { name: 'og:site_name', content: '@fastify/vite' }],
+    // ['meta', { name: 'og:image', content: 'https://vitepress.dev/vitepress-og.jpg' }],
+    // ['script', { src: 'https://cdn.usefathom.com/script.js', 'data-site': 'AZBRSFGG', 'data-spa': 'auto', defer: '' }]
   ],
 
   themeConfig: {
@@ -228,7 +225,8 @@ function Vue (collapsed = false) {
         link: 'index',
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
-          { text: 'Known Limitations', link: 'index#known-limitations' }
+          { text: 'Runtime requirements', link: 'index#runtime-requirements' },
+          { text: 'Known limitations', link: 'index#known-limitations' }
         ],
       },
       { 
@@ -283,7 +281,8 @@ function React (collapsed = false) {
         link: 'index',
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
-          { text: 'Known Limitations', link: 'index#known-limitations' }
+          { text: 'Runtime requirements', link: 'index#runtime-requirements' },
+          { text: 'Known limitations', link: 'index#known-limitations' }
         ],
       },
       { 

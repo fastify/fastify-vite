@@ -15,26 +15,19 @@ Below is an overview of all individual documentation topics and the order in whi
 - [Route Layouts](/react/route-layouts) covers **route layout modules**.
 - [Rendering Modes](/react/rendering-modes) covers all different route module **rendering modes**.
 
+## Runtime Requirements
+
+- [Node.js](https://nodejs.org/en/) v18 — you should upgrade to [v20 LTS](https://nodejs.org/en/blog/announcements/v20-release-announce) to benefit from [massive performance improvements](https://blog.rafaelgss.dev/state-of-nodejs-performance-2023)!
+- We recommend PNPM as a package manager.
+
+Support for other JavaScript environments with HTTP support based on the [Fetch](https://fetch.spec.whatwg.org/) and [Service Worker](https://www.w3.org/TR/service-workers/) standards is coming when [`fastify-edge`](https://github.com/galvez/fastify-edge) is finished.
+
 ## Starter templates
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-<table>
-<thead>
-<tr>
-<th>Template</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td valign=top>
+## <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
 
-<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
-
-
-</td>
-<td>
 
 The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
 
@@ -69,15 +62,7 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
-</td>
-</tr>
-<tr>
-<td valign=top>
-
-<a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
-
-</td>
-<td>
+## <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
@@ -98,10 +83,6 @@ All dependencies from **react-base** plus:
 
 - [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/) support.
 
-</td>
-</tr>
-</tbody>
-</table>
 
 ## Known Limitations
 
