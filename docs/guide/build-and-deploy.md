@@ -28,7 +28,7 @@ Assuming you're using the default `clientModule` resolution (`/index.js`), these
 }
 ```
 
-After running `npm run build` on [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), for example, you should see a new `client/dist` folder.
+If you're using a **different** [`clientModule`](/config/#clientmodule) settings, you *will* need to change the `build:server` command accordingly, i.e., that's not taken care of by `**@fastify/vite**`. After running `npm run build` on [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla), for example, you should see a new `client/dist` folder.
 
 ```diff
   ├── client
