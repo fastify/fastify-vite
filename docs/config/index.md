@@ -12,6 +12,8 @@ It works with `import.meta.url` too.
 
 Enables Vite's development server if set to `true`.
 
+Its default value is set to `process.argv.includes('--dev')`, so it will automatically recognize passing the `--dev` flag to your Node.js process unless you change it to something else.
+
 ### `spa`
 
 When set to `true`, **disables SSR** and just sets up integration for delivering a static SPA application.
