@@ -25,7 +25,16 @@
     "setup.js"
   ],
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./index.js"
+      },
+      "require": {
+        "types": "./types/index.d.ts",
+        "default": "./index.js"
+      }
+    },
     "./utils": "./utils.js"
   },
   "homepage": "https://github.com/fastify/fastify-vite",
