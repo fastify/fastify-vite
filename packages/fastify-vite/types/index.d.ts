@@ -6,6 +6,7 @@ import { FastifyPluginAsync } from 'fastify'
 declare module 'fastify' {
   interface FastifyReply {
     html(): void
+    render(): void
   }
 
   interface FastifyInstance {
