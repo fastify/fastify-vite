@@ -2,7 +2,7 @@
 
 # Getting Started
 
-**`@fastify/react`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [Vue][vue]. It is accompanied by **`@fastify/react/plugin`**, a Vite plugin that complements the renderer package.
+**`@fastify/react`** is **@fastify/vite**'s [**core renderer**](/guide/core-renderers) for [React][react]. It is accompanied by **`@fastify/react/plugin`**, a Vite plugin that complements the renderer package.
 
 It implements all of the features specified in [**Core Renderers**](/guide/core-renderers), including [**automated routing**](/react/router-setup), [**universal data fetching**](/react/route-modules#data-fetching) and [**head management**](/react/route-modules#page-metadata). It's meant to be a lightweight Fastify-flavored replacement to **Next.js** and other full blown SSR React frameworks. It is **Fastify-first** in the sense that your Fastify server is responsible for setting everything up via **`@fastify/vite`**.
 
