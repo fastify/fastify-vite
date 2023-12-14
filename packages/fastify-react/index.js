@@ -143,7 +143,9 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
   // Extend with route context initialization module
   RouteContext.extend(client.context)
 
-  scope.get(route.path, {
+  scope.route({
+    url: route.path,
+    method: ['GET', 'POST', 'PUT', 'DELETE'],
     onRequest,
     // If either getData or onEnter are provided,
     // make sure they run before the SSR route handler
