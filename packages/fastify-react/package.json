@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/react",
   "description": "The official @fastify/vite renderer for React",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "files": [
     "virtual/create.jsx",
     "virtual/root.jsx",
