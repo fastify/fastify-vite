@@ -9,6 +9,8 @@
     retrieve server data and maintain it in the global state.</li>
     <li><router-link to="/using-auth">/using-auth</router-link> demonstrates how to 
     wrap a route in a custom layout component.</li>
+    <li><router-link to="/form/123">/form/123</router-link> demonstrates how to 
+    send a POST request with form data to a route with dynamic URL.</li>
     <li><router-link to="/client-only">/client-only</router-link> demonstrates how to set 
     up a route for rendering on the client only (disables SSR).</li>
     <li><router-link to="/server-only">/server-only</router-link> demonstrates how to set 

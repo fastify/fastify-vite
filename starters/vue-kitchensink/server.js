@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
+import FastifyFormBody from '@fastify/formbody'
 
 const server = Fastify({
   logger: {
@@ -27,6 +28,7 @@ server.delete('/api/todo/items', (req, reply) => {
   reply.send({ ok: true })
 })
 
+await server.register(FastifyFormBody)
 await server.register(FastifyVite, { 
   root: import.meta.url, 
   renderer: '@fastify/vue',

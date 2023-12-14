@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
+import FastifyFormBody from '@fastify/formbody'
 
 const server = Fastify({
   logger: {
@@ -9,6 +10,7 @@ const server = Fastify({
   }
 })
 
+await server.register(FastifyFormBody)
 await server.register(FastifyVite, { 
   root: import.meta.url, 
   renderer: '@fastify/react',

@@ -29,6 +29,8 @@ export default function Index () {
         state even after navigating to another route.</li>
         <li><Link to="/using-auth">/using-auth</Link> demonstrates how to 
         wrap a route in a custom layout component.</li>
+        <li><Link to="/form/123">/form/123</Link> demonstrates how to 
+    send a POST request with form data to a route with dynamic URL.</li>
         <li><Link to="/client-only">/client-only</Link> demonstrates how to set 
         up a route for rendering on the client only (disables SSR).</li>
         <li><Link to="/server-only">/server-only</Link> demonstrates how to set 

@@ -11,9 +11,10 @@
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "@fastify/formbody": "^7.4.0",
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^5.0.4",
-    "@fastify/vue": "^0.2.0",
+    "@fastify/vite": "^5.0.6",
+    "@fastify/vue": "^0.3.0",
     "fastify": "latest",
     "unihead": "^0.0.6",
     "vite": "^5.0.2",
