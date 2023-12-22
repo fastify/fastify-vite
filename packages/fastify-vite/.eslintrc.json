@@ -7,7 +7,7 @@
       "files": ["types/*.test-d.ts", "types/*.d.ts"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": ["./packages/fastify-vite/tsconfig.eslint.json"]
+        "project": ["./tsconfig.eslint.json", "./tsconfig.json"]
       },
       "extends": [
         "plugin:@typescript-eslint/recommended",

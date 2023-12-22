@@ -17,34 +17,40 @@ declare module 'fastify' {
 }
 
 type FastifyVitePlugin = FastifyPluginAsync<NonNullable<fastifyVite.FastifyViteOptions>>;
-type RouteKey = 'server'
-  | 'req'
-  | 'reply'
-  | 'head'
-  | 'state'
-  | 'data'
-  | 'firstRender'
-  | 'layout'
-  | 'getMeta'
-  | 'getData'
-  | 'onEnter'
-  | 'streaming'
-  | 'clientOnly'
-  | 'serverOnly'
-type RouteType = Partial<Record<RouteKey, any>>
+
+type RouteType = Partial<{
+  server: unknown
+  req: unknown
+  reply: unknown
+  head: unknown
+  state: unknown
+  data: Record<string, unknown>
+  firstRender: boolean
+  layout: unknown
+  getMeta: unknown
+  getData: unknown
+  onEnter: unknown
+  streaming: unknown
+  clientOnly: unknown
+  serverOnly: unknown
+}>
+type Loosen<T> = T & Record<string, unknown>
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+type Ctx = Loosen<{ routes: Array<RouteType>, context: unknown, body: unknown, stream: unknown, data: unknown }>
+
 interface RendererFunctions {
-  createHtmlFunction(source: string, scope?: FastifyInstance, config?: any): (ctx: { routes: Array<RouteType>, context: any, body: any } | Record<string, any>) => Promise<any>
-  createHtmlTemplateFunction(source: string): any
-  createRenderFunction({ routes, create }?: { routes: Array<RouteType>, create: (arg0: Record<string, any>) => any } | Record<string, any>): Promise<(req: any, ...args: any[]) => { routes: Array<any>; context: any; body: any; } | Record<string, any>>
+  createHtmlTemplateFunction(source: string): unknown
+  createHtmlFunction(source: string, scope?: unknown, config?: unknown): (ctx: Ctx) => Promise<unknown>;
+  createRenderFunction(args: Loosen<{ routes: Array<RouteType>, create: (arg0: Record<string, unknown>) => unknown, createApp: unknown }>): Promise<(server: unknown, req: unknown, reply: unknown) => Ctx | { element:string, hydration:string }>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-interface RendererOption<ClientModuleType = string | Record<string, any> | any, ClientType = any> extends Partial<RendererFunctions> {
+interface RendererOption<ClientModuleType = string | Record<string, unknown> | unknown, ClientType = unknown> extends RendererFunctions {
   clientModule: ClientModuleType
-  createErrorHandler(client: ClientType, scope: FastifyInstance, config?: any): (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
-  createRoute({ client, handler, errorHandler, route }: { client?: ClientType, handler?: (...args: any[]) => any, errorHandler: (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void, route?: RouteType } | Record<string, any>, scope: FastifyInstance, config: any): void
-  createRouteHandler(client: ClientType, scope: FastifyInstance, config?: any): (req: FastifyRequest, reply: FastifyReply) => Promise<any>
-  prepareClient(clientModule: ClientModuleType, scope?: FastifyInstance, config?: any): Promise<ClientType>
+  createErrorHandler(client: ClientType, scope: FastifyInstance, config?: unknown): (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
+  createRoute(args: Loosen<{ client?: ClientType, handler?: (...args: unknown[]) => unknown, errorHandler: (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void, route?: RouteType }>, scope: FastifyInstance, config: unknown): void
+  createRouteHandler(client: ClientType, scope: FastifyInstance, config?: unknown): (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
+  prepareClient(clientModule: ClientModuleType, scope?: FastifyInstance, config?: unknown): Promise<ClientType>
 }
 
 declare namespace fastifyVite {
@@ -57,7 +63,7 @@ declare namespace fastifyVite {
     vite?: UserConfig
     viteConfig?: string
     bundle?: {
-      manifest?: object | Array<any>,
+      manifest?: object,
       indexHtml?: string | Buffer,
       dir?: string
     },

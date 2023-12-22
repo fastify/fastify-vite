@@ -24,9 +24,9 @@ const options = {
       return Promise.resolve()
     }
   },
-  createRenderFunction () {
+  createRenderFunction ({ create, routes, createApp }) {
     return Promise.resolve((req) => {
-      return {}
+      return { element: '', hydration: '' }
     })
   },
   renderer: {
