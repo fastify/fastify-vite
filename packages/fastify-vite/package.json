@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "vitest run --no-threads --root=.",
+    "test": "vitest run --root=.",
+    "test:type": "vitest --ui --typecheck",
     "lint": "eslint . --ext .js --fix"
   },
   "bugs": {
@@ -26,14 +27,9 @@
   ],
   "exports": {
     ".": {
-      "import": {
-        "types": "./types/index.d.ts",
-        "default": "./index.js"
-      },
-      "require": {
-        "types": "./types/index.d.ts",
-        "default": "./index.js"
-      }
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./types/index.d.ts"
     },
     "./utils": "./utils.js"
   },
@@ -41,6 +37,8 @@
   "license": "MIT",
   "main": "index.js",
   "name": "@fastify/vite",
+  "types": "./types/index.d.ts",
+  "typings": "./types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
@@ -58,8 +56,10 @@
     "vite": "^5.0.0"
   },
   "peerDependencies": {
+    "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "@fastify/react": "workspace:^"
+    "vite": ">4",
+    "fastify": "^4"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
@@ -70,7 +70,8 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
+    "fastify": "^4.25.1",
     "typescript": "^5.2.2",
-    "vitest": "^0.28.5"
+    "vitest": "^1.0.2"
   }
 }
