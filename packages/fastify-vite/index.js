@@ -36,11 +36,15 @@ class Vite {
   }
 }
 
-function fastifyVite (scope, options, done) {
+function plugin (scope, options, done) {
   scope.decorate('vite', new Vite(scope, options))
   done()
 }
 
-module.exports = fp(fastifyVite, {
+const fastifyVite = fp(plugin, {
   name: '@fastify/vite'
 })
+
+module.exports = fastifyVite
+module.exports.default = fastifyVite
+module.exports.fastifyVite = fastifyVite
