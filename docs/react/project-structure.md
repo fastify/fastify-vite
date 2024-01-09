@@ -96,7 +96,7 @@ The Vite application HTML template:
 <!-- head -->
 </head>
 <body>
-<main><!-- element --></main>
+<div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
 <script type="module" src="/:mount.js"></script>
@@ -185,7 +185,7 @@ export default {
 <!-- head -->
 </head>
 <body>
-<main><!-- element --></main>
+<div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
 <script type="module" src="/:mount.js"></script>

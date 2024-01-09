@@ -123,7 +123,7 @@ Then for the client code, cleanly separated in the `client/` directory, you have
 ::: code-group
 ```html [client/index.html]
 <!DOCTYPE html>
-<main><!-- element --></main>
+<div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
 ```
 
@@ -131,7 +131,7 @@ Then for the client code, cleanly separated in the `client/` directory, you have
 import { createRoot } from 'react-dom/client'
 import { createApp } from './base.jsx'
 
-const root = createRoot(document.querySelector('main'))
+const root = createRoot(document.getElementById('root'))
 root.render(createApp())
 ```
 

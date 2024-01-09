@@ -82,14 +82,14 @@ In the [react-vanilla][react-vanilla] example, both `client/mount.js` and `clien
 ::: code-group
 ```html [client/index.html]
 <!DOCTYPE html>
-<main><!-- element --></main>
+<div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
 ```
 ```js [client/mount.js]
 import { hydrateRoot } from 'react-dom/client'
 import { createApp } from './base.jsx'
 
-const mountElement = document.querySelector('main')
+const mountElement = document.getElementById('root')
 
 // hydrateRoot() avoids re-rendering prerendered markup
 hydrateRoot(mountElement, createApp())
