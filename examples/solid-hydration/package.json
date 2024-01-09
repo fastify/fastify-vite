@@ -29,6 +29,6 @@
     "eslint-plugin-solid": "^0.9.4",
     "vite": "^5.0.0",
     "vite-plugin-solid": "^2.7.2",
-    "vitest": "^0.28.5"
+    "vitest": "^1.0.0"
   }
 }

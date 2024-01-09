@@ -28,6 +28,6 @@
     "eslint-plugin-react": "^7.33.2",
     "postcss": "^8.4.31",
     "vite": "^5.0.0",
-    "vitest": "^0.28.5"
+    "vitest": "^1.0.0"
   }
 }
