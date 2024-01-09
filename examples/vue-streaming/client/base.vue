@@ -19,7 +19,7 @@ html {
 button {
   margin: 0 0.5em;
 }
-main {
+#root {
   display: flex;
   place-items: center;
   flex-direction: column;
