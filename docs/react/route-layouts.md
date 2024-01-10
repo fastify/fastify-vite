@@ -1,15 +1,19 @@
 # Route Layouts
 
-`@fastify/vue` will automatically load layouts from the `layouts/` folder. 
+`@fastify/react` will automatically load layouts from the `layouts/` folder. 
 
-By default, the `/:layouts/default.vue` [**smart import**](/vue/project-structure#smart-imports) is used. If a project is missing `/layouts/defaults.vue` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
+By default, the `/:layouts/default.jsx` [**smart import**](/react/project-structure#smart-imports) is used. If a project is missing `/layouts/default.jsx` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
-```vue
-<template>
-  <div class="layout">
-    <slot></slot>
-  </div>
-</template>
+```jsx
+import { Suspense } from 'react'
+
+export default function Layout ({ children }) {
+  return (
+    <Suspense>
+      {children}
+    </Suspense>
+  )
+}
 ```
 
 You assign a layout to a route by exporting `layout`. 
@@ -18,34 +22,37 @@ You assign a layout to a route by exporting `layout`.
 export const layout = 'auth'
 ```
 
-That'll will cause the route to be wrapped in the layout component exported by a Vue component placed in `layouts/auth.vue`. Below is a simple example:
+That will cause the route to be wrapped in the layout component exported by a React component placed in `layouts/auth.jsx`. Below is a simple example:
 
-```vue
-<template>
-  <div class="contents">
-    <template v-if="!state.user.authenticated">
+```jsx
+import { Suspense } from 'react'
+import { useRouteContext } from '/:core.jsx'
+
+export default function Auth ({ children }) {
+  const { actions, state, snapshot } = useRouteContext()
+  const authenticate = () => actions.authenticate(state)
+  return (
+    <Suspense>
+      {snapshot.user.authenticated
+        ? children
+        : <Login onClick={() => authenticate()} /> }
+    </Suspense>
+  )
+}
+
+function Login ({ onClick }) {
+  return (
+    <>
       <p>This route needs authentication.</p>
-      <button @click="authenticate">
+      <button onClick={onClick}>
         Click this button to authenticate.
       </button>
-    </template>
-    <slot v-else></slot>
-  </div>
-</template>
-
-<script>
-import { useRouteContext } from '/:core.js'
-
-export default {
-  setup () {
-    const { actions, state } = useRouteContext()
-    return {
-      state,
-      authenticate: () => actions.authenticate(state)
-    }
-  }
+    </>
+  )
 }
 </script>
 ```
+
+Also you can use `.tsx` extensions for files in layouts folder.
 
 Like route modules, layouts can use `useRouteContext()`.
