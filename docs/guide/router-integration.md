@@ -103,7 +103,7 @@ export default {
 ```html [client/index.html]
 <!DOCTYPE html>
 <!-- hydration -->
-<main><!-- element --></main>
+<div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
 :::
 

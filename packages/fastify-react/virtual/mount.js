@@ -4,11 +4,11 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import create from '/:create.jsx'
 import routesPromise from '/:routes.js'
 
-mount('main')
+mount('root')
 
 async function mount (target) {
   if (typeof target === 'string') {
-    target = document.querySelector(target)
+    target = document.getElementById(target)
   }
   const context = await import('/:context.js')
   const ctxHydration = await extendContext(window.route, context)

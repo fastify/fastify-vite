@@ -3,5 +3,5 @@ import { createApp } from './base.jsx'
 
 hydrate(
   createApp(),
-  document.querySelector('main')
+  document.getElementById('root')
 )
