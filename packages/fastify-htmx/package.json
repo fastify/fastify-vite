@@ -1,0 +1,32 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "type": "module",
+  "main": "index.js",
+  "name": "@fastify/htmx",
+  "description": "The official @fastify/vite renderer for HTMX",
+  "version": "0.1.0",
+  "files": [
+    "virtual/hydrate.js",
+    "virtual/inject.js",
+    "index.js",
+    "plugin.cjs",
+    "server/context.js",
+    "server/stream.js"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.cjs"
+  },
+  "dependencies": {
+    "devalue": "latest"
+  },
+  "peerDependencies": {
+    "@fastify/vite": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

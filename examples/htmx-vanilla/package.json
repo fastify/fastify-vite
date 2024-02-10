@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "node server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr ./index.js",
+    "lint": "eslint . --ext .js,.vue --fix",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "^4.24.3",
+    "htmx.org": "^1.9.10"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}
