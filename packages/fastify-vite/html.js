@@ -3,7 +3,7 @@ function createHtmlTemplateFunction (source) {
   const interpolated = ['']
   const params = []
 
-  for (const match of source.matchAll(/<!--\s*([\w]+)\s*-->/g)) {
+  for (const match of source.matchAll(/<!--\s*([\.\w]+)\s*-->/g)) {
     ranges.set(match.index, {
       param: match[1],
       end: match.index + match[0].length
@@ -29,9 +29,13 @@ function createHtmlTemplateFunction (source) {
     interpolated[cursor] += source[i]
   }
 
+  console.log(    `(function ({ ${params.map((s) => s.split('.')[0]).join(', ')} }) {` +
+    `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
+    '})'
+)
   // eslint-disable-next-line no-eval
   return (0, eval)(
-    `(function ({ ${params.join(', ')} }) {` +
+    `(function ({ ${params.map((s) => s.split('.')[0]).join(', ')} }) {` +
     `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
     '})'
   )

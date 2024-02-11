@@ -55,7 +55,6 @@ const DefaultConfig = {
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
-    console.log('source', source)
     const indexHtmlTemplate = typeof source === 'function'
       ? source
       : config.createHtmlTemplateFunction(source)
@@ -74,6 +73,7 @@ const DefaultConfig = {
       }
     } else {
       return async function (ctx) {
+        console.log('ctx', ctx)
         this.type('text/html')
         this.send(await indexHtmlTemplate(ctx))
         return this
@@ -96,13 +96,20 @@ const DefaultConfig = {
   createRouteHandler ({ client, route }, scope, config) {
     if (config.hasRenderFunction) {
       return async function (req, reply) {
-        const page = await reply.render({ app: scope, req, reply })
+        const page = await reply.render({ app: scope, req, reply, route })
         return reply.html(page)
       }
     } else {
       return async function (req, reply) {
         const page = await route.default({ scope, req, reply })
-        return reply.html({ app: scope, req, reply, element: page })
+        console.log('!!!', route)
+        return reply.html({ 
+          app: scope, 
+          req, 
+          reply, 
+          route,
+          element: page,
+        })
       }
     }
   },
@@ -115,6 +122,7 @@ const DefaultConfig = {
         scope.vite.devServer.ssrFixStacktrace(error)
         reply.code(500).send({ error })
       } else {
+        console.error(error)
         reply.code(500).send({ error })
       }
     }

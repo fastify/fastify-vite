@@ -33,8 +33,6 @@ class Vite {
       errorHandler,
     } = await this[kSetup](this.config, this.createServer)
 
-    console.log('routes', routes)
-
     // Register individual Fastify routes for each the client-provided routes
     if (routes && typeof routes[Symbol.iterator] === 'function') {
       for (const route of routes) {
@@ -49,7 +47,7 @@ class Vite {
           route,
         }, this.scope, this.config)
 
-        this.config.createRoute({ 
+        await this.config.createRoute({ 
           client, 
           handler,
           errorHandler, 

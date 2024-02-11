@@ -14,22 +14,6 @@ export default function ({ isSsrBuild }) {
     optimizeDeps: {
       include: ['/client/**']
     },
-    build: {
-      lib: {
-        // Could also be a dictionary or array of multiple entry points
-        entry: isSsrBuild 
-          ? resolve(__dirname, 'client/server.jsx')
-          : resolve(__dirname, 'client/client.js'),
-        fileName: 'index',
-        formats: ['es'],
-      },
-      rollupOptions: {
-        external: ['htmx.org'],
-        output: {
-          exports: 'named',
-        }
-      },
-    },
     plugins: [
       inject({
         // See https://github.com/bigskysoftware/htmx/issues/1469

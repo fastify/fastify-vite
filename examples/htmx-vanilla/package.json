@@ -5,7 +5,7 @@
     "start": "node server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr ./server.jsx",
+    "build:server": "vite build --outDir dist/server --ssr ./index.js",
     "lint": "eslint . --ext .js,.vue --fix",
     "test": "vitest run"
   },

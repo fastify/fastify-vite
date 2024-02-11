@@ -9,8 +9,7 @@ export async function main (dev) {
 
   await server.register(FastifyVite, { 
     root: import.meta.url,
-    dev: dev || process.argv.includes('--dev'),
-    clientModule: '/server.jsx',
+    dev: process.argv.includes('--dev'),
   })
 
   server.setErrorHandler((err, req, reply) => {
