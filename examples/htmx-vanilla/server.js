@@ -10,11 +10,7 @@ export async function main (dev) {
   await server.register(FastifyVite, { 
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
-    async createRenderFunction ({ createApp }) {
-      return async () => ({
-        element: await createApp()
-      })
-    }
+    clientModule: '/server.jsx',
   })
 
   server.setErrorHandler((err, req, reply) => {
@@ -23,10 +19,6 @@ export async function main (dev) {
   })
 
   await server.vite.ready()
-
-  server.get('/', (req, reply) => {
-    return reply.html()
-  })
 
   return server
 }

@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
+    "@kitajs/html": "^3.1.2",
     "fastify": "^4.24.3",
     "htmx.org": "^1.9.10"
   },
   "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
     "vite": "^5.0.0",
     "vitest": "^1.0.0"
   }

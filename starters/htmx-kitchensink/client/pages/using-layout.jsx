@@ -1,10 +1,6 @@
 
 export const layout = 'auth'
 
-export function getMeta () {
-  return { title: 'Using Custom Layout' }
-}
-
 export default function (app, req, reply) {
   return (
     <h2>Todo List — Using Custom Layout</h2>

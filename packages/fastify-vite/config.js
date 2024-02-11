@@ -55,7 +55,9 @@ const DefaultConfig = {
 
   // Create reply.html() response function
   createHtmlFunction (source, scope, config) {
-    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
+    const indexHtmlTemplate = typeof source === 'function'
+      ? source
+      : config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
         this.type('text/html')
@@ -63,10 +65,18 @@ const DefaultConfig = {
         return this
       }
     }
-    return async function (ctx) {
-      this.type('text/html')
-      this.send(indexHtmlTemplate(ctx ?? await this.render()))
-      return this
+    if (config.hasRenderFunction) {
+      return async function (ctx) {
+        this.type('text/html')
+        this.send(await indexHtmlTemplate(await this.render(ctx)))
+        return this
+      }
+    } else {
+      return async function (ctx) {
+        this.type('text/html')
+        this.send(await indexHtmlTemplate(ctx))
+        return this
+      }
     }
   },
 
@@ -82,21 +92,30 @@ const DefaultConfig = {
   },
 
   // Function to create the route handler passed to createRoute
-  createRouteHandler (client, scope, config) {
-    return async function (req, reply) {
-      const page = await reply.render(scope, req, reply)
-      return reply.html(page)
+  createRouteHandler ({ client, route }, scope, config) {
+    if (config.hasRenderFunction) {
+      return async function (req, reply) {
+        const page = await reply.render({ app: scope, req, reply })
+        return reply.html(page)
+      }
+    } else {
+      return async function (req, reply) {
+        const page = await route.default({ scope, req, reply })
+        return reply.html({ app: scope, req, reply, element: page })
+      }
     }
   },
 
   // Function to create the route errorHandler passed to createRoute
-  createErrorHandler (client, scope, config) {
+  createErrorHandler ({ client, route }, scope, config) {
     return (error, req, reply) => {
       if (config.dev) {
         console.error(error)
         scope.vite.devServer.ssrFixStacktrace(error)
+        reply.code(500).send({ error })
+      } else {
+        reply.code(500).send({ error })
       }
-      scope.errorHandler(error, req, reply)
     }
   }
 }
