@@ -20,7 +20,13 @@ export default {
         resolve(__dirname, 'client/client.js'),
         resolve(__dirname, 'client/server.jsx'),
       ],
-    }
+    },
+    rollupOptions: {
+      external: ['htmx.org'],
+      output: {
+        exports: 'named',
+      }
+    },
   },
   plugins: [
     inject({
