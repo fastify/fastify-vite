@@ -18,7 +18,9 @@ function fileUrl (str) {
 
 async function setup (config) {
   if (!config.bundle) {
-    throw new Error('No distribution bundle found.')
+    config.bundle = {
+      dir: join(config.vite.root, config.vite.build.outDir)
+    }
   }
   // For production you get the distribution version of the render function
   const { assetsDir } = config.vite.build
@@ -47,29 +49,29 @@ async function setup (config) {
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
 
+  config.hasRenderFunction = typeof config.createRenderFunction === 'function'
+
   // Load routes from client module (server entry point)
   const clientModule = await loadClient()
   const client = await config.prepareClient(clientModule)
 
-  // Create route handler and route error handler functions
-  const handler = await config.createRouteHandler(client, this.scope, config)
-  const errorHandler = await config.createErrorHandler(client, this.scope, config)
-
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply('html', await config.createHtmlFunction(
-    config.bundle.indexHtml,
+    config.bundle.indexHtml ?? client.html,
     this.scope,
     config
   ))
 
-  // Set reply.render() function with the client module production bundle
-  this.scope.decorateReply('render', await config.createRenderFunction(
-    client,
-    this.scope,
-    config
-  ))
+  if (config.hasRenderFunction) {
+    // Set reply.render() function with the client module production bundle
+    this.scope.decorateReply('render', await config.createRenderFunction(
+      client,
+      this.scope,
+      config
+    ))
+  }
 
-  return { client, routes: client.routes, handler, errorHandler }
+  return { client, routes: client.routes }
 
   // Loads the Vite application server entry point for the client
   async function loadClient () {
@@ -91,7 +93,15 @@ async function setup (config) {
       }
     }
     const serverBundle = await import(serverBundlePath)
-    return serverBundle.default || serverBundle
+    if (typeof serverBundle.default === 'function') {
+      const { default: htmlFunction, ...entryModuleExports } = serverBundle
+      return {
+        html: htmlFunction,
+        ...entryModuleExports,
+      }
+    } else {
+      return serverBundle.default || serverBundle
+    }
   }
 }
 
