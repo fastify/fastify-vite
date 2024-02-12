@@ -73,7 +73,6 @@ const DefaultConfig = {
       }
     } else {
       return async function (ctx) {
-        console.log('ctx', ctx)
         this.type('text/html')
         this.send(await indexHtmlTemplate(ctx))
         return this

@@ -1,7 +1,4 @@
-import { useRouteContext } from '/:core.js'
-
-export default function ({ children }) {
-  const { req } = useRouteContext()
+export default function ({ req, children }) {
   return (
     <div class="contents">
       {!req.session.user

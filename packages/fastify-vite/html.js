@@ -1,3 +1,5 @@
+import { Readable } from 'stream'
+
 function createHtmlTemplateFunction (source) {
   const ranges = new Map()
   const interpolated = ['']
@@ -29,16 +31,32 @@ function createHtmlTemplateFunction (source) {
     interpolated[cursor] += source[i]
   }
 
-  console.log(    `(function ({ ${params.map((s) => s.split('.')[0]).join(', ')} }) {` +
-    `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
-    '})'
-)
   // eslint-disable-next-line no-eval
   return (0, eval)(
-    `(function ({ ${params.map((s) => s.split('.')[0]).join(', ')} }) {` +
-    `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
+    `(function ({ ${
+      [...new Set(params.map((s) => s.split('.')[0]))].join(', ')
+    } }) {` +
+    `return asReadable\`${interpolated.map(s => serialize(s)).join('')}\`` +
     '})'
   )
+}
+
+function asReadable (fragments, ...values) {
+  return Readable.from(async function * () {
+    for (const fragment of fragments) {
+      yield fragment
+      if (values.length) {
+        const value = values.shift()
+        if (value instanceof Readable) {
+          for await (const chunk of value) {
+            yield chunk
+          }
+        } else {
+          yield value
+        }
+      }
+    }
+  }
 }
 
 module.exports = {

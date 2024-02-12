@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { join, dirname, resolve } from 'node:path'
 import { findStaticImports } from 'mlly'
+import { renderToStream } from '@kitajs/html/suspense'
 import * as devalue from 'devalue'
 
 const root = dirname(new URL(import.meta.url).pathname)
@@ -10,12 +11,6 @@ export default {
   prepareClient,
   createRoute,
   findClientImports,
-}
-
-// TODO remove requirement of having this defined 
-// in SSR mode as there's need for a render() method if the
-// rendering is inlined via createRoute() or createRouteHandler()
-function createRenderFunction () {
 }
 
 // TODO update @fastify/vite to cover the signature
@@ -34,32 +29,16 @@ async function prepareClient (clientModule, scope, config) {
 
 // The return value of this function gets registered as reply.html()
 export function createHtmlFunction (source, scope, config) {
-  // Templating functions for universal rendering (SSR+CSR)
-  const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
-  const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
-  const unFooterTemplate = createHtmlTemplateFunction(unFooterSource)
-  // Templating functions for server-only rendering (SSR only)
-  const [soHeadSource, soFooterSource] = source
-    // Unsafe if dealing with user-input, but safe here
-    // where we control the index.html source
-    .replace(/<script[^>]+type="module"[^>]+>.*?<\/script>/g, '')
-    .split('<!-- element -->')
-  const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
+  const template = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, body }) {
     // Decide which templating functions to use, with and without hydration
     const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
     const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
-    // Render page-level <head> elements
-    const head = new Head(context.head).render()
     // Create readable stream with prepended and appended chunks
     const readable = Readable.from(generateHtmlStream({
-      body: body && (
-        context.streaming
-          ? onShellReady(body)
-          : onAllReady(body)
-      ),
+      body,
       head: headTemplate({ ...context, head }),
       footer: () => footerTemplate({
         ...context,
@@ -68,7 +47,6 @@ export function createHtmlFunction (source, scope, config) {
         ...!context.serverOnly && {
           hydration: (
             '<script>\n' +
-            `window.route = ${devalue.uneval(context.toJSON())}\n` +
             `window.routes = ${devalue.uneval(routes.toJSON())}\n` +
             '</script>'
           ),
@@ -88,10 +66,12 @@ export function createRoute ({ handler, errorHandler, route }, scope, config) {
     async handler (req, reply) {
       reply.type('text/html')
       if (route.fragment) {
-        return await route.default(req, reply)
+        return await route.default({ app: scope, req, reply })
       } else {
         return reply.html({
-          element: await route.default(req, reply),
+          element: renderToStream(
+            route.default({ app: scope, req, reply })
+          ),
           hydration: (
             '<script>\n' +
             `window[Symbol.for('hydration')] = {` +

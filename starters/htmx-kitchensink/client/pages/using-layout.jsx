@@ -1,4 +1,3 @@
-
 export const layout = 'auth'
 
 export default function (app, req, reply) {
@@ -14,7 +13,7 @@ export default function (app, req, reply) {
       <button 
         hx-post="/parts/list-item" 
         hx-swap="beforenend"
-        hx-target=".list">Add</button>
+        hx-target="previous .list">Add</button>
     </form>
     <p>
       <a href="/">Go back to the index</a>
