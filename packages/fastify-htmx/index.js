@@ -26,36 +26,37 @@ async function prepareClient (clientModule, scope, config) {
   return Object.assign({}, clientModule, { routes })
 }
 
-
 // The return value of this function gets registered as reply.html()
 export function createHtmlFunction (source, scope, config) {
-  const template = createHtmlTemplateFunction(soHeadSource)
-  const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
-  // This function gets registered as reply.html()
-  return function ({ routes, context, body }) {
-    // Decide which templating functions to use, with and without hydration
-    const headTemplate = context.serverOnly ? soHeadTemplate : unHeadTemplate
-    const footerTemplate = context.serverOnly ? soFooterTemplate : unFooterTemplate
-    // Create readable stream with prepended and appended chunks
-    const readable = Readable.from(generateHtmlStream({
-      body,
-      head: headTemplate({ ...context, head }),
-      footer: () => footerTemplate({
-        ...context,
-        hydration: '',
-        // Decide whether or not to include the hydration script
-        ...!context.serverOnly && {
-          hydration: (
-            '<script>\n' +
-            `window.routes = ${devalue.uneval(routes.toJSON())}\n` +
-            '</script>'
-          ),
-        },
-      }),
-    }))
+  const asReadable = createHtmlTemplateFunction(source)
+  return function ({ element, hydration }) {
     // Send out header and readable stream with full response
     this.type('text/html')
-    this.send(readable)
+    this.send(asReadable({ element, hydration }))
+  }
+}
+
+export function createRouteHandler ({ client, route }, scope, config) {
+  if (route.fragment) {
+    return async function (req, reply) {
+      reply.type('text/html')
+      return await route.default({ app: scope, req, reply })
+    }
+  } else {
+    return async function (req, reply) {
+      return reply.html({
+        element: renderToStream(
+          route.default({ app: scope, req, reply })
+        ),
+        hydration: (
+          '<script>\n' +
+          `window[Symbol.for('hydration')] = {` +
+          `  clientImports: ${devalue.uneval(route.clientImports)}\n` +
+          `}\n` +
+          '</script>'
+        )
+      })
+    }
   }
 }
 
@@ -63,25 +64,6 @@ export function createRoute ({ handler, errorHandler, route }, scope, config) {
   scope.route({
     url: route.path,
     method: route.method ?? 'GET',
-    async handler (req, reply) {
-      reply.type('text/html')
-      if (route.fragment) {
-        return await route.default({ app: scope, req, reply })
-      } else {
-        return reply.html({
-          element: renderToStream(
-            route.default({ app: scope, req, reply })
-          ),
-          hydration: (
-            '<script>\n' +
-            `window[Symbol.for('hydration')] = {` +
-            `  clientImports: ${devalue.uneval(route.clientImports)}\n` +
-            `}\n` +
-            '</script>'
-          )
-        })
-      }
-    },
     errorHandler,
     ...route
   })
