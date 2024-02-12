@@ -1,11 +1,12 @@
 const { readFileSync, existsSync } = require('fs')
 const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
+const inject = require('@rollup/plugin-inject')
 
 function viteFastifyHtmx (config = {}) {  
   const prefix = /^\/:/
   const virtualRoot = resolve(__dirname, 'virtual')
-  const virtualModules = ['client.js']
+  const virtualModules = ['client.js', 'routes.js']
   virtualModules.includes = function (virtual) {
     if (!virtual) {
       return false
@@ -44,6 +45,16 @@ function viteFastifyHtmx (config = {}) {
   return {
     name: 'vite-plugin-fastify-htmx',
     config (config, { command }) {
+      config.esbuild = {
+        jsxFactory: 'Html.createElement',
+        jsxFragment: 'Html.Fragment',
+      }
+      config.plugins.push(
+        inject({
+           htmx: 'htmx.org',
+           Html: '@kitajs/html'
+        })
+      )
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {
           output: {
@@ -65,7 +76,7 @@ function viteFastifyHtmx (config = {}) {
         return id
       }
     },
-    load (id) {
+    load (id, options) {
       if (options?.ssr && id.endsWith('.client.js')) {
         return {
           code: '',

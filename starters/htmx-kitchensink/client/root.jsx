@@ -1,12 +1,9 @@
 import Layout from '/:layout.jsx'
 
-export default function () {
+export default function ({ children }) {
   return (
     <Layout>
-      <component
-        :is="Component"
-        :key="$route.path"
-      />
+      {children}
     </Layout>
   )
 }

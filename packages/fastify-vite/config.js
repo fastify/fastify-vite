@@ -82,9 +82,12 @@ const DefaultConfig = {
 
   // Function to register server routes for client routes
   createRoute ({ handler, errorHandler, route }, scope, config) {
+    if (!route.path) {
+      throw new Error('Route missing `path` export.')
+    }
     scope.route({
       url: route.path,
-      method: 'GET',
+      method: route.method ?? 'GET',
       handler,
       errorHandler,
       ...route

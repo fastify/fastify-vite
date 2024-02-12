@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
+    "@fastify/htmx": "workspace:^",
     "@fastify/one-line-logger": "latest",
     "@fastify/vite": "workspace:^",
-    "@fastify/htmx": "workspace:^",
+    "@kitajs/html": "^3.1.2",
+    "@rollup/plugin-inject": "^5.0.5",
     "fastify": "latest",
+    "htmx.org": "^1.9.10",
     "vite": "^5.0.2"
   },
   "devDependencies": {
