@@ -28,7 +28,7 @@ async function prepareClient (clientModule, scope, config) {
 
 // The return value of this function gets registered as reply.html()
 export function createHtmlFunction (source, scope, config) {
-  const asReadable = createHtmlTemplateFunction(source)
+  const asReadable = config.createHtmlTemplateFunction(source)
   return function ({ element, hydration }) {
     // Send out header and readable stream with full response
     this.type('text/html')

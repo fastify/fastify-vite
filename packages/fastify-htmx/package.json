@@ -9,7 +9,6 @@
   "version": "0.1.0",
   "files": [
     "virtual/hydrate.js",
-    "virtual/inject.js",
     "index.js",
     "plugin.cjs",
     "server/context.js",

@@ -13,8 +13,8 @@
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^5.0.6",
-    "@fastify/htmx": "^0.3.0",
+    "@fastify/vite": "workspace:^",
+    "@fastify/htmx": "workspace:^",
     "fastify": "latest",
     "vite": "^5.0.2"
   },

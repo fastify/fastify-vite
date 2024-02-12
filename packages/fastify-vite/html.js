@@ -1,4 +1,4 @@
-import { Readable } from 'stream'
+const { Readable } = require('stream')
 
 function createHtmlTemplateFunction (source) {
   const ranges = new Map()
@@ -56,7 +56,7 @@ function asReadable (fragments, ...values) {
         }
       }
     }
-  }
+  })
 }
 
 module.exports = {
