@@ -1,12 +1,14 @@
-function createHtmlTemplateFunction (source) {
+const { Readable } = require('stream')
+
+function createHtmlTemplateFunction(source) {
   const ranges = new Map()
   const interpolated = ['']
   const params = []
 
-  for (const match of source.matchAll(/<!--\s*([\w]+)\s*-->/g)) {
+  for (const match of source.matchAll(/<!--\s*([\.\w]+)\s*-->/g)) {
     ranges.set(match.index, {
       param: match[1],
-      end: match.index + match[0].length
+      end: match.index + match[0].length,
     })
   }
 
@@ -29,22 +31,49 @@ function createHtmlTemplateFunction (source) {
     interpolated[cursor] += source[i]
   }
 
-  // eslint-disable-next-line no-eval
-  return (0, eval)(
-    `(function ({ ${params.join(', ')} }) {` +
-    `return \`${interpolated.map(s => serialize(s)).join('')}\`` +
-    '})'
+  // https://stackoverflow.com/questions/21616264/what-does-0-eval-do
+  // biome-ignore lint/style/noCommaOperator: indirect call to eval() to ensure global scope
+  const compiledTemplatingFunction = (0, eval)(
+    // biome-ignore lint/style/useTemplate: needed for compiling
+    `(asReadable) => (function ({ ${[
+      ...new Set(params.map((s) => s.split('.')[0])),
+    ].join(', ')} }) {` +
+      `return asReadable\`${interpolated.map((s) => serialize(s)).join('')}\`` +
+      '})',
+  )(asReadable)
+
+  return compiledTemplatingFunction
+}
+
+function asReadable(fragments, ...values) {
+  return Readable.from(
+    (async function* () {
+      for (const fragment of fragments) {
+        yield fragment
+        if (values.length) {
+          const value = values.shift()
+          if (value instanceof Readable) {
+            for await (const chunk of value) {
+              yield chunk
+            }
+          } else if (value && typeof value !== 'string') {
+            yield value.toString()
+          } else {
+            yield value ?? ''
+          }
+        }
+      }
+    })(),
   )
 }
 
 module.exports = {
-  createHtmlTemplateFunction
+  createHtmlTemplateFunction,
 }
 
-function serialize (frag) {
+function serialize(frag) {
   if (typeof frag === 'object') {
     return `$\{${frag.param}}`
-  } else {
-    return frag
   }
+  return frag
 }
