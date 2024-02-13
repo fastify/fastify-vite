@@ -6,7 +6,13 @@ const inject = require('@rollup/plugin-inject')
 function viteFastifyHtmx (config = {}) {  
   const prefix = /^\/:/
   const virtualRoot = resolve(__dirname, 'virtual')
-  const virtualModules = ['client.js', 'routes.js']
+  const virtualModules = [
+    'client.js',
+    'layouts/',
+    'layouts.js',
+    'routes.js',
+    'root.jsx'
+  ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {
       return false
@@ -42,51 +48,51 @@ function viteFastifyHtmx (config = {}) {
     }
   }
 
-  return {
-    name: 'vite-plugin-fastify-htmx',
-    config (config, { command }) {
-      config.esbuild = {
-        jsxFactory: 'Html.createElement',
-        jsxFragment: 'Html.Fragment',
-      }
-      config.plugins.push(
-        inject({
-           htmx: 'htmx.org',
-           Html: '@kitajs/html'
-        })
-      )
-      if (command === 'build' && config.build?.ssr) {
-        config.build.rollupOptions = {
-          output: {
-            format: 'es',
-          },
+  return [
+    inject({
+      htmx: 'htmx.org',
+      Html: '@kitajs/html'
+    }),
+    {
+      name: 'vite-plugin-fastify-htmx',
+      config (config, { command }) {
+        config.esbuild = {
+          jsxFactory: 'Html.createElement',
+          jsxFragment: 'Html.Fragment',
         }
-      }
-    },
-    configResolved (config) {
-      viteProjectRoot = config.root
-    },
-    async resolveId (id) {
-      const [, virtual] = id.split(prefix)
-      if (virtual) {
-        const override = await loadVirtualModuleOverride(virtual)
-        if (override) {
-          return override
+        if (command === 'build' && config.build?.ssr) {
+          config.build.rollupOptions = {
+            output: {
+              format: 'es',
+            },
+          }
         }
-        return id
-      }
-    },
-    load (id, options) {
-      if (options?.ssr && id.endsWith('.client.js')) {
-        return {
-          code: '',
-          map: null,
+      },
+      configResolved (config) {
+        viteProjectRoot = config.root
+      },
+      async resolveId (id) {
+        const [, virtual] = id.split(prefix)
+        if (virtual) {
+          const override = await loadVirtualModuleOverride(virtual)
+          if (override) {
+            return override
+          }
+          return id
         }
-      }
-      const [, virtual] = id.split(prefix)
-      return loadVirtualModule(virtual)
-    },
-  }
+      },
+      load (id, options) {
+        if (options?.ssr && id.endsWith('.client.js')) {
+          return {
+            code: '',
+            map: null,
+          }
+        }
+        const [, virtual] = id.split(prefix)
+        return loadVirtualModule(virtual)
+      },
+    }
+  ]
 }
 
 module.exports = viteFastifyHtmx

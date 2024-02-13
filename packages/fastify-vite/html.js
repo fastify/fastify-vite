@@ -32,17 +32,13 @@ function createHtmlTemplateFunction (source) {
   }
 
   // eslint-disable-next-line no-eval
-  const xyz = (0, eval)(
+  return (0, eval)(
     `(asReadable) => (function ({ ${
       [...new Set(params.map((s) => s.split('.')[0]))].join(', ')
     } }) {` +
     `return asReadable\`${interpolated.map(s => serialize(s)).join('')}\`` +
     '})'
   )(asReadable)
-
-  console.log(xyz.toString())
-
-  return xyz
 }
 
 function asReadable (fragments, ...values) {

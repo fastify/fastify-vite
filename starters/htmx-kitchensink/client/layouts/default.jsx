@@ -1,7 +1,7 @@
-export default function ({ children }) {
+export default function ({ req, children }) {
   return (
-    <div class="layout">
+    <div class="contents">
       {children}
     </div>
   )
-]
+}
