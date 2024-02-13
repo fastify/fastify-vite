@@ -1,12 +1,12 @@
 export const path = '/using-layout'
 export const layout = 'auth'
 
-export default function (app, req, reply) {
+export default function ({ app, req, reply }) {
   return (
     <>
       <h2>Todo List — Using Custom Layout</h2>
       <ul class="list">
-        {app.todoList.map((item, i) => {
+        {app.db.todoList.map((item, i) => {
           return <li>{item}</li>
         })}
       </ul>

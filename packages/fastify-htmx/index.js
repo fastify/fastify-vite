@@ -29,7 +29,6 @@ export function createHtmlFunction (source, scope, config) {
   const htmlTemplate = config.createHtmlTemplateFunction(source)
   return function ({ element, hydration }) {
     const html = htmlTemplate({ element, hydration })
-    console.log(html)
     // Send out header and readable stream with full response
     this.type('text/html')
     this.send(html)
@@ -40,14 +39,21 @@ export function createHtmlFunction (source, scope, config) {
 export function createRouteHandler ({ client, route }, scope, config) {
   if (route.fragment) {
     return async function (req, reply) {
+      req.route = route
       reply.type('text/html')
       reply.send(await route.default({ app: scope, req, reply }))
     }
   } else {
     return async function (req, reply) {
+      req.route = route
       reply.html({
         // https://github.com/kitajs/html?tab=readme-ov-file#suspense-component
-        element: route.default({ app: scope, req, reply }),
+        element: await client.root({ 
+          app: scope, 
+          req, 
+          reply,
+          children: await route.default({ app: scope, req, reply }),
+        }),
         hydration: (
           '<script>\n' +
           `window[Symbol.for('hydration')] = {` +

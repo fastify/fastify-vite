@@ -1,2 +1,2 @@
 export { routes } from '/:routes.js'
-export { root } from '/:root.jsx'
+export { default as root } from '/:root.jsx'

@@ -10,6 +10,18 @@ const server = Fastify({
   }
 })
 
+const session = {
+  user: null
+}
+
+server.decorateRequest('session', { getter: () => session })
+
+server.post('/authenticate', (req, reply) => {
+  req.session.user = true
+  reply.header('HX-Redirect', req.headers.referer)
+  reply.send('')
+})
+
 server.decorate('db', {
   todoList: [
     'Do laundry',

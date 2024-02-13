@@ -8,11 +8,11 @@ export const head = (
   </>
 )
 
-export default async function (app, req, reply) {
+export default async function ({ app, req, reply }) {
   // Just to demonstrate an asynchronous request
   const data = await new Promise((resolve) => {
     // Prepopulated in server.js
-    resolve(app.todoList)
+    resolve(app.db.todoList)
   })
   return (
     <>
