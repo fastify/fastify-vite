@@ -1,8 +1,10 @@
 
+import './data.client.js'
+
 export const path = '/data'
 
 export const head = <>
-  <title>Using Custom Layout</title>
+  <title>Using Data</title>
 </>
 
 export default async function ({ app, req, reply }) {
@@ -13,7 +15,7 @@ export default async function ({ app, req, reply }) {
   })
   return (
     <>
-      <h2>Todo List — Using Custom Layout</h2>
+      <h2>Todo List — Using Data</h2>
       <ul class="list">
         {data.map((item, i) => {
           return <li>{item}</li>
@@ -22,8 +24,9 @@ export default async function ({ app, req, reply }) {
       <form>
         <input name="inputValue" />
         <button 
-          hx-post="/parts/list-item" 
-          hx-swap="beforenend"
+          id="add-button"
+          hx-post="/list/add" 
+          hx-swap="beforeend"
           hx-target=".list">Add</button>
       </form>
       <p>

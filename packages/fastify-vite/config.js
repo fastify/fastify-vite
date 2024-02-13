@@ -32,7 +32,7 @@ const DefaultConfig = {
 
   // Module bridging client code to the server,
   // also referred to as the server entry point.
-  // Automatically resolved from /index.js if unset
+  // Automatically resolved from /index.(t|j)sx? if unset
   clientModule: null,
 
   // If true, disables SSR and disables loading of `clientModule`
@@ -104,7 +104,6 @@ const DefaultConfig = {
     } else {
       return async function (req, reply) {
         const page = await route.default({ scope, req, reply })
-        console.log('!!!', route)
         return reply.html({ 
           app: scope, 
           req, 
@@ -213,8 +212,6 @@ async function resolveViteConfig (root, dev, isSpa) {
           ssrBuild: !isSpa
         })
       }
-      console.log('userConfig', userConfig)
-      console.log('resolvedConfig', resolvedConfig)
       return [
         Object.assign(userConfig, {
           build: {

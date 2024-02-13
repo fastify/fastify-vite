@@ -8,10 +8,15 @@ export const streaming = true
 
 export default function ({ rid }) {
   return (
-    <Suspense
-      rid={rid}
-      fallback={<div>Loading message...</div>}>
-      <Message />
-    </Suspense>
+    <>
+      <Suspense
+        rid={rid}
+        fallback={<div>Loading message...</div>}>
+        <Message />
+      </Suspense>
+      <p>
+        <a href="/">Go back to the index</a>
+      </p>
+    </>
   )
 }

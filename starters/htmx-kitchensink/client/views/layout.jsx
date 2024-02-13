@@ -1,5 +1,11 @@
+import './data.client.js'
+
 export const path = '/layout'
 export const layout = 'auth'
+
+export const head = <>
+  <title>Using Custom Layout</title>
+</>
 
 export default function ({ app, req, reply }) {
   return (
@@ -10,11 +16,11 @@ export default function ({ app, req, reply }) {
           return <li>{item}</li>
         })}
       </ul>
-      <form>
+      <form {...{'hx-on::after-request': 'this.reset()' }}>
         <input name="inputValue" />
         <button 
-          hx-post="/parts/list-item" 
-          hx-swap="beforenend"
+          hx-post="/list/add" 
+          hx-swap="beforeend"
           hx-target="previous .list">Add</button>
       </form>
       <p>

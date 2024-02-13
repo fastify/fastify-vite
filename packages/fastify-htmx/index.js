@@ -13,7 +13,6 @@ export default {
 // TODO update @fastify/vite to cover the signature
 // of all configuration hooks
 async function prepareClient (clientModule, scope, config) {
-  console.log('config', config)
   if (!clientModule) {
     return null
   }
@@ -27,11 +26,9 @@ async function prepareClient (clientModule, scope, config) {
 // The return value of this function gets registered as reply.html()
 export function createHtmlFunction (source, scope, config) {
   const htmlTemplate = config.createHtmlTemplateFunction(source)
-  return function ({ element, hydration }) {
-    const html = htmlTemplate({ element, hydration })
-    // Send out header and readable stream with full response
+  return function (ctx) {
     this.type('text/html')
-    this.send(html)
+    this.send(htmlTemplate(ctx))
     return this
   }
 }
@@ -69,12 +66,17 @@ export function createRouteHandler ({ client, route }, scope, config) {
 }
 
 async function renderHead (client, route, ctx) {
-  let rendered
-  let head = route.head ?? client.head
-  if (typeof head === 'function') {
-    rendered = await head(ctx)
-  } else {
-    rendered = head ?? ''
+  let rendered = ''
+  if (route.head === 'function') {
+    rendered += await route.head(ctx)
+  } else if (route.head) {
+    rendered += route.head
+  }
+  rendered += '\n'
+  if (client.head === 'function') {
+    rendered += await client.head(ctx)
+  } else if (client.head) {
+    rendered += client.head
   }
   return rendered
 }

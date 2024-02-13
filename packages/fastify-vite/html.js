@@ -31,6 +31,15 @@ function createHtmlTemplateFunction (source) {
     interpolated[cursor] += source[i]
   }
 
+  // const compiled = (0, eval)(
+  //   `(asReadable) => (function ({ ${
+  //     [...new Set(params.map((s) => s.split('.')[0]))].join(', ')
+  //   } }) {` +
+  //   `return asReadable\`${interpolated.map(s => serialize(s)).join('')}\`` +
+  //   '})'
+  // )(asReadable)
+  // console.log(compiled.toString())
+
   // eslint-disable-next-line no-eval
   return (0, eval)(
     `(asReadable) => (function ({ ${

@@ -9,13 +9,10 @@ export const head = <>
 export default function () {
   return (
     <>
-  	  <p class={styles.banner}>This route is rendered on the server with CSS modules and the CSS bundle for the route is loaded asynchronously.</p>
+  	  <p class={styles.banner}>This route is rendered on the server and the CSS bundle for the route is loaded asynchronously.</p>
       <p>
-        <router-link to="/">Go back to the index</router-link>
+        <a href="/">Go back to the index</a>
       </p>
-      <p>⁂</p>
-      <p>When this route is rendered on the server, no SSR takes place.</p>
-      <p>See the output of <code>curl http:/\/localhost:3000/client-only</code>.</p>
     </>
   )
 }
