@@ -213,6 +213,8 @@ async function resolveViteConfig (root, dev, isSpa) {
           ssrBuild: !isSpa
         })
       }
+      console.log('userConfig', userConfig)
+      console.log('resolvedConfig', resolvedConfig)
       return [
         Object.assign(userConfig, {
           build: {

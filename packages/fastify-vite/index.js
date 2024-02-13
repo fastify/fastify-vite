@@ -17,6 +17,7 @@ class Vite {
   async ready () {
     // Process all user-provided options and compute all Vite configuration settings
     this.config = await configure(this[kOptions])
+    console.log('>', this.config)
     // Determine which setup function to use
     this[kSetup] = this.config.dev
       // Boots Vite's development server and ensures hot reload

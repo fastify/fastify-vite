@@ -53,7 +53,7 @@ async function setup (config) {
 
   // Load routes from client module (server entry point)
   const clientModule = await loadClient()
-  const client = await config.prepareClient(clientModule)
+  const client = await config.prepareClient(clientModule, this.scope, config)
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply('html', await config.createHtmlFunction(

@@ -1,3 +1,4 @@
+import styles from '/assets/styles.module.css'
 
 export const path = '/css-module'
 
@@ -8,7 +9,7 @@ export const head = <>
 export default function () {
   return (
     <>
-  	  <p>This route is rendered on the client only!</p>
+  	  <p class={styles.banner}>This route is rendered on the server with CSS modules and the CSS bundle for the route is loaded asynchronously.</p>
       <p>
         <router-link to="/">Go back to the index</router-link>
       </p>

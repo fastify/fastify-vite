@@ -8,12 +8,12 @@ export default {
   prepareClient,
   createHtmlFunction,
   createRouteHandler,
-  findClientImports,
 }
 
 // TODO update @fastify/vite to cover the signature
 // of all configuration hooks
 async function prepareClient (clientModule, scope, config) {
+  console.log('config', config)
   if (!clientModule) {
     return null
   }
@@ -47,6 +47,7 @@ export function createRouteHandler ({ client, route }, scope, config) {
     return async function (req, reply) {
       req.route = route
       reply.html({
+        head: await renderHead(client, route, { app: scope, req, reply }),
         element: renderToStream((rid) => client.root({ 
           app: scope, 
           req, 
@@ -56,15 +57,26 @@ export function createRouteHandler ({ client, route }, scope, config) {
         })),
         hydration: (
           '<script>\n' +
-          `window[Symbol.for('hydration')] = {` +
-          `  clientImports: ${devalue.uneval(route.clientImports)}\n` +
-          `}\n` +
+          `window[Symbol.for('clientImports')] = ${
+            devalue.uneval(route.clientImports)
+          }\n` +
           '</script>'
         )
       })
       return reply
     }
   }
+}
+
+async function renderHead (client, route, ctx) {
+  let rendered
+  let head = route.head ?? client.head
+  if (typeof head === 'function') {
+    rendered = await head(ctx)
+  } else {
+    rendered = head ?? ''
+  }
+  return rendered
 }
 
 async function findClientImports (root, path, imports = []) {

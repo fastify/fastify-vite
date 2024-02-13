@@ -1,25 +1,12 @@
+export const path = '/layout'
+export const layout = 'auth'
 
-export const path = '/using-data'
-
-export function head ({ app, req, reply }) {
-  return (
-    <>
-      <title>Using Custom Layout</title>
-    </>
-  )
-}
-
-export default async function ({ app, req, reply }) {
-  // Just to demonstrate an asynchronous request
-  const data = await new Promise((resolve) => {
-    // Prepopulated in server.js
-    resolve(app.db.todoList)
-  })
+export default function ({ app, req, reply }) {
   return (
     <>
       <h2>Todo List — Using Custom Layout</h2>
       <ul class="list">
-        {data.map((item, i) => {
+        {app.db.todoList.map((item, i) => {
           return <li>{item}</li>
         })}
       </ul>
@@ -28,7 +15,7 @@ export default async function ({ app, req, reply }) {
         <button 
           hx-post="/parts/list-item" 
           hx-swap="beforenend"
-          hx-target=".list">Add</button>
+          hx-target="previous .list">Add</button>
       </form>
       <p>
         <a href="/">Go back to the index</a>
