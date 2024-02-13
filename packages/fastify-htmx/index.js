@@ -47,13 +47,13 @@ export function createRouteHandler ({ client, route }, scope, config) {
     return async function (req, reply) {
       req.route = route
       reply.html({
-        // https://github.com/kitajs/html?tab=readme-ov-file#suspense-component
-        element: await client.root({ 
+        element: renderToStream((rid) => client.root({ 
           app: scope, 
           req, 
           reply,
-          children: await route.default({ app: scope, req, reply }),
-        }),
+          rid,
+          children: route.default({ app: scope, req, reply, rid }),
+        })),
         hydration: (
           '<script>\n' +
           `window[Symbol.for('hydration')] = {` +

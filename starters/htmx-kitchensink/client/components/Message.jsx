@@ -1,7 +1,7 @@
-export default async function ({ secs }) {
+export default async function () {
 	const message = await afterSeconds({
   	message: 'Delayed as an asynchronous component',
-  	seconds: secs
+  	seconds: 3
   })
 	return (
 		<p>{message}</p>

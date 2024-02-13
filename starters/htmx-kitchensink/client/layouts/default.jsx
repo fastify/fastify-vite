@@ -1,5 +1,4 @@
-export default function ({ req, children }) {
-  console.log('children', children)
+export default function Layout ({ app, req, reply, rid, children }) {
   return (
     <div class="contents">
       {children}

@@ -1,5 +1,4 @@
 export default function ({ req, children }) {
-  console.log('auth!')
   return (
     <div class="contents">
       {!req.session.user

@@ -1,12 +1,13 @@
 
 export const path = '/using-data'
-export const layout = 'auth'
 
-export const head = (
-  <>
-    <title>Using Custom Layout</title>
-  </>
-)
+export function head ({ app, req, reply }) {
+  return (
+    <>
+      <title>Using Custom Layout</title>
+    </>
+  )
+}
 
 export default async function ({ app, req, reply }) {
   // Just to demonstrate an asynchronous request
