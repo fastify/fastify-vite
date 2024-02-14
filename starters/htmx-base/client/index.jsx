@@ -6,8 +6,6 @@
 // route.js and root.jsx files in the root of your 
 // client/ directory, they're used instead
 
-// Default virtual modules are located in node_modules/@fastify/htmx/virtual
-
 export { routes } from '/:routes.js'
 export { default as root } from '/:root.jsx'
 

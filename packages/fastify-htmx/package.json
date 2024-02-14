@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "lint": "biome check --apply-unsafe ."
+    "lint": "biome check --apply ."
   },
   "type": "module",
   "main": "index.js",

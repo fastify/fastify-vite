@@ -1,33 +1,28 @@
 {
-  "name": "vue-base",
-  "description": "The vue-base starter template for @fastify/vue",
+  "name": "htmx-kitchensink",
+  "description": "The htmx-kitchensink starter template for @fastify/htmx",
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
     "build": "npm run build:client && npm run build:server",
     "start": "node server.js",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /index.js",
+    "build:server": "vite build --outDir dist/server --ssr /index.jsx",
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/htmx": "workspace:^",
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^5.0.6",
-    "@fastify/vue": "^0.3.0",
-    "fastify": "^4.24.3",
-    "unihead": "^0.0.6",
-    "vue": "^3.3.8",  
-    "vue-router": "^4.2.5"
+    "@fastify/vite": "workspace:^",
+    "@kitajs/html": "^3.1.2",
+    "@rollup/plugin-inject": "^5.0.5",
+    "fastify": "latest",
+    "htmx.org": "^1.9.10",
+    "vite": "^5.0.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.16.0",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^8.7.1",
-    "vite": "^5.0.2"
+    "postcss-preset-env": "^7.7.1",
+    "unocss": "^0.57.7"
   }
 }

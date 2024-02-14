@@ -1,15 +1,12 @@
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
-import viteVue from '@vitejs/plugin-vue'
-import viteFastifyVue from '@fastify/vue/plugin'
-
-const path = fileURLToPath(import.meta.url)
+import inject from '@rollup/plugin-inject'
+import viteFastifyHtmx from '@fastify/htmx/plugin'
 
 export default {
-  root: join(dirname(path), 'client'),
+  root: join(dirname(fileURLToPath(import.meta.url)), 'client'),
   plugins: [
-    viteVue(), 
-    viteFastifyVue(),
+    viteFastifyHtmx()
   ],
 }
