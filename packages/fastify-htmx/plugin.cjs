@@ -3,7 +3,7 @@ const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 const inject = require('@rollup/plugin-inject')
 
-function viteFastifyHtmx (config = {}) {  
+function viteFastifyHtmx(config = {}) {
   const prefix = /^\/:/
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [
@@ -11,7 +11,7 @@ function viteFastifyHtmx (config = {}) {
     'layouts/',
     'layouts.js',
     'routes.js',
-    'root.jsx'
+    'root.jsx',
   ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {
@@ -27,7 +27,7 @@ function viteFastifyHtmx (config = {}) {
 
   let viteProjectRoot
 
-  function loadVirtualModuleOverride (virtual) {
+  function loadVirtualModuleOverride(virtual) {
     if (!virtualModules.includes(virtual)) {
       return
     }
@@ -37,11 +37,11 @@ function viteFastifyHtmx (config = {}) {
     }
   }
 
-  function loadVirtualModule (virtual) {
+  function loadVirtualModule(virtual) {
     if (!virtualModules.includes(virtual)) {
       return
     }
-    let code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
+    const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
     return {
       code,
       map: null,
@@ -51,11 +51,11 @@ function viteFastifyHtmx (config = {}) {
   return [
     inject({
       htmx: 'htmx.org',
-      Html: '@kitajs/html'
+      Html: '@kitajs/html',
     }),
     {
       name: 'vite-plugin-fastify-htmx',
-      config (config, { command }) {
+      config(config, { command }) {
         config.esbuild = {
           jsxFactory: 'Html.createElement',
           jsxFragment: 'Html.Fragment',
@@ -68,10 +68,10 @@ function viteFastifyHtmx (config = {}) {
           }
         }
       },
-      configResolved (config) {
+      configResolved(config) {
         viteProjectRoot = config.root
       },
-      async resolveId (id) {
+      async resolveId(id) {
         const [, virtual] = id.split(prefix)
         if (virtual) {
           const override = await loadVirtualModuleOverride(virtual)
@@ -81,7 +81,7 @@ function viteFastifyHtmx (config = {}) {
           return id
         }
       },
-      load (id, options) {
+      load(id, options) {
         if (options?.ssr && id.endsWith('.client.js')) {
           return {
             code: '',
@@ -91,7 +91,7 @@ function viteFastifyHtmx (config = {}) {
         const [, virtual] = id.split(prefix)
         return loadVirtualModule(virtual)
       },
-    }
+    },
   ]
 }
 

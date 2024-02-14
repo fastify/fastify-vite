@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "biome check --apply-unsafe ."
   },
   "type": "module",
   "main": "index.js",
@@ -8,11 +8,13 @@
   "description": "The official @fastify/vite renderer for HTMX",
   "version": "0.1.0",
   "files": [
-    "virtual/hydrate.js",
+    "virtual/layouts/default.jsx",
+    "virtual/client.js",
+    "virtual/layouts.js",
+    "virtual/root.jsx",
+    "virtual/routes.js",
     "index.js",
-    "plugin.cjs",
-    "server/context.js",
-    "server/stream.js"
+    "plugin.cjs"
   ],
   "license": "MIT",
   "exports": {
@@ -31,5 +33,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3"
   }
 }

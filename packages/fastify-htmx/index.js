@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
-import { join, dirname, resolve } from 'node:path'
-import { findStaticImports } from 'mlly'
+import { dirname, join, resolve } from 'node:path'
 import { renderToStream } from '@kitajs/html/suspense.js'
 import * as devalue from 'devalue'
+import { findStaticImports } from 'mlly'
 
 export default {
   prepareClient,
@@ -12,19 +12,22 @@ export default {
 
 // TODO update @fastify/vite to cover the signature
 // of all configuration hooks
-async function prepareClient (clientModule, scope, config) {
+async function prepareClient(clientModule, scope, config) {
   if (!clientModule) {
     return null
   }
   const { routes } = clientModule
   for (const route of routes) {
-  	route.clientImports = await findClientImports(config.vite.root, route.modulePath)
+    route.clientImports = await findClientImports(
+      config.vite.root,
+      route.modulePath,
+    )
   }
   return Object.assign({}, clientModule, { routes })
 }
 
 // The return value of this function gets registered as reply.html()
-export function createHtmlFunction (source, scope, config) {
+export function createHtmlFunction(source, scope, config) {
   const htmlTemplate = config.createHtmlTemplateFunction(source)
   return function (ctx) {
     this.type('text/html')
@@ -33,39 +36,36 @@ export function createHtmlFunction (source, scope, config) {
   }
 }
 
-export function createRouteHandler ({ client, route }, scope, config) {
+export function createRouteHandler({ client, route }, scope, config) {
   if (route.fragment) {
-    return async function (req, reply) {
+    return async (req, reply) => {
       req.route = route
       reply.type('text/html')
       reply.send(await route.default({ app: scope, req, reply }))
     }
-  } else {
-    return async function (req, reply) {
-      req.route = route
-      reply.html({
-        head: await renderHead(client, route, { app: scope, req, reply }),
-        element: renderToStream((rid) => client.root({ 
-          app: scope, 
-          req, 
+  }
+  return async (req, reply) => {
+    req.route = route
+    reply.html({
+      head: await renderHead(client, route, { app: scope, req, reply }),
+      element: renderToStream((rid) =>
+        client.root({
+          app: scope,
+          req,
           reply,
           rid,
           children: route.default({ app: scope, req, reply, rid }),
-        })),
-        hydration: (
-          '<script>\n' +
-          `window[Symbol.for('clientImports')] = ${
-            devalue.uneval(route.clientImports)
-          }\n` +
-          '</script>'
-        )
-      })
-      return reply
-    }
+        }),
+      ),
+      hydration: `<script>\nwindow[Symbol.for('clientImports')] = ${devalue.uneval(
+        route.clientImports,
+      )}\n</script>`,
+    })
+    return reply
   }
 }
 
-async function renderHead (client, route, ctx) {
+async function renderHead(client, route, ctx) {
   let rendered = ''
   if (route.head === 'function') {
     rendered += await route.head(ctx)
@@ -81,7 +81,7 @@ async function renderHead (client, route, ctx) {
   return rendered
 }
 
-async function findClientImports (root, path, imports = []) {
+async function findClientImports(root, path, imports = []) {
   const source = await readFile(join(root, path), 'utf8')
   const specifiers = findStaticImports(source)
     .filter(({ specifier }) => {
@@ -92,7 +92,7 @@ async function findClientImports (root, path, imports = []) {
     const resolved = resolve(dirname(path), specifier)
     imports.push(resolved)
     if (specifier.endsWith('.client.js')) {
-      imports.push(...await findClientImports(root, resolved))
+      imports.push(...(await findClientImports(root, resolved)))
     }
   }
   return imports
