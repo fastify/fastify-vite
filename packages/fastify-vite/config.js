@@ -56,10 +56,7 @@ const DefaultConfig = {
 
   // Create reply.html() response function
   createHtmlFunction(source, scope, config) {
-    const indexHtmlTemplate =
-      typeof source === 'function'
-        ? source
-        : config.createHtmlTemplateFunction(source)
+    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
         this.type('text/html')
