@@ -1,7 +1,7 @@
 const middie = require('@fastify/middie')
 const { join, resolve, read, exists } = require('../ioutils')
 
-async function setup (config) {
+async function setup(config) {
   const { createServer, mergeConfig, defineConfig } = await import('vite')
 
   // Middie seems to work well for running Vite's development server
@@ -15,12 +15,12 @@ async function setup (config) {
       server: {
         middlewareMode: true,
         hmr: {
-          server: this.scope.server
-        }
+          server: this.scope.server,
+        },
       },
-      appType: 'custom'
+      appType: 'custom',
     }),
-    config.vite
+    config.vite,
   )
 
   this.devServer = await createServer(devServerOptions)
@@ -31,17 +31,16 @@ async function setup (config) {
     if (config.spa) {
       return {}
     }
-    const modulePath = resolve(config.vite.root, config.clientModule.replace(/^\/+/, ''))
-    const entryModule = await this.devServer.ssrLoadModule(modulePath)
+    const modulePath = resolve(
+      config.vite.root,
+      config.clientModule.replace(/^\/+/, ''),
+    )
+    let entryModule = await this.devServer.ssrLoadModule(modulePath)
     if (typeof entryModule.default === 'function') {
-      const { default: htmlFunction, ...entryModuleExports } = entryModule
-      return {
-        html: htmlFunction,
-        ...entryModuleExports,
-      }
-    } else {
-      return entryModule.default || entryModule
+      entryModule = await entryModule.default(config)
+      return entryModule
     }
+    return entryModule.default || entryModule
   }
 
   // Initialize Reply prototype decorations
@@ -55,17 +54,26 @@ async function setup (config) {
     const clientModule = await loadClient()
     const client = await config.prepareClient(clientModule, this.scope, config)
     const indexHtmlPath = join(config.vite.root, 'index.html')
-    if (exists(indexHtmlPath)) {
-      const indexHtml = await read(indexHtmlPath, 'utf8')
-      const transformedHtml = await this.devServer.transformIndexHtml(req.url, indexHtml)
-      // Set reply.html() function with latest version of index.html
-      reply.html = await config.createHtmlFunction(transformedHtml, this.scope, config)
-    } else {
-      reply.html = await config.createHtmlFunction(clientModule.html, this.scope, config)
-    }
+    const indexHtml = await read(indexHtmlPath, 'utf8')
+    const transformedHtml = await this.devServer.transformIndexHtml(
+      req.url,
+      indexHtml,
+    )
+
+    // Set reply.html() function with latest version of index.html
+    reply.html = await config.createHtmlFunction(
+      transformedHtml,
+      this.scope,
+      config,
+    )
+
     // Set reply.render() function with latest version of the client module
     if (config.hasRenderFunction) {
-      reply.render = await config.createRenderFunction(client, this.scope, config)
+      reply.render = await config.createRenderFunction(
+        client,
+        this.scope,
+        config,
+      )
     }
   })
 
@@ -73,10 +81,10 @@ async function setup (config) {
   const clientModule = await loadClient()
   const client = await config.prepareClient(clientModule, this.scope, config)
 
-  return { 
-    config, 
-    client, 
-    routes: client?.routes, 
+  return {
+    config,
+    client,
+    routes: client?.routes,
   }
 }
 

@@ -2,7 +2,7 @@
   "scripts": {
     "test": "vitest run --root=.",
     "test:type": "vitest --ui --typecheck",
-    "lint": "eslint . --ext .js --fix"
+    "lint": "biome check --apply ."
   },
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
@@ -59,18 +59,12 @@
     "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "vite": ">4",
-    "fastify": "^4"
+    "fastify": "^4",
+    "vite": "^4"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
     "@types/node": "^20.9.0",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "eslint": "^8.53.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
     "fastify": "^4.25.1",
     "typescript": "^5.2.2",
     "vitest": "^1.0.2"

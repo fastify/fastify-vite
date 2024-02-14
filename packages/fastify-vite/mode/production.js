@@ -1,7 +1,7 @@
 const { parse, resolve, join, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
-function fileUrl (str) {
+function fileUrl(str) {
   if (typeof str !== 'string') {
     throw new Error('Expected a string')
   }
@@ -16,10 +16,10 @@ function fileUrl (str) {
   return encodeURI(`file://${pathName}`)
 }
 
-async function setup (config) {
+async function setup(config) {
   if (!config.bundle) {
     config.bundle = {
-      dir: join(config.vite.root, config.vite.build.outDir)
+      dir: join(config.vite.root, config.vite.build.outDir),
     }
   }
   // For production you get the distribution version of the render function
@@ -39,10 +39,10 @@ async function setup (config) {
   }
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
-  await this.scope.register(async function staticContext (scope) {
+  await this.scope.register(async function staticContext(scope) {
     await scope.register(FastifyStatic, {
       root: [resolve(clientDist, assetsDir), resolve(serverDist, assetsDir)],
-      prefix: `/${assetsDir}`
+      prefix: `/${assetsDir}`,
     })
   })
   // Note: this is just to ensure it works, for a real world
@@ -56,52 +56,52 @@ async function setup (config) {
   const client = await config.prepareClient(clientModule, this.scope, config)
 
   // Set reply.html() function with production version of index.html
-  this.scope.decorateReply('html', await config.createHtmlFunction(
-    config.bundle.indexHtml ?? client.html,
-    this.scope,
-    config
-  ))
+  this.scope.decorateReply(
+    'html',
+    await config.createHtmlFunction(
+      config.bundle.indexHtml,
+      this.scope,
+      config,
+    ),
+  )
 
   if (config.hasRenderFunction) {
     // Set reply.render() function with the client module production bundle
-    this.scope.decorateReply('render', await config.createRenderFunction(
+    const renderFunction = await config.createRenderFunction(
       client,
       this.scope,
-      config
-    ))
+      config,
+    )
+    this.scope.decorateReply('render', renderFunction)
   }
 
   return { client, routes: client.routes }
 
   // Loads the Vite application server entry point for the client
-  async function loadClient () {
+  async function loadClient() {
     if (config.spa) {
       return {}
     }
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
-      join('server', `${parse(config.clientModule).name}.mjs`)
+      join('server', `${parse(config.clientModule).name}.mjs`),
     ]
     let serverBundlePath
     for (const serverFile of serverFiles) {
       // Use file path on Windows
-      serverBundlePath = process.platform === 'win32'
-        ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
-        : resolve(config.bundle.dir, serverFile)
+      serverBundlePath =
+        process.platform === 'win32'
+          ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
+          : resolve(config.bundle.dir, serverFile)
       if (await exists(serverBundlePath)) {
         break
       }
     }
-    const serverBundle = await import(serverBundlePath)
+    let serverBundle = await import(serverBundlePath)
     if (typeof serverBundle.default === 'function') {
-      const { default: htmlFunction, ...entryModuleExports } = serverBundle
-      return {
-        html: htmlFunction,
-        ...entryModuleExports,
-      }
-    } else {
-      return serverBundle.default || serverBundle
+      serverBundle = await serverBundle.default(config)
     }
+    return serverBundle.default || serverBundle
   }
 }
 
