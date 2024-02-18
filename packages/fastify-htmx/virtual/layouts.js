@@ -1,4 +1,4 @@
-const DefaultLayout = () => import('/:layouts/default.jsx')
+import DefaultLayout from '/:layouts/default.jsx'
 
 const appLayouts = import.meta.glob('/layouts/*.{jsx,tsx}', {
   eager: true,

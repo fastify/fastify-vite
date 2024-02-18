@@ -1,15 +1,9 @@
-import 'htmx.org'
-import '/base.css'
+import htmx from 'htmx.org'
 
-const allClientImports = {
+void {
   ...import.meta.glob('/**/*.css'),
-  ...import.meta.glob('/**/*.client.js'),
+  ...import.meta.glob('/**/*.svg'),
+  ...import.meta.glob('/**/*.client.js')
 }
 
-const clientImports = window[Symbol.for('clientImports')]
-
-Promise.all(
-  clientImports.map((clientImport) => {
-    return allClientImports[clientImport]()
-  }),
-)
+window.htmx = htmx

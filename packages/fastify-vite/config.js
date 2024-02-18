@@ -81,7 +81,8 @@ const DefaultConfig = {
   // Function to register server routes for client routes
   createRoute({ handler, errorHandler, route }, scope, config) {
     if (!route.path) {
-      throw new Error('Route missing `path` export.')
+      // throw new Error('Route missing `path` export.')
+      return
     }
     scope.route({
       url: route.path,
@@ -121,12 +122,10 @@ const DefaultConfig = {
   createErrorHandler({ client, route }, scope, config) {
     return (error, req, reply) => {
       if (config.dev) {
-        console.error(error)
-        scope.vite.devServer.ssrFixStacktrace(error)
-        reply.code(500).send({ error })
+        console.log(error)
+        reply.code(500).type('application/json').send(JSON.stringify({ error }))
       } else {
-        console.error(error)
-        reply.code(500).send({ error })
+        reply.code(500).send('')
       }
     }
   },

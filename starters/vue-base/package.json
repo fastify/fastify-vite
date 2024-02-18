@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^5.0.6",
-    "@fastify/vue": "^0.3.0",
+    "@fastify/vite": "workspace:^",
+    "@fastify/vue": "workspace:^",
     "fastify": "^4.24.3",
     "unihead": "^0.0.6",
     "vue": "^3.3.8",  

@@ -1,4 +1,4 @@
-import { Suspense } from '@kitajs/html/suspense.js'
+import { Suspense } from '@kitajs/html/suspense'
 
 export const path = '/suspense'
 

@@ -1,5 +1,5 @@
-const views = import.meta.glob('/views/**/*.jsx', { eager: true })
-const fragments = import.meta.glob('/fragments/**/*.jsx', { eager: true })
+const views = import.meta.glob('/views/**/*.{js,ts,jsx,tsx}', { eager: true })
+const fragments = import.meta.glob('/fragments/**/*.{js,ts,jsx,tsx}', { eager: true })
 
 const routeHash = { ...views, ...fragments }
 

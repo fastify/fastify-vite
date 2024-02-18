@@ -1,4 +1,4 @@
-const { parse, resolve, join, exists } = require('../ioutils')
+const { parse, resolve, join, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 function fileUrl(str) {
@@ -49,10 +49,20 @@ async function setup(config) {
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
 
-  config.hasRenderFunction = typeof config.createRenderFunction === 'function'
+  Object.defineProperty(config, 'hasRenderFunction', {
+    writable: false,
+    value: typeof config.createRenderFunction === 'function'
+  })
 
   // Load routes from client module (server entry point)
-  const clientModule = await loadClient()
+  const { module: clientModule, ssrManifest } = await loadClient()
+
+  // Make SSR Manifest available in the config
+  Object.defineProperty(config, 'ssrManifest', {
+    writable: false,
+    value: ssrManifest
+  })
+
   const client = await config.prepareClient(clientModule, this.scope, config)
 
   // Set reply.html() function with production version of index.html
@@ -82,6 +92,11 @@ async function setup(config) {
     if (config.spa) {
       return {}
     }
+    const ssrManifestPath = resolve(config.bundle.dir, 'client', '.vite', 'ssr-manifest.json')
+    const ssrManifest = 
+        process.platform === 'win32'
+          ? new URL(fileUrl(ssrManifestPath))
+          : ssrManifestPath
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
       join('server', `${parse(config.clientModule).name}.mjs`),
@@ -101,7 +116,10 @@ async function setup(config) {
     if (typeof serverBundle.default === 'function') {
       serverBundle = await serverBundle.default(config)
     }
-    return serverBundle.default || serverBundle
+    return {
+      module: serverBundle.default || serverBundle,
+      ssrManifest: JSON.parse(await read(ssrManifest, 'utf8'))
+    }
   }
 }
 

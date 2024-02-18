@@ -10,6 +10,8 @@ export default {
   createRouteHandler,
 }
 
+const kPrefetch = Symbol('kPrefetch')
+
 // TODO update @fastify/vite to cover the signature
 // of all configuration hooks
 async function prepareClient(clientModule, scope, config) {
@@ -18,10 +20,35 @@ async function prepareClient(clientModule, scope, config) {
   }
   const { routes } = clientModule
   for (const route of routes) {
-    route.clientImports = await findClientImports(
+    const { css, svg, js } = await findClientImports(
       config.vite.root,
       route.modulePath,
     )
+    route[kPrefetch] = ''
+    for (const stylesheet of css) {
+      if (config.dev) {
+        route[kPrefetch] += `<link rel="stylesheet" href="${stylesheet}">\n`
+      } else if (config.ssrManifest[stylesheet]) {
+        const [asset] = config.ssrManifest[stylesheet].filter((s) => s.endsWith('.css'))
+        route[kPrefetch] += `<link rel="stylesheet" href="${asset}" crossorigin>\n`
+      }
+    }
+    for (const image of svg) {
+      if (config.dev) {
+        route[kPrefetch] += `<link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
+      } else if (config.ssrManifest[image]) {
+        const [asset] = config.ssrManifest[image].filter((s) => s.endsWith('.svg'))
+        route[kPrefetch] += `<link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
+      }
+    }
+    for (const script of js) {
+      if (config.dev) {
+        route[kPrefetch] += `<script src="${script}" type="module"></script>\n`
+      } else if (config.ssrManifest[script]) {
+        const [asset] = config.ssrManifest[script].filter((s) => s.endsWith('.js'))
+        route[kPrefetch] += `<script src="${asset}" type="module" crossorigin></script>\n`
+      }
+    }
   }
   return Object.assign({}, clientModule, { routes })
 }
@@ -56,10 +83,7 @@ export function createRouteHandler({ client, route }, scope, config) {
           rid,
           children: route.default({ app: scope, req, reply, rid }),
         }),
-      ),
-      hydration: `<script>\nwindow[Symbol.for('clientImports')] = ${devalue.uneval(
-        route.clientImports,
-      )}\n</script>`,
+      )
     })
     return reply
   }
@@ -67,6 +91,9 @@ export function createRouteHandler({ client, route }, scope, config) {
 
 async function renderHead(client, route, ctx) {
   let rendered = ''
+  if (route[kPrefetch]) {
+    rendered += route[kPrefetch]
+  }
   if (route.head === 'function') {
     rendered += await route.head(ctx)
   } else if (route.head) {
@@ -81,19 +108,30 @@ async function renderHead(client, route, ctx) {
   return rendered
 }
 
-async function findClientImports(root, path, imports = []) {
+async function findClientImports(root, path, { js = [], css = [], svg = [] } = {}) {
   const source = await readFile(join(root, path), 'utf8')
   const specifiers = findStaticImports(source)
     .filter(({ specifier }) => {
-      return specifier.endsWith('.css') || specifier.endsWith('.client.js')
+      return specifier.match(/\.((svg)|(css)|(m?js)|(tsx?)|(jsx?))$/)
     })
     .map(({ specifier }) => specifier)
   for (const specifier of specifiers) {
     const resolved = resolve(dirname(path), specifier)
-    imports.push(resolved)
-    if (specifier.endsWith('.client.js')) {
-      imports.push(...(await findClientImports(root, resolved)))
+    if (specifier.match(/\.svg$/)) {
+      svg.push(resolved.slice(1))
+    }
+    if (specifier.match(/\.client\.((m?js)|(tsx?)|(jsx?))$/)) {
+      js.push(resolved.slice(1))
+    }
+    if (specifier.match(/\.css$/)) {
+      css.push(resolved.slice(1))
+    }
+    if (specifier.match(/\.((m?js)|(tsx?)|(jsx?))$/)) {
+      const submoduleImports = await findClientImports(root, resolved)
+      js.push(...submoduleImports.js)
+      css.push(...submoduleImports.css)
+      svg.push(...submoduleImports.svg)
     }
   }
-  return imports
+  return { js, css, svg }
 }

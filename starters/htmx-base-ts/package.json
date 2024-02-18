@@ -1,6 +1,6 @@
 {
-  "name": "htmx-base",
-  "description": "The htmx-base starter template for @fastify/htmx",
+  "name": "htmx-base-ts",
+  "description": "The htmx-base-ts starter template for @fastify/htmx",
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
@@ -22,7 +22,11 @@
     "vite": "^5.0.2"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.31",
+    "postcss-nesting": "^12.0.2",
     "postcss-preset-env": "^7.7.1",
+    "tailwindcss": "^3.4.1",
     "unocss": "^0.57.7"
   }
 }

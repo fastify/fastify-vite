@@ -40,18 +40,23 @@ async function setup(config) {
       entryModule = await entryModule.default(config)
       return entryModule
     }
-    return entryModule.default || entryModule
+    return {
+      module: entryModule.default || entryModule
+    }
   }
 
   // Initialize Reply prototype decorations
   this.scope.decorateReply('render', null)
   this.scope.decorateReply('html', null)
 
-  config.hasRenderFunction = typeof config.createRenderFunction === 'function'
+  Object.defineProperty(config, 'hasRenderFunction', {
+    writable: false,
+    value: typeof config.createRenderFunction === 'function'
+  })
 
   // Load fresh index.html template and client module before every request
   this.scope.addHook('onRequest', async (req, reply) => {
-    const clientModule = await loadClient()
+    const { module: clientModule } = await loadClient()
     const client = await config.prepareClient(clientModule, this.scope, config)
     const indexHtmlPath = join(config.vite.root, 'index.html')
     const indexHtml = await read(indexHtmlPath, 'utf8')
@@ -78,7 +83,7 @@ async function setup(config) {
   })
 
   // Load routes from client module (server entry point)
-  const clientModule = await loadClient()
+  const { module: clientModule } = await loadClient()
   const client = await config.prepareClient(clientModule, this.scope, config)
 
   return {
