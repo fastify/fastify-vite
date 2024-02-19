@@ -1,8 +1,6 @@
 
 export const path = '/'
 
-import logo from '/assets/logo.svg'
-
 export const head = <>
   <title>Welcome to @fastify/htmx!</title>
 </>
@@ -12,8 +10,8 @@ export default function () {
   return (
     <>
       <h1>{ message }</h1>
-      <p><img src={logo} /></p>
-      <ul class="columns-2">
+      <p><img src="/logo.svg" /></p>
+      <ul class="columns-1 list-disc">
         <li><a href="/data">/data</a>: fetch data with async component.</li>
         <li><a href="/layout">/layout</a>: rendering with named layout.</li>
         <li><a href="/css-module">/css-module</a>: rendering with css modules.</li>

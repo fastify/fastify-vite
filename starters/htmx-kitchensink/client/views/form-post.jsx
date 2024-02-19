@@ -1,16 +1,33 @@
 export const path = '/form/:id'
 export const method = ['GET', 'POST']
 
-export default function ({ app, req, reply }) {
-  const data = {}
+// For convenience, you can export a list of properties to decorate 
+// the Request object with. This is important to avoid changing the
+// v8 shape of the object in runtime, which can hurt performance. 
+// Every property exported in `decorateRequest` is translated as 
+// `fastify.decorateRequest(prop, null)` at boot time.
+export const decorateRequest = ['data']
+
+// We could just run this function inside the default function export 
+// if it weren't for reply.redirect(). When the default function export 
+// is executed, it'll start streaming the HTTP headers and body immediately, 
+// making it impossible to call reply.redirect() in the process.
+// By exporting preHandler, @fastify/htmx will register it
+// as a Fastify route preHandler hook, so we can be sure it runs
+// before the main view component function (default export).
+export async function preHandler (req, reply) {
+  req.data = {}
   if (req.method === 'POST') {
     if (req.body.number !== '42') {
       return reply.redirect('/')
     }
-    data.number = req.body.number
+    req.data.number = req.body.number
   } else {
-    data.number = ''
+    req.data.number = ''
   }
+}
+
+export default function ({ req: { data } }) {
   return (
     <>
       <h1>Form example with dynamic URL</h1>

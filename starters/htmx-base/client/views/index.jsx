@@ -1,3 +1,4 @@
+import Header from '/components/Header.jsx'
 
 export const path = '/'
 
@@ -11,7 +12,7 @@ export default function () {
   const message = 'Welcome to @fastify/htmx!'
   return (
     <>
-      <h1>{ message }</h1>
+      <Header text={ message } />
       <p><img src={logo} /></p>
     </>
   )

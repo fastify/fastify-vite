@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
-    "@fastify/htmx": "^0.1.0-alpha.1",
+    "@fastify/htmx": "^0.2.0",
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "6.0.0-alpha.0",
+    "@fastify/vite": "^6.0.1",
     "@kitajs/html": "^3.1.2",
     "@rollup/plugin-inject": "^5.0.5",
     "fastify": "latest",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "postcss": "^8.4.31",
+    "postcss-import": "^16.0.1",
     "postcss-nesting": "^12.0.2",
     "postcss-preset-env": "^7.7.1",
     "tailwindcss": "^3.4.1"
