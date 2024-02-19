@@ -20,6 +20,18 @@ async function prepareClient(clientModule, scope, config) {
   }
   const { routes } = clientModule
   for (const route of routes) {
+    // Predecorate Request and Reply objects
+    if (route.decorateRequest) {
+      for (const prop of route.decorateRequest) {
+        !scope.hasRequestDecorator(prop) && scope.decorateRequest(prop, null)
+      }
+    }
+    if (route.decorateReply) {
+      for (const prop of route.decorateReply) {
+        !scope.hasReplyDecorator(prop) && scope.decorateReply(prop, null)
+      }      
+    }
+    // Pregenerate prefetching <head> elements
     const { css, svg, js } = await findClientImports(
       config.vite.root,
       route.modulePath,
