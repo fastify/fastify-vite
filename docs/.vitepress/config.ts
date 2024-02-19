@@ -1,6 +1,6 @@
 import { createRequire } from 'module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
-import { withMermaid } from 'vitepress-plugin-mermaid'
+import { withMermaid } from "vitepress-plugin-mermaid";
 import { OramaPlugin } from '@orama/plugin-vitepress'
 
 const require = createRequire(import.meta.url)
@@ -48,7 +48,6 @@ export default withMermaid({
 
     sidebar: {
       '/guide/': { base: '/guide/', items: sidebarGuide() },
-      '/htmx/': { base: '/vue/', items: sidebarHtmx() },
       '/vue/': { base: '/vue/', items: sidebarVue() },
       '/react/': { base: '/react/', items: sidebarReact() },
       '/config/': { base: '/config/', items: sidebarConfig() },
@@ -103,17 +102,6 @@ function nav(): DefaultTheme.NavItem[] {
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
   return [
     Guide(),
-    Htmx(true),
-    Vue(true),
-    React(true),
-    ...Common(),
-  ]
-}
-
-function sidebarHtmx(): DefaultTheme.SidebarItem[] {
-  return [
-    Guide(true),
-    Htmx(),
     Vue(true),
     React(true),
     ...Common(),
@@ -123,7 +111,6 @@ function sidebarHtmx(): DefaultTheme.SidebarItem[] {
 function sidebarVue(): DefaultTheme.SidebarItem[] {
   return [
     Guide(true),
-    Htmx(true),
     Vue(),
     React(true),
     ...Common(),
@@ -133,7 +120,6 @@ function sidebarVue(): DefaultTheme.SidebarItem[] {
 function sidebarReact(): DefaultTheme.SidebarItem[] {
   return [
     Guide(true),
-    Htmx(true),
     Vue(true),
     React(),
     ...Common(),
@@ -233,68 +219,11 @@ function Guide (collapsed = false) {
   }
 }
 
-
 function Vue (collapsed = false) {
   return {
     collapsed,
     text: '@fastify/vue',
     base: '/vue/',
-    items: [
-      { 
-        text: 'Getting Started', 
-        link: 'index',
-        items: [
-          { text: 'Starter templates', link: 'index#starter-templates' },
-          { text: 'Runtime requirements', link: 'index#runtime-requirements' },
-          { text: 'Known limitations', link: 'index#known-limitations' }
-        ],
-      },
-      { 
-        text: 'Project Structure', 
-        link: 'project-structure',
-        items: [
-          { text: 'Essential files', link: 'project-structure#essential-files' },
-          { text: 'Smart imports', link: 'project-structure#smart-imports' },
-          { text: 'Special directories', link: 'project-structure#special-directories' }
-        ]
-      },
-      { 
-        text: 'Router Setup', 
-        link: 'router-setup',
-        items: [
-          { text: 'Routes location', link: 'router-setup#routes-location' },
-          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
-        ],
-      },
-      { 
-        text: 'Route Modules', 
-        link: 'route-modules',
-        items: [
-          { text: 'Data fetching', link: 'route-modules#data-fetching' },
-          { text: 'Page metadata', link: 'route-modules#page-metadata' },
-          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' }
-        ],        
-      },
-      { 
-        text: 'Route Context',
-        link: 'route-context',
-        items: [
-          { text: 'Init module', link: 'route-context#init-module' },
-          { text: 'Access hook', link: 'route-context#access-hook' },
-          { text: 'Execution order', link: 'route-context#execution-order' }
-        ]
-      },
-      { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Rendering Modes', link: 'rendering-modes' }
-    ]
-  }
-}
-
-function Htmx (collapsed = false) {
-  return {
-    collapsed,
-    text: '@fastify/htmx',
-    base: '/htmx/',
     items: [
       { 
         text: 'Getting Started', 
