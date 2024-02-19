@@ -1,6 +1,9 @@
-module.exports = {
+let port = 8791
+module.exports = () => ({
   root: __dirname,
   server: {
-    hmr: false,
+    hmr: {
+      port: port++
+    }
   },
-}
+})

@@ -51,7 +51,7 @@ async function setup(config) {
 
   Object.defineProperty(config, 'hasRenderFunction', {
     writable: false,
-    value: typeof config.createRenderFunction === 'function'
+    value: typeof config.createRenderFunction === 'function',
   })
 
   // Load routes from client module (server entry point)
@@ -60,7 +60,7 @@ async function setup(config) {
   // Make SSR Manifest available in the config
   Object.defineProperty(config, 'ssrManifest', {
     writable: false,
-    value: ssrManifest
+    value: ssrManifest,
   })
 
   const client = await config.prepareClient(clientModule, this.scope, config)
@@ -92,11 +92,16 @@ async function setup(config) {
     if (config.spa) {
       return {}
     }
-    const ssrManifestPath = resolve(config.bundle.dir, 'client', '.vite', 'ssr-manifest.json')
-    const ssrManifest = 
-        process.platform === 'win32'
-          ? new URL(fileUrl(ssrManifestPath))
-          : ssrManifestPath
+    const ssrManifestPath = resolve(
+      config.bundle.dir,
+      'client',
+      '.vite',
+      'ssr-manifest.json',
+    )
+    const ssrManifest =
+      process.platform === 'win32'
+        ? new URL(fileUrl(ssrManifestPath))
+        : ssrManifestPath
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
       join('server', `${parse(config.clientModule).name}.mjs`),
@@ -118,7 +123,7 @@ async function setup(config) {
     }
     return {
       module: serverBundle.default || serverBundle,
-      ssrManifest: JSON.parse(await read(ssrManifest, 'utf8'))
+      ssrManifest: JSON.parse(await read(ssrManifest, 'utf8')),
     }
   }
 }

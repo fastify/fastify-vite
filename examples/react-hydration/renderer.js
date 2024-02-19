@@ -10,8 +10,7 @@ export default { createRenderFunction }
 
 function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return async function (ccc) {
-    const { app, req, reply } = ccc
+  return async function ({ app, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const data = {

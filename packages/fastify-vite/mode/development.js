@@ -41,7 +41,7 @@ async function setup(config) {
       return entryModule
     }
     return {
-      module: entryModule.default || entryModule
+      module: entryModule.default || entryModule,
     }
   }
 
@@ -51,7 +51,7 @@ async function setup(config) {
 
   Object.defineProperty(config, 'hasRenderFunction', {
     writable: false,
-    value: typeof config.createRenderFunction === 'function'
+    value: typeof config.createRenderFunction === 'function',
   })
 
   // Load fresh index.html template and client module before every request

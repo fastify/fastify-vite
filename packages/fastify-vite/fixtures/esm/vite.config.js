@@ -1,9 +1,13 @@
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-export default {
+let port = 7981 
+
+export default () => ({
   root: dirname(fileURLToPath(new URL(import.meta.url))),
   server: {
-    hmr: false,
+    hmr: {
+      port: port++,
+    },
   },
-}
+})

@@ -66,7 +66,7 @@ const DefaultConfig = {
     }
     if (config.hasRenderFunction) {
       return async function (ctx) {
-        this.send(await indexHtmlTemplate(ctx ?? await this.render(ctx)))
+        this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
         return this
       }
     }
@@ -100,6 +100,7 @@ const DefaultConfig = {
           app: scope,
           req,
           reply,
+          client,
           route,
         })
         return reply.html(page)
@@ -111,6 +112,7 @@ const DefaultConfig = {
         app: scope,
         req,
         reply,
+        client,
         route,
         element: page,
       })

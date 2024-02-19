@@ -41,7 +41,7 @@ A single configuration object which can be used to set all [Renderer options](/c
 
 If unset, **`@fastify/vite`** will automatically try to resolve `index.js` from your Vite project root as your client module. You can override this behavior by setting this option.
 
-### `prepareClient`
+### `prepareClient(clientModule, scope, config)`
 
 As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. 
 
@@ -53,20 +53,20 @@ This configuration function creates the `reply.render()` method.
 
 It's covered in detail in **[Rendering function](/guide/rendering-function)**.
 
-### `createHtmlFunction`
+### `createHtmlFunction(source, scope, config)`
 
 This configuration function creates the `reply.html()` method.
 
 It's covered in detail in **[Templating function](/guide/rendering-function)**.
 
-### `createRouteHandler`
+### `createRouteHandler({ client, route }, scope, config)`
 
 This configuration function creates the default **route handler** for registering Fastify routes based on the client module `routes` exported array (if available).
 
-### `createErrorHandler`
+### `createErrorHandler({ client, route }, scope, config)`
 
 This configuration function creates the default **error handler** for the Fastify routes registered based on the client module `routes` exported array.
 
-### `createRoute`
+### `createRoute({ handler, errorHandler, route }, scope, config) {`
 
 this configuration function is responsible for actually registering an individual Fastify route for each of your client-level routes.
