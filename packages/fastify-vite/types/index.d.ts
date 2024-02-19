@@ -1,7 +1,12 @@
 // Definitions by: Jens <https://github.com/jens-ox>
 /// <reference types="node" />
 
-import type { FastifyPluginAsync, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import type {
+  FastifyInstance,
+  FastifyPluginAsync,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify'
 import type { UserConfig } from 'vite'
 declare module 'fastify' {
   interface FastifyReply {
@@ -16,7 +21,9 @@ declare module 'fastify' {
   }
 }
 
-type FastifyVitePlugin = FastifyPluginAsync<NonNullable<fastifyVite.FastifyViteOptions>>;
+type FastifyVitePlugin = FastifyPluginAsync<
+  NonNullable<fastifyVite.FastifyViteOptions>
+>
 
 type RouteType = Partial<{
   server: unknown
@@ -36,10 +43,10 @@ type RouteType = Partial<{
 }>
 type Loosen<T> = T & Record<string, unknown>
 type Ctx = Loosen<{
-  routes: Array<RouteType>,
-  context: unknown,
-  body: unknown,
-  stream: unknown,
+  routes: Array<RouteType>
+  context: unknown
+  body: unknown
+  stream: unknown
   data: unknown
 }>
 interface RendererFunctions {
@@ -47,45 +54,61 @@ interface RendererFunctions {
   createHtmlFunction(
     source: string,
     scope?: unknown,
-    config?: unknown
-  ): (ctx: Ctx) => Promise<unknown>;
-  createRenderFunction(args: Loosen<{
-    routes: Array<RouteType>,
-    create: (arg0: Record<string, unknown>) => unknown,
-    createApp: unknown
-  }>): Promise<(
-    server: unknown,
-    req: unknown,
-    reply: unknown
-  ) => Ctx | { element: string, hydration: string }>
+    config?: unknown,
+  ): (ctx: Ctx) => Promise<unknown>
+  createRenderFunction(
+    args: Loosen<{
+      routes: Array<RouteType>
+      create: (arg0: Record<string, unknown>) => unknown
+      createApp: unknown
+    }>,
+  ): Promise<
+    (
+      server: unknown,
+      req: unknown,
+      reply: unknown,
+    ) => Ctx | { element: string; hydration: string }
+  >
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-interface RendererOption<CM = string | Record<string, unknown> | unknown, C = unknown> extends RendererFunctions {
+interface RendererOption<
+  CM = string | Record<string, unknown> | unknown,
+  C = unknown,
+> extends RendererFunctions {
   clientModule: CM
-  createErrorHandler(client: C, scope: FastifyInstance, config?: unknown):
-    (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
-  createRoute(args: Loosen<{
-    client?: C,
-    handler?: (...args: unknown[]) => unknown,
-    errorHandler: (
-      error: Error,
-      req?: FastifyRequest,
-      reply?: FastifyReply
-    ) => void,
-    route?: RouteType
-  }>, scope: FastifyInstance, config: unknown): void
-  createRouteHandler(client: C, scope: FastifyInstance, config?: unknown):
-    (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
+  createErrorHandler(
+    client: C,
+    scope: FastifyInstance,
+    config?: unknown,
+  ): (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
+  createRoute(
+    args: Loosen<{
+      client?: C
+      handler?: (...args: unknown[]) => unknown
+      errorHandler: (
+        error: Error,
+        req?: FastifyRequest,
+        reply?: FastifyReply,
+      ) => void
+      route?: RouteType
+    }>,
+    scope: FastifyInstance,
+    config: unknown,
+  ): void
+  createRouteHandler(
+    client: C,
+    scope: FastifyInstance,
+    config?: unknown,
+  ): (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
   prepareClient(
     clientModule: CM,
     scope?: FastifyInstance,
-    config?: unknown
+    config?: unknown,
   ): Promise<C>
 }
 
 declare namespace fastifyVite {
-
   export interface FastifyViteOptions extends Partial<RendererOption> {
     dev?: boolean
     root: string
@@ -94,10 +117,10 @@ declare namespace fastifyVite {
     vite?: UserConfig
     viteConfig?: string
     bundle?: {
-      manifest?: object,
-      indexHtml?: string | Buffer,
+      manifest?: object
+      indexHtml?: string | Buffer
       dir?: string
-    },
+    }
   }
 
   export const fastifyVite: FastifyVitePlugin
@@ -105,6 +128,8 @@ declare namespace fastifyVite {
   export { fastifyVite as default }
 }
 
-declare function fastifyVite(...params: Parameters<FastifyVitePlugin>): ReturnType<FastifyVitePlugin>;
+declare function fastifyVite(
+  ...params: Parameters<FastifyVitePlugin>
+): ReturnType<FastifyVitePlugin>
 
-export = fastifyVite;
+export = fastifyVite

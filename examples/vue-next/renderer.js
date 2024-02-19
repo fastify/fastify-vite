@@ -39,7 +39,7 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 }
 
 function createRenderFunction ({ createApp }) {
-  return async function (server, req, reply) {
+  return async function ({ app: server, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const serverSideProps = req.serverSideProps

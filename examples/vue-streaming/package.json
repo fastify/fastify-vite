@@ -7,7 +7,7 @@
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr ./index.js",
     "lint": "eslint . --ext .js,.vue --fix",
-    "test": "vitest run"
+    "test": "node --test"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
@@ -27,7 +27,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.18.1",
-    "vite": "^5.0.0",
-    "vitest": "^1.0.0"
+    "vite": "^5.0.0"
   }
 }

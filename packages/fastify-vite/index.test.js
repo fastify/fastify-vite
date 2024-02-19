@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 
-import { main as esmServer } from './fixtures/esm/server.js'
 import { main as cjsServer } from './fixtures/cjs/server.js'
+import { main as esmServer } from './fixtures/esm/server.js'
 
 test('esm - should register development server in development mode', async () => {
   const server = await esmServer(true)

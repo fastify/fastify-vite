@@ -1,7 +1,7 @@
-const { parse, resolve, join, exists } = require('../ioutils')
+const { parse, resolve, join, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
-function fileUrl (str) {
+function fileUrl(str) {
   if (typeof str !== 'string') {
     throw new Error('Expected a string')
   }
@@ -16,9 +16,11 @@ function fileUrl (str) {
   return encodeURI(`file://${pathName}`)
 }
 
-async function setup (config) {
+async function setup(config) {
   if (!config.bundle) {
-    throw new Error('No distribution bundle found.')
+    config.bundle = {
+      dir: join(config.vite.root, config.vite.build.outDir),
+    }
   }
   // For production you get the distribution version of the render function
   const { assetsDir } = config.vite.build
@@ -37,61 +39,92 @@ async function setup (config) {
   }
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
-  await this.scope.register(async function staticContext (scope) {
+  await this.scope.register(async function staticContext(scope) {
     await scope.register(FastifyStatic, {
       root: [resolve(clientDist, assetsDir), resolve(serverDist, assetsDir)],
-      prefix: `/${assetsDir}`
+      prefix: `/${assetsDir}`,
     })
   })
   // Note: this is just to ensure it works, for a real world
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
 
-  // Load routes from client module (server entry point)
-  const clientModule = await loadClient()
-  const client = await config.prepareClient(clientModule)
+  Object.defineProperty(config, 'hasRenderFunction', {
+    writable: false,
+    value: typeof config.createRenderFunction === 'function',
+  })
 
-  // Create route handler and route error handler functions
-  const handler = await config.createRouteHandler(client, this.scope, config)
-  const errorHandler = await config.createErrorHandler(client, this.scope, config)
+  // Load routes from client module (server entry point)
+  const { module: clientModule, ssrManifest } = await loadClient()
+
+  // Make SSR Manifest available in the config
+  Object.defineProperty(config, 'ssrManifest', {
+    writable: false,
+    value: ssrManifest,
+  })
+
+  const client = await config.prepareClient(clientModule, this.scope, config)
 
   // Set reply.html() function with production version of index.html
-  this.scope.decorateReply('html', await config.createHtmlFunction(
-    config.bundle.indexHtml,
-    this.scope,
-    config
-  ))
+  this.scope.decorateReply(
+    'html',
+    await config.createHtmlFunction(
+      config.bundle.indexHtml,
+      this.scope,
+      config,
+    ),
+  )
 
-  // Set reply.render() function with the client module production bundle
-  this.scope.decorateReply('render', await config.createRenderFunction(
-    client,
-    this.scope,
-    config
-  ))
+  if (config.hasRenderFunction) {
+    // Set reply.render() function with the client module production bundle
+    const renderFunction = await config.createRenderFunction(
+      client,
+      this.scope,
+      config,
+    )
+    this.scope.decorateReply('render', renderFunction)
+  }
 
-  return { client, routes: client.routes, handler, errorHandler }
+  return { client, routes: client?.routes }
 
   // Loads the Vite application server entry point for the client
-  async function loadClient () {
+  async function loadClient() {
     if (config.spa) {
       return {}
     }
+    const ssrManifestPath = resolve(
+      config.bundle.dir,
+      'client',
+      '.vite',
+      'ssr-manifest.json',
+    )
+    const ssrManifest =
+      process.platform === 'win32'
+        ? new URL(fileUrl(ssrManifestPath))
+        : ssrManifestPath
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
-      join('server', `${parse(config.clientModule).name}.mjs`)
+      join('server', `${parse(config.clientModule).name}.mjs`),
     ]
     let serverBundlePath
     for (const serverFile of serverFiles) {
       // Use file path on Windows
-      serverBundlePath = process.platform === 'win32'
-        ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
-        : resolve(config.bundle.dir, serverFile)
+      serverBundlePath =
+        process.platform === 'win32'
+          ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
+          : resolve(config.bundle.dir, serverFile)
       if (await exists(serverBundlePath)) {
         break
       }
     }
-    const serverBundle = await import(serverBundlePath)
-    return serverBundle.default || serverBundle
+    let serverBundle = await import(serverBundlePath)
+    if (typeof serverBundle.default === 'function') {
+      serverBundle = await serverBundle.default(config)
+    }
+    return {
+      module: serverBundle.default || serverBundle,
+      ssrManifest: JSON.parse(await read(ssrManifest, 'utf8')),
+    }
   }
 }
 
