@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "zx": "^7.2.3"
+  },
+  "scripts": {
+  	"test:all": "zx run-all-tests.mjs"
+  }
+}

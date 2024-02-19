@@ -85,7 +85,7 @@ async function setup(config) {
     this.scope.decorateReply('render', renderFunction)
   }
 
-  return { client, routes: client.routes }
+  return { client, routes: client?.routes }
 
   // Loads the Vite application server entry point for the client
   async function loadClient() {

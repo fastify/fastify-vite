@@ -12,4 +12,7 @@ const plugins = [
 export default {
   root,
   plugins,
+  ssr: {
+    external: ['fastify']
+  }
 }

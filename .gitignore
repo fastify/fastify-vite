@@ -1,3 +1,4 @@
+vite.config.js.timestamp-*
 docs/.vitepress/cache
 .nyc_output
 .DS_Store

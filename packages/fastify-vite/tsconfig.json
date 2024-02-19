@@ -2,7 +2,7 @@
   "extends": "./tsconfig.eslint.json",
   "files": [],
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
     "lib": [
       "ES2020"
     ],

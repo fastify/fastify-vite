@@ -1,6 +1,6 @@
+import assert from 'node:assert'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { assert, expect } from 'vitest'
 import { execaCommand } from 'execa'
 
 export function makeIndexTest ({ main, dev }) {
@@ -9,7 +9,7 @@ export function makeIndexTest ({ main, dev }) {
     const server = await main(dev)
     await server.vite.devServer?.close()
     const response = await server.inject({ method: 'GET', url: '/' })
-    expect(response.statusCode).toBe(200)
+    assert.strictEqual(response.statusCode, 200)
    }
 }
 
@@ -25,8 +25,8 @@ export function makeSSRBuildTest ({ cwd, clientModules, serverModules }) {
     const { stdout: clientStdout } = await execaCommand(`npx ${buildClient}`, { cwd })
     const { stdout: serverStdout } = await execaCommand(`npx ${buildServer}`, { cwd })
 
-    expect(clientStdout).toContain(`✓ ${clientModules} modules transformed`)
-    expect(serverStdout).toContain(`✓ ${serverModules} modules transformed`)
+    assert.ok(clientStdout.includes(`${clientModules} modules transformed`))
+    assert.ok(serverStdout.includes(`${serverModules} modules transformed`))
   }
 }
 
@@ -36,6 +36,6 @@ export function makeSPABuildTest ({ cwd, clientModules }) {
       await readFile(join(cwd, 'package.json'), 'utf8')
     )
     const { stdout } = await execaCommand(`npx ${build}`, { cwd })
-    expect(stdout).toContain(`✓ ${clientModules} modules transformed`)
+    assert.ok(stdout.includes(`${clientModules} modules transformed`))
   }
 }

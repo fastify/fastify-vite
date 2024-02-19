@@ -66,8 +66,7 @@ const DefaultConfig = {
     }
     if (config.hasRenderFunction) {
       return async function (ctx) {
-        this.type('text/html')
-        this.send(await indexHtmlTemplate(await this.render(ctx)))
+        this.send(await indexHtmlTemplate(ctx ?? await this.render(ctx)))
         return this
       }
     }
@@ -107,7 +106,7 @@ const DefaultConfig = {
       }
     }
     return async (req, reply) => {
-      const page = await route.default({ scope, req, reply })
+      const page = await route.default({ app: scope, req, reply })
       return reply.html({
         app: scope,
         req,
@@ -160,11 +159,9 @@ async function configure(options = {}) {
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
   }
-  if (config.spa) {
-    config.createRenderFunction = () => {}
-  } else {
-    config.clientModule = config.clientModule || resolveClientModule(vite.root)
-  }
+
+  config.clientModule = config.clientModule || resolveClientModule(vite.root)
+
   return config
 }
 

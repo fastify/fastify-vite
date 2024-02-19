@@ -40,7 +40,7 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
 
 function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return function (server, req, reply) {
+  return function ({ app: server, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const serverSideProps = req.serverSideProps

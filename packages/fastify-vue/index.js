@@ -66,7 +66,6 @@ export function createHtmlFunction (source, scope, config) {
     // Render page-level <head> elements
     const head = new Head(context.head).render()
     // Create readable stream with prepended and appended chunks
-    console.log('1')
     const readable = Readable.from(generateHtmlStream({
       body,
       stream,
@@ -87,7 +86,6 @@ export function createHtmlFunction (source, scope, config) {
         },
       }),
     }))
-    console.log('2')
     // Send out header and readable stream with full response
     this.type('text/html')
     this.send(readable)
@@ -115,7 +113,6 @@ export async function createRenderFunction ({ routes, create }) {
         stream = renderToNodeStream(app.instance, app.ctx)
       } else {
         body = renderToString(app.instance, app.ctx)
-        console.log('app.ctx', app.ctx.modules)
       }
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
@@ -126,10 +123,7 @@ export async function createRenderFunction ({ routes, create }) {
 
 export function createRouteHandler ({ client }, scope, config) {
   return async function (req, reply) {
-    const r = await reply.render(req)
-    console.log('---')
-    console.log(r)
-    reply.html(r)
+    reply.html(await reply.render(req))
     return reply
   }
 }
