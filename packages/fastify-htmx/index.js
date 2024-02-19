@@ -29,24 +29,34 @@ async function prepareClient(clientModule, scope, config) {
       if (config.dev) {
         route[kPrefetch] += `<link rel="stylesheet" href="${stylesheet}">\n`
       } else if (config.ssrManifest[stylesheet]) {
-        const [asset] = config.ssrManifest[stylesheet].filter((s) => s.endsWith('.css'))
-        route[kPrefetch] += `<link rel="stylesheet" href="${asset}" crossorigin>\n`
+        const [asset] = config.ssrManifest[stylesheet].filter((s) =>
+          s.endsWith('.css'),
+        )
+        route[kPrefetch] +=
+          `<link rel="stylesheet" href="${asset}" crossorigin>\n`
       }
     }
     for (const image of svg) {
       if (config.dev) {
-        route[kPrefetch] += `<link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
+        route[kPrefetch] +=
+          `<link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
       } else if (config.ssrManifest[image]) {
-        const [asset] = config.ssrManifest[image].filter((s) => s.endsWith('.svg'))
-        route[kPrefetch] += `<link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
+        const [asset] = config.ssrManifest[image].filter((s) =>
+          s.endsWith('.svg'),
+        )
+        route[kPrefetch] +=
+          `<link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
       }
     }
     for (const script of js) {
       if (config.dev) {
         route[kPrefetch] += `<script src="${script}" type="module"></script>\n`
       } else if (config.ssrManifest[script]) {
-        const [asset] = config.ssrManifest[script].filter((s) => s.endsWith('.js'))
-        route[kPrefetch] += `<script src="${asset}" type="module" crossorigin></script>\n`
+        const [asset] = config.ssrManifest[script].filter((s) =>
+          s.endsWith('.js'),
+        )
+        route[kPrefetch] +=
+          `<script src="${asset}" type="module" crossorigin></script>\n`
       }
     }
   }
@@ -83,7 +93,7 @@ export function createRouteHandler({ client, route }, scope, config) {
           rid,
           children: route.default({ app: scope, req, reply, rid }),
         }),
-      )
+      ),
     })
     return reply
   }
@@ -108,7 +118,11 @@ async function renderHead(client, route, ctx) {
   return rendered
 }
 
-async function findClientImports(root, path, { js = [], css = [], svg = [] } = {}) {
+async function findClientImports(
+  root,
+  path,
+  { js = [], css = [], svg = [] } = {},
+) {
   const source = await readFile(join(root, path), 'utf8')
   const specifiers = findStaticImports(source)
     .filter(({ specifier }) => {

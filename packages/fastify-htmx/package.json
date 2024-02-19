@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/htmx",
   "description": "The official @fastify/vite renderer for HTMX",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "files": [
     "virtual/layouts/default.jsx",
     "virtual/client.js",

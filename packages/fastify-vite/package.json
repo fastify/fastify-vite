@@ -54,6 +54,7 @@
     "vite": "^5.1.3"
   },
   "peerDependencies": {
+    "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
     "fastify": "^4",
