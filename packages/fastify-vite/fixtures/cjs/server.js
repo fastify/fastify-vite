@@ -7,9 +7,6 @@ async function main(dev) {
   await server.register(fastifyVite, {
     dev,
     root: __dirname,
-    createRenderFunction() {
-      return () => {}
-    },
   })
 
   await server.vite.ready()

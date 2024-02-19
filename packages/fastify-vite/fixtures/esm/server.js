@@ -10,9 +10,6 @@ export async function main(dev) {
   await server.register(fastifyVite, {
     dev,
     root: import.meta.url,
-    createRenderFunction() {
-      return () => {}
-    },
   })
 
   await server.vite.ready()
