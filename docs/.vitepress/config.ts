@@ -145,12 +145,12 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'clientModule', link: 'index#clientmodule' },
-        { text: 'prepareClient', link: 'index#prepareclient' },
+        { text: 'prepareClient', link: 'index#prepareclient-clientmodule-scope-config' },
         { text: 'createRenderFunction', link: 'index#createrenderfunction' },
-        { text: 'createHtmlFunction', link: 'index#createhtmlfunction' },
-        { text: 'createRouteHandler', link: 'index#createroutehandler' },
-        { text: 'createErrorHandler', link: 'index#createerrorhandler' },
-        { text: 'createRoute', link: 'index#createroute' }
+        { text: 'createHtmlFunction', link: 'index#createhtmlfunction-source-scope-config' },
+        { text: 'createRouteHandler', link: 'index#createroutehandler-client-route-scope-config' },
+        { text: 'createErrorHandler', link: 'index#createerrorhandler-client-route-scope-config' },
+        { text: 'createRoute', link: 'index#createroute-handler-errorhandler-route-scope-config' }
       ]
     },
     {
