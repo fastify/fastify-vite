@@ -39,12 +39,27 @@ async function setup(config) {
   }
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
-  await this.scope.register(async function staticContext(scope) {
+  await this.scope.register(async function assetFiles(scope) {
+    const root = [resolve(clientDist, assetsDir)]
+    if (exists(resolve(serverDist, assetsDir))) {
+      root.push(resolve(serverDist, assetsDir))
+    }
     await scope.register(FastifyStatic, {
-      root: [resolve(clientDist, assetsDir), resolve(serverDist, assetsDir)],
+      root,
       prefix: `/${assetsDir}`,
     })
   })
+
+  // And again for files in the public/ folder
+  await this.scope.register(async function publicFiles(scope) {
+    await scope.register(FastifyStatic, {
+      root: clientDist,
+      allowedPath(path) {
+        return path !== '/index.html'
+      },
+    })
+  })
+
   // Note: this is just to ensure it works, for a real world
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
@@ -128,4 +143,6 @@ async function setup(config) {
   }
 }
 
-module.exports = setup
+module.exports = {
+  setup,
+}

@@ -1,6 +1,8 @@
 const middie = require('@fastify/middie')
 const { join, resolve, read, exists } = require('../ioutils')
 
+const hot = Symbol('hotModuleReplacementProxy')
+
 async function setup(config) {
   const { createServer, mergeConfig, defineConfig } = await import('vite')
 
@@ -25,6 +27,8 @@ async function setup(config) {
 
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
+
+  this.scope.decorate(hot, {})
 
   // Loads the Vite application server entry point for the client
   const loadClient = async () => {
@@ -57,7 +61,24 @@ async function setup(config) {
   // Load fresh index.html template and client module before every request
   this.scope.addHook('onRequest', async (req, reply) => {
     const { module: clientModule } = await loadClient()
-    const client = await config.prepareClient(clientModule, this.scope, config)
+    this.scope[hot].client = await config.prepareClient(
+      clientModule,
+      this.scope,
+      config,
+    )
+    if (
+      this.scope[hot].client?.routes &&
+      typeof this.scope[hot].client.routes[Symbol.iterator] === 'function'
+    ) {
+      if (!this.scope[hot].routeHash) {
+        this.scope[hot].routeHash = new Map()
+      }
+      for (const route of this.scope[hot].client.routes) {
+        if (route.path) {
+          this.scope[hot].routeHash.set(route.path, route)
+        }
+      }
+    }
     const indexHtmlPath = join(config.vite.root, 'index.html')
     const indexHtml = await read(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(
@@ -75,7 +96,7 @@ async function setup(config) {
     // Set reply.render() function with latest version of the client module
     if (config.hasRenderFunction) {
       reply.render = await config.createRenderFunction(
-        client,
+        this.scope[hot].client,
         this.scope,
         config,
       )
@@ -93,4 +114,7 @@ async function setup(config) {
   }
 }
 
-module.exports = setup
+module.exports = {
+  setup,
+  hot,
+}

@@ -3,7 +3,7 @@ module.exports = () => ({
   root: __dirname,
   server: {
     hmr: {
-      port: port++
-    }
+      port: port++,
+    },
   },
 })
