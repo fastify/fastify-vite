@@ -121,7 +121,7 @@ export async function createRenderFunction ({ routes, create }) {
   }
 }
 
-export function createRouteHandler (client, scope, config) {
+export function createRouteHandler ({ client }, scope, config) {
   return async function (req, reply) {
     reply.html(await reply.render(req))
     return reply

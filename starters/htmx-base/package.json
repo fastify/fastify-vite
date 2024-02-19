@@ -1,0 +1,30 @@
+{
+  "name": "htmx-base",
+  "description": "The htmx-base starter template for @fastify/htmx",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node server.js",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr /index.jsx",
+    "lint": "eslint . --ext .js,.jsx --fix"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/htmx": "workspace:^",
+    "@fastify/one-line-logger": "latest",
+    "@fastify/vite": "workspace:^",
+    "@kitajs/html": "^3.1.2",
+    "@rollup/plugin-inject": "^5.0.5",
+    "fastify": "latest",
+    "htmx.org": "^1.9.10",
+    "vite": "^5.0.2"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.31",
+    "postcss-nesting": "^12.0.2",
+    "postcss-preset-env": "^7.7.1",
+    "tailwindcss": "^3.4.1"
+  }
+}

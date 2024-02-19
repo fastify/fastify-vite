@@ -8,13 +8,17 @@ import { renderToPipeableStream } from 'react-dom/server'
 
 // Helper function to prepend and append chunks the body stream
 export async function * generateHtmlStream ({ head, body, footer }) {
-  yield head
+  for await (const chunk of await head) {
+    yield chunk
+  }
   if (body) {
     for await (const chunk of await body) {
       yield chunk
     }
   }
-  yield footer()
+  for await (const chunk of await footer()) {
+    yield chunk
+  }
 }
 
 // Helper function to get an AsyncIterable (via PassThrough)

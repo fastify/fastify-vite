@@ -1,0 +1,40 @@
+{
+  "scripts": {
+    "lint": "biome check --apply ."
+  },
+  "type": "module",
+  "main": "index.js",
+  "name": "@fastify/htmx",
+  "description": "The official @fastify/vite renderer for HTMX",
+  "version": "0.1.0",
+  "files": [
+    "virtual/layouts/default.jsx",
+    "virtual/client.js",
+    "virtual/layouts.js",
+    "virtual/root.jsx",
+    "virtual/routes.js",
+    "index.js",
+    "plugin.cjs"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.cjs"
+  },
+  "dependencies": {
+    "@kitajs/html": "^3.1.2",
+    "@rollup/plugin-inject": "^5.0.5",
+    "devalue": "latest",
+    "htmx.org": "^1.9.10",
+    "mlly": "^1.5.0"
+  },
+  "peerDependencies": {
+    "@fastify/vite": "^6.0.0-alpha.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3"
+  }
+}
