@@ -27,25 +27,25 @@ async function prepareClient(clientModule, scope, config) {
     route[kPrefetch] = ''
     for (const stylesheet of css) {
       if (config.dev) {
-        route[kPrefetch] += `<link rel="stylesheet" href="${stylesheet}">\n`
+        route[kPrefetch] += `  <link rel="stylesheet" href="${stylesheet}">\n`
       } else if (config.ssrManifest[stylesheet]) {
         const [asset] = config.ssrManifest[stylesheet].filter((s) =>
           s.endsWith('.css'),
         )
         route[kPrefetch] +=
-          `<link rel="stylesheet" href="${asset}" crossorigin>\n`
+          `  <link rel="stylesheet" href="${asset}" crossorigin>\n`
       }
     }
     for (const image of svg) {
       if (config.dev) {
         route[kPrefetch] +=
-          `<link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
+          `  <link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
       } else if (config.ssrManifest[image]) {
         const [asset] = config.ssrManifest[image].filter((s) =>
           s.endsWith('.svg'),
         )
         route[kPrefetch] +=
-          `<link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
+          `  <link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
       }
     }
     for (const script of js) {
@@ -78,20 +78,20 @@ export function createRouteHandler({ client, route }, scope, config) {
     return async (req, reply) => {
       req.route = route
       reply.type('text/html')
-      reply.send(await route.default({ app: scope, req, reply }))
+      reply.send(await route.default({ app: scope, req, reply, client, route }))
     }
   }
   return async (req, reply) => {
     req.route = route
     reply.html({
-      head: await renderHead(client, route, { app: scope, req, reply }),
+      head: await renderHead(client, route, { app: scope, req, reply, client, route }),
       element: renderToStream((rid) =>
         client.root({
           app: scope,
           req,
           reply,
           rid,
-          children: route.default({ app: scope, req, reply, rid }),
+          children: route.default({ app: scope, client, route, req, reply, rid }),
         }),
       ),
     })
