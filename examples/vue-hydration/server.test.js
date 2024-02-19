@@ -1,7 +1,7 @@
+import test from 'node:test'
 import { join, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { beforeEach, afterEach, assert, expect, test } from 'vitest'
-import { makeSSRBuildTest, makeIndexTest } from '../test-factories.js'
+import { makeSSRBuildTest, makeIndexTest } from '../test-factories.mjs'
 import { main } from './server.js'
 
 const cwd = dirname(fileURLToPath(import.meta.url))

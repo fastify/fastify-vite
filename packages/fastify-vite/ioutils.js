@@ -4,11 +4,13 @@ const { join, resolve, parse, dirname, basename } = require('node:path')
 const { ensureDir } = require('fs-extra')
 const klaw = require('klaw')
 
-async function * walk (dir, ignorePatterns = []) {
+async function* walk(dir, ignorePatterns = []) {
   const sliceAt = dir.length + (dir.endsWith('/') ? 0 : 1)
   for await (const match of klaw(dir)) {
     const pathEntry = match.path.slice(sliceAt)
-    if (ignorePatterns.some(ignorePattern => ignorePattern.test(match.path))) {
+    if (
+      ignorePatterns.some((ignorePattern) => ignorePattern.test(match.path))
+    ) {
       continue
     }
     if (pathEntry === '') {
@@ -29,5 +31,5 @@ module.exports = {
   read: readFile,
   exists: existsSync,
   stat: lstatSync,
-  ensure: ensureDir
+  ensure: ensureDir,
 }

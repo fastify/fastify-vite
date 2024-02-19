@@ -21,7 +21,7 @@ const DefaultConfig = {
   bundle: {
     manifest: null,
     indexHtml: null,
-    dir: null
+    dir: null,
   },
 
   // Single object that can override all rendering settings that follow
@@ -32,20 +32,21 @@ const DefaultConfig = {
 
   // Module bridging client code to the server,
   // also referred to as the server entry point.
-  // Automatically resolved from /index.js if unset
+  // Automatically resolved from /index.(t|j)sx? if unset
   clientModule: null,
 
   // If true, disables SSR and disables loading of `clientModule`
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
-  async prepareClient (clientModule, scope, config) {
+  async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
       return null
     }
-    const routes = typeof clientModule.routes === 'function'
-      ? await clientModule.routes()
-      : clientModule.routes
+    const routes =
+      typeof clientModule.routes === 'function'
+        ? await clientModule.routes()
+        : clientModule.routes
     return Object.assign({}, clientModule, { routes })
   },
 
@@ -54,7 +55,7 @@ const DefaultConfig = {
   createHtmlTemplateFunction,
 
   // Create reply.html() response function
-  createHtmlFunction (source, scope, config) {
+  createHtmlFunction(source, scope, config) {
     const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
@@ -63,45 +64,75 @@ const DefaultConfig = {
         return this
       }
     }
+    if (config.hasRenderFunction) {
+      return async function (ctx) {
+        this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
+        return this
+      }
+    }
     return async function (ctx) {
       this.type('text/html')
-      this.send(indexHtmlTemplate(ctx ?? await this.render()))
+      this.send(await indexHtmlTemplate(ctx))
       return this
     }
   },
 
   // Function to register server routes for client routes
-  createRoute ({ handler, errorHandler, route }, scope, config) {
+  createRoute({ handler, errorHandler, route }, scope, config) {
+    if (!route.path) {
+      // throw new Error('Route missing `path` export.')
+      return
+    }
     scope.route({
       url: route.path,
-      method: 'GET',
+      method: route.method ?? 'GET',
       handler,
       errorHandler,
-      ...route
+      ...route,
     })
   },
 
   // Function to create the route handler passed to createRoute
-  createRouteHandler (client, scope, config) {
-    return async function (req, reply) {
-      const page = await reply.render(scope, req, reply)
-      return reply.html(page)
+  createRouteHandler({ client, route }, scope, config) {
+    if (config.hasRenderFunction) {
+      return async (req, reply) => {
+        const page = await reply.render({
+          app: scope,
+          req,
+          reply,
+          client,
+          route,
+        })
+        return reply.html(page)
+      }
+    }
+    return async (req, reply) => {
+      const page = await route.default({ app: scope, req, reply })
+      return reply.html({
+        app: scope,
+        req,
+        reply,
+        client,
+        route,
+        element: page,
+      })
     }
   },
 
   // Function to create the route errorHandler passed to createRoute
-  createErrorHandler (client, scope, config) {
+  createErrorHandler({ client, route }, scope, config) {
     return (error, req, reply) => {
       if (config.dev) {
-        console.error(error)
-        scope.vite.devServer.ssrFixStacktrace(error)
+        console.log(error)
+        reply.code(500).type('application/json').send(JSON.stringify({ error }))
+      } else {
+        reply.code(500).send('')
       }
-      scope.errorHandler(error, req, reply)
     }
-  }
+  },
 }
 
-async function configure (options = {}) {
+async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
@@ -112,7 +143,7 @@ async function configure (options = {}) {
     ...options,
     vite,
     viteConfig,
-    bundle
+    bundle,
   })
   if (typeof config.renderer === 'string') {
     const { default: renderer } = await import(config.renderer)
@@ -126,19 +157,17 @@ async function configure (options = {}) {
     'createRenderFunction',
     'createRoute',
     'createRouteHandler',
-    'prepareClient'
+    'prepareClient',
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
   }
-  if (config.spa) {
-    config.createRenderFunction = () => {}
-  } else {
-    config.clientModule = config.clientModule || resolveClientModule(vite.root)
-  }
+
+  config.clientModule = config.clientModule || resolveClientModule(vite.root)
+
   return config
 }
 
-function resolveClientModule (root) {
+function resolveClientModule(root) {
   for (const ext of ['js', 'mjs', 'ts', 'cjs', 'jsx', 'tsx']) {
     const indexFile = join(root, `index.${ext}`)
     if (exists(indexFile)) {
@@ -148,31 +177,35 @@ function resolveClientModule (root) {
   return null
 }
 
-function resolveRoot (root) {
+function resolveRoot(path) {
+  let root = path
   if (root.startsWith('file:')) {
     root = fileURLToPath(root)
   }
   if (stat(root).isFile()) {
     return dirname(root)
-  } else {
-    return root
   }
+  return root
 }
 
-async function resolveViteConfig (root, dev, isSpa) {
+async function resolveViteConfig(root, dev, isSpa) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
   for (const ext of ['js', 'mjs', 'ts']) {
     let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       const { resolveConfig } = await import('vite')
-      const resolvedConfig = await resolveConfig({
-        configFile
-      }, command, mode)
+      const resolvedConfig = await resolveConfig(
+        {
+          configFile,
+        },
+        command,
+        mode,
+      )
       if (process.platform === 'win32') {
         configFile = `file://${configFile}`
       }
-      let userConfig = await import(configFile).then(m => m.default)
+      let userConfig = await import(configFile).then((m) => m.default)
       if (userConfig.default) {
         userConfig = userConfig.default
       }
@@ -180,24 +213,24 @@ async function resolveViteConfig (root, dev, isSpa) {
         userConfig = await userConfig({
           command,
           mode,
-          ssrBuild: !isSpa
+          ssrBuild: !isSpa,
         })
       }
       return [
         Object.assign(userConfig, {
           build: {
             assetsDir: resolvedConfig.build.assetsDir,
-            outDir: resolvedConfig.build.outDir
-          }
+            outDir: resolvedConfig.build.outDir,
+          },
         }),
-        configFile
+        configFile,
       ]
     }
   }
   return [null, null]
 }
 
-async function resolveSSRBundle ({ dev, vite }) {
+async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
     bundle.dir = resolve(vite.root, vite.build.outDir)
@@ -209,7 +242,10 @@ async function resolveSSRBundle ({ dev, vite }) {
     // SSR manifest location altered between Vite v4 and v5
     const v4SSRManifestPath = resolve(bundle.dir, 'client/ssr-manifest.json')
     // See https://github.com/vitejs/vite/pull/14230
-    const ssrManifestPath = resolve(bundle.dir, 'client/.vite/ssr-manifest.json')
+    const ssrManifestPath = resolve(
+      bundle.dir,
+      'client/.vite/ssr-manifest.json',
+    )
     if (exists(v4SSRManifestPath)) {
       bundle.manifest = require(v4SSRManifestPath)
     } else if (exists(ssrManifestPath)) {
@@ -221,7 +257,7 @@ async function resolveSSRBundle ({ dev, vite }) {
   return bundle
 }
 
-async function resolveSPABundle ({ dev, vite }) {
+async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
     bundle.dir = resolve(vite.root, vite.build.outDir)
@@ -239,6 +275,6 @@ async function resolveSPABundle ({ dev, vite }) {
 module.exports = {
   configure,
   resolveSSRBundle,
-  resolveSPABundle
+  resolveSPABundle,
 }
 module.exports.default = module.exports

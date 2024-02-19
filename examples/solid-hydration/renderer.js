@@ -7,7 +7,7 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return async function (server, req, reply) {
+  return async function ({ app: server, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const data = {

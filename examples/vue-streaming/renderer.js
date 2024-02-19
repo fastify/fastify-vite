@@ -39,7 +39,7 @@ function createHtmlFunction (source, scope, config) {
 
 function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return async function (server, req, reply) {
+  return async function ({ app: server, req, reply }) {
     const data = {
       todoList: [
         'Do laundry',

@@ -10,7 +10,7 @@ export default { createRenderFunction }
 
 function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return function (server, req, reply) {
+  return async function ({ app, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const data = {
@@ -21,9 +21,9 @@ function createRenderFunction ({ createApp }) {
       ]
     }
     // Creates main React component with all the SSR context it needs
-    const app = createApp({ data, server, req, reply }, req.url)
+    const main = createApp({ data, server: app, req, reply }, req.url)
     // Perform SSR, i.e., turn app.instance into an HTML fragment
-    const element = renderToString(app)
+    const element = await renderToString(main)
     return {
       // Server-side rendered HTML fragment
       element,

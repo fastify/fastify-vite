@@ -41,7 +41,7 @@ function createHtmlFunction (source, scope, config) {
 
 function createRenderFunction ({ createApp }) {
   // createApp is exported by client/index.js
-  return function (server, req, reply) {
+  return function ({ server, req, reply }) {
     const data = {
       todoList: [
         'Do laundry',
@@ -59,13 +59,17 @@ function createRenderFunction ({ createApp }) {
 
 // Helper function to prepend and append chunks the body stream
 async function * streamHtml (head, body, footer) {
-  yield head
+  for await (const chunk of await head) {
+    yield chunk
+  }
   // We first await on the stream being ready (onShellReady)
   // And then await on its AsyncIterator
   for await (const chunk of await body) {
     yield chunk
   }
-  yield footer
+  for await (const chunk of await footer) {
+    yield chunk
+  }
 }
 
 // Helper function to get an AsyncIterable (via PassThrough)
