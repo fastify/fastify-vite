@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/htmx",
   "description": "The official @fastify/vite renderer for HTMX",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "files": [
     "virtual/layouts/default.jsx",
     "virtual/client.js",
@@ -29,7 +29,7 @@
     "mlly": "^1.5.0"
   },
   "peerDependencies": {
-    "@fastify/vite": "^6.0.0"
+    "@fastify/vite": "^6.0.0-alpha.0"
   },
   "publishConfig": {
     "access": "public"

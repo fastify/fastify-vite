@@ -27,7 +27,7 @@ async function prepareClient(clientModule, scope, config) {
     route[kPrefetch] = ''
     for (const stylesheet of css) {
       if (config.dev) {
-        route[kPrefetch] += `  <link rel="stylesheet" href="${stylesheet}">\n`
+        route[kPrefetch] += `  <link rel="stylesheet" href="/${stylesheet}">\n`
       } else if (config.ssrManifest[stylesheet]) {
         const [asset] = config.ssrManifest[stylesheet].filter((s) =>
           s.endsWith('.css'),
@@ -39,7 +39,7 @@ async function prepareClient(clientModule, scope, config) {
     for (const image of svg) {
       if (config.dev) {
         route[kPrefetch] +=
-          `  <link as="image" rel="preload" href="${image}" fetchpriority="high">\n`
+          `  <link as="image" rel="preload" href="/${image}" fetchpriority="high">\n`
       } else if (config.ssrManifest[image]) {
         const [asset] = config.ssrManifest[image].filter((s) =>
           s.endsWith('.svg'),
@@ -50,7 +50,7 @@ async function prepareClient(clientModule, scope, config) {
     }
     for (const script of js) {
       if (config.dev) {
-        route[kPrefetch] += `<script src="${script}" type="module"></script>\n`
+        route[kPrefetch] += `<script src="/${script}" type="module"></script>\n`
       } else if (config.ssrManifest[script]) {
         const [asset] = config.ssrManifest[script].filter((s) =>
           s.endsWith('.js'),
