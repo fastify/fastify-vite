@@ -29,7 +29,7 @@ async function prepareClient(clientModule, scope, config) {
     if (route.decorateReply) {
       for (const prop of route.decorateReply) {
         !scope.hasReplyDecorator(prop) && scope.decorateReply(prop, null)
-      }      
+      }
     }
     // Pregenerate prefetching <head> elements
     const { css, svg, js } = await findClientImports(
@@ -96,14 +96,27 @@ export function createRouteHandler({ client, route }, scope, config) {
   return async (req, reply) => {
     req.route = route
     reply.html({
-      head: await renderHead(client, route, { app: scope, req, reply, client, route }),
+      head: await renderHead(client, route, {
+        app: scope,
+        req,
+        reply,
+        client,
+        route,
+      }),
       element: renderToStream((rid) =>
         client.root({
           app: scope,
           req,
           reply,
           rid,
-          children: route.default({ app: scope, client, route, req, reply, rid }),
+          children: route.default({
+            app: scope,
+            client,
+            route,
+            req,
+            reply,
+            rid,
+          }),
         }),
       ),
     })
