@@ -17,12 +17,10 @@
     "vite.js",
     "html.js",
     "config.js",
-    "generate.js",
     "html.js",
     "utils.js",
     "index.js",
     "ioutils.js",
-    "routing.js",
     "setup.js"
   ],
   "exports": {
@@ -46,7 +44,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "5.0.6",
+  "version": "6.0.0",
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",

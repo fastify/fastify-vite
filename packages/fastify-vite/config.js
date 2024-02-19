@@ -100,6 +100,7 @@ const DefaultConfig = {
           app: scope,
           req,
           reply,
+          client,
           route,
         })
         return reply.html(page)
@@ -111,6 +112,7 @@ const DefaultConfig = {
         app: scope,
         req,
         reply,
+        client,
         route,
         element: page,
       })
