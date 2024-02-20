@@ -1,3 +1,11 @@
+/*
+Optional:
+https://tailwindcss.com/docs/preflight
+@tailwind base;
+*/
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --color-base: #f1f1f1;
   --color-highlight: #ff80ff;
