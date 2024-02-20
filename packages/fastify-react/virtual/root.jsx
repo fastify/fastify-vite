@@ -1,13 +1,13 @@
 import { Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { Router, AppRoute } from '/:core.jsx'
+import { Route, Routes } from 'react-router-dom'
+import { AppRoute, Router } from '/:core.jsx'
 
-export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
+export default function Root({ url, routes, head, ctxHydration, routeMap }) {
   return (
     <Suspense>
       <Router location={url}>
-        <Routes>{
-          routes.map(({ path, component: Component }) =>
+        <Routes>
+          {routes.map(({ path, component: Component }) => (
             <Route
               key={path}
               path={path}
@@ -15,12 +15,14 @@ export default function Root ({ url, routes, head, ctxHydration, routeMap }) {
                 <AppRoute
                   head={head}
                   ctxHydration={ctxHydration}
-                  ctx={routeMap[path]}>
+                  ctx={routeMap[path]}
+                >
                   <Component />
                 </AppRoute>
-              } />,
-          )
-        }</Routes>
+              }
+            />
+          ))}
+        </Routes>
       </Router>
     </Suspense>
   )

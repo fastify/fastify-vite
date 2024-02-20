@@ -2,15 +2,18 @@ const { readFileSync, existsSync } = require('fs')
 const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 
-function viteReactFastifyDX (config = {}) {  
+function viteReactFastifyDX(config = {}) {
   const prefix = /^\/:/
-  const routing = Object.assign({
-    globPattern: '/pages/**/*.{jsx,tsx}',
-    paramPattern: /\[(\w+)\]/,
-  }, config)
+  const routing = Object.assign(
+    {
+      globPattern: '/pages/**/*.{jsx,tsx}',
+      paramPattern: /\[(\w+)\]/,
+    },
+    config,
+  )
   const virtualRoot = resolve(__dirname, 'virtual')
-  const virtualModules = [ 
-    'mount.js', 
+  const virtualModules = [
+    'mount.js',
     'resource.js',
     'routes.js',
     'layouts.js',
@@ -18,7 +21,7 @@ function viteReactFastifyDX (config = {}) {
     'root.jsx',
     'layouts/',
     'context.js',
-    'core.jsx'
+    'core.jsx',
   ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {
@@ -35,12 +38,12 @@ function viteReactFastifyDX (config = {}) {
     'routes.js': {
       $globPattern: routing.globPattern,
       $paramPattern: routing.paramPattern,
-    }
+    },
   }
 
   let viteProjectRoot
 
-  function loadVirtualModuleOverride (virtual) {
+  function loadVirtualModuleOverride(virtual) {
     if (!virtualModules.includes(virtual)) {
       return
     }
@@ -50,13 +53,15 @@ function viteReactFastifyDX (config = {}) {
     }
   }
 
-  function loadVirtualModule (virtual) {
+  function loadVirtualModule(virtual) {
     if (!virtualModules.includes(virtual)) {
       return
     }
     let code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
     if (virtualModuleInserts[virtual]) {
-      for (const [key, value] of Object.entries(virtualModuleInserts[virtual])) {
+      for (const [key, value] of Object.entries(
+        virtualModuleInserts[virtual],
+      )) {
         code = code.replace(new RegExp(escapeRegExp(key), 'g'), value)
       }
     }
@@ -67,15 +72,13 @@ function viteReactFastifyDX (config = {}) {
   }
 
   // Thanks to https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
-  function escapeRegExp (s) {
-    return s
-      .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-      .replace(/-/g, '\\x2d')
+  function escapeRegExp(s) {
+    return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d')
   }
 
   return {
     name: 'vite-plugin-fastify-react',
-    config (config, { command }) {
+    config(config, { command }) {
       if (command === 'build' && config.build?.ssr) {
         config.build.rollupOptions = {
           output: {
@@ -84,10 +87,10 @@ function viteReactFastifyDX (config = {}) {
         }
       }
     },
-    configResolved (config) {
+    configResolved(config) {
       viteProjectRoot = config.root
     },
-    async resolveId (id) {
+    async resolveId(id) {
       const [, virtual] = id.split(prefix)
       if (virtual) {
         const override = await loadVirtualModuleOverride(virtual)
@@ -97,7 +100,7 @@ function viteReactFastifyDX (config = {}) {
         return id
       }
     },
-    load (id) {
+    load(id) {
       const [, virtual] = id.split(prefix)
       return loadVirtualModule(virtual)
     },

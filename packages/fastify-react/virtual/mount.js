@@ -1,12 +1,13 @@
-import Head from 'unihead/client'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import Head from 'unihead/client'
 
 import create from '/:create.jsx'
 import routesPromise from '/:routes.js'
 
 mount('root')
 
-async function mount (target) {
+async function mount(targetInput) {
+  let target = targetInput
   if (typeof target === 'string') {
     target = document.getElementById(target)
   }
@@ -31,14 +32,17 @@ async function mount (target) {
   }
 }
 
-async function extendContext (ctx, {
-  // The route context initialization function
-  default: setter,
-  // We destructure state here just to discard it from extra
-  state,
-  // Other named exports from context.js
-  ...extra
-}) {
+async function extendContext(
+  ctx,
+  {
+    // The route context initialization function
+    default: setter,
+    // We destructure state here just to discard it from extra
+    state,
+    // Other named exports from context.js
+    ...extra
+  },
+) {
   Object.assign(ctx, extra)
   if (setter) {
     await setter(ctx)

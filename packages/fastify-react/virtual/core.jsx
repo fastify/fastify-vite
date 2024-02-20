@@ -1,16 +1,16 @@
-import { createContext, useContext, useEffect } from 'react'
-import { useLocation, BrowserRouter } from 'react-router-dom'
-import { StaticRouter } from 'react-router-dom/server.mjs'
 import { createPath } from 'history'
+import { createContext, useContext, useEffect } from 'react'
+import { BrowserRouter, useLocation } from 'react-router-dom'
+import { StaticRouter } from 'react-router-dom/server.mjs'
 import { proxy, useSnapshot } from 'valtio'
-import { waitResource, waitFetch } from '/:resource.js'
 import layouts from '/:layouts.js'
+import { waitFetch, waitResource } from '/:resource.js'
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
 export const RouteContext = createContext({})
 
-export function useRouteContext () {
+export function useRouteContext() {
   const routeContext = useContext(RouteContext)
   if (routeContext.state) {
     routeContext.snapshot = isServer
@@ -20,22 +20,22 @@ export function useRouteContext () {
   return routeContext
 }
 
-export function AppRoute ({ head, ctxHydration, ctx, children }) {
+export function AppRoute({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
     const Layout = layouts[ctxHydration.layout ?? 'default']
     return (
-      <RouteContext.Provider value={{
-        ...ctx,
-        ...ctxHydration,
-        state: isServer
-          ? ctxHydration.state ?? {}
-          : proxy(ctxHydration.state ?? {}),
-      }}>
-        <Layout>
-          {children}
-        </Layout>
+      <RouteContext.Provider
+        value={{
+          ...ctx,
+          ...ctxHydration,
+          state: isServer
+            ? ctxHydration.state ?? {}
+            : proxy(ctxHydration.state ?? {}),
+        }}
+      >
+        <Layout>{children}</Layout>
       </RouteContext.Provider>
     )
   }
@@ -56,6 +56,7 @@ export function AppRoute ({ head, ctxHydration, ctx, children }) {
 
   // When the next route renders client-side,
   // force it to execute all URMA hooks again
+  // biome-ignore lint/correctness/useExhaustiveDependencies: I'm inclined to believe you, Biome, but I'm not risking it.
   useEffect(() => {
     window.route.firstRender = false
   }, [location])
@@ -102,16 +103,16 @@ export function AppRoute ({ head, ctxHydration, ctx, children }) {
   const Layout = layouts[ctx.layout ?? 'default']
 
   return (
-    <RouteContext.Provider value={{
-      ...ctxHydration,
-      ...ctx,
-      state: isServer
-        ? ctxHydration.state ?? {}
-        : proxy(ctxHydration.state ?? {}),
-    }}>
-      <Layout>
-        {children}
-      </Layout>
+    <RouteContext.Provider
+      value={{
+        ...ctxHydration,
+        ...ctx,
+        state: isServer
+          ? ctxHydration.state ?? {}
+          : proxy(ctxHydration.state ?? {}),
+      }}
+    >
+      <Layout>{children}</Layout>
     </RouteContext.Provider>
   )
 }

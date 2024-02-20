@@ -1,7 +1,7 @@
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
-  static async create (server, req, reply, route, contextInit) {
+  static async create(server, req, reply, route, contextInit) {
     const routeContext = new RouteContext(server, req, reply, route)
     if (contextInit) {
       if (contextInit.state) {
@@ -14,7 +14,7 @@ export default class RouteContext {
     return routeContext
   }
 
-  constructor (server, req, reply, route) {
+  constructor(server, req, reply, route) {
     this.server = server
     this.req = req
     this.reply = reply
@@ -31,7 +31,7 @@ export default class RouteContext {
     this.serverOnly = route.serverOnly
   }
 
-  [routeContextInspect] () {
+  [routeContextInspect]() {
     return {
       ...this,
       server: { [routeContextInspect]: () => '[Server]' },
@@ -40,7 +40,7 @@ export default class RouteContext {
     }
   }
 
-  toJSON () {
+  toJSON() {
     return {
       state: this.state,
       data: this.data,
@@ -54,7 +54,7 @@ export default class RouteContext {
   }
 }
 
-RouteContext.extend = function (initial) {
+RouteContext.extend = (initial) => {
   const { default: _, ...extra } = initial
   for (const [prop, value] of Object.entries(extra)) {
     if (prop !== 'data' && prop !== 'state') {

@@ -6,11 +6,11 @@ export default import.meta.env.SSR
   ? createRoutes(import.meta.glob('$globPattern', { eager: true }))
   : hydrateRoutes(import.meta.glob('$globPattern'))
 
-async function createRoutes (from, { param } = { param: $paramPattern }) {
+async function createRoutes(from, { param } = { param: $paramPattern }) {
   // Otherwise we get a ReferenceError, but since
   // this function is only ran once, there's no overhead
   class Routes extends Array {
-    toJSON () {
+    toJSON() {
       return this.map((route) => {
         return {
           id: route.id,
@@ -28,26 +28,28 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
   if (Array.isArray(from)) {
     for (const routeDef of from) {
       promises.push(
-        getRouteModule(routeDef.path, routeDef.component)
-          .then((routeModule) => {
+        getRouteModule(routeDef.path, routeDef.component).then(
+          (routeModule) => {
             return {
               id: routeDef.path,
               path: routeDef.path ?? routeModule.path,
               ...routeModule,
             }
-          }),
+          },
+        ),
       )
     }
   } else {
     // Ensure that static routes have precedence over the dynamic ones
-    for (const path of importPaths.sort((a, b) => a > b ? -1 : 1)) {
+    for (const path of importPaths.sort((a, b) => (a > b ? -1 : 1))) {
       promises.push(
-        getRouteModule(path, from[path])
-          .then((routeModule) => {
-            return {
-              id: path,
-              layout: routeModule.layout,
-              path: routeModule.path ?? path
+        getRouteModule(path, from[path]).then((routeModule) => {
+          return {
+            id: path,
+            layout: routeModule.layout,
+            path:
+              routeModule.path ??
+              path
                 // Remove /pages and .jsx extension
                 .slice(6, -4)
                 // Replace [id] with :id
@@ -56,20 +58,19 @@ async function createRoutes (from, { param } = { param: $paramPattern }) {
                 .replace(/\/index$/, '/')
                 // Remove trailing slashs
                 .replace(/(.+)\/+$/, (...m) => m[1]),
-              ...routeModule,
-            }
-          }),
+            ...routeModule,
+          }
+        }),
       )
     }
   }
-  return new Routes(...await Promise.all(promises))
+  return new Routes(...(await Promise.all(promises)))
 }
 
-async function hydrateRoutes (from) {
+async function hydrateRoutes(fromInput) {
+  let from = fromInput
   if (Array.isArray(from)) {
-    from = Object.fromEntries(
-      from.map((route) => [route.path, route]),
-    )
+    from = Object.fromEntries(from.map((route) => [route.path, route]))
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
@@ -78,7 +79,7 @@ async function hydrateRoutes (from) {
   })
 }
 
-function getRouteModuleExports (routeModule) {
+function getRouteModuleExports(routeModule) {
   return {
     // The Route component (default export)
     component: routeModule.default,
@@ -95,23 +96,23 @@ function getRouteModuleExports (routeModule) {
   }
 }
 
-async function getRouteModule (path, routeModule) {
+async function getRouteModule(path, routeModuleInput) {
+  let routeModule = routeModuleInput
   // const isServer = typeof process !== 'undefined'
   if (typeof routeModule === 'function') {
     routeModule = await routeModule()
     return getRouteModuleExports(routeModule)
-  } else {
-    return getRouteModuleExports(routeModule)
   }
+  return getRouteModuleExports(routeModule)
 }
 
-function memoImport (func) {
+function memoImport(func) {
   // Otherwise we get a ReferenceError, but since this function
   // is only ran once for each route, there's no overhead
   const kFuncExecuted = Symbol('kFuncExecuted')
   const kFuncValue = Symbol('kFuncValue')
   func[kFuncExecuted] = false
-  return async function () {
+  return async () => {
     if (!func[kFuncExecuted]) {
       func[kFuncValue] = await func()
       func[kFuncExecuted] = true

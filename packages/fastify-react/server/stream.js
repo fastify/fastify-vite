@@ -7,7 +7,7 @@ import { Minipass } from 'minipass'
 import { renderToPipeableStream } from 'react-dom/server'
 
 // Helper function to prepend and append chunks the body stream
-export async function * generateHtmlStream ({ head, body, footer }) {
+export async function* generateHtmlStream({ head, body, footer }) {
   for await (const chunk of await head) {
     yield chunk
   }
@@ -23,12 +23,12 @@ export async function * generateHtmlStream ({ head, body, footer }) {
 
 // Helper function to get an AsyncIterable (via PassThrough)
 // from the renderToPipeableStream() onShellReady event
-export function onShellReady (app) {
+export function onShellReady(app) {
   const duplex = new Minipass()
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
-        onShellReady () {
+        onShellReady() {
           resolve(pipeable.pipe(duplex))
         },
       })
@@ -40,12 +40,12 @@ export function onShellReady (app) {
 
 // Helper function to get an AsyncIterable (via Minipass)
 // from the renderToPipeableStream() onAllReady event
-export function onAllReady (app) {
+export function onAllReady(app) {
   const duplex = new Minipass()
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
-        onAllReady () {
+        onAllReady() {
           resolve(pipeable.pipe(duplex))
         },
       })
