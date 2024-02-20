@@ -62,6 +62,10 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
+- [**`tailwind`**](https://github.com/unocss/unocss) and [**`postcss-nesting`**](https://www.npmjs.com/package/postcss-nesting)for [Tailwind](https://unocss.dev/presets/wind) and [CSS Nesting](https://www.w3.org/TR/css-nesting-1/) support.
+
+- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
+
 ### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
@@ -77,11 +81,7 @@ giget gh:fastify/fastify-vite/starters/react-kitchensink#dev your-app
 
 #### Dependencies
 
-All dependencies from **react-base** plus:
-
-- [**`unocss`**](https://github.com/unocss/unocss) for [Tailwind](https://unocss.dev/presets/wind) support and many other CSS goodies.
-
-- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/) support.
+All dependencies from **react-base**.
 
 
 ## Known limitations

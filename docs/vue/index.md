@@ -59,6 +59,10 @@ giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 
 - [**`@fastify/one-line-logger`**](https://github.com/fastify/one-line-logger) for better logging in development.
 
+- [**`tailwind`**](https://github.com/unocss/unocss) and [**`postcss-nesting`**](https://www.npmjs.com/package/postcss-nesting)for [Tailwind](https://unocss.dev/presets/wind) and [CSS Nesting](https://www.w3.org/TR/css-nesting-1/) support.
+
+- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
+
 ### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-kitchensink</code></a>
 
 The **vue-kitchensink** starter template includes all of **vue-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
@@ -74,11 +78,7 @@ giget gh:fastify/fastify-vite/starters/vue-kitchensink#dev your-app
 
 #### Dependencies
 
-All dependencies from **vue-base** plus:
-
-- [**`tailwind`**](https://github.com/unocss/unocss) and [**`postcss-nesting`**](https://www.npmjs.com/package/postcss-nesting)for [Tailwind](https://unocss.dev/presets/wind) and [CSS Nesting](https://www.w3.org/TR/css-nesting-1/) support.
-
-- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
+All dependencies from **vue-base**.
 
 ## Known limitations
 
