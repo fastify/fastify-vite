@@ -32,10 +32,6 @@ export default async function ({ app, req, reply }) {
       <p>
         <a href="/">Go back to the index</a>
       </p>
-      <p>⁂</p>
-      <p>This example is exactly the same as <a ree="/using-data">/using-data</a>,
-      except it's wrapped in a custom layout which blocks it until 
-      <code>req.session.user</code> exists.</p>
     </>
   )
 }
