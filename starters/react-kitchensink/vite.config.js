@@ -1,6 +1,5 @@
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import unocss from 'unocss/vite'
 
 import viteReact from '@vitejs/plugin-react'
 import fastifyReact from '@fastify/react/plugin'
@@ -12,7 +11,6 @@ export default {
   plugins: [
     viteReact(), 
     fastifyReact(),
-    unocss(),
   ],
   ssr: {
     external: [
