@@ -1,12 +1,9 @@
 {
-  "scripts": {
-    "lint": "eslint . --ext .js,.vue --fix"
-  },
   "type": "module",
   "main": "index.js",
   "name": "@fastify/vue",
   "description": "The official @fastify/vite renderer for Vue",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "files": [
     "virtual/create.js",
     "virtual/root.vue",
@@ -15,6 +12,7 @@
     "virtual/context.js",
     "virtual/mount.js",
     "virtual/core.js",
+    "virtual/router.vue",
     "virtual/routes.js",
     "index.js",
     "plugin.cjs",
@@ -29,7 +27,7 @@
   "dependencies": {
     "devalue": "latest",
     "unihead": "^0.0.6",
-    "vue": "^3.3.8",
+    "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
@@ -43,9 +41,12 @@
     "eslint-plugin-vue": "^8.7.1"
   },
   "peerDependencies": {
-    "@fastify/vite": "workspace:^"
+    "@fastify/vite": "^6.0.2"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .js,.vue --fix"
   }
 }

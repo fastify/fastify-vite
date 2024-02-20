@@ -2,26 +2,13 @@
 </script>
 
 <script setup>
-import Layout from '/:layout.vue'
+import Router from '/:router.vue'
+export function configure ({ app, router }) {
+  // Use this to configure/extend your Vue app and router instance
+  console.log(app)
+}
 </script>
 
 <template>
-  <router-view v-slot="{ Component }">
-    <template v-if="$isServer">
-      <Layout>
-        <component
-          :is="Component"
-          :key="$route.path"
-        />
-      </Layout>
-    </template>
-    <Suspense v-else>
-      <Layout>
-        <component
-          :is="Component"
-          :key="$route.path"
-        />
-      </Layout>
-    </Suspense>
-  </router-view>
+  <Router />
 </template>

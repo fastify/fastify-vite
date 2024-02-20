@@ -3,7 +3,7 @@ import create from '/:create.js'
 import routesPromise from '/:routes.js'
 import * as context from '/:context.js'
 
-mount('root')
+mount('#root')
 
 async function mount (target) {
   const ctxHydration = await extendContext(window.route, context)

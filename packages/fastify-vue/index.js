@@ -112,7 +112,7 @@ export async function createRenderFunction ({ routes, create }) {
       if (req.route.streaming) {
         stream = renderToNodeStream(app.instance, app.ctx)
       } else {
-        body = renderToString(app.instance, app.ctx)
+        body = await renderToString(app.instance, app.ctx)
       }
     }
     // Perform SSR, i.e., turn app.instance into an HTML fragment
@@ -121,7 +121,7 @@ export async function createRenderFunction ({ routes, create }) {
   }
 }
 
-export function createRouteHandler ({ client }, scope, config) {
+export function createRouteHandler (client, scope, config) {
   return async function (req, reply) {
     reply.html(await reply.render(req))
     return reply

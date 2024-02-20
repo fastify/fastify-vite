@@ -35,6 +35,10 @@ export default async function create (ctx) {
 
   instance.use(router)
 
+  if (typeof root.configure === 'function') {
+    await root.configure({ app: instance, router })
+  }
+
   if (ctx.url) {
     router.push(ctx.url)
     await router.isReady()

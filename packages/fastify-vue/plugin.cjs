@@ -13,6 +13,7 @@ function viteFastifyVue (config = {}) {
     'mount.js',
     'mount.ts',
     'routes.js',
+    'router.vue',
     'layout.vue',
     'create.js',
     'create.ts',
