@@ -76,11 +76,9 @@ giget gh:fastify/fastify-vite/starters/vue-kitchensink#dev your-app
 
 All dependencies from **vue-base** plus:
 
-- [**`@vueuse/core`**](https://vueuse.org/) for its rich set of utilities.
+- [**`tailwind`**](https://github.com/unocss/unocss) and [**`postcss-nesting`**](https://www.npmjs.com/package/postcss-nesting)for [Tailwind](https://unocss.dev/presets/wind) and [CSS Nesting](https://www.w3.org/TR/css-nesting-1/) support.
 
-- [**`unocss`**](https://github.com/unocss/unocss) for [Tailwind](https://unocss.dev/presets/wind) support and many other CSS goodies.
-
-- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for [**CSS Nesting**](https://www.w3.org/TR/css-nesting-1/) support.
+- [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
 
 ## Known limitations
 

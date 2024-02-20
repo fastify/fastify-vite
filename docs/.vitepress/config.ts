@@ -163,6 +163,7 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
           link: 'vue/virtual-modules',
           items: [
             { text: '/:root.vue', link: 'vue/virtual-modules#root-vue' },
+            { text: '/:router.vue', link: 'vue/virtual-modules#router-vue' },
             { text: '/:routes.js', link: 'vue/virtual-modules#routes-js' },
             { text: '/:core.js', link: 'vue/virtual-modules#core-js' },
             { text: '/:create.js', link: 'vue/virtual-modules#create-js' },

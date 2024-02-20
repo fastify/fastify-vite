@@ -243,6 +243,8 @@ The core files of **`@fastify/vue`** that make all of that (and a bit more) work
 │    ├── core.js
 │    ├── create.js
 │    ├── mount.js
+│    ├── routes.js
+│    ├── router.vue
 │    ├── root.vue
 │    ├── context.js
 │    ├── index.js
@@ -316,12 +318,28 @@ The Vite application mount script, imported by `index.html`.
 <tr>
 <td>
 
+`/:router.vue`
+
+</td>
+<td>
+
+The main Vue Router component for your application.
+
+Loaded by `/:root.vue`.
+
+</td>
+</tr>
+<tr>
+<td>
+
 `/:root.vue`
 
 </td>
 <td>
 
 The main Vue component for your application.
+
+It can also export a `configure({ app, router })` function to let you further extend the Vue and Vue Router instances without having to fully eject other core virtual modules into your application.
 
 </td>
 </tr>

@@ -10,6 +10,14 @@ This is the root Vue component. It's used internally by `/:create.js`. You can e
 
 <<< @../../packages/fastify-vue/virtual/root.vue
 
+## `/:router.vue`
+
+This is the root Vue Router component. Loaded by `/:root.vue`.
+
+#### Source from `packages/fastify-vue/virtual/router.vue`:
+
+<<< @../../packages/fastify-vue/virtual/router.vue
+
 Note that a top-level `<Suspense>` wrapper is necessary because **`@fastify/vue`** has code-splitting enabled at the route-level. You can opt out of code-splitting by providing your own `routes.js` file, but that's very unlikely to be ever required for any reason.
 
 ## `/:routes.js`
