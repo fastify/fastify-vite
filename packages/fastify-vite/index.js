@@ -35,8 +35,8 @@ class Vite {
             // Create route handler and route error handler functions
             const handler = await this.config.createRouteHandler(
               {
-                client: this.scope[this[kMode].hot].client,
-                route: this.scope[this[kMode].hot].routeHash.get(route.path),
+                client: this.scope[this[kMode].hot].client ?? client,
+                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
               },
               this.scope,
               this.config,
@@ -46,8 +46,8 @@ class Vite {
           const hmrErrorHandler = async (error, req, reply) => {
             const errorHandler = await this.config.createErrorHandler(
               {
-                client: this.scope[this[kMode].hot].client,
-                route: this.scope[this[kMode].hot].routeHash.get(route.path),
+                client: this.scope[this[kMode].hot].client ?? client,
+                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
               },
               this.scope,
               this.config,
@@ -57,14 +57,14 @@ class Vite {
 
           await this.config.createRoute(
             {
-              client: this.scope[this[kMode].hot].client,
+              client,
+              route,
               async handler(...args) {
                 return await hmrHandler(...args)
               },
               async errorHandler(...args) {
                 return await hmrErrorHandler(...args)
               },
-              route,
             },
             this.scope,
             this.config,
