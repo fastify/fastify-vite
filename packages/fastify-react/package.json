@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/react",
   "description": "The official @fastify/vite renderer for React",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "files": [
     "virtual/create.jsx",
     "virtual/root.jsx",
@@ -39,9 +39,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3"
-  },
-  "peerDependencies": {
-    "@fastify/vite": "workspace:^"
   },
   "publishConfig": {
     "access": "public"
