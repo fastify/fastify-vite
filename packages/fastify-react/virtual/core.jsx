@@ -49,6 +49,9 @@ export function AppRoute({ head, ctxHydration, ctx, children }) {
   if (ctx.firstRender) {
     ctx.data = window.route.data
     ctx.head = window.route.head
+  } else {
+    ctx.data = undefined
+    ctx.head = undefined
   }
 
   const location = useLocation()
