@@ -12,8 +12,6 @@ export default {
 
 const kPrefetch = Symbol('kPrefetch')
 
-// TODO update @fastify/vite to cover the signature
-// of all configuration hooks
 async function prepareClient(clientModule, scope, config) {
   if (!clientModule) {
     return null
