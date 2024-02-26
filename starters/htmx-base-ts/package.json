@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
-    "@fastify/htmx": "^0.2.0",
+    "@fastify/htmx": "^0.4.0",
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^6.0.1",
+    "@fastify/vite": "^6.0.3",
     "@kitajs/html": "^3.1.2",
     "@rollup/plugin-inject": "^5.0.5",
     "fastify": "latest",
