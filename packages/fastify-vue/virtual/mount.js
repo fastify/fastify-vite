@@ -2,10 +2,15 @@ import Head from 'unihead/client'
 import create from '/:create.js'
 import routesPromise from '/:routes.js'
 import * as context from '/:context.js'
+import * as root from '/:root.vue'
 
-mount('#root')
+if (root.mount) {
+  mount(root.mount)
+} else {
+  mount('#root', 'main')
+}
 
-async function mount (target) {
+async function mount (...targets) {
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await routesPromise
@@ -19,7 +24,17 @@ async function mount (target) {
     routeMap,
   })
   await router.isReady()
-  instance.mount(target)
+  let mountTargetFound = false
+  for (const target of targets) {
+    if (document.querySelector(target)) {
+      mountTargetFound = true
+      instance.mount(target)
+      break
+    }
+  }
+  if (!mountTargetFound) {
+    throw new Error(`No mount element found from provided list of targets: ${targets}`)
+  }
 }
 
 async function extendContext (ctx, {
