@@ -103,6 +103,9 @@ async function setup(config) {
     }
   })
 
+  // Close the dev server when Fastify closes
+  this.scope.addHook('onClose', () => this.devServer.close())
+
   // Load routes from client module (server entry point)
   const { module: clientModule } = await loadClient()
   const client = await config.prepareClient(clientModule, this.scope, config)
