@@ -180,7 +180,7 @@ function resolveClientModule(root) {
 function resolveRoot(path) {
   let root = path
   if (root.startsWith('file:')) {
-    root = fileURLToPath(root)
+    root = fileURLToPath(root).replace(/^file:\/\/\/([A-Z]):\//, 'file:///$1|/')
   }
   if (stat(root).isFile()) {
     return dirname(root)
@@ -203,7 +203,7 @@ async function resolveViteConfig(root, dev, isSpa) {
         mode,
       )
       if (process.platform === 'win32') {
-        configFile = `file://${configFile}`
+        configFile = `file://${configFile}`.replace(/^file:\/\/\/([A-Z]):\//, 'file:///$1|/')
       }
       let userConfig = await import(configFile).then((m) => m.default)
       if (userConfig.default) {
