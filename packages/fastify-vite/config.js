@@ -39,6 +39,8 @@ const DefaultConfig = {
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
+  prepareServer (scope, config) {},
+
   async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
       return null
@@ -78,7 +80,10 @@ const DefaultConfig = {
   },
 
   // Function to register server routes for client routes
-  createRoute({ handler, errorHandler, route }, scope, config) {
+  async createRoute({ handler, errorHandler, route }, scope, config) {
+    if (route.configure) {
+      await route.configure(scope)
+    }
     if (!route.path) {
       // throw new Error('Route missing `path` export.')
       return
@@ -157,7 +162,8 @@ async function configure(options = {}) {
     'createRenderFunction',
     'createRoute',
     'createRouteHandler',
-    'prepareClient',
+    'prepareServer',
+    'prepareClient'
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
   }

@@ -15,6 +15,10 @@ class Vite {
   async ready() {
     // Process all user-provided options and compute all Vite configuration settings
     this.config = await configure(this[kOptions])
+
+    // Configure the Fastify server instance — used mostly by renderer packages
+    await this.config.prepareServer?.(this.scope)
+
     // Determine which setup function to use
     this[kMode] = this.config.dev
       ? // Boots Vite's development server and ensures hot reload
