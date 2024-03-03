@@ -93,6 +93,7 @@ function getRouteModuleExports(routeModule) {
     streaming: routeModule.streaming,
     clientOnly: routeModule.clientOnly,
     serverOnly: routeModule.serverOnly,
+    ...routeModule,
   }
 }
 

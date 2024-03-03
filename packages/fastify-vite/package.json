@@ -45,6 +45,12 @@
     "access": "public"
   },
   "version": "6.0.4",
+  "optionalDependencies": {
+    "@fastify/vite": "workspace:^",
+    "@fastify/vue": "workspace:^",
+    "@fastify/htmx": "workspace:^",
+    "@fastify/react": "workspace:^"
+  },
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",

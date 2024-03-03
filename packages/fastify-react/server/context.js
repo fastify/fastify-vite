@@ -19,6 +19,7 @@ export default class RouteContext {
     this.req = req
     this.reply = reply
     this.head = {}
+    this.actionData = {}
     this.state = null
     this.data = route.data
     this.firstRender = true
@@ -42,6 +43,7 @@ export default class RouteContext {
 
   toJSON() {
     return {
+      actionData: this.actionData,
       state: this.state,
       data: this.data,
       layout: this.layout,

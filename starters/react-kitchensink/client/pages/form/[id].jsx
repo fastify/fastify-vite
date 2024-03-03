@@ -1,8 +1,6 @@
 
 import { useRouteContext } from '/:core.jsx'
 
-export const layout = 'default'
-
 export function getData ({ req, reply }) {
   if (req.method === 'POST') {
     if (req.body.number !== '42') {

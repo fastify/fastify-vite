@@ -27,13 +27,14 @@ import RouteContext from './server/context.js'
 
 export default {
   prepareClient,
+  prepareServer,
   createHtmlFunction,
   createRenderFunction,
   createRouteHandler,
   createRoute,
 }
 
-export async function prepareClient({
+async function prepareClient({
   routes: routesPromise,
   context: contextPromise,
   ...others
@@ -44,7 +45,7 @@ export async function prepareClient({
 }
 
 // The return value of this function gets registered as reply.html()
-export function createHtmlFunction(source, scope, config) {
+function createHtmlFunction(source, scope, config) {
   // Templating functions for universal rendering (SSR+CSR)
   const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
   const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
@@ -93,7 +94,7 @@ export function createHtmlFunction(source, scope, config) {
   }
 }
 
-export async function createRenderFunction({ routes, create }) {
+async function createRenderFunction({ routes, create }) {
   // create is exported by client/index.js
   return (req) => {
     // Create convenience-access routeMap
@@ -117,14 +118,33 @@ export async function createRenderFunction({ routes, create }) {
   }
 }
 
-export function createRouteHandler({ client }, scope, config) {
+function createRouteHandler({ client }, scope, config) {
   return (req, reply) => {
     reply.html(reply.render(req))
     return reply
   }
 }
 
-export function createRoute(
+function prepareServer (server) {
+  let url
+  server.decorate('serverURL', { getter: () => url })
+  server.addHook('onListen', () => {
+    const { port, address, family } = server.server.address()
+    let protocol = server.https ? 'https://' : 'http'
+    if (family === 'IPv6') {
+      url = `${protocol}://[${address}]:${port}`
+    } else {
+      url = `${protocol}://${address}:${port}`
+    }
+  })
+  server.decorateRequest('fetchMap', null)
+  server.addHook('onRequest', (req, _, done) => {
+    req.fetchMap = new Map()
+    done()
+  })
+}
+
+export async function createRoute(
   { client, handler, errorHandler, route },
   scope,
   config,
@@ -138,6 +158,12 @@ export function createRoute(
       client.context,
     )
   }
+
+  console.log('route.configure', route.configure)
+  if (route.configure) {
+    await route.configure(scope)
+  }
+
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
     scope.get(`/-/data${route.path}`, {

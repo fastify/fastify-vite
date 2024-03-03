@@ -37,6 +37,9 @@
     "unihead": "latest",
     "valtio": "latest"
   },
+  "optionalDependencies": {
+    "@fastify/vite": "workspace:^"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3"
   },
