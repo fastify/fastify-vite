@@ -80,7 +80,10 @@ const DefaultConfig = {
   },
 
   // Function to register server routes for client routes
-  createRoute({ handler, errorHandler, route }, scope, config) {
+  async createRoute({ handler, errorHandler, route }, scope, config) {
+    if (route.configure) {
+      await route.configure(scope)
+    }
     if (!route.path) {
       // throw new Error('Route missing `path` export.')
       return
