@@ -8,10 +8,18 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default {
   createRenderFunction,
-  createRoute
+  createRoute,
+  prepareServer
 }
 
-function createRoute ({ handler, errorHandler, route }, scope, config) {
+export function prepareServer (server) {
+  server.log.info('prepareServer() hook picked up from configuration!')
+}
+
+async function createRoute ({ handler, errorHandler, route }, scope, config) {
+  if (route.configure) {
+    await route.configure(scope)
+  }
   if (route.getServerSideProps) {
     // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
