@@ -39,7 +39,7 @@ const DefaultConfig = {
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
-  prepareServer (scope, config) {},
+  prepareServer(scope, config) {},
 
   async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
@@ -163,7 +163,7 @@ async function configure(options = {}) {
     'createRoute',
     'createRouteHandler',
     'prepareServer',
-    'prepareClient'
+    'prepareClient',
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
   }
@@ -209,7 +209,10 @@ async function resolveViteConfig(root, dev, isSpa) {
         mode,
       )
       if (process.platform === 'win32') {
-        configFile = `file://${configFile}`.replace(/^file:\/\/\/([A-Z]):\//, 'file:///$1|/')
+        configFile = `file://${configFile}`.replace(
+          /^file:\/\/\/([A-Z]):\//,
+          'file:///$1|/',
+        )
       }
       let userConfig = await import(configFile).then((m) => m.default)
       if (userConfig.default) {

@@ -17,7 +17,9 @@ class Vite {
     this.config = await configure(this[kOptions])
 
     // Configure the Fastify server instance — used mostly by renderer packages
-    await this.config.prepareServer?.(this.scope)
+    if (this.config.prepareServer) {
+      await this.config.prepareServer?.(this.scope)
+    }
 
     // Determine which setup function to use
     this[kMode] = this.config.dev
@@ -40,7 +42,9 @@ class Vite {
             const handler = await this.config.createRouteHandler(
               {
                 client: this.scope[this[kMode].hot].client ?? client,
-                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
+                route:
+                  this.scope[this[kMode].hot].routeHash?.get(route.path) ??
+                  route,
               },
               this.scope,
               this.config,
@@ -51,7 +55,9 @@ class Vite {
             const errorHandler = await this.config.createErrorHandler(
               {
                 client: this.scope[this[kMode].hot].client ?? client,
-                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
+                route:
+                  this.scope[this[kMode].hot].routeHash?.get(route.path) ??
+                  route,
               },
               this.scope,
               this.config,
