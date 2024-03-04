@@ -104,7 +104,7 @@ function viteFastifyReact(config = {}) {
     load(id, options) {
       if (!options?.ssr && !id.startsWith('/:') && id.match(/.(j|t)sx$/)) {
         const source = readFileSync(id, 'utf8')
-        return stripFunction(source, 'configure')
+        return stripFunction(stripFunction(source, 'configure'), 'getData')
       }
       const [, virtual] = id.split(prefix)
       return loadVirtualModule(virtual)
