@@ -1,7 +1,12 @@
 const clientFetchMap = new Map()
 const clientResourceMap = new Map()
 
-export function waitResource(path, id, promise, resourceMap = clientResourceMap) {
+export function waitResource(
+  path,
+  id,
+  promise,
+  resourceMap = clientResourceMap,
+) {
   const resourceId = `${path}:${id}`
   const loaderStatus = resourceMap.get(resourceId)
   if (loaderStatus) {

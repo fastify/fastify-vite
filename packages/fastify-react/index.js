@@ -125,12 +125,12 @@ function createRouteHandler({ client }, scope, config) {
   }
 }
 
-function prepareServer (server) {
+function prepareServer(server) {
   let url
   server.decorate('serverURL', { getter: () => url })
   server.addHook('onListen', () => {
     const { port, address, family } = server.server.address()
-    let protocol = server.https ? 'https://' : 'http'
+    const protocol = server.https ? 'https://' : 'http'
     if (family === 'IPv6') {
       url = `${protocol}://[${address}]:${port}`
     } else {

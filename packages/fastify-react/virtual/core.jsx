@@ -22,32 +22,26 @@ export function useRouteContext() {
 
 let serverActionCounter = 0
 
-export function createServerAction (name) {
+export function createServerAction(name) {
   return `/-/action/${name ?? serverActionCounter++}`
 }
 
-export function useServerAction (action, options = {}) {
+export function useServerAction(action, options = {}) {
   if (import.meta.env.SSR) {
     const { req, server } = useRouteContext()
-    try {
-      req.route.actionData[action] = waitFetch(`${server.serverURL}${action}`, options, req.fetchMap)
-    } catch (status) {
-      throw status
-    }
+    req.route.actionData[action] = waitFetch(
+      `${server.serverURL}${action}`,
+      options,
+      req.fetchMap,
+    )
     return req.route.actionData[action]
-  } else {
-    const { actionData } = useRouteContext()
-    if (actionData[action]) {
-      return actionData[action]
-    } else {
-      try {
-        actionData[action] = waitFetch(action, options)
-        return actionData[action]
-      } catch (status) {
-        throw status
-      }
-    }
   }
+  const { actionData } = useRouteContext()
+  if (actionData[action]) {
+    return actionData[action]
+  }
+  actionData[action] = waitFetch(action, options)
+  return actionData[action]
 }
 
 export function AppRoute({ head, ctxHydration, ctx, children }) {

@@ -19,26 +19,15 @@ export default function Index () {
       <img src={logo} />
       <h1>{snapshot.message}</h1>
       <ul className="columns-2">
-        <li><Link to="/using-data">/using-data</Link> demonstrates how to 
-        leverage the <code>getData()</code> function 
-        and <code>useRouteContext()</code> to retrieve server data for a route.</li>
-        <li><Link to="/using-store">/using-store</Link> demonstrates how to 
-        leverage the 
-        automated <a href="https://github.com/pmndrs/valtio">Valtio</a> store 
-        to retrieve server data for a route and maintain it in a global 
-        state even after navigating to another route.</li>
-        <li><Link to="/using-auth">/using-auth</Link> demonstrates how to 
-        wrap a route in a custom layout component.</li>
-        <li><Link to="/form/123">/form/123</Link> demonstrates how to 
-    send a POST request with form data to a route with dynamic URL.</li>
-        <li><Link to="/actions/data">/actions/data</Link> demonstrates using a server action.</li>
-        <li><Link to="/actions/form">/actions/form</Link> demonstrates using a server action with form.</li>
-        <li><Link to="/client-only">/client-only</Link> demonstrates how to set 
-        up a route for rendering on the client only (disables SSR).</li>
-        <li><Link to="/server-only">/server-only</Link> demonstrates how to set 
-        up a route for rendering on the server only (sends no JavaScript).</li>
-        <li><Link to="/streaming">/streaming</Link> demonstrates how to set 
-        up a route for SSR in streaming mode.</li>
+        <li><Link to="/using-data">/using-data</Link> — isomorphic data fetching.</li>
+        <li><Link to="/using-store">/using-store</Link> — integrated <a href="https://github.com/pmndrs/valtio">Valtio</a> store.</li>
+        <li><Link to="/using-auth">/using-auth</Link> — <b>custom layout</b>.</li>
+        <li><Link to="/form/123">/form/123</Link> — <code>POST</code> to dynamic route.</li>
+        <li><Link to="/actions/data">/actions/data</Link> — inline <code>GET</code> handler.</li>
+        <li><Link to="/actions/form">/actions/form</Link> — inline <code>POST</code> handler.</li>
+        <li><Link to="/client-only">/client-only</Link> — <b>disabling</b> SSR.</li>
+        <li><Link to="/server-only">/server-only</Link> — <code>0kb</code> JavaScript.</li>
+        <li><Link to="/streaming">/streaming</Link> — <b>streaming</b> SSR.</li>
       </ul>
     </>
   )
