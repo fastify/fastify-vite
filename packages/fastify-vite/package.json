@@ -44,13 +44,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "6.0.5",
-  "optionalDependencies": {
-    "@fastify/vite": "workspace:^",
-    "@fastify/vue": "workspace:^",
-    "@fastify/htmx": "workspace:^",
-    "@fastify/react": "workspace:^"
-  },
+  "version": "6.0.6",
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",
