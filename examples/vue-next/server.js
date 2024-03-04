@@ -6,7 +6,7 @@ import renderer from './renderer.js'
 import ky from 'ky-universal'
 
 export async function main (dev) {
-  const server = Fastify({ ignoreTrailingSlash: true })
+  const server = Fastify({ logger: true, ignoreTrailingSlash: true })
 
   server.decorate('ky', ky.create({
     prefixUrl: 'http://localhost:3000/',

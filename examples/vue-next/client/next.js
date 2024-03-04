@@ -15,6 +15,8 @@ export function getPageRoutes (importMap) {
         .replace(/\/index$/, '/'),
       // The React component (default export)
       component: importMap[path].default,
+      // A configure(server) helper to add Fastify decorationss
+      configure: importMap[path].configure,
       // The getServerSideProps individual export
       getServerSideProps: importMap[path].getServerSideProps
     }))

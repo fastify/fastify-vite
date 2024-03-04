@@ -10,3 +10,9 @@
     </router-link>
   </p>
 </template>
+
+<script>
+export function configure (server) {
+  server.log.info('configure() hook picked up from route module!')
+}
+</script>
