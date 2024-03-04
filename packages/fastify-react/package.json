@@ -34,12 +34,10 @@
     "minipass": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "latest",
+    "react-router-dom": "^6",
     "unihead": "latest",
-    "valtio": "latest"
-  },
-  "optionalDependencies": {
-    "@fastify/vite": "workspace:^"
+    "valtio": "latest",
+    "@fastify/vite": "^6"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3"

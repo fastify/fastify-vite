@@ -3,7 +3,7 @@ const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
 const stripFunction = require('acorn-strip-function')
 
-function viteReactFastifyDX(config = {}) {
+function viteFastify(config = {}) {React
   const prefix = /^\/:/
   const routing = Object.assign(
     {
@@ -112,4 +112,4 @@ function viteReactFastifyDX(config = {}) {
   }
 }
 
-module.exports = viteReactFastifyDX
+module.exports = viteFastifyReact
