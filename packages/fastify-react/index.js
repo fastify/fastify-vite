@@ -130,7 +130,7 @@ function prepareServer(server) {
   server.decorate('serverURL', { getter: () => url })
   server.addHook('onListen', () => {
     const { port, address, family } = server.server.address()
-    const protocol = server.https ? 'https://' : 'http'
+    const protocol = server.https ? 'https' : 'http'
     if (family === 'IPv6') {
       url = `${protocol}://[${address}]:${port}`
     } else {
@@ -140,6 +140,10 @@ function prepareServer(server) {
   server.decorateRequest('fetchMap', null)
   server.addHook('onRequest', (req, _, done) => {
     req.fetchMap = new Map()
+    done()
+  })
+  server.addHook('onResponse', (req, _, done) => {
+    req.fetchMap = undefined
     done()
   })
 }
