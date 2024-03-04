@@ -18,7 +18,7 @@ class Vite {
 
     // Configure the Fastify server instance — used mostly by renderer packages
     if (this.config.prepareServer) {
-      await this.config.prepareServer?.(this.scope)
+      await this.config.prepareServer(this.scope)
     }
 
     // Determine which setup function to use
