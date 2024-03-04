@@ -14,6 +14,9 @@ import * as devalue from 'devalue'
 // <title>, <meta> and <link> elements
 import Head from 'unihead'
 
+// Used for removing <script> tags when serverOnly is enabled
+import { HTMLRewriter } from 'html-rewriter-wasm'
+
 // Helpers from the Node.js stream library to
 // make it easier to work with renderToPipeableStream()
 import {
@@ -45,17 +48,15 @@ async function prepareClient({
 }
 
 // The return value of this function gets registered as reply.html()
-function createHtmlFunction(source, scope, config) {
+async function createHtmlFunction(source, scope, config) {
   // Templating functions for universal rendering (SSR+CSR)
   const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
   const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
   const unFooterTemplate = createHtmlTemplateFunction(unFooterSource)
   // Templating functions for server-only rendering (SSR only)
-  const [soHeadSource, soFooterSource] = source
-    // Unsafe if dealing with user-input, but safe here
-    // where we control the index.html source
-    .replace(/<script[^>]+type="module"[^>]+>.*?<\/script>/g, '')
-    .split('<!-- element -->')
+  const [soHeadSource, soFooterSource] = (await removeModules(source)).split(
+    '<!-- element -->',
+  )
   const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
@@ -217,4 +218,32 @@ export async function createRoute(
     errorHandler,
     ...route,
   })
+}
+
+async function removeModules(html) {
+  const decoder = new TextDecoder()
+
+  let output = ''
+  const rewriter = new HTMLRewriter((outputChunk) => {
+    output += decoder.decode(outputChunk)
+  })
+
+  rewriter.on('script', {
+    element(element) {
+      for (const [attr, value] of element.attributes) {
+        if (attr === 'type' && value === 'module') {
+          element.replace('')
+        }
+      }
+    },
+  })
+
+  try {
+    const encoder = new TextEncoder()
+    await rewriter.write(encoder.encode(html))
+    await rewriter.end()
+    return output
+  } finally {
+    rewriter.free()
+  }
 }

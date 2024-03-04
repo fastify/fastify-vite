@@ -28,16 +28,17 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
+    "@fastify/vite": "^6.0.5",
     "acorn-strip-function": "^1.1.0",
     "devalue": "latest",
     "history": "latest",
+    "html-rewriter-wasm": "^0.4.1",
     "minipass": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6",
     "unihead": "latest",
-    "valtio": "latest",
-    "@fastify/vite": "^6"
+    "valtio": "latest"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3"
