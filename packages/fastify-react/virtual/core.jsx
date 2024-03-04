@@ -20,6 +20,30 @@ export function useRouteContext() {
   return routeContext
 }
 
+let serverActionCounter = 0
+
+export function createServerAction(name) {
+  return `/-/action/${name ?? serverActionCounter++}`
+}
+
+export function useServerAction(action, options = {}) {
+  if (import.meta.env.SSR) {
+    const { req, server } = useRouteContext()
+    req.route.actionData[action] = waitFetch(
+      `${server.serverURL}${action}`,
+      options,
+      req.fetchMap,
+    )
+    return req.route.actionData[action]
+  }
+  const { actionData } = useRouteContext()
+  if (actionData[action]) {
+    return actionData[action]
+  }
+  actionData[action] = waitFetch(action, options)
+  return actionData[action]
+}
+
 export function AppRoute({ head, ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
@@ -62,6 +86,7 @@ export function AppRoute({ head, ctxHydration, ctx, children }) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: I'm inclined to believe you, Biome, but I'm not risking it.
   useEffect(() => {
     window.route.firstRender = false
+    window.route.actionData = {}
   }, [location])
 
   // If we have a getData function registered for this route
@@ -69,7 +94,7 @@ export function AppRoute({ head, ctxHydration, ctx, children }) {
     try {
       const { pathname, search } = location
       // If not, fetch data from the JSON endpoint
-      ctx.data = waitFetch(`${pathname}${search}`)
+      ctx.data = waitFetch(`/-/data${pathname}${search}`)
     } catch (status) {
       // If it's an actual error...
       if (status instanceof Error) {

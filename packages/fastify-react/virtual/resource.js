@@ -1,7 +1,12 @@
-const fetchMap = new Map()
-const resourceMap = new Map()
+const clientFetchMap = new Map()
+const clientResourceMap = new Map()
 
-export function waitResource(path, id, promise) {
+export function waitResource(
+  path,
+  id,
+  promise,
+  resourceMap = clientResourceMap,
+) {
   const resourceId = `${path}:${id}`
   const loaderStatus = resourceMap.get(resourceId)
   if (loaderStatus) {
@@ -37,7 +42,7 @@ export function waitResource(path, id, promise) {
   return waitResource(path, id)
 }
 
-export function waitFetch(path) {
+export function waitFetch(path, options = {}, fetchMap = clientFetchMap) {
   const loaderStatus = fetchMap.get(path)
   if (loaderStatus) {
     if (loaderStatus.error || loaderStatus.data?.statusCode === 500) {
@@ -59,7 +64,7 @@ export function waitFetch(path) {
     data: null,
     promise: null,
   }
-  loader.promise = fetch(`/-/data${path}`)
+  loader.promise = fetch(path, options)
     .then((response) => response.json())
     .then((loaderData) => {
       loader.data = loaderData
@@ -73,5 +78,5 @@ export function waitFetch(path) {
 
   fetchMap.set(path, loader)
 
-  return waitFetch(path)
+  return waitFetch(path, options, fetchMap)
 }

@@ -3,11 +3,11 @@ import FastifyVite from '@fastify/vite'
 import FastifyFormBody from '@fastify/formbody'
 
 const server = Fastify({
-  logger: {
-    transport: {
-      target: '@fastify/one-line-logger'
-    }
-  }
+  // logger: {
+  //   transport: {
+  //     target: '@fastify/one-line-logger'
+  //   }
+  // }
 })
 
 await server.register(FastifyFormBody)

@@ -14,6 +14,9 @@ import * as devalue from 'devalue'
 // <title>, <meta> and <link> elements
 import Head from 'unihead'
 
+// Used for removing <script> tags when serverOnly is enabled
+import { HTMLRewriter } from 'html-rewriter-wasm'
+
 // Helpers from the Node.js stream library to
 // make it easier to work with renderToPipeableStream()
 import {
@@ -27,13 +30,14 @@ import RouteContext from './server/context.js'
 
 export default {
   prepareClient,
+  prepareServer,
   createHtmlFunction,
   createRenderFunction,
   createRouteHandler,
   createRoute,
 }
 
-export async function prepareClient({
+async function prepareClient({
   routes: routesPromise,
   context: contextPromise,
   ...others
@@ -44,17 +48,15 @@ export async function prepareClient({
 }
 
 // The return value of this function gets registered as reply.html()
-export function createHtmlFunction(source, scope, config) {
+async function createHtmlFunction(source, scope, config) {
   // Templating functions for universal rendering (SSR+CSR)
   const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
   const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
   const unFooterTemplate = createHtmlTemplateFunction(unFooterSource)
   // Templating functions for server-only rendering (SSR only)
-  const [soHeadSource, soFooterSource] = source
-    // Unsafe if dealing with user-input, but safe here
-    // where we control the index.html source
-    .replace(/<script[^>]+type="module"[^>]+>.*?<\/script>/g, '')
-    .split('<!-- element -->')
+  const [soHeadSource, soFooterSource] = (await removeModules(source)).split(
+    '<!-- element -->',
+  )
   const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
   const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
@@ -93,7 +95,7 @@ export function createHtmlFunction(source, scope, config) {
   }
 }
 
-export async function createRenderFunction({ routes, create }) {
+async function createRenderFunction({ routes, create }) {
   // create is exported by client/index.js
   return (req) => {
     // Create convenience-access routeMap
@@ -117,14 +119,37 @@ export async function createRenderFunction({ routes, create }) {
   }
 }
 
-export function createRouteHandler({ client }, scope, config) {
+function createRouteHandler({ client }, scope, config) {
   return (req, reply) => {
     reply.html(reply.render(req))
     return reply
   }
 }
 
-export function createRoute(
+function prepareServer(server) {
+  let url
+  server.decorate('serverURL', { getter: () => url })
+  server.addHook('onListen', () => {
+    const { port, address, family } = server.server.address()
+    const protocol = server.https ? 'https' : 'http'
+    if (family === 'IPv6') {
+      url = `${protocol}://[${address}]:${port}`
+    } else {
+      url = `${protocol}://${address}:${port}`
+    }
+  })
+  server.decorateRequest('fetchMap', null)
+  server.addHook('onRequest', (req, _, done) => {
+    req.fetchMap = new Map()
+    done()
+  })
+  server.addHook('onResponse', (req, _, done) => {
+    req.fetchMap = undefined
+    done()
+  })
+}
+
+export async function createRoute(
   { client, handler, errorHandler, route },
   scope,
   config,
@@ -138,6 +163,11 @@ export function createRoute(
       client.context,
     )
   }
+
+  if (route.configure) {
+    await route.configure(scope)
+  }
+
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
     scope.get(`/-/data${route.path}`, {
@@ -188,4 +218,32 @@ export function createRoute(
     errorHandler,
     ...route,
   })
+}
+
+async function removeModules(html) {
+  const decoder = new TextDecoder()
+
+  let output = ''
+  const rewriter = new HTMLRewriter((outputChunk) => {
+    output += decoder.decode(outputChunk)
+  })
+
+  rewriter.on('script', {
+    element(element) {
+      for (const [attr, value] of element.attributes) {
+        if (attr === 'type' && value === 'module') {
+          element.replace('')
+        }
+      }
+    },
+  })
+
+  try {
+    const encoder = new TextEncoder()
+    await rewriter.write(encoder.encode(html))
+    await rewriter.end()
+    return output
+  } finally {
+    rewriter.free()
+  }
 }

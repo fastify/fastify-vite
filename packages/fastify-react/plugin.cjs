@@ -1,8 +1,9 @@
 const { readFileSync, existsSync } = require('fs')
 const { dirname, join, resolve } = require('path')
 const { fileURLToPath } = require('url')
+const stripFunction = require('acorn-strip-function')
 
-function viteReactFastifyDX(config = {}) {
+function viteFastifyReact(config = {}) {
   const prefix = /^\/:/
   const routing = Object.assign(
     {
@@ -100,11 +101,15 @@ function viteReactFastifyDX(config = {}) {
         return id
       }
     },
-    load(id) {
+    load(id, options) {
+      if (!options?.ssr && !id.startsWith('/:') && id.match(/.(j|t)sx$/)) {
+        const source = readFileSync(id, 'utf8')
+        return stripFunction(source, 'configure')
+      }
       const [, virtual] = id.split(prefix)
       return loadVirtualModule(virtual)
     },
   }
 }
 
-module.exports = viteReactFastifyDX
+module.exports = viteFastifyReact
