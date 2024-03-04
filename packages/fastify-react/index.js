@@ -159,7 +159,6 @@ export async function createRoute(
     )
   }
 
-  console.log('route.configure', route.configure)
   if (route.configure) {
     await route.configure(scope)
   }

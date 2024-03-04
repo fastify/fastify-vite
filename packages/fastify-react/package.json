@@ -28,6 +28,7 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
+    "acorn-strip-function": "^1.1.0",
     "devalue": "latest",
     "history": "latest",
     "minipass": "latest",

@@ -22,7 +22,7 @@ export function useRouteContext() {
 
 let serverActionCounter = 0
 
-export function createActionPath (name) {
+export function createServerAction (name) {
   return `/-/action/${name ?? serverActionCounter++}`
 }
 
