@@ -115,12 +115,7 @@ async function setup(config) {
     )
     const ssrManifest =
       process.platform === 'win32'
-        ? new URL(
-            fileUrl(ssrManifestPath).replace(
-              /^file:\/\/\/([A-Z]):\//,
-              'file:///$1|/',
-            ),
-          )
+        ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
     const serverFiles = [
       join('server', `${parse(config.clientModule).name}.js`),
@@ -131,12 +126,7 @@ async function setup(config) {
       // Use file path on Windows
       serverBundlePath =
         process.platform === 'win32'
-          ? new URL(
-              fileUrl(resolve(config.bundle.dir, serverFile)).replace(
-                /^file:\/\/\/([A-Z]):\//,
-                'file:///$1|/',
-              ),
-            )
+          ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
           : resolve(config.bundle.dir, serverFile)
       if (await exists(serverBundlePath)) {
         break
