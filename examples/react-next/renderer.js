@@ -15,11 +15,13 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
   if (route.getServerSideProps) {
     // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
-      reply.send(await route.getServerSideProps({
-        req,
-        ky: scope.ky
-      }))
-    })
+      reply.send(
+        await route.getServerSideProps({
+          req,
+          fetchJSON: scope.fetchJSON,
+        }),
+      );
+    });
   }
   scope.get(route.path, {
     // If getServerSideProps is provided,
@@ -28,9 +30,9 @@ function createRoute ({ handler, errorHandler, route }, scope, config) {
       async preHandler (req, reply) {
         req.serverSideProps = await route.getServerSideProps({
           req,
-          ky: scope.ky
-        })
-      }
+          fetchJSON: scope.fetchJSON,
+        });
+      },
     },
     handler,
     errorHandler,
