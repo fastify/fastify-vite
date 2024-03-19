@@ -33,5 +33,18 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "keywords": [
+    "fastify",
+    "vite",
+    "htmx"
+  ],
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "homepage": "https://github.com/fastify/fastify-vite#readme"
 }
