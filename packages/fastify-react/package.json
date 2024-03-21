@@ -45,5 +45,18 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "keywords": [
+    "fastify",
+    "vite",
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "homepage": "https://fastify-vite.dev/react/"
 }

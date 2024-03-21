@@ -45,5 +45,18 @@
   },
   "scripts": {
     "lint": "eslint . --ext .js,.vue --fix"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "keywords": [
+    "fastify",
+    "vite",
+    "vue"
+  ],
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "homepage": "https://fastify-vite.dev/vue/"
 }
