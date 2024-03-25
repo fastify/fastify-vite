@@ -2,9 +2,17 @@
 
 import { lazy } from 'react'
 
-export default import.meta.env.SSR
-  ? createRoutes(import.meta.glob('$globPattern', { eager: true }))
-  : hydrateRoutes(import.meta.glob('$globPattern'))
+const routeModules = import.meta.glob('$globPattern')
+
+export default getRoutes()
+
+function getRoutes () {
+  if (import.meta.env.SSR) {
+    return createRoutes(routeModules)
+  } else {
+    return hydrateRoutes(routeModules)
+  }
+}
 
 async function createRoutes(from, { param } = { param: $paramPattern }) {
   // Otherwise we get a ReferenceError, but since
