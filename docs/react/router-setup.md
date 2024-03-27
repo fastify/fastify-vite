@@ -28,7 +28,7 @@ import viteFastifyReact from '@fastify/react/plugin'
 export default {
   plugins: [
     // ...
-    viteFastifyReact({ globPattern: '/views/**/*.vue' }),
+    viteFastifyReact({ globPattern: '/views/**/*.tsx' }),
   ]
 }
 ```
