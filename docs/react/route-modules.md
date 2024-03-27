@@ -133,7 +133,7 @@ export default function Index (props) {
 
 **`@fastify/react`** renders `<head>` elements **independently** from SSR. This allows you to fetch data for populating `<meta>` tags first, stream them right away to the client, and only then perform SSR.
 
-> Under the hood, it uses the [`unihead`](https://github.com/galvez/unihead) library, which has a SSR function and a browser library that allows for dynamic changes during client-side navigation. This is a very small library built specifically for `@fastify/vite` core renderers, and used in the current implementation of `createHtmlFunction()` for `@fastify/react`. This may change in the futuree as other libraries are considered, but for most use cases it should be enough.
+> Under the hood, it uses the [`unihead`](https://github.com/galvez/unihead) library, which has a SSR function and a browser library that allows for dynamic changes during client-side navigation. This is a very small library built specifically for `@fastify/vite` core renderers, and used in the current implementation of `createHtmlFunction()` for `@fastify/react`. This may change in the future as other libraries are considered, but for most use cases it should be enough.
 
 To populate `<title>`, `<meta>` and `<link>` elements, export a `getMeta()` function that returns an object matching the interface expected by [unihead](https://github.com/galvez/unihead):
 
