@@ -1,3 +1,4 @@
+const path = require('node:path');
 const { parse, resolve, join, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
@@ -46,7 +47,7 @@ async function setup(config) {
     }
     await scope.register(FastifyStatic, {
       root,
-      prefix: `/${assetsDir}`,
+      prefix: path.join(config.vite.base || '/', assetsDir),
     })
   })
 
