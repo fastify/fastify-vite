@@ -1,4 +1,4 @@
-const path = require('node:path');
+const path = require('node:path')
 const { parse, resolve, join, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
