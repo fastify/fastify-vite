@@ -46,7 +46,7 @@ async function setup(config) {
     }
     await scope.register(FastifyStatic, {
       root,
-      prefix: `/${assetsDir}`,
+      prefix: join(config.vite.base || '/', assetsDir),
     })
   })
 
