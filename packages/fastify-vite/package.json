@@ -44,7 +44,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "6.0.6",
+  "version": "6.0.7",
   "dependencies": {
     "@fastify/middie": "^8.3.0",
     "@fastify/static": "^6.12.0",
