@@ -16,6 +16,9 @@ const DefaultConfig = {
   // Automatically computed from root after resolveConfig()
   viteConfig: null,
 
+  // Path to the directory containing the server file that is registering the FastifyVite plugin.
+  serverDir: null,
+
   // Vite's distribution bundle info.
   // Automatically computed from Vite's default settings
   bundle: {
@@ -141,7 +144,7 @@ async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const [vite, viteConfig] = await resolveViteConfig(root, dev, options.spa)
+  const [vite, viteConfig] = await resolveViteConfig(root, dev, options)
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
@@ -194,9 +197,21 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, isSpa) {
+async function resolveViteConfig(root, dev, { spa, serverDir }) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
+
+  if (!dev && serverDir) {
+    const viteConfigDistFile = resolve(serverDir, 'vite.config.dist.json');
+
+    if (exists(viteConfigDistFile)) {
+      return [
+        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+        viteConfigDistFile,
+      ];
+    }
+  }
+
   for (const ext of ['js', 'mjs', 'ts']) {
     let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
@@ -219,7 +234,7 @@ async function resolveViteConfig(root, dev, isSpa) {
         userConfig = await userConfig({
           command,
           mode,
-          ssrBuild: !isSpa,
+          ssrBuild: !spa,
         })
       }
       return [
