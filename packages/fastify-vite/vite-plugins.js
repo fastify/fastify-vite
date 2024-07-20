@@ -1,4 +1,4 @@
-import { ensure, remove, resolve, write } from "./ioutils"
+const { ensure, remove, resolve, write } = require("./ioutils")
 
 function ensureESMBuild() {
   return {
@@ -16,22 +16,23 @@ function ensureESMBuild() {
 }
 
 /**
- * Writes the vite.config properties used by @fastify/vite to a JSON file so production builds can
+ * Writes the vite.config properties used by fastify-vite to a JSON file so production builds can
  * be loaded without importing vite nor the actual vite.config file. This allows vite to remain a
  * devDependency and not need to exist on production Docker images.
  *
  * @param {object} options
- * @param {string} options.outDir - Directory to write the JSON file to
+ * @param {string} options.distDir - The directory to create the JSON file into. Must match the
+ *   `viteConfigDistDir` provided to FastifyVite when registering the plugin onto a Fastify server.
  * @returns 
  */
-function writeViteConfigToDist({ outDir }) {
+function writeViteToDist({ distDir }) {
   return {
-    name: 'fastify-vite-write-vite-config-to-dist',
+    name: 'fastify-vite-write-vite-to-dist',
     configResolved(config) {
-      const jsonFilePath = resolve(outDir, 'vite.config.dist.json')
+      const jsonFilePath = resolve(distDir, 'vite.config.dist.json')
 
       if (config.isProduction) {
-        ensure(outDir)
+        ensure(distDir)
         write(jsonFilePath, JSON.stringify({
 					base: config.base,
 					root: config.root,
@@ -39,7 +40,7 @@ function writeViteConfigToDist({ outDir }) {
 						assetsDir: config.build.assetsDir,
 						outDir: config.build.outDir,
 					},
-				}), 'utf-8')
+				}, undefined, 2), 'utf-8')
 			} else {
         remove(jsonFilePath) // dev mode needs the real vite
       }
@@ -47,4 +48,5 @@ function writeViteConfigToDist({ outDir }) {
   }
 }
 
-module.exports = { ensureESMBuild, writeViteConfigToDist }
+module.exports.ensureESMBuild = ensureESMBuild
+module.exports.writeViteToDist = writeViteToDist

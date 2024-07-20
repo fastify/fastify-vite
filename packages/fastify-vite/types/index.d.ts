@@ -116,6 +116,7 @@ declare namespace fastifyVite {
     renderer?: string | Partial<RendererOption>
     vite?: UserConfig
     viteConfig?: string
+    viteConfigDistDir?: string
     bundle?: {
       manifest?: object
       indexHtml?: string | Buffer

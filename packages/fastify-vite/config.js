@@ -16,8 +16,12 @@ const DefaultConfig = {
   // Automatically computed from root after resolveConfig()
   viteConfig: null,
 
-  // Path to the directory containing the server file that is registering the FastifyVite plugin.
-  serverDir: null,
+  // Path to the directory containing the `vite.config.dist.json` file created by the
+  // `writeViteToDist` vite-plugin. Must match the `distDir` option of the `writeViteToDist` plugin.
+  // If this exists, vite configuration information is loaded from the `vite.config.dist.json` file
+  // instead of loading the actual vite config. This allows production builds to exclude vite from
+  // their final container images.
+  viteConfigDistDir: null,
 
   // Vite's distribution bundle info.
   // Automatically computed from Vite's default settings
@@ -197,18 +201,24 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, { spa, serverDir }) {
+async function resolveViteConfig(root, dev, { spa, viteConfigDistDir }) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
 
-  if (!dev && serverDir) {
-    const viteConfigDistFile = resolve(serverDir, 'vite.config.dist.json');
+  if (!dev && viteConfigDistDir) {
+    const viteConfigDistFile = resolve(viteConfigDistDir, 'vite.config.dist.json')
 
     if (exists(viteConfigDistFile)) {
+      console.log(`Loading vite config at: ${viteConfigDistFile}`)
+
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        viteConfigDistFile,
+        viteConfigDistDir,
       ];
+    } else {
+      throw new Error(
+        `${viteConfigDistFile} does not exist. Check configuration of the "writeViteToDist" plugin.`
+      )
     }
   }
 
