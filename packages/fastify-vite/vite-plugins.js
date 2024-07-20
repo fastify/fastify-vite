@@ -28,12 +28,12 @@ function ensureESMBuild() {
 function saveViteConfigToDist({ distDir }) {
   return {
     name: 'fastify-vite-write-vite-to-dist',
-    configResolved(config) {
+    async configResolved(config) {
       const jsonFilePath = resolve(distDir, 'vite.config.dist.json')
 
       if (config.isProduction) {
-        ensure(distDir)
-        return write(jsonFilePath, JSON.stringify({
+        await ensure(distDir)
+        await write(jsonFilePath, JSON.stringify({
 					base: config.base,
 					root: config.root,
 					build: {
@@ -42,7 +42,7 @@ function saveViteConfigToDist({ distDir }) {
 					},
 				}, undefined, 2), 'utf-8')
 			} else {
-        return remove(jsonFilePath) // dev mode needs the real vite
+        await remove(jsonFilePath) // dev mode needs the real vite
       }
     }
   }
