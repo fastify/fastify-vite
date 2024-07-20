@@ -7,7 +7,6 @@
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "bundleDependencies": [],
   "deprecated": false,
   "description": "Official Fastify plugin for Vite integration.",
   "files": [
@@ -51,8 +50,7 @@
     "@fastify/static": "^8.0.0",
     "fastify-plugin": "^5.0.0",
     "fs-extra": "^10.1.0",
-    "klaw": "^4.1.0",
-    "vite": "^5.4.4"
+    "klaw": "^4.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
@@ -60,7 +58,15 @@
     "@vitest/ui": "^1.6.0",
     "fastify": "^5.0.0",
     "typescript": "^5.6.2",
+    "vite": "^5.3.4",
     "vitest": "^1.6.0"
   },
-  "keywords": ["fastify", "vite"]
+  "peerDependencies": {
+    "fastify": ">=5",
+    "vite": ">=4"
+  },
+  "keywords": [
+    "fastify",
+    "vite"
+  ]
 }
