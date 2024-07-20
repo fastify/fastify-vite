@@ -33,7 +33,7 @@ function saveViteConfigToDist({ distDir }) {
 
       if (config.isProduction) {
         ensure(distDir)
-        write(jsonFilePath, JSON.stringify({
+        return write(jsonFilePath, JSON.stringify({
 					base: config.base,
 					root: config.root,
 					build: {
@@ -42,7 +42,7 @@ function saveViteConfigToDist({ distDir }) {
 					},
 				}, undefined, 2), 'utf-8')
 			} else {
-        remove(jsonFilePath) // dev mode needs the real vite
+        return remove(jsonFilePath) // dev mode needs the real vite
       }
     }
   }

@@ -215,7 +215,7 @@ async function resolveViteConfig(root, dev, { spa, viteConfigDistDir }) {
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
         viteConfigDistDir,
-      ];
+      ]
     } else {
       throw new Error(
         `${viteConfigDistFile} does not exist. Check configuration of the "saveViteConfigToDist" plugin.`
@@ -293,7 +293,7 @@ async function resolveSSRBundle({ dev, vite }) {
 async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    bundle.dir = resolveViteBuildOutDir(vite);
+    bundle.dir = resolveViteBuildOutDir(vite)
     const indexHtmlPath = resolve(bundle.dir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
