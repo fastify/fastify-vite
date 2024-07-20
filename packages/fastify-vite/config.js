@@ -1,3 +1,4 @@
+const { isAbsolute } = require('node:path')
 const { fileURLToPath } = require('node:url')
 const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
@@ -264,7 +265,8 @@ async function resolveViteConfig(root, dev, { spa, viteConfigDistDir }) {
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    bundle.dir = resolve(vite.root, vite.build.outDir)
+    bundle.dir = resolveViteBuildOutDir(vite)
+
     const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
     if (!exists(indexHtmlPath)) {
       return
@@ -291,7 +293,7 @@ async function resolveSSRBundle({ dev, vite }) {
 async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    bundle.dir = resolve(vite.root, vite.build.outDir)
+    bundle.dir = resolveViteBuildOutDir(vite);
     const indexHtmlPath = resolve(bundle.dir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
@@ -301,6 +303,13 @@ async function resolveSPABundle({ dev, vite }) {
     bundle.manifest = []
   }
   return bundle
+}
+
+function resolveViteBuildOutDir(vite) {
+  if (isAbsolute(vite.build.outDir)) {
+   return vite.build.outDir
+  }
+  return resolve(vite.root, vite.build.outDir)
 }
 
 module.exports = {
