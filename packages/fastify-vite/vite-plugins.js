@@ -25,7 +25,7 @@ function ensureESMBuild() {
  *   `viteConfigDistDir` provided to FastifyVite when registering the plugin onto a Fastify server.
  * @returns 
  */
-function writeViteToDist({ distDir }) {
+function saveViteConfigToDist({ distDir }) {
   return {
     name: 'fastify-vite-write-vite-to-dist',
     configResolved(config) {
@@ -49,4 +49,4 @@ function writeViteToDist({ distDir }) {
 }
 
 module.exports.ensureESMBuild = ensureESMBuild
-module.exports.writeViteToDist = writeViteToDist
+module.exports.saveViteConfigToDist = saveViteConfigToDist

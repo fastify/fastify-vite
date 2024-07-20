@@ -17,7 +17,7 @@ const DefaultConfig = {
   viteConfig: null,
 
   // Path to the directory containing the `vite.config.dist.json` file created by the
-  // `writeViteToDist` vite-plugin. Must match the `distDir` option of the `writeViteToDist` plugin.
+  // `saveViteConfigToDist` vite-plugin. Must match the `distDir` option of that vite plugin.
   // If this exists, vite configuration information is loaded from the `vite.config.dist.json` file
   // instead of loading the actual vite config. This allows production builds to exclude vite from
   // their final container images.
@@ -217,7 +217,7 @@ async function resolveViteConfig(root, dev, { spa, viteConfigDistDir }) {
       ];
     } else {
       throw new Error(
-        `${viteConfigDistFile} does not exist. Check configuration of the "writeViteToDist" plugin.`
+        `${viteConfigDistFile} does not exist. Check configuration of the "saveViteConfigToDist" plugin.`
       )
     }
   }
