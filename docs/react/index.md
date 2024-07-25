@@ -52,7 +52,7 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
     - **`minipass`**
     - **`react`**
     - **`react-dom`**
-    - **`reactr-router`**
+    - **`react-router`**
     - **`unihead`**
     - **`valtio`**
 
