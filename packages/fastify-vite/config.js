@@ -1,6 +1,6 @@
 const { isAbsolute } = require('node:path')
 const { fileURLToPath } = require('node:url')
-const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
+const { dirname, join, resolve, resolveIfRelative, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
 
 const DefaultConfig = {
@@ -26,7 +26,7 @@ const DefaultConfig = {
   bundle: {
     manifest: null,
     indexHtml: null,
-    dir: null,
+    dir: null, // deprecated
   },
 
   // Single object that can override all rendering settings that follow
@@ -253,8 +253,6 @@ async function resolveViteConfig(root, dev, {
         })
       }
 
-      console.log('resolvedConfig.build.outDir', resolvedConfig.build.outDir)
-
       return [
         Object.assign(userConfig, {
           build: {
@@ -271,21 +269,26 @@ async function resolveViteConfig(root, dev, {
 
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
-  if (!dev) {
-    bundle.dir = resolveViteBuildOutDir(vite)
+  let clientOutDir;
 
-    const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
+  if (!dev) {
+    if (vite.fastify) {
+      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+    } else {
+      // Backwards compatibility for projects that do not use the viteFastify plugin.
+      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      clientOutDir = resolve(bundle.dir, 'client')
+    }
+
+    const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
     }
     bundle.indexHtml = await read(indexHtmlPath, 'utf8')
     // SSR manifest location altered between Vite v4 and v5
-    const v4SSRManifestPath = resolve(bundle.dir, 'client/ssr-manifest.json')
+    const v4SSRManifestPath = resolve(clientOutDir, 'ssr-manifest.json')
     // See https://github.com/vitejs/vite/pull/14230
-    const ssrManifestPath = resolve(
-      bundle.dir,
-      'client/.vite/ssr-manifest.json',
-    )
+    const ssrManifestPath = resolve(clientOutDir, '.vite/ssr-manifest.json')
     if (exists(v4SSRManifestPath)) {
       bundle.manifest = require(v4SSRManifestPath)
     } else if (exists(ssrManifestPath)) {
@@ -300,8 +303,17 @@ async function resolveSSRBundle({ dev, vite }) {
 async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    bundle.dir = resolveViteBuildOutDir(vite)
-    const indexHtmlPath = resolve(bundle.dir, 'index.html')
+    let clientOutDir
+
+    if (vite.fastify) {
+      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+    } else {
+      // Backwards compatibility for projects that do not use the viteFastify plugin.
+      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      clientOutDir = resolve(bundle.dir, 'client')
+    }
+
+    const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
     }
@@ -310,13 +322,6 @@ async function resolveSPABundle({ dev, vite }) {
     bundle.manifest = []
   }
   return bundle
-}
-
-function resolveViteBuildOutDir(vite) {
-  if (isAbsolute(vite.build.outDir)) {
-    return vite.build.outDir
-  }
-  return resolve(vite.root, vite.build.outDir)
 }
 
 module.exports = {
