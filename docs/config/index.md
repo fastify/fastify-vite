@@ -16,20 +16,20 @@ Its default value is set to `process.argv.includes('--dev')`, so it will automat
 
 ### `viteConfigDistDir`
 
-By default, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is often not desirable in production mode since many production builds declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
+In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
 
 To support this kind of production build, `@fastify/vite` ships with a Vite plugin that can save the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. This configuration option tells `@fastify/vite` where to look for that file.
 
-To use this option, you must first use the `saveViteConfigToDist` plugin from `@fastify/vite/vite-plugins` inside your `vite.config.js` file:
+To use this option, you must first use the `viteFastify` plugin from `@fastify/vite` inside your `vite.config.js` file:
 
 ```js
 import { resolve } from "node:path";
-import { saveViteConfigToDist } from "@fastify/vite/vite-plugins";
+import { viteFastify } from "@fastify/vite";
 
 export default {
   // other vite configuration options
   plugins: [
-    saveViteConfigToDist({
+    viteFastify({
       distDir: resolve(import.meta.dirname, "dist"),
     }),
   ],

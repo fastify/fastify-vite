@@ -47,6 +47,8 @@ yarn add vite -D
 ```
 :::
 
+### The Fastify server
+
 In `server.js`, notice how starting the development mode is conditioned to the presence of a `--dev` CLI argument passed to the Node.js process — could also be an environment variable. The default value for the `dev` configuration option is actually what you see in this snippet, a CLI argument check for `--dev`. All `server.js` files in the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) are **using this default behavior**.
 
 ::: code-group
@@ -57,7 +59,7 @@ import FastifyVite from '@fastify/vite'
 const server = Fastify()
 
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.url, // where to look for vite.config.js
   dev: process.argv.includes('--dev'),
   spa: true
 })
@@ -75,19 +77,27 @@ This Fastify server only has a root route and it replies with the result of `rep
 
 As for awaiting on `server.vite.ready()`, this is what triggers the Vite development server to be started (if in development mode) and all client-level code loaded. This step is intentionally kept separate from the plugin registration, as you might need to wait on other plugins to be registered first.
 
-In `vite.config.js`, notice how the Vite project root is set to `./client`, and in `server.js`, how just passing `import.meta.url` is enough to let `@fastify/vite` know where to look for your Vite configuration file.
+### The Vite config
+
+In `vite.config.js`, notice how the Vite project root is set to `./client`, and in `server.js`, how just passing `import.meta.url` is enough to let `@fastify/vite` know where to look for your Vite configuration file. You can also use `import.meta.dirname` instead of `import.meta.url` if you are on Node v20+.
+
+In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is often not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
+
+To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. The `viteFastify` plugin will automatically create a JSON file in your `dist/server` directory that will be used in production mode instead of the full vite package.
 
 ::: code-group
 ```js [vite.config.js]
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { viteFastify } from '@fastify/vite'
 import viteReact from '@vitejs/plugin-react'
 
 const path = fileURLToPath(import.meta.url)
 const root = resolve(dirname(path), 'client')
 
 const plugins = [
-  viteReact({ jsxRuntime: 'classic' })
+  viteFastify(),
+  viteReact({ jsxRuntime: 'classic' }),
 ]
 
 export default { root, plugins }
