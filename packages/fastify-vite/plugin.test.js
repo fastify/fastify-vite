@@ -13,7 +13,62 @@ describe('viteFastify', () => {
     remove(configDistFile)
   })
 
+
+  test('uses "dist" as the default "distDir", relative to vite.config file', async () => {
+    const vitePlugin = viteFastify()
+
+    await vitePlugin.configResolved({
+      configFile: import.meta.filename,
+      isProduction: true,
+    })
+
+    await vitePlugin.writeBundle()
+    expect(existsSync(configDistFile)).toBe(true)
+  })
+
   test('saves vite config to dist only in production mode', async () => {
+    const vitePlugin = viteFastify()
+
+    await vitePlugin.configResolved({
+      configFile: import.meta.filename,
+      isProduction: true,
+    })
+
+    await vitePlugin.writeBundle()
+    expect(existsSync(configDistFile)).toBe(true)
+  })
+
+  test('does not save anything if not production mode', async () => {
+    const vitePlugin = viteFastify()
+
+    await vitePlugin.configResolved({
+      configFile: import.meta.filename,
+      isProduction: false,
+      root: 'walala',
+    })
+
+    await vitePlugin.writeBundle()
+
+    expect(existsSync(configDistFile)).toBe(false)
+  })
+
+  test('can write to a different "distDir', async () => {
+    const customDistDir = resolve(import.meta.dirname, 'somewhere/else')
+    const customDistFileLoc = resolve(customDistDir, 'vite.config.dist.json')
+    const vitePlugin = viteFastify({ distDir: customDistDir })
+
+    await vitePlugin.configResolved({
+      configFile: import.meta.filename,
+      isProduction: true,
+    })
+
+    await vitePlugin.writeBundle()
+    expect(existsSync(configDistFile)).toBe(false)
+    expect(existsSync(customDistFileLoc)).toBe(true)
+    await remove(customDistFileLoc)
+  })
+
+  test('saves only the needed properties', async () => {
     const vitePlugin = viteFastify({ distDir })
 
     await vitePlugin.configResolved({
@@ -24,26 +79,62 @@ describe('viteFastify', () => {
         assetsDir: 'wassets',
         outDir: 'wowout',
       },
+      unneededProperty: 'go away',
     })
+
+    await vitePlugin.writeBundle()
 
     expect(JSON.parse(await readFile(configDistFile, 'utf-8'))).toEqual({
       base: 'wahaha',
       root: 'walala',
       build: {
         assetsDir: 'wassets',
-        outDir: 'wowout',
       },
+      fastify: {
+        clientOutDir: 'wowout',
+      }
     })
   })
 
-  test('does not save anything if not production mode', async () => {
-    const vitePlugin = viteFastify({ distDir })
-
-    await vitePlugin.configResolved({
-      isProduction: false,
+  test('merges server and client configs for SSR builds', async () => {
+    const vitePluginClient = viteFastify()
+    const vitePluginServer = viteFastify()
+    const viteConfig = {
+      configFile: import.meta.filename,
+      isProduction: true,
+      base: 'wahaha',
       root: 'walala',
-    })
+    }
 
-    expect(existsSync(configDistFile)).toBe(false)
+    await vitePluginClient.configResolved({
+      ...viteConfig,
+      build: {
+        assetsDir: 'wassets',
+        outDir: 'wowout/client',
+      },
+    })
+    await vitePluginClient.writeBundle()
+
+    await vitePluginServer.configResolved({
+      ...viteConfig,
+      build: {
+        assetsDir: 'wassets',
+        outDir: 'wowout/server',
+        ssr: true,
+      },
+    })
+    await vitePluginServer.writeBundle()
+
+    expect(JSON.parse(await readFile(configDistFile, 'utf-8'))).toEqual({
+      base: 'wahaha',
+      root: 'walala',
+      build: {
+        assetsDir: 'wassets',
+      },
+      fastify: {
+        clientOutDir: 'wowout/client',
+        ssrOutDir: 'wowout/server',
+      }
+    })
   })
 })

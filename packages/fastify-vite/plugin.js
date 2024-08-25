@@ -47,14 +47,13 @@ function viteFastify({ distDir = 'dist' } = {}) {
       // For SSR builds, `vite build` is executed twice: once for client and once for server.
       // We need to merge the two configs and make both `outDir` properties available.
       if (ssr) {
-        configToWrite.fastify.serverOutDir = outDir;
+        configToWrite.fastify.ssrOutDir = outDir;
       } else {
         configToWrite.fastify.clientOutDir = outDir;
       }
 
       if (existsSync(jsonFilePath)) {
         const existingJson = JSON.parse(await read(jsonFilePath, 'utf-8'))
-        console.log('read existing config file', configToWrite)
         if (existingJson.fastify) {
           configToWrite.fastify = { ...existingJson.fastify, ...configToWrite.fastify }
         }
