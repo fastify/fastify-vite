@@ -1,20 +1,5 @@
 const { ensure, remove, resolve, write } = require("./ioutils")
 
-function ensureESMBuild() {
-  return {
-    name: 'fastify-vite-ensure-esm-build',
-    config(config, { command }) {
-      if (command === 'build' && config.build?.ssr) {
-        config.build.rollupOptions = {
-          output: {
-            format: 'es',
-          },
-        }
-      }
-    },
-  }
-}
-
 /**
  * Writes the vite.config properties used by fastify-vite to a JSON file so production builds can
  * be loaded without importing vite nor the actual vite.config file. This allows vite to remain a
@@ -34,19 +19,18 @@ function saveViteConfigToDist({ distDir }) {
       if (config.isProduction) {
         await ensure(distDir)
         await write(jsonFilePath, JSON.stringify({
-					base: config.base,
-					root: config.root,
-					build: {
-						assetsDir: config.build.assetsDir,
-						outDir: config.build.outDir,
-					},
-				}, undefined, 2), 'utf-8')
-			} else {
+          base: config.base,
+          root: config.root,
+          build: {
+            assetsDir: config.build.assetsDir,
+            outDir: config.build.outDir,
+          },
+        }, undefined, 2), 'utf-8')
+      } else {
         await remove(jsonFilePath) // dev mode needs the real vite
       }
     }
   }
 }
 
-module.exports.ensureESMBuild = ensureESMBuild
 module.exports.saveViteConfigToDist = saveViteConfigToDist
