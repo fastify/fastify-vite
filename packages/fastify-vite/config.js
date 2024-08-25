@@ -19,7 +19,7 @@ const DefaultConfig = {
 
   // Path to the directory containing the `vite.config.dist.json` file created by the vite plugin.
   // Must match the `distDir` option of that vite plugin.
-  viteConfigDistDir: 'dist/server',
+  vitePluginDistDir: 'dist',
 
   // Vite's distribution bundle info.
   // Automatically computed from Vite's default settings
@@ -201,27 +201,28 @@ function resolveRoot(path) {
 
 async function resolveViteConfig(root, dev, {
   spa,
-  viteConfigDistDir = DefaultConfig.viteConfigDistDir
+  vitePluginDistDir = DefaultConfig.vitePluginDistDir
 } = {}) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
 
   if (!dev) {
-    if (!isAbsolute(viteConfigDistDir)) {
-      viteConfigDistDir = resolve(root, viteConfigDistDir);
+    if (!isAbsolute(vitePluginDistDir)) {
+      vitePluginDistDir = resolve(root, vitePluginDistDir);
     }
-    const viteConfigDistFile = resolve(viteConfigDistDir, 'vite.config.dist.json')
+    const viteConfigDistFile = resolve(vitePluginDistDir, 'vite.config.dist.json')
 
     if (exists(viteConfigDistFile)) {
       console.log(`Loading vite config at: ${viteConfigDistFile}`)
 
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        viteConfigDistDir,
+        vitePluginDistDir,
       ]
     } else {
-      throw new Error(
-        `${viteConfigDistFile} does not exist. Check configuration of the "saveViteConfigToDist" plugin.`
+      console.warn(
+        `${viteConfigDistFile} does not exist. Production builds will load the entire "vite" dependency.`,
+        'If this is not intentional, make sure "vitePluginDistDir" matches the "distDir" given to the viteFastify plugin.'
       )
     }
   }
@@ -251,6 +252,9 @@ async function resolveViteConfig(root, dev, {
           ssrBuild: !spa,
         })
       }
+
+      console.log('resolvedConfig.build.outDir', resolvedConfig.build.outDir)
+
       return [
         Object.assign(userConfig, {
           build: {

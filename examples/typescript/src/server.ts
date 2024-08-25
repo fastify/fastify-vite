@@ -8,8 +8,6 @@ await server.register(FastifyVite, {
 	root: resolve(import.meta.dirname, '../'),
 	dev: process.argv.includes('--dev'),
 	spa: true,
-	// This file will also be in the dist dir after build as a sibling of vite.config.dist.json
-	viteConfigDistDir: import.meta.dirname,
 });
 
 // Route must match vite "base": https://vitejs.dev/config/shared-options.html#base

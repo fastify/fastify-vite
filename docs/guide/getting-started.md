@@ -83,24 +83,21 @@ In `vite.config.js`, notice how the Vite project root is set to `./client`, and 
 
 In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is often not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
 
-To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. The `viteFastify` plugin will automatically create a JSON file in your `dist/server` directory that will be used in production mode instead of the full vite package.
+To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. The `viteFastify` plugin will automatically create a JSON file in a `dist` folder (relative to the location of the vite config file). Then, `@fastify/vite` will be able to read this JSON file instead of loading `vite` in production.
 
 ::: code-group
 ```js [vite.config.js]
 import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { viteFastify } from '@fastify/vite'
 import viteReact from '@vitejs/plugin-react'
 
-const path = fileURLToPath(import.meta.url)
-const root = resolve(dirname(path), 'client')
-
-const plugins = [
-  viteFastify(),
-  viteReact({ jsxRuntime: 'classic' }),
-]
-
-export default { root, plugins }
+export default { 
+  root: resolve(import.meta.dirname, 'client'), 
+  plugins: [
+    viteFastify(),
+    viteReact({ jsxRuntime: 'classic' }),
+  ],
+}
 ```
 :::
 

@@ -14,7 +14,7 @@ Enables Vite's development server if set to `true`.
 
 Its default value is set to `process.argv.includes('--dev')`, so it will automatically recognize passing the `--dev` flag to your Node.js process unless you change it to something else.
 
-### `viteConfigDistDir`
+### `vitePluginDistDir`
 
 In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
 
@@ -47,13 +47,13 @@ const server = Fastify({ logger: true });
 
 await server.register(FastifyVite, {
   // Must match the distDir passed into the Vite plugin shown above
-  viteConfigDistDir: resolve(import.meta.dirname, "dist"),
+  vitePluginDistDir: resolve(import.meta.dirname, "dist"),
 
   // ...other options
 });
 ```
 
-**Tip**: If your server file lives in the a `src` directory and compiles to the same `dist` directory as where you want your Vite config dist file to be saved, you can just set `viteConfigDistDir` to `import.meta.dirname`. The compiled server file and the Vite config dist file will be siblings in your `dist` directory. This is common in TypeScript projects.
+**Tip**: If your server file lives in the a `src` directory and compiles to the same `dist` directory as where you want your Vite config dist file to be saved, you can just set `vitePluginDistDir` to `import.meta.dirname`. The compiled server file and the Vite config dist file will be siblings in your `dist` directory. This is common in TypeScript projects.
 
 ### `spa`
 
