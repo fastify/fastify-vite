@@ -13,14 +13,14 @@ await server.register(FastifyVite, {
 });
 
 // Route must match vite "base": https://vitejs.dev/config/shared-options.html#base
-server.get('/app/', (req, reply) => {
+server.get('/', (req, reply) => {
 	return reply.html();
 });
 
 await server.vite.ready();
 
 try {
-	await server.listen({ host: 'localhost', port: 3000 });
+	await server.listen({ port: 3000 });
 } catch (err) {
 	server.log.error(err);
 	process.exit(1);
