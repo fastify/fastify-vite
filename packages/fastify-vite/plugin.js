@@ -1,19 +1,26 @@
-const { ensure, remove, resolve, write } = require("./ioutils")
+const { isAbsolute, dirname, resolve } = require('node:path');
+const { ensure, remove, write } = require("./ioutils")
 
 /**
  * Writes the vite.config properties used by fastify-vite to a JSON file so production builds can
  * be loaded without importing vite nor the actual vite.config file. This allows vite to remain a
  * devDependency and not need to exist on production Docker images.
  *
- * @param {object} options
- * @param {string} options.distDir - The directory to create the JSON file into. Must match the
- *   `viteConfigDistDir` provided to FastifyVite when registering the plugin onto a Fastify server.
+ * @param {object} [options]
+ * @param {string} [options.distDir='dist/server'] - The directory to create the JSON file into. 
+ *   Must match the `viteConfigDistDir` provided to FastifyVite when registering the plugin onto a 
+ *   Fastify server. If a non-absolute path is provided, it will be resolved relative to the
+ *   location of your `vite.config.js` file.
  * @returns 
  */
-function saveViteConfigToDist({ distDir }) {
+function viteFastify({ distDir = 'dist/server' } = {}) {
   return {
-    name: 'fastify-vite-write-vite-to-dist',
+    name: 'vite-fastify',
     async configResolved(config) {
+      if (!isAbsolute(distDir)) {
+        distDir = resolve(dirname(config.configFile), distDir)
+      }
+
       const jsonFilePath = resolve(distDir, 'vite.config.dist.json')
 
       if (config.isProduction) {
@@ -33,4 +40,4 @@ function saveViteConfigToDist({ distDir }) {
   }
 }
 
-module.exports.saveViteConfigToDist = saveViteConfigToDist
+module.exports.viteFastify = viteFastify

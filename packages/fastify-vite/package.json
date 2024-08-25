@@ -13,7 +13,7 @@
     "types/index.d.ts",
     "mode/development.js",
     "mode/production.js",
-    "vite-plugins.js",
+    "plugin.js",
     "html.js",
     "config.js",
     "html.js",

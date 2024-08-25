@@ -17,12 +17,9 @@ const DefaultConfig = {
   // Automatically computed from root after resolveConfig()
   viteConfig: null,
 
-  // Path to the directory containing the `vite.config.dist.json` file created by the
-  // `saveViteConfigToDist` vite-plugin. Must match the `distDir` option of that vite plugin.
-  // If this exists, vite configuration information is loaded from the `vite.config.dist.json` file
-  // instead of loading the actual vite config. This allows production builds to exclude vite from
-  // their final container images.
-  viteConfigDistDir: null,
+  // Path to the directory containing the `vite.config.dist.json` file created by the vite plugin.
+  // Must match the `distDir` option of that vite plugin.
+  viteConfigDistDir: 'dist/server',
 
   // Vite's distribution bundle info.
   // Automatically computed from Vite's default settings
@@ -47,7 +44,7 @@ const DefaultConfig = {
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
-  prepareServer(scope, config) {},
+  prepareServer(scope, config) { },
 
   async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
@@ -202,11 +199,17 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, { spa, viteConfigDistDir }) {
+async function resolveViteConfig(root, dev, {
+  spa,
+  viteConfigDistDir = DefaultConfig.viteConfigDistDir
+} = {}) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
 
-  if (!dev && viteConfigDistDir) {
+  if (!dev) {
+    if (!isAbsolute(viteConfigDistDir)) {
+      viteConfigDistDir = resolve(root, viteConfigDistDir);
+    }
     const viteConfigDistFile = resolve(viteConfigDistDir, 'vite.config.dist.json')
 
     if (exists(viteConfigDistFile)) {
@@ -307,7 +310,7 @@ async function resolveSPABundle({ dev, vite }) {
 
 function resolveViteBuildOutDir(vite) {
   if (isAbsolute(vite.build.outDir)) {
-   return vite.build.outDir
+    return vite.build.outDir
   }
   return resolve(vite.root, vite.build.outDir)
 }

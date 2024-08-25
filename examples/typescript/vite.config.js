@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { saveViteConfigToDist } from '@fastify/vite/vite-plugins';
+import { viteFastify } from '@fastify/vite';
 import viteReact from '@vitejs/plugin-react';
 
 /** @type {import('vite').UserConfig} */
@@ -8,7 +8,7 @@ export default {
 	root: resolve(import.meta.dirname, 'src/client'),
 	plugins: [
 		viteReact(),
-		saveViteConfigToDist({ distDir: resolve(import.meta.dirname, 'dist') }),
+		viteFastify({ distDir: resolve(import.meta.dirname, 'dist') }),
 	],
 	build: {
 		emptyOutDir: true,
