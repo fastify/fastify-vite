@@ -4,9 +4,9 @@
   "scripts": {
     "build": "npm run build:server && vite build",
     "build:server": "tsc",
+    "dev": "npm run build:server && node dist/server.js --dev",
     "lint": "biome lint --apply .",
-    "start": "npm run build:server && node dist/server.js --dev",
-    "start:prod": "node dist/server.js"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
