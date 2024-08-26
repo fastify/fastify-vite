@@ -9,8 +9,8 @@ describe('viteFastify', () => {
   const distDir = resolve(import.meta.dirname, 'dist')
   const configDistFile = resolve(distDir, 'vite.config.dist.json')
 
-  afterEach(() => {
-    remove(configDistFile)
+  afterEach(async () => {
+    await remove(configDistFile)
   })
 
 
@@ -136,5 +136,13 @@ describe('viteFastify', () => {
         ssrOutDir: 'wowout/server',
       }
     })
+  })
+
+  test('does not error if "configFile" is missing in dev mode', async () => {
+    const vitePlugin = viteFastify()
+
+    expect(() => vitePlugin.configResolved({
+      isProduction: false
+    })).not.toThrow()
   })
 })

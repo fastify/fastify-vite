@@ -23,13 +23,20 @@ function viteFastify({ distDir = 'dist' } = {}) {
   return {
     name: 'vite-fastify',
     async configResolved(config = {}) {
-      const { base, build, root } = config
+      const { base, build, configFile, isProduction, root } = config
       const { assetsDir, outDir, ssr } = build || {}
+
+      // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
+      // configs in these executions are missing many properties. Since there is no advantage to
+      // running this function during dev, we save build time and prevent errors by returning early.
+      if (!isProduction) {
+        return
+      }
 
       resolvedConfig = config
 
       if (!isAbsolute(distDir)) {
-        distDir = resolve(dirname(config.configFile), 'dist')
+        distDir = resolve(dirname(configFile), 'dist')
       }
 
       jsonFilePath = resolve(distDir, 'vite.config.dist.json')
@@ -65,8 +72,6 @@ function viteFastify({ distDir = 'dist' } = {}) {
       if (resolvedConfig.isProduction) {
         await ensure(distDir)
         await write(jsonFilePath, JSON.stringify(configToWrite, undefined, 2), 'utf-8')
-      } else {
-        await remove(jsonFilePath) // dev mode needs the real vite
       }
     }
   }
