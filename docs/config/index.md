@@ -30,7 +30,7 @@ export default {
   // other vite configuration options
   plugins: [
     viteFastify({
-      distDir: resolve(import.meta.dirname, "dist"),
+      distDir: resolve(import.meta.dirname, "custom/dist/directory"),
     }),
   ],
 };
@@ -47,13 +47,13 @@ const server = Fastify({ logger: true });
 
 await server.register(FastifyVite, {
   // Must match the distDir passed into the Vite plugin shown above
-  vitePluginDistDir: resolve(import.meta.dirname, "dist"),
+  vitePluginDistDir: resolve(import.meta.dirname, "custom/dist/directory"),
 
   // ...other options
 });
 ```
 
-**Tip**: If your server file lives in the a `src` directory and compiles to the same `dist` directory as where you want your Vite config dist file to be saved, you can just set `vitePluginDistDir` to `import.meta.dirname`. The compiled server file and the Vite config dist file will be siblings in your `dist` directory. This is common in TypeScript projects.
+By default, the value of both these configuration options is "dist", relative to the location of the vite.config file.
 
 ### `spa`
 
