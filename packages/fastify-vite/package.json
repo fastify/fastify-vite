@@ -49,6 +49,7 @@
     "@fastify/middie": "^9.0.1",
     "@fastify/static": "^8.0.0",
     "fastify-plugin": "^5.0.0",
+    "find-cache-dir": "^3.3.2",
     "fs-extra": "^10.1.0",
     "klaw": "^4.1.0"
   },

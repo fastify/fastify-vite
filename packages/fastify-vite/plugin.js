@@ -1,29 +1,26 @@
 const { existsSync } = require('node:fs')
-const { isAbsolute, dirname, resolve } = require('node:path')
-const { ensure, remove, write, read } = require("./ioutils")
+const { resolve } = require('node:path')
+const { ensure, write, read } = require("./ioutils")
+const { CACHE_DIR } = require('./sharedPaths.js')
 
 /**
  * This is the Vite plugin, not the Fastify plugin.
  * 
- * Writes the vite.config properties used by fastify-vite to a JSON file so production builds can
- * be loaded without importing vite nor the actual vite.config file. This allows vite to remain a
- * devDependency and not need to exist on production Docker images.
+ * Writes the vite.config properties used by fastify-vite to a JSON file in the node_modules/.cache
+ * directory so production builds do not need to import vite nor the actual vite.config  file. This
+ * allows vite to remain a devDependency and not need to exist on production Docker images.
  *
- * @param {object} [options]
- * @param {string} [options.distDir] - The directory to create the JSON file into. 
- *   Must match the `vitePluginDistDir` provided to FastifyVite when registering the plugin onto a 
- *   Fastify server. Defaults to 'dist', relative to the location of the vite.config file.
  * @returns 
  */
-function viteFastify({ distDir = 'dist' } = {}) {
+function viteFastify() {
+  const jsonFilePath = resolve(CACHE_DIR, 'vite.config.dist.json')
   let configToWrite = {}
-  let jsonFilePath
   let resolvedConfig = {}
 
   return {
     name: 'vite-fastify',
     async configResolved(config = {}) {
-      const { base, build, configFile, isProduction, root } = config
+      const { base, build, isProduction, root } = config
       const { assetsDir, outDir, ssr } = build || {}
 
       // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
@@ -34,12 +31,6 @@ function viteFastify({ distDir = 'dist' } = {}) {
       }
 
       resolvedConfig = config
-
-      if (!isAbsolute(distDir)) {
-        distDir = resolve(dirname(configFile), 'dist')
-      }
-
-      jsonFilePath = resolve(distDir, 'vite.config.dist.json')
 
       configToWrite = {
         base,
@@ -70,7 +61,7 @@ function viteFastify({ distDir = 'dist' } = {}) {
     // Write the JSON file after the bundle finishes writing to avoid getting deleted by emptyOutDir
     async writeBundle() {
       if (resolvedConfig.isProduction) {
-        await ensure(distDir)
+        await ensure(CACHE_DIR)
         await write(jsonFilePath, JSON.stringify(configToWrite, undefined, 2), 'utf-8')
       }
     }

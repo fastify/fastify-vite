@@ -4,26 +4,13 @@ import { resolve } from 'node:path'
 import { remove } from 'fs-extra'
 import { afterEach, describe, expect, test } from 'vitest'
 import { viteFastify } from './plugin'
+import { CACHE_DIR } from './sharedPaths'
 
 describe('viteFastify', () => {
-  const distDir = resolve(import.meta.dirname, 'dist')
-  const configDistFile = resolve(distDir, 'vite.config.dist.json')
+  const configDistFile = resolve(CACHE_DIR, 'vite.config.dist.json')
 
   afterEach(async () => {
     await remove(configDistFile)
-  })
-
-
-  test('uses "dist" as the default "distDir", relative to vite.config file', async () => {
-    const vitePlugin = viteFastify()
-
-    await vitePlugin.configResolved({
-      configFile: import.meta.filename,
-      isProduction: true,
-    })
-
-    await vitePlugin.writeBundle()
-    expect(existsSync(configDistFile)).toBe(true)
   })
 
   test('saves vite config to dist only in production mode', async () => {
@@ -52,24 +39,8 @@ describe('viteFastify', () => {
     expect(existsSync(configDistFile)).toBe(false)
   })
 
-  test('can write to a different "distDir', async () => {
-    const customDistDir = resolve(import.meta.dirname, 'somewhere/else')
-    const customDistFileLoc = resolve(customDistDir, 'vite.config.dist.json')
-    const vitePlugin = viteFastify({ distDir: customDistDir })
-
-    await vitePlugin.configResolved({
-      configFile: import.meta.filename,
-      isProduction: true,
-    })
-
-    await vitePlugin.writeBundle()
-    expect(existsSync(configDistFile)).toBe(false)
-    expect(existsSync(customDistFileLoc)).toBe(true)
-    await remove(customDistFileLoc)
-  })
-
   test('saves only the needed properties', async () => {
-    const vitePlugin = viteFastify({ distDir })
+    const vitePlugin = viteFastify()
 
     await vitePlugin.configResolved({
       isProduction: true,

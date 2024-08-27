@@ -1,7 +1,7 @@
-const { isAbsolute } = require('node:path')
 const { fileURLToPath } = require('node:url')
 const { dirname, join, resolve, resolveIfRelative, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
+const { CACHE_DIR } = require('./sharedPaths.js')
 
 const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server
@@ -16,10 +16,6 @@ const DefaultConfig = {
   // Vite's config path.
   // Automatically computed from root after resolveConfig()
   viteConfig: null,
-
-  // Path to the directory containing the `vite.config.dist.json` file created by the vite plugin.
-  // Must match the `distDir` option of that vite plugin.
-  vitePluginDistDir: 'dist',
 
   // Vite's distribution bundle info.
   // Automatically computed from Vite's default settings
@@ -199,30 +195,24 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, {
-  spa,
-  vitePluginDistDir = DefaultConfig.vitePluginDistDir
-} = {}) {
+async function resolveViteConfig(root, dev, { spa } = {}) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
 
   if (!dev) {
-    if (!isAbsolute(vitePluginDistDir)) {
-      vitePluginDistDir = resolve(root, vitePluginDistDir);
-    }
-    const viteConfigDistFile = resolve(vitePluginDistDir, 'vite.config.dist.json')
+    const viteConfigDistFile = resolve(CACHE_DIR, 'vite.config.dist.json')
 
     if (exists(viteConfigDistFile)) {
       console.log(`Loading vite config at: ${viteConfigDistFile}`)
 
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        vitePluginDistDir,
+        CACHE_DIR,
       ]
     } else {
       console.warn(
         `${viteConfigDistFile} does not exist. Production builds will load the entire "vite" dependency.`,
-        'If this is not intentional, make sure "vitePluginDistDir" matches the "distDir" given to the viteFastify plugin.'
+        'If this is not intentional, make sure to use the viteFastify plugin in your vite config.'
       )
     }
   }

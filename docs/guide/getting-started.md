@@ -81,9 +81,9 @@ As for awaiting on `server.vite.ready()`, this is what triggers the Vite develop
 
 In `vite.config.js`, notice how the Vite project root is set to `./client`, and in `server.js`, how just passing `import.meta.url` is enough to let `@fastify/vite` know where to look for your Vite configuration file. You can also use `import.meta.dirname` instead of `import.meta.url` if you are on Node v20+.
 
-In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is often not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
+In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This great for dev, but not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
 
-To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. The `viteFastify` plugin will automatically create a JSON file in a `dist` folder (relative to the location of the vite config file). Then, `@fastify/vite` will be able to read this JSON file instead of loading `vite` in production.
+To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object into a cached JSON file. Then, `@fastify/vite` will be able to read this JSON file instead of loading `vite` in production.
 
 ::: code-group
 ```js [vite.config.js]

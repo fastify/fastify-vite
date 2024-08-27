@@ -14,47 +14,6 @@ Enables Vite's development server if set to `true`.
 
 Its default value is set to `process.argv.includes('--dev')`, so it will automatically recognize passing the `--dev` flag to your Node.js process unless you change it to something else.
 
-### `vitePluginDistDir`
-
-In dev mode, `@fastify/vite` looks up the Vite configuration options by importing Vite from `node_modules` and then using its Node API to look up the `vite.config` file. This is not desirable in production mode since most projects declare Vite as a `devDependency` and exclude it from their final container/docker images to save space.
-
-To support this kind of production build, `@fastify/vite` ships with a Vite plugin that can save the handful of properties that it needs from the resolved Vite configuration object to a file in your dist directory. This configuration option tells `@fastify/vite` where to look for that file.
-
-To use this option, you must first use the `viteFastify` plugin from `@fastify/vite` inside your `vite.config.js` file:
-
-```js
-import { resolve } from "node:path";
-import { viteFastify } from "@fastify/vite";
-
-export default {
-  // other vite configuration options
-  plugins: [
-    viteFastify({
-      distDir: resolve(import.meta.dirname, "custom/dist/directory"),
-    }),
-  ],
-};
-```
-
-Then when you register the `FastifyVite` plugin on to your `Fastify` server, you must also tell it where to look for the vite config dist file:
-
-```js
-import { resolve } from "node:path";
-import FastifyVite from "@fastify/vite";
-import Fastify from "fastify";
-
-const server = Fastify({ logger: true });
-
-await server.register(FastifyVite, {
-  // Must match the distDir passed into the Vite plugin shown above
-  vitePluginDistDir: resolve(import.meta.dirname, "custom/dist/directory"),
-
-  // ...other options
-});
-```
-
-By default, the value of both these configuration options is "dist", relative to the location of the vite.config file.
-
 ### `spa`
 
 When set to `true`, **disables SSR** and just sets up integration for delivering a static SPA application.
