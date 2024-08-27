@@ -4,10 +4,10 @@ import { resolve } from 'node:path'
 import { remove } from 'fs-extra'
 import { afterEach, describe, expect, test } from 'vitest'
 import { viteFastify } from './plugin'
-import { CACHE_DIR } from './sharedPaths'
+import { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } from './sharedPaths'
 
 describe('viteFastify', () => {
-  const configDistFile = resolve(CACHE_DIR, 'vite.config.dist.json')
+  const configDistFile = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
 
   afterEach(async () => {
     await remove(configDistFile)

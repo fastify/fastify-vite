@@ -1,7 +1,7 @@
 const { fileURLToPath } = require('node:url')
 const { dirname, join, resolve, resolveIfRelative, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
-const { CACHE_DIR } = require('./sharedPaths.js')
+const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
 
 const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server
@@ -200,7 +200,7 @@ async function resolveViteConfig(root, dev, { spa } = {}) {
   const mode = dev ? 'development' : 'production'
 
   if (!dev) {
-    const viteConfigDistFile = resolve(CACHE_DIR, 'vite.config.dist.json')
+    const viteConfigDistFile = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
 
     if (exists(viteConfigDistFile)) {
       console.log(`Loading vite config at: ${viteConfigDistFile}`)

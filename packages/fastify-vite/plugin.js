@@ -1,7 +1,7 @@
 const { existsSync } = require('node:fs')
 const { resolve } = require('node:path')
 const { ensure, write, read } = require("./ioutils")
-const { CACHE_DIR } = require('./sharedPaths.js')
+const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
 
 /**
  * This is the Vite plugin, not the Fastify plugin.
@@ -13,7 +13,7 @@ const { CACHE_DIR } = require('./sharedPaths.js')
  * @returns 
  */
 function viteFastify() {
-  const jsonFilePath = resolve(CACHE_DIR, 'vite.config.dist.json')
+  const jsonFilePath = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
   let configToWrite = {}
   let resolvedConfig = {}
 
