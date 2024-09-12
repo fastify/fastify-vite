@@ -1,4 +1,4 @@
-const { Readable } = require('stream')
+const { Readable } = require('node:stream')
 
 function createHtmlTemplateFunction(source) {
   const ranges = new Map()
@@ -33,6 +33,7 @@ function createHtmlTemplateFunction(source) {
 
   // https://stackoverflow.com/questions/21616264/what-does-0-eval-do
   // biome-ignore lint/style/noCommaOperator: indirect call to eval() to ensure global scope
+  // biome-ignore lint/security/noGlobalEval: necessary for templating
   const compiledTemplatingFunction = (0, eval)(
     // biome-ignore lint/style/useTemplate: needed for compiling
     `(asReadable) => (function ({ ${[

@@ -118,6 +118,7 @@ function plugin(scope, options, done) {
 }
 
 const fastifyVite = fp(plugin, {
+  fastify: '5.x',
   name: '@fastify/vite',
 })
 

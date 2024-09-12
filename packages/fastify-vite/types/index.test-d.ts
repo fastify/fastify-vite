@@ -1,8 +1,8 @@
-import { Server } from 'http'
-import Fastify, { FastifyPluginAsync } from 'fastify'
+import type { Server } from 'node:http'
+import Fastify, { type FastifyPluginAsync } from 'fastify'
 import { describe, expectTypeOf, it } from 'vitest'
 import * as FastifyViteAll from '..'
-import FastifyVite, { FastifyViteOptions } from '..'
+import FastifyVite, { type FastifyViteOptions } from '..'
 
 const FastifyViteRequire = require('..')
 

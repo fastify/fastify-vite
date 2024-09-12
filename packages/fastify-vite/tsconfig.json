@@ -1,16 +1,10 @@
 {
   "extends": "./tsconfig.eslint.json",
-  "files": [
-    "**/*.ts"
-  ],
+  "files": ["**/*.ts"],
   "compilerOptions": {
     "target": "esnext",
-    "lib": [
-      "ES2020"
-    ],
-    "module": "NodeNext",
+    "lib": ["ES2020"],
+    "module": "NodeNext"
   },
-  "include": [
-    "types/*.test-d.ts"
-  ],
+  "include": ["types/*.test-d.ts"]
 }
