@@ -3,6 +3,9 @@
     "zx": "^7.2.3"
   },
   "scripts": {
-  	"test:all": "zx run-all-tests.mjs"
+    "test:all": "zx run-all-tests.mjs"
+  },
+  "dependencies": {
+    "fastify": "5.0.0-alpha.4"
   }
 }

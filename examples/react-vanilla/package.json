@@ -11,23 +11,23 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "fastify": "^4.24.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "ws": "^8.14.2"
+    "fastify": "5.0.0-alpha.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
-    "@babel/eslint-parser": "^7.23.3",
-    "@babel/preset-react": "^7.23.3",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/preset-react": "^7.24.7",
     "@vitejs/plugin-react": "^3.1.0",
-    "eslint": "^8.54.0",
+    "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.33.2",
-    "vite": "^5.0.0"
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-react": "^7.35.2",
+    "vite": "^5.4.4"
   }
 }

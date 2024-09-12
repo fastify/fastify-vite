@@ -5,6 +5,6 @@ for folder in */; do
     # Check if it's a directory
     if [ -d "$folder" ]; then
         # Run your command inside the folder
-        (cd "$folder" && pnpm upgrade && pnpm add vite@latest)
+        (cd "$folder" && pnpm upgrade && pnpm add fastify@next)
     fi
 done
