@@ -46,9 +46,9 @@
   },
   "version": "7.0.0",
   "dependencies": {
-    "@fastify/middie": "^8.3.2",
-    "@fastify/static": "^6.12.0",
-    "fastify-plugin": "^4.5.1",
+    "@fastify/middie": "^9.0.1",
+    "@fastify/static": "^8.0.0",
+    "fastify-plugin": "^5.0.0",
     "fs-extra": "^10.1.0",
     "klaw": "^4.1.0",
     "vite": "^5.4.4"
@@ -57,7 +57,7 @@
     "@biomejs/biome": "^1.8.3",
     "@types/node": "^20.16.5",
     "@vitest/ui": "^1.6.0",
-    "fastify": "^4.28.1",
+    "fastify": "^5.0.0",
     "typescript": "^5.6.2",
     "vitest": "^1.6.0"
   },
