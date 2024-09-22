@@ -7,7 +7,7 @@ export default {
 	root: resolve(import.meta.dirname, 'src/client'),
 	plugins: [
 		viteReact(),
-		viteFastify({ distDir: resolve(import.meta.dirname, 'dist') }),
+		viteFastify(),
 	],
 	build: {
 		emptyOutDir: true,
