@@ -13,7 +13,7 @@
     "@fastify/vite": "workspace:^",
     "@solidjs/router": "^0.9.1",
     "devalue": "^4.3.3",
-    "fastify": "5.0.0-alpha.4",
+    "fastify": "5.0.0",
     "solid-js": "^1.8.22"
   },
   "devDependencies": {

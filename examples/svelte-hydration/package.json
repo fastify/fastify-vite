@@ -12,7 +12,7 @@
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "devalue": "^4.3.3",
-    "fastify": "5.0.0-alpha.4",
+    "fastify": "5.0.0",
     "svelte": "^3.59.2",
     "svelte-navigator": "^3.2.2"
   },

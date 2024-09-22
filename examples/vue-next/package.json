@@ -13,7 +13,7 @@
     "@fastify/vite": "workspace:^",
     "@vue/server-renderer": "^3.5.4",
     "devalue": "^4.3.3",
-    "fastify": "5.0.0-alpha.4",
+    "fastify": "5.0.0",
     "ky": "^0.33.3",
     "ky-universal": "^0.11.0",
     "vue": "^3.5.4",
