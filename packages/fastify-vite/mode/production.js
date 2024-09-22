@@ -46,7 +46,7 @@ async function setup(config) {
     }
     await scope.register(FastifyStatic, {
       root,
-      prefix: join(config.vite.base || '/', assetsDir),
+      prefix: join(config.vite.base || '/', assetsDir).replace(/\\/g, '/'),
     })
   })
 
