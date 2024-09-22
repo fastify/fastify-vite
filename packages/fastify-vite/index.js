@@ -125,3 +125,4 @@ const fastifyVite = fp(plugin, {
 module.exports = fastifyVite
 module.exports.default = fastifyVite
 module.exports.fastifyVite = fastifyVite
+module.exports.viteFastify = require('./plugin').viteFastify

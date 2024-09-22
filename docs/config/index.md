@@ -18,13 +18,13 @@ Its default value is set to `process.argv.includes('--dev')`, so it will automat
 
 When set to `true`, **disables SSR** and just sets up integration for delivering a static SPA application.
 
-`clientModule` resolution is disabled and the `Reply.html()` method doesn't require a context object with variables for the `index.html` template. 
+`clientModule` resolution is disabled and the `Reply.html()` method doesn't require a context object with variables for the `index.html` template.
 
 This can be customized however by providing your own `createHtmlFunction()`.
 
 ### `renderer`
 
-A single configuration object which can be used to set all [Renderer options](/config/#renderer-options). 
+A single configuration object which can be used to set all [Renderer options](/config/#renderer-options).
 
 - `clientModule`
 - `createErrorHandler`
@@ -43,7 +43,7 @@ If unset, **`@fastify/vite`** will automatically try to resolve `index.js` from 
 
 ### `prepareClient(clientModule, scope, config)`
 
-As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function. 
+As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function.
 
 See its default definition [here](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (**Vue Router**, **React Router** etc). That's why `prepareClient()` is implemented that way by default.
 

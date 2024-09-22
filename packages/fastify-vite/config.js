@@ -1,6 +1,7 @@
 const { fileURLToPath } = require('node:url')
-const { dirname, join, resolve, exists, stat, read } = require('./ioutils')
+const { dirname, join, resolve, resolveIfRelative, exists, stat, read } = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
+const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
 
 const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server
@@ -21,7 +22,7 @@ const DefaultConfig = {
   bundle: {
     manifest: null,
     indexHtml: null,
-    dir: null,
+    dir: null, // deprecated
   },
 
   // Single object that can override all rendering settings that follow
@@ -39,7 +40,7 @@ const DefaultConfig = {
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
-  prepareServer(scope, config) {},
+  prepareServer(scope, config) { },
 
   async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
@@ -141,7 +142,7 @@ async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const [vite, viteConfig] = await resolveViteConfig(root, dev, options.spa)
+  const [vite, viteConfig] = await resolveViteConfig(root, dev, options)
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
   const config = Object.assign(defaultConfig, {
@@ -194,9 +195,28 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, isSpa) {
+async function resolveViteConfig(root, dev, { spa } = {}) {
   const command = 'serve'
   const mode = dev ? 'development' : 'production'
+
+  if (!dev) {
+    const viteConfigDistFile = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
+
+    if (exists(viteConfigDistFile)) {
+      console.log(`Loading vite config at: ${viteConfigDistFile}`)
+
+      return [
+        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+        CACHE_DIR,
+      ]
+    } else {
+      console.warn(
+        `${viteConfigDistFile} does not exist. Production builds will load the entire "vite" dependency.`,
+        'If this is not intentional, make sure to use the viteFastify plugin in your vite config.'
+      )
+    }
+  }
+
   for (const ext of ['js', 'mjs', 'ts']) {
     let configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
@@ -219,9 +239,10 @@ async function resolveViteConfig(root, dev, isSpa) {
         userConfig = await userConfig({
           command,
           mode,
-          ssrBuild: !isSpa,
+          ssrBuild: !spa,
         })
       }
+
       return [
         Object.assign(userConfig, {
           build: {
@@ -238,20 +259,26 @@ async function resolveViteConfig(root, dev, isSpa) {
 
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
+  let clientOutDir;
+
   if (!dev) {
-    bundle.dir = resolve(vite.root, vite.build.outDir)
-    const indexHtmlPath = resolve(bundle.dir, 'client/index.html')
+    if (vite.fastify) {
+      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+    } else {
+      // Backwards compatibility for projects that do not use the viteFastify plugin.
+      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      clientOutDir = resolve(bundle.dir, 'client')
+    }
+
+    const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
     }
     bundle.indexHtml = await read(indexHtmlPath, 'utf8')
     // SSR manifest location altered between Vite v4 and v5
-    const v4SSRManifestPath = resolve(bundle.dir, 'client/ssr-manifest.json')
+    const v4SSRManifestPath = resolve(clientOutDir, 'ssr-manifest.json')
     // See https://github.com/vitejs/vite/pull/14230
-    const ssrManifestPath = resolve(
-      bundle.dir,
-      'client/.vite/ssr-manifest.json',
-    )
+    const ssrManifestPath = resolve(clientOutDir, '.vite/ssr-manifest.json')
     if (exists(v4SSRManifestPath)) {
       bundle.manifest = require(v4SSRManifestPath)
     } else if (exists(ssrManifestPath)) {
@@ -266,8 +293,17 @@ async function resolveSSRBundle({ dev, vite }) {
 async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    bundle.dir = resolve(vite.root, vite.build.outDir)
-    const indexHtmlPath = resolve(bundle.dir, 'index.html')
+    let clientOutDir
+
+    if (vite.fastify) {
+      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+    } else {
+      // Backwards compatibility for projects that do not use the viteFastify plugin.
+      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      clientOutDir = resolve(bundle.dir, 'client')
+    }
+
+    const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return
     }

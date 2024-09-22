@@ -1,4 +1,5 @@
-const { parse, resolve, join, read, exists } = require('../ioutils')
+const { join, resolve } = require('node:path')
+const { parse, resolveIfRelative, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
 
 function fileUrl(str) {
@@ -17,43 +18,48 @@ function fileUrl(str) {
 }
 
 async function setup(config) {
-  if (!config.bundle) {
-    config.bundle = {
-      dir: join(config.vite.root, config.vite.build.outDir),
-    }
+  const { spa, vite } = config
+  let clientOutDir, ssrOutDir
+
+  if (vite.fastify) {
+    clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+    ssrOutDir = resolveIfRelative(vite.fastify.ssrOutDir || '', vite.root)
+  } else {
+    // Backwards compatibility for projects that do not use the viteFastify plugin.
+    const outDir = resolveIfRelative(vite.build.outDir, vite.root);
+
+    clientOutDir = resolve(outDir, 'client')
+    ssrOutDir = resolve(outDir, 'server')
   }
+
   // For production you get the distribution version of the render function
-  const { assetsDir } = config.vite.build
+  const { assetsDir } = vite.build
 
-  const clientDist = config.spa
-    ? resolve(config.bundle.dir)
-    : resolve(config.bundle.dir, 'client')
-
-  if (!exists(clientDist)) {
+  if (!exists(clientOutDir)) {
     throw new Error('No client distribution bundle found.')
   }
 
-  const serverDist = resolve(config.bundle.dir, 'server')
-  if (!config.spa && !exists(serverDist)) {
+  if (!spa && !exists(ssrOutDir)) {
     throw new Error('No server distribution bundle found.')
   }
+
   // We also register fastify-static to serve all static files
   // in production (dev server takes of this)
   await this.scope.register(async function assetFiles(scope) {
-    const root = [resolve(clientDist, assetsDir)]
-    if (exists(resolve(serverDist, assetsDir))) {
-      root.push(resolve(serverDist, assetsDir))
+    const root = [resolve(clientOutDir, assetsDir)]
+    if (exists(resolve(ssrOutDir, assetsDir))) {
+      root.push(resolve(ssrOutDir, assetsDir))
     }
     await scope.register(FastifyStatic, {
       root,
-      prefix: join(config.vite.base || '/', assetsDir).replace(/\\/g, '/'),
+      prefix: join(vite.base || '/', assetsDir).replace(/\\/g, '/'),
     })
   })
 
   // And again for files in the public/ folder
   await this.scope.register(async function publicFiles(scope) {
     await scope.register(FastifyStatic, {
-      root: clientDist,
+      root: clientOutDir,
       allowedPath(path) {
         return path !== '/index.html'
       },
@@ -108,8 +114,7 @@ async function setup(config) {
       return {}
     }
     const ssrManifestPath = resolve(
-      config.bundle.dir,
-      'client',
+      clientOutDir,
       '.vite',
       'ssr-manifest.json',
     )
@@ -118,16 +123,16 @@ async function setup(config) {
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
     const serverFiles = [
-      join('server', `${parse(config.clientModule).name}.js`),
-      join('server', `${parse(config.clientModule).name}.mjs`),
+      `${parse(config.clientModule).name}.js`,
+      `${parse(config.clientModule).name}.mjs`,
     ]
     let serverBundlePath
     for (const serverFile of serverFiles) {
       // Use file path on Windows
       serverBundlePath =
         process.platform === 'win32'
-          ? new URL(fileUrl(resolve(config.bundle.dir, serverFile)))
-          : resolve(config.bundle.dir, serverFile)
+          ? new URL(fileUrl(resolve(ssrOutDir, serverFile)))
+          : resolve(ssrOutDir, serverFile)
       if (await exists(serverBundlePath)) {
         break
       }
