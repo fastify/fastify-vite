@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@fastify/one-line-logger": "latest",
-    "@fastify/vite": "^6.0.3",
+    "@fastify/vite": "workspace:^",
     "@fastify/vue": "^0.5.0",
-    "fastify": "^4.24.3",
-    "unihead": "^0.0.6",
-    "vue": "^3.4.19",
-    "vue-router": "^4.2.5"
+    "fastify": "^5.0.0",
+    "unihead": "^0.8.0",
+    "vue": "^3.5.8",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
@@ -28,7 +28,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-vue": "^8.7.1",
-    "vite": "^5.0.2",
+    "vite": "^5.4.7",
     "postcss": "^8.4.31",
     "postcss-nesting": "^12.0.2",
     "postcss-preset-env": "^7.7.1",
