@@ -25,10 +25,11 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
+    "@fastify/vite": "workspace:^",
     "devalue": "latest",
-    "unihead": "^0.0.6",
-    "vue": "^3.4.19",
-    "vue-router": "^4.2.5"
+    "unihead": "^0.8.0",
+    "vue": "^3.5.8",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "latest",
