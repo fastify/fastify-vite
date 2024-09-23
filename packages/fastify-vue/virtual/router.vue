@@ -3,7 +3,7 @@ import Layout from '/:layout.vue'
 </script>
 
 <template>
-  <router-view v-slot="{ Component }">
+  <RouterView v-slot="{ Component }">
     <template v-if="$isServer">
       <Layout>
         <component
@@ -20,5 +20,5 @@ import Layout from '/:layout.vue'
         />
       </Layout>
     </Suspense>
-  </router-view>
+  </RouterView>
 </template>
