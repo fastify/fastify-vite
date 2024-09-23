@@ -44,6 +44,8 @@ If you're using a **different** [`clientModule`](/config/#clientmodule) settings
 
 That's where the production bundle of your Vite application is located, so this folder needs to exist before you can run a Fastify server with **`@fastify/vite`** in production mode. Once you have `client/dist` available, `node server.js` without the `--dev` flag should be able to run.
 
+> Make sure to have `NODE_ENV` set to `production` as well in case your framework requires it (like React) for SSR in production as well. Accidentally running React SSR in development mode is quite common and can lead to serious performance degradation.
+
 Also note that in **production mode**, **`@fastify/vite`** will serve static assets from your Vite application via [`@fastify/static`](https://github.com/fastify/fastify-static) automatically, but you should consider using a CDN for those files if you can, or just serve through Nginx  instead of directly through Node.js.
 
 If you don't need SSR, it can also just serve as a convenience to serve your static Vite bundle through Fastify via [@fastify/static][fastify-static], automatically inferring your bundle's output directory from your Vite configuration file, and still allowing you to leverage Vite's development server for hot reload.
