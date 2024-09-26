@@ -91,26 +91,27 @@ async function createHtmlTemplateFunction(source) {
 }
 
 function asReadable(fragments, ...values) {
-  return Readable.from(
-    (async function* () {
-      for (const fragment of fragments) {
-        yield fragment
-        if (values.length) {
-          const value = values.shift()
-          if (value instanceof Readable) {
-            for await (const chunk of value) {
-              yield chunk
-            }
-          } else if (value && typeof value !== 'string') {
-            yield value.toString()
-          } else {
-            yield value ?? ''
+  return Readable.from(generateChunks(fragments, values))
+}
+
+async function * generateChunks (fragments, values) {
+    for (const fragment of fragments) {
+      yield fragment
+      if (values.length) {
+        const value = values.shift()
+        if (value instanceof Readable) {
+          for await (const chunk of value) {
+            yield chunk
           }
+        } else if (value && typeof value !== 'string') {
+          yield value.toString()
+        } else {
+          yield value ?? ''
         }
       }
-    })(),
-  )
-}
+    }
+  }
+
 
 module.exports = {
   createHtmlTemplateFunction,
