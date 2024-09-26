@@ -128,7 +128,7 @@ export function createRouteHandler (client, scope, config) {
   }
 }
 
-export function createRoute ({ client, handler, errorHandler, route }, scope, config) {
+export async function createRoute ({ client, handler, errorHandler, route }, scope, config) {
   const onRequest = async function onRequest (req, reply) {
     req.route = await RouteContext.create(
       scope,
@@ -138,6 +138,11 @@ export function createRoute ({ client, handler, errorHandler, route }, scope, co
       client.context,
     )
   }
+
+  if (route.configure) {
+    await route.configure(scope)
+  }
+
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
     scope.get(`/-/data${route.path}`, {
