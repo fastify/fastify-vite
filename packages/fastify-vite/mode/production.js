@@ -19,14 +19,15 @@ function fileUrl(str) {
 
 async function setup(config) {
   const { spa, vite } = config
-  let clientOutDir, ssrOutDir
+  let clientOutDir
+  let ssrOutDir
 
   if (vite.fastify) {
     clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
     ssrOutDir = resolveIfRelative(vite.fastify.ssrOutDir || '', vite.root)
   } else {
     // Backwards compatibility for projects that do not use the viteFastify plugin.
-    const outDir = resolveIfRelative(vite.build.outDir, vite.root);
+    const outDir = resolveIfRelative(vite.build.outDir, vite.root)
 
     clientOutDir = resolve(outDir, 'client')
     ssrOutDir = resolve(outDir, 'server')
@@ -113,11 +114,7 @@ async function setup(config) {
     if (config.spa) {
       return {}
     }
-    const ssrManifestPath = resolve(
-      clientOutDir,
-      '.vite',
-      'ssr-manifest.json',
-    )
+    const ssrManifestPath = resolve(clientOutDir, '.vite', 'ssr-manifest.json')
     const ssrManifest =
       process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))

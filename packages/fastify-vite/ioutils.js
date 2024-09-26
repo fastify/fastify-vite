@@ -1,6 +1,13 @@
 const { existsSync, lstatSync } = require('node:fs')
 const { writeFile, readFile } = require('node:fs/promises')
-const { isAbsolute, join, resolve, parse, dirname, basename } = require('node:path')
+const {
+  isAbsolute,
+  join,
+  resolve,
+  parse,
+  dirname,
+  basename,
+} = require('node:path')
 const { ensureDir, remove } = require('fs-extra')
 const klaw = require('klaw')
 

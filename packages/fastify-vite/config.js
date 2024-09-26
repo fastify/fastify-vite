@@ -1,5 +1,13 @@
 const { fileURLToPath } = require('node:url')
-const { dirname, join, resolve, resolveIfRelative, exists, stat, read } = require('./ioutils')
+const {
+  dirname,
+  join,
+  resolve,
+  resolveIfRelative,
+  exists,
+  stat,
+  read,
+} = require('./ioutils')
 const { createHtmlTemplateFunction } = require('./html')
 const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
 
@@ -40,7 +48,7 @@ const DefaultConfig = {
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
 
-  prepareServer(scope, config) { },
+  prepareServer(scope, config) {},
 
   async prepareClient(clientModule, scope, config) {
     if (!clientModule) {
@@ -205,16 +213,12 @@ async function resolveViteConfig(root, dev, { spa } = {}) {
     if (exists(viteConfigDistFile)) {
       console.log(`Loading vite config at: ${viteConfigDistFile}`)
 
-      return [
-        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        CACHE_DIR,
-      ]
-    } else {
-      console.warn(
-        `${viteConfigDistFile} does not exist. Production builds will load the entire "vite" dependency.`,
-        'If this is not intentional, make sure to use the viteFastify plugin in your vite config.'
-      )
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), CACHE_DIR]
     }
+    console.warn(
+      `${viteConfigDistFile} does not exist. Production builds will load the entire "vite" dependency.`,
+      'If this is not intentional, make sure to use the viteFastify plugin in your vite config.',
+    )
   }
 
   for (const ext of ['js', 'mjs', 'ts']) {
@@ -259,7 +263,7 @@ async function resolveViteConfig(root, dev, { spa } = {}) {
 
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
-  let clientOutDir;
+  let clientOutDir
 
   if (!dev) {
     if (vite.fastify) {

@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import { remove } from 'fs-extra'
 import { afterEach, describe, expect, test } from 'vitest'
 import { viteFastify } from './plugin'
-import { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } from './sharedPaths'
+import { CACHED_VITE_CONFIG_FILE_NAME, CACHE_DIR } from './sharedPaths'
 
 describe('viteFastify', () => {
   const configDistFile = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
@@ -63,7 +63,7 @@ describe('viteFastify', () => {
       },
       fastify: {
         clientOutDir: 'wowout',
-      }
+      },
     })
   })
 
@@ -105,15 +105,17 @@ describe('viteFastify', () => {
       fastify: {
         clientOutDir: 'wowout/client',
         ssrOutDir: 'wowout/server',
-      }
+      },
     })
   })
 
   test('does not error if "configFile" is missing in dev mode', async () => {
     const vitePlugin = viteFastify()
 
-    expect(() => vitePlugin.configResolved({
-      isProduction: false
-    })).not.toThrow()
+    expect(() =>
+      vitePlugin.configResolved({
+        isProduction: false,
+      }),
+    ).not.toThrow()
   })
 })
