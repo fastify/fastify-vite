@@ -104,7 +104,7 @@ describe('viteFastify', () => {
       },
       fastify: {
         clientOutDir: 'wowout/client',
-        ssrOutDir: 'wowout/server',
+        serverOutDir: 'wowout/server',
       },
     })
   })

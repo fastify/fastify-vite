@@ -45,7 +45,7 @@ function viteFastify() {
       // For SSR builds, `vite build` is executed twice: once for client and once for server.
       // We need to merge the two configs and make both `outDir` properties available.
       if (ssr) {
-        configToWrite.fastify.ssrOutDir = outDir
+        configToWrite.fastify.serverOutDir = outDir
       } else {
         configToWrite.fastify.clientOutDir = outDir
       }

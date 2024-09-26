@@ -20,17 +20,17 @@ function fileUrl(str) {
 async function setup(config) {
   const { spa, vite } = config
   let clientOutDir
-  let ssrOutDir
+  let serverOutDir
 
   if (vite.fastify) {
     clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
-    ssrOutDir = resolveIfRelative(vite.fastify.ssrOutDir || '', vite.root)
+    serverOutDir = resolveIfRelative(vite.fastify.serverOutDir || '', vite.root)
   } else {
     // Backwards compatibility for projects that do not use the viteFastify plugin.
     const outDir = resolveIfRelative(vite.build.outDir, vite.root)
 
     clientOutDir = resolve(outDir, 'client')
-    ssrOutDir = resolve(outDir, 'server')
+    serverOutDir = resolve(outDir, 'server')
   }
 
   // For production you get the distribution version of the render function
@@ -40,7 +40,7 @@ async function setup(config) {
     throw new Error('No client distribution bundle found.')
   }
 
-  if (!spa && !exists(ssrOutDir)) {
+  if (!spa && !exists(serverOutDir)) {
     throw new Error('No server distribution bundle found.')
   }
 
@@ -48,8 +48,8 @@ async function setup(config) {
   // in production (dev server takes of this)
   await this.scope.register(async function assetFiles(scope) {
     const root = [resolve(clientOutDir, assetsDir)]
-    if (exists(resolve(ssrOutDir, assetsDir))) {
-      root.push(resolve(ssrOutDir, assetsDir))
+    if (exists(resolve(serverOutDir, assetsDir))) {
+      root.push(resolve(serverOutDir, assetsDir))
     }
     await scope.register(FastifyStatic, {
       root,
@@ -128,8 +128,8 @@ async function setup(config) {
       // Use file path on Windows
       serverBundlePath =
         process.platform === 'win32'
-          ? new URL(fileUrl(resolve(ssrOutDir, serverFile)))
-          : resolve(ssrOutDir, serverFile)
+          ? new URL(fileUrl(resolve(serverOutDir, serverFile)))
+          : resolve(serverOutDir, serverFile)
       if (await exists(serverBundlePath)) {
         break
       }

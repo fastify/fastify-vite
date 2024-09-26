@@ -30,7 +30,7 @@
       "types": "./types/index.d.ts"
     },
     "./utils": "./utils.js",
-    "./vite-plugins": "./vite-plugins.js"
+    "./plugin": "./plugins.js"
   },
   "homepage": "https://fastify-vite.dev/",
   "license": "MIT",
