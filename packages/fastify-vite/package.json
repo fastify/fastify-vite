@@ -45,7 +45,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "7.1.0-beta.3",
+  "version": "7.1.0-beta.4",
   "optionalDependencies": {
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
