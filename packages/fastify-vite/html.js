@@ -16,13 +16,15 @@ async function compileHtmlTemplate(source) {
   const rewriter = new HTMLRewriter((chunk) => {
     decoded = decoder.decode(chunk)
     if (isScript) {
-      decoded = decoded.replace(/[$]/g, '\\$').replace(/\`/g, '\\`')
+      decoded = JSON.stringify(decoded).slice(1, -1)
     }
     output += decoded
   })
 
   rewriter.on('script', {
     element(element) {
+      element.prepend('${"')
+      element.append('"}')
       isScriptTag = true
     },
     end() {
@@ -83,7 +85,6 @@ async function createHtmlTemplateFunction(source) {
       ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }`
       : ''
   }) {\n  return asReadable\`${compiled}\`}))`
-
   // biome-ignore lint/style/noCommaOperator: indirect call to eval() to ensure global scope
   // biome-ignore lint/security/noGlobalEval: necessary for templating
   return (0, eval(templatingFunctionSource))(asReadable)

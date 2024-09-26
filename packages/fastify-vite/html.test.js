@@ -3,17 +3,6 @@ import { describe, expect, test } from 'vitest'
 import { createHtmlTemplateFunction } from './html.js'
 
 describe('createHtmlTemplateFunction', () => {
-  test('doesnt break with certain special characers (#165)', async () => {
-    const html = [
-      '<script>',
-      `console.log(\`%c Example 1 + 1 = \${1 + 1}\`, 'color: blue;');`,
-      '</script>',
-    ].join('\n')
-    const templateFn = await createHtmlTemplateFunction(html)
-    const resultStream = templateFn()
-    const resultStr = await streamToString(resultStream)
-    expect(resultStr).toBe(html)
-  })
   test('replaces comments without spaces <!-- element -->', async () => {
     const templateFn = await createHtmlTemplateFunction(
       [
@@ -56,6 +45,30 @@ describe('createHtmlTemplateFunction', () => {
         '<!-- secret easter egg note -->',
       ].join('\n'),
     )
+  })
+
+  test('doesnt break with certain special characers (#165/1)', async () => {
+    const html = [
+      '<script>',
+      `console.log(\`%c Example 1 + 1 = \${1 + 1}\`, 'color: blue;');`,
+      '</script>',
+    ].join('\n')
+    const templateFn = await createHtmlTemplateFunction(html)
+    const resultStream = templateFn()
+    const resultStr = await streamToString(resultStream)
+    expect(resultStr).toBe(html)
+  })
+
+  test('doesnt break with certain special characers (#165/2)', async () => {
+    const html = [
+      '<script>',
+      `console.log(\`%c Example 1 + 1 = \\\${1 + 1}\`, 'color: blue;');`,
+      '</script>',
+    ].join('\n')
+    const templateFn = await createHtmlTemplateFunction(html)
+    const resultStream = templateFn()
+    const resultStr = await streamToString(resultStream)
+    expect(resultStr).toBe(html)
   })
 
   function streamToString(stream) {
