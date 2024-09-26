@@ -66,8 +66,8 @@ const DefaultConfig = {
   createHtmlTemplateFunction,
 
   // Create reply.html() response function
-  createHtmlFunction(source, scope, config) {
-    const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
+  async createHtmlFunction(source, scope, config) {
+    const indexHtmlTemplate = await config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
         this.type('text/html')

@@ -3,8 +3,19 @@ import { describe, expect, test } from 'vitest'
 import { createHtmlTemplateFunction } from './html.js'
 
 describe('createHtmlTemplateFunction', () => {
+  test('doesnt break with certain special characers (#165)', async () => {
+    const html = [
+      '<script>',
+      `console.log(\`%c Example 1 + 1 = \${1 + 1}\`, 'color: blue;');`,
+      '</script>',
+    ].join('\n')
+    const templateFn = await createHtmlTemplateFunction(html)
+    const resultStream = templateFn()
+    const resultStr = await streamToString(resultStream)
+    expect(resultStr).toBe(html)
+  })
   test('replaces comments without spaces <!-- element -->', async () => {
-    const templateFn = createHtmlTemplateFunction(
+    const templateFn = await createHtmlTemplateFunction(
       [
         '<!doctype html>',
         '<!-- element -->',
@@ -24,7 +35,7 @@ describe('createHtmlTemplateFunction', () => {
   })
 
   test('leaves comments with spaces alone', async () => {
-    const templateFn = createHtmlTemplateFunction(
+    const templateFn = await createHtmlTemplateFunction(
       [
         '<!-- arbitrary comment -->',
         '<!doctype html>',

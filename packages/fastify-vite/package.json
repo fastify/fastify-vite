@@ -47,8 +47,8 @@
   },
   "version": "7.1.0-beta.3",
   "optionalDependencies": {
-    "@fastify/vue": "workspace:^",
     "@fastify/react": "workspace:^",
+    "@fastify/vue": "workspace:^",
     "vite": "^5.4.8"
   },
   "dependencies": {
@@ -57,6 +57,7 @@
     "fastify-plugin": "^5.0.1",
     "find-cache-dir": "^3.3.2",
     "fs-extra": "^10.1.0",
+    "html-rewriter-wasm": "^0.4.1",
     "klaw": "^4.1.0"
   },
   "devDependencies": {

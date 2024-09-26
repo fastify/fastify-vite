@@ -1,49 +1,92 @@
 const { Readable } = require('node:stream')
+const { HTMLRewriter } = require('html-rewriter-wasm')
 
-function createHtmlTemplateFunction(source) {
-  const ranges = new Map()
-  const interpolated = ['']
+const jsPath = /^[a-zA-Z_$][a-zA-Z_$.0-9]*$/
+
+async function compileHtmlTemplate(source) {
+  const encoder = new TextEncoder()
+  const decoder = new TextDecoder()
+
+  let output = ''
+  let decoded = ''
+  let isScriptTag = false
+  let isScript = false
+
   const params = []
-
-  for (const match of source.matchAll(/<!--\s*([\.\w]+)\s*-->/g)) {
-    ranges.set(match.index, {
-      param: match[1],
-      end: match.index + match[0].length,
-    })
-  }
-
-  let cursor = 0
-  const cut = null
-  let range = null
-
-  for (let i = 0; i < source.length; i++) {
-    if (i === cut) {
-      interpolated.push('')
-      cursor += 1
-    } else if (ranges.get(i)) {
-      range = ranges.get(i)
-      params.push(range.param)
-      interpolated.push({ param: range.param })
-      i = range.end
-      interpolated.push('')
-      cursor += 2
+  const rewriter = new HTMLRewriter((chunk) => {
+    decoded = decoder.decode(chunk)
+    if (isScript) {
+      decoded = decoded.replace(/[$]/g, '\\$').replace(/\`/g, '\\`')
     }
-    interpolated[cursor] += source[i]
+    output += decoded
+  })
+
+  rewriter.on('script', {
+    element(element) {
+      isScriptTag = true
+    },
+    end() {
+      isScriptTag = false
+    },
+  })
+
+  rewriter.onDocument({
+    text(text) {
+      if (text.lastInTextNode) {
+        isScriptTag = false
+        isScript = false
+        return
+      }
+      if (isScriptTag) {
+        isScript = true
+      }
+    },
+    comments(comment) {
+      let trimmed
+      // biome-ignore lint/suspicious/noAssignInExpressions: self explanatory
+      if (jsPath.test((trimmed = comment.text.trim()))) {
+        params.push(trimmed)
+        comment.replace(`\${${trimmed}}`)
+      }
+    },
+  })
+
+  try {
+    await rewriter.write(encoder.encode(source))
+    await rewriter.end()
+  } finally {
+    rewriter.free()
   }
 
-  // https://stackoverflow.com/questions/21616264/what-does-0-eval-do
+  return [output, params]
+}
+
+// TODO v8: Provide synchronous version for speed
+//
+// async function createHtmlTemplateFunction(source) {
+//   const [compiled, params] = await compileHtmlTemplate(source)
+//   // biome-ignore lint/style/noCommaOperator: indirect call to eval() to ensure global scope
+//   // biome-ignore lint/security/noGlobalEval: necessary for templating
+//   return (0, eval(
+//     `(function (${
+//       params.length
+//         ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }`
+//         : ''
+//     }) {\n  return \`${compiled}\`\n}))`
+//   ))
+// }
+
+async function createHtmlTemplateFunction(source) {
+  const [compiled, params] = await compileHtmlTemplate(source)
+  const templatingFunctionSource = `((asReadable) => (function (${
+    params.length
+      ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }`
+      : ''
+  }) {\n  return asReadable\`${compiled}\`}))`
+
   // biome-ignore lint/style/noCommaOperator: indirect call to eval() to ensure global scope
   // biome-ignore lint/security/noGlobalEval: necessary for templating
-  const compiledTemplatingFunction = (0, eval)(
-    // biome-ignore lint/style/useTemplate: needed for compiling
-    `(asReadable) => (function ({ ${[
-      ...new Set(params.map((s) => s.split('.')[0])),
-    ].join(', ')} }) {` +
-      `return asReadable\`${interpolated.map((s) => serialize(s)).join('')}\`` +
-      '})',
-  )(asReadable)
-
-  return compiledTemplatingFunction
+  return (0, eval(templatingFunctionSource))(asReadable)
 }
 
 function asReadable(fragments, ...values) {
@@ -70,11 +113,4 @@ function asReadable(fragments, ...values) {
 
 module.exports = {
   createHtmlTemplateFunction,
-}
-
-function serialize(frag) {
-  if (typeof frag === 'object') {
-    return `$\{${frag.param}}`
-  }
-  return frag
 }
