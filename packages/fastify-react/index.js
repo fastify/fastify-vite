@@ -51,14 +51,14 @@ async function prepareClient({
 async function createHtmlFunction(source, scope, config) {
   // Templating functions for universal rendering (SSR+CSR)
   const [unHeadSource, unFooterSource] = source.split('<!-- element -->')
-  const unHeadTemplate = createHtmlTemplateFunction(unHeadSource)
-  const unFooterTemplate = createHtmlTemplateFunction(unFooterSource)
+  const unHeadTemplate = await createHtmlTemplateFunction(unHeadSource)
+  const unFooterTemplate = await createHtmlTemplateFunction(unFooterSource)
   // Templating functions for server-only rendering (SSR only)
   const [soHeadSource, soFooterSource] = (await removeModules(source)).split(
     '<!-- element -->',
   )
-  const soHeadTemplate = createHtmlTemplateFunction(soHeadSource)
-  const soFooterTemplate = createHtmlTemplateFunction(soFooterSource)
+  const soHeadTemplate = await createHtmlTemplateFunction(soHeadSource)
+  const soFooterTemplate = await createHtmlTemplateFunction(soFooterSource)
   // This function gets registered as reply.html()
   return function ({ routes, context, body }) {
     // Decide which templating functions to use, with and without hydration
