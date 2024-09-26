@@ -10,17 +10,18 @@
   "deprecated": false,
   "description": "Official Fastify plugin for Vite integration.",
   "files": [
-    "types/index.d.ts",
+    "config.js",
+    "html.js",
+    "html.js",
+    "index.js",
+    "ioutils.js",
     "mode/development.js",
     "mode/production.js",
     "plugin.js",
-    "html.js",
-    "config.js",
-    "html.js",
-    "utils.js",
-    "index.js",
-    "ioutils.js",
-    "setup.js"
+    "setup.js",
+    "sharedPaths.js",
+    "types/index.d.ts",
+    "utils.js"
   ],
   "exports": {
     ".": {
@@ -70,8 +71,5 @@
     "fastify": ">=5",
     "vite": ">=5"
   },
-  "keywords": [
-    "fastify",
-    "vite"
-  ]
+  "keywords": ["fastify", "vite"]
 }
