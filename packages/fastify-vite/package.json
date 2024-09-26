@@ -14,12 +14,12 @@
     "html.js",
     "html.js",
     "index.js",
-    "ioutils.js",
+    "ioutils.cjs",
     "mode/development.js",
     "mode/production.js",
     "plugin.js",
     "setup.js",
-    "sharedPaths.js",
+    "sharedPaths.cjs",
     "types/index.d.ts",
     "utils.js"
   ],
@@ -30,7 +30,7 @@
       "types": "./types/index.d.ts"
     },
     "./utils": "./utils.js",
-    "./plugin": "./plugins.js"
+    "./plugin": "./plugin.mjs"
   },
   "homepage": "https://fastify-vite.dev/",
   "license": "MIT",
@@ -49,6 +49,7 @@
   "optionalDependencies": {
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
+    "@fastify/htmx": "workspace:^",
     "vite": "^5.4.8"
   },
   "dependencies": {

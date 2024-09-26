@@ -1,5 +1,5 @@
-const { ensureConfigFile, ejectBlueprint } = require('./setup')
-const { createHtmlTemplateFunction } = require('./html')
+const { ensureConfigFile, ejectBlueprint } = require('./setup.js')
+const { createHtmlTemplateFunction } = require('./html.js')
 
 module.exports.createHtmlTemplateFunction = createHtmlTemplateFunction
 module.exports.ensureConfigFile = ensureConfigFile

@@ -1,6 +1,6 @@
 const { join, resolve } = require('node:path')
-const { parse, resolveIfRelative, read, exists } = require('../ioutils')
 const FastifyStatic = require('@fastify/static')
+const { parse, resolveIfRelative, read, exists } = require('../ioutils.cjs')
 
 function fileUrl(str) {
   if (typeof str !== 'string') {

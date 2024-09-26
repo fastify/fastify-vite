@@ -1,5 +1,5 @@
 const fp = require('fastify-plugin')
-const { configure } = require('./config')
+const { configure } = require('./config.js')
 
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')
@@ -125,4 +125,3 @@ const fastifyVite = fp(plugin, {
 module.exports = fastifyVite
 module.exports.default = fastifyVite
 module.exports.fastifyVite = fastifyVite
-module.exports.viteFastify = require('./plugin').viteFastify

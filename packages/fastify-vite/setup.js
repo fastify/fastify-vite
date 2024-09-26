@@ -1,5 +1,5 @@
 const { parse: parsePath } = require('node:path')
-const { join, walk, ensure, exists, write, read } = require('./ioutils')
+const { join, walk, ensure, exists, write, read } = require('./ioutils.cjs')
 
 async function ejectBlueprint(base, { root, renderer }) {
   await ensure(root)

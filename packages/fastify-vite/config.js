@@ -7,9 +7,9 @@ const {
   exists,
   stat,
   read,
-} = require('./ioutils')
-const { createHtmlTemplateFunction } = require('./html')
-const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
+} = require('./ioutils.cjs')
+const { createHtmlTemplateFunction } = require('./html.js')
+const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.cjs')
 
 const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server

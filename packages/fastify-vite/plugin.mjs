@@ -1,7 +1,7 @@
-const { existsSync } = require('node:fs')
-const { resolve } = require('node:path')
-const { ensure, write, read } = require('./ioutils')
-const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
+import { existsSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { ensure, write, read } from './ioutils.cjs'
+import { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } from './sharedPaths.cjs'
 
 /**
  * This is the Vite plugin, not the Fastify plugin.
@@ -12,7 +12,7 @@ const { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } = require('./sharedPaths.js')
  *
  * @returns
  */
-function viteFastify() {
+export function viteFastify() {
   const jsonFilePath = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)
   let configToWrite = {}
   let resolvedConfig = {}
@@ -75,4 +75,4 @@ function viteFastify() {
   }
 }
 
-module.exports.viteFastify = viteFastify
+export default viteFastify
