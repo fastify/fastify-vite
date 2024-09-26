@@ -16,6 +16,7 @@ See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
 - Jonas Galvez [@galvez](https://github.com/galvez)
 - Wei Wang [@onlywei](https://github.com/onlywei)
+- Gürgün Dayıoğlu[@gurgunday](https://github.com/gurgunday)
 
 ## Sponsors
 
