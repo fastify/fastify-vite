@@ -55,7 +55,7 @@ export default class RouteContext {
   }
 }
 
-RouteContext.extend = function (initial) {
+RouteContext.extend = (initial) => {
   const { default: _, ...extra } = initial
   for (const [prop, value] of Object.entries(extra)) {
     if (prop !== 'data' && prop !== 'state') {
