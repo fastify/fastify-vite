@@ -12,12 +12,11 @@
   "files": [
     "config.js",
     "html.js",
-    "html.js",
     "index.js",
     "ioutils.cjs",
     "mode/development.js",
     "mode/production.js",
-    "plugin.js",
+    "plugin.mjs",
     "setup.js",
     "sharedPaths.cjs",
     "types/index.d.ts",
