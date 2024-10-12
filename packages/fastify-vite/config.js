@@ -160,8 +160,8 @@ async function configure(options = {}) {
     bundle,
   })
   if (typeof config.renderer === 'string') {
-    const { default: renderer } = await import(config.renderer)
-    config.renderer = renderer
+    const { default: renderer, ...named } = await import(config.renderer)
+    config.renderer = { ...renderer, ...named }
   }
   for (const setting of [
     'clientModule',
