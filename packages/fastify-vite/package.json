@@ -18,7 +18,7 @@
     "mode/production.js",
     "plugin.mjs",
     "setup.js",
-    "sharedPaths.cjs",
+    "sharedPaths.mjs",
     "types/index.d.ts",
     "utils.js"
   ],
@@ -46,16 +46,16 @@
   },
   "version": "7.1.0-beta.5",
   "optionalDependencies": {
+    "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "@fastify/htmx": "workspace:^",
     "vite": "^5.4.8"
   },
   "dependencies": {
     "@fastify/middie": "^9.0.2",
     "@fastify/static": "^8.0.1",
     "fastify-plugin": "^5.0.1",
-    "find-cache-dir": "^3.3.2",
+    "find-cache-dir": "^5.0.0",
     "fs-extra": "^10.1.0",
     "html-rewriter-wasm": "^0.4.1",
     "klaw": "^4.1.0"
