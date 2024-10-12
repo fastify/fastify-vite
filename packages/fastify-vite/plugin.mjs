@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { ensure, write, read } from './ioutils.cjs'
-import { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } from './sharedPaths.cjs'
+import { CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME } from './sharedPaths.mjs'
 
 /**
  * This is the Vite plugin, not the Fastify plugin.
