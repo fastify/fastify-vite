@@ -49,7 +49,7 @@
     "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "vite": "^5.4.8"
+    "vite": "^5.1.8"
   },
   "dependencies": {
     "@fastify/middie": "^9.0.2",
