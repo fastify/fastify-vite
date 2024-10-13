@@ -6,6 +6,5 @@ example/dist
 node_modules
 package-lock.json
 dist
-pnpm-lock.yaml
 .idea
 *.tsbuildinfo

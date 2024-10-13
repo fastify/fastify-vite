@@ -16,6 +16,7 @@
     "@fastify/vite": "workspace:^",
     "@fastify/vue": "workspace:^",
     "fastify": "^5.0.0",
+    "html-rewriter-wasm": "^0.4.1",
     "unihead": "^0.8.0",
     "vue": "^3.5.8",
     "vue-router": "^4.4.5"

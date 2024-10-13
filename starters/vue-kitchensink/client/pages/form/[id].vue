@@ -18,6 +18,7 @@ export function getData ({ req, reply }) {
 <script setup>
 import { useRouteContext } from '/:core.js'
 const { data } = useRouteContext()
+console.log('data', data)
 </script>
 
 <template>
