@@ -831,6 +831,9 @@ importers:
       '@fastify/vite':
         specifier: workspace:^
         version: link:../../packages/fastify-vite
+      '@vitejs/plugin-vue':
+        specifier: ^5.1.4
+        version: 5.1.4(vite@5.4.4(@types/node@20.16.9))(vue@3.5.8(typescript@5.6.2))
       fastify:
         specifier: 5.0.0
         version: 5.0.0
@@ -2480,7 +2483,6 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
-    bundledDependencies: []
 
   '@fastify/vue@0.5.0':
     resolution: {integrity: sha512-PzFg4c68gW2yTaICjQr++8OK6wgRY9ONldk6oaTB+8at8UCxFnf2tuAYSs1YbNzJ+tW0oAsVyIurIERSvQxkAA==}
@@ -9272,6 +9274,11 @@ snapshots:
   '@vitejs/plugin-vue@5.0.4(vite@5.4.7(@types/node@20.16.9))(vue@3.5.8(typescript@5.6.2))':
     dependencies:
       vite: 5.4.7(@types/node@20.16.9)
+      vue: 3.5.8(typescript@5.6.2)
+
+  '@vitejs/plugin-vue@5.1.4(vite@5.4.4(@types/node@20.16.9))(vue@3.5.8(typescript@5.6.2))':
+    dependencies:
+      vite: 5.4.4(@types/node@20.16.9)
       vue: 3.5.8(typescript@5.6.2)
 
   '@vitejs/plugin-vue@5.1.4(vite@5.4.8(@types/node@20.16.9))(vue@3.5.8(typescript@5.6.2))':
