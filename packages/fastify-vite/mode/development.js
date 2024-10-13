@@ -35,10 +35,12 @@ async function setup(config) {
     if (config.spa) {
       return {}
     }
-    const modulePath = resolve(
-      config.vite.root,
-      config.clientModule.replace(/^\/+/, ''),
-    )
+    const modulePath = config.clientModule.startsWith('/:')
+      ? config.clientModule
+      : resolve(
+          config.vite.root,
+          config.clientModule.replace(/^\/+/, ''),
+        )
     let entryModule = await this.devServer.ssrLoadModule(modulePath)
     if (typeof entryModule.default === 'function') {
       entryModule = await entryModule.default(config)

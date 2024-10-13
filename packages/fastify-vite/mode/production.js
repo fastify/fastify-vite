@@ -119,10 +119,8 @@ async function setup(config) {
       process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
-    const serverFiles = [
-      `${parse(config.clientModule).name}.js`,
-      `${parse(config.clientModule).name}.mjs`,
-    ]
+    const parsedNamed = parse(config.clientModule.replace('/:', '/_')).name
+    const serverFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
     let serverBundlePath
     for (const serverFile of serverFiles) {
       // Use file path on Windows
