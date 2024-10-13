@@ -99,6 +99,11 @@ export default {
   ],
 }
 ```
+
+#### CACHE_DIR
+
+Note that the location of this cached JSON file is determined by [find-cache-dir](https://www.npmjs.com/package/find-cache-dir), which requires a bit of a special consideration when working in containers like Docker or other environments in which the `node_modules` directory is not writable. If you are running in such an environment, set an environment variable named `CACHE_DIR` to any location you want. Make sure to also copy that `CACHE_DIR` directory from your build step to your final image.
+
 :::
 
 In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite. 
