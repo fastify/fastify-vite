@@ -52,7 +52,6 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     )
   }
 
-  console.log('client', client)
   const preHandler = [
     async (req) => {
       if (!req.route.clientOnly) {
