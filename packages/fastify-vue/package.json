@@ -13,16 +13,21 @@
     "virtual/mount.js",
     "virtual/core.js",
     "virtual/router.vue",
-    "virtual/routes.js",
     "index.js",
     "plugin.cjs",
-    "server/context.js",
-    "server/stream.js"
+    "rendering.js",
+    "templating.js",
+    "routing.js",
+    "context.js",
+    "client.js",
+    "server.js"
   ],
   "license": "MIT",
   "exports": {
     ".": "./index.js",
-    "./plugin": "./plugin.cjs"
+    "./plugin": "./plugin.cjs",
+    "./client": "./client.js",
+    "./server": "./server.js"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",

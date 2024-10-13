@@ -2,8 +2,16 @@ import RouteContext from './context.js'
 import Youch from 'youch'
 
 export async function prepareClient (client) {
-  client.context = await client.context
-  client.routes = await client.routes
+  if (client.context instanceof Promise) {
+    client.context = await client.context
+  }
+  if (client.routes instanceof Promise) {
+    client.routes = await client.routes
+  }
+  if (client.create instanceof Promise) {
+    const { default: create } = await client.create
+    client.create = create
+  }
   return client
 }
 
@@ -44,6 +52,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     )
   }
 
+  console.log('client', client)
   const preHandler = [
     async (req) => {
       if (!req.route.clientOnly) {

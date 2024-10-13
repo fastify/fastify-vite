@@ -4,10 +4,6 @@ const { fileURLToPath } = require('url')
 
 function viteFastifyVue (config = {}) {  
   const prefix = /^\/:/
-  const routing = Object.assign({
-    globPattern: '/pages/**/*.vue',
-    paramPattern: /\[(\w+)\]/,
-  }, config)
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js',
@@ -34,12 +30,6 @@ function viteFastifyVue (config = {}) {
     }
     return false
   }
-  const virtualModuleInserts = {
-    'routes.js': {
-      $globPattern: routing.globPattern,
-      $paramPattern: routing.paramPattern,
-    }
-  }
 
   let viteProjectRoot
 
@@ -58,11 +48,6 @@ function viteFastifyVue (config = {}) {
       return
     }
     let code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
-    if (virtualModuleInserts[virtual]) {
-      for (const [key, value] of Object.entries(virtualModuleInserts[virtual])) {
-        code = code.replace(new RegExp(escapeRegExp(key), 'g'), value)
-      }
-    }
     return {
       code,
       map: null,
