@@ -1,10 +1,11 @@
 {
   "scripts": {
+    "lint": "oxlint",
     "test": "zx test.mjs"
   },
   "private": "true",
   "devDependencies": {
-    "execa": "^7.2.0",
+    "oxlint": "^0.9.10",
     "vitest": "^1.3.0",
     "zx": "^8.1.9"
   },
