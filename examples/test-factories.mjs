@@ -1,8 +1,6 @@
 import assert from 'node:assert'
-import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { build } from 'vite'
-import { execaCommand } from 'execa'
 
 export function makeIndexTest ({ main, dev }) {
   return async () => {
