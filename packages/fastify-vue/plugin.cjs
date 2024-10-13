@@ -16,8 +16,8 @@ function viteFastifyVue (config = {}) {
     'root.vue',
     'layouts/',
     'context.js',
-    'context.ts',
-    'core.js'
+    'core.js',
+    'server.js'
   ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {

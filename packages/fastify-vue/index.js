@@ -8,3 +8,5 @@ export {
   createRenderFunction,
   createHtmlFunction,
 } from './rendering.js'
+
+export const clientModule = '/:server.js'
