@@ -1,6 +1,9 @@
+$.verbose = true
+
 const root = path.resolve(__dirname)
 
 cd(path.join(root, 'packages/fastify-vite'))
+
 await $`npx vitest run`
 await $`sleep 2`
 
