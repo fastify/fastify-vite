@@ -47,7 +47,7 @@ async function compileHtmlTemplate(source) {
       // biome-ignore lint/suspicious/noAssignInExpressions: self explanatory
       if (jsPath.test((trimmed = comment.text.trim()))) {
         params.push(trimmed)
-        comment.replace(`\${${trimmed}}`)
+        comment.replace(`\${${trimmed} ?? ''}`)
       }
     },
   })
