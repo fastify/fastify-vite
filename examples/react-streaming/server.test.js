@@ -1,11 +1,11 @@
 import test from 'node:test'
-import { join, resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { makeSSRBuildTest, makeIndexTest } from '../test-factories.mjs'
 import { main } from './server.js'
 
-const cwd = dirname(fileURLToPath(import.meta.url))
+const cwd = import.meta.dirname
 
-test('render index page in development', makeIndexTest({ main, dev: true }))
-test('build production bundle', makeSSRBuildTest({ cwd }))
-test('render index page in production', makeIndexTest({ main }))
+test('react-streaming', async (t) => {
+  await t.test('render index page in development', makeIndexTest({ main, dev: true }))
+  await t.test('build production bundle', makeSSRBuildTest({ cwd }))
+  await t.test('render index page in production', makeIndexTest({ main }))
+})

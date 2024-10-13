@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { makeIndexTest, makeSPABuildTest } from '../test-factories.mjs'
 import { main } from './server.js'
 
-const cwd = dirname(fileURLToPath(import.meta.url))
+const cwd = import.meta.dirname
 
 test('react-vanilla-spa', async (t) => {
   await t.test('build production bundle', makeSPABuildTest({ cwd }))

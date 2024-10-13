@@ -1,11 +1,10 @@
 import test from 'node:test'
 import { setTimeout } from 'node:timers/promises'
-import { join, resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+
 import { makeSSRBuildTest, makeIndexTest } from '../test-factories.mjs'
 import { main } from './server.js'
 
-const cwd = dirname(fileURLToPath(import.meta.url))
+const cwd = import.meta.dirname
 
 test('svelte-hydration', async (t) => {
   await t.test('build production bundle', makeSSRBuildTest({ cwd }))

@@ -1,19 +1,14 @@
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { viteFastify } from "@fastify/vite/plugin";
-import viteSolid from "vite-plugin-solid";
-
-const path = fileURLToPath(import.meta.url);
-const root = resolve(dirname(path), "client");
-
-const plugins = [viteFastify(), viteSolid({ ssr: true })];
-
-const ssr = {
-  noExternal: ["@solidjs/router"],
-};
+import { join } from 'node:path'
+import viteFastify from '@fastify/vite/plugin'
+import viteSolid from 'vite-plugin-solid'
 
 export default {
-  root,
-  plugins,
-  ssr,
-};
+  root: join(import.meta.dirname, 'client'),
+  plugins: [
+    viteFastify(), 
+    viteSolid({ ssr: true })
+  ],
+  ssr: {
+    noExternal: ['@solidjs/router'],
+  },
+}
