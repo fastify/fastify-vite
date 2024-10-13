@@ -12,7 +12,7 @@
   "dependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.5.3",
     "fastify": "5.0.0",
-    "svelte": "^3.59.2"
+    "svelte": "^4.2.19"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
