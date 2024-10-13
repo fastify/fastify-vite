@@ -25,7 +25,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-solid": "^0.9.4",
-    "vite": "^5.4.4",
+    "vite": "^5.4.6",
     "vite-plugin-solid": "^2.10.2"
   }
 }

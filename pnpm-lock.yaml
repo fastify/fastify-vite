@@ -115,7 +115,7 @@ importers:
         version: 7.24.7(@babel/core@7.25.2)
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -138,8 +138,8 @@ importers:
         specifier: ^7.35.2
         version: 7.35.2(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/react-next:
     dependencies:
@@ -185,7 +185,7 @@ importers:
         version: 7.24.7(@babel/core@7.25.2)
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -208,8 +208,8 @@ importers:
         specifier: ^7.35.2
         version: 7.35.2(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/react-streaming:
     dependencies:
@@ -246,7 +246,7 @@ importers:
         version: 7.24.7(@babel/core@7.25.2)
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -269,8 +269,8 @@ importers:
         specifier: ^7.35.2
         version: 7.35.2(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/react-vanilla:
     dependencies:
@@ -301,7 +301,7 @@ importers:
         version: 7.24.7(@babel/core@7.25.2)
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -324,8 +324,8 @@ importers:
         specifier: ^7.35.2
         version: 7.35.2(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/react-vanilla-spa:
     dependencies:
@@ -353,7 +353,7 @@ importers:
         version: 7.24.7(@babel/core@7.25.2)
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -376,8 +376,8 @@ importers:
         specifier: ^7.35.2
         version: 7.35.2(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/solid-hydration:
     dependencies:
@@ -428,11 +428,11 @@ importers:
         specifier: ^0.9.4
         version: 0.9.4(eslint@8.57.0)(typescript@5.6.2)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
       vite-plugin-solid:
         specifier: ^2.10.2
-        version: 2.10.2(solid-js@1.8.22)(vite@5.4.4(@types/node@20.16.9))
+        version: 2.10.2(solid-js@1.8.22)(vite@5.4.8(@types/node@20.16.9))
 
   examples/solid-vanilla:
     dependencies:
@@ -477,11 +477,11 @@ importers:
         specifier: ^0.9.4
         version: 0.9.4(eslint@8.57.0)(typescript@5.6.2)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
       vite-plugin-solid:
         specifier: ^2.10.2
-        version: 2.10.2(solid-js@1.8.22)(vite@5.4.4(@types/node@20.16.9))
+        version: 2.10.2(solid-js@1.8.22)(vite@5.4.8(@types/node@20.16.9))
 
   examples/svelte-hydration:
     dependencies:
@@ -509,7 +509,7 @@ importers:
         version: 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       '@sveltejs/vite-plugin-svelte':
         specifier: ^2.5.3
-        version: 2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))
+        version: 2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -532,14 +532,14 @@ importers:
         specifier: ^2.43.0
         version: 2.43.0(eslint@8.57.0)(svelte@3.59.2)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/svelte-vanilla:
     dependencies:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^2.5.3
-        version: 2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))
+        version: 2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))
       fastify:
         specifier: 5.0.0
         version: 5.0.0
@@ -578,8 +578,8 @@ importers:
         specifier: ^2.43.0
         version: 2.43.0(eslint@8.57.0)(svelte@3.59.2)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/typescript-vanilla:
     dependencies:
@@ -598,13 +598,13 @@ importers:
         version: 20.16.5
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.4.4(@types/node@20.16.5))
+        version: 4.3.1(vite@5.4.8(@types/node@20.16.5))
       typescript:
         specifier: ^5.5.3
         version: 5.6.2
       vite:
-        specifier: ^5.3.4
-        version: 5.4.4(@types/node@20.16.5)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.5)
 
   examples/vue-hydration:
     dependencies:
@@ -638,7 +638,7 @@ importers:
         version: 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       '@vitejs/plugin-vue':
         specifier: ^4.6.2
-        version: 4.6.2(vite@5.4.4(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
+        version: 4.6.2(vite@5.4.8(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -661,8 +661,8 @@ importers:
         specifier: ^9.28.0
         version: 9.28.0(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/vue-next:
     dependencies:
@@ -699,7 +699,7 @@ importers:
         version: 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       '@vitejs/plugin-vue':
         specifier: ^4.6.2
-        version: 4.6.2(vite@5.4.4(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
+        version: 4.6.2(vite@5.4.8(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -722,8 +722,8 @@ importers:
         specifier: ^9.28.0
         version: 9.28.0(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/vue-streaming:
     dependencies:
@@ -751,7 +751,7 @@ importers:
         version: 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       '@vitejs/plugin-vue':
         specifier: ^4.6.2
-        version: 4.6.2(vite@5.4.4(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
+        version: 4.6.2(vite@5.4.8(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -774,8 +774,8 @@ importers:
         specifier: ^9.28.0
         version: 9.28.0(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/vue-vanilla:
     dependencies:
@@ -797,7 +797,7 @@ importers:
         version: 7.25.1(@babel/core@7.25.2)(eslint@8.57.0)
       '@vitejs/plugin-vue':
         specifier: ^4.6.2
-        version: 4.6.2(vite@5.4.4(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
+        version: 4.6.2(vite@5.4.8(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -820,8 +820,8 @@ importers:
         specifier: ^9.28.0
         version: 9.28.0(eslint@8.57.0)
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   examples/vue-vanilla-spa:
     dependencies:
@@ -840,10 +840,10 @@ importers:
     devDependencies:
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@5.4.4(@types/node@20.16.9))
+        version: 3.1.0(vite@5.4.8(@types/node@20.16.9))
       vite:
-        specifier: ^5.4.4
-        version: 5.4.4(@types/node@20.16.9)
+        specifier: ^5.4.6
+        version: 5.4.8(@types/node@20.16.9)
 
   packages/fastify-htmx:
     dependencies:
@@ -7092,37 +7092,6 @@ packages:
       terser:
         optional: true
 
-  vite@5.4.4:
-    resolution: {integrity: sha512-RHFCkULitycHVTtelJ6jQLd+KSAAzOgEYorV32R2q++M6COBjKJR6BxqClwp5sf0XaBDjVMuJ9wnNfyAJwjMkA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || >=20.0.0
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      sass-embedded: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-
   vite@5.4.7:
     resolution: {integrity: sha512-5l2zxqMEPVENgvzTuBpHer2awaetimj2BGkhBPdnwKbPNOlHsODU+oiazEZzLK7KhAnOrO+XGYJYn4ZlUhDtDQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -8978,26 +8947,26 @@ snapshots:
     dependencies:
       solid-js: 1.8.22
 
-  '@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9)))(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))':
+  '@sveltejs/vite-plugin-svelte-inspector@1.0.4(@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9)))(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))
+      '@sveltejs/vite-plugin-svelte': 2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))
       debug: 4.3.4
       svelte: 3.59.2
-      vite: 5.4.4(@types/node@20.16.9)
+      vite: 5.4.8(@types/node@20.16.9)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))':
+  '@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9)))(svelte@3.59.2)(vite@5.4.4(@types/node@20.16.9))
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.4(@sveltejs/vite-plugin-svelte@2.5.3(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9)))(svelte@3.59.2)(vite@5.4.8(@types/node@20.16.9))
       debug: 4.3.7
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.11
       svelte: 3.59.2
       svelte-hmr: 0.15.3(svelte@3.59.2)
-      vite: 5.4.4(@types/node@20.16.9)
-      vitefu: 0.2.5(vite@5.4.4(@types/node@20.16.9))
+      vite: 5.4.8(@types/node@20.16.9)
+      vitefu: 0.2.5(vite@5.4.8(@types/node@20.16.9))
     transitivePeerDependencies:
       - supports-color
 
@@ -9147,14 +9116,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@3.1.0(vite@5.4.4(@types/node@20.16.9))':
+  '@vitejs/plugin-react@3.1.0(vite@5.4.8(@types/node@20.16.9))':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.25.2)
       '@babel/plugin-transform-react-jsx-source': 7.23.3(@babel/core@7.25.2)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 5.4.4(@types/node@20.16.9)
+      vite: 5.4.8(@types/node@20.16.9)
     transitivePeerDependencies:
       - supports-color
 
@@ -9169,14 +9138,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.3.1(vite@5.4.4(@types/node@20.16.5))':
+  '@vitejs/plugin-react@4.3.1(vite@5.4.8(@types/node@20.16.5))':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.2)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.25.2)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.4.4(@types/node@20.16.5)
+      vite: 5.4.8(@types/node@20.16.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -9206,9 +9175,9 @@ snapshots:
       vite: 4.5.3(@types/node@20.16.9)
       vue: 3.5.4(typescript@5.6.2)
 
-  '@vitejs/plugin-vue@4.6.2(vite@5.4.4(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))':
+  '@vitejs/plugin-vue@4.6.2(vite@5.4.8(@types/node@20.16.9))(vue@3.5.4(typescript@5.6.2))':
     dependencies:
-      vite: 5.4.4(@types/node@20.16.9)
+      vite: 5.4.8(@types/node@20.16.9)
       vue: 3.5.4(typescript@5.6.2)
 
   '@vitejs/plugin-vue@5.0.4(vite@5.4.7(@types/node@20.16.9))(vue@3.5.8(typescript@5.6.2))':
@@ -14502,7 +14471,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-solid@2.10.2(solid-js@1.8.22)(vite@5.4.4(@types/node@20.16.9)):
+  vite-plugin-solid@2.10.2(solid-js@1.8.22)(vite@5.4.8(@types/node@20.16.9)):
     dependencies:
       '@babel/core': 7.25.2
       '@types/babel__core': 7.20.5
@@ -14510,8 +14479,8 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.8.22
       solid-refresh: 0.6.3(solid-js@1.8.22)
-      vite: 5.4.4(@types/node@20.16.9)
-      vitefu: 0.2.5(vite@5.4.4(@types/node@20.16.9))
+      vite: 5.4.8(@types/node@20.16.9)
+      vitefu: 0.2.5(vite@5.4.8(@types/node@20.16.9))
     transitivePeerDependencies:
       - supports-color
 
@@ -14533,24 +14502,6 @@ snapshots:
       '@types/node': 20.16.9
       fsevents: 2.3.3
 
-  vite@5.4.4(@types/node@20.16.5):
-    dependencies:
-      esbuild: 0.21.5
-      postcss: 8.4.47
-      rollup: 4.21.2
-    optionalDependencies:
-      '@types/node': 20.16.5
-      fsevents: 2.3.3
-
-  vite@5.4.4(@types/node@20.16.9):
-    dependencies:
-      esbuild: 0.21.5
-      postcss: 8.4.47
-      rollup: 4.21.2
-    optionalDependencies:
-      '@types/node': 20.16.9
-      fsevents: 2.3.3
-
   vite@5.4.7(@types/node@20.16.9):
     dependencies:
       esbuild: 0.21.5
@@ -14558,6 +14509,15 @@ snapshots:
       rollup: 4.21.2
     optionalDependencies:
       '@types/node': 20.16.9
+      fsevents: 2.3.3
+
+  vite@5.4.8(@types/node@20.16.5):
+    dependencies:
+      esbuild: 0.21.5
+      postcss: 8.4.47
+      rollup: 4.22.4
+    optionalDependencies:
+      '@types/node': 20.16.5
       fsevents: 2.3.3
 
   vite@5.4.8(@types/node@20.16.9):
@@ -14569,9 +14529,9 @@ snapshots:
       '@types/node': 20.16.9
       fsevents: 2.3.3
 
-  vitefu@0.2.5(vite@5.4.4(@types/node@20.16.9)):
+  vitefu@0.2.5(vite@5.4.8(@types/node@20.16.9)):
     optionalDependencies:
-      vite: 5.4.4(@types/node@20.16.9)
+      vite: 5.4.8(@types/node@20.16.9)
 
   vitepress-plugin-mermaid@2.0.15(mermaid@10.6.1)(vitepress@1.0.0-rc.25(@algolia/client-search@4.22.1)(@types/node@20.16.9)(axios@1.7.7(debug@4.3.4))(change-case@4.1.2)(drauu@0.3.7)(fuse.js@6.6.2)(markdown-it-mathjax3@4.3.2)(postcss@8.4.47)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.13.0)(typescript@5.6.2)):
     dependencies:
