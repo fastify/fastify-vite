@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import { remove } from 'fs-extra'
 import { afterEach, describe, expect, test } from 'vitest'
 import { viteFastify } from './plugin.mjs'
-import { CACHED_VITE_CONFIG_FILE_NAME, CACHE_DIR } from './sharedPaths.cjs'
+import { CACHED_VITE_CONFIG_FILE_NAME, CACHE_DIR } from './sharedPaths.mjs'
 
 describe('viteFastify', () => {
   const configDistFile = resolve(CACHE_DIR, CACHED_VITE_CONFIG_FILE_NAME)

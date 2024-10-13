@@ -11,8 +11,7 @@ describe('createHtmlTemplateFunction', () => {
         '<script type="module" src="./mount.js"></script>',
       ].join('\n'),
     )
-    const resultStream = templateFn({ element: 'walalalala' })
-    const resultStr = await streamToString(resultStream)
+    const resultStr = templateFn({ element: 'walalalala' })
 
     expect(resultStr).toBe(
       [
@@ -33,8 +32,7 @@ describe('createHtmlTemplateFunction', () => {
         '<!-- secret easter egg note -->',
       ].join('\n'),
     )
-    const resultStream = templateFn({ element: '' })
-    const resultStr = await streamToString(resultStream)
+    const resultStr = templateFn({ element: '' })
 
     expect(resultStr).toBe(
       [
@@ -54,8 +52,7 @@ describe('createHtmlTemplateFunction', () => {
       '</script>',
     ].join('\n')
     const templateFn = await createHtmlTemplateFunction(html)
-    const resultStream = templateFn()
-    const resultStr = await streamToString(resultStream)
+    const resultStr = templateFn()
     expect(resultStr).toBe(html)
   })
 
@@ -66,17 +63,8 @@ describe('createHtmlTemplateFunction', () => {
       '</script>',
     ].join('\n')
     const templateFn = await createHtmlTemplateFunction(html)
-    const resultStream = templateFn()
-    const resultStr = await streamToString(resultStream)
+    const resultStr = templateFn()
     expect(resultStr).toBe(html)
   })
 
-  function streamToString(stream) {
-    const chunks = []
-    return new Promise((resolve, reject) => {
-      stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)))
-      stream.on('error', (err) => reject(err))
-      stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
-    })
-  }
 })
