@@ -76,6 +76,7 @@ const DefaultConfig = {
     }
     if (config.hasRenderFunction) {
       return async function (ctx) {
+        this.type('text/html')
         this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
         return this
       }
