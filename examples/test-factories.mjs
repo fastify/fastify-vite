@@ -16,12 +16,14 @@ export function makeIndexTest ({ main, dev }) {
 export function makeSSRBuildTest ({ cwd }) {
   return async () => {
     await build({
+      root: cwd,
       build: {
         outDir: 'dist/client',
         ssrManifest: true,
       }
     })
     await build({
+      root: cwd,
       build: {
         outDir: 'dist/server',
         ssr: './index.js',
@@ -30,7 +32,7 @@ export function makeSSRBuildTest ({ cwd }) {
   }
 }
 
-export function makeSPABuildTest ({ cwd }) {
+export function makeSPABuildTest () {
   return async () => {
     await build({
       build: {
