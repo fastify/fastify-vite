@@ -9,9 +9,8 @@ export const routeLayout = Symbol('routeLayout')
 export function useRouteContext () {
   if (isServer) {
     return inject(serverRouteContext)
-  } else {
-    return useRoute().meta[serverRouteContext]
   }
+  return useRoute().meta[serverRouteContext]
 }
 
 export function createBeforeEachHandler ({ routeMap, ctxHydration, head }, layout) {

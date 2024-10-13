@@ -19,17 +19,21 @@ export default class RouteContext {
     this.server = server
     this.req = req
     this.reply = reply
-    this.head = {}
-    this.state = null
-    this.data = route.data
+    // Internal
+    this.ssrContext = {}
     this.firstRender = true
+    // Populated
+    this.head = {}
+    this.data = route.data
+    this.state = null
+    // Route settings
     this.layout = route.layout
-    this.getMeta = !!route.getMeta
-    this.getData = !!route.getData
-    this.onEnter = !!route.onEnter
     this.streaming = route.streaming
     this.clientOnly = route.clientOnly
     this.serverOnly = route.serverOnly
+    this.getMeta = !!route.getMeta
+    this.getData = !!route.getData
+    this.onEnter = !!route.onEnter
   }
 
   [routeContextInspect] () {
