@@ -16,14 +16,14 @@ export function makeIndexTest ({ main, dev }) {
 export function makeSSRBuildTest ({ cwd }) {
   return async () => {
     await build({
-      root: cwd,
+      root: join(cwd, 'client'),
       build: {
         outDir: 'dist/client',
         ssrManifest: true,
       }
     })
     await build({
-      root: cwd,
+      root: join(cwd, 'client'),
       build: {
         outDir: 'dist/server',
         ssr: './index.js',
