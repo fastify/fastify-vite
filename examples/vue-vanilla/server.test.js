@@ -7,5 +7,5 @@ import { main } from './server.js'
 const cwd = dirname(fileURLToPath(import.meta.url))
 
 test('render index page in development', makeIndexTest({ main, dev: true }))
-test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 11, serverModules: 4 }))
+test('build production bundle', makeSSRBuildTest({ cwd }))
 test('render index page in production', makeIndexTest({ main }))

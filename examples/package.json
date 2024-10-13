@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "vite": "^5.4.8",
     "zx": "^7.2.3"
   },
   "scripts": {

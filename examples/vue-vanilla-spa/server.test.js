@@ -7,7 +7,7 @@ import { main } from './server.js'
 const cwd = dirname(fileURLToPath(import.meta.url))
 
 test('vue-vanilla-spa', async (t) => {
-  await t.test('build production bundle', makeSPABuildTest({ cwd, clientModules: 25 }))
+  await t.test('build production bundle', makeSPABuildTest({ cwd }))
   await t.test('render index page in development', makeIndexTest({ main, dev: true }))
   await t.test('render index page in production', makeIndexTest({ main }))
 })

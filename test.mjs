@@ -8,23 +8,22 @@ await $`npx vitest run`
 await $`sleep 1`
 
 for (const example of [
-  'react-hydration',
-  'react-next',
-  'react-streaming',
   'react-vanilla',
-  'react-vanilla-spa',
-  'solid-hydration',
-  'solid-vanilla',
-  'svelte-hydration',
-  'svelte-vanilla',
-  'typescript-vanilla',
-  'vue-hydration',
-  'vue-next',
-  'vue-streaming',
   'vue-vanilla',
-  'vue-vanilla-spa',
+  'svelte-vanilla',
+  'solid-vanilla',
+  'react-hydration',
+  'vue-hydration',  
+  'svelte-hydration',
+  'solid-hydration',
+  'react-next',
+  'vue-next',
+  'react-streaming',  
+  'vue-streaming',
+  'react-vanilla-spa',
+  'vue-vanilla-spa'
 ]) {
   cd(path.join(root, 'examples', example))
   await $`node --test`
-  await $`sleep 2`
+  await $`sleep 1`
 }

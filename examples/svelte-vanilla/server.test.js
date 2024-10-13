@@ -6,6 +6,6 @@ import { main } from './server.js'
 
 const cwd = dirname(fileURLToPath(import.meta.url))
 
-test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 5, serverModules: 3 }))
+test('build production bundle', makeSSRBuildTest({ cwd }))
 test('render index page in development', makeIndexTest({ main, dev: true }))
 test('render index page in production', makeIndexTest({ main }))

@@ -76,6 +76,9 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
     devDependencies:
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@20.16.9)
       zx:
         specifier: ^7.2.3
         version: 7.2.3
@@ -2477,6 +2480,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vue@0.5.0':
     resolution: {integrity: sha512-PzFg4c68gW2yTaICjQr++8OK6wgRY9ONldk6oaTB+8at8UCxFnf2tuAYSs1YbNzJ+tW0oAsVyIurIERSvQxkAA==}
