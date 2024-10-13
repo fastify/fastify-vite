@@ -16,14 +16,14 @@ export function makeIndexTest ({ main, dev }) {
 export function makeSSRBuildTest ({ cwd }) {
   return async () => {
     await build({
-      root: join(cwd, 'client'),
+      viteConfig: join(cwd, 'vite.config.js'),
       build: {
         outDir: 'dist/client',
         ssrManifest: true,
       }
     })
     await build({
-      root: join(cwd, 'client'),
+      viteConfig: join(cwd, 'vite.config.js'),
       build: {
         outDir: 'dist/server',
         ssr: './index.js',
@@ -32,9 +32,10 @@ export function makeSSRBuildTest ({ cwd }) {
   }
 }
 
-export function makeSPABuildTest () {
+export function makeSPABuildTest ({ cwd }) {
   return async () => {
     await build({
+      viteConfig: join(cwd, 'vite.config.js'),
       build: {
         outDir: 'dist/client',
       }
