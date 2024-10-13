@@ -6,6 +6,8 @@ import { main } from './server.js'
 
 const cwd = dirname(fileURLToPath(import.meta.url))
 
-test('render index page in development', makeIndexTest({ main, dev: true }))
-test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 37, serverModules: 6 }))
-test('render index page in production', makeIndexTest({ main }))
+test('react-hydration', async (t) => {
+  await t.test('render index page in development', makeIndexTest({ main, dev: true }))
+  await t.test('build production bundle', makeSSRBuildTest({ cwd, clientModules: 37, serverModules: 6 }))
+  await t.test('render index page in production', makeIndexTest({ main }))
+})
