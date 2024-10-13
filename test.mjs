@@ -1,5 +1,6 @@
 $.verbose = true
 
+import { setTimeout } from 'node:timers/promises'
 const root = path.resolve(__dirname)
 
 cd(path.join(root, 'packages/fastify-vite'))
@@ -25,5 +26,5 @@ for (const example of [
 ]) {
   cd(path.join(root, 'examples', example))
   await $`node --test`
-  await $`sleep 1`
+  await setTimeout(100)
 }
