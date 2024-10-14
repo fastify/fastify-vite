@@ -1,12 +1,12 @@
 {
   "devDependencies": {
-    "vite": "^5.4.8",
+    "vite": "catalog:",
     "zx": "^7.2.3"
   },
   "scripts": {
     "test:all": "zx run-all-tests.mjs"
   },
   "dependencies": {
-    "fastify": "5.0.0"
+    "fastify": "catalog:"
   }
 }
