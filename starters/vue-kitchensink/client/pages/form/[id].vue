@@ -16,9 +16,8 @@ export function getData ({ req, reply }) {
 </script>
 
 <script setup>
-import { useRouteContext } from '@fastify/vue/client'
-const { data } = useRouteContext()
-console.log('data', data)
+import { useData } from '$app/hooks'
+const data = useData()
 </script>
 
 <template>
