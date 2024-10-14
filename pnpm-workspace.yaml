@@ -3,3 +3,12 @@ packages:
   - "packages/**"
   - "examples/**"
   - "starters/**"
+
+catalog:
+  devalue: ^4.3.3
+  fastify: ^5.0.0
+  react: ^18.3.1
+  react-dom: ^18.3.1
+  solid-js: ^1.8.22
+  vite: ^5.4.9
+  vue: ^3.5.4

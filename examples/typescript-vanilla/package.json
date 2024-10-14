@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "fastify": "^5.0.0"
+    "fastify": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3",
     "@types/node": "^20.14.11",
     "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.5.3",
-    "vite": "^5.3.4"
+    "vite": "catalog:"
   }
 }
