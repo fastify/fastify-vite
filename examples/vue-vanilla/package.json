@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "fastify": "5.0.0",
-    "vue": "^3.5.4"
+    "fastify": "catalog:",
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -25,6 +25,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-vue": "^9.28.0",
-    "vite": "^5.4.4"
+    "vite": "catalog:"
   }
 }

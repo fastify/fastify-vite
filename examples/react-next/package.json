@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "devalue": "^4.3.3",
-    "fastify": "5.0.0",
+    "devalue": "catalog:",
+    "fastify": "catalog:",
     "jotai": "^2.9.3",
     "ky": "^0.33.3",
     "ky-universal": "^0.11.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "react-router-dom": "^6.26.2",
     "undici": "^5.28.4"
   },
@@ -33,6 +33,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-react": "^7.35.2",
-    "vite": "^5.4.4"
+    "vite": "catalog:"
   }
 }
