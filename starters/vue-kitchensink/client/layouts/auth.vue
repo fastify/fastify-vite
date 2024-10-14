@@ -11,6 +11,6 @@
 </template>
 
 <script setup>
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 const { actions, state } = useRouteContext()
 </script>

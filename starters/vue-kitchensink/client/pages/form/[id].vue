@@ -16,7 +16,7 @@ export function getData ({ req, reply }) {
 </script>
 
 <script setup>
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 const { data } = useRouteContext()
 console.log('data', data)
 </script>

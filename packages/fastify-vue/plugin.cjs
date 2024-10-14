@@ -4,6 +4,7 @@ const { fileURLToPath } = require('url')
 
 function viteFastifyVue (config = {}) {  
   const prefix = /^\/:/
+  const nprefix = /^\$app\//
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [ 
     'mount.js',
@@ -17,7 +18,9 @@ function viteFastifyVue (config = {}) {
     'layouts/',
     'context.js',
     'core.js',
-    'server.js'
+    'server.js',
+    'stores',
+    'hooks'
   ]
   virtualModules.includes = function (virtual) {
     if (!virtual) {
@@ -44,10 +47,17 @@ function viteFastifyVue (config = {}) {
   }
 
   function loadVirtualModule (virtual) {
+    if (!virtual.includes('.')) {
+      const code = readFileSync(resolve(virtualRoot, `${virtual}.js`), 'utf8')
+      return {
+        code,
+        map: null,
+      }
+    }
     if (!virtualModules.includes(virtual)) {
       return
     }
-    let code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
+    const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
     return {
       code,
       map: null,
@@ -60,6 +70,8 @@ function viteFastifyVue (config = {}) {
       .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
       .replace(/-/g, '\\x2d')
   }
+
+  let parseStateKeys
 
   return {
     name: 'vite-plugin-fastify-vue',
@@ -92,19 +104,80 @@ function viteFastifyVue (config = {}) {
       viteProjectRoot = config.root
     },
     async resolveId (id) {
-      const [, virtual] = id.split(prefix)
+      let _prefix = prefix
+      if (nprefix.test(id)) {
+        _prefix = nprefix
+      }
+      const [, virtual] = id.split(_prefix)
       if (virtual) {
-        const override = await loadVirtualModuleOverride(virtual)
+        const override = loadVirtualModuleOverride(virtual)
         if (override) {
           return override
         }
         return id
       }
     },
-    load (id) {
-      const [, virtual] = id.split(prefix)
-      return loadVirtualModule(virtual)
+    async load (id) {
+      let _prefix = prefix
+      if (nprefix.test(id)) {
+        _prefix = nprefix
+      }
+      const [, virtual] = id.split(_prefix)
+      if (virtual) {
+        if (virtual === 'stores') {
+          if (!parseStateKeys) {
+            await import('./parsing.js').then((m) => {
+              parseStateKeys = m.parseStateKeys
+            })
+          }
+          const { id } = await this._container.moduleGraph.resolveId('/:context.js')
+          const keys = parseStateKeys(readFileSync(id, 'utf8'))
+          return generateStores(keys)
+        }
+        return loadVirtualModule(virtual)
+      }
     },
+  }
+}
+
+function generateStores(keys) {
+  let code = `
+import { useRouteContext } from '@fastify/vue/client'
+
+function storeGetter (proxy, prop) {
+  if (!proxy.context) {
+    proxy.context = useRouteContext()
+  }
+  if (prop === 'state') {
+    return proxy.context.state
+  }
+  let method
+  if (method = proxy.context.actions[proxy.key][prop]) {
+    if (!proxy.wrappers[prop]) {
+      proxy.wrappers[prop] = (...args) => {
+        return method(proxy.context.state, ...args)
+      }
+    }
+    return proxy.wrappers[prop]
+  } else {
+    throw new Error('Store action \`\${prop}\` not implemented.')
+  }
+}
+`
+  for (const key of keys) {
+    code += `
+export const ${key} = new Proxy({
+  key: '${key}',
+  wrappers: {},
+  context: null,
+}, { 
+  get: storeGetter
+})
+`
+  }
+  return {
+    code,
+    map: null
   }
 }
 

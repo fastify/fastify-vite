@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { isServer, useRouteContext } from '/:core.js'
+import { isServer, useRouteContext } from '@fastify/vue/client'
 import logo from '/assets/logo.svg'
 
 const { state } = useRouteContext()

@@ -24,7 +24,7 @@
 
 <script>
 import { ref, reactive } from 'vue'
-import { useRouteContext } from '/:core.js'
+import { useData } from '$app/hooks'
 
 export function getMeta () {
   return { title: 'Todo List — Using Data' }
@@ -38,7 +38,7 @@ export function getData ({ server }) {
 
 export default {
   setup () {
-    const { data } = useRouteContext()
+    const data = useData()
     const inputValue = ref(null)
     const todoList = reactive(data.todoList)
     const addItem = () => {

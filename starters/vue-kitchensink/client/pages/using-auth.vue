@@ -22,7 +22,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useRouteContext } from '/:core.js'
+import { todoList } from '$app/stores'
 
 export const layout = 'auth'
 

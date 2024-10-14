@@ -7,7 +7,7 @@
 
 <script>
 import { inject } from 'vue'
-import { routeLayout } from '/:core.js'
+import { routeLayout } from '@fastify/vue/client'
 
 import * as DefaultLayout from '/:layouts/default.vue'
 const appLayouts = import.meta.glob('/layouts/*.vue', { eager: true })

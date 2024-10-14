@@ -6,7 +6,8 @@ import {
   serverRouteContext,
   routeLayout,
   createBeforeEachHandler,
-} from '/:core.js'
+} from '@fastify/vue/client'
+
 import * as root from '/:root.vue'
 
 export default async function create (ctx) {

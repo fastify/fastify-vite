@@ -934,6 +934,15 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     optionalDependencies:
+      '@fastify/htmx':
+        specifier: workspace:^
+        version: link:../fastify-htmx
+      '@fastify/react':
+        specifier: workspace:^
+        version: link:../fastify-react
+      '@fastify/vue':
+        specifier: workspace:^
+        version: link:../fastify-vue
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@20.16.9)
@@ -966,6 +975,12 @@ importers:
       '@fastify/vite':
         specifier: workspace:^
         version: link:../fastify-vite
+      acorn:
+        specifier: ^8.12.1
+        version: 8.12.1
+      acorn-walk:
+        specifier: ^8.3.4
+        version: 8.3.4
       devalue:
         specifier: latest
         version: 5.1.1
@@ -975,6 +990,9 @@ importers:
       unihead:
         specifier: ^0.8.0
         version: 0.8.0
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@20.16.9)
       vue:
         specifier: ^3.5.8
         version: 3.5.8(typescript@5.6.2)
@@ -3312,13 +3330,12 @@ packages:
     resolution: {integrity: sha512-cjkyv4OtNCIeqhHrfS81QWXoCBPExR/J62oyEqepVw8WaQeSqpW2uhuLPh1m9eWhDuOo/jUXVTlifvesOWp/4A==}
     engines: {node: '>=0.4.0'}
 
+  acorn-walk@8.3.4:
+    resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
+    engines: {node: '>=0.4.0'}
+
   acorn@7.4.1:
     resolution: {integrity: sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
-  acorn@8.11.3:
-    resolution: {integrity: sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -9557,10 +9574,6 @@ snapshots:
     dependencies:
       acorn: 7.4.1
 
-  acorn-jsx@5.3.2(acorn@8.11.3):
-    dependencies:
-      acorn: 8.11.3
-
   acorn-jsx@5.3.2(acorn@8.12.1):
     dependencies:
       acorn: 8.12.1
@@ -9573,9 +9586,11 @@ snapshots:
 
   acorn-walk@8.3.2: {}
 
-  acorn@7.4.1: {}
+  acorn-walk@8.3.4:
+    dependencies:
+      acorn: 8.12.1
 
-  acorn@8.11.3: {}
+  acorn@7.4.1: {}
 
   acorn@8.12.1: {}
 
@@ -11230,8 +11245,8 @@ snapshots:
 
   espree@9.6.1:
     dependencies:
-      acorn: 8.11.3
-      acorn-jsx: 5.3.2(acorn@8.11.3)
+      acorn: 8.12.1
+      acorn-jsx: 5.3.2(acorn@8.12.1)
       eslint-visitor-keys: 3.4.3
 
   esprima@4.0.1: {}
@@ -12455,7 +12470,7 @@ snapshots:
 
   mlly@1.5.0:
     dependencies:
-      acorn: 8.11.3
+      acorn: 8.12.1
       pathe: 1.1.2
       pkg-types: 1.0.3
       ufo: 1.4.0

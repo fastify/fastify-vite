@@ -21,7 +21,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useRouteContext } from '/:core.js'
+import { todoList } from '$app/stores'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
@@ -30,12 +30,11 @@ export function getMeta () {
 export default {
   setup () {
     const inputValue = ref(null)
-    const { state, actions } = useRouteContext()
     const addItem = async () => {
-      await actions.todoList.add(state, inputValue.value)
+      await todoList.add(inputValue.value)
       inputValue.value = ''
     }
-    return { state, inputValue, addItem }
+    return { state: todoList.state, inputValue, addItem }
   },
 }
 </script>
