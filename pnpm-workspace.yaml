@@ -12,3 +12,4 @@ catalog:
   solid-js: ^1.8.22
   vite: ^5.4.9
   vue: ^3.5.4
+  vue-router: ^4.4.4

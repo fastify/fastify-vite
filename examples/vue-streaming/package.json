@@ -14,7 +14,7 @@
     "devalue": "catalog:",
     "fastify": "catalog:",
     "vue": "catalog:",
-    "vue-router": "^4.4.4"
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

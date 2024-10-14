@@ -17,7 +17,7 @@
     "ky": "^0.33.3",
     "ky-universal": "^0.11.0",
     "vue": "catalog:",
-    "vue-router": "^4.4.4"
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
