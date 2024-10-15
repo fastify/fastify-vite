@@ -264,16 +264,9 @@ async function resolveViteConfig(root, dev, { spa } = {}) {
 
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
-  let clientOutDir
 
   if (!dev) {
-    if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
-    } else {
-      // Backwards compatibility for projects that do not use the viteFastify plugin.
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
-      clientOutDir = resolve(bundle.dir, 'client')
-    }
+    const clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
 
     const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
@@ -298,16 +291,7 @@ async function resolveSSRBundle({ dev, vite }) {
 async function resolveSPABundle({ dev, vite }) {
   const bundle = {}
   if (!dev) {
-    let clientOutDir
-
-    if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
-    } else {
-      // Backwards compatibility for projects that do not use the viteFastify plugin.
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
-      clientOutDir = resolve(bundle.dir, 'client')
-    }
-
+    const clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
     const indexHtmlPath = resolve(clientOutDir, 'index.html')
     if (!exists(indexHtmlPath)) {
       return

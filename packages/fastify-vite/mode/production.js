@@ -19,19 +19,8 @@ function fileUrl(str) {
 
 async function setup(config) {
   const { spa, vite } = config
-  let clientOutDir
-  let serverOutDir
-
-  if (vite.fastify) {
-    clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
-    serverOutDir = resolveIfRelative(vite.fastify.serverOutDir || '', vite.root)
-  } else {
-    // Backwards compatibility for projects that do not use the viteFastify plugin.
-    const outDir = resolveIfRelative(vite.build.outDir, vite.root)
-
-    clientOutDir = resolve(outDir, 'client')
-    serverOutDir = resolve(outDir, 'server')
-  }
+  const clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
+  const serverOutDir = resolveIfRelative(vite.fastify.serverOutDir || '', vite.root)
 
   // For production you get the distribution version of the render function
   const { assetsDir } = vite.build
