@@ -9,4 +9,4 @@ export {
   createHtmlFunction,
 } from './rendering.js'
 
-export const clientModule = '/:server.js'
+export const clientModule = '/:index.js'

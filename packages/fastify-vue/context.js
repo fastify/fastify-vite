@@ -39,6 +39,7 @@ export default class RouteContext {
   [routeContextInspect] () {
     return {
       ...this,
+      actions: this.actions,
       server: { [routeContextInspect]: () => '[Server]' },
       req: { [routeContextInspect]: () => '[Request]' },
       reply: { [routeContextInspect]: () => '[Reply]' },
@@ -63,7 +64,7 @@ RouteContext.extend = (initial) => {
   const { default: _, ...extra } = initial
   for (const [prop, value] of Object.entries(extra)) {
     if (prop !== 'data' && prop !== 'state') {
-      Object.defineProperty(RouteContext.prototype, prop, value)
+      Object.defineProperty(RouteContext.prototype, prop, { enumerable: true, value })
     }
   }
 }

@@ -2,7 +2,7 @@
   <h2>Todo List — Using Store</h2>
   <ul>
     <li 
-      v-for="(item, i) in state.todoList"
+      v-for="(item, i) in todoList.state"
       :key="`item-${i}`">
       {{ item }}
     </li>
@@ -34,7 +34,7 @@ export default {
       await todoList.add(inputValue.value)
       inputValue.value = ''
     }
-    return { state: todoList.state, inputValue, addItem }
+    return { todoList, inputValue, addItem }
   },
 }
 </script>

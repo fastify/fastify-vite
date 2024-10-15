@@ -40,29 +40,3 @@ function extractObjectKeys(node) {
   }
   return keys
 }
-
-// Example usage
-const code1 = `export function state () {
-  return {
-    user: {
-      authenticated: false,
-    },
-    todoList: null,
-  }
-}`;
-
-const code2 = `export const state = () => ({
-  user: {
-    authenticated: false,
-  },
-  todoList: null,
-})
-if (1) {
-  const state = () => {
-
-  }
-}
-`;
-
-console.log(parseStateKeys(code1)); // ['user', 'todoList']
-console.log(parseStateKeys(code2)); // ['user', 'todoList']

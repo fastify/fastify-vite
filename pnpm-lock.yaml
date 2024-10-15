@@ -987,6 +987,9 @@ importers:
       html-rewriter-wasm:
         specifier: ^0.4.1
         version: 0.4.1
+      mlly:
+        specifier: ^1.5.0
+        version: 1.6.1
       unihead:
         specifier: ^0.8.0
         version: 0.8.0
@@ -2489,7 +2492,6 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
-    bundledDependencies: []
 
   '@fastify/vue@0.5.0':
     resolution: {integrity: sha512-PzFg4c68gW2yTaICjQr++8OK6wgRY9ONldk6oaTB+8at8UCxFnf2tuAYSs1YbNzJ+tW0oAsVyIurIERSvQxkAA==}
