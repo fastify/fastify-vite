@@ -5,13 +5,7 @@ import create from '/:create.js'
 import * as context from '/:context.js'
 import * as root from '/:root.vue'
 
-if (root.mount) {
-  mount(root.mount)
-} else {
-  mount('#root', 'main')
-}
-
-async function mount (...targets) {
+async function mountApp (...targets) {
   const ctxHydration = await extendContext(window.route, context)
   const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await hydrateRoutes(routes)
@@ -36,6 +30,14 @@ async function mount (...targets) {
   if (!mountTargetFound) {
     throw new Error(`No mount element found from provided list of targets: ${targets}`)
   }
+}
+
+const mountMethod = 'mount'
+
+if (mountMethod in root) {
+  mountApp(root[mountMethod])
+} else {
+  mountApp('#root', 'main')
 }
 
 async function extendContext (ctx, {
