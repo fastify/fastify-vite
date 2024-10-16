@@ -1,6 +1,7 @@
 import { inject } from 'vue'
 import { useRoute, createMemoryHistory, createWebHistory } from 'vue-router'
 
+export const isServer = typeof window === 'undefined' && typeof process === 'object'
 export const createHistory = isServer ? createMemoryHistory : createWebHistory
 export const serverRouteContext = Symbol('serverRouteContext')
 export const routeLayout = Symbol('routeLayout')
