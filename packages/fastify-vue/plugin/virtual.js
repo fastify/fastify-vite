@@ -2,13 +2,10 @@ import { readFileSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { findExports } from 'mlly'
-import { parseStateKeys } from './parsers.js'
-import { generateStores } from './stores.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const virtualRoot = resolve(__dirname, '..', 'virtual')
-const prefixes = [/^\/:/, /^\$app\//]
 
 const virtualModules = [ 
   'mount.js',
@@ -28,6 +25,8 @@ const virtualModules = [
   'hooks'
 ]
 
+export const prefixes = [/^\/:/, /^\$app\//]
+
 export async function resolveId (id) {
   const prefix = prefixes.find(_ => _.test(id))
   if (prefix) {
@@ -42,26 +41,18 @@ export async function resolveId (id) {
   }
 }
 
-export async function load (id) {
-  if (id.includes('?server') && !ssr) {
-    const source = loadSource(id)
-    return createPlaceholderExports(source)
+export function loadVirtualModule (virtualInput) {
+  let virtual = virtualInput
+  if (!/\.((mc)?ts)|((mc)?js)|(vue)$/.test(virtual)) {
+    virtual += '.js'
   }
-  if (id.includes('?client') && ssr) {
-    const source = loadSource(id)
-    return createPlaceholderExports(source)
+  if (!virtualModules.includes(virtual)) {
+    return
   }
-  const prefix = prefixes.find(_ => _.test(id))
-  if (prefix) {
-    const [, virtual] = id.split(prefix)
-    if (virtual) {
-      if (virtual === 'stores') {
-        const { id } = await this._container.moduleGraph.resolveId('/:context.js')
-        const keys = parseStateKeys(readFileSync(id, 'utf8'))
-        return generateStores(keys)
-      }
-      return loadVirtualModule(virtual)
-    }
+  const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
+  return {
+    code,
+    map: null,
   }
 }
 
@@ -87,33 +78,14 @@ function loadVirtualModuleOverride (viteProjectRoot, virtual) {
   }
 }
 
-
-function loadVirtualModule (virtual) {
-  if (!virtual.includes('.')) {
-    const code = readFileSync(resolve(virtualRoot, `${virtual}.js`), 'utf8')
-    return {
-      code,
-      map: null,
-    }
-  }
-  if (!virtualModules.includes(virtual)) {
-    return
-  }
-  const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
-  return {
-    code,
-    map: null,
-  }
-}
-
-function loadSource (id) {
+export function loadSource (id) {
   const filePath = id
     .replace(/\?client$/, '')
     .replace(/\?server$/, '')
   return readFileSync(filePath, 'utf8')
 }
 
-function createPlaceholderExports (source) {
+export function createPlaceholderExports (source) {
   let pExports = ''
   for (const exp of findExports(source)) {
     switch (exp.type) {

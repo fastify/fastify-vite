@@ -1,7 +1,8 @@
-import RouteContext from './context.js'
 import Youch from 'youch'
+import RouteContext from './context.js'
+import { createHtmlFunction } from './rendering.js'
 
-export async function prepareClient (client) {
+export async function prepareClient (client, _) {
   if (client.context instanceof Promise) {
     client.context = await client.context
   }
@@ -103,15 +104,25 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     })
   }
 
+  // Route handler
+  let handler
+  if (config.dev) {
+    handler = (_, reply) => reply.html()
+  } else {
+    const { id } = route
+    const htmlPath = id.replace(/pages\/(.*?)\.vue$/, 'client/html/$1.html')
+    const htmlSource = readFileSync(join(config.vite.root, config.vite.build.outDir, htmlPath), 'utf8')
+    const htmlFunction = createHtmlFunction(htmlSource, scope, config)
+    handler = (_, reply) => htmlFunction.call(reply)
+  }
+
   scope.route({
     url: route.path,
     method: route.method ?? ['GET', 'POST', 'PUT', 'DELETE'],
     errorHandler,
     onRequest,
     preHandler,
-    handler (_, reply) {
-      return reply.html()
-    },
+    handler,
     ...route,
   })
 

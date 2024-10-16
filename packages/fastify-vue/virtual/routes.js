@@ -1,1 +1,1 @@
-export default import.meta.glob('/pages/*.vue')
+export default import.meta.glob('/pages/**/*.vue')
