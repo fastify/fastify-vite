@@ -2,7 +2,7 @@
   <h2>Todo List — Using Custom Layout</h2>
   <ul>
     <li 
-      v-for="(item, i) in state.todoList"
+      v-for="(item, i) in todoList.state"
       :key="`item-${i}`">
       {{ item }}
     </li>
@@ -33,12 +33,11 @@ export function getMeta () {
 export default {
   setup () {
     const inputValue = ref(null)
-    const {state, actions} = useRouteContext()
     const addItem = async () => {
-      await actions.todoList.add(state, inputValue.value)
+      await todoList.add(inputValue.value)
       inputValue.value = ''
     }
-    return { state, inputValue, addItem }
+    return { todoList, inputValue, addItem }
   }
 }
 </script>

@@ -1,5 +1,5 @@
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import viteVue from '@vitejs/plugin-vue'
 import viteFastify from '@fastify/vite/plugin'

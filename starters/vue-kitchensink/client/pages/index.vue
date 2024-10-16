@@ -21,12 +21,12 @@
 </template>
 
 <script setup>
-import { isServer, useRouteContext } from '@fastify/vue/client'
+import { useState } from '$app/hooks'
 import logo from '/assets/logo.svg'
 
-const { state } = useRouteContext()
+const state = useState()
 
-if (isServer) {
+if (import.meta.env.SSR) {
   // State is automatically hydrated on the client
   state.message = 'Welcome to @fastify/vue!'
 }
@@ -41,3 +41,9 @@ export function getMeta () {
   }
 }
 </script>
+
+<style>
+.dummy {
+  color: black;
+}
+</style>
