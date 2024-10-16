@@ -1,7 +1,6 @@
 import { inject } from 'vue'
 import { useRoute, createMemoryHistory, createWebHistory } from 'vue-router'
 
-export const isServer = import.meta.env.SSR
 export const createHistory = isServer ? createMemoryHistory : createWebHistory
 export const serverRouteContext = Symbol('serverRouteContext')
 export const routeLayout = Symbol('routeLayout')
