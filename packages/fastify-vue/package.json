@@ -3,20 +3,23 @@
   "main": "index.js",
   "name": "@fastify/vue",
   "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "files": [
-    "virtual/create.js",
-    "virtual/root.vue",
-    "virtual/layout.vue",
-    "virtual/layouts/default.vue",
-    "virtual/context.js",
-    "virtual/mount.js",
-    "virtual/core.js",
-    "virtual/router.vue",
+    "plugin/index.js",
     "plugin/parsers.js",
+    "plugin/preload.js",
     "plugin/stores.js",
     "plugin/virtual.js",
-    "plugin/index.js",
+    "virtual/layouts/default.vue",
+    "virtual/context.js",
+    "virtual/create.js",
+    "virtual/hooks.js",
+    "virtual/index.js",
+    "virtual/layout.vue",
+    "virtual/mount.js",
+    "virtual/root.vue",
+    "virtual/router.vue",
+    "virtual/routes.js",
     "index.js",
     "rendering.js",
     "templating.js",
@@ -50,9 +53,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "lint": "eslint . --ext .js,.vue --fix"
   },
   "repository": {
     "type": "git",
