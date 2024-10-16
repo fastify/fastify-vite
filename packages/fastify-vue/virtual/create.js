@@ -1,7 +1,6 @@
 import { createApp, createSSRApp, reactive, ref } from 'vue'
 import { createRouter } from 'vue-router'
 import {
-  isServer,
   createHistory,
   serverRouteContext,
   routeLayout,
@@ -21,6 +20,7 @@ export default async function create (ctx) {
   const router = createRouter({ history, routes })
   const layoutRef = ref(ctxHydration.layout ?? 'default')
 
+  const isServer = import.meta.env.SSR
   instance.config.globalProperties.$isServer = isServer
 
   instance.provide(routeLayout, layoutRef)
