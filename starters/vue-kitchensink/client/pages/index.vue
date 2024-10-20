@@ -2,21 +2,13 @@
   <h1>{{ message }}</h1>
   <p><img :src="logo" /></p>
   <ul class="columns-2">
-    <li><router-link to="/using-data">/using-data</router-link> demonstrates how to 
-    leverage the <code>getData()</code> function 
-    and <code>useRouteContext()</code> to retrieve server data for a route.</li>
-    <li><router-link to="/using-store">/using-store</router-link> demonstrates how to 
-    retrieve server data and maintain it in the global state.</li>
-    <li><router-link to="/using-auth">/using-auth</router-link> demonstrates how to 
-    wrap a route in a custom layout component.</li>
-    <li><router-link to="/form/123">/form/123</router-link> demonstrates how to 
-    send a POST request with form data to a route with dynamic URL.</li>
-    <li><router-link to="/client-only">/client-only</router-link> demonstrates how to set 
-    up a route for rendering on the client only (disables SSR).</li>
-    <li><router-link to="/server-only">/server-only</router-link> demonstrates how to set 
-    up a route for rendering on the server only (sends no JavaScript).</li>
-    <li><router-link to="/streaming">/streaming</router-link> demonstrates how to set 
-    up a route for SSR in streaming mode.</li>
+    <li><router-link to="/using-data">/using-data</router-link> — <b>isomorphic data fetching</b>.</li>
+    <li><router-link to="/using-store">/using-store</router-link> — <b>universal</b> <code>reactive()</code> stores.</li>
+    <li><router-link to="/using-auth">/using-auth</router-link> — <b>custom layout</b>.</li>
+    <li><router-link to="/form/123">/form/123</router-link> — <code>POST</code> to dynamic route.</li>
+    <li><router-link to="/client-only">/client-only</router-link> — <b>disabling</b> SSR.</li>
+    <li><router-link to="/server-only">/server-only</router-link> — <code>0kb</code> JavaScript.</li>
+    <li><router-link to="/streaming">/streaming</router-link> — <b>streaming</b> SSR.</li>
   </ul>
 </template>
 
