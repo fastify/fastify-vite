@@ -12,12 +12,12 @@
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@vue/server-renderer": "^3.5.4",
-    "devalue": "^4.3.3",
-    "fastify": "5.0.0",
+    "devalue": "catalog:",
+    "fastify": "catalog:",
     "ky": "^0.33.3",
     "ky-universal": "^0.11.0",
-    "vue": "^3.5.4",
-    "vue-router": "^4.4.4"
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -30,6 +30,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-vue": "^9.28.0",
-    "vite": "^5.4.4"
+    "vite": "catalog:"
   }
 }

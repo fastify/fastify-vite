@@ -12,9 +12,9 @@
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@solidjs/router": "^0.9.1",
-    "devalue": "^4.3.3",
-    "fastify": "5.0.0",
-    "solid-js": "^1.8.22"
+    "devalue": "catalog:",
+    "fastify": "catalog:",
+    "solid-js": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -27,7 +27,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-solid": "^0.9.4",
-    "vite": "^5.4.4",
+    "vite": "catalog:",
     "vite-plugin-solid": "^2.10.2"
   }
 }
