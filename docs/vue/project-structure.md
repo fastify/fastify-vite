@@ -17,7 +17,7 @@ A minimal **`@fastify/vue`** project may look like the following:
 └── package.json
 ```
 
-There are of course many other boilerplate files that comprise the setup, but they don't need to exist in your project directory for your application to run. 
+There are of course many other boilerplate files that comprise the setup, but they don't need to exist in your project directory for your application to run.
 
 If they do exist, they override the defaults. This is made possible via [smart imports](/vue/project-structure#smart-imports), covered later in this document. It is a clean and straightforward way to avoid a massive number of boilerplate files for projects who do well with the defaults, while still easily allowing for customization and extensibility.
 
@@ -69,9 +69,9 @@ It needs to import and register `@fastify/vue/plugin`.
 </td>
 <td>
 
-The Vite application module loaded by `@fastify/vite`. 
+The Vite application module loaded by `@fastify/vite`.
 
-It must export an object with `create`, `routes` and `context`. 
+It must export an object with `create`, `routes` and `context`.
 
 These are detailed further below on this page.
 
@@ -141,8 +141,8 @@ const server = Fastify({
   }
 })
 
-await server.register(FastifyVite, { 
-  root: import.meta.url, 
+await server.register(FastifyVite, {
+  root: import.meta.url,
   renderer: '@fastify/vue',
 })
 
@@ -161,7 +161,7 @@ const path = fileURLToPath(import.meta.url)
 export default {
   root: join(dirname(path), 'client'),
   plugins: [
-    viteVue(), 
+    viteVue(),
     fastifyVue(),
   ],
 }
@@ -170,8 +170,8 @@ export default {
 import routes from '/:routes.js'
 import create from '/:create.js'
 
-export default { 
-  context: import('/:context.js'), 
+export default {
+  context: import('/:context.js'),
   routes,
   create,
 }
@@ -221,15 +221,15 @@ img {
 
 [vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base
 
-This example is actually provided as the [vue-base][vue-base] starter. 
+This example is actually provided as the [vue-base][vue-base] starter.
 
-In this example, `server.js` is the Fastify server and also the place where both `@fastify/vite` and `@fastify/vue` are imported to set up your application. 
+In this example, `server.js` is the Fastify server and also the place where both `@fastify/vite` and `@fastify/vue` are imported to set up your application.
 
 Like in any `@fastify/vite` application, `client/index.js` are the portions of your client code that get loaded by the server. It exports your application's factory function (`create`), the application routes and the [route context](/vue/route-context) initialization module, all loaded via [smart imports](/vue/project-structure#smart-imports), covered later on this page.
 
-Notice that `client/index.html` needs to exist as the [front-and-central entry point](https://vitejs.dev/guide/#index-html-and-project-root) of your application, and `@fastify/vue` has its own structure for it. 
+Notice that `client/index.html` needs to exist as the [front-and-central entry point](https://vitejs.dev/guide/#index-html-and-project-root) of your application, and `@fastify/vue` has its own structure for it.
 
-Also notice that in `vite.config.js`, `@fastify/vue/plugin` needs to be registered so that [**smart imports**](/vue/project-structure#smart-imports) can work. 
+Also notice that in `vite.config.js`, `@fastify/vue/plugin` needs to be registered so that [**smart imports**](/vue/project-structure#smart-imports) can work.
 
 ## Smart imports
 
@@ -263,11 +263,11 @@ The way this works is via the `/:` prefix.
 
 </div>
 
-Notice how `client/index.html` imports the Vue application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.js` and the [route context](/vue/route-context) initialization module from `/:context.js`. 
+Notice how `client/index.html` imports the Vue application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.js` and the [route context](/vue/route-context) initialization module from `/:context.js`.
 
 What this prefix does is **first check if the file exists** in your Vite project root directory, **and if not**, provide the **default versions** stored inside the `@fastify/vue` package instead.
-  
-Below is a quick rundown of all smart imports available. 
+
+Below is a quick rundown of all smart imports available.
 
 <table>
 <thead>

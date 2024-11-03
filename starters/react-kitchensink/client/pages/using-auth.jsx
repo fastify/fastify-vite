@@ -32,7 +32,7 @@ export default function Index (props) {
       </p>
       <p>⁂</p>
       <p>This example is exactly the same as <Link to="/using-store">/using-store</Link>,
-      except it's wrapped in a custom layout which blocks it until 
+      except it's wrapped in a custom layout which blocks it until
       <code>user.authenticated</code> is <code>true</code> in the global state.</p>
     </>
   )

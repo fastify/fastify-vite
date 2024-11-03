@@ -29,7 +29,7 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do 
+      <p>When you navigate away from this route, any additions to the to-do
       list are not lost, because they're bound to the global application state.</p>
     </>
   )

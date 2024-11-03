@@ -4,7 +4,7 @@ As a means of supporting my work on this project, [I've](https://hire.jonasgalve
 
 ## Expertise
 
-I'm an expert in JavaScript and Node.js performance, and SSR technology in general. I'm a former core contributor to the [Nuxt.js](https://nuxt.com/) framework and have been involved with the Fastify project for nearly three years since I started working on **`@fastify/vite`**. Previously I was a Python engineer for 10+ years. 
+I'm an expert in JavaScript and Node.js performance, and SSR technology in general. I'm a former core contributor to the [Nuxt.js](https://nuxt.com/) framework and have been involved with the Fastify project for nearly three years since I started working on **`@fastify/vite`**. Previously I was a Python engineer for 10+ years.
 
 Read more about my background [here](https://hire.jonasgalvez.com.br/about/).
 

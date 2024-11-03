@@ -32,7 +32,7 @@ await server.register(FastifyVite, {
 
 > If you're familiar with [Nuxt.js](https://nuxtjs.org/), you can think of `context.js` as a [Nuxt.js plugin](https://nuxtjs.org/docs/directory-structure/plugins/), in the way it **runs twice**, once on the server before SSR, and another on the client during the hydration phase. And also because it can be used to make dependencies available to all route modules and initializes the **global state**.
 
-The `client/context.js` file you see below is taken from the [`react-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template, which includes everything from [`react-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-base) plus a few example pages demonstrating all of **`@fastify/react`**'s features. 
+The `client/context.js` file you see below is taken from the [`react-kitchensink`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template, which includes everything from [`react-base`](https://github.com/fastify/fastify-vite/tree/dev/starters/react-base) plus a few example pages demonstrating all of **`@fastify/react`**'s features.
 
 Make sure to see the page examples in the other snippet tabs:
 
@@ -42,9 +42,9 @@ Make sure to see the page examples in the other snippet tabs:
 // to automatically perform JSON requests
 import { sendJSON } from '/fetch.js'
 
-// The default export function runs exactly once on 
-// the server and once on the client during the 
-// first render, that is, it's not executed again 
+// The default export function runs exactly once on
+// the server and once on the client during the
+// first render, that is, it's not executed again
 // in subsquent client-side navigation via React Router.
 export default (ctx) => {
   if (ctx.server) {
@@ -52,8 +52,8 @@ export default (ctx) => {
   }
 }
 
-// State initializer, must be a function called state 
-// as this is a special context.js export and needs 
+// State initializer, must be a function called state
+// as this is a special context.js export and needs
 // special processing, e.g., serialization and hydration
 export function state () {
   return {
@@ -64,7 +64,7 @@ export function state () {
   }
 }
 
-// Grouped actions that operate on the state. This export 
+// Grouped actions that operate on the state. This export
 // could be named anything, no special processing involved.
 export const actions = {
   authenticate (state) {
@@ -122,9 +122,9 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do 
+      <p>When you navigate away from this route, any additions to the to-do
       list will be lost, because they're bound to this route component only.</p>
-      <p>See the <Link to="/using-store">/using-store</Link> example to learn 
+      <p>See the <Link to="/using-store">/using-store</Link> example to learn
       how to use the application global state for it.
       </p>
     </>
@@ -164,7 +164,7 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do 
+      <p>When you navigate away from this route, any additions to the to-do
       list are not lost, because they're bound to the global application state.</p>
     </>
   )
@@ -216,7 +216,7 @@ On the client, this becomes a [valtio](https://github.com/pmndrs/valtio) object.
 </td>
 <td>
 
-Automatically populated by the `getData()` function. 
+Automatically populated by the `getData()` function.
 
 Covered in [Data fetching](/react/route-modules#data-fetching).
 
@@ -298,6 +298,6 @@ flowchart TD
 
 First the `default` function export from `context.js` (if present) is executed. This is where you can manually feed global server data into your application by populating the global state (the route context's `state` property), which is automatically hydrated on the client.
 
-Then `getData()` runs — which populates the route context's `data` property, and is also automatically hydrated on the client. Then `getMeta()`, which populates the route context's `head` property. 
+Then `getData()` runs — which populates the route context's `data` property, and is also automatically hydrated on the client. Then `getMeta()`, which populates the route context's `head` property.
 
 Then `onEnter()` runs and finally your route component renders.

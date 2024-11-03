@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const virtualRoot = resolve(__dirname, '..', 'virtual')
 
-const virtualModules = [ 
+const virtualModules = [
   'mount.js',
   'mount.ts',
   'routes.js',
@@ -97,7 +97,7 @@ export function createPlaceholderExports (source) {
       case 'default':
         pExports += `export default {}\n`
         break
-      case 'declaration': 
+      case 'declaration':
         pExports += `export const ${exp.name} = {}\n`
         break
     }

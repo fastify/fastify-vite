@@ -28,8 +28,8 @@ server.decorate('db', {
 })
 
 await server.register(FastifyFormBody)
-await server.register(FastifyVite, { 
-  root: import.meta.url, 
+await server.register(FastifyVite, {
+  root: import.meta.url,
   renderer: '@fastify/htmx',
 })
 

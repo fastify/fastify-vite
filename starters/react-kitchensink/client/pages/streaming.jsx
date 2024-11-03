@@ -12,7 +12,7 @@ export default function Index () {
 
 function Message () {
   const message = afterSeconds({
-  	id: 'index', 
+  	id: 'index',
   	message: 'Delayed by Suspense API',
   	seconds: 5
   })

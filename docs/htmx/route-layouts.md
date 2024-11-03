@@ -1,6 +1,6 @@
 # Route Layouts
 
-`@fastify/react` will automatically load layouts from the `layouts/` folder. 
+`@fastify/react` will automatically load layouts from the `layouts/` folder.
 
 By default, the `/:layouts/default.jsx` [**smart import**](/react/project-structure#smart-imports) is used. If a project is missing `/layouts/default.jsx` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
@@ -16,7 +16,7 @@ export default function Layout ({ children }) {
 }
 ```
 
-You assign a layout to a route by exporting `layout`. 
+You assign a layout to a route by exporting `layout`.
 
 ```js
 export const layout = 'auth'

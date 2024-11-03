@@ -7,7 +7,7 @@ import { renderToString } from 'vue/server-renderer'
 export async function main (dev) {
   const server = Fastify()
 
-  await server.register(FastifyVite, { 
+  await server.register(FastifyVite, {
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction ({ createApp }) {

@@ -6,7 +6,7 @@
 
 ## Server only
 
-If a route module exports `serverOnly` set to `true`, only SSR will take place. 
+If a route module exports `serverOnly` set to `true`, only SSR will take place.
 
 The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
 

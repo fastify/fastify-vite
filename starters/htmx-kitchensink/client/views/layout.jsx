@@ -18,8 +18,8 @@ export default function ({ app, req, reply }) {
       </ul>
       <form {...{'hx-on::after-request': 'this.reset()' }}>
         <input name="inputValue" />
-        <button 
-          hx-post="/list/add" 
+        <button
+          hx-post="/list/add"
           hx-swap="beforeend"
           hx-target="previous .list">Add</button>
       </form>
@@ -28,7 +28,7 @@ export default function ({ app, req, reply }) {
       </p>
       <p>⁂</p>
       <p>This example is exactly the same as <a ree="/data">/data</a>,
-      except it's wrapped in a custom layout which blocks it until 
+      except it's wrapped in a custom layout which blocks it until
       <code>req.session.user</code> exists.</p>
     </>
   )

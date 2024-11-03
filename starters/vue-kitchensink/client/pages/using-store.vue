@@ -1,7 +1,7 @@
 <template>
   <h2>Todo List — Using Store</h2>
   <ul>
-    <li 
+    <li
       v-for="(item, i) in todoList.state"
       :key="`item-${i}`">
       {{ item }}
@@ -15,7 +15,7 @@
     <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do 
+  <p>When you navigate away from this route, any additions to the to-do
   list are not lost, because they're bound to the global application state.</p>
 </template>
 

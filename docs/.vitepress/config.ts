@@ -158,8 +158,8 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Vite Plugin', link: 'vue/vite-plugin' },
-        { 
-          text: 'Virtual Modules', 
+        {
+          text: 'Virtual Modules',
           link: 'vue/virtual-modules',
           items: [
             { text: '/:root.vue', link: 'vue/virtual-modules#root-vue' },
@@ -178,8 +178,8 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Vite Plugin', link: 'react/vite-plugin' },
-        { 
-          text: 'Virtual Modules', 
+        {
+          text: 'Virtual Modules',
           link: 'react/virtual-modules',
           items: [
             { text: '/:root.jsx', link: 'react/virtual-modules#root-jsx' },
@@ -226,8 +226,8 @@ function Vue (collapsed = false) {
     text: '@fastify/vue',
     base: '/vue/',
     items: [
-      { 
-        text: 'Getting Started', 
+      {
+        text: 'Getting Started',
         link: 'index',
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
@@ -235,8 +235,8 @@ function Vue (collapsed = false) {
           { text: 'Known limitations', link: 'index#known-limitations' }
         ],
       },
-      { 
-        text: 'Project Structure', 
+      {
+        text: 'Project Structure',
         link: 'project-structure',
         items: [
           { text: 'Essential files', link: 'project-structure#essential-files' },
@@ -244,24 +244,24 @@ function Vue (collapsed = false) {
           { text: 'Special directories', link: 'project-structure#special-directories' }
         ]
       },
-      { 
-        text: 'Router Setup', 
+      {
+        text: 'Router Setup',
         link: 'router-setup',
         items: [
           { text: 'Routes location', link: 'router-setup#routes-location' },
           { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
         ],
       },
-      { 
-        text: 'Route Modules', 
+      {
+        text: 'Route Modules',
         link: 'route-modules',
         items: [
           { text: 'Data fetching', link: 'route-modules#data-fetching' },
           { text: 'Page metadata', link: 'route-modules#page-metadata' },
           { text: 'The onEnter event', link: 'route-modules#the-onenter-event' }
-        ],        
+        ],
       },
-      { 
+      {
         text: 'Route Context',
         link: 'route-context',
         items: [
@@ -282,7 +282,7 @@ function React (collapsed = false) {
     text: '@fastify/react',
     base: '/react/',
     items: [
-      { 
+      {
         text: 'Getting Started',
         link: 'index',
         items: [
@@ -291,8 +291,8 @@ function React (collapsed = false) {
           { text: 'Known limitations', link: 'index#known-limitations' }
         ],
       },
-      { 
-        text: 'Project Structure', 
+      {
+        text: 'Project Structure',
         link: 'project-structure',
         items: [
           { text: 'Essential files', link: 'project-structure#essential-files' },
@@ -300,24 +300,24 @@ function React (collapsed = false) {
           { text: 'Special directories', link: 'project-structure#special-directories' }
         ]
       },
-      { 
-        text: 'Router Setup', 
+      {
+        text: 'Router Setup',
         link: 'router-setup',
         items: [
           { text: 'Routes location', link: 'router-setup#routes-location' },
           { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
         ],
       },
-      { 
-        text: 'Route Modules', 
+      {
+        text: 'Route Modules',
         link: 'route-modules',
         items: [
           { text: 'Data fetching', link: 'route-modules#data-fetching' },
           { text: 'Page metadata', link: 'route-modules#page-metadata' },
           { text: 'The onEnter event', link: 'route-modules#the-onenter-event' }
-        ],        
+        ],
       },
-      { 
+      {
         text: 'Route Context',
         link: 'route-context',
         items: [
@@ -327,7 +327,7 @@ function React (collapsed = false) {
         ]
       },
       { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Rendering Modes', link: 'rendering-modes' } 
+      { text: 'Rendering Modes', link: 'rendering-modes' }
     ]
   }
 }

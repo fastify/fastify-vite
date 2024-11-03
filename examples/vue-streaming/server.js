@@ -9,7 +9,7 @@ import renderer from './renderer.js'
 export async function main (dev) {
   const server = Fastify()
   const root = import.meta.url
-  
+
   await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
     root,

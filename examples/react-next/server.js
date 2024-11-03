@@ -12,12 +12,12 @@ import renderer from './renderer.js'
 
 export async function main (dev) {
   const server = Fastify({ ignoreTrailingSlash: true })
-  
+
   server.decorate('fetchJSON', async (path) => {
     const response = await fetch(`http://localhost:3000${path}`)
     return response.json()
   })
-  
+
   server.get('/api/todo-list', (_, reply) => {
     reply.send([
       'Do laundry',

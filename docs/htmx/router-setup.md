@@ -2,7 +2,7 @@
 
 # Router Setup
 
-By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in your Vite configuration file. 
+By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in your Vite configuration file.
 
 The route paths are **dynamically inferred from the directory structure**, very much like **Next.js**, and passed to the **React Router** instance in `/:create.js`
 
