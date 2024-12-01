@@ -12,7 +12,7 @@ export async function main (dev) {
     },
   })
 
-  await server.register(FastifyVite, { 
+  await server.register(FastifyVite, {
     root: import.meta.url,
     renderer,
   })

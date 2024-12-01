@@ -105,7 +105,7 @@ Enables **streaming** server-side rendering.
 
 ## Data fetching
 
-**`@fastify/react`** implements the `getServerSideProps()` style of data fetching via the `getData()` route module export. 
+**`@fastify/react`** implements the `getServerSideProps()` style of data fetching via the `getData()` route module export.
 
 It will run server-side before any SSR takes place, so any data fetched is made available to the route component (on the [route context](/react/route-context)) before it even starts to render. During first render, any data retrieved on the server is automatically sent to the client for hydration, as part of the the route context.
 
@@ -147,7 +147,7 @@ interface RouteMeta {
 }
 ```
 
-It receives the [route context](/react/route-context) as first parameter and runs right after `getData()`, giving you access to `data` when generate your tags. 
+It receives the [route context](/react/route-context) as first parameter and runs right after `getData()`, giving you access to `data` when generate your tags.
 
 It will populate the `head` object in the [route context](/react/route-context).
 

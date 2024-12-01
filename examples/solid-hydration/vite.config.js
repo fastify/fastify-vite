@@ -5,7 +5,7 @@ import viteSolid from 'vite-plugin-solid'
 export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [
-    viteFastify(), 
+    viteFastify(),
     viteSolid({ ssr: true })
   ],
   ssr: {

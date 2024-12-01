@@ -1,9 +1,9 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { 
+import {
   prefixes,
-  resolveId, 
-  loadSource, 
+  resolveId,
+  loadSource,
   loadVirtualModule,
   createPlaceholderExports
 } from './virtual.js'
@@ -81,12 +81,12 @@ function config (config, { isSsrBuild, command }) {
 function onwarn (warning, rollupWarn) {
   if (
     !(
-      warning.code == 'PLUGIN_WARNING' && 
+      warning.code == 'PLUGIN_WARNING' &&
       warning.message?.includes?.('dynamic import will not move module into another chunk')
     )
     &&
     !(
-      warning.code == 'UNUSED_EXTERNAL_IMPORT' && 
+      warning.code == 'UNUSED_EXTERNAL_IMPORT' &&
       warning.exporter === 'vue'
     )
   ) {

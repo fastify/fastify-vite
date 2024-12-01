@@ -6,7 +6,7 @@ import viteFastifyVue from '@fastify/vue/plugin'
 export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [
-    viteVue(), 
+    viteVue(),
     viteFastify(),
     viteFastifyVue(),
   ],

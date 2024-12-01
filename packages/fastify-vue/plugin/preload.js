@@ -34,9 +34,9 @@ export async function closeBundle() {
         jsPreloads += `  <link rel="modulepreload" href="${this.resolvedConfig.base}${js}">\n`
       }
       const pageHtml = await appendHead(
-        this.indexHtml, 
-        imagePreloads, 
-        cssPreloads, 
+        this.indexHtml,
+        imagePreloads,
+        cssPreloads,
         jsPreloads
       )
       writeHtml(page, pageHtml, distDir)

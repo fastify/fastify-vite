@@ -7,11 +7,11 @@ This [Fastify][fastify] plugin allows you to run Vite's development server as mi
 
 ## Why not a framework?
 
-The key principle behind **@fastify/vite** is minimalism, based on the belief that [Fastify][fastify] and [Vite][vite] alone are good enough core foundations. 
+The key principle behind **@fastify/vite** is minimalism, based on the belief that [Fastify][fastify] and [Vite][vite] alone are good enough core foundations.
 
 Instead of adopting the arbitrary semantics and runtime of a full-blown SSR framework like [Next.js][next] or [Nuxt.js][nuxt], the idea is to **just use Fastify** for your backend needs, and **just use Vite** to build your client application, and still be able to run them together in a happy [modular monolith](https://blog.platformatic.dev/build-and-deploy-a-modular-monolith-with-platformatic).
 
-Your client application can be written of course in whatever framework you like, without losing the ability to also perform SSR if needed. 
+Your client application can be written of course in whatever framework you like, without losing the ability to also perform SSR if needed.
 
 In addition to the basic integration building blocks required to run Vite's development server as a middleware and serving your Vite application's production bundle, this plugin offers granular hooks that let you customize your Fastify server according to what your client application module provides, allowing you to essentially **build your own framework**.
 
@@ -27,7 +27,7 @@ These packages are implemented the same way, following the specification found i
 
 The vanilla React SPA (Single Page Application) project [available in `examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples/react-vanilla-spa) is a good starting point to demonstrate the basics of @fastify/vite. The only difference from this to running Vite's own development server directly is that it's executed as a middleware for the Fastify server, allowing other code and custom routes to be added. Vite's development server middleware only runs if you enable it, otherwise it will serve the production bundle (result of running `vite build`), whose location is automatically inferred from the Vite configuration file.
 
-This basic SPA setup requires a Vite configuration file, the Fastify server file and the appropriate commands in `package.json` to run the server in **development and production modes**, and to **build** your Vite application. 
+This basic SPA setup requires a Vite configuration file, the Fastify server file and the appropriate commands in `package.json` to run the server in **development and production modes**, and to **build** your Vite application.
 
 To run this project, `fastify`, `@fastify/vite`, `react` and `react-dom` are the only dependencies required. Vite is only required in development.
 
@@ -91,8 +91,8 @@ import { resolve, dirname } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
 import viteReact from '@vitejs/plugin-react'
 
-export default { 
-  root: resolve(import.meta.dirname, 'client'), 
+export default {
+  root: resolve(import.meta.dirname, 'client'),
   plugins: [
     viteFastify(),
     viteReact({ jsxRuntime: 'classic' }),
@@ -106,7 +106,7 @@ Note that the location of this cached JSON file is determined by [find-cache-dir
 
 :::
 
-In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite. 
+In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite.
 
 ::: code-group
 ```json [package.json]
@@ -172,7 +172,7 @@ This is what the directory structure for the example above looks like:
 └── package.json
 ```
 
-In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`.  This is the recommended approach. 
+In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`.  This is the recommended approach.
 
 ::: warning
 It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines your **project root** in Vite's context.

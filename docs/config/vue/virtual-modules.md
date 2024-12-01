@@ -42,7 +42,7 @@ Implements `useRouteContext()` and `createBeforeEachHandler()`, used by `core.js
 
 ## `/:create.js`
 
-This virtual module creates your root Vue component. 
+This virtual module creates your root Vue component.
 
 This is where `root.vue` is imported.
 

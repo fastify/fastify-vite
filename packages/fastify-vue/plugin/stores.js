@@ -27,7 +27,7 @@ export const ${key} = new Proxy({
   key: '${key}',
   wrappers: {},
   context: null,
-}, { 
+}, {
   get: storeGetter
 })
 `

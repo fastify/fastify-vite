@@ -1,7 +1,7 @@
 <template>
   <h2>Todo List — Using Custom Layout</h2>
   <ul>
-    <li 
+    <li
       v-for="(item, i) in todoList.state"
       :key="`item-${i}`">
       {{ item }}
@@ -16,7 +16,7 @@
   </p>
   <p>⁂</p>
   <p>This example is exactly the same as <router-link to="/using-store">/using-store</router-link>,
-  except it's wrapped in a custom layout which blocks it until 
+  except it's wrapped in a custom layout which blocks it until
   <code>user.authenticated</code> is <code>true</code> in the global state.</p>
 </template>
 

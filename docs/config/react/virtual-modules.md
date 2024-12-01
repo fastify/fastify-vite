@@ -25,7 +25,7 @@ Note that a top-level `<Suspense>` wrapper is necessary because **`@fastify/reac
 
 ## `/:core.jsx`
 
-Implements `useRouteContext()`, `App` and `AppRoute`. 
+Implements `useRouteContext()`, `App` and `AppRoute`.
 
 `App` is imported by `root.jsx` and encapsulates **`@fastify/react`**'s route component API.
 
@@ -35,7 +35,7 @@ Implements `useRouteContext()`, `App` and `AppRoute`.
 
 ## `/:create.jsx`
 
-This virtual module creates your root React component. 
+This virtual module creates your root React component.
 
 This is where `root.jsx` is imported.
 

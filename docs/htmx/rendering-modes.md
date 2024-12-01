@@ -4,7 +4,7 @@
 
 ## Server only
 
-If a route module exports `serverOnly` set to `true`, only SSR will take place. 
+If a route module exports `serverOnly` set to `true`, only SSR will take place.
 
 The client gets the server-side rendered markup without any accompanying JavaScript or data hydration.
 
@@ -12,7 +12,7 @@ You should use this setting to deliver lighter pages when there's no need to run
 
 ```vue
 export const serverOnly = true
-  
+
 export function Index () {
   return <p>No JavaScript sent to the browser.</p>
 }
@@ -28,7 +28,7 @@ You can use this setting to save server resources on internal pages where SSR ma
 
 ```vue
 export const clientOnly = true
-  
+
 export function Index () {
   return <p>No pre-rendered HTML sent to the browser.</p>
 }
@@ -55,7 +55,7 @@ export default function Index () {
 
 function Message () {
   const message = afterSeconds({
-    id: 'index', 
+    id: 'index',
     message: 'Delayed by Suspense API',
     seconds: 5
   })

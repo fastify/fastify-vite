@@ -1,6 +1,6 @@
 # Route Layouts
 
-`@fastify/vue` will automatically load layouts from the `layouts/` folder. 
+`@fastify/vue` will automatically load layouts from the `layouts/` folder.
 
 By default, the `/:layouts/default.vue` [**smart import**](/vue/project-structure#smart-imports) is used. If a project is missing `/layouts/defaults.vue` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
@@ -12,7 +12,7 @@ By default, the `/:layouts/default.vue` [**smart import**](/vue/project-structur
 </template>
 ```
 
-You assign a layout to a route by exporting `layout`. 
+You assign a layout to a route by exporting `layout`.
 
 ```js
 export const layout = 'auth'

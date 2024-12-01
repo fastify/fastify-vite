@@ -22,7 +22,7 @@ console.log(
 
 The snippet above prints out `<main>This will be inserted</main>`.
 
-By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is registered as `reply.html()`. In the snippet below you can see how `createHtmlFunction()` is defined by default in `@fastify/vite`. 
+By default, that function is used internally by the `createHtmlFunction()` configuration option, which is responsible for returning the function that is registered as `reply.html()`. In the snippet below you can see how `createHtmlFunction()` is defined by default in `@fastify/vite`.
 
 Notice that `createHtmlTemplateFunction()` is not only a utility you can import from `@fastify/vite/utils`, but is also set as configuration hook within `@fastify/vite`. If you want to use a different templating engine, just provide a different `createHtmlTemplateFunction()` implementation and it will be automatically used by the [**default definition of `createHtmlFunction()`**](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L58):
 
@@ -44,6 +44,6 @@ function createHtmlFunction (source, scope, config) {
 }
 ```
 
-Notice that if no parameter is passed to `reply.html()`, it will automatically run `reply.render()` and use its result implicitly. 
+Notice that if no parameter is passed to `reply.html()`, it will automatically run `reply.render()` and use its result implicitly.
 
 In many cases, it's very likely you'll want to provide your own `createHtmlFunction()` hook through **`@fastify/vite`**'s plugin options. For instance, the [`vue-streaming`](https://github.com/fastify/fastify-vite/tree/dev/examples/vue-streaming) example demonstrates a custom implementation that works with a stream instead of a raw string. And of course the core renders [`@fastify/vue`][fastify-vue] and [`@fastify/react`][fastify-react] have their own implementations as well.

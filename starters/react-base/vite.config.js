@@ -9,7 +9,7 @@ const path = fileURLToPath(import.meta.url)
 export default {
   root: join(dirname(path), 'client'),
   plugins: [
-    viteReact(), 
+    viteReact(),
     viteFastifyReact(),
   ],
   ssr: {

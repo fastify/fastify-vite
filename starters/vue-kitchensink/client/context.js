@@ -2,9 +2,9 @@
 // to automatically perform JSON requests
 import { sendJSON } from '/fetch.js'
 
-// The default export function runs exactly once on 
-// the server and once on the client during the 
-// first render, that is, it's not executed again 
+// The default export function runs exactly once on
+// the server and once on the client during the
+// first render, that is, it's not executed again
 // in subsquent client-side navigation via React Router.
 export default (ctx) => {
   if (ctx.server) {
@@ -12,8 +12,8 @@ export default (ctx) => {
   }
 }
 
-// State initializer, must be a function called state 
-// as this is a special context.js export and has 
+// State initializer, must be a function called state
+// as this is a special context.js export and has
 // special processing, e.g., serialization and hydration
 export function state () {
   return {
@@ -24,7 +24,7 @@ export function state () {
   }
 }
 
-// Grouped actions that operate on the state. This export 
+// Grouped actions that operate on the state. This export
 // could be named anything, no special processing involved.
 export const actions = {
   authenticate (state) {

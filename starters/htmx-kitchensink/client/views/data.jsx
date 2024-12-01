@@ -23,9 +23,9 @@ export default async function ({ app, req, reply }) {
       </ul>
       <form>
         <input name="inputValue" />
-        <button 
+        <button
           id="add-button"
-          hx-post="/list/add" 
+          hx-post="/list/add"
           hx-swap="beforeend"
           hx-target=".list">Add</button>
       </form>

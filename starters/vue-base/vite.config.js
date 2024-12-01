@@ -10,7 +10,7 @@ const path = fileURLToPath(import.meta.url)
 export default {
   root: join(dirname(path), 'client'),
   plugins: [
-    viteVue(), 
+    viteVue(),
     viteFastify(),
     viteFastifyVue(),
   ],

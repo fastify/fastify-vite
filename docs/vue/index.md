@@ -10,7 +10,7 @@ Below is an overview of all individual documentation topics and the order in whi
 
 - [Project Structure](/vue/project-structure) covers the structure of a **`@fastify/vue`** project, configuration, special folders and others conventions employed.
 - [Router Setup](/vue/router-setup) covers how route modules get registered as actual routes, both on the server and the client.
-- [Route Modules](/vue/route-modules) covers what makes up route modules, what special exports they have and how they work. 
+- [Route Modules](/vue/route-modules) covers what makes up route modules, what special exports they have and how they work.
 - [Route Context](/vue/route-context) covers the universal **route context** initialization module and the `useRouteContext()` hook, available to all route modules and route layouts.
 - [Route Layouts](/vue/route-layouts) covers **route layout modules**.
 - [Rendering Modes](/vue/rendering-modes) covers all different route module **rendering modes**.
@@ -28,7 +28,7 @@ Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't r
 
 ### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-base</code></a>
 
-The **vue-base** starter template includes just about the minimum set of files to get your `@fastify/vue` application going. 
+The **vue-base** starter template includes just about the minimum set of files to get your `@fastify/vue` application going.
 
 It contains no embedded examples other than `pages/index.vue`, and no additional dependencies.
 
