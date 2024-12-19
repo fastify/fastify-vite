@@ -52,3 +52,15 @@ export default {
 }
 ```
 
+## Scroll behavior
+
+Scroll behavior can be set by exporting the function `scrollBehavior` in `root.vue`. See [Scroll Bahavior](https://router.vuejs.org/guide/advanced/scroll-behavior) on how to use it.
+
+In your `root.vue` file:  
+
+```js
+export function scrollBehavior() {
+  // Always scroll to the top
+  return { top: 0, left: 0 };
+}
+```

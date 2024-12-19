@@ -16,8 +16,13 @@ export default async function create (ctx) {
     ? createApp(root.default)
     : createSSRApp(root.default)
 
+  let scrollBehavior = null
+  if (typeof root.scrollBehavior === "function") {
+    scrollBehavior = root.scrollBehavior
+  }
+
   const history = createHistory()
-  const router = createRouter({ history, routes })
+  const router = createRouter({ history, routes, scrollBehavior })
   const layoutRef = ref(ctxHydration.layout ?? 'default')
 
   const isServer = import.meta.env.SSR
