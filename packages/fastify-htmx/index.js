@@ -150,6 +150,9 @@ async function findClientImports(
   const specifiers = (
     await Promise.all(
       findStaticImports(source).map(async ({ specifier }) => {
+        if (extname(specifier)) {
+          return specifier
+        }
         const resolved = resolve(dirname(path), specifier)
 
         // resolve the file extension which allows for
