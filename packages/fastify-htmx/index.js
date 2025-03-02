@@ -19,7 +19,7 @@ async function prepareClient(clientModule, scope, config) {
 
   let defaultLayout = null
   try {
-    defaultLayout = await resolveLayout(config.vite.root, 'default')
+    defaultLayout = await resolveLayoutFilePath(config.vite.root, 'default')
   } catch (e) {
     scope.log.info(
       'No default layout specified. Falling back to virtual layout.',
@@ -39,17 +39,17 @@ async function prepareClient(clientModule, scope, config) {
         !scope.hasReplyDecorator(prop) && scope.decorateReply(prop, null)
       }
     }
-    // Pregenerate prefetching <head> elements
-    let assets = { css: [], svg: [], js: [] }
-    // Extract potential layout imports
+    // prefetch layout file path
     let layout = null
     if (route.layout) {
       layout = await resolveLayout(config.vite.root, route.layout)
     } else if (defaultLayout) {
       layout = defaultLayout
     }
-    if (layout) {
-      assets = await findClientImports(config.vite.root, layout)
+    // Pregenerate prefetching <head> elements
+    let assets = { css: [], svg: [], js: [] }
+    if (layoutFilePath) {
+      assets = await findClientImports(config.vite.root, layoutFilePath)
     }
     // Extract the route's imports
     const { css, svg, js } = await findClientImports(
@@ -196,12 +196,24 @@ async function findClientImports(
   return { js, css, svg }
 }
 
-async function resolveLayout(root, layout) {
-  const fullPath = await resolvePath(
-    join(root, 'layouts', layout || 'default'),
-    {
-      extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
-    },
-  )
-  return fullPath.replace(root, '')
+/**
+ * @type Map<string,string>
+ */
+const layoutFilePathCache = new Map()
+/**
+ * Calculates the relative path and extension of the given layout name
+ * @param {string} root The root directory to search for the layout in
+ * @param {string} layout The layout file name (without extension)
+ * @returns {Promise<string>}
+ */
+async function resolveLayoutFilePath(root, layout) {
+  if (layoutFilePathCache.has(layout)) {
+    return Promise.resolve(layoutFilePathCache.get(layout))
+  }
+  const fullPath = await resolvePath(join(root, 'layouts', layout), {
+    extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
+  })
+  const relativePath = fullPath.replace(root, '')
+  layoutFilePathCache.set(layout, relativePath)
+  return relativePath
 }
