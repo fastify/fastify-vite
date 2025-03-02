@@ -177,6 +177,7 @@ async function findClientImports(
   path,
   { js = [], css = [], svg = [] } = {},
 ) {
+  // Don't re-evaluate the file's dependencies if we've processed it before
   if (clientImportsCache.has(path)) {
     return clientImportsCache.get(path)
   }
@@ -227,11 +228,16 @@ async function findClientImports(
     }
     if (specifier.match(/\.((m?js)|(tsx?)|(jsx?))$/)) {
       const submoduleImports = await findClientImports(root, resolved)
+      // always add JS submodules to the cache
       clientImportsCache.set(resolved, submoduleImports)
       js.push(...submoduleImports.js)
       css.push(...submoduleImports.css)
       svg.push(...submoduleImports.svg)
     }
+  }
+  // Always cache layouts, they're checked often
+  if (path.includes('layouts')) {
+    clientImportsCache.set(path, { js: [...js], css: [...css], svg: [...svg] })
   }
   return { js, css, svg }
 }
