@@ -179,7 +179,8 @@ async function findClientImports(
 ) {
   // Don't re-evaluate the file's dependencies if we've processed it before
   if (clientImportsCache.has(path)) {
-    return clientImportsCache.get(path)
+    const cached = clientImportsCache.get(path)
+    return { js: [...cached.js], css: [...cached.css], svg: [...cached.svg] }
   }
   const source = await readFile(join(root, path), 'utf8')
 
