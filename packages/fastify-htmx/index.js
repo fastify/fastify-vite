@@ -40,12 +40,16 @@ async function prepareClient(clientModule, scope, config) {
       }
     }
     // prefetch layout file path
-    let layout = null
+    let layoutFilePath = null
     if (route.layout) {
-      layout = await resolveLayout(config.vite.root, route.layout)
+      layoutFilePath = await resolveLayoutFilePath(
+        config.vite.root,
+        route.layout,
+      )
     } else if (defaultLayout) {
-      layout = defaultLayout
+      layoutFilePath = defaultLayout
     }
+
     // Pregenerate prefetching <head> elements
     let assets = { css: [], svg: [], js: [] }
     if (layoutFilePath) {
