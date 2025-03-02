@@ -164,18 +164,53 @@ async function renderHead(client, route, ctx) {
   return rendered
 }
 
+/**
+ * @type Map<string, { js: string[], css: string[], svg:[] }
+ */
+const clientImportsCache = new Map()
 async function findClientImports(
   root,
   path,
   { js = [], css = [], svg = [] } = {},
 ) {
+  if (clientImportsCache.has(path)) {
+    return clientImportsCache.get(path)
+  }
   const source = await readFile(join(root, path), 'utf8')
-  const specifiers = findStaticImports(source)
-    .filter(({ specifier }) => {
-      return specifier.match(/\.((svg)|(css)|(m?js)|(tsx?)|(jsx?))$/)
-    })
-    .map(({ specifier }) => specifier)
+
+  const specifiers = (
+    await Promise.all(
+      findStaticImports(source).map(async ({ specifier }) => {
+        if (extname(specifier)) {
+          return specifier
+        }
+        const resolved = resolve(dirname(path), specifier)
+
+        // resolve the file extension which allows for
+        // resolved client imports without specified extensions
+        try {
+          const filePathWithExtension = await resolvePath(
+            join(root, resolved),
+            {
+              extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
+            },
+          )
+          const specifier = filePathWithExtension.replace(root, '')
+
+          return specifier
+        } catch (e) {
+          return ''
+        }
+      }),
+    )
+  ).filter((specifier) => {
+    return specifier.match(/\.((svg)|(css)|(m?js)|(tsx?)|(jsx?))$/)
+  })
+
   for (const specifier of specifiers) {
+    if (specifier.match(/\.server\./)) {
+      continue
+    }
     const resolved = resolve(dirname(path), specifier)
     if (specifier.match(/\.svg$/)) {
       svg.push(resolved.slice(1))
@@ -188,6 +223,7 @@ async function findClientImports(
     }
     if (specifier.match(/\.((m?js)|(tsx?)|(jsx?))$/)) {
       const submoduleImports = await findClientImports(root, resolved)
+      clientImportsCache.set(resolved, submoduleImports)
       js.push(...submoduleImports.js)
       css.push(...submoduleImports.css)
       svg.push(...submoduleImports.svg)
