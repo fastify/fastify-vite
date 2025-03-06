@@ -88,7 +88,9 @@ export function createRouteHandler({ client, route }, scope, config) {
     return async (req, reply) => {
       req.route = route
       reply.type('text/html')
-      reply.send(await route.default({ app: scope, req, reply, client, route }))
+      return reply.send(
+        await route.default({ app: scope, req, reply, client, route }),
+      )
     }
   }
   return async (req, reply) => {
