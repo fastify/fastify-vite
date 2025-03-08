@@ -126,7 +126,6 @@ export default function Index (props) {
   const {data} = useRouteContext()
   return <p>{data.message}</p>
 }
-</script>
 ```
 
 ## Page metadata
