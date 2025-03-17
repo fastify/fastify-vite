@@ -12,11 +12,17 @@ export default {
 }
 
 const kPrefetch = Symbol('kPrefetch')
+/**
+ * An in-memory cache for resolved imports.
+ * @type Map<string, { js: string[], css: string[], svg:[] }
+ */
+const clientImportsCache = new Map()
 
 async function prepareClient(clientModule, scope, config) {
   if (!clientModule) {
     return null
   }
+  clientImportsCache.clear()
 
   let defaultLayout = null
   try {
@@ -54,11 +60,11 @@ async function prepareClient(clientModule, scope, config) {
     // Pregenerate prefetching <head> elements
     let assets = { css: [], svg: [], js: [] }
     if (layoutFilePath) {
-      assets = await findClientImports(config.vite.root, layoutFilePath)
+      assets = await findClientImports(config, layoutFilePath)
     }
     // Extract the route's imports
     const { css, svg, js } = await findClientImports(
-      config.vite.root,
+      config,
       route.modulePath,
       assets,
     )
@@ -171,17 +177,17 @@ async function renderHead(client, route, ctx) {
   return rendered
 }
 
-/**
- * @type Map<string, { js: string[], css: string[], svg:[] }
- */
-const clientImportsCache = new Map()
 async function findClientImports(
-  root,
+  config,
   path,
   { js = [], css = [], svg = [] } = {},
 ) {
+  const {
+    dev,
+    vite: { root },
+  } = config
   // Don't re-evaluate the file's dependencies if we've processed it before
-  if (clientImportsCache.has(path)) {
+  if (!dev && clientImportsCache.has(path)) {
     const cached = clientImportsCache.get(path)
     return { js: [...cached.js], css: [...cached.css], svg: [...cached.svg] }
   }
