@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises'
-import { dirname, join, resolve } from 'node:path'
+import { dirname, extname, join, resolve } from 'node:path'
 import { renderToStream } from '@kitajs/html/suspense.js'
 import * as devalue from 'devalue'
 import { findStaticImports, resolvePath } from 'mlly'
@@ -8,6 +8,7 @@ export default {
   prepareClient,
   createHtmlFunction,
   createRouteHandler,
+  createErrorHandler,
 }
 
 const kPrefetch = Symbol('kPrefetch')
@@ -115,7 +116,9 @@ export function createRouteHandler({ client, route }, scope, config) {
     return async (req, reply) => {
       req.route = route
       reply.type('text/html')
-      reply.send(await route.default({ app: scope, req, reply, client, route }))
+      return reply.send(
+        await route.default({ app: scope, req, reply, client, route }),
+      )
     }
   }
   return async (req, reply) => {
@@ -263,4 +266,14 @@ async function resolveLayoutFilePath(root, layout) {
   const relativePath = fullPath.replace(root, '')
   layoutFilePathCache.set(layout, relativePath)
   return relativePath
+}
+
+function createErrorHandler(_, scope, config) {
+  return (error, req, reply) => {
+    if (config.dev) {
+      scope.log.error(error)
+      scope.vite.devServer.ssrFixStacktrace(error)
+    }
+    scope.errorHandler(error, req, reply)
+  }
 }

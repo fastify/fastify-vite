@@ -50,7 +50,6 @@ function Login ({ onClick }) {
     </>
   )
 }
-</script>
 ```
 
 Also you can use `.tsx` extensions for files in layouts folder.
