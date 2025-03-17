@@ -224,14 +224,14 @@ async function findClientImports(
     if (specifier.match(/\.svg$/)) {
       svg.push(resolved.slice(1))
     }
-    if (specifier.match(/\.client\.((m?js)|(tsx?)|(jsx?))$/)) {
-      js.push(resolved.slice(1))
-    }
     if (specifier.match(/\.css$/)) {
       css.push(resolved.slice(1))
     }
     if (specifier.match(/\.((m?js)|(tsx?)|(jsx?))$/)) {
-      const submoduleImports = await findClientImports(root, resolved)
+      if (specifier.match(/\.client\.((m?js)|(tsx?)|(jsx?))$/)) {
+        js.push(resolved.slice(1))
+      }
+      const submoduleImports = await findClientImports(config, resolved)
       // always add JS submodules to the cache
       clientImportsCache.set(resolved, submoduleImports)
       js.push(...submoduleImports.js)
