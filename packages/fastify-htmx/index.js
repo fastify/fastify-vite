@@ -12,11 +12,27 @@ export default {
 }
 
 const kPrefetch = Symbol('kPrefetch')
+/**
+ * An in-memory cache for resolved imports.
+ * @type Map<string, { js: string[], css: string[], svg:[] }
+ */
+const clientImportsCache = new Map()
 
 async function prepareClient(clientModule, scope, config) {
   if (!clientModule) {
     return null
   }
+  clientImportsCache.clear()
+
+  let defaultLayout = null
+  try {
+    defaultLayout = await resolveLayoutFilePath(config.vite.root, 'default')
+  } catch (e) {
+    scope.log.info(
+      'No default layout specified. Falling back to virtual layout.',
+    )
+  }
+
   const { routes } = clientModule
   for (const route of routes) {
     // Predecorate Request and Reply objects
@@ -30,10 +46,27 @@ async function prepareClient(clientModule, scope, config) {
         !scope.hasReplyDecorator(prop) && scope.decorateReply(prop, null)
       }
     }
+    // prefetch layout file path
+    let layoutFilePath = null
+    if (route.layout) {
+      layoutFilePath = await resolveLayoutFilePath(
+        config.vite.root,
+        route.layout,
+      )
+    } else if (defaultLayout) {
+      layoutFilePath = defaultLayout
+    }
+
     // Pregenerate prefetching <head> elements
+    let assets = { css: [], svg: [], js: [] }
+    if (layoutFilePath) {
+      assets = await findClientImports(config, layoutFilePath)
+    }
+    // Extract the route's imports
     const { css, svg, js } = await findClientImports(
-      config.vite.root,
+      config,
       route.modulePath,
+      assets,
     )
     route[kPrefetch] = ''
     for (const stylesheet of css) {
@@ -145,11 +178,21 @@ async function renderHead(client, route, ctx) {
 }
 
 async function findClientImports(
-  root,
+  config,
   path,
   { js = [], css = [], svg = [] } = {},
 ) {
+  const {
+    dev,
+    vite: { root },
+  } = config
+  // Don't re-evaluate the file's dependencies if we've processed it before
+  if (!dev && clientImportsCache.has(path)) {
+    const cached = clientImportsCache.get(path)
+    return { js: [...cached.js], css: [...cached.css], svg: [...cached.svg] }
+  }
   const source = await readFile(join(root, path), 'utf8')
+
   const specifiers = (
     await Promise.all(
       findStaticImports(source).map(async ({ specifier }) => {
@@ -180,24 +223,55 @@ async function findClientImports(
   })
 
   for (const specifier of specifiers) {
+    if (specifier.match(/\.server\./)) {
+      continue
+    }
     const resolved = resolve(dirname(path), specifier)
     if (specifier.match(/\.svg$/)) {
       svg.push(resolved.slice(1))
-    }
-    if (specifier.match(/\.client\.((m?js)|(tsx?)|(jsx?))$/)) {
-      js.push(resolved.slice(1))
     }
     if (specifier.match(/\.css$/)) {
       css.push(resolved.slice(1))
     }
     if (specifier.match(/\.((m?js)|(tsx?)|(jsx?))$/)) {
-      const submoduleImports = await findClientImports(root, resolved)
+      if (specifier.match(/\.client\.((m?js)|(tsx?)|(jsx?))$/)) {
+        js.push(resolved.slice(1))
+      }
+      const submoduleImports = await findClientImports(config, resolved)
+      // always add JS submodules to the cache
+      clientImportsCache.set(resolved, submoduleImports)
       js.push(...submoduleImports.js)
       css.push(...submoduleImports.css)
       svg.push(...submoduleImports.svg)
     }
   }
+  // Always cache layouts, they're checked often
+  if (path.includes('layouts')) {
+    clientImportsCache.set(path, { js: [...js], css: [...css], svg: [...svg] })
+  }
   return { js, css, svg }
+}
+
+/**
+ * @type Map<string,string>
+ */
+const layoutFilePathCache = new Map()
+/**
+ * Calculates the relative path and extension of the given layout name
+ * @param {string} root The root directory to search for the layout in
+ * @param {string} layout The layout file name (without extension)
+ * @returns {Promise<string>}
+ */
+async function resolveLayoutFilePath(root, layout) {
+  if (layoutFilePathCache.has(layout)) {
+    return Promise.resolve(layoutFilePathCache.get(layout))
+  }
+  const fullPath = await resolvePath(join(root, 'layouts', layout), {
+    extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
+  })
+  const relativePath = fullPath.replace(root, '')
+  layoutFilePathCache.set(layout, relativePath)
+  return relativePath
 }
 
 function createErrorHandler(_, scope, config) {
