@@ -4,7 +4,8 @@ import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
-export async function prepareClient (client, _) {
+export async function prepareClient (entries, _) {
+  const client = entries.ssr
   if (client.context instanceof Promise) {
     client.context = await client.context
   }

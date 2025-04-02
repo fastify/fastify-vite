@@ -4,31 +4,49 @@ const { join, resolve, read, exists } = require('../ioutils.cjs')
 const hot = Symbol('hotModuleReplacementProxy')
 
 async function setup(config) {
-  // Loads the Vite application server entry point for the client
-  const loadClientPath = () => {
+  const loadEntryModulePaths = async () => {
     if (config.spa) {
       return null
     }
-    const modulePath = config.clientModule.startsWith('/:')
-      ? config.clientModule
-      : resolve(
-          config.vite.root,
-          config.clientModule.replace(/^\/+/, ''),
-        )
-    return modulePath
+    const entryModulePaths = {}
+    if (!config.vite.plugins.some((_) => _.name === 'vite-fastify')) {
+      throw new Error("@fastify/vite's Vite plugin not registered")
+    }
+    const { config: setupEnvironments } = config.vite.plugins.find(
+      (_) => _.name === 'vite-fastify',
+    )
+    const viteEnvsConfig = {
+      root: config.vite.root,
+    }
+
+    await setupEnvironments(viteEnvsConfig)
+
+    const { client: _, ...nonClientEnvs } = Object.fromEntries(
+      Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
+    )
+
+    for (const env of Object.keys(nonClientEnvs)) {
+      const environment = viteEnvsConfig.environments[env]
+      if (environment.build?.rollupOptions?.input?.index) {
+        const modulePath =
+          environment.build.rollupOptions.input.index.startsWith('/:')
+            ? environment
+            : resolve(
+                config.vite.root,
+                environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
+              )
+        entryModulePaths[env] = modulePath
+      }
+    }
+    return entryModulePaths
   }
 
-  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
+  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } =
+    await import('vite')
 
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
   await this.scope.register(middie)
-
-  // Load client module path
-  const clientModulePath = loadClientPath()
-
-  // Create Vite environments if not provided by the config
-  const environments = await config.prepareEnvironments(clientModulePath, config.vite)
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = mergeConfig(
@@ -41,28 +59,36 @@ async function setup(config) {
         },
       },
       appType: 'custom',
-      environments,
     }),
     config.vite,
   )
 
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
-  this.serverRunner = createServerModuleRunner(this.devServer.environments.server)
 
-  this.scope.decorate(hot, {})
+  const loadEntries = async () => {
+    const entryModulePaths = await loadEntryModulePaths()
 
-  // Loads the Vite application server entry point for the client
-  const loadClient = async () => {
-    const modulePath = loadClientPath()
-    if (!modulePath) {
-      return {}
-    }
-    const entryModule = await this.serverRunner.import(modulePath)
-    return {
-      module: entryModule.default || entryModule,
+    this.runners = {}
+    this.entries = {}
+
+    for (const [env, envConfig] of Object.entries(
+      this.devServer.environments,
+    )) {
+      if (env === 'client') {
+        continue
+      }
+      const runner = createServerModuleRunner(envConfig)
+      this.runners[env] = runner
+
+      if (env in entryModulePaths) {
+        const entryModule = await runner.import(entryModulePaths[env])
+        this.entries[env] = entryModule.default ?? entryModule
+      }
     }
   }
+
+  this.scope.decorate(hot, {})
 
   // Initialize Reply prototype decorations
   this.scope.decorateReply('render', null)
@@ -75,16 +101,13 @@ async function setup(config) {
 
   // Load fresh index.html template and client module before every request
   this.scope.addHook('onRequest', async (req, reply) => {
-    const { module: clientModule } = await loadClient()
+    await loadEntries()
     this.scope[hot].client = await config.prepareClient(
-      clientModule,
+      this.entries,
       this.scope,
       config,
     )
-    if (
-      this.scope[hot].client?.routes &&
-      typeof this.scope[hot].client.routes[Symbol.iterator] === 'function'
-    ) {
+    if (client.routes && typeof client.routes[Symbol.iterator] === 'function') {
       if (!this.scope[hot].routeHash) {
         this.scope[hot].routeHash = new Map()
       }
@@ -121,9 +144,9 @@ async function setup(config) {
   // Close the dev server when Fastify closes
   this.scope.addHook('onClose', () => this.devServer.close())
 
-  // Load routes from client module (server entry point)
-  const { module: clientModule } = await loadClient()
-  const client = await config.prepareClient(clientModule, this.scope, config)
+  await loadEntries()
+
+  const client = await config.prepareClient(this.entries, this.scope, config)
 
   return {
     config,

@@ -66,9 +66,9 @@ async function createHtmlTemplateFunction(source) {
   const [compiled, params] = await compileHtmlTemplate(source)
   return new Function(
     params.length
-      ? `{ ${[...new Set(params.map(s => s.split('.')[0]))].join(', ')} }`
+      ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }`
       : '',
-    `return \`${compiled}\``
+    `return \`${compiled}\``,
   )
 }
 
