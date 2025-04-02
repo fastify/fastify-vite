@@ -12,13 +12,14 @@ import { ensure, read, write } from './ioutils.cjs'
  *
  * @returns
  */
-export function viteFastify() {
+export function viteFastify({ clientModule } = {}) {
   let jsonFilePath
   let configToWrite = {}
   let resolvedConfig = {}
 
   return {
     name: 'vite-fastify',
+    enforce: 'pre',
     async config(config) {
       const deepMerge = getDeepMergeFunction()
       const {
@@ -32,9 +33,8 @@ export function viteFastify() {
         createClientEnvironment(),
         config.environments.client ?? {},
       )
-      const clientModule = resolveClientModule(config.root)
       config.environments.ssr = deepMerge(
-        createSSREnvironment(clientModule),
+        createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
         config.environments.ssr ?? {},
       )
     },
@@ -42,14 +42,14 @@ export function viteFastify() {
       const { base, build, isProduction, root } = config
       const { assetsDir } = build || {}
 
+      resolvedConfig = config
+
       // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
       // configs in these executions are missing many properties. Since there is no advantage to
       // running this function during dev, we save build time and prevent errors by returning early.
       if (!isProduction) {
         return
       }
-
-      resolvedConfig = config
 
       // For SSR builds, `vite build` is executed twice: once for client and once for server.
       // We need to merge the two configs and make both `outDir` properties available.

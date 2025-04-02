@@ -18,7 +18,6 @@
     "mode/production.js",
     "plugin.mjs",
     "setup.js",
-    "sharedPaths.mjs",
     "types/index.d.ts",
     "utils.js"
   ],
@@ -44,9 +43,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "8.0.0-alpha.2",
+  "version": "8.0.0",
   "optionalDependencies": {
-    "vite": "^6.2.4"
+    "vite": "^6.2.4",
+    "@fastify/vue": "workspace:^",
+    "@fastify/react": "workspace:^",
+    "@fastify/htmx": "workspace:^"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",

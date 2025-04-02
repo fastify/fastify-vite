@@ -9,7 +9,7 @@
 import { inject } from 'vue'
 import { routeLayout } from '@fastify/vue/client'
 
-import * as DefaultLayout from '/:layouts/default.vue'
+import * as DefaultLayout from '$app/layouts/default.vue'
 const appLayouts = import.meta.glob('/layouts/*.vue', { eager: true })
 
 appLayouts['/layouts/default.vue'] ??= DefaultLayout

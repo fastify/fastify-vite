@@ -7,7 +7,7 @@ import {
   createBeforeEachHandler,
 } from '@fastify/vue/client'
 
-import * as root from '/:root.vue'
+import * as root from '$app/root.vue'
 
 export default async function create (ctx) {
   const { routes, ctxHydration } = ctx

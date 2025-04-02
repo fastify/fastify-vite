@@ -9,12 +9,13 @@ async function setup(config) {
       return null
     }
     const entryModulePaths = {}
-    if (!config.vite.plugins.some((_) => _.name === 'vite-fastify')) {
+
+    if (!hasPlugin(config.vite, 'vite-fastify')) {
       throw new Error("@fastify/vite's Vite plugin not registered")
     }
-    const { config: setupEnvironments } = config.vite.plugins.find(
-      (_) => _.name === 'vite-fastify',
-    )
+
+    const { config: setupEnvironments } = findPlugin(config.vite, 'vite-fastify')
+
     const viteEnvsConfig = {
       root: config.vite.root,
     }
@@ -27,9 +28,10 @@ async function setup(config) {
 
     for (const env of Object.keys(nonClientEnvs)) {
       const environment = viteEnvsConfig.environments[env]
+      console.log('environment.build?.rollupOptions', environment.build?.rollupOptions)
       if (environment.build?.rollupOptions?.input?.index) {
         const modulePath =
-          environment.build.rollupOptions.input.index.startsWith('/:')
+          environment.build.rollupOptions.input.index.startsWith('$app')
             ? environment
             : resolve(
                 config.vite.root,
@@ -68,6 +70,7 @@ async function setup(config) {
 
   const loadEntries = async () => {
     const entryModulePaths = await loadEntryModulePaths()
+    console.log('entryModulePaths', entryModulePaths)
 
     this.runners = {}
     this.entries = {}
@@ -82,7 +85,7 @@ async function setup(config) {
       this.runners[env] = runner
 
       if (env in entryModulePaths) {
-        const entryModule = await runner.import(entryModulePaths[env])
+        const entryModule = await runner.import(entryModulePaths[env].build.rollupOptions.input.index)
         this.entries[env] = entryModule.default ?? entryModule
       }
     }
@@ -153,6 +156,36 @@ async function setup(config) {
     client,
     routes: client?.routes,
   }
+}
+
+function findPlugin(config, pluginName) {
+  for (const plugin of config.plugins) {
+    if (Array.isArray(plugin)) {
+      for (const subPlugin of plugin) {
+        if (subPlugin.name === pluginName) {
+          return subPlugin
+        }
+      }
+    }
+    if (plugin.name === pluginName) {
+      return plugin
+    }
+  }
+  return config.plugins.some((_) => {
+    if (Array.isArray(_)) {
+      return _.some((__) => __.name === pluginName)
+    }
+    return _.name === pluginName
+  })
+}
+
+function hasPlugin(config, pluginName) {
+  return config.plugins.some((_) => {
+    if (Array.isArray(_)) {
+      return _.some((__) => __.name === pluginName)
+    }
+    return _.name === pluginName
+  })
 }
 
 module.exports = {

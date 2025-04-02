@@ -25,11 +25,10 @@ const virtualModules = [
   'hooks'
 ]
 
-export const prefixes = [/^\/:/, /^\$app\//]
+export const prefix = /^\$app\//
 
 export async function resolveId (id) {
-  const prefix = prefixes.find(_ => _.test(id))
-  if (prefix) {
+  if (prefix.test(id)) {
     const [, virtual] = id.split(prefix)
     if (virtual) {
       const override = loadVirtualModuleOverride(this.root, virtual)
