@@ -114,25 +114,25 @@ async function setup(config) {
 
   return { client, routes: client?.routes }
 
-  async function loadBundle(distOutDir, entryPath) {
-    const parsedNamed = parse(entryPath.replace('/:', '/_')).name
+  async function loadBundle(viteRoot, distOutDir, entryPath) {
+    const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
     let bundlePath
     for (const serverFile of bundleFiles) {
       // Use file path on Windows
       bundlePath =
         process.platform === 'win32'
-          ? new URL(fileUrl(resolve(distOutDir, serverFile)))
-          : resolve(distOutDir, serverFile)
-      if (await exists(bundlePath)) {
+          ? new URL(fileUrl(resolve(viteRoot, distOutDir, serverFile)))
+          : resolve(viteRoot, distOutDir, serverFile)
+      if (exists(bundlePath)) {
         break
       }
     }
-    let serverBundle = await import(serverBundlePath)
-    if (typeof serverBundle.default === 'function') {
-      serverBundle = await serverBundle.default(config)
+    let bundle = await import(bundlePath)
+    if (typeof bundle.default === 'function') {
+      bundle = await bundle.default(config)
     }
-    return serverBundle.default || serverBundle
+    return bundle.default || bundle
   }
 
   // Loads the Vite application server entry point for the client
@@ -158,8 +158,11 @@ async function setup(config) {
       process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
-    for (const [env, entryPath] of Object.entries(config.vite.entryPaths)) {
+    const entries = {}
+    console.log('config.vite.fastify.outDirs', config.vite.fastify.outDirs)
+    for (const [env, entryPath] of Object.entries(config.vite.fastify.entryPaths)) {
       entries[env] = await loadBundle(
+        config.vite.root,
         config.vite.fastify.outDirs[env],
         entryPath,
       )

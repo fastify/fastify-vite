@@ -28,10 +28,9 @@ async function setup(config) {
 
     for (const env of Object.keys(nonClientEnvs)) {
       const environment = viteEnvsConfig.environments[env]
-      console.log('environment.build?.rollupOptions', environment.build?.rollupOptions)
       if (environment.build?.rollupOptions?.input?.index) {
         const modulePath =
-          environment.build.rollupOptions.input.index.startsWith('$app')
+          environment.build.rollupOptions.input.index.startsWith(config.virtualModulePrefix)
             ? environment
             : resolve(
                 config.vite.root,
@@ -70,7 +69,6 @@ async function setup(config) {
 
   const loadEntries = async () => {
     const entryModulePaths = await loadEntryModulePaths()
-    console.log('entryModulePaths', entryModulePaths)
 
     this.runners = {}
     this.entries = {}

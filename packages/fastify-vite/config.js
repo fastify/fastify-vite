@@ -11,12 +11,12 @@ const {
 } = require('./ioutils.cjs')
 const { createHtmlTemplateFunction } = require('./html.js')
 
-const mainOutDir = 'dist'
+const distDir = 'dist'
 
 function createClientEnvironment() {
   return {
     build: {
-      outDir: `${mainOutDir}/client`,
+      outDir: `${distDir}/client`,
       minify: false,
       sourcemap: true,
       manifest: true,
@@ -27,7 +27,7 @@ function createClientEnvironment() {
 function createSSREnvironment(clientModule) {
   return {
     build: {
-      outDir: `${mainOutDir}/server`,
+      outDir: `${distDir}/server`,
       sourcemap: true,
       ssr: true,
       emitAssets: true,
@@ -42,6 +42,9 @@ function createSSREnvironment(clientModule) {
 }
 
 const DefaultConfig = {
+  // Main distribution dir
+  distDir,
+
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
 
@@ -77,6 +80,12 @@ const DefaultConfig = {
   // If true, disables SSR and disables loading of `clientModule`
   // This lets you automate integration with a SPA Vite bundle
   spa: false,
+
+  // When loading environments' entry points,
+  // @fastify/vite will recognize imports with this prefix
+  // as virtual module imports and won't try to do
+  // any path resolving on them
+  virtualModulePrefix: '$app',
 
   prepareServer(scope, config) {},
 
@@ -182,15 +191,13 @@ async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const [vite, viteConfig] = await resolveViteConfig(root, dev, options)
+  const config = Object.assign(defaultConfig, { ...options })
+  const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
+  Object.assign(config, { vite, viteConfig })
+
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
-  const config = Object.assign(defaultConfig, {
-    ...options,
-    vite,
-    viteConfig,
-    bundle,
-  })
+  Object.assign(config, { bundle, })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)
     config.renderer = { ...renderer, ...named }
@@ -236,58 +243,62 @@ function resolveRoot(path) {
   return root
 }
 
-async function resolveViteConfig(root, dev, { spa } = {}) {
+async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   const command = 'build'
   const mode = dev ? 'development' : 'production'
-
   if (!dev) {
-    const viteConfigDistFile = resolve(root, 'dist', 'config.json')
+    let viteConfigDistFile
+    // Check for top-level dist/ folder
+    viteConfigDistFile = resolve(root, distDir, 'config.json')
     if (exists(viteConfigDistFile)) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), CACHE_DIR]
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, distDir)]
+    }
+    // Check for client/dist/ folder (following convention)
+    viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
+    if (exists(viteConfigDistFile)) {
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, 'client', distDir)]
     }
     console.warn(
       `Failed to load cached Vite configuration from ${viteConfigDistFile}`,
     )
   }
 
-  for (const ext of ['js', 'mjs', 'ts']) {
-    let configFile = join(root, `vite.config.${ext}`)
-    if (exists(configFile)) {
-      const { resolveConfig } = await import('vite')
-      const resolvedConfig = await resolveConfig(
-        {
-          configFile,
-        },
-        command,
-        mode,
-      )
-      if (process.platform === 'win32') {
-        configFile = `file://${configFile}`
-      }
-      let userConfig = await import(configFile).then((m) => m.default)
-      if (userConfig.default) {
-        userConfig = userConfig.default
-      }
-      if (typeof userConfig === 'function') {
-        userConfig = await userConfig({
-          command,
-          mode,
-          ssrBuild: !spa,
-        })
-      }
-
-      return [
-        Object.assign(userConfig, {
-          build: {
-            assetsDir: resolvedConfig.build.assetsDir,
-            outDir: resolvedConfig.build.outDir,
-          },
-        }),
-        configFile,
-      ]
-    }
+  const configFile = findConfigFile(root)
+  if (!configFile) {
+    return [null, null]
   }
-  return [null, null]
+  const { resolveConfig } = await import('vite')
+  const resolvedConfig = await resolveConfig(
+    {
+      configFile,
+    },
+    command,
+    mode,
+  )
+  if (process.platform === 'win32') {
+    configFile = `file://${configFile}`
+  }
+  let userConfig = await import(configFile).then((m) => m.default)
+  if (userConfig.default) {
+    userConfig = userConfig.default
+  }
+  if (typeof userConfig === 'function') {
+    userConfig = await userConfig({
+      command,
+      mode,
+      ssrBuild: !spa,
+    })
+  }
+
+  return [
+    Object.assign(userConfig, {
+      build: {
+        assetsDir: resolvedConfig.build.assetsDir,
+        outDir: resolvedConfig.build.outDir,
+      },
+    }),
+    configFile,
+  ]
 }
 
 async function resolveSSRBundle({ dev, vite }) {
@@ -349,6 +360,15 @@ async function resolveSPABundle({ dev, vite }) {
     bundle.manifest = []
   }
   return bundle
+}
+
+function findConfigFile (root) {
+  for (const ext of ['js', 'mjs', 'ts']) {
+    let configFile = join(root, `vite.config.${ext}`)
+    if (exists(configFile)) {
+      return configFile
+    }
+  }
 }
 
 module.exports = {
