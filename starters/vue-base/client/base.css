@@ -1,10 +1,4 @@
-/*
-Optional:
-https://tailwindcss.com/docs/preflight
-@tailwind base;
-*/
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss'; 
 
 :root {
   --color-base: #f1f1f1;

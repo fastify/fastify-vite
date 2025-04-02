@@ -5,7 +5,6 @@ import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
 export async function prepareClient (entries, _) {
-  console.log('entries', entries)
   const client = entries.ssr
   if (client.context instanceof Promise) {
     client.context = await client.context

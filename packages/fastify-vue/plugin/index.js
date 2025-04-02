@@ -70,14 +70,23 @@ function configResolved (config) {
 
 function config (config, { isSsrBuild, command }) {
   if (command === 'build') {
-    // config.build.rollupOptions = {
-      // onwarn
-    // }
+    if (!config.build) {
+      config.build = {}
+    }
+    if (!config.build.rollupOptions) {
+      config.build.rollupOptions = {}
+    }
+    config.build.rollupOptions.onwarn = onwarn
   }
 }
 
 function onwarn (warning, rollupWarn) {
   if (
+    !(
+      warning.code == 'MISSING_EXPORT' &&
+      warning.message?.includes?.('"scrollBehavior" is not exported')
+    )
+    &&
     !(
       warning.code == 'PLUGIN_WARNING' &&
       warning.message?.includes?.('dynamic import will not move module into another chunk')
