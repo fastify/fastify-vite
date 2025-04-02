@@ -4,11 +4,31 @@ const { join, resolve, read, exists } = require('../ioutils.cjs')
 const hot = Symbol('hotModuleReplacementProxy')
 
 async function setup(config) {
-  const { createServer, mergeConfig, defineConfig } = await import('vite')
+  // Loads the Vite application server entry point for the client
+  const loadClientPath = () => {
+    if (config.spa) {
+      return null
+    }
+    const modulePath = config.clientModule.startsWith('/:')
+      ? config.clientModule
+      : resolve(
+          config.vite.root,
+          config.clientModule.replace(/^\/+/, ''),
+        )
+    return modulePath
+  }
+
+  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
 
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
   await this.scope.register(middie)
+
+  // Load client module path
+  const clientModulePath = loadClientPath()
+
+  // Create Vite environments if not provided by the config
+  const environments = await config.prepareEnvironments(clientModulePath, config.vite)
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = mergeConfig(
@@ -21,31 +41,24 @@ async function setup(config) {
         },
       },
       appType: 'custom',
+      environments,
     }),
     config.vite,
   )
 
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
+  this.serverRunner = createServerModuleRunner(this.devServer.environments.server)
 
   this.scope.decorate(hot, {})
 
   // Loads the Vite application server entry point for the client
   const loadClient = async () => {
-    if (config.spa) {
+    const modulePath = loadClientPath()
+    if (!modulePath) {
       return {}
     }
-    const modulePath = config.clientModule.startsWith('/:')
-      ? config.clientModule
-      : resolve(
-          config.vite.root,
-          config.clientModule.replace(/^\/+/, ''),
-        )
-    let entryModule = await this.devServer.ssrLoadModule(modulePath)
-    if (typeof entryModule.default === 'function') {
-      entryModule = await entryModule.default(config)
-      return entryModule
-    }
+    const entryModule = await this.serverRunner.import(modulePath)
     return {
       module: entryModule.default || entryModule,
     }

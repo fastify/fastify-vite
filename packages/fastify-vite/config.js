@@ -60,6 +60,34 @@ const DefaultConfig = {
     return Object.assign({}, clientModule, { routes })
   },
 
+  prepareEnvironments(clientModulePath, viteConfig) {
+    console.log('viteConfig.environments', viteConfig.environments)
+    return {
+      client: {
+        build: {
+          outDir: 'dist/client',
+          minify: false,
+          sourcemap: true,
+          manifest: true,
+        },
+      },
+      server: {
+        build: {
+          outDir: 'dist/server',
+          sourcemap: true,
+          ssr: true,
+          emitAssets: true,
+          manifest: true,
+          rollupOptions: {
+            input: {
+              index: clientModulePath,
+            },
+          },
+        },
+      }
+    }
+  },
+
   // Compile index.html into templating function,
   // used by createHtmlFunction() by default
   createHtmlTemplateFunction,
@@ -172,6 +200,7 @@ async function configure(options = {}) {
     'createRoute',
     'createRouteHandler',
     'prepareServer',
+    'prepareEnvironments',
     'prepareClient',
   ]) {
     config[setting] = config.renderer[setting] || config[setting]
