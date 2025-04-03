@@ -23,9 +23,9 @@
   ],
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./index.js",
-      "require": "./index.js",
-      "types": "./types/index.d.ts"
+      "require": "./index.js"
     },
     "./utils": "./utils.js",
     "./plugin": "./plugin.mjs"

@@ -1,5 +1,4 @@
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+
 import viteFastify from '@fastify/vite/plugin'
 
 if (!globalThis.port) {
@@ -7,7 +6,7 @@ if (!globalThis.port) {
 }
 
 export default () => ({
-  root: dirname(fileURLToPath(new URL(import.meta.url))),
+  root: import.meta.dirname,
   plugins: [
     viteFastify()
   ],

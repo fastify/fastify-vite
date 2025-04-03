@@ -16,3 +16,8 @@ export async function main(dev) {
 
   return server
 }
+
+if (process.argv[1] === new URL(import.meta.url).pathname) {
+  const server = await main(process.argv.includes('--dev'))
+  await server.listen({ port: 3000 })
+}
