@@ -28,22 +28,6 @@ export function viteFastify({ spa, clientModule } = {}) {
         createClientEnvironment,
       } = await import('./config.js')
 
-      if (!config.builder) {
-        config.builder = {}
-      }
-      // Write the JSON file after the bundle finishes writing to avoid getting deleted by emptyOutDir
-      if (!config.builder.buildApp) {
-        config.builder.buildApp = async (builder) => {
-          await builder.build(builder.environments.client)
-          await builder.build(builder.environments.ssr)
-          await write(
-            jsonFilePath,
-            JSON.stringify(configToWrite, undefined, 2),
-            'utf-8',
-          )
-        }
-      }
-
       config.environments = {}
       config.environments.client = deepMerge(
         createClientEnvironment(),
@@ -54,6 +38,16 @@ export function viteFastify({ spa, clientModule } = {}) {
           createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
           config.environments.ssr ?? {},
         )
+        if (!config.builder) {
+          config.builder = {}
+        }
+        // Write the JSON file after the bundle finishes writing to avoid getting deleted by emptyOutDir
+        if (!config.builder.buildApp) {
+          config.builder.buildApp = async (builder) => {
+            await builder.build(builder.environments.client)
+            await builder.build(builder.environments.ssr)
+          }
+        }
       }
     },
     async configResolved(config = {}) {
@@ -104,6 +98,13 @@ export function viteFastify({ spa, clientModule } = {}) {
         'config.json',
       )
     },
+    async writeBundle() {
+      await write(
+        jsonFilePath,
+        JSON.stringify(configToWrite, undefined, 2),
+        'utf-8',
+      )
+    }
   }
 }
 

@@ -17,7 +17,6 @@ for (const example of [
 ]) {
   cd(path.join(root, 'examples', example))
   await $`node --test`
-  await setTimeout(100)
 }
 
 // for (const contrib of [

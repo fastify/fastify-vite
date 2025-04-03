@@ -89,7 +89,7 @@ async function setup(config) {
     value: ssrManifest,
   })
 
-  const client = await config.prepareClient(entries, this.scope, config)
+  const client = !config.spa && await config.prepareClient(entries, this.scope, config)
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply(

@@ -68,10 +68,14 @@ async function setup(config) {
   this.scope.use(this.devServer.middlewares)
 
   const loadEntries = async () => {
-    const entryModulePaths = await loadEntryModulePaths()
-
     this.runners = {}
     this.entries = {}
+
+    const entryModulePaths = await loadEntryModulePaths()
+
+    if (!entryModulePaths) {
+      return
+    }
 
     for (const [env, envConfig] of Object.entries(
       this.devServer.environments,
@@ -110,13 +114,15 @@ async function setup(config) {
       this.scope,
       config,
     )
-    if (client.routes && typeof client.routes[Symbol.iterator] === 'function') {
-      if (!this.scope[hot].routeHash) {
-        this.scope[hot].routeHash = new Map()
-      }
-      for (const route of this.scope[hot].client.routes) {
-        if (route.path) {
-          this.scope[hot].routeHash.set(route.path, route)
+    if (this.scope[hot].client) {
+      if (client.routes && typeof client.routes[Symbol.iterator] === 'function') {
+        if (!this.scope[hot].routeHash) {
+          this.scope[hot].routeHash = new Map()
+        }
+        for (const route of this.scope[hot].client.routes) {
+          if (route.path) {
+            this.scope[hot].routeHash.set(route.path, route)
+          }
         }
       }
     }
