@@ -21,7 +21,6 @@ export function makeIndexTest ({ main, dev }) {
 //   }
 // }
 
-
 export function makeSPABuildTest ({ cwd }) {
   return async () => {
     const configFile = join(cwd, 'vite.config.js')
@@ -36,11 +35,11 @@ export function makeSPABuildTest ({ cwd }) {
 export function makeBuildTest ({ cwd }) {
   return async () => {
     const configFile = join(cwd, 'vite.config.js')
-    const config = await loadConfigFromFile({ 
-      command: 'build', 
-      mode: 'production'
-    }, configFile)
-    const builder = await createBuilder(config)
+    // const config = await loadConfigFromFile({ 
+    //   command: 'build', 
+    //   mode: 'production'
+    // }, configFile)
+    const builder = await createBuilder({ configFile })
     await builder.buildApp()
   }
 }
