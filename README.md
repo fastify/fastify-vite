@@ -12,6 +12,8 @@ This [Fastify](https://fastify.dev) plugin allows you to run Vite's development 
 
 See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
+Official examples can be found in [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples). Community examples are kept in [`contrib/`](https://github.com/fastify/fastify-vite/tree/dev/contrib) and [could use your help](https://github.com/fastify/fastify-vite/edit/dev/contrib/README.md)!
+
 ## Team
 
 - Jonas Galvez [@galvez](https://github.com/galvez)
