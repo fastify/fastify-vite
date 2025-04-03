@@ -3,33 +3,31 @@
   "scripts": {
     "dev": "node server.js --dev",
     "start": "node server.js",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr ./index.js",
+    "build": "vite build --app",
     "lint": "eslint . --ext .js,.vue --fix",
     "test": "node --test"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "@vue/server-renderer": "^3.5.4",
+    "@vue/server-renderer": "^3.5.13",
     "devalue": "catalog:",
     "fastify": "catalog:",
-    "ky": "^0.33.3",
-    "ky-universal": "^0.11.0",
+    "ky": "^1.8.0",
+    "ky-universal": "^0.12.0",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/eslint-parser": "^7.25.1",
-    "@vitejs/plugin-vue": "^4.6.2",
-    "eslint": "^8.57.0",
+    "@babel/core": "^7.26.10",
+    "@babel/eslint-parser": "^7.27.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "eslint": "^9.23.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.30.0",
-    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.17.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.6.0",
-    "eslint-plugin-vue": "^9.28.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-vue": "^10.0.0",
     "vite": "catalog:"
   }
 }

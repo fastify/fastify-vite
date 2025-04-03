@@ -14,7 +14,7 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.4",
+    "@vitejs/plugin-vue": "^5.2.3",
     "vite": "catalog:"
   }
 }
