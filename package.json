@@ -5,6 +5,7 @@
   },
   "private": "true",
   "devDependencies": {
+    "execa": "^9.5.2",
     "oxlint": "^0.9.10",
     "vitest": "^1.3.0",
     "zx": "^8.1.9"

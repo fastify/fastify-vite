@@ -1,1 +1,0 @@
-<p>Hello world from Svelte and @fastify/vite!</p>

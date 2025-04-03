@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "node server.js --dev",
     "start": "node server.js",
-    "build": "vite build --app",
+    "build": "vite build",
     "lint": "eslint . --ext .js,.vue --fix",
     "test": "node --test"
   },
@@ -17,7 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/eslint-parser": "^7.27.0",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "catalog:",
     "eslint": "^9.23.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",
