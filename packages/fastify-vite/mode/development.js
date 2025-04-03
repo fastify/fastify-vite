@@ -83,8 +83,10 @@ async function setup(config) {
       this.runners[env] = runner
 
       if (env in entryModulePaths) {
-        const entryModule = await runner.import(entryModulePaths[env].build.rollupOptions.input.index)
-        this.entries[env] = entryModule.default ?? entryModule
+        if (exists(entryModulePaths[env])) {
+          const entryModule = await runner.import(entryModulePaths[env])
+          this.entries[env] = entryModule.default ?? entryModule
+        }
       }
     }
   }

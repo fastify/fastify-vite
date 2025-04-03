@@ -45,7 +45,7 @@ async function setup(config) {
   }
 
   // We also register fastify-static to serve all static files
-  // in production (dev server takes of this)
+  // in production (dev server takes care of this)
   await this.scope.register(async function assetFiles(scope) {
     const root = [resolve(clientOutDir, assetsDir)]
     if (exists(resolve(ssrOutDir, assetsDir))) {
@@ -75,7 +75,6 @@ async function setup(config) {
   // Note: this is just to ensure it works, for a real world
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
-
   Object.defineProperty(config, 'hasRenderFunction', {
     writable: false,
     value: typeof config.createRenderFunction === 'function',
@@ -158,8 +157,8 @@ async function setup(config) {
       process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
+
     const entries = {}
-    console.log('config.vite.fastify.outDirs', config.vite.fastify.outDirs)
     for (const [env, entryPath] of Object.entries(config.vite.fastify.entryPaths)) {
       entries[env] = await loadBundle(
         config.vite.root,

@@ -12,7 +12,7 @@ import { ensure, read, write } from './ioutils.cjs'
  *
  * @returns
  */
-export function viteFastify({ clientModule } = {}) {
+export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
   let configToWrite = {}
   let resolvedConfig = {}
@@ -33,10 +33,12 @@ export function viteFastify({ clientModule } = {}) {
         createClientEnvironment(),
         config.environments.client ?? {},
       )
-      config.environments.ssr = deepMerge(
-        createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
-        config.environments.ssr ?? {},
-      )
+      if (!spa) {
+        config.environments.ssr = deepMerge(
+          createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
+          config.environments.ssr ?? {},
+        )
+      }
     },
     async configResolved(config = {}) {
       const { base, build, isProduction, root } = config
