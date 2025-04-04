@@ -22,17 +22,17 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
-    "@kitajs/html": "^3.1.2",
+    "@kitajs/html": "^4.2.7",
     "@rollup/plugin-inject": "^5.0.5",
-    "devalue": "latest",
-    "htmx.org": "^1.9.10",
-    "mlly": "^1.5.0"
+    "devalue": "^5.1.1",
+    "htmx.org": "^2.0.4",
+    "mlly": "^1.7.4"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3"
+    "@biomejs/biome": "^1.9.4"
   },
   "repository": {
     "type": "git",
