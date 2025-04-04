@@ -119,8 +119,9 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     handler = (_, reply) => htmlFunction.call(reply)
   }
 
+  // Replace wildcard routes with Fastify compatible syntax
   scope.route({
-    url: route.path,
+    url: route.path.replace(/:[^+]+\+/, "*"),
     method: route.method ?? ['GET', 'POST', 'PUT', 'DELETE'],
     errorHandler,
     onRequest,

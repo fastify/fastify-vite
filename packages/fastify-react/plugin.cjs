@@ -38,7 +38,6 @@ function viteFastifyReact(config = {}) {
   const virtualModuleInserts = {
     'routes.js': {
       $globPattern: routing.globPattern,
-      $paramPattern: routing.paramPattern,
     },
   }
 

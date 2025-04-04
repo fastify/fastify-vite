@@ -184,8 +184,9 @@ export async function createRoute(
   // Extend with route context initialization module
   RouteContext.extend(client.context)
 
+  // Replace wildcard routes with Fastify compatible syntax
   scope.route({
-    url: route.path,
+    url: route.path.replace(/:[^+]+\+/, "*"),
     method: ['GET', 'POST', 'PUT', 'DELETE'],
     onRequest,
     // If either getData or onEnter are provided,

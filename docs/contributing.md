@@ -2,7 +2,7 @@
 
 Currently [I'm](https://hire.jonasgalvez.com.br) the sole maintainer of this project.
 
-New contributors would be extremely wecome.
+New contributors would be extremely welcome.
 
 The project needs at least an additional releaser.
 
