@@ -18,6 +18,7 @@ Official examples can be found in [`examples/`](https://github.com/fastify/fasti
 
 - Jonas Galvez [@galvez](https://github.com/galvez)
 - Wei Wang [@onlywei](https://github.com/onlywei)
+- Andreas Johansson [@zanmato](https://github.com/zanmato)
 - Gürgün Dayıoğlu [@gurgunday](https://github.com/gurgunday)
 
 ## Sponsors
