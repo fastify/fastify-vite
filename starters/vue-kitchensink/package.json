@@ -4,16 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
-    "build": "npm run build:client && npm run build:server",
-    "start": "node server.js",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /:index.js"
+    "build": "vite build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/vite": "8.0.0-alpha.2",
-    "@fastify/vue": "1.0.0-alpha.5",
+    "@fastify/vite": "8.0.0-beta.1",
+    "@fastify/vue": "1.0.0-beta.1",
     "fastify": "^5.2.2",
     "html-rewriter-wasm": "^0.4.1",
     "unihead": "^0.8.0",
