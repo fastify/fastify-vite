@@ -24,8 +24,7 @@ export function state () {
   }
 }
 
-// Grouped actions that operate on the state. This export
-// could be named anything, no special processing involved.
+// Grouped actions that operate on the state
 export const actions = {
   authenticate (state) {
     state.user.authenticated = true

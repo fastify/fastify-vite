@@ -66,5 +66,4 @@ describe('createHtmlTemplateFunction', () => {
     const resultStr = templateFn()
     expect(resultStr).toBe(html)
   })
-
 })

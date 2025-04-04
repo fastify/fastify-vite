@@ -1,17 +1,11 @@
-import { join, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-
-import viteVue from '@vitejs/plugin-vue'
-import viteFastify from '@fastify/vite/plugin'
+import { join } from 'node:path'
 import viteFastifyVue from '@fastify/vue/plugin'
-
-const path = fileURLToPath(import.meta.url)
+import viteVue from '@vitejs/plugin-vue'
 
 export default {
-  root: join(dirname(path), 'client'),
+  root: join(import.meta.dirname, 'client'),
   plugins: [
-    viteVue(),
-    viteFastify(),
     viteFastifyVue(),
+    viteVue(),
   ],
 }

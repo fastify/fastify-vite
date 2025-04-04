@@ -1,9 +1,9 @@
 import Head from 'unihead/client'
 import { hydrateRoutes } from '@fastify/vue/client'
-import routes from '/:routes.js'
-import create from '/:create.js'
-import * as context from '/:context.js'
-import * as root from '/:root.vue'
+import routes from '$app/routes.js'
+import create from '$app/create.js'
+import * as context from '$app/context.js'
+import * as root from '$app/root.vue'
 
 async function mountApp (...targets) {
   const ctxHydration = await extendContext(window.route, context)

@@ -1,5 +1,4 @@
-import { createRoot } from 'react-dom/client'
-import { createApp } from './base.jsx'
+import { createApp } from './base.js'
 
-const root = createRoot(document.getElementById('root'))
-root.render(createApp())
+createApp(window.hydration)
+  .mount('#root')

@@ -28,18 +28,6 @@ Note that a top-level `<Suspense>` wrapper is necessary because **`@fastify/vue`
 
 <<< @../../packages/fastify-vue/virtual/routes.js
 
-## `/:core.js`
-
-Implements `useRouteContext()` and `createBeforeEachHandler()`, used by `core.js`.
-
-`DXApp` is imported by `root.vue` and encapsulates **`@fastify/vue`**'s route component API.
-
-> Vue Router's [nested routes](https://router.vuejs.org/guide/essentials/nested-routes.html) aren't supported yet.
-
-#### Source from `packages/fastify-vue/virtual/core.js`:
-
-<<< @../../packages/fastify-vue/virtual/core.js
-
 ## `/:create.js`
 
 This virtual module creates your root Vue component.

@@ -1,4 +1,5 @@
 import test from 'node:test'
+import assert from 'node:assert'
 
 test('parseStateKeys', (t) => {
   const a = `export function state () {

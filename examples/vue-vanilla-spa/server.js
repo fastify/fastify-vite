@@ -2,6 +2,7 @@
 import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
+import { renderToString } from 'vue/server-renderer'
 
 export async function main (dev) {
   const server = Fastify()
@@ -9,14 +10,20 @@ export async function main (dev) {
   await server.register(FastifyVite, {
     root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
-    spa: true
+    spa: true,
   })
+
+  server.setErrorHandler((err, req, reply) => {
+    console.error(err)
+    reply.send(err)
+  })
+
+  await server.vite.ready()
 
   server.get('/', (req, reply) => {
     return reply.html()
   })
 
-  await server.vite.ready()
   return server
 }
 

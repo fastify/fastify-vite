@@ -1,42 +1,45 @@
+import { setTimeout } from 'node:timers/promises'
 import assert from 'node:assert'
-import { join } from 'node:path'
-import { build } from 'vite'
+import { join } from 'path'
+import { loadConfigFromFile, createBuilder, build } from 'vite'
 
 export function makeIndexTest ({ main, dev }) {
   return async () => {
     const server = await main(dev)
     const response = await server.inject({ method: 'GET', url: '/' })
     assert.strictEqual(response.statusCode, 200)
-    await server.vite.devServer?.close()
-   }
-}
-
-export function makeSSRBuildTest ({ cwd }) {
-  return async () => {
-    await build({
-      configFile: join(cwd, 'vite.config.js'),
-      build: {
-        outDir: 'dist/client',
-        ssrManifest: true,
-      }
-    })
-    await build({
-      configFile: join(cwd, 'vite.config.js'),
-      build: {
-        outDir: 'dist/server',
-        ssr: './index.js',
-      }
-    })
+    await setTimeout(3000)
+    await server.close()
   }
 }
 
+
+// export function makeBuildTest () {
+//   return async () => {
+//     const builder = await createBuilder()
+//     await builder.buildApp()
+//   }
+// }
+
 export function makeSPABuildTest ({ cwd }) {
   return async () => {
-    await build({
-      configFile: join(cwd, 'vite.config.js'),
-      build: {
-        outDir: 'dist/client',
-      }
-    })
+    const configFile = join(cwd, 'vite.config.js')
+    const config = await loadConfigFromFile({ 
+      command: 'build', 
+      mode: 'production'
+    }, configFile)
+    await build(config)
+  }
+}
+
+export function makeBuildTest ({ cwd }) {
+  return async () => {
+    const configFile = join(cwd, 'vite.config.js')
+    // const config = await loadConfigFromFile({ 
+    //   command: 'build', 
+    //   mode: 'production'
+    // }, configFile)
+    const builder = await createBuilder({ configFile })
+    await builder.buildApp()
   }
 }

@@ -1,7 +1,7 @@
 import { createRoutes } from '@fastify/vue/server'
 
 export default {
-  routes: createRoutes(import('/:routes.js')),
-  create: import('/:create.js'),
-  context: import('/:context.js'),
+  routes: createRoutes(import('$app/routes.js')),
+  create: import('$app/create.js'),
+  context: import('$app/context.js'),
 }

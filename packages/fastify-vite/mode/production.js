@@ -20,17 +20,17 @@ function fileUrl(str) {
 async function setup(config) {
   const { spa, vite } = config
   let clientOutDir
-  let serverOutDir
+  let ssrOutDir
 
   if (vite.fastify) {
-    clientOutDir = resolveIfRelative(vite.fastify.clientOutDir, vite.root)
-    serverOutDir = resolveIfRelative(vite.fastify.serverOutDir || '', vite.root)
+    clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, vite.root)
+    ssrOutDir = resolveIfRelative(vite.fastify.outDirs.ssr || '', vite.root)
   } else {
     // Backwards compatibility for projects that do not use the viteFastify plugin.
     const outDir = resolveIfRelative(vite.build.outDir, vite.root)
 
     clientOutDir = resolve(outDir, 'client')
-    serverOutDir = resolve(outDir, 'server')
+    ssrOutDir = resolve(outDir, 'server')
   }
 
   // For production you get the distribution version of the render function
@@ -40,16 +40,16 @@ async function setup(config) {
     throw new Error('No client distribution bundle found.')
   }
 
-  if (!spa && !exists(serverOutDir)) {
-    throw new Error('No server distribution bundle found.')
+  if (!spa && !exists(ssrOutDir)) {
+    throw new Error('No SSR distribution bundle found.')
   }
 
   // We also register fastify-static to serve all static files
-  // in production (dev server takes of this)
+  // in production (dev server takes care of this)
   await this.scope.register(async function assetFiles(scope) {
     const root = [resolve(clientOutDir, assetsDir)]
-    if (exists(resolve(serverOutDir, assetsDir))) {
-      root.push(resolve(serverOutDir, assetsDir))
+    if (exists(resolve(ssrOutDir, assetsDir))) {
+      root.push(resolve(ssrOutDir, assetsDir))
     }
     await scope.register(FastifyStatic, {
       root,
@@ -57,7 +57,7 @@ async function setup(config) {
         URL.canParse(vite.base)
           ? new URL(vite.base).pathname
           : vite.base || '/',
-        assetsDir
+        assetsDir,
       ).replace(/\\/g, '/'),
     })
   })
@@ -75,14 +75,13 @@ async function setup(config) {
   // Note: this is just to ensure it works, for a real world
   // production deployment, you'll want to capture those paths in
   // Nginx or just serve them from a CDN instead
-
   Object.defineProperty(config, 'hasRenderFunction', {
     writable: false,
     value: typeof config.createRenderFunction === 'function',
   })
 
   // Load routes from client module (server entry point)
-  const { module: clientModule, ssrManifest } = await loadClient()
+  const { entries, ssrManifest } = await loadEntries()
 
   // Make SSR Manifest available in the config
   Object.defineProperty(config, 'ssrManifest', {
@@ -90,7 +89,7 @@ async function setup(config) {
     value: ssrManifest,
   })
 
-  const client = await config.prepareClient(clientModule, this.scope, config)
+  const client = !config.spa && await config.prepareClient(entries, this.scope, config)
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply(
@@ -114,35 +113,61 @@ async function setup(config) {
 
   return { client, routes: client?.routes }
 
+  async function loadBundle(viteRoot, distOutDir, entryPath) {
+    const parsedNamed = parse(entryPath).name
+    const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
+    let bundlePath
+    for (const serverFile of bundleFiles) {
+      // Use file path on Windows
+      bundlePath =
+        process.platform === 'win32'
+          ? new URL(fileUrl(resolve(viteRoot, distOutDir, serverFile)))
+          : resolve(viteRoot, distOutDir, serverFile)
+      if (exists(bundlePath)) {
+        break
+      }
+    }
+    let bundle = await import(bundlePath)
+    if (typeof bundle.default === 'function') {
+      bundle = await bundle.default(config)
+    }
+    return bundle.default || bundle
+  }
+
   // Loads the Vite application server entry point for the client
-  async function loadClient() {
+  async function loadEntries() {
     if (config.spa) {
       return {}
     }
-    const ssrManifestPath = resolve(clientOutDir, '.vite', 'ssr-manifest.json')
+    let ssrManifestPath
+    const manifestPaths = [
+      // Vite v4 and v5
+      resolve(clientOutDir, 'ssr-manifest.json'),
+      // Vite v6 Beta
+      resolve(clientOutDir, '.vite/ssr-manifest.json'),
+      // Vite v6
+      resolve(clientOutDir, '.vite/manifest.json'),
+    ]
+    for (const manifestPath of manifestPaths) {
+      if (exists(manifestPath)) {
+        ssrManifestPath = manifestPath
+      }
+    }
     const ssrManifest =
       process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
-    const parsedNamed = parse(config.clientModule.replace('/:', '/_')).name
-    const serverFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
-    let serverBundlePath
-    for (const serverFile of serverFiles) {
-      // Use file path on Windows
-      serverBundlePath =
-        process.platform === 'win32'
-          ? new URL(fileUrl(resolve(serverOutDir, serverFile)))
-          : resolve(serverOutDir, serverFile)
-      if (await exists(serverBundlePath)) {
-        break
-      }
-    }
-    let serverBundle = await import(serverBundlePath)
-    if (typeof serverBundle.default === 'function') {
-      serverBundle = await serverBundle.default(config)
+
+    const entries = {}
+    for (const [env, entryPath] of Object.entries(config.vite.fastify.entryPaths)) {
+      entries[env] = await loadBundle(
+        config.vite.root,
+        config.vite.fastify.outDirs[env],
+        entryPath,
+      )
     }
     return {
-      module: serverBundle.default || serverBundle,
+      entries,
       ssrManifest: JSON.parse(await read(ssrManifest, 'utf8')),
     }
   }

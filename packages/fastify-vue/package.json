@@ -3,7 +3,7 @@
   "main": "index.js",
   "name": "@fastify/vue",
   "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0",
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -43,13 +43,15 @@
     "html-rewriter-wasm": "^0.4.1",
     "mlly": "^1.5.0",
     "unihead": "^0.8.0",
-    "vite": "^5.4.8",
     "vue": "^3.5.8",
     "vue-router": "^4.4.5",
     "youch": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "latest"
+  },
+  "optionalDependencies": {
+    "vite": "^6.2.4"
   },
   "publishConfig": {
     "access": "public"

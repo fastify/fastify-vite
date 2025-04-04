@@ -1,0 +1,31 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "node server.js",
+    "build": "vite build --app",
+    "lint": "eslint . --ext .js,.jsx --fix",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "@solidjs/router": "^0.15.3",
+    "devalue": "catalog:",
+    "fastify": "catalog:",
+    "solid-js": "catalog:"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/eslint-parser": "^7.27.0",
+    "babel-preset-solid": "^1.9.5",
+    "eslint": "^9.23.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.17.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-solid": "^0.14.5",
+    "vite": "catalog:",
+    "vite-plugin-solid": "^2.11.6"
+  }
+}

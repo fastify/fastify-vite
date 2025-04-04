@@ -1,7 +1,8 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import viteFastify from '@fastify/vite/plugin'
 import {
-  prefixes,
+  prefix,
   resolveId,
   loadSource,
   loadVirtualModule,
@@ -15,7 +16,9 @@ export default function viteFastifyVue () {
   const context = {
     root: null,
   }
-  return {
+  return [viteFastify({
+    clientModule: '$app/index.js'
+  }), {
     name: 'vite-plugin-fastify-vue',
     config,
     configResolved: configResolved.bind(context),
@@ -29,8 +32,7 @@ export default function viteFastifyVue () {
         const source = loadSource(id)
         return createPlaceholderExports(source)
       }
-      const prefix = prefixes.find(_ => _.test(id))
-      if (prefix) {
+      if (prefix.test(id)) {
         const [, virtual] = id.split(prefix)
         if (virtual) {
           if (virtual === 'stores') {
@@ -50,7 +52,7 @@ export default function viteFastifyVue () {
       handler: transformIndexHtml.bind(context)
     },
     closeBundle: closeBundle.bind(context),
-  }
+  }]
 }
 
 function transformIndexHtml (html, { bundle }) {
@@ -68,18 +70,23 @@ function configResolved (config) {
 
 function config (config, { isSsrBuild, command }) {
   if (command === 'build') {
-    config.build.rollupOptions = {
-      input: isSsrBuild ? config.build.ssr : '/index.html',
-      output: {
-        format: 'es',
-      },
-      onwarn
+    if (!config.build) {
+      config.build = {}
     }
+    if (!config.build.rollupOptions) {
+      config.build.rollupOptions = {}
+    }
+    config.build.rollupOptions.onwarn = onwarn
   }
 }
 
 function onwarn (warning, rollupWarn) {
   if (
+    !(
+      warning.code == 'MISSING_EXPORT' &&
+      warning.message?.includes?.('"scrollBehavior" is not exported')
+    )
+    &&
     !(
       warning.code == 'PLUGIN_WARNING' &&
       warning.message?.includes?.('dynamic import will not move module into another chunk')
