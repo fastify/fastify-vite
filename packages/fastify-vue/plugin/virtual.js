@@ -25,7 +25,7 @@ const virtualModules = [
   'hooks'
 ]
 
-export const prefix = /^\$app\//
+export const prefix = /^\/?\$app\//
 
 export async function resolveId (id) {
   if (prefix.test(id)) {

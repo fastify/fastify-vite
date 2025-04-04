@@ -1,5 +1,5 @@
 <script>
-export { default } from '/:router.vue'
+export { default } from '$app/router.vue'
 
 export const mount = '#root'
 

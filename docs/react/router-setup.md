@@ -35,18 +35,5 @@ export default {
 
 ## Dynamic parameters
 
-Dynamic route parameters follow the [Next.js convention](https://nextjs.org/docs/basic-features/pages#pages-with-dynamic-routes) (`[param]`), but that can be overriden by using the `paramPattern` plugin option. For example, this configuration switches the param pattern to the [Remix convention](https://remix.run/docs/en/v1/guides/routing#dynamic-segments) (`$param`).
-
-In your Vite configuration file:
-
-```js
-import viteFastifyReact from '@fastify/react/plugin'
-
-export default {
-  plugins: [
-    // ...
-    viteFastifyReact({ paramPattern: /\$(\w+)/ }),
-  ],
-}
-```
+Dynamic route parameters uses `[param]` for a singular parameter and `[param+]` for wildcard routes.
 

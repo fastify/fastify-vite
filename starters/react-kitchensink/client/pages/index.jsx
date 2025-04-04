@@ -28,6 +28,7 @@ export default function Index () {
         <li><Link to="/client-only">/client-only</Link> — <b>disabling</b> SSR.</li>
         <li><Link to="/server-only">/server-only</Link> — <code>0kb</code> JavaScript.</li>
         <li><Link to="/streaming">/streaming</Link> — <b>streaming</b> SSR.</li>
+        <li><Link to="/wildcard/another/one">/wildcard/another/one</Link> — <b>wildcard route matching</b> <code>/wildcard/*</code></li>
       </ul>
     </>
   )

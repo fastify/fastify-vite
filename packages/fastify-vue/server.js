@@ -6,6 +6,7 @@ class Routes extends Array {
       return {
         id: route.id,
         path: route.path,
+        name: route.name,
         layout: route.layout,
         getData: !!route.getData,
         getMeta: !!route.getMeta,
@@ -15,7 +16,7 @@ class Routes extends Array {
   }
 }
 
-export async function createRoutes (fromPromise, { param } = { param: /\[(\w+)\]/ }) {
+export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]+\+?)\]/ }) {
   const { default: from } = await fromPromise
   const importPaths = Object.keys(from)
   const promises = []
@@ -26,6 +27,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[(\w+)\]
           .then((routeModule) => {
             return {
               id: routeDef.path,
+              name: routeDef.path ?? routeModule.path,
               path: routeDef.path ?? routeModule.path,
               ...routeModule,
             }
@@ -38,20 +40,37 @@ export async function createRoutes (fromPromise, { param } = { param: /\[(\w+)\]
       promises.push(
         getRouteModule(path, from[path])
           .then((routeModule) => {
-            return {
+            const route = {
               id: path,
               layout: routeModule.layout,
-              path: routeModule.path ?? path
+              name: path
                 // Remove /pages and .jsx extension
                 .slice(6, -4)
-                // Replace [id] with :id
-                .replace(param, (_, m) => `:${m}`)
-                // Replace '/index' with '/'
-                .replace(/\/index$/, '/')
-                // Remove trailing slashs
-                .replace(/(.+)\/+$/, (...m) => m[1]),
+                // Remove params
+                .replace(param, (_, m) => ``)
+                // Remove leading and trailing slashes
+                .replace(/^\/*|\/*$/g, '')
+                // Replace slashes with underscores
+                .replace(/\//g, '_'),
+              path:
+                routeModule.path ??
+                path
+                  // Remove /pages and .jsx extension
+                  .slice(6, -4)
+                  // Replace [id] with :id and [slug+] with :slug+
+                  .replace(param, (_, m) => `:${m}`)
+                  // Replace '/index' with '/'
+                  .replace(/\/index$/, '/')
+                  // Remove trailing slashs
+                  .replace(/(.+)\/+$/, (...m) => m[1]),
               ...routeModule,
             }
+
+            if (route.name === '') {
+              route.name = 'catch-all'
+            }
+
+            return route
           }),
       )
     }
