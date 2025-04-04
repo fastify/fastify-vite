@@ -31,7 +31,7 @@ async function setup(config) {
       if (environment.build?.rollupOptions?.input?.index) {
         const modulePath =
           environment.build.rollupOptions.input.index.startsWith(config.virtualModulePrefix)
-            ? environment
+            ? environment.build.rollupOptions.input.index
             : resolve(
                 config.vite.root,
                 environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
@@ -87,10 +87,8 @@ async function setup(config) {
       this.runners[env] = runner
 
       if (env in entryModulePaths) {
-        if (exists(entryModulePaths[env])) {
-          const entryModule = await runner.import(entryModulePaths[env])
-          this.entries[env] = entryModule.default ?? entryModule
-        }
+        const entryModule = await runner.import(entryModulePaths[env])
+        this.entries[env] = entryModule.default ?? entryModule
       }
     }
   }
@@ -155,7 +153,7 @@ async function setup(config) {
 
   await loadEntries()
 
-  const client = await config.prepareClient(this.entries, this.scope, config)
+  const client = !config.spa && await config.prepareClient(this.entries, this.scope, config)
 
   return {
     config,
