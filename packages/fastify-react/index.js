@@ -168,9 +168,12 @@ export async function createRoute(
     await route.configure(scope)
   }
 
+  // Replace wildcard routes with Fastify compatible syntax
+  const routePath = route.path.replace(/:[^+]+\+/, '*')
+
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    scope.get(`/-/data${route.path}`, {
+    scope.get(`/-/data${routePath}`, {
       onRequest,
       async handler(req, reply) {
         reply.send(await route.getData(req.route))
@@ -184,9 +187,8 @@ export async function createRoute(
   // Extend with route context initialization module
   RouteContext.extend(client.context)
 
-  // Replace wildcard routes with Fastify compatible syntax
   scope.route({
-    url: route.path.replace(/:[^+]+\+/, "*"),
+    url: routePath,
     method: ['GET', 'POST', 'PUT', 'DELETE'],
     onRequest,
     // If either getData or onEnter are provided,
