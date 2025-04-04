@@ -1067,9 +1067,6 @@ importers:
       unihead:
         specifier: ^0.8.0
         version: 0.8.0
-      vite:
-        specifier: ^5.4.8
-        version: 5.4.17(@types/node@22.14.0)(lightningcss@1.29.2)
       vue:
         specifier: ^3.5.8
         version: 3.5.13(typescript@5.8.2)
@@ -1079,10 +1076,14 @@ importers:
       youch:
         specifier: ^3.3.4
         version: 3.3.4
+    optionalDependencies:
+      vite:
+        specifier: ^6.2.4
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: latest
-        version: 5.2.3(vite@5.4.17(@types/node@22.14.0)(lightningcss@1.29.2))(vue@3.5.13(typescript@5.8.2))
+        version: 5.2.3(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.2))
 
   starters/htmx-base:
     dependencies:
@@ -2619,6 +2620,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vite@8.0.0-alpha.2':
     resolution: {integrity: sha512-4vS2qwXBbzJQvSoNDfD57/cFYb/4PUgW310q3MGYwV98CP5DXqMNyh9MZarGCYW71hw7s+KkukUNuXCXwTISeg==}
@@ -8960,11 +8962,6 @@ snapshots:
   '@vitejs/plugin-vue@4.6.2(vite@4.5.12(@types/node@22.14.0)(lightningcss@1.29.2))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       vite: 4.5.12(@types/node@22.14.0)(lightningcss@1.29.2)
-      vue: 3.5.13(typescript@5.8.2)
-
-  '@vitejs/plugin-vue@5.2.3(vite@5.4.17(@types/node@22.14.0)(lightningcss@1.29.2))(vue@3.5.13(typescript@5.8.2))':
-    dependencies:
-      vite: 5.4.17(@types/node@22.14.0)(lightningcss@1.29.2)
       vue: 3.5.13(typescript@5.8.2)
 
   '@vitejs/plugin-vue@5.2.3(vite@6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.2))':
