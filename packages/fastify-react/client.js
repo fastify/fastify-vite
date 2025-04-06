@@ -1,3 +1,16 @@
+import { createContext, useContext, lazy } from 'react'
+
+export const RouteContext = createContext({})
+
+export function useRouteContext() {
+  const routeContext = useContext(RouteContext)
+  if (routeContext.state) {
+    routeContext.snapshot = isServer
+      ? routeContext.state ?? {}
+      : useSnapshot(routeContext.state ?? {})
+  }
+  return routeContext
+}
 
 export async function hydrateRoutes (fromInput) {
   let from = fromInput

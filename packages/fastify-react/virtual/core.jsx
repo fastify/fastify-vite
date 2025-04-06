@@ -1,23 +1,13 @@
 import { createPath } from 'history'
-import { createContext, useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { BrowserRouter, StaticRouter, useLocation } from 'react-router'
 import { proxy, useSnapshot } from 'valtio'
+import { RouteContext, useRouteContext } from '@fastify/react/client'
 import layouts from '$app/layouts.js'
 import { waitFetch, waitResource } from '$app/resource.js'
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
-export const RouteContext = createContext({})
-
-export function useRouteContext() {
-  const routeContext = useContext(RouteContext)
-  if (routeContext.state) {
-    routeContext.snapshot = isServer
-      ? routeContext.state ?? {}
-      : useSnapshot(routeContext.state ?? {})
-  }
-  return routeContext
-}
 
 let serverActionCounter = 0
 
