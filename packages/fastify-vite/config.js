@@ -197,7 +197,7 @@ async function configure(options = {}) {
 
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
   const bundle = await resolveBundle({ dev, vite })
-  Object.assign(config, { bundle, })
+  Object.assign(config, { bundle })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)
     config.renderer = { ...renderer, ...named }
@@ -251,19 +251,25 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
     // Check for top-level dist/ folder
     viteConfigDistFile = resolve(root, distDir, 'config.json')
     if (exists(viteConfigDistFile)) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, distDir)]
+      return [
+        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+        resolve(root, distDir),
+      ]
     }
     // Check for client/dist/ folder (following convention)
     viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
     if (exists(viteConfigDistFile)) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, 'client', distDir)]
+      return [
+        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+        resolve(root, 'client', distDir),
+      ]
     }
     console.warn(
       `Failed to load cached Vite configuration from ${viteConfigDistFile}`,
     )
   }
 
-  const configFile = findConfigFile(root)
+  let configFile = findConfigFile(root)
   if (!configFile) {
     return [null, null]
   }
@@ -362,9 +368,9 @@ async function resolveSPABundle({ dev, vite }) {
   return bundle
 }
 
-function findConfigFile (root) {
+function findConfigFile(root) {
   for (const ext of ['js', 'mjs', 'ts']) {
-    let configFile = join(root, `vite.config.${ext}`)
+    const configFile = join(root, `vite.config.${ext}`)
     if (exists(configFile)) {
       return configFile
     }

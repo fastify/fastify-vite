@@ -90,7 +90,8 @@ async function setup(config) {
     value: ssrManifest,
   })
 
-  const client = !config.spa && await config.prepareClient(entries, this.scope, config)
+  const client =
+    !config.spa && (await config.prepareClient(entries, this.scope, config))
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply(
@@ -160,7 +161,9 @@ async function setup(config) {
         : ssrManifestPath
 
     const entries = {}
-    for (const [env, entryPath] of Object.entries(config.vite.fastify.entryPaths)) {
+    for (const [env, entryPath] of Object.entries(
+      config.vite.fastify.entryPaths,
+    )) {
       entries[env] = await loadBundle(
         config.vite.root,
         config.vite.fastify.outDirs[env],

@@ -1,4 +1,3 @@
-
 import viteFastify from '@fastify/vite/plugin'
 
 if (!globalThis.port) {
@@ -7,9 +6,7 @@ if (!globalThis.port) {
 
 export default () => ({
   root: import.meta.dirname,
-  plugins: [
-    viteFastify()
-  ],
+  plugins: [viteFastify()],
   server: {
     hmr: {
       port: globalThis.port++,
