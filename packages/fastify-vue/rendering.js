@@ -66,7 +66,6 @@ export async function createHtmlFunction (source, _, config) {
       )
     }
 
-    console.dir(context.toJSON(), { depth: null })
     // Embed full hydration script
     context.hydration = (
       `<script>\nwindow.route = ${
@@ -95,7 +94,7 @@ export async function createHtmlFunction (source, _, config) {
   }
 }
 
-export function sendClientOnlyShell (templates, context, body) {
+export function sendClientOnlyShell (templates, context) {
   context.head = new Head(context.head).render()
   return `${
     templates.beforeElement(context)
@@ -115,13 +114,14 @@ export function sendShell (templates, context, body) {
   }`
 }
 
-export function streamShell (templates, context) {
-  return Readable.from(createShellStream(templates, context))
+export function streamShell (templates, context, body) {
+  context.head = new Head(context.head).render()
+  return Readable.from(createShellStream(templates, context, body))
 }
 
-async function * createShellStream (templates, context) {
+async function * createShellStream (templates, context, body) {
   yield templates.beforeElement(context)
-  for await (const chunk of context.body) {
+  for await (const chunk of body) {
     yield chunk
   }
   yield templates.afterElement(context)
