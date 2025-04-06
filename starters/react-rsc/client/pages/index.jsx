@@ -1,9 +1,8 @@
 import logo from '/assets/logo.svg'
-import { Link } from 'react-router-dom'
 import Examples from '/comp/examples.jsx'
 import { useRouteContext } from '@fastify/react/client'
 
-export function getMeta () xa{
+export function getMeta () {
   return {
     title: 'Welcome to @fastify/react!'
   }

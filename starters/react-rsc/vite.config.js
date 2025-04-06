@@ -10,7 +10,9 @@ export default {
   root: join(dirname(path), 'client'),
   plugins: [
     viteReact(),
-    viteFastifyReact(),
+    viteFastifyReact({
+      rsc: true
+    }),
   ],
   ssr: {
     external: [

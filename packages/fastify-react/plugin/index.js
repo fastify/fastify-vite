@@ -13,15 +13,20 @@ import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
 export default function viteFastifyVue () {
+  const { configResolved, writeBundle } = viteFastify({
+    clientModule: '$app/index.js'
+  })
   const context = {
     root: null,
   }
-  return [viteFastify({
-    clientModule: '$app/index.js'
-  }), {
+  const configResolvedForVirtual = configResolved.bind(context)
+  return [, {
     name: 'vite-plugin-fastify-react',
     config,
-    configResolved: configResolved.bind(context),
+    configResolved (config) {
+      configResolved(config)
+      configResolvedForVirtual(config)
+    },
     resolveId: resolveId.bind(context),
     async load (id) {
       if (id.includes('?server') && !context.resolvedConfig.build.ssr) {
@@ -51,6 +56,7 @@ export default function viteFastifyVue () {
       order: 'post',
       handler: transformIndexHtml.bind(context)
     },
+    writeBundle,
     closeBundle: closeBundle.bind(context),
   }]
 }
@@ -68,7 +74,35 @@ function configResolved (config) {
   this.root = config.root
 }
 
-function config (config, { isSsrBuild, command }) {
+async function config (config) {
+  const deepMerge = getDeepMergeFunction()
+  const {
+    resolveClientModule,
+    createSSREnvironment,
+    createClientEnvironment,
+  } = await import('./environments.js')
+
+  config.environments = {}
+  config.environments.client = deepMerge(
+    createClientEnvironment(),
+    config.environments.client ?? {},
+  )
+  if (!spa) {
+    config.environments.ssr = deepMerge(
+      createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
+      config.environments.ssr ?? {},
+    )
+    if (!config.builder) {
+      config.builder = {}
+    }
+    // Write the JSON file after the bundle finishes writing to avoid getting deleted by emptyOutDir
+    if (!config.builder.buildApp) {
+      config.builder.buildApp = async (builder) => {
+        await builder.build(builder.environments.client)
+        await builder.build(builder.environments.ssr)
+      }
+    }
+  }
   if (command === 'build') {
     if (!config.build) {
       config.build = {}
