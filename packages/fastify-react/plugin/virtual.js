@@ -23,14 +23,10 @@ const virtualModules = [
 export const prefix = /^\/?\$app\//
 
 export async function resolveId (id) {
-  console.log('id', id)
   if (prefix.test(id)) {
     const [, virtual] = id.split(prefix)
-    console.log('virtual', virtual)
     if (virtual) {
-      console.log('virtual/found', virtual)
       const override = loadVirtualModuleOverride(this.root, virtual)
-      console.log('override', override)
       if (override) {
         return override
       }
@@ -44,11 +40,9 @@ export function loadVirtualModule (virtualInput) {
   if (!/\.((mc)?ts)|((mc)?js)|(jsx)$/.test(virtual)) {
     virtual += '.js'
   }
-  console.log('virtual->', virtual)
   if (!virtualModules.includes(virtual)) {
     return
   }
-  console.log('virtual/2->', virtual)
   const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
   return {
     code,
