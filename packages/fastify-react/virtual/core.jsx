@@ -1,7 +1,7 @@
 import { createPath } from 'history'
 import { useEffect } from 'react'
 import { BrowserRouter, StaticRouter, useLocation } from 'react-router'
-import { proxy, useSnapshot } from 'valtio'
+import { proxy } from 'valtio'
 import { RouteContext, useRouteContext } from '@fastify/react/client'
 import layouts from '$app/layouts.js'
 import { waitFetch, waitResource } from '$app/resource.js'

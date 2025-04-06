@@ -1,6 +1,8 @@
 import { createContext, useContext, lazy } from 'react'
+import { useSnapshot } from 'valtio'
 
 export const RouteContext = createContext({})
+export const isServer = typeof window === 'undefined' && typeof process === 'object'
 
 export function useRouteContext() {
   const routeContext = useContext(RouteContext)

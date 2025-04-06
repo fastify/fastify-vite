@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export default function Auth ({ children }) {
   const { actions, state, snapshot } = useRouteContext()

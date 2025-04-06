@@ -1,6 +1,6 @@
 import logo from '/assets/logo.svg'
 import { Link } from 'react-router-dom'
-import { isServer, useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export function getMeta () {
   return {
@@ -10,7 +10,7 @@ export function getMeta () {
 
 export default function Index () {
   const { snapshot, state } = useRouteContext()
-  if (isServer) {
+  if (import.meta.env.SSR) {
     // State is automatically hydrated on the client
     state.message = 'Welcome to @fastify/react!'
   }

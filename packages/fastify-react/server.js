@@ -63,6 +63,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
       promises.push(
         getRouteModule(path, from[path])
           .then((routeModule) => {
+            console.log('path', path)
             const route = {
               id: path,
               layout: routeModule.layout,
@@ -70,7 +71,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
                 // Remove /pages and .vue extension
                 .slice(6, -4)
                 // Remove params
-                .replace(param, (_, m) => ``)
+                .replace(param, '')
                 // Remove leading and trailing slashes
                 .replace(/^\/*|\/*$/g, '')
                 // Replace slashes with underscores
@@ -82,6 +83,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
                   .slice(6, -4)
                   // Replace [id] with :id and [slug+] with :slug+
                   .replace(param, (_, m) => `:${m}`)
+                  .replace(/:\w+\+/, (_, m) => `*`)
                   // Replace '/index' with '/'
                   .replace(/\/index$/, '/')
                   // Remove trailing slashs
