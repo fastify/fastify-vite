@@ -1,10 +1,9 @@
 import { createPath } from 'history'
 import { createContext, useContext, useEffect } from 'react'
-import { BrowserRouter, useLocation } from 'react-router-dom'
-import { StaticRouter } from 'react-router-dom/server.mjs'
+import { BrowserRouter, StaticRouter, useLocation } from 'react-router'
 import { proxy, useSnapshot } from 'valtio'
-import layouts from '/:layouts.js'
-import { waitFetch, waitResource } from '/:resource.js'
+import layouts from '$app/layouts.js'
+import { waitFetch, waitResource } from '$app/resource.js'
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
