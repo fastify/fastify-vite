@@ -44,7 +44,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
               id: path,
               layout: routeModule.layout,
               name: path
-                // Remove /pages and .jsx extension
+                // Remove /pages and .vue extension
                 .slice(6, -4)
                 // Remove params
                 .replace(param, (_, m) => ``)
@@ -55,7 +55,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
               path:
                 routeModule.path ??
                 path
-                  // Remove /pages and .jsx extension
+                  // Remove /pages and .vue extension
                   .slice(6, -4)
                   // Replace [id] with :id and [slug+] with :slug+
                   .replace(param, (_, m) => `:${m}`)
@@ -97,7 +97,6 @@ function getRouteModuleExports (routeModule) {
 }
 
 async function getRouteModule (path, routeModuleInput) {
-  // const isServer = typeof process !== 'undefined'
   if (typeof routeModuleInput === 'function') {
     const routeModule = await routeModuleInput()
     return getRouteModuleExports(routeModule)
