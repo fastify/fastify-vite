@@ -31,14 +31,14 @@ export default function viteFastifyReact ({ rsc } = {}) {
   return [
     {
       name: 'vite-fastify',
+      config: config.bind({ 
+        context,
+        rsc: rsc ?? false,
+        clientModule
+      }),
     },
     {
       name: 'vite-plugin-fastify-react',
-      config: config.bind({ 
-      context,
-      rsc: rsc ?? false,
-      clientModule
-    }),
       configureServer,
       configResolved (config) {
         manager.config = config
@@ -103,7 +103,7 @@ function configResolved (config) {
   this.root = config.root
 }
 
-async function config (config, { command }) {
+async function config (config, { command } = {}) {
   this.context.root = config.root
   const deepMerge = getDeepMergeFunction()
   const {
@@ -122,6 +122,9 @@ async function config (config, { command }) {
   )
   if (this.rsc) {
     config.environments.rsc = createRSCEnvironment('$app/server.js')
+    if (!config.plugins) {
+      config.plugins = []
+    }
     config.plugins.push(
       vitePluginUseClient(),
       vitePluginSilenceDirectiveBuildWarning(),
