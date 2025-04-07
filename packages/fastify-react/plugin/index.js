@@ -121,7 +121,8 @@ async function config (config, { command } = {}) {
     config.environments.ssr ?? {},
   )
   if (this.rsc) {
-    config.environments.rsc = createRSCEnvironment('$app/server.js')
+    config.environments.rsc = createRSCEnvironment('/server.js')
+    // config.environments.rsc = createRSCEnvironment('$app/server.js')
     if (!config.plugins) {
       config.plugins = []
     }

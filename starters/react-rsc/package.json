@@ -3,9 +3,7 @@
   "scripts": {
     "dev": "node server.js --dev",
     "start": "node server.js",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /index.js",
+    "build": "vite build",
     "devinstall": "zx ../../devinstall.mjs -- node server.js --dev",
     "lint": "eslint . --ext .js,.jsx --fix"
   },
@@ -32,6 +30,6 @@
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
-    "vite": "^6.2.4"
+    "vite": "^6.2.5"
   }
 }

@@ -1,3 +1,4 @@
+import { defaultServerConditions } from 'vite'
 
 export function createClientEnvironment() {
   return {
@@ -43,7 +44,7 @@ export function createSSREnvironment (clientModule) {
 export function createRSCEnvironment(rscModule) {
   return {
     resolve: {
-      conditions: ['react-server'],
+      conditions: ['react-server', ...defaultServerConditions],
       noExternal: true,
     },
     dev: {

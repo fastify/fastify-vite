@@ -983,6 +983,9 @@ importers:
       react-router-dom:
         specifier: ^7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-server-dom-webpack:
+        specifier: ^19.1.0
+        version: 19.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(webpack@5.98.0)
       unihead:
         specifier: latest
         version: 0.8.0
@@ -1424,7 +1427,7 @@ importers:
         specifier: ^4.1.1
         version: 4.1.2
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.2.5
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1)
 
   starters/vue-base:
@@ -2705,6 +2708,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vite@8.0.0':
     resolution: {integrity: sha512-QPoDwWL+umc8ASUny1m+obI+bJ5ZREemTu4pjj+0DgnXp+69sswxoHQfT3nsJrLtDuu1JwCtHTxLB/mFjwKu5g==}
