@@ -15,8 +15,12 @@ export function useRouteContext () {
 
 export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
   return async function beforeCreate (to) {
-    // The client-side route context
-    const ctx = routeMap[to.matched[0].path]
+    // The client-side route context, fallback to unset domain constraint
+    const ctx = routeMap[window.location.host + '__' + to.matched[0].path] ?? routeMap['*__' + to.matched[0].path]
+    if (to.name !== ctx.name) {
+      return { name: ctx.name, params: to.params, query: to.query }
+    }
+
     // Indicates whether or not this is a first render on the client
     ctx.firstRender = ctxHydration.firstRender
 
@@ -25,6 +29,10 @@ export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
 
     // Update layoutRef
     layout.value = ctx.layout ?? 'default'
+
+    // Set locale meta, this ensures that the locale is always set in meta
+    // both on the server and client
+    to.meta.locale = ctx.locale
 
     // If it is, take server context data from hydration and return immediately
     if (ctx.firstRender) {
@@ -39,7 +47,7 @@ export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
     // If we have a getData function registered for this route
     if (ctx.getData) {
       try {
-        ctx.data = await jsonDataFetch(to.fullPath)
+        ctx.data = await jsonDataFetch(to.fullPath, ctx.locale)
       } catch (error) {
         ctx.error = error
       }
@@ -93,8 +101,8 @@ function memoImport (func) {
   }
 }
 
-export async function jsonDataFetch (path) {
-  const response = await fetch(`/-/data${path}`)
+export async function jsonDataFetch (path, locale) {
+  const response = await fetch(`/-/data/${locale + path}`)
   let data
   let error
   try {

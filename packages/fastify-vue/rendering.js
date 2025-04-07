@@ -6,7 +6,7 @@ import { createHtmlTemplates } from './templating.js'
 
 export async function createRenderFunction ({ routes, create }) {
   // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(routes.map(_ => [_.path, _]))
+  const routeMap = Object.fromEntries(routes.map(_ => [_.domain + '__' + _.path, _]))
   // Registered as reply.render()
   return function () {
     if (this.request.route.streaming) {

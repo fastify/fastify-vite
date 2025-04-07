@@ -10,6 +10,7 @@
     <li><router-link to="/server-only">/server-only</router-link> — <code>0kb</code> JavaScript.</li>
     <li><router-link to="/streaming">/streaming</router-link> — <b>streaming</b> SSR.</li>
     <li><router-link to="/wildcard/another/one">/wildcard/another/one</router-link> — <b>wildcard route matching</b> <code>/wildcard/*</code></li>
+    <li><router-link :to="{ name: 'sv__wildcard', params: { slug: ['another', 'one'] } }">/asterisk/another/one</router-link> — <b>locale based routes (sv)</b> <code>/asterisk/*</code></li>
   </ul>
 </template>
 

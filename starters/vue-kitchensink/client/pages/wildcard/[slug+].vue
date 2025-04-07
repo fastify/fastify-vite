@@ -9,7 +9,14 @@ export function getData ({ req }) {
 
   return {
     pathMatch: pathMatch.split('/'),
+    locale: req.route.locale,
   }
+}
+
+// Define routes that aren't the default locale (en)
+export const i18n = {
+  'sv': '/asterisk/:slug+',
+  'da': '/asterisk/:slug+',
 }
 </script>
 
@@ -21,4 +28,5 @@ const data = useData()
 <template>
   <h1>Wildcard example that matches /wildcard/*</h1>
   <p>Path match: {{ data.pathMatch }}</p>
+  <p>Locale: {{ data.locale }}</p>
 </template>

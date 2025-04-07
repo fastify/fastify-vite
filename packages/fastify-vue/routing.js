@@ -41,7 +41,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
   }
 
   // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(client.routes.map(_ => [_.path, _]))
+  const routeMap = Object.fromEntries(client.routes.map(_ => [_.domain + '__' + _.path, _]))
 
   // Extend with route context initialization module
   RouteContext.extend(client.context)
@@ -69,7 +69,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
         req.route.router = router
         req.route.store = store
       }
-    }
+    },
   ]
 
   if (route.getData) {
@@ -132,6 +132,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
   scope.route({
     url: routePath,
     method: route.method ?? ['GET', 'POST', 'PUT', 'DELETE'],
+    constraints: route.constraints,
     handler,
     errorHandler,
     ...route,
@@ -139,7 +140,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    scope.get(`/-/data${routePath}`, {
+    scope.get(`/-/data/${route.locale + routePath}`, {
       onRequest,
       async handler (req, reply) {
         reply.send(await route.getData(req.route))

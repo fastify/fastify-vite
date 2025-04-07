@@ -7,7 +7,9 @@ class Routes extends Array {
         id: route.id,
         path: route.path,
         name: route.name,
+        locale: route.locale,
         layout: route.layout,
+        domain: route.domain || '*',
         getData: !!route.getData,
         getMeta: !!route.getMeta,
         onEnter: !!route.onEnter,
@@ -16,68 +18,113 @@ class Routes extends Array {
   }
 }
 
-export async function createRoutes (fromPromise, { param } = { param: /\[([.\w]+\+?)\]/ }) {
+export async function createRoutes (fromPromise, { defaultLocale, localeDomains, localePrefix }) {
   const { default: from } = await fromPromise
   const importPaths = Object.keys(from)
   const promises = []
+  const i18n = Object.keys(localeDomains).length > 0 || localePrefix
+
   if (Array.isArray(from)) {
     for (const routeDef of from) {
       promises.push(
-        getRouteModule(routeDef.path, routeDef.component)
-          .then((routeModule) => {
-            return {
-              id: routeDef.path,
-              name: routeDef.path ?? routeModule.path,
-              path: routeDef.path ?? routeModule.path,
-              ...routeModule,
-            }
-          }),
+        await getRouteModule(routeDef.path, routeDef.component).then((routeModule) => {
+          return {
+            id: routeDef.path,
+            name: routeDef.path ?? routeModule.path,
+            path: routeDef.path ?? routeModule.path,
+            locale: defaultLocale,
+            ...routeModule,
+          }
+        }),
       )
     }
   } else {
     // Ensure that static routes have precedence over the dynamic ones
     for (const path of importPaths.sort((a, b) => a > b ? -1 : 1)) {
-      promises.push(
-        getRouteModule(path, from[path])
-          .then((routeModule) => {
-            const route = {
-              id: path,
-              layout: routeModule.layout,
-              name: path
-                // Remove /pages and .vue extension
-                .slice(6, -4)
-                // Remove params
-                .replace(param, (_, m) => ``)
-                // Remove leading and trailing slashes
-                .replace(/^\/*|\/*$/g, '')
-                // Replace slashes with underscores
-                .replace(/\//g, '_'),
-              path:
-                routeModule.path ??
-                path
-                  // Remove /pages and .vue extension
-                  .slice(6, -4)
-                  // Replace [id] with :id and [slug+] with :slug+
-                  .replace(param, (_, m) => `:${m}`)
-                  // Replace '/index' with '/'
-                  .replace(/\/index$/, '/')
-                  // Remove trailing slashs
-                  .replace(/(.+)\/+$/, (...m) => m[1]),
-              ...routeModule,
-            }
+      const rts = await getRouteModule(path, from[path]).then((routeModule) => {
+        const ret = []
 
-            if (route.name === '') {
-              route.name = 'catch-all'
-            }
+        const baseRoute = {
+          id: path,
+          layout: routeModule.layout,
+          name: path
+            // Remove /pages and .jsx extension
+            .slice(6, -4)
+            // Remove params
+            .replace(/\[([.\w]+\+?)\]/, (_, m) => '')
+            // Remove leading and trailing slashes
+            .replace(/^\/*|\/*$/g, '')
+            // Replace slashes with underscores
+            .replace(/\//g, '_'),
+          path:
+            routeModule.path ??
+            path
+              // Remove /pages and .jsx extension
+              .slice(6, -4)
+              // Replace [id] with :id and [slug+] with :slug+
+              .replace(/\[([.\w]+\+?)\]/, (_, m) => `:${m}`)
+              // Replace '/index' with '/'
+              .replace(/\/index$/, '/')
+              // Remove trailing slashes
+              .replace(/(.+)\/+$/, (...m) => m[1]),
+          ...routeModule,
+        }
 
-            return route
-          }),
-      )
+        if (baseRoute.name === '') {
+          baseRoute.name = 'catch-all'
+        }
+
+        // Add the default locale route
+        const baseLocaleRoute = Object.assign({}, baseRoute)
+        baseLocaleRoute.locale = defaultLocale
+        baseLocaleRoute.meta = { locale: defaultLocale }
+
+        if (i18n) {
+          baseLocaleRoute.name = `${defaultLocale}__${baseLocaleRoute.name}`
+
+          // Add the find-my-way default locale domain constraint
+          if (localeDomains[defaultLocale]) {
+            baseLocaleRoute.constraints = { host: localeDomains[defaultLocale] }
+            baseLocaleRoute.domain = localeDomains[defaultLocale]
+          } else if (baseRoute.path !== '/' && localePrefix) {
+            baseLocaleRoute.path = `/${defaultLocale}${baseLocaleRoute.path}`
+          }
+
+          ret.push(baseLocaleRoute)
+
+          // Add the locale routes
+          if (routeModule.i18n != null) {
+            for (const [locale, localePath] of Object.entries(routeModule.i18n)) {
+              const localeRoute = Object.assign({}, baseRoute)
+              localeRoute.name = `${locale}__${localeRoute.name}`
+              localeRoute.path = localePath
+              localeRoute.locale = locale
+              localeRoute.meta = { locale }
+
+              // Add the find-my-way locale domain constraint
+              if (localeDomains[locale]) {
+                localeRoute.constraints = { host: localeDomains[locale] }
+                localeRoute.domain = localeDomains[locale]
+              } else if (localePrefix) {
+                localeRoute.path = `/${locale}${localeRoute.path}`
+              }
+
+              ret.push(localeRoute)
+            }
+          }
+        } else {
+          ret.push(baseLocaleRoute)
+        }
+
+        return ret
+      })
+
+      promises.push(...rts)
     }
   }
-  return new Routes(...await Promise.all(promises))
-}
 
+  return new Routes(...promises)
+}
 
 function getRouteModuleExports (routeModule) {
   return {
@@ -90,6 +137,7 @@ function getRouteModuleExports (routeModule) {
     getMeta: routeModule.getMeta,
     onEnter: routeModule.onEnter,
     // Other Route-level settings
+    i18n: routeModule.i18n,
     streaming: routeModule.streaming,
     clientOnly: routeModule.clientOnly,
     serverOnly: routeModule.serverOnly,

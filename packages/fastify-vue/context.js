@@ -1,4 +1,3 @@
-
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
@@ -34,6 +33,7 @@ export default class RouteContext {
     this.getMeta = !!route.getMeta
     this.getData = !!route.getData
     this.onEnter = !!route.onEnter
+    this.locale = route.locale
   }
 
   [routeContextInspect] () {
@@ -57,6 +57,7 @@ export default class RouteContext {
       onEnter: this.onEnter,
       firstRender: this.firstRender,
       clientOnly: this.clientOnly,
+      locale: this.locale,
     }
   }
 }

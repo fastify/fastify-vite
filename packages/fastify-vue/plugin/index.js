@@ -6,18 +6,38 @@ import {
   resolveId,
   loadSource,
   loadVirtualModule,
-  createPlaceholderExports
+  createPlaceholderExports,
 } from './virtual.js'
 import { closeBundle } from './preload.js'
 import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
-export default function viteFastifyVue ({ ts } = {}) {
+export default function viteFastifyVue (fastifyVueOptions = {}) {
   const context = {
     root: null,
   }
+
+  fastifyVueOptions = Object.assign({
+    ts: false,
+    defaultLocale: 'en',
+    localePrefix: false,
+    localeDomains: {},
+  }, fastifyVueOptions)
+
+  if (Object.keys(fastifyVueOptions.localeDomains).length > 0 && fastifyVueOptions.localePrefix) {
+    throw new Error('localeDomains can only be used with localePrefix set to false')
+  }
+
+  const virtualModuleInserts = {
+    'index.js': {
+      $defaultLocale: `'${fastifyVueOptions.defaultLocale}'`,
+      $localeDomains: JSON.stringify(fastifyVueOptions.localeDomains),
+      $localePrefix: fastifyVueOptions.localePrefix,
+    },
+  }
+
   return [viteFastify({
-    clientModule: ts ? '$app/index.ts' : '$app/index.js'
+    clientModule: fastifyVueOptions.ts ? '$app/index.ts' : '$app/index.js'
   }), {
     // https://vite.dev/guide/api-plugin#conventions
     name: 'vite-plugin-react-vue',
@@ -48,13 +68,13 @@ export default function viteFastifyVue ({ ts } = {}) {
             }
             return
           }
-          return loadVirtualModule(virtual, { ts })
+          return loadVirtualModule(virtual, { ts: fastifyVueOptions.ts }, virtualModuleInserts)
         }
       }
     },
     transformIndexHtml: {
       order: 'post',
-      handler: transformIndexHtml.bind(context)
+      handler: transformIndexHtml.bind(context),
     },
     closeBundle: {
       order: 'post',
@@ -95,13 +115,11 @@ function onwarn (warning, rollupWarn) {
     !(
       warning.code == 'MISSING_EXPORT' &&
       warning.message?.includes?.('"scrollBehavior" is not exported')
-    )
-    &&
+    ) &&
     !(
       warning.code == 'PLUGIN_WARNING' &&
       warning.message?.includes?.('dynamic import will not move module into another chunk')
-    )
-    &&
+    ) &&
     !(
       warning.code == 'UNUSED_EXTERNAL_IMPORT' &&
       warning.exporter === 'vue'

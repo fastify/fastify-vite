@@ -33,7 +33,7 @@ const virtualModulesTS = [
   'context.ts',
   'index.ts',
   'stores',
-  'hooks'
+  'hooks',
 ]
 
 export const prefix = /^\/?\$app\//
@@ -56,7 +56,7 @@ export async function resolveId (id) {
   }
 }
 
-export function loadVirtualModule (virtualInput, options) {
+export function loadVirtualModule (virtualInput, options, virtualModuleInserts) {
   let virtual = virtualInput
   if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
     virtual += options.ts ? '.ts' : '.js'
@@ -66,8 +66,16 @@ export function loadVirtualModule (virtualInput, options) {
   }
   let virtualRootDir = options.ts ? virtualRootTS : virtualRoot 
   const codePath = resolve(virtualRootDir, virtual)
+
+  let code = readFileSync(codePath, 'utf8')
+  if (virtualModuleInserts[virtual]) {
+    for (const [key, value] of Object.entries(virtualModuleInserts[virtual])) {
+      code = code.replace(new RegExp(escapeRegExp(key), 'g'), value)
+    }
+  }
+
   return {
-    code: readFileSync(codePath, 'utf8'),
+    code,
     map: null,
   }
 }
@@ -113,6 +121,13 @@ function loadVirtualModuleOverride (viteProjectRoot, virtualInput) {
   }
 }
 
+// Thanks to https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
+function escapeRegExp (s) {
+  return s
+    .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+    .replace(/-/g, '\\x2d')
+}
+
 export function loadSource (id) {
   const filePath = id
     .replace(/\?client$/, '')
@@ -130,7 +145,7 @@ export function createPlaceholderExports (source) {
         }
         break
       case 'default':
-        pExports += `export default {}\n`
+        pExports += 'export default {}\n'
         break
       case 'declaration':
         pExports += `export const ${exp.name} = {}\n`

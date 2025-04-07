@@ -18,11 +18,13 @@ export const path = '/my-page'
 </script>
 ```
 
-## Routes location
+## Internationalization
 
-You can also change the glob pattern used to determine where to route modules from. Internally, this setting is passed to [Vite's glob importer](https://vitejs.dev/guide/features.html#glob-import).
+### Locale prefix
 
-In your Vite configuration file:
+If you want to prefix your routes with the locale, set `localePrefix` to `true`.
+
+In your Vite configuration file:  
 
 ```js
 import viteFastifyVue from '@fastify/vue/plugin'
@@ -30,10 +32,60 @@ import viteFastifyVue from '@fastify/vue/plugin'
 export default {
   plugins: [
     // ...
-    viteFastifyVue({ globPattern: '/views/**/*.vue' }),
+    viteFastifyVue({ defaultLocale: 'en', localePrefix: true }),
   ]
 }
 ```
+
+In your Vue template file:  
+
+```vue
+<script>
+// Define routes that aren't the default locale (en)
+export const i18n = {
+  'sv': '/product',
+  'da': '/product',
+}
+</script>
+```
+
+Routes will be `/en/product`, `/sv/product` and `/da/product`. **Note:** The index `/` route will default to the default locale.
+
+
+### Per domain
+
+If you want to match routes per domain you can use the option `localeDomains` to define a domain for each of your locales.
+
+In your Vite configuration file:  
+
+```js
+import viteFastifyVue from '@fastify/vue/plugin'
+
+export default {
+  plugins: [
+    // ...
+    viteFastifyVue({
+      defaultLocale: 'en',
+      localePrefix: false,
+      localeDomains: { 'sv': 'example.se', 'da': 'example.dk' }
+    }),
+  ]
+}
+```
+
+In your Vue template file:  
+
+```vue
+<script>
+// Define routes that aren't the default locale (en)
+export const i18n = {
+  'sv': '/product',
+  'da': '/product',
+}
+</script>
+```
+
+Routes will be identified by domain `en: */product`, `se: example.se/product` and `da: example.dk/product`.
 
 ## Dynamic parameters
 
