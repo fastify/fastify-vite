@@ -16,8 +16,8 @@ async function main(dev) {
 
 module.exports = { main }
 
-
 if (process.argv[1] === __filename) {
-  main(process.argv.includes('--dev'))
-    .then(server => server.listen({ port: 3000 }))
+  main(process.argv.includes('--dev')).then((server) =>
+    server.listen({ port: 3000 }),
+  )
 }

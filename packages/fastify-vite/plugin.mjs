@@ -1,7 +1,6 @@
-import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { ensure, read, write } from './ioutils.cjs'
+import { write } from './ioutils.cjs'
 
 /**
  * This is the Vite plugin, not the Fastify plugin.
@@ -35,7 +34,9 @@ export function viteFastify({ spa, clientModule } = {}) {
       )
       if (!spa) {
         config.environments.ssr = deepMerge(
-          createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
+          createSSREnvironment(
+            clientModule ?? resolveClientModule(config.root),
+          ),
           config.environments.ssr ?? {},
         )
         if (!config.builder) {
@@ -104,7 +105,7 @@ export function viteFastify({ spa, clientModule } = {}) {
         JSON.stringify(configToWrite, undefined, 2),
         'utf-8',
       )
-    }
+    },
   }
 }
 

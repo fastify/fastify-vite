@@ -14,7 +14,10 @@ async function setup(config) {
       throw new Error("@fastify/vite's Vite plugin not registered")
     }
 
-    const { config: setupEnvironments } = findPlugin(config.vite, 'vite-fastify')
+    const { config: setupEnvironments } = findPlugin(
+      config.vite,
+      'vite-fastify',
+    )
 
     const viteEnvsConfig = {
       root: config.vite.root,
@@ -30,7 +33,9 @@ async function setup(config) {
       const environment = viteEnvsConfig.environments[env]
       if (environment.build?.rollupOptions?.input?.index) {
         const modulePath =
-          environment.build.rollupOptions.input.index.startsWith(config.virtualModulePrefix)
+          environment.build.rollupOptions.input.index.startsWith(
+            config.virtualModulePrefix,
+          )
             ? environment.build.rollupOptions.input.index
             : resolve(
                 config.vite.root,
@@ -113,7 +118,10 @@ async function setup(config) {
       config,
     )
     if (this.scope[hot].client) {
-      if (client.routes && typeof client.routes[Symbol.iterator] === 'function') {
+      if (
+        client.routes &&
+        typeof client.routes[Symbol.iterator] === 'function'
+      ) {
         if (!this.scope[hot].routeHash) {
           this.scope[hot].routeHash = new Map()
         }
@@ -153,7 +161,9 @@ async function setup(config) {
 
   await loadEntries()
 
-  const client = !config.spa && await config.prepareClient(this.entries, this.scope, config)
+  const client =
+    !config.spa &&
+    (await config.prepareClient(this.entries, this.scope, config))
 
   return {
     config,

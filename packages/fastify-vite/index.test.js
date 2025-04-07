@@ -1,4 +1,4 @@
-  import { expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { main as cjsServer } from './fixtures/cjs/server.js'
 import { main as esmServer } from './fixtures/esm/server.js'

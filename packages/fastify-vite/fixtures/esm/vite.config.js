@@ -8,9 +8,7 @@ if (!globalThis.port) {
 
 export default () => ({
   root: dirname(fileURLToPath(new URL(import.meta.url))),
-  plugins: [
-    viteFastify()
-  ],
+  plugins: [viteFastify()],
   server: {
     hmr: {
       port: globalThis.port++,
