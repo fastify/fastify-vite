@@ -66,6 +66,7 @@ async function setup(config) {
   await this.scope.register(async function publicFiles(scope) {
     await scope.register(FastifyStatic, {
       root: clientOutDir,
+      index: false,
       wildcard: false,
       allowedPath(path) {
         return path !== '/index.html'
