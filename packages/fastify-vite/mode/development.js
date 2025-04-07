@@ -14,13 +14,13 @@ async function setup(config) {
       throw new Error("@fastify/vite's Vite plugin not registered")
     }
 
-    const { config: setupEnvironments } = findPlugin(config.vite, 'vite-fastify')
+    const { setupEnvironments } = await import('../plugin.mjs')
 
     const viteEnvsConfig = {
       root: config.vite.root,
     }
 
-    await setupEnvironments(viteEnvsConfig)
+    await setupEnvironments.bind({ clientModule: config.clientModule })(viteEnvsConfig)
 
     const { client: _, ...nonClientEnvs } = Object.fromEntries(
       Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),

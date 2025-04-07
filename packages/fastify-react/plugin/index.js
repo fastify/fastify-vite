@@ -1,5 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { resolveClientModule } from '@fastify/vite/utils'
+import getDeepMergeFunction from '@fastify/deepmerge'
 import viteFastify from '@fastify/vite/plugin'
 import {
   prefix,
@@ -20,21 +22,24 @@ import { createServerModuleRunner } from 'vite'
 import { createRSCEnvironment } from './env.js'
 
 export default function viteFastifyReact ({ rsc } = {}) {
-  const { configResolved, writeBundle } = viteFastify({
-    clientModule: '$app/index.js'
-  })
+  const clientModule = '$app/index.js'
+  const { configResolved, writeBundle } = viteFastify({ clientModule })
   const context = {
     root: null,
   }
   const configResolvedForVirtual = configResolved.bind(context)
   return [
-    vitePluginServerAction(),
-    vitePluginUseClient(),
-    vitePluginSilenceDirectiveBuildWarning(),
-    virtualNormalizeUrlPlugin(),
+    {
+      name: 'vite-fastify',
+    },
     {
       name: 'vite-plugin-fastify-react',
-      config: config.bind({ rsc: rsc ?? false }),
+      config: config.bind({ 
+      context,
+      rsc: rsc ?? false,
+      clientModule
+    }),
+      configureServer,
       configResolved (config) {
         manager.config = config
         configResolved(config)
@@ -84,11 +89,13 @@ function transformIndexHtml (html, { bundle }) {
 }
 
 function configureServer(server) {
-  const reactServerEnv = server.environments.rsc
-  // No HMR setup for custom node environment
-  const reactServerRunner = createServerModuleRunner(reactServerEnv)
-  globalThis.server = server
-  globalThis.reactServerRunner = reactServerRunner
+  if (server.environments.rsc) {
+    const reactServerEnv = server.environments.rsc
+    // No HMR setup for custom node environment
+    const reactServerRunner = createServerModuleRunner(reactServerEnv)
+    globalThis.server = server
+    globalThis.reactServerRunner = reactServerRunner
+  }
 }
 
 function configResolved (config) {
@@ -96,13 +103,13 @@ function configResolved (config) {
   this.root = config.root
 }
 
-async function config (config) {
+async function config (config, { command }) {
+  this.context.root = config.root
   const deepMerge = getDeepMergeFunction()
   const {
-    resolveClientModule,
     createSSREnvironment,
     createClientEnvironment,
-  } = await import('./environments.js')
+  } = await import('./env.js')
 
   config.environments = {}
   config.environments.client = deepMerge(
@@ -110,11 +117,16 @@ async function config (config) {
     config.environments.client ?? {},
   )
   config.environments.ssr = deepMerge(
-    createSSREnvironment(clientModule ?? resolveClientModule(config.root)),
+    createSSREnvironment(this.clientModule ?? resolveClientModule(config.root)),
     config.environments.ssr ?? {},
   )
   if (this.rsc) {
-    config.environments.rsc = createRSCEnvironment()
+    config.environments.rsc = createRSCEnvironment('$app/server.js')
+    config.plugins.push(
+      vitePluginUseClient(),
+      vitePluginSilenceDirectiveBuildWarning(),
+      virtualNormalizeUrlPlugin()
+    )
   }
   if (!config.builder) {
     config.builder = {}

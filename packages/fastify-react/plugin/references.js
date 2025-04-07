@@ -1,7 +1,7 @@
 
 import { ok } from 'node:assert'
 import path from 'node:path'
-import { transformDirectiveProxyExport, transformServerActionServer } from '@hiogawa/transforms'
+import { transformDirectiveProxyExport } from '@hiogawa/transforms'
 import { parseAstAsync } from 'vite';
 import { createVirtualPlugin } from './utils.js'
 
@@ -24,62 +24,60 @@ export function vitePluginUseClient() {
   /*
     [input]
 
-      "use client"
+      'use client'
       export function Counter() {}
 
     [output]
 
-      import { registerClientReference as $$register } from "...runtime..."
-      export const Counter = $$register("<id>", "Counter");
+      import { registerClientReference as $$register } from <runtime>
+      export const Counter = $$register(<id>, 'Counter');
 
   */
   const transformPlugin = {
-    name: vitePluginUseClient.name + ":transform",
+    name: vitePluginUseClient.name + ':transform',
     async transform(code, id, _options) {
-      console.log(_options, id)
       if (!['rsc'].includes(this.environment.name)) {
         return;
       }
-      manager.clientReferenceMap.delete(id);
-      if (code.includes("use client")) {
-        const runtimeId = await normalizeReferenceId(id, "client");
-        const ast = await parseAstAsync(code);
+      manager.clientReferenceMap.delete(id)
+      if (code.includes('use client')) {
+        const runtimeId = await normalizeReferenceId(id, 'client')
+        const ast = await parseAstAsync(code)
         let output = await transformDirectiveProxyExport(ast, {
-          directive: "use client",
+          directive: 'use client',
           id: runtimeId,
-          runtime: "$$register",
-        });
+          runtime: '$$register',
+        })
         if (output) {
-          manager.clientReferenceMap.set(id, runtimeId);
-          if (manager.buildStep === "scan") {
-            return;
+          manager.clientReferenceMap.set(id, runtimeId)
+          if (manager.buildStep === 'scan') {
+            return
           }
           output.prepend(
-            `import { $$register } from "/src/react-server.js";`,
-          );
+            `import { $$register } from '/src/react-server.js';`,
+          )
           return { 
             code: output.toString(), 
-            map: output.generateMap() };
+            map: output.generateMap() }
         }
       }
-      return;
+      return
     },
-  };
+  }
 
   /*
     [output]
 
       export default {
-        "<id>": () => import("<id>"),
+        <id>: () => import('<id>'),
         ...
       }
 
   */
   const virtualPlugin = createVirtualPlugin(
-    "client-references",
+    'client-references',
     function () {
-      console.log('this.environment?.name', this.environment?.name)
-      ok(this.environment?.mode === "build");
+      ok(this.environment?.mode === "build")
 
       return [
         `export default {`,
@@ -87,7 +85,7 @@ export function vitePluginUseClient() {
           ([id, runtimeId]) => `"${runtimeId}": () => import("${id}"),\n`,
         ),
         `}`,
-      ].join("\n");
+      ].join('\n');
     },
   );
 
@@ -98,63 +96,59 @@ export function vitePluginUseClient() {
         this.environment?.name === "rsc"
       ) {
         console.log(id)
-        // rename webpack markers in react server runtime
+        // Rename webpack markers in react server runtime
         // to avoid conflict with ssr runtime which shares same globals
         code = code.replaceAll(
-          "__webpack_require__",
-          "__vite_react_server_webpack_require__",
+          '__webpack_require__',
+          '__vite_react_server_webpack_require__',
         );
         code = code.replaceAll(
-          "__webpack_chunk_load__",
-          "__vite_react_server_webpack_chunk_load__",
-        );
+          '__webpack_chunk_load__',
+          '__vite_react_server_webpack_chunk_load__',
+        )
 
-        // make server reference async for simplicity (stale chunkCache, etc...)
+        // Make server reference async for simplicity (stale chunkCache, etc...)
         // see TODO in https://github.com/facebook/react/blob/33a32441e991e126e5e874f831bd3afc237a3ecf/packages/react-server-dom-webpack/src/ReactFlightClientConfigBundlerWebpack.js#L131-L132
-        code = code.replaceAll("if (isAsyncImport(metadata))", "if (true)");
-        code = code.replaceAll("4 === metadata.length", "true");
+        code = code.replaceAll('if (isAsyncImport(metadata))', 'if (true)')
+        code = code.replaceAll('4 === metadata.length', 'true')
 
-        return { code, map: null };
+        return { code, map: null }
       }
-      return;
+      return
     },
   };
 
-  return [transformPlugin, patchPlugin, virtualPlugin];
+  return [transformPlugin, patchPlugin, virtualPlugin]
 }
 
-async function normalizeReferenceId(id, name: "client" | "rsc" | "ssr") {
-  if (manager.config.command === "build") {
-    return hashString(path.relative(manager.config.root, id));
+async function normalizeReferenceId(id, name/* client|rsc|ssr */) {
+  if (manager.config.command === 'build') {
+    return hashString(path.relative(manager.config.root, id))
   }
 
-  // need to align with what Vite import analysis would rewrite
-  // to avoid double modules on browser and ssr.
-  const devEnv = globalThis.server.environments[name];
-  const transformed = await devEnv.transformRequest(
-    "virtual:normalize-url/" + encodeURIComponent(id),
-  );
-  ok(transformed);
-  let runtimeId: string | undefined;
+  // Need to align with what Vite import analysis would rewrite
+  // to avoid double modules on browser and SSR
+  const devEnv = globalThis.server.environments[name]
+  const transformed = await devEnv.transformRequest('virtual:normalize-url/' + encodeURIComponent(id))
+  ok(transformed)
+  let runtimeId
   switch (name) {
     case 'client': {
-      const m = transformed.code.match(/import\("(.*)"\)/);
-      runtimeId = m?.[1];
-      break;
+      const m = transformed.code.match(/import\(["'](.*)["']\)/)
+      runtimeId = m?.[1]
+      break
     }
     case 'ssr': {
-      const m = transformed.code.match(/import\("(.*)"\)/);
-      runtimeId = m?.[1];
-      break;
+      const m = transformed.code.match(/import\(["'](.*)["']\)/)
+      runtimeId = m?.[1]
+      break
     }
     case 'rsc': {
-      console.log('transformed.dynamicDeps', transformed.dynamicDeps)
       // `dynamicDeps` is available for ssrTransform
-      runtimeId = transformed.dynamicDeps?.[0];
-      break;
+      runtimeId = transformed.dynamicDeps?.[0]
+      break
     }
   }
-  console.log({ runtimeId })
-  ok(runtimeId);
-  return runtimeId;
+  ok(runtimeId)
+  return runtimeId
 }

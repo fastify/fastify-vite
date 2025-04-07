@@ -30,7 +30,10 @@
     "./server": "./server.js"
   },
   "dependencies": {
+    "@fastify/deepmerge": "^3.0.0",
     "@fastify/vite": "workspace:^",
+    "@hiogawa/transforms": "^0.0.0",
+    "@hiogawa/utils": "^1.7.0",
     "acorn": "^8.14.1",
     "acorn-strip-function": "^1.2.0",
     "acorn-walk": "^8.3.4",

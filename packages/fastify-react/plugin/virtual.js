@@ -18,6 +18,7 @@ const virtualModules = [
   'context.js',
   'core.jsx',
   'index.js',
+  'server.js',
 ]
 
 export const prefix = /^\/?\$app\//
@@ -66,6 +67,7 @@ function loadVirtualModuleOverride (viteProjectRoot, virtual) {
   if (!virtualModules.includes(virtual)) {
     return
   }
+  console.log('viteProjectRoot', viteProjectRoot)
   const overridePath = resolve(viteProjectRoot, virtual)
   if (existsSync(overridePath)) {
     return overridePath
