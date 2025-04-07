@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { createServerAction, useServerAction } from '/:core.jsx'
+import { createServerAction, useServerAction } from '$app/core.jsx'
 
 const accessCounter = createServerAction()
 

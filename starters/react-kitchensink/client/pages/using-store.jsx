@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }

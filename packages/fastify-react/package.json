@@ -25,20 +25,27 @@
   "license": "MIT",
   "exports": {
     ".": "./index.js",
-    "./plugin": "./plugin.cjs"
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
+    "acorn": "^8.14.1",
     "acorn-strip-function": "^1.2.0",
+    "acorn-walk": "^8.3.4",
     "devalue": "latest",
     "history": "latest",
     "html-rewriter-wasm": "^0.4.1",
     "minipass": "latest",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
+    "mlly": "^1.7.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.5.0",
+    "react-router-dom": "^7.5.0",
     "unihead": "latest",
-    "valtio": "latest"
+    "valtio": "latest",
+    "youch": "^3.3.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.2"

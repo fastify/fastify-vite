@@ -1,4 +1,4 @@
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export function getData ({ req }) {
   let pathMatch = req.params['*'];

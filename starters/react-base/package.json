@@ -3,31 +3,30 @@
   "scripts": {
     "dev": "node server.js --dev",
     "start": "node server.js",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr /index.js",
+    "build": "vite build",
     "devinstall": "zx ../../devinstall.mjs -- node server.js --dev",
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
-    "@fastify/one-line-logger": "^1.2.0",
-    "@fastify/vite": "^6.0.5",
-    "@fastify/react": "^0.6.0",
-    "fastify": "^4.24.3",
+    "@fastify/one-line-logger": "^2.0.2",
+    "@fastify/react": "workspace:^",
+    "@fastify/vite": "workspace:^",
+    "fastify": "^5.2.2",
     "history": "^5.3.0",
-    "minipass": "^7.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "unihead": "^0.0.6",
-    "valtio": "^1.12.0"
+    "minipass": "^7.1.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.5.0",
+    "react-router-dom": "^7.5.0",
+    "unihead": "^0.8.0",
+    "valtio": "^2.1.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
-    "postcss": "^8.4.31",
-    "postcss-nesting": "^12.0.2",
-    "postcss-preset-env": "^7.7.1",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.0.2"
+    "@tailwindcss/postcss": "^4.1.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "postcss": "^8.5.3",
+    "postcss-preset-env": "^10.1.5",
+    "tailwindcss": "^4.1.1",
+    "vite": "^6.2.4"
   }
 }

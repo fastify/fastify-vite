@@ -14,6 +14,11 @@ await server.register(FastifyVite, {
   renderer: '@fastify/react',
 })
 
+server.setErrorHandler((error, req, reply) => {
+  console.error(error)
+  reply.send({ error })
+})
+
 await server.vite.ready()
 
 server.decorate('db', {
