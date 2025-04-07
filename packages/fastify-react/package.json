@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/react",
   "description": "The official @fastify/vite renderer for React",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -18,7 +18,7 @@
     "virtual/context.js",
     "virtual/core.jsx",
     "virtual/create.jsx",
-    "virtual/index.jsx",
+    "virtual/index.js",
     "virtual/layouts.js",
     "virtual/mount.js",
     "virtual/resource.js",
