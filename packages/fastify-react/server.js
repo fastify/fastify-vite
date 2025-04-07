@@ -63,7 +63,6 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
       promises.push(
         getRouteModule(path, from[path])
           .then((routeModule) => {
-            console.log('path', path)
             const route = {
               id: path,
               layout: routeModule.layout,

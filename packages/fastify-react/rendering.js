@@ -126,16 +126,13 @@ export function sendClientOnlyShell (templates, context, body) {
 }
 
 export function streamShell (templates, context, body) {
-  console.log('body', body)
   context.head = new Head(context.head).render()
   return Readable.from(createShellStream(templates, context, body))
 }
 
 async function * createShellStream (templates, context, body) {
-  console.log('body_>', body)
   yield templates.beforeElement(context)
   for await (const chunk of body) {
-    console.log('chunk', chunk)
     yield chunk
   }
   yield templates.afterElement(context)

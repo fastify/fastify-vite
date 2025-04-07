@@ -11,7 +11,7 @@ export async function closeBundle() {
       Object.entries(this.resolvedBundle ?? {})
         .filter(([id, meta]) => {
           if (meta.facadeModuleId?.includes('/pages/')) {
-            meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.vue$/, 'html/$1.html')
+            meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.jsx$/, 'html/$1.html')
             return true
           }
         })

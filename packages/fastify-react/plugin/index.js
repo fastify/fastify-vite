@@ -68,7 +68,7 @@ function configResolved (config) {
   this.root = config.root
 }
 
-function config (config, { isSsrBuild, command }) {
+function config (config, { command }) {
   if (command === 'build') {
     if (!config.build) {
       config.build = {}
