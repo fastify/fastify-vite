@@ -191,7 +191,7 @@ export default {
 <script type="module" src="/:mount.js"></script>
 </html>
 ```
-```vue [client/pages/index.jsx]
+```js [client/pages/index.jsx]
 import logo from '/assets/logo.svg'
 
 export function getMeta () {
@@ -206,7 +206,7 @@ export default function Index () {
     <>
       <p>{message}</p>
       <img src={logo} />
-    </p>
+    </>
   )
 }
 :::
@@ -233,7 +233,7 @@ The core files of **`@fastify/react`** that make all of that (and a bit more) wo
 ├── server.js
 ├── client/
 │    ├── core.jsx
-│    ├── create.jsxx
+│    ├── create.jsx
 │    ├── mount.js
 │    ├── resource.js
 │    ├── root.jsx
