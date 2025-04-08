@@ -4,14 +4,13 @@
     "dev": "node server.js --dev",
     "start": "node server.js",
     "build": "vite build",
-    "devinstall": "zx ../../devinstall.mjs -- node server.js --dev",
     "lint": "eslint . --ext .js,.jsx --fix"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/react": "workspace:^",
-    "@fastify/vite": "workspace:^",
+    "@fastify/react": "latest",
+    "@fastify/vite": "latest",
     "fastify": "^5.2.2",
     "history": "^5.3.0",
     "minipass": "^7.1.2",
