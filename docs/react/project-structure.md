@@ -206,7 +206,7 @@ export default function Index () {
     <>
       <p>{message}</p>
       <img src={logo} />
-    </p>
+    </>
   )
 }
 :::
