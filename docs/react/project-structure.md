@@ -233,7 +233,7 @@ The core files of **`@fastify/react`** that make all of that (and a bit more) wo
 ├── server.js
 ├── client/
 │    ├── core.jsx
-│    ├── create.jsxx
+│    ├── create.jsx
 │    ├── mount.js
 │    ├── resource.js
 │    ├── root.jsx
