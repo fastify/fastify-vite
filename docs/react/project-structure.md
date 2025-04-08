@@ -191,7 +191,7 @@ export default {
 <script type="module" src="/:mount.js"></script>
 </html>
 ```
-```vue [client/pages/index.jsx]
+```js [client/pages/index.jsx]
 import logo from '/assets/logo.svg'
 
 export function getMeta () {
