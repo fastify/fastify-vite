@@ -87,7 +87,7 @@ To support this kind of production build, `@fastify/vite` ships with a Vite plug
 
 ::: code-group
 ```js [vite.config.js]
-import { resolve, dirname } from 'node:path'
+import { resolve } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
 import viteReact from '@vitejs/plugin-react'
 
