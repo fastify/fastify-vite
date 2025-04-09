@@ -23,7 +23,7 @@ export async function hydrateRoutes (fromInput) {
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
-    route.component = lazy(() => route.loader())
+    route.element = lazy(() => route.loader())
     return route
   })
 }

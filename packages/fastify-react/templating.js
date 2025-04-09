@@ -2,23 +2,13 @@ import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 import { HTMLRewriter } from 'html-rewriter-wasm'
 
 export async function createHtmlTemplates (source, config) {
-  const el = '<!-- element -->'
-
-  const universal = source.split(el)
-  const serverOnlyRaw = await removeClientModule(source, config)
-  const serverOnly = serverOnlyRaw.split(el)
+  const serverOnly = await removeClientModule(source, config)
 
   return {
     // Templates for client-only and universal rendering
-    universal: {
-      beforeElement: await createHtmlTemplateFunction(universal[0]),
-      afterElement: await createHtmlTemplateFunction(universal[1]),
-    },
+    universal: await createHtmlTemplateFunction(source),
     // Templates for server-only rendering
-    serverOnly: {
-      beforeElement: await createHtmlTemplateFunction(serverOnly[0]),
-      afterElement: await createHtmlTemplateFunction(serverOnly[1]),
-    },
+    serverOnly: await createHtmlTemplateFunction(serverOnly)
   }
 }
 

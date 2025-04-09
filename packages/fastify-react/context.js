@@ -15,6 +15,7 @@ export default class RouteContext {
   }
 
   constructor(server, req, reply, route) {
+    this.path = route.path
     this.server = server
     this.req = req
     this.reply = reply
@@ -42,17 +43,36 @@ export default class RouteContext {
   }
 
   toJSON() {
-    return {
-      actionData: this.actionData,
-      state: this.state,
-      data: this.data,
-      layout: this.layout,
-      getMeta: this.getMeta,
-      getData: this.getData,
-      onEnter: this.onEnter,
-      firstRender: this.firstRender,
-      clientOnly: this.clientOnly,
+    const json = {}
+    json.path = this.path
+    if (this.actionData) {
+      json.actionData = this.actionData
     }
+    if (this.state) {
+      json.state = this.state
+    }
+    if (this.data) {
+      json.data = this.data
+    }
+    if (this.layout) {
+      json.layout = this.layout
+    }
+    if (this.getMeta) {
+      json.getMeta = this.getMeta
+    }
+    if (this.getData) {
+      json.getData = this.getData
+    }
+    if (this.onEnter) {
+      json.onEnter = this.onEnter
+    }
+    if (this.firstRender) {
+      json.firstRender = this.firstRender
+    }
+    if (this.clientOnly) {
+      json.clientOnly = this.clientOnly
+    }
+    return json
   }
 }
 

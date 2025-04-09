@@ -1,18 +1,32 @@
 // Otherwise we get a ReferenceError, but since
 // this function is only ran once, there's no overhead
 class Routes extends Array {
-  toJSON () {
-    return this.map((route) => {
-      return {
-        id: route.id,
-        path: route.path,
-        name: route.name,
-        layout: route.layout,
-        getData: !!route.getData,
-        getMeta: !!route.getMeta,
-        onEnter: !!route.onEnter,
+  * toJSON () {
+    for (const route of this) {
+      const json = {}
+      if (route.id) {
+        json.id = route.id
       }
-    })
+      if (route.path) {
+        json.path = route.path
+      }
+      if (route.name) {
+        json.name = route.name
+      }
+      if (route.layout) {
+        json.layout = route.layout
+      }
+      if (route.getData) {
+        json.getData = true
+      }
+      if (route.getMeta) {
+        json.getMeta = true
+      }
+      if (route.onEnter) {
+        json.onEnter = true
+      }
+      yield json
+    }
   }
 }
 
@@ -29,14 +43,13 @@ export function prepareServer(server) {
     }
   })
   server.decorateRequest('fetchMap', null)
-  server.addHook('onRequest', (req, _, done) => {
-    req.fetchMap = new Map()
-    done()
-  })
-  server.addHook('onResponse', (req, _, done) => {
-    req.fetchMap = undefined
-    done()
-  })
+  // server.addHook('onRequest', (req, _, done) => {
+  //   done()
+  // })
+  // server.addHook('onResponse', (req, _, done) => {
+  //   req.fetchMap = undefined
+  //   done()
+  // })
 }
 
 export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]+\+?)\]/ }) {
@@ -46,7 +59,7 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
   if (Array.isArray(from)) {
     for (const routeDef of from) {
       promises.push(
-        getRouteModule(routeDef.path, routeDef.component)
+        getRouteModule(routeDef.path, routeDef.element)
           .then((routeModule) => {
             return {
               id: routeDef.path,
@@ -104,20 +117,34 @@ export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]
 
 
 function getRouteModuleExports (routeModule) {
-  return {
-    // The Route component (default export)
-    component: routeModule.default,
-    // The Layout Route component
-    layout: routeModule.layout,
-    // Route-level hooks
-    getData: routeModule.getData,
-    getMeta: routeModule.getMeta,
-    onEnter: routeModule.onEnter,
-    // Other Route-level settings
-    streaming: routeModule.streaming,
-    clientOnly: routeModule.clientOnly,
-    serverOnly: routeModule.serverOnly,
+  const modExports = Object.create(null)
+  // The Route component (default export)
+  modExports.element = routeModule.default
+  // The Layout Route component
+  if (routeModule.layout) {
+    modExports.layout = routeModule.layout
   }
+  // Route-level hooks
+  if (routeModule.getData) {
+    modExports.getData = routeModule.getData
+  }
+  if (routeModule.getMeta) {
+    modExports.getMeta = routeModule.getMeta
+  }
+  if (routeModule.onEnter) {
+    modExports.onEnter = routeModule.onEnter
+  }
+  // Other Route-level settings
+  if (routeModule.streaming) {
+    modExports.streaming = routeModule.streaming
+  }
+  if (routeModule.clientOnly) {
+    modExports.clientOnly = routeModule.clientOnly
+  }
+  if (routeModule.serverOnly) {
+    modExports.serverOnly = routeModule.serverOnly
+  }
+  return modExports
 }
 
 async function getRouteModule (path, routeModuleInput) {

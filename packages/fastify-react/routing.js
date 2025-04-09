@@ -4,7 +4,7 @@ import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
-export async function prepareClient (entries, _) {
+export async function prepareClient (entries, _, config) {
   const client = entries.ssr
   if (client.context instanceof Promise) {
     client.context = await client.context
@@ -16,6 +16,7 @@ export async function prepareClient (entries, _) {
     const { default: create } = await client.create
     client.create = create
   }
+  config.$routeMap = Object.fromEntries(client.routes.map(_ => [_.path, _]))
   return client
 }
 
@@ -40,13 +41,12 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     await route.configure(scope)
   }
 
-  // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(client.routes.map(_ => [_.path, _]))
-
   // Extend with route context initialization module
   RouteContext.extend(client.context)
 
   const onRequest = async (req, reply) => {
+    // req.fetchMap = new Map()
+
     req.route = await RouteContext.create(
       scope,
       req,
@@ -54,40 +54,30 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
       route,
       client.context,
     )
-  }
 
-  const preHandler = [
-    async (req) => {
-      if (!req.route.clientOnly) {
-        const app = client.create({
-          routes: client.routes,
-          routeMap,
-          ctxHydration: req.route,
-          url: req.url,
-        })
-        req.route.app = app
-      }
+    if (!req.route.clientOnly) {
+      const app = client.create({
+        routes: client.routes,
+        routeMap: config.$routeMap,
+        ctxHydration: req.route,
+        url: req.url,
+      })
+      req.route.app = app
     }
-  ]
 
-  if (route.getData) {
-    preHandler.push(async (req) => {
+    if (route.getData) {
       if (!req.route.data) {
         req.route.data = {}
       }
       const result = await route.getData(req.route)
       Object.assign(req.route.data, result)
-    })
-  }
+    }
 
-  if (route.getMeta) {
-    preHandler.push(async (req) => {
+    if (route.getMeta) {
       req.route.head = await route.getMeta(req.route)
-    })
-  }
+    }
 
-  if (route.onEnter) {
-    preHandler.push(async (req) => {
+    if (route.onEnter) {
       try {
         if (route.onEnter) {
           if (!req.route.data) {
@@ -102,7 +92,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
         }
         req.route.error = err
       }
-    })
+    }
   }
 
   // Route handler
@@ -125,8 +115,11 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     method: route.method ?? ['GET', 'POST', 'PUT', 'DELETE'],
     errorHandler,
     onRequest,
-    preHandler,
     handler,
+    config: {
+      path: route.path,
+      element: route.element,
+    },
     ...route,
   })
 
