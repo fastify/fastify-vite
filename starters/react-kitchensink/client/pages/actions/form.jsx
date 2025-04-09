@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { createServerAction } from '$app/core.jsx'
 
 const isAdmin = createServerAction()

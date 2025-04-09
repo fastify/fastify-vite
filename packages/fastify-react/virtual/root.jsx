@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import { AppRoute, Router } from '$app/core.jsx'
 
 export default function Root({ url, routes, head, ctxHydration, routeMap }) {

@@ -85,7 +85,7 @@ export const actions = {
 
 ```jsx [client/pages/using-data.jsx]
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useRouteContext } from '/:core.jsx'
 
 export function getMeta () {
@@ -134,7 +134,7 @@ export default function Index (props) {
 
 ```jsx [client/pages/using-store.jsx]
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useRouteContext } from '/:core.jsx'
 
 export function getMeta () {

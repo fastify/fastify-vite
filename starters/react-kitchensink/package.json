@@ -17,7 +17,6 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.5.0",
-    "react-router-dom": "^7.5.0",
     "unihead": "^0.8.0",
     "valtio": "^2.1.4"
   },
