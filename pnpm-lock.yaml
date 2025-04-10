@@ -1235,8 +1235,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
+        specifier: latest
+        version: 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       '@fastify/vite':
         specifier: latest
         version: 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
@@ -1293,8 +1293,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
+        specifier: latest
+        version: 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       '@fastify/vite':
         specifier: latest
         version: 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
@@ -2606,8 +2606,8 @@ packages:
   '@fastify/react@0.6.0':
     resolution: {integrity: sha512-4XEukEO/eHz5a06UdzCxnjnZRPiJ3FckysK1VuvYNmRImnmFJys+2tm5AS7W4Hp/582vDSl8uQvs9OO20h+WnQ==}
 
-  '@fastify/react@1.0.0':
-    resolution: {integrity: sha512-giwl+jeww5PoNCuvSbSvnU6zUg55NzaedNyLeh2IemCoG04wFI268iRJE+m47a5Kyb7F5EbXcFBXbM4552DmUQ==}
+  '@fastify/react@1.0.1':
+    resolution: {integrity: sha512-ci6ZHOJC+CuakBmDExI4vkDcjf46LWwqsc/V/CB9xAbHpQfkaQrqISlh9DP1s1jOrCt6X4bpSIoCbuyb1f0UsQ==}
 
   '@fastify/send@2.1.0':
     resolution: {integrity: sha512-yNYiY6sDkexoJR0D8IDy3aRP3+L4wdqCpvx5WP+VtEU58sn7USmKynBzDQex5X42Zzvw2gNzzYgP90UfWShLFA==}
@@ -6081,13 +6081,6 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  react-router-dom@7.5.0:
-    resolution: {integrity: sha512-fFhGFCULy4vIseTtH5PNcY/VvDJK5gvOWcwJVHQp8JQcWVr85ENhJ3UpuF/zP1tQOIFYNRJHzXtyhU1Bdgw0RA==}
-    engines: {node: '>=20.0.0'}
-    peerDependencies:
-      react: '>=18'
-      react-dom: '>=18'
-
   react-router@6.30.0:
     resolution: {integrity: sha512-D3X8FyH9nBcTSHGdEKurK7r8OYE1kKFn3d/CF+CoxbSHkxU7o37+Uh7eAHRXr6k2tSExXYO++07PeXJtA/dEhQ==}
     engines: {node: '>=14.0.0'}
@@ -8227,7 +8220,7 @@ snapshots:
       - terser
     optional: true
 
-  '@fastify/react@1.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
+  '@fastify/react@1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
     dependencies:
       '@fastify/vite': 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       acorn: 8.14.1
@@ -8241,7 +8234,6 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       react-router: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      react-router-dom: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       unihead: 0.8.0
       valtio: 2.1.4(react@19.1.0)
       youch: 3.3.4
@@ -8262,7 +8254,6 @@ snapshots:
       - tsx
       - typescript
       - yaml
-    optional: true
 
   '@fastify/send@2.1.0':
     dependencies:
@@ -8362,7 +8353,7 @@ snapshots:
       klaw: 4.1.0
     optionalDependencies:
       '@fastify/htmx': 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(rollup@4.39.0)
-      '@fastify/react': 1.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+      '@fastify/react': 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       '@fastify/vue': 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
     transitivePeerDependencies:
@@ -8399,6 +8390,7 @@ snapshots:
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
+      - '@types/react'
       - fastify
       - jiti
       - less
@@ -8430,6 +8422,7 @@ snapshots:
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
+      - '@types/react'
       - fastify
       - jiti
       - less
@@ -12370,13 +12363,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.30.0(react@18.3.1)
-    optional: true
-
-  react-router-dom@7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
-    dependencies:
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      react-router: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     optional: true
 
   react-router@6.30.0(react@18.3.1):
