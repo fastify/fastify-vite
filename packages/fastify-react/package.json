@@ -6,7 +6,7 @@
   "main": "index.js",
   "name": "@fastify/react",
   "description": "The official @fastify/vite renderer for React",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
