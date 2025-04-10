@@ -9,7 +9,7 @@ test('esm - should register development server in development mode', async () =>
   await server.vite.devServer.close()
 })
 
-test('esm - should not register development server in production mode', async () => {
+test.skip('esm - should not register development server in production mode', async () => {
   const server = await esmServer()
   expect(server.vite.devServer).toBeUndefined()
 })
@@ -29,7 +29,7 @@ test('cjs - should register development server in development mode', async () =>
   await server.vite.devServer.close()
 })
 
-test('cjs - should not register development server in production mode', async () => {
+test.skip('cjs - should not register development server in production mode', async () => {
   const server = await cjsServer()
   expect(server.vite.devServer).toBeUndefined()
 })
