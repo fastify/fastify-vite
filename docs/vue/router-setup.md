@@ -22,7 +22,7 @@ export const path = '/my-page'
 
 ### Locale prefix
 
-If you want to prefix your routes with the locale, set `localePrefix` to `true`.
+If you want to prefix your routes with the locale, set `localePrefix` to `true`. The first locale in `locales` is assumed to be the default locale.  
 
 In your Vite configuration file:  
 
@@ -32,7 +32,7 @@ import viteFastifyVue from '@fastify/vue/plugin'
 export default {
   plugins: [
     // ...
-    viteFastifyVue({ defaultLocale: 'en', localePrefix: true }),
+    viteFastifyVue({ locales: ['en', 'sv', 'da'], localePrefix: true }),
   ]
 }
 ```
@@ -54,7 +54,7 @@ Routes will be `/en/product`, `/sv/product` and `/da/product`. **Note:** The ind
 
 ### Per domain
 
-If you want to match routes per domain you can use the option `localeDomains` to define a domain for each of your locales.
+If you want to match routes per domain you can use the option `localeDomains` to define a domain for each of your locales. The first locale in `locales` is assumed to be the default locale.  
 
 In your Vite configuration file:  
 
@@ -65,7 +65,7 @@ export default {
   plugins: [
     // ...
     viteFastifyVue({
-      defaultLocale: 'en',
+      locales: ['en', 'sv', 'da'],
       localePrefix: false,
       localeDomains: { 'sv': 'example.se', 'da': 'example.dk' }
     }),

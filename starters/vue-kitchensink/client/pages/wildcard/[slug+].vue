@@ -29,4 +29,7 @@ const data = useData()
   <h1>Wildcard example that matches /wildcard/*</h1>
   <p>Path match: {{ data.pathMatch }}</p>
   <p>Locale: {{ data.locale }}</p>
+  <p>
+    <router-link to="/">Go back to the index</router-link>
+  </p>
 </template>

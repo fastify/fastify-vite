@@ -18,11 +18,12 @@ class Routes extends Array {
   }
 }
 
-export async function createRoutes (fromPromise, { defaultLocale, localeDomains, localePrefix }) {
+export async function createRoutes (fromPromise, { localeDomains, localePrefix, locales }) {
   const { default: from } = await fromPromise
   const importPaths = Object.keys(from)
   const promises = []
   const i18n = Object.keys(localeDomains).length > 0 || localePrefix
+  const defaultLocale = Array.isArray(locales) && locales.length > 0 ? locales[0] : 'en'
 
   if (Array.isArray(from)) {
     for (const routeDef of from) {
@@ -80,37 +81,32 @@ export async function createRoutes (fromPromise, { defaultLocale, localeDomains,
         baseLocaleRoute.meta = { locale: defaultLocale }
 
         if (i18n) {
-          baseLocaleRoute.name = `${defaultLocale}__${baseLocaleRoute.name}`
+          // Add the customized locale routes
+          for (const locale of locales) {
+            const localeRoute = Object.assign({}, baseRoute)
+            localeRoute.name = `${locale}__${localeRoute.name}`
+            localeRoute.locale = locale
+            localeRoute.meta = { locale }
 
-          // Add the find-my-way default locale domain constraint
-          if (localeDomains[defaultLocale]) {
-            baseLocaleRoute.constraints = { host: localeDomains[defaultLocale] }
-            baseLocaleRoute.domain = localeDomains[defaultLocale]
-          } else if (baseRoute.path !== '/' && localePrefix) {
-            baseLocaleRoute.path = `/${defaultLocale}${baseLocaleRoute.path}`
-          }
-
-          ret.push(baseLocaleRoute)
-
-          // Add the locale routes
-          if (routeModule.i18n != null) {
-            for (const [locale, localePath] of Object.entries(routeModule.i18n)) {
-              const localeRoute = Object.assign({}, baseRoute)
-              localeRoute.name = `${locale}__${localeRoute.name}`
+            // If the route has a custom i18n path, use it, otherwise use standard path
+            const localePath = routeModule.i18n ? routeModule.i18n[locale] : null
+            if (localePath) {
               localeRoute.path = localePath
-              localeRoute.locale = locale
-              localeRoute.meta = { locale }
+            }
 
-              // Add the find-my-way locale domain constraint
-              if (localeDomains[locale]) {
-                localeRoute.constraints = { host: localeDomains[locale] }
-                localeRoute.domain = localeDomains[locale]
-              } else if (localePrefix) {
+            // Add the find-my-way locale domain constraint
+            if (localeDomains[locale]) {
+              localeRoute.constraints = { host: localeDomains[locale] }
+              localeRoute.domain = localeDomains[locale]
+            } else if (localePrefix) {
+              if (localeRoute.path === '/') {
+                localeRoute.path = locale === defaultLocale ? '/' : `/${locale}`
+              } else {
                 localeRoute.path = `/${locale}${localeRoute.path}`
               }
-
-              ret.push(localeRoute)
             }
+
+            ret.push(localeRoute)
           }
         } else {
           ret.push(baseLocaleRoute)

@@ -17,7 +17,7 @@
   <p>⁂</p>
   <p>When you navigate away from this route, any additions to the to-do
   list will be lost, because they're bound to this route component only.</p>
-  <p>See the <router-link to="/using-store">/using-store</router-link> example to learn
+  <p>See the <router-link to="/en/using-store">/using-store</router-link> example to learn
   how to use the application global state for it.
   </p>
 </template>

@@ -6,11 +6,8 @@ export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [
     viteFastifyVue({
-      defaultLocale: 'en',
-      localePrefix: false,
-      localeDomains: {
-        'da': '127.0.0.1:3001', // Danish pages are constrained to this domain/host
-      },
+      locales: ['en', 'sv', 'da'], // The first locale is the default
+      localePrefix: true,
     }),
     viteVue(),
   ],

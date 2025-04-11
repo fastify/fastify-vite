@@ -19,7 +19,7 @@ export default function viteFastifyVue (fastifyVueOptions = {}) {
 
   fastifyVueOptions = Object.assign({
     ts: false,
-    defaultLocale: 'en',
+    locales: ['en'],
     localePrefix: false,
     localeDomains: {},
   }, fastifyVueOptions)
@@ -30,9 +30,9 @@ export default function viteFastifyVue (fastifyVueOptions = {}) {
 
   const virtualModuleInserts = {
     'index.js': {
-      $defaultLocale: `'${fastifyVueOptions.defaultLocale}'`,
       $localeDomains: JSON.stringify(fastifyVueOptions.localeDomains),
       $localePrefix: fastifyVueOptions.localePrefix,
+      $locales: JSON.stringify(fastifyVueOptions.locales),
     },
   }
 
@@ -113,15 +113,15 @@ function config (config, { isSsrBuild, command }) {
 function onwarn (warning, rollupWarn) {
   if (
     !(
-      warning.code == 'MISSING_EXPORT' &&
+      warning.code === 'MISSING_EXPORT' &&
       warning.message?.includes?.('"scrollBehavior" is not exported')
     ) &&
     !(
-      warning.code == 'PLUGIN_WARNING' &&
+      warning.code === 'PLUGIN_WARNING' &&
       warning.message?.includes?.('dynamic import will not move module into another chunk')
     ) &&
     !(
-      warning.code == 'UNUSED_EXTERNAL_IMPORT' &&
+      warning.code === 'UNUSED_EXTERNAL_IMPORT' &&
       warning.exporter === 'vue'
     )
   ) {
