@@ -19,12 +19,12 @@ async function setup(config) {
       'vite-fastify',
     )
 
-    const viteEnvsConfig = {
-      root: config.vite.root,
-    }
+    const viteEnvsConfig = config.vite
 
     await setupEnvironments(viteEnvsConfig)
 
+    console.log('viteEnvsConfig.environments', viteEnvsConfig.environments)
+    
     const { client: _, ...nonClientEnvs } = Object.fromEntries(
       Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
     )

@@ -5,8 +5,6 @@ import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
 export async function prepareClient (entries, _) {
-  console.log('entries', entries)
-  process.exit()
   const client = entries.ssr
   if (client.context instanceof Promise) {
     client.context = await client.context
@@ -118,8 +116,6 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
     handler = (_, reply) => htmlFunction.call(reply)
   }
-
-  console.log('route->', route)
 
   // Replace wildcard routes with Fastify compatible syntax
   const routePath = route.path.replace(/:[^+]+\+/, '*')

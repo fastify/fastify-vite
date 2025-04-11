@@ -27,7 +27,9 @@ export function viteFastify({ spa, clientModule } = {}) {
         createClientEnvironment,
       } = await import('./config.js')
 
-      config.environments = {}
+      if (!config.environments) {
+        config.environments = {}
+      }
       config.environments.client = deepMerge(
         createClientEnvironment(),
         config.environments.client ?? {},

@@ -27,7 +27,8 @@
     ".": "./index.js",
     "./plugin": "./plugin/index.js",
     "./client": "./client.js",
-    "./server": "./server.js"
+    "./server": "./server.js",
+    "./external": "./external/index.dist.js"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",

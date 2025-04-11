@@ -42,6 +42,7 @@ export default function viteFastifyReact ({ rsc } = {}) {
       configureServer,
       configResolved (config) {
         manager.config = config
+        console.log('Envs resolved', Object.keys(config.environments))
         configResolved(config)
         configResolvedForVirtual(config)
       },
@@ -100,18 +101,23 @@ function configureServer(server) {
 
 function configResolved (config) {
   this.resolvedConfig = config
+  console.log('this.resolvedConfig', this.resolvedConfig.environments)
   this.root = config.root
 }
 
-async function config (config, { command } = {}) {
+async function config (config, { command, ...others } = {}) {
+  console.log({ others })
   this.context.root = config.root
   const deepMerge = getDeepMergeFunction()
+
   const {
     createSSREnvironment,
     createClientEnvironment,
   } = await import('./env.js')
 
-  config.environments = {}
+  if (!config.environments) {
+    config.environments = {}
+  }
   config.environments.client = deepMerge(
     createClientEnvironment(),
     config.environments.client ?? {},
@@ -121,8 +127,10 @@ async function config (config, { command } = {}) {
     config.environments.ssr ?? {},
   )
   if (this.rsc) {
-    config.environments.rsc = createRSCEnvironment('/server.js')
-    // config.environments.rsc = createRSCEnvironment('$app/server.js')
+    config.environments.rsc = createRSCEnvironment('$app/server.js')
+    if (!config.plugins) {
+      config.plugins = []
+    }
     if (!config.plugins) {
       config.plugins = []
     }

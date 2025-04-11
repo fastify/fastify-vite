@@ -3,15 +3,14 @@
 import { PassThrough } from 'node:stream';
 import { memoize } from '@hiogawa/utils'
 import { ok } from 'node:assert'
-import { renderToPipeableStream, registerClientReference } from 'react-server-dom-webpack/server'
-import { createElement } from 'react'
-
+import { renderToPipeableStream, registerClientReference } from '@fastify/react/external'
+  
 // Used directly by the SSR environment
 export function renderRoute (match) {
   // initClientReferences()
   // SSR the actual page route as a server component
   const { pipe: pipeRoute } = renderToPipeableStream(
-    createElement(match[0].route.element), 
+    match[0].route.element, 
     createBundlerConfig()
   )
   return pipeRoute(new PassThrough()) 
