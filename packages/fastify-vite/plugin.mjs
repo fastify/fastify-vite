@@ -2,15 +2,6 @@ import { join, resolve } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
 import { write } from './ioutils.cjs'
 
-/**
- * This is the Vite plugin, not the Fastify plugin.
- *
- * Writes the vite.config properties used by fastify-vite to a JSON file in the node_modules/.cache
- * directory so production builds do not need to import vite nor the actual vite.config  file. This
- * allows vite to remain a devDependency and not need to exist on production Docker images.
- *
- * @returns
- */
 export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
   let configToWrite = {}
