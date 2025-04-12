@@ -72,9 +72,10 @@ async function setup(config) {
   this.devServer = await createServer(devServerOptions)
   this.scope.use(this.devServer.middlewares)
 
+  this.entries = {}
+
   const loadEntries = async () => {
     this.runners = {}
-    this.entries = {}
 
     const entryModulePaths = await loadEntryModulePaths()
 
@@ -93,7 +94,11 @@ async function setup(config) {
 
       if (env in entryModulePaths) {
         const entryModule = await runner.import(entryModulePaths[env])
-        this.entries[env] = entryModule.default ?? entryModule
+        if (!this.entries[env]) {
+          this.entries[env] = entryModule.default ?? entryModule
+        } else {
+          Object.assign(this.entries[env], entryModule.default ?? entryModule)
+        } 
       }
     }
   }
