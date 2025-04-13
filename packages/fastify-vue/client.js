@@ -13,7 +13,7 @@ export function useRouteContext () {
   return useRoute().meta[serverRouteContext]
 }
 
-export function createBeforeEachHandler ({ routeMap, ctxHydration, head }, layout) {
+export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
   return async function beforeCreate (to) {
     // The client-side route context
     const ctx = routeMap[to.matched[0].path]
@@ -48,7 +48,8 @@ export function createBeforeEachHandler ({ routeMap, ctxHydration, head }, layou
     // memoized module, so there's barely any overhead
     const { getMeta, onEnter } = await ctx.loader()
     if (ctx.getMeta) {
-      head.update(await getMeta(ctx))
+      ctx.head = await getMeta(ctx)
+      ctxHydration.useHead.push(ctx.head)
     }
     if (ctx.onEnter) {
       const updatedData = await onEnter(ctx)
