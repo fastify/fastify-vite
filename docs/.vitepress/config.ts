@@ -1,7 +1,6 @@
 import { createRequire } from 'module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { withMermaid } from "vitepress-plugin-mermaid";
-import { OramaPlugin } from '@orama/plugin-vitepress'
 
 const require = createRequire(import.meta.url)
 
@@ -19,10 +18,6 @@ export default withMermaid({
       light: 'min-light',
       dark: 'dracula',
     }
-  },
-
-  vite: {
-    plugins: [OramaPlugin()]
   },
 
   sitemap: {
