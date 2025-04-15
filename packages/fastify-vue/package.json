@@ -3,7 +3,7 @@
   "main": "index.js",
   "name": "@fastify/vue",
   "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
