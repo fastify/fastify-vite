@@ -157,13 +157,13 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
           text: 'Virtual Modules',
           link: 'vue/virtual-modules',
           items: [
-            { text: '/:root.vue', link: 'vue/virtual-modules#root-vue' },
-            { text: '/:router.vue', link: 'vue/virtual-modules#router-vue' },
-            { text: '/:routes.js', link: 'vue/virtual-modules#routes-js' },
-            { text: '/:core.js', link: 'vue/virtual-modules#core-js' },
-            { text: '/:create.js', link: 'vue/virtual-modules#create-js' },
-            { text: '/:layouts/default.vue', link: 'vue/virtual-modules#layouts-default-vue' },
-            { text: '/:mount.js', link: 'vue/virtual-modules#mount-js' }
+            { text: '$app/root.vue', link: 'vue/virtual-modules#root-vue' },
+            { text: '$app/router.vue', link: 'vue/virtual-modules#router-vue' },
+            { text: '$app/routes.js', link: 'vue/virtual-modules#routes-js' },
+            { text: '$app/core.js', link: 'vue/virtual-modules#core-js' },
+            { text: '$app/create.js', link: 'vue/virtual-modules#create-js' },
+            { text: '$app/layouts/default.vue', link: 'vue/virtual-modules#layouts-default-vue' },
+            { text: '$app/mount.js', link: 'vue/virtual-modules#mount-js' }
           ]
         },
       ]
@@ -177,13 +177,13 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
           text: 'Virtual Modules',
           link: 'react/virtual-modules',
           items: [
-            { text: '/:root.jsx', link: 'react/virtual-modules#root-jsx' },
-            { text: '/:routes.js', link: 'react/virtual-modules#routes-js' },
-            { text: '/:core.jsx', link: 'react/virtual-modules#core-jsx' },
-            { text: '/:create.jsx', link: 'react/virtual-modules#create-jsx' },
-            { text: '/:layouts/default.jsx', link: 'react/virtual-modules#layouts-default-jsx' },
-            { text: '/:mount.js', link: 'react/virtual-modules#mount-js' },
-            { text: '/:resource.js', link: 'react/virtual-modules#resource-js' }
+            { text: '$app/root.jsx', link: 'react/virtual-modules#root-jsx' },
+            { text: '$app/routes.js', link: 'react/virtual-modules#routes-js' },
+            { text: '$app/core.jsx', link: 'react/virtual-modules#core-jsx' },
+            { text: '$app/create.jsx', link: 'react/virtual-modules#create-jsx' },
+            { text: '$app/layouts/default.jsx', link: 'react/virtual-modules#layouts-default-jsx' },
+            { text: '$app/mount.js', link: 'react/virtual-modules#mount-js' },
+            { text: '$app/resource.js', link: 'react/virtual-modules#resource-js' }
           ]
         },
       ]
