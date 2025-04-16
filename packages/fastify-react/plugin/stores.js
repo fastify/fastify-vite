@@ -11,7 +11,7 @@ function storeGetter (proxy, prop) {
     return proxy.context.state[proxy.key]
   }
   let method
-  if (method = proxy.context.actions[proxy.key][prop]) {
+  if (method = proxy.context.actions?.[proxy.key]?.[prop]) {
     if (!proxy.wrappers[prop]) {
       proxy.wrappers[prop] = (...args) => {
         return method(proxy.context.state, ...args)
