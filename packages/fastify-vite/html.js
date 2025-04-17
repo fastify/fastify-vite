@@ -20,6 +20,33 @@ async function compileHtmlTemplate(source) {
     output += decoded
   })
 
+  const processComment = (text) => {
+    let trimmed
+    if (jsPath.test((trimmed = text.trim()))) {
+      params.push(trimmed)
+      return `\${${trimmed} ?? ''}`
+    }
+    return null
+  }
+
+  rewriter.on('*', {
+    element(element) {
+      for (const [name, value] of element.attributes) {
+        if (!value) {
+          continue
+        }
+        const commentMatch = value.match(/<!--\s*([^>]*)\s*-->/)
+        if (commentMatch) {
+          const commentText = commentMatch[1]
+          const replacement = processComment(commentText)
+          if (replacement) {
+            element.setAttribute(name, replacement)
+          }
+        }
+      }
+    }
+  })
+
   rewriter.on('script', {
     element(element) {
       element.prepend('${"')
@@ -43,11 +70,9 @@ async function compileHtmlTemplate(source) {
       }
     },
     comments(comment) {
-      let trimmed
-      // biome-ignore lint/suspicious/noAssignInExpressions: self explanatory
-      if (jsPath.test((trimmed = comment.text.trim()))) {
-        params.push(trimmed)
-        comment.replace(`\${${trimmed} ?? ''}`)
+      const replacement = processComment(comment.text)
+      if (replacement) {
+        comment.replace(replacement)
       }
     },
   })

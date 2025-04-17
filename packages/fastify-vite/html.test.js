@@ -66,4 +66,14 @@ describe('createHtmlTemplateFunction', () => {
     const resultStr = templateFn()
     expect(resultStr).toBe(html)
   })
+
+  test('identifies placeholders in attributes', async () => {
+    const html = [
+      '<script nonce="<!-- nonce -->">',
+      '</script>',
+    ].join('\n')
+    const templateFn = await createHtmlTemplateFunction(html)
+    const resultStr = templateFn({ nonce: 'foobar' })
+    expect(resultStr).toBe(html.replace('<!-- nonce -->', 'foobar'))
+  })
 })
