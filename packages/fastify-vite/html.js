@@ -35,7 +35,7 @@ async function compileHtmlTemplate(source) {
         if (!value) {
           continue
         }
-        const commentMatch = value.match(/<!--\s*([^>]*)\s*-->/)
+        const commentMatch = value.match(/^#([^#]*)#$/)
         if (commentMatch) {
           const commentText = commentMatch[1]
           const replacement = processComment(commentText)
