@@ -51,7 +51,10 @@ export default function viteFastifyVue () {
       order: 'post',
       handler: transformIndexHtml.bind(context)
     },
-    closeBundle: closeBundle.bind(context),
+    closeBundle: {
+      order: 'post',
+      handler: closeBundle.bind(context),
+    },
   }]
 }
 
