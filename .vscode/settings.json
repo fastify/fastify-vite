@@ -6,5 +6,8 @@
 	"javascript.format.semicolons": "remove",
 	"typescript.format.semicolons": "remove",
 	"javascript.preferences.quoteStyle": "auto",
-	"typescript.preferences.quoteStyle": "auto"
+	"typescript.preferences.quoteStyle": "auto",
+	"[markdown]": {
+		"editor.formatOnSave": false,
+	}
 }
