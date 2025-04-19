@@ -23,15 +23,15 @@ export async function closeBundle() {
       let imagePreloads = '\n'
       for (let image of images) {
         image = image.slice(this.root.length + 1)
-        imagePreloads += `  <link rel="preload" as="image" href="${this.resolvedConfig.base}${image}">\n`
+        imagePreloads += `  <link rel="preload" as="image" crossorigin href="${this.resolvedConfig.base}${image}">\n`
       }
       let cssPreloads = ''
       for (const css of cssImports) {
-        cssPreloads += `  <link rel="preload" as="style" href="${this.resolvedConfig.base}${css}">\n`
+        cssPreloads += `  <link rel="preload" as="style" crossorigin href="${this.resolvedConfig.base}${css}">\n`
       }
       let jsPreloads = ''
       for (const js of jsImports) {
-        jsPreloads += `  <link rel="modulepreload" href="${this.resolvedConfig.base}${js}">\n`
+        jsPreloads += `  <link rel="modulepreload" crossorigin href="${this.resolvedConfig.base}${js}">\n`
       }
       const pageHtml = await appendHead(
         this.indexHtml,
