@@ -117,6 +117,19 @@ function getRouteModuleExports (routeModule) {
     streaming: routeModule.streaming,
     clientOnly: routeModule.clientOnly,
     serverOnly: routeModule.serverOnly,
+    // Server configure function
+    configure: routeModule.configure,
+    // Route-level Fastify hooks
+    onRequest: routeModule.onRequest ?? undefined,
+    preParsing: routeModule.preParsing ?? undefined,
+    preValidation: routeModule.preValidation ?? undefined,
+    preHandler: routeModule.preHandler ?? undefined,
+    preSerialization: routeModule.preSerialization ?? undefined,
+    onError: routeModule.onError ?? undefined,
+    onSend: routeModule.onSend ?? undefined,
+    onResponse: routeModule.onResponse ?? undefined,
+    onTimeout: routeModule.onTimeout ?? undefined,
+    onRequestAbort: routeModule.onRequestAbort ?? undefined,
   }
 }
 
