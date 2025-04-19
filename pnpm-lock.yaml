@@ -57,305 +57,6 @@ importers:
         specifier: ^8.1.9
         version: 8.5.0
 
-  contrib/react-hydration:
-    dependencies:
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      devalue:
-        specifier: 'catalog:'
-        version: 5.1.1
-      fastify:
-        specifier: 'catalog:'
-        version: 5.2.2
-      jotai:
-        specifier: ^2.12.2
-        version: 2.12.2(react@19.1.0)
-      react:
-        specifier: 'catalog:'
-        version: 19.1.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.1.0(react@19.1.0)
-      react-router:
-        specifier: ^7.4.1
-        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.10
-        version: 7.26.10
-      '@babel/eslint-parser':
-        specifier: ^7.27.0
-        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
-      '@babel/preset-react':
-        specifier: ^7.26.3
-        version: 7.26.3(@babel/core@7.26.10)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.23.0
-        version: 9.23.0(jiti@2.4.2)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-n:
-        specifier: ^17.17.0
-        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-node:
-        specifier: ^11.1.0
-        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-promise:
-        specifier: ^7.2.1
-        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-react:
-        specifier: ^7.37.4
-        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
-      vite:
-        specifier: 'catalog:'
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
-
-  contrib/react-next:
-    dependencies:
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      devalue:
-        specifier: 'catalog:'
-        version: 5.1.1
-      fastify:
-        specifier: 'catalog:'
-        version: 5.2.2
-      jotai:
-        specifier: ^2.12.2
-        version: 2.12.2(react@19.1.0)
-      ky:
-        specifier: ^1.8.0
-        version: 1.8.0
-      ky-universal:
-        specifier: ^0.12.0
-        version: 0.12.0(ky@1.8.0)(web-streams-polyfill@3.3.3)
-      react:
-        specifier: 'catalog:'
-        version: 19.1.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.1.0(react@19.1.0)
-      react-router:
-        specifier: ^7.4.1
-        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      undici:
-        specifier: ^7.7.0
-        version: 7.7.0
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.10
-        version: 7.26.10
-      '@babel/eslint-parser':
-        specifier: ^7.27.0
-        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
-      '@babel/preset-react':
-        specifier: ^7.26.3
-        version: 7.26.3(@babel/core@7.26.10)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.23.0
-        version: 9.23.0(jiti@2.4.2)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-n:
-        specifier: ^17.17.0
-        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-node:
-        specifier: ^11.1.0
-        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-promise:
-        specifier: ^7.2.1
-        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-react:
-        specifier: ^7.37.4
-        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
-      vite:
-        specifier: 'catalog:'
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
-
-  contrib/react-streaming:
-    dependencies:
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      devalue:
-        specifier: 'catalog:'
-        version: 5.1.1
-      fastify:
-        specifier: 'catalog:'
-        version: 5.2.2
-      jotai:
-        specifier: ^2.12.2
-        version: 2.12.2(react@19.1.0)
-      react:
-        specifier: 'catalog:'
-        version: 19.1.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.1.0(react@19.1.0)
-      react-router:
-        specifier: ^7.4.1
-        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.10
-        version: 7.26.10
-      '@babel/eslint-parser':
-        specifier: ^7.27.0
-        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
-      '@babel/preset-react':
-        specifier: ^7.26.3
-        version: 7.26.3(@babel/core@7.26.10)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.23.0
-        version: 9.23.0(jiti@2.4.2)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-n:
-        specifier: ^17.17.0
-        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-node:
-        specifier: ^11.1.0
-        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-promise:
-        specifier: ^7.2.1
-        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-react:
-        specifier: ^7.37.4
-        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
-      vite:
-        specifier: 'catalog:'
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
-
-  contrib/react-vanilla:
-    dependencies:
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      fastify:
-        specifier: 'catalog:'
-        version: 5.2.2
-      react:
-        specifier: 'catalog:'
-        version: 19.1.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.1.0(react@19.1.0)
-      ws:
-        specifier: ^8.18.1
-        version: 8.18.1
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.10
-        version: 7.26.10
-      '@babel/eslint-parser':
-        specifier: ^7.27.0
-        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
-      '@babel/preset-react':
-        specifier: ^7.26.3
-        version: 7.26.3(@babel/core@7.26.10)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.23.0
-        version: 9.23.0(jiti@2.4.2)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-n:
-        specifier: ^17.17.0
-        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-node:
-        specifier: ^11.1.0
-        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-promise:
-        specifier: ^7.2.1
-        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-react:
-        specifier: ^7.37.4
-        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
-      vite:
-        specifier: 'catalog:'
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
-
-  contrib/react-vanilla-spa:
-    dependencies:
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      fastify:
-        specifier: 'catalog:'
-        version: 5.2.2
-      react:
-        specifier: 'catalog:'
-        version: 19.1.0
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.1.0(react@19.1.0)
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.26.10
-        version: 7.26.10
-      '@babel/eslint-parser':
-        specifier: ^7.27.0
-        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
-      '@babel/preset-react':
-        specifier: ^7.26.3
-        version: 7.26.3(@babel/core@7.26.10)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
-      eslint:
-        specifier: ^9.23.0
-        version: 9.23.0(jiti@2.4.2)
-      eslint-config-standard:
-        specifier: ^17.1.0
-        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-n:
-        specifier: ^17.17.0
-        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-node:
-        specifier: ^11.1.0
-        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-promise:
-        specifier: ^7.2.1
-        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
-      eslint-plugin-react:
-        specifier: ^7.37.4
-        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
-      vite:
-        specifier: 'catalog:'
-        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
-
   contrib/solid-hydration:
     dependencies:
       '@fastify/vite':
@@ -647,6 +348,275 @@ importers:
       zx:
         specifier: ^7.2.3
         version: 7.2.3
+
+  examples/react-hydration:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      devalue:
+        specifier: 'catalog:'
+        version: 5.1.1
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      jotai:
+        specifier: ^2.12.2
+        version: 2.12.2(react@19.1.0)
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+      react-router:
+        specifier: ^7.4.1
+        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.26.10
+        version: 7.26.10
+      '@babel/eslint-parser':
+        specifier: ^7.27.0
+        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
+      '@babel/preset-react':
+        specifier: ^7.26.3
+        version: 7.26.3(@babel/core@7.26.10)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      eslint:
+        specifier: ^9.23.0
+        version: 9.23.0(jiti@2.4.2)
+      eslint-config-standard:
+        specifier: ^17.1.0
+        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-n:
+        specifier: ^17.17.0
+        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-node:
+        specifier: ^11.1.0
+        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-promise:
+        specifier: ^7.2.1
+        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-react:
+        specifier: ^7.37.4
+        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
+
+  examples/react-next:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      devalue:
+        specifier: 'catalog:'
+        version: 5.1.1
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      jotai:
+        specifier: ^2.12.2
+        version: 2.12.2(react@19.1.0)
+      ky:
+        specifier: ^1.8.0
+        version: 1.8.0
+      ky-universal:
+        specifier: ^0.12.0
+        version: 0.12.0(ky@1.8.0)(web-streams-polyfill@3.3.3)
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+      react-router:
+        specifier: ^7.4.1
+        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      undici:
+        specifier: ^7.7.0
+        version: 7.7.0
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.26.10
+        version: 7.26.10
+      '@babel/eslint-parser':
+        specifier: ^7.27.0
+        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
+      '@babel/preset-react':
+        specifier: ^7.26.3
+        version: 7.26.3(@babel/core@7.26.10)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      eslint:
+        specifier: ^9.23.0
+        version: 9.23.0(jiti@2.4.2)
+      eslint-config-standard:
+        specifier: ^17.1.0
+        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-n:
+        specifier: ^17.17.0
+        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-node:
+        specifier: ^11.1.0
+        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-promise:
+        specifier: ^7.2.1
+        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-react:
+        specifier: ^7.37.4
+        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
+
+  examples/react-streaming:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      devalue:
+        specifier: 'catalog:'
+        version: 5.1.1
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      jotai:
+        specifier: ^2.12.2
+        version: 2.12.2(react@19.1.0)
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+      react-router:
+        specifier: ^7.4.1
+        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.26.10
+        version: 7.26.10
+      '@babel/eslint-parser':
+        specifier: ^7.27.0
+        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
+      '@babel/preset-react':
+        specifier: ^7.26.3
+        version: 7.26.3(@babel/core@7.26.10)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      eslint:
+        specifier: ^9.23.0
+        version: 9.23.0(jiti@2.4.2)
+      eslint-config-standard:
+        specifier: ^17.1.0
+        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-n:
+        specifier: ^17.17.0
+        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-node:
+        specifier: ^11.1.0
+        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-promise:
+        specifier: ^7.2.1
+        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-react:
+        specifier: ^7.37.4
+        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
+
+  examples/react-vanilla:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+    devDependencies:
+      '@vitejs/plugin-react':
+        specifier: ^4.4.0
+        version: 4.4.0(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      oxlint:
+        specifier: ^0.16.6
+        version: 0.16.6
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
+
+  examples/react-vanilla-spa:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.26.10
+        version: 7.26.10
+      '@babel/eslint-parser':
+        specifier: ^7.27.0
+        version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
+      '@babel/preset-react':
+        specifier: ^7.26.3
+        version: 7.26.3(@babel/core@7.26.10)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      eslint:
+        specifier: ^9.23.0
+        version: 9.23.0(jiti@2.4.2)
+      eslint-config-standard:
+        specifier: ^17.1.0
+        version: 17.1.0(eslint-plugin-import@2.31.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-n@17.17.0(eslint@9.23.0(jiti@2.4.2)))(eslint-plugin-promise@7.2.1(eslint@9.23.0(jiti@2.4.2)))(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-n:
+        specifier: ^17.17.0
+        version: 17.17.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-node:
+        specifier: ^11.1.0
+        version: 11.1.0(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-promise:
+        specifier: ^7.2.1
+        version: 7.2.1(eslint@9.23.0(jiti@2.4.2))
+      eslint-plugin-react:
+        specifier: ^7.37.4
+        version: 7.37.5(eslint@9.23.0(jiti@2.4.2))
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
 
   examples/vue-hydration:
     dependencies:
@@ -1119,7 +1089,7 @@ importers:
         version: 5.0.5(rollup@4.39.0)
       fastify:
         specifier: latest
-        version: 5.2.2
+        version: 5.3.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -1162,7 +1132,7 @@ importers:
         version: 5.0.5(rollup@4.39.0)
       fastify:
         specifier: latest
-        version: 5.2.2
+        version: 5.3.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -1205,7 +1175,7 @@ importers:
         version: 5.0.5(rollup@4.39.0)
       fastify:
         specifier: latest
-        version: 5.2.2
+        version: 5.3.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -1235,11 +1205,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: latest
-        version: 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-react
       '@fastify/vite':
-        specifier: latest
-        version: 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1271,6 +1241,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      oxlint:
+        specifier: ^0.16.6
+        version: 0.16.6
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -1293,11 +1266,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: latest
-        version: 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-react
       '@fastify/vite':
-        specifier: latest
-        version: 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1329,6 +1302,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))
+      oxlint:
+        specifier: ^0.16.6
+        version: 0.16.6
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -2630,16 +2606,16 @@ packages:
     peerDependencies:
       fastify: '>=5'
 
-  '@fastify/vite@8.0.2':
-    resolution: {integrity: sha512-3XjxupCGH160EqYF4BOLgsiWR8uWUcjb2qH2/Zn5ryJ/n1G5paEYNfSag8oeE6JpXhcqRIGHa5PEWjpJnTHWfw==}
+  '@fastify/vite@8.0.5':
+    resolution: {integrity: sha512-AiWxo8E8PO7HLUBmC4OM6HTYGuoaf+ADMVvVKHcc29c2zYx8rgvD5C3+BwohnICL30EfLiVCjWHmMqcNbk//Rw==}
     peerDependencies:
       fastify: '>=5'
 
   '@fastify/vue@1.0.0':
     resolution: {integrity: sha512-BhY+BtS9sCcEvSia57RrwZSt6+BmuqHwAbwcQsDF+SBidPHosDS41OX/mr+rp1D8dbf4B38t1ybjb0xRv3gopg==}
 
-  '@fastify/vue@1.0.1':
-    resolution: {integrity: sha512-caGhfhyV5AIZJ9jdHH2NzMGGoPgSOi7wJ4RTT7cT8X88HHB5VCTmu/sEMbqmTGXrN4Q3F9+i7ivQ57RxrEJZ9w==}
+  '@fastify/vue@1.0.6':
+    resolution: {integrity: sha512-uwXYtb8F7JkKyiBBYOvh9DpArSVHIpPn+3kAK5VL8jFFbLL6qGV/jvbWyvv84iNRnfNUtPSukUMl32xSc3kudg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2774,9 +2750,19 @@ packages:
   '@oramacloud/client@1.0.0-beta.21':
     resolution: {integrity: sha512-yubgcBA1LrxpxkJlc4KG+pafHaKaQhmm/xG2cAtQtHKNQULcSHYpWUoKoypoj4XQxFHb9QoTSl2HptXXZFYX6g==}
 
+  '@oxlint/darwin-arm64@0.16.6':
+    resolution: {integrity: sha512-wvW55Br6o08JEmiezMqvo0byZNH9eunCkbouV8rM2gQP6ROv8lbeQdPZLpAeFz0QA4Ca2b2pVo5S3N2fS78d+Q==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@oxlint/darwin-arm64@0.9.10':
     resolution: {integrity: sha512-eOXKZYq5bnCSgDefgM5bzAg+4Fc//Rc4yjgKN8iDWUARweCaChiQXb6TXX8MfEfs6qayEMy6yVj0pqoFz0B1aw==}
     cpu: [arm64]
+    os: [darwin]
+
+  '@oxlint/darwin-x64@0.16.6':
+    resolution: {integrity: sha512-VezC8yep+1TxVtBsTQz2OHJs9aTuIQ7ISyl5rn1QVQXeG7wdFIIFln3ilu2TtaMjnswEdEsCDqBjyoF1euqQow==}
+    cpu: [x64]
     os: [darwin]
 
   '@oxlint/darwin-x64@0.9.10':
@@ -2784,8 +2770,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@oxlint/linux-arm64-gnu@0.16.6':
+    resolution: {integrity: sha512-hvpBsP5/bERq8ft4KidszGifWV4ZcXeaJrfNI8CqIbfd4AqGJmnc5d6M2Op/sYdEMjRGdpPqftfzw4D6jDHPIQ==}
+    cpu: [arm64]
+    os: [linux]
+
   '@oxlint/linux-arm64-gnu@0.9.10':
     resolution: {integrity: sha512-0Zn+vqHhrZyufFBfq9WOgiIool0gCR14BLsdS+0Dwd9o+kNxPGA5q7erQFkiC4rpkxtfBHeD3iIKMMt7d29Kyw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxlint/linux-arm64-musl@0.16.6':
+    resolution: {integrity: sha512-PolYYEhYELXaQ0ht0g6Z827rRVDgbi/PQcHFpctiDHbSruW3udIOy9nEOAUt0agSHYrdZcC0NWzISE+CPrM0Yw==}
     cpu: [arm64]
     os: [linux]
 
@@ -2794,8 +2790,18 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@oxlint/linux-x64-gnu@0.16.6':
+    resolution: {integrity: sha512-y4Lq4mcheXYzyLiS2TG1CaNDfgK+yVmmyJlms010Gs6nd1ejF6cObMuY5g6GLPGRJMJxG4fhbE955I2y50+Ltg==}
+    cpu: [x64]
+    os: [linux]
+
   '@oxlint/linux-x64-gnu@0.9.10':
     resolution: {integrity: sha512-JHbkMUnibqaSMBvLHyqTL5cWxcGW+jw+Ppt2baLISpvo34a6fBR+PI7v/A92sEDWe0W1rPhypzCwA8mKpkQ3DA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxlint/linux-x64-musl@0.16.6':
+    resolution: {integrity: sha512-p3Njn7MzBsIJr+23HtxItA86UP01xhcWfwU35RGWVyTNbXIdNoAkaD+DjXQj2KSEauO7rRDAZbrTA+40NWNNkQ==}
     cpu: [x64]
     os: [linux]
 
@@ -2804,9 +2810,19 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@oxlint/win32-arm64@0.16.6':
+    resolution: {integrity: sha512-IdySuXzslSnZEk9F2mRx1cjyPsHM8ny2xQd+FEbWhDhfwxVZCK+m9hXoEnqVQ6FLXQsOjWVutGtYb+EpDiZxlQ==}
+    cpu: [arm64]
+    os: [win32]
+
   '@oxlint/win32-arm64@0.9.10':
     resolution: {integrity: sha512-LXDnk7vKHT3IY6G1jq0O7+XMhtcHOYuxLGIx4KP+4xS6vKgBY+Bsq4xV3AtmtKlvnXkP5FxHpfLmcEtm5AWysA==}
     cpu: [arm64]
+    os: [win32]
+
+  '@oxlint/win32-x64@0.16.6':
+    resolution: {integrity: sha512-DqkFdDX1ULoizFBg21TMIe6B5L2a59KljqpN1S7H4+IXhxmRcc71bpZ7FRwrxjrlRhtCD4SAPTZadBI9qRhViw==}
+    cpu: [x64]
     os: [win32]
 
   '@oxlint/win32-x64@0.9.10':
@@ -3178,6 +3194,12 @@ packages:
 
   '@vitejs/plugin-react@4.3.4':
     resolution: {integrity: sha512-SCCPBJtYLdE8PX/7ZQAs1QAZ8Jqwih+0VBLum1EGqmCCQal+MIUqLCzj3ZUy8ufbC0cAM4LRlSTm7IQJwWT4ug==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^4.2.0 || ^5.0.0 || ^6.0.0
+
+  '@vitejs/plugin-react@4.4.0':
+    resolution: {integrity: sha512-x/EztcTKVj+TDeANY1WjNeYsvZjZdfWRMP/KXi5Yn8BoTzpa13ZltaQqKfvWYbX8CE10GOHHdC5v86jY9x8i/g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
@@ -4407,6 +4429,9 @@ packages:
   fastify@5.2.2:
     resolution: {integrity: sha512-22T/PnhquWozuFXg3Ish4md5ipsF1Nx1mJ9ulLdZPXSk14WFj/wMlyNB/yll9sQOojKRgOIxT2inK3Xpjg5hyw==}
 
+  fastify@5.3.2:
+    resolution: {integrity: sha512-AIPqBgtqBAwkOkrnwesEE+dOyU30dQ4kh7udxeGVR05CRGwubZx+p2H8P0C4cRnQT0+EPK4VGea2DTL2RtWttg==}
+
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
 
@@ -5453,6 +5478,11 @@ packages:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
     engines: {node: '>= 0.4'}
 
+  oxlint@0.16.6:
+    resolution: {integrity: sha512-pesehI0loV2h2k95mFRsUg6uNgGw2RPs1pcuAfPRJUwGehkfraMVCQofwqsMUeufmXygweH734vhKzQ24r3djA==}
+    engines: {node: '>=8.*'}
+    hasBin: true
+
   oxlint@0.9.10:
     resolution: {integrity: sha512-bKiiFN7Hnoaist/rditTRBXz+GXKYuLd53/NB7Q6zHB/bifELJarSoRLkAUGElIJKl4PSr3lTh1g6zehh+rX0g==}
     engines: {node: '>=14.*'}
@@ -6024,6 +6054,9 @@ packages:
   process-warning@4.0.1:
     resolution: {integrity: sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q==}
 
+  process-warning@5.0.0:
+    resolution: {integrity: sha512-a39t9ApHNx2L4+HBnQKqxxHNs1r7KF+Intd8Q/g1bUh6q0WIp9voPXJ/x0j+ZL45KF1pJd9+q2jLIRMfvEshkA==}
+
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
@@ -6072,6 +6105,10 @@ packages:
 
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
+    engines: {node: '>=0.10.0'}
+
+  react-refresh@0.17.0:
+    resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
 
   react-router-dom@6.30.0:
@@ -6241,6 +6278,9 @@ packages:
 
   secure-json-parse@3.0.2:
     resolution: {integrity: sha512-H6nS2o8bWfpFEV6U38sOSjS7bTbdgbCGU9wEM6W14P5H0QOsz94KCusifV44GpHDTu2nqZbuDNhTzu+mjDSw1w==}
+
+  secure-json-parse@4.0.0:
+    resolution: {integrity: sha512-dxtLJO6sc35jWidmLxo7ij+Eg48PM/kleBsxpC8QJE0qJICe+KawkDQmvCMZUr9u7WKVHgMW6vy3fQ7zMiFZMA==}
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -8222,7 +8262,7 @@ snapshots:
 
   '@fastify/react@1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+      '@fastify/vite': 8.0.5(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       acorn: 8.14.1
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
@@ -8254,6 +8294,7 @@ snapshots:
       - tsx
       - typescript
       - yaml
+    optional: true
 
   '@fastify/send@2.1.0':
     dependencies:
@@ -8340,7 +8381,7 @@ snapshots:
       - typescript
       - yaml
 
-  '@fastify/vite@8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
+  '@fastify/vite@8.0.5(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
     dependencies:
       '@fastify/deepmerge': 3.1.0
       '@fastify/middie': 9.0.3
@@ -8354,7 +8395,7 @@ snapshots:
     optionalDependencies:
       '@fastify/htmx': 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(rollup@4.39.0)
       '@fastify/react': 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
-      '@fastify/vue': 1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+      '@fastify/vue': 1.0.6(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
@@ -8375,7 +8416,7 @@ snapshots:
 
   '@fastify/vue@1.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+      '@fastify/vite': 8.0.5(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       acorn: 8.14.1
       acorn-walk: 8.3.4
       devalue: 5.1.1
@@ -8405,9 +8446,9 @@ snapshots:
       - typescript
       - yaml
 
-  '@fastify/vue@1.0.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
+  '@fastify/vue@1.0.6(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
+      '@fastify/vite': 8.0.5(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(typescript@5.8.2)(yaml@2.7.1)
       acorn: 8.14.1
       acorn-walk: 8.3.4
       devalue: 5.1.1
@@ -8422,7 +8463,6 @@ snapshots:
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
-      - '@types/react'
       - fastify
       - jiti
       - less
@@ -8620,25 +8660,49 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@oxlint/darwin-arm64@0.16.6':
+    optional: true
+
   '@oxlint/darwin-arm64@0.9.10':
+    optional: true
+
+  '@oxlint/darwin-x64@0.16.6':
     optional: true
 
   '@oxlint/darwin-x64@0.9.10':
     optional: true
 
+  '@oxlint/linux-arm64-gnu@0.16.6':
+    optional: true
+
   '@oxlint/linux-arm64-gnu@0.9.10':
+    optional: true
+
+  '@oxlint/linux-arm64-musl@0.16.6':
     optional: true
 
   '@oxlint/linux-arm64-musl@0.9.10':
     optional: true
 
+  '@oxlint/linux-x64-gnu@0.16.6':
+    optional: true
+
   '@oxlint/linux-x64-gnu@0.9.10':
+    optional: true
+
+  '@oxlint/linux-x64-musl@0.16.6':
     optional: true
 
   '@oxlint/linux-x64-musl@0.9.10':
     optional: true
 
+  '@oxlint/win32-arm64@0.16.6':
+    optional: true
+
   '@oxlint/win32-arm64@0.9.10':
+    optional: true
+
+  '@oxlint/win32-x64@0.16.6':
     optional: true
 
   '@oxlint/win32-x64@0.9.10':
@@ -8973,6 +9037,17 @@ snapshots:
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.10)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
+      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@vitejs/plugin-react@4.4.0(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))':
+    dependencies:
+      '@babel/core': 7.26.10
+      '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.10)
+      '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.10)
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.17.0
       vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
@@ -10523,6 +10598,24 @@ snapshots:
       semver: 7.7.1
       toad-cache: 3.7.0
 
+  fastify@5.3.2:
+    dependencies:
+      '@fastify/ajv-compiler': 4.0.2
+      '@fastify/error': 4.1.0
+      '@fastify/fast-json-stringify-compiler': 5.0.2
+      '@fastify/proxy-addr': 5.0.0
+      abstract-logging: 2.0.1
+      avvio: 9.1.0
+      fast-json-stringify: 6.0.1
+      find-my-way: 9.3.0
+      light-my-request: 6.6.0
+      pino: 9.6.0
+      process-warning: 5.0.0
+      rfdc: 1.4.1
+      secure-json-parse: 4.0.0
+      semver: 7.7.1
+      toad-cache: 3.7.0
+
   fastq@1.19.1:
     dependencies:
       reusify: 1.1.0
@@ -11665,6 +11758,17 @@ snapshots:
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
+  oxlint@0.16.6:
+    optionalDependencies:
+      '@oxlint/darwin-arm64': 0.16.6
+      '@oxlint/darwin-x64': 0.16.6
+      '@oxlint/linux-arm64-gnu': 0.16.6
+      '@oxlint/linux-arm64-musl': 0.16.6
+      '@oxlint/linux-x64-gnu': 0.16.6
+      '@oxlint/linux-x64-musl': 0.16.6
+      '@oxlint/win32-arm64': 0.16.6
+      '@oxlint/win32-x64': 0.16.6
+
   oxlint@0.9.10:
     optionalDependencies:
       '@oxlint/darwin-arm64': 0.9.10
@@ -12310,6 +12414,8 @@ snapshots:
 
   process-warning@4.0.1: {}
 
+  process-warning@5.0.0: {}
+
   prop-types@15.8.1:
     dependencies:
       loose-envify: 1.4.0
@@ -12356,6 +12462,8 @@ snapshots:
   react-is@18.3.1: {}
 
   react-refresh@0.14.2: {}
+
+  react-refresh@0.17.0: {}
 
   react-router-dom@6.30.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -12540,6 +12648,8 @@ snapshots:
   secure-json-parse@2.7.0: {}
 
   secure-json-parse@3.0.2: {}
+
+  secure-json-parse@4.0.0: {}
 
   semver@6.3.1: {}
 

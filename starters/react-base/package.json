@@ -4,12 +4,12 @@
     "dev": "node server.js --dev",
     "start": "NODE_ENV=production node server.js",
     "build": "NODE_ENV=production vite build",
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "lint": "oxlint"
   },
   "dependencies": {
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/react": "latest",
-    "@fastify/vite": "latest",
+    "@fastify/react": "workspace:^",
+    "@fastify/vite": "workspace:^",
     "fastify": "^5.2.2",
     "history": "^5.3.0",
     "minipass": "^7.1.2",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
