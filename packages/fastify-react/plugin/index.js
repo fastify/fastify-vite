@@ -12,7 +12,7 @@ import { closeBundle } from './preload.js'
 import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
-export default function viteFastifyVue () {
+export default function viteFastifyReactPlugin () {
   const context = {
     root: null,
   }
@@ -23,6 +23,15 @@ export default function viteFastifyVue () {
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
+    configEnvironment (name, config, { mode }) {
+      if (mode === 'production') {
+        config.build.minify = true
+        config.build.sourcemap = false
+      }
+      if (name === 'ssr') {
+        config.build.manifest = false
+      }
+    },
     async load (id) {
       if (id.includes('?server') && !this.environment.config.build?.ssr) {
         const source = loadSource(id)
@@ -51,9 +60,8 @@ export default function viteFastifyVue () {
       order: 'post',
       handler: transformIndexHtml.bind(context)
     },
-    closeBundle: {
-      order: 'post',
-      handler: closeBundle.bind(context),
+    closeBundle () {
+      closeBundle.call(this, context.resolvedBundle)
     },
   }]
 }
