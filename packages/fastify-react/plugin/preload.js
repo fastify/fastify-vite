@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, parse as parsePath } from 'node:path'
 import { HTMLRewriter } from 'html-rewriter-wasm'
 
@@ -7,6 +7,7 @@ const imageFile = /\.((png)|(jpg)|(svg)|(webp)|(gif))$/
 export async function closeBundle() {
   if (!this.resolvedConfig.build.ssr) {
     const distDir = join(this.root, this.resolvedConfig.build.outDir)
+    const indexHtml = readFileSync(join(distDir, 'index.html'), 'utf8')
     const pages = Object.fromEntries(
       Object.entries(this.resolvedBundle ?? {})
         .filter(([id, meta]) => {
@@ -34,7 +35,7 @@ export async function closeBundle() {
         jsPreloads += `  <link rel="modulepreload" crossorigin href="${this.resolvedConfig.base}${js}">\n`
       }
       const pageHtml = await appendHead(
-        this.indexHtml,
+        indexHtml,
         imagePreloads,
         cssPreloads,
         jsPreloads
