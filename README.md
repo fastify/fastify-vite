@@ -42,16 +42,11 @@ MIT
 <br>
 <br>
 
-**Happy Little Monoliths** is an upcoming ebook by the author of this plugin covering full stack development directly with Fastify and Vite, avoiding metaframeworks entirely.
+[**Happy Little Monoliths** is out!](https://hire.jonasgalvez.com.br/happy-little-monoliths)
 
 <a href="https://hire.jonasgalvez.com.br/happy-little-monoliths">
 <img width="250" alt="Screenshot 2024-09-22 at 23 54 20" src="https://github.com/user-attachments/assets/f12e72f7-a429-433e-a3fc-0b90b15f4a5d">
 </a>
-
-<br>
-<br>
-
-[Learn more and pre-order here](https://hire.jonasgalvez.com.br/happy-little-monoliths).
 
 </td>
 

@@ -1,0 +1,10 @@
+{
+	"editor.tabSize": 2,
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+	},
+	"javascript.format.semicolons": "remove",
+	"typescript.format.semicolons": "remove",
+	"javascript.preferences.quoteStyle": "auto",
+	"typescript.preferences.quoteStyle": "auto"
+}
