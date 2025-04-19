@@ -24,11 +24,11 @@ export default function viteFastifyVue () {
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
     async load (id) {
-      if (id.includes('?server') && !context.resolvedConfig.build.ssr) {
+      if (id.includes('?server') && !this.environment.config.build?.ssr) {
         const source = loadSource(id)
         return createPlaceholderExports(source)
       }
-      if (id.includes('?client') && context.resolvedConfig.build.ssr) {
+      if (id.includes('?client') && this.environment.config.build?.ssr) {
         const source = loadSource(id)
         return createPlaceholderExports(source)
       }
