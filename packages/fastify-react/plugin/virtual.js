@@ -23,6 +23,11 @@ const virtualModules = [
 export const prefix = /^\/?\$app\//
 
 export async function resolveId (id) {
+  // Paths are prefixed with .. on Windows by the glob import
+  if (process.platform === 'win32' && /^\.\.\/[C-Z]:/.test(id)) {
+    return id.substring(3)
+  }
+
   if (prefix.test(id)) {
     const [, virtual] = id.split(prefix)
     if (virtual) {
