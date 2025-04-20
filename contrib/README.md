@@ -4,11 +4,6 @@ This directory contains original examples from past `@fastify/vite` releases whi
 
 Namely, outdated React (still using React v18), Solid and Svelte examples:
 
-- [`react-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/contrib/react-vanilla)
-- [`react-vanilla-spa`](https://github.com/fastify/fastify-vite/tree/dev/contrib/react-vanilla-spa)
-- [`react-hydration`](https://github.com/fastify/fastify-vite/tree/dev/contrib/react-hydration)
-- [`react-streaming`](https://github.com/fastify/fastify-vite/tree/dev/contrib/react-streaming)
-- [`react-next`](https://github.com/fastify/fastify-vite/tree/dev/contrib/react-next)
 - [`solid-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/contrib/solid-vanilla)
 - [`solid-hydration`](https://github.com/fastify/fastify-vite/tree/dev/contrib/solid-hydration)
 - [`svelte-vanilla`](https://github.com/fastify/fastify-vite/tree/dev/contrib/svelte-vanilla)
