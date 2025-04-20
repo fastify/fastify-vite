@@ -1,6 +1,5 @@
-import { join, resolve } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { write } from './ioutils.cjs'
+import { join, write, isAbsolute } from './ioutils.cjs'
 
 export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
@@ -25,6 +24,7 @@ export function viteFastify({ spa, clientModule } = {}) {
         createClientEnvironment(),
         config.environments.client ?? {},
       )
+      console.log('config.environments.client', config.environments.client)
       if (!spa) {
         config.environments.ssr = deepMerge(
           createSSREnvironment(
@@ -86,11 +86,14 @@ export function viteFastify({ spa, clientModule } = {}) {
         fastify,
       }
 
-      jsonFilePath = join(
-        root,
-        findCommonPath(Object.values(fastify.outDirs)),
-        'config.json',
-      )
+      const commonDistFolder = findCommonPath(Object.values(fastify.outDirs))
+      console.log('commonDistFolder', commonDistFolder)
+      if (isAbsolute(commonDistFolder)) {
+        jsonFilePath = join(commonDistFolder, 'config.json')
+      } else {
+        jsonFilePath = join(root, commonDistFolder, 'config.json')
+      }
+      console.log('jsonFilePath', jsonFilePath)
     },
     async writeBundle() {
       await write(
@@ -102,7 +105,7 @@ export function viteFastify({ spa, clientModule } = {}) {
   }
 }
 
-function findCommonPath(paths) {
+export function findCommonPath(paths) {
   if (paths.length === 1) {
     return paths[0]
   }

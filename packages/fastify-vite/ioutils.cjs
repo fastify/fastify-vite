@@ -40,6 +40,7 @@ module.exports = {
   dirname,
   basename,
   remove,
+  isAbsolute,
   write: writeFile,
   read: readFile,
   exists: existsSync,
