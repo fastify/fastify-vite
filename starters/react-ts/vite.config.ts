@@ -11,6 +11,6 @@ export default defineConfig({
     viteFastifyReactPlugin(),
   ],
   build: {
-    outDir: 'dist'
+    outDir: resolve('dist')
   },
 })
