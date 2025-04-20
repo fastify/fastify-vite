@@ -19,7 +19,8 @@ export default function viteFastifyReactPlugin () {
   return [viteFastify({
     clientModule: '$app/index.js'
   }), {
-    name: '@fastify/react/plugin',
+    // https://vite.dev/guide/api-plugin#conventions
+    name: 'vite-plugin-react-fastify',
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),

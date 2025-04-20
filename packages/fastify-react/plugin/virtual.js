@@ -6,6 +6,7 @@ import { findExports } from 'mlly'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const virtualRoot = resolve(__dirname, '..', 'virtual')
+const virtualRootTS = resolve(__dirname, '..', 'virtual-ts')
 
 const virtualModules = [
   'mount.js',
@@ -18,6 +19,19 @@ const virtualModules = [
   'context.js',
   'core.jsx',
   'index.js',
+]
+
+const virtualModulesTS = [
+  'mount.ts',
+  'resource.ts',
+  'routes.ts',
+  'layouts.ts',
+  'create.tsx',
+  'root.tsx',
+  'layouts/',
+  'context.ts',
+  'core.tsx',
+  'index.ts',
 ]
 
 export const prefix = /^\/?\$app\//
