@@ -19,19 +19,10 @@ export default function viteFastifyReactPlugin () {
   return [viteFastify({
     clientModule: '$app/index.js'
   }), {
-    name: 'vite-plugin-fastify-react',
+    name: '@fastify/react/plugin',
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
-    configEnvironment (name, config, { mode }) {
-      if (mode === 'production') {
-        config.build.minify = true
-        config.build.sourcemap = false
-      }
-      if (name === 'ssr') {
-        config.build.manifest = false
-      }
-    },
     async load (id) {
       if (id.includes('?server') && !this.environment.config.build?.ssr) {
         const source = loadSource(id)
