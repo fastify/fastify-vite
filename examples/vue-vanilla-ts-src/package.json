@@ -1,0 +1,25 @@
+{
+  "name": "example-vue-vanilla-ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts --dev",
+    "start": "node dist/server.js",
+    "build": "pnpm build:client && pnpm build:server",
+    "build:server": "tsdown src/server.ts",
+    "build:client": "vite build",
+    "lint": "oxlint",
+    "test": "tsx --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "catalog:",
+    "oxlint": "catalog:",
+    "tsdown": "^0.9.1",
+    "tsx": "^4.19.3",
+    "vite": "catalog:"
+  }
+}
