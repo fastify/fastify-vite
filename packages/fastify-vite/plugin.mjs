@@ -24,7 +24,6 @@ export function viteFastify({ spa, clientModule } = {}) {
         createClientEnvironment(),
         config.environments.client ?? {},
       )
-      console.log('config.environments.client', config.environments.client)
       if (!spa) {
         config.environments.ssr = deepMerge(
           createSSREnvironment(
@@ -87,13 +86,11 @@ export function viteFastify({ spa, clientModule } = {}) {
       }
 
       const commonDistFolder = findCommonPath(Object.values(fastify.outDirs))
-      console.log('commonDistFolder', commonDistFolder)
       if (isAbsolute(commonDistFolder)) {
         jsonFilePath = join(commonDistFolder, 'config.json')
       } else {
         jsonFilePath = join(root, commonDistFolder, 'config.json')
       }
-      console.log('jsonFilePath', jsonFilePath)
     },
     async writeBundle() {
       await write(
