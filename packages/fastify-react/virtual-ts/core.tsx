@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { BrowserRouter, StaticRouter, useLocation } from 'react-router'
 import { proxy } from 'valtio'
 import { RouteContext, useRouteContext } from '@fastify/react/client'
-import layouts from '$app/layouts.js'
-import { waitFetch, waitResource } from '$app/resource.js'
+import layouts from '$app/layouts.ts'
+import { waitFetch, waitResource } from '$app/resource.ts'
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter

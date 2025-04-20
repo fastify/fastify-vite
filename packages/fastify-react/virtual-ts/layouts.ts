@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-const DefaultLayout = () => import('$app/layouts/default.jsx')
+const DefaultLayout = () => import('$app/layouts/default.tsx')
 
 const appLayouts = import.meta.glob('/layouts/*.{jsx,tsx}')
 
@@ -9,7 +9,7 @@ if (
     path.match(/\/layouts\/default\.(j|t)sx/),
   )
 ) {
-  appLayouts['/layouts/default.jsx'] = DefaultLayout
+  appLayouts['/layouts/default.tsx'] = DefaultLayout
 }
 
 export default Object.fromEntries(

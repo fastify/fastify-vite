@@ -56,15 +56,16 @@ export async function resolveId (id) {
 
 export function loadVirtualModule (virtualInput) {
   let virtual = virtualInput
-  if (!/\.((mc)?ts)|((mc)?js)|(jsx)$/.test(virtual)) {
-    virtual += '.js'
-  }
-  if (!virtualModules.includes(virtual)) {
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
+  let virtualRootDir = virtualRoot
+  if (virtualInput.match(/\.tsx?$/)) {
+    virtualRootDir = virtualRootTS
+  }
+  const codePath = resolve(virtualRootDir, virtual)
   return {
-    code,
+    code: readFileSync(codePath, 'utf8'),
     map: null,
   }
 }
