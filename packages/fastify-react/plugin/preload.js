@@ -1,7 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, isAbsolute, parse as parsePath } from 'node:path'
 import { HTMLRewriter } from 'html-rewriter-wasm'
-// import { findCommonPath } from '@fastify/vite/plugin'
 
 const imageFileRE = /\.((png)|(jpg)|(svg)|(webp)|(gif))$/
 
@@ -84,23 +83,4 @@ function writeHtml(page, pageHtml, distDir) {
     mkdirSync(htmlDir, { recursive: true })
   }
   writeFileSync(join(htmlDir, base), pageHtml)
-}
-
-function findCommonPath(paths) {
-  if (paths.length === 1) {
-    return paths[0]
-  }
-  const segments = paths.map((path) => path.split('/'))
-  const minLength = Math.min(...segments.map((arr) => arr.length))
-  const commonSegments = []
-  for (let i = 0; i < minLength; i++) {
-    const segment = segments[0][i]
-    if (segments.every((arr) => arr[i] === segment)) {
-      commonSegments.push(segment)
-    } else {
-      break
-    }
-  }
-
-  return commonSegments.join('/')
 }
