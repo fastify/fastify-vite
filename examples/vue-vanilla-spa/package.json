@@ -4,7 +4,7 @@
     "dev": "node server.js --dev",
     "start": "node server.js",
     "build": "vite build",
-    "lint": "eslint . --ext .js,.vue --fix",
+    "lint": "oxlint",
     "test": "node --test"
   },
   "dependencies": {
@@ -13,16 +13,8 @@
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/eslint-parser": "^7.27.0",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "eslint": "^9.23.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.17.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-vue": "^10.0.0",
+    "@vitejs/plugin-vue": "catalog:",
+    "oxlint": "^0.16.6",
     "vite": "catalog:"
   }
 }
