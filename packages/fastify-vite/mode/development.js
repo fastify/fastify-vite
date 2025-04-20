@@ -23,7 +23,7 @@ async function setup(config) {
       root: config.vite.root,
     }
 
-    await setupEnvironments(viteEnvsConfig)
+    await setupEnvironments(viteEnvsConfig, { mode: 'development' })
 
     const { client: _, ...nonClientEnvs } = Object.fromEntries(
       Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),

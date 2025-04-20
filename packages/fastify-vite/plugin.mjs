@@ -9,7 +9,9 @@ export function viteFastify({ spa, clientModule } = {}) {
   return {
     name: 'vite-fastify',
     enforce: 'pre',
-    async config(config) {
+    async config(config, { mode }) {
+      const dev = mode === 'development'
+      const outDir = config.build?.outDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
       const {
         resolveClientModule,
@@ -21,14 +23,13 @@ export function viteFastify({ spa, clientModule } = {}) {
         config.environments = {}
       }
       config.environments.client = deepMerge(
-        createClientEnvironment(),
+        createClientEnvironment(dev, outDir),
         config.environments.client ?? {},
       )
       if (!spa) {
+        const ssrEntryPoint = clientModule ?? resolveClientModule(config.root)
         config.environments.ssr = deepMerge(
-          createSSREnvironment(
-            clientModule ?? resolveClientModule(config.root),
-          ),
+          createSSREnvironment(dev, outDir, ssrEntryPoint),
           config.environments.ssr ?? {},
         )
         if (!config.builder) {
