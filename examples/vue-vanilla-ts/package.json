@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:",
-    "oxlint": "^0.16.6",
+    "oxlint": "catalog:",
     "tsdown": "^0.9.1",
     "tsx": "^4.19.3",
     "vite": "catalog:"

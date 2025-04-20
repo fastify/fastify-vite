@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "catalog:",
-    "oxlint": "^0.16.6",
+    "oxlint": "catalog:",
     "vite": "catalog:"
   }
 }

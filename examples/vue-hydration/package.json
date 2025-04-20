@@ -28,7 +28,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-vue": "^10.0.0",
-    "oxlint": "^0.16.6",
+    "oxlint": "catalog:",
     "vite": "catalog:"
   }
 }
