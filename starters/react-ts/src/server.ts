@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import Fastify from 'Fastify'
 import FastifyVite from '@fastify/vite'
 
@@ -6,7 +7,7 @@ async function getServer (dev: boolean | undefined) {
 
   await server.register(FastifyVite, {
     dev: process.argv.includes('--dev') ?? dev,
-    root: import.meta.dirname,
+    root: resolve(import.meta.dirname, '..'),
     renderer: '@fastify/react',
   })
 
