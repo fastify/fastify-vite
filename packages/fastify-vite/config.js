@@ -5,33 +5,33 @@ const {
   join,
   resolve,
   resolveIfRelative,
+  isAbsolute,
   exists,
   stat,
   read,
+  sep,
 } = require('./ioutils.cjs')
 const { createHtmlTemplateFunction } = require('./html.js')
 
-const distDir = 'dist'
-
-function createClientEnvironment() {
+function createClientEnvironment(dev, outDir) {
   return {
     build: {
-      outDir: `${distDir}/client`,
-      minify: false,
-      sourcemap: true,
+      outDir: `${outDir}/client`,
+      minify: !dev,
+      sourcemap: dev,
       manifest: true,
     },
   }
 }
 
-function createSSREnvironment(clientModule) {
+function createSSREnvironment(dev, outDir, clientModule) {
   return {
     build: {
-      outDir: `${distDir}/server`,
-      sourcemap: true,
+      outDir: `${outDir}/server`,
       ssr: true,
+      minify: !dev,
+      sourcemap: dev,      
       emitAssets: true,
-      manifest: true,
       rollupOptions: {
         input: {
           index: clientModule,
@@ -43,7 +43,7 @@ function createSSREnvironment(clientModule) {
 
 const DefaultConfig = {
   // Main distribution dir
-  distDir,
+  distDir: 'dist',
 
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
@@ -189,7 +189,7 @@ const DefaultConfig = {
 
 async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
-  const root = resolveRoot(options.root)
+  const root = resolveRoot(options.distDir ?? 'dist', options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
   const config = Object.assign(defaultConfig, { ...options })
   const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
@@ -232,24 +232,33 @@ function resolveClientModule(root) {
   return null
 }
 
-function resolveRoot(path) {
+function resolveRoot(distDir, path) {
   let root = path
   if (root.startsWith('file:')) {
     root = fileURLToPath(root)
   }
+  let dir = root
   if (stat(root).isFile()) {
-    return dirname(root)
+    dir = dirname(root)
   }
-  return root
+  const split = dir.split(sep)
+  if (split.at(-1) === distDir) {
+    return split.slice(0, -1).join(sep)
+  }
+  return dir
 }
 
 async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   const command = 'build'
   const mode = dev ? 'development' : 'production'
   if (!dev) {
+    let viteDistDir = distDir
+    if (!isAbsolute(viteDistDir)) {
+      viteDistDir = join(root, viteDistDir)
+    }
     let viteConfigDistFile
     // Check for top-level dist/ folder
-    viteConfigDistFile = resolve(root, distDir, 'config.json')
+    viteConfigDistFile = resolve(viteDistDir, 'config.json')
     if (exists(viteConfigDistFile)) {
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
@@ -257,16 +266,17 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
       ]
     }
     // Check for client/dist/ folder (following convention)
-    viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
-    if (exists(viteConfigDistFile)) {
-      return [
-        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        resolve(root, 'client', distDir),
-      ]
-    }
+    // viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
+    // if (exists(viteConfigDistFile)) {
+    //   return [
+    //     JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+    //     resolve(root, 'client', distDir),
+    //   ]
+    // }
     console.warn(
       `Failed to load cached Vite configuration from ${viteConfigDistFile}`,
     )
+    process.exit(1)
   }
 
   let configFile = findConfigFile(root)
