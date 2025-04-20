@@ -265,14 +265,14 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
         resolve(root, distDir),
       ]
     }
-    // Check for client/dist/ folder (following convention)
-    // viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
-    // if (exists(viteConfigDistFile)) {
-    //   return [
-    //     JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-    //     resolve(root, 'client', distDir),
-    //   ]
-    // }
+    // Check for client/dist/ folder (default convention)
+    viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
+    if (exists(viteConfigDistFile)) {
+      return [
+        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
+        resolve(root, 'client', distDir),
+      ]
+    }
     console.warn(
       `Failed to load cached Vite configuration from ${viteConfigDistFile}`,
     )
