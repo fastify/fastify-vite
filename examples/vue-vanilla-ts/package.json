@@ -1,4 +1,5 @@
 {
+  "name": "example-vue-vanilla-ts",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts --dev",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:",
+    "oxlint": "^0.16.6",
     "tsdown": "^0.9.1",
     "tsx": "^4.19.3",
     "vite": "catalog:"
