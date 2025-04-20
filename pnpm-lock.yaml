@@ -1296,11 +1296,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: latest
-        version: 1.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-react
       '@fastify/vite':
-        specifier: latest
-        version: 8.0.5(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1391,60 +1391,17 @@ importers:
         specifier: ^4.19.3
         version: 4.19.3
 
-  starters/react-ts copy:
-    dependencies:
-      '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
-      '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
-      '@types/node':
-        specifier: ^22.13.5
-        version: 22.14.0
-      fastify:
-        specifier: ^5.3.2
-        version: 5.3.2
-      history:
-        specifier: ^5.3.0
-        version: 5.3.0
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      react-router:
-        specifier: ^7.5.0
-        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
-      valtio:
-        specifier: ^2.1.4
-        version: 2.1.4(react@19.1.0)
-    devDependencies:
-      '@vitejs/plugin-react':
-        specifier: latest
-        version: 4.4.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))
-      tsdown:
-        specifier: ^0.9.1
-        version: 0.9.1(typescript@5.8.2)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
-
   starters/vue-base:
     dependencies:
       '@fastify/one-line-logger':
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: 8.0.0
+        version: 8.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
       '@fastify/vue':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vue
+        specifier: 1.0.0
+        version: 1.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(@types/node@22.14.0)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.1)
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
