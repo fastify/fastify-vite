@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "node server.js",
+    "build": "vite build",
+    "lint": "oxlint --fix",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "catalog:",
+    "oxlint": "^0.16.6",
+    "vite": "catalog:"
+  }
+}
