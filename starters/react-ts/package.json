@@ -5,7 +5,8 @@
   "scripts": {
     "build": "pnpm build:server && pnpm build:client",
     "build:server": "tsdown ./src/server.ts",
-    "build:client": "vite build -c ./src/vite.config.ts",
+    "build:client": "vite build",
+    "start": "node ./dist/server.js",
     "dev": "tsx ./src/server.ts --dev"
   },
   "license": "MIT",
