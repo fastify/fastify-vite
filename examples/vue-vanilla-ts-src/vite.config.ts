@@ -6,7 +6,7 @@ export default {
   root: join(import.meta.dirname, 'src', 'client'),
   plugins: [
     viteFastifyPlugin(), 
-    vuePlugin()
+    vuePlugin(),
   ],
   build: {
     // Forces Vite to use a top-level dist folder,

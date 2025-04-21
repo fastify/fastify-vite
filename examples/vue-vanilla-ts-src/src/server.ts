@@ -3,7 +3,7 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
 
-export async function main (dev) {
+export async function main (dev?: boolean | undefined) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
@@ -13,8 +13,10 @@ export async function main (dev) {
     root: resolve(import.meta.dirname, '..'),
     distDir: resolve(import.meta.dirname, '..', 'build'),
     dev: dev || process.argv.includes('--dev'),
+    // @ts-ignore
     async createRenderFunction ({ createApp }) {
       return async () => ({
+        // @ts-ignore
         element: await renderToString(createApp())
       })
     }

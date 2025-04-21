@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["es2023"],
-    "moduleDetection": "force",
-    "module": "preserve",
+    "lib": ["es2022", "DOM"],
+    "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": ["node"],
     "strict": true,
     "noUnusedLocals": true,
     "declaration": true,
-    "isolatedDeclarations": true,
+    "isolatedDeclarations": false,
     "esModuleInterop": true,
-    "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "build"
   },
-  "include": ["src", "tests"]
+  "include": ["globals.d.ts", "src"],
+  "exclude": ["**/*.test.ts"]
 }

@@ -1,4 +1,4 @@
-import { createApp } from './base.ts'
+import { createApp } from './base'
 
-createApp(window.hydration)
+createApp()
   .mount('#root')
