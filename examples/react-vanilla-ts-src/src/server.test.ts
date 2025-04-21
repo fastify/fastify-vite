@@ -1,9 +1,9 @@
 import test from 'node:test'
 import { makeBuildTest, makeIndexTest } from '../../test-factories.mjs'
 import { main } from './server.ts'
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 
-const cwd = join(import.meta.dirname, '..')
+const cwd = resolve(import.meta.dirname, '..')
 
 test('vue-vanilla', async (t) => {
   await t.test('build production bundle', makeBuildTest({ cwd }))
