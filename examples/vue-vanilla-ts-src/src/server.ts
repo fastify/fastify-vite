@@ -3,7 +3,7 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
 
-export async function main (dev?: boolean | undefined) {
+export async function main (dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
