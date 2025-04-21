@@ -50,6 +50,8 @@ export function viteFastify({ spa, clientModule } = {}) {
 
       resolvedConfig = config
 
+      resolvedConfig.fastify = { clientModule }
+
       // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
       // configs in these executions are missing many properties. Since there is no advantage to
       // running this function during dev, we save build time and prevent errors by returning early.

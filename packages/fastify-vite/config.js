@@ -217,7 +217,9 @@ async function configure(options = {}) {
     config[setting] = config.renderer[setting] || config[setting]
   }
 
-  config.clientModule = config.clientModule || resolveClientModule(vite.root)
+  config.clientModule = vite.fastify.clientModule
+    ?? config.clientModule
+    ?? resolveClientModule(vite.root)
 
   return config
 }
@@ -305,6 +307,7 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
       ssrBuild: !spa,
     })
   }
+  userConfig.fastify = resolvedConfig.fastify
 
   return [
     Object.assign(userConfig, {
