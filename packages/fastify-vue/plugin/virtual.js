@@ -58,7 +58,7 @@ export async function resolveId (id) {
 
 export function loadVirtualModule (virtualInput, options) {
   let virtual = virtualInput
-  if (!virtual.endsWith('.vue') && !virtual.match(/(ts)|(js)$/)) {
+  if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
     virtual += options.ts ? '.ts' : '.js'
   }
   if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
