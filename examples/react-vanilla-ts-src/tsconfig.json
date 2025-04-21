@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "outDir": "build",
+    "outDir": "dist",
     "jsx": "react-jsx",
   },
   "include": [

@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "pnpm -r run build",
     "lint": "oxlint",
     "test": "zx test.mjs"
   },

@@ -2,19 +2,19 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'react-dom/server'
+import { join } from 'path'
 
 export async function main (dev?: boolean) {
   const server = Fastify()
 
+  const root = join(import.meta.dirname, '..')
   await server.register(FastifyVite, {
-    root: import.meta.dirname,
+    root,
     dev: dev || process.argv.includes('--dev'),
-    // @ts-ignore
-    createRenderFunction ({ createApp }) {
+    async createRenderFunction ({ createApp }: { createApp: () => React.ReactNode  }) {
       return () => {
         return {
-          // @ts-ignore
-          element: renderToString(createApp())
+          element: renderToString(createApp()),
         }
       }
     }

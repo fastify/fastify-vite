@@ -5,7 +5,6 @@ import vuePlugin from '@vitejs/plugin-vue'
 export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [
-    // @ts-ignore
     viteFastify(), 
     vuePlugin()
   ],

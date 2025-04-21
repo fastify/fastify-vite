@@ -2,6 +2,7 @@ import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
+import type { VNode } from 'vue'
 
 export async function main (dev?: boolean) {
   const server = Fastify()
@@ -13,12 +14,12 @@ export async function main (dev?: boolean) {
     root: resolve(import.meta.dirname, '..'),
     distDir: resolve(import.meta.dirname, '..', 'build'),
     dev: dev || process.argv.includes('--dev'),
-    // @ts-ignore
-    async createRenderFunction ({ createApp }) {
-      return async () => ({
-        // @ts-ignore
-        element: await renderToString(createApp())
-      })
+    async createRenderFunction ({ createApp }: { createApp: () => VNode}) {
+      return async () => {  
+        return {
+          element: await renderToString(createApp())
+        }
+      }
     }
   })
 
