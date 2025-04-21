@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path'
+import { join } from 'node:path'
 import viteFastifyPlugin from '@fastify/vite/plugin'
 import vuePlugin from '@vitejs/plugin-vue'
 

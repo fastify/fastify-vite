@@ -19,7 +19,7 @@ export async function main (dev?: boolean) {
     // to rely on process.cwd() to acurately determine the root dir
     // upon boot — or we use a CLI path flag (you can still 
     // use process.cwd() to resolve the absolute path from the flag)
-    root: join(process.cwd(), 'client'),
+    root: process.cwd(),
     distDir: join(process.cwd(), 'dist'),
     dev: dev || process.argv.includes('--dev'),
     // @ts-ignore
