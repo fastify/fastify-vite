@@ -5,7 +5,7 @@
     "dev": "tsx server.ts --dev",
     "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "tsdown server.ts",
+    "build:server": "vue-tsc && tsdown server.ts",
     "build:client": "vite build",
     "lint": "oxlint",
     "test": "tsx --test"
@@ -16,10 +16,12 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:",
     "oxlint": "catalog:",
     "tsdown": "^0.9.1",
     "tsx": "^4.19.3",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vue-tsc": "^2.2.8"
   }
 }

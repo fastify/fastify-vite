@@ -5,7 +5,7 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'vue/server-renderer'
 
-export async function main (dev) {
+export async function main (dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
@@ -22,8 +22,10 @@ export async function main (dev) {
     root: join(process.cwd(), 'client'),
     distDir: join(process.cwd(), 'dist'),
     dev: dev || process.argv.includes('--dev'),
+    // @ts-ignore
     async createRenderFunction ({ createApp }) {
       return async () => ({
+        // @ts-ignore
         element: await renderToString(createApp())
       })
     }
