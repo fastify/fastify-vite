@@ -243,6 +243,7 @@ function resolveRoot(distDir, path) {
   if (stat(root).isFile()) {
     dir = dirname(root)
   }
+  // Check if running under dist folder
   const split = dir.split(sep)
   if (split.at(-1) === distDir) {
     return split.slice(0, -1).join(sep)

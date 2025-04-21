@@ -82,11 +82,16 @@ virtualModules.includes = function (virtual) {
   return false
 }
 
-function loadVirtualModuleOverride (viteProjectRoot, virtual) {
-  if (!virtualModules.includes(virtual)) {
+function loadVirtualModuleOverride (viteProjectRoot, virtualInput) {
+  let virtual = virtualInput
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  const overridePath = resolve(viteProjectRoot, virtual)
+  let overridePath = resolve(viteProjectRoot, virtual) 
+  if (existsSync(overridePath)) {
+    return overridePath
+  }
+  overridePath = overridePath.replace('.js', '.ts')
   if (existsSync(overridePath)) {
     return overridePath
   }

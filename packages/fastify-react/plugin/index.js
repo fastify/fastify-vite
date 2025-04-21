@@ -12,12 +12,12 @@ import { closeBundle } from './preload.js'
 import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
-export default function viteFastifyReactPlugin () {
+export default function viteFastifyReactPlugin ({ ts } = {}) {
   const context = {
     root: null,
   }
   return [viteFastify({
-    clientModule: '$app/index.js'
+    clientModule: ts ? '$app/index.ts' : '$app/index.js'
   }), {
     // https://vite.dev/guide/api-plugin#conventions
     name: 'vite-plugin-react-fastify',
@@ -36,14 +36,6 @@ export default function viteFastifyReactPlugin () {
       if (prefix.test(id)) {
         const [, virtual] = id.split(prefix)
         if (virtual) {
-          if (virtual === 'stores') {
-            const contextPath = join(context.root, 'context.js')
-            if (existsSync(contextPath)) {
-              const keys = parseStateKeys(readFileSync(contextPath, 'utf8'))
-              return generateStores(keys)
-            }
-            return
-          }
           return loadVirtualModule(virtual)
         }
       }
