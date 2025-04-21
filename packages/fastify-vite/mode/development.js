@@ -97,8 +97,10 @@ async function setup(config) {
         if (!this.entries[env]) {
           this.entries[env] = { ...(entryModule.default ?? entryModule) }
         } else {
-          Object.assign(this.entries[env], { ...(entryModule.default ?? entryModule) })
-        } 
+          Object.assign(this.entries[env], {
+            ...(entryModule.default ?? entryModule),
+          })
+        }
       }
     }
   }

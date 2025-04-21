@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "pnpm -r run build",
-    "lint": "oxlint",
+    "lint": "oxlint --fix",
     "test": "zx test.mjs"
   },
   "private": "true",

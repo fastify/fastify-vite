@@ -30,7 +30,7 @@ function createSSREnvironment(dev, outDir, clientModule) {
       outDir: `${outDir}/server`,
       ssr: true,
       minify: !dev,
-      sourcemap: dev,      
+      sourcemap: dev,
       emitAssets: true,
       rollupOptions: {
         input: {
@@ -217,9 +217,10 @@ async function configure(options = {}) {
     config[setting] = config.renderer[setting] || config[setting]
   }
 
-  config.clientModule = vite.fastify.clientModule
-    ?? config.clientModule
-    ?? resolveClientModule(vite.root)
+  config.clientModule =
+    vite.fastify.clientModule ??
+    config.clientModule ??
+    resolveClientModule(vite.root)
 
   return config
 }

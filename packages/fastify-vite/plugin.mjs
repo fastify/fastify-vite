@@ -1,5 +1,5 @@
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { join, write, isAbsolute } from './ioutils.cjs'
+import { isAbsolute, join, write } from './ioutils.cjs'
 
 export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
