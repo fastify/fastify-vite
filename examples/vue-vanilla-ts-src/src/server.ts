@@ -12,7 +12,7 @@ export async function main (dev?: boolean) {
     // which is the same depth as <root>/src, so 
     // we can use import.meta.dirname here
     root: resolve(import.meta.dirname, '..'),
-    distDir: resolve(import.meta.dirname, '..', 'build'),
+    distDir: resolve(import.meta.dirname, '..', 'dist'),
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction ({ createApp }: { createApp: () => VNode}) {
       return async () => {  

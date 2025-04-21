@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "outDir": "build"
+    "outDir": "dist"
   },
   "include": [
     "./globals.d.ts", 

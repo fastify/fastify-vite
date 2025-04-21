@@ -3,10 +3,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",
-    "start": "node build/server.js",
+    "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "vue-tsc && tsdown -d ./build src/server.ts",
-    "build:client": "vite build",
+    "build:server": "vue-tsc && tsdown -d ./dist src/server.ts",
+    "build:client": "vite build --emptyOutDir",
     "lint": "oxlint",
     "test": "tsx --test"
   },
