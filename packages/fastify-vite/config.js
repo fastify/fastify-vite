@@ -255,7 +255,7 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
     }
     let viteConfigDistFile
     // Check for top-level dist/ folder
-    viteConfigDistFile = resolve(viteDistDir, 'config.json')
+    viteConfigDistFile = resolve(viteDistDir, 'vite.config.json')
     if (exists(viteConfigDistFile)) {
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
@@ -263,7 +263,7 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
       ]
     }
     // Check for client/dist/ folder (default convention)
-    viteConfigDistFile = resolve(root, 'client', distDir, 'config.json')
+    viteConfigDistFile = resolve(root, 'client', distDir, 'vite.config.json')
     if (exists(viteConfigDistFile)) {
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),

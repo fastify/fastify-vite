@@ -90,9 +90,9 @@ export function viteFastify({ spa, clientModule } = {}) {
 
       const commonDistFolder = findCommonPath(Object.values(fastify.outDirs))
       if (isAbsolute(commonDistFolder)) {
-        jsonFilePath = join(commonDistFolder, 'config.json')
+        jsonFilePath = join(commonDistFolder, 'vite.config.json')
       } else {
-        jsonFilePath = join(root, commonDistFolder, 'config.json')
+        jsonFilePath = join(root, commonDistFolder, 'vite.config.json')
       }
     },
     async writeBundle() {
