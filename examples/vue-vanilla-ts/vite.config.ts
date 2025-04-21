@@ -4,5 +4,11 @@ import vuePlugin from '@vitejs/plugin-vue'
 
 export default {
   root: join(import.meta.dirname, 'client'),
-  plugins: [viteFastify(), vuePlugin()],
+  plugins: [
+    viteFastify(), 
+    vuePlugin()
+  ],
+  build: {
+    outDir: join(import.meta.dirname, 'dist')
+  }
 }

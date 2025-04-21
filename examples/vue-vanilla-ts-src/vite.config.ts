@@ -11,6 +11,6 @@ export default {
   build: {
     // Forces Vite to use a top-level dist folder,
     // outside the project root defined above
-    outDir: resolve('dist')
+    outDir: join(import.meta.dirname, 'build')
   }
 }

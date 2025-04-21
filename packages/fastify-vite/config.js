@@ -43,7 +43,7 @@ function createSSREnvironment(dev, outDir, clientModule) {
 
 const DefaultConfig = {
   // Main distribution dir
-  distDir: 'dist',
+  distDir: resolve(process.cwd(), 'dist'),
 
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
@@ -239,16 +239,10 @@ function resolveRoot(distDir, path) {
   if (root.startsWith('file:')) {
     root = fileURLToPath(root)
   }
-  let dir = root
   if (stat(root).isFile()) {
-    dir = dirname(root)
+    root = dirname(root)
   }
-  // Check if running under dist folder
-  const split = dir.split(sep)
-  if (split.at(-1) === distDir) {
-    return split.slice(0, -1).join(sep)
-  }
-  return dir
+  return root
 }
 
 async function resolveViteConfig(root, dev, { spa, distDir } = {}) {

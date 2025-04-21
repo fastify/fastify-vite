@@ -3,9 +3,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",
-    "start": "node dist/server.js",
+    "start": "node build/server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "tsdown src/server.ts",
+    "build:server": "tsdown -d ./build src/server.ts",
     "build:client": "vite build",
     "lint": "oxlint",
     "test": "tsx --test"

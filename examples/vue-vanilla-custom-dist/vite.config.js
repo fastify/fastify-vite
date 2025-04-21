@@ -6,6 +6,6 @@ export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [viteFastify(), vuePlugin()],
   build: {
-    outDir: 'build',
+    outDir: join(import.meta.dirname, 'build'),
   }
 }
