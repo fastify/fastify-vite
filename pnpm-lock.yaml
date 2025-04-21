@@ -736,6 +736,34 @@ importers:
         specifier: 'catalog:'
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
 
+  examples/vue-vanilla-ts-src:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      fastify:
+        specifier: 'catalog:'
+        version: 5.2.2
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.13(typescript@5.8.2)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: 'catalog:'
+        version: 5.2.3(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.2))
+      oxlint:
+        specifier: 'catalog:'
+        version: 0.16.6
+      tsdown:
+        specifier: ^0.9.1
+        version: 0.9.1(typescript@5.8.2)
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+
   packages/fastify-htmx:
     dependencies:
       '@kitajs/html':
@@ -1173,23 +1201,29 @@ importers:
         specifier: ^6.2.4
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
 
-  starters/react-ts:
+  starters/react-typescript:
     dependencies:
+      '@fastify/formbody':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@fastify/one-line-logger':
+        specifier: ^2.0.2
+        version: 2.0.2
       '@fastify/react':
         specifier: workspace:^
         version: link:../../packages/fastify-react
       '@fastify/vite':
         specifier: workspace:^
         version: link:../../packages/fastify-vite
-      '@types/node':
-        specifier: ^22.13.5
-        version: 22.14.0
       fastify:
-        specifier: ^5.3.2
+        specifier: ^5.2.2
         version: 5.3.2
       history:
         specifier: ^5.3.0
         version: 5.3.0
+      minipass:
+        specifier: ^7.1.2
+        version: 7.1.2
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -1198,7 +1232,7 @@ importers:
         version: 19.1.0(react@19.1.0)
       react-router:
         specifier: ^7.5.0
-        version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 7.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       unihead:
         specifier: ^0.8.0
         version: 0.8.0
@@ -1206,15 +1240,30 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(react@19.1.0)
     devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.1.1
+        version: 4.1.2
       '@vitejs/plugin-react':
-        specifier: latest
+        specifier: ^4.3.4
         version: 4.4.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))
+      oxlint:
+        specifier: ^0.16.6
+        version: 0.16.6
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.3
+      postcss-preset-env:
+        specifier: ^10.1.5
+        version: 10.1.5(postcss@8.5.3)
+      tailwindcss:
+        specifier: ^4.1.1
+        version: 4.1.2
       tsdown:
         specifier: ^0.9.1
         version: 0.9.1(typescript@5.8.2)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
+      vite:
+        specifier: ^6.2.4
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
 
   starters/vue-base:
     dependencies:
@@ -1307,6 +1356,61 @@ importers:
       tailwindcss:
         specifier: ^4.1.1
         version: 4.1.2
+      vite:
+        specifier: 6.2.4
+        version: 6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+
+  starters/vue-typescript:
+    dependencies:
+      '@fastify/formbody':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@fastify/one-line-logger':
+        specifier: ^2.0.2
+        version: 2.0.2
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      '@fastify/vue':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vue
+      fastify:
+        specifier: ^5.2.2
+        version: 5.3.2
+      html-rewriter-wasm:
+        specifier: ^0.4.1
+        version: 0.4.1
+      unihead:
+        specifier: ^0.8.0
+        version: 0.8.0
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.13(typescript@5.8.2)
+      vue-router:
+        specifier: ^4.5.0
+        version: 4.5.0(vue@3.5.13(typescript@5.8.2))
+    devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.1.1
+        version: 4.1.2
+      '@vitejs/plugin-vue':
+        specifier: ^5.2.3
+        version: 5.2.3(vite@6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.2))
+      oxlint:
+        specifier: ^0.16.6
+        version: 0.16.6
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.3
+      postcss-preset-env:
+        specifier: ^10.1.5
+        version: 10.1.5(postcss@8.5.3)
+      tailwindcss:
+        specifier: ^4.1.1
+        version: 4.1.2
+      tsdown:
+        specifier: ^0.9.1
+        version: 0.9.1(typescript@5.8.2)
       vite:
         specifier: 6.2.4
         version: 6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)

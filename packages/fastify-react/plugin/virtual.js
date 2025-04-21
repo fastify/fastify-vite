@@ -70,6 +70,20 @@ export function loadVirtualModule (virtualInput) {
   }
 }
 
+
+virtualModulesTS.includes = function (virtual) {
+  if (!virtual) {
+    return false
+  }
+  for (const entry of this) {
+    if (virtual.startsWith(entry)) {
+      return true
+    }
+  }
+  return false
+}
+
+
 virtualModules.includes = function (virtual) {
   if (!virtual) {
     return false

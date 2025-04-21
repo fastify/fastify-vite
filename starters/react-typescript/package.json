@@ -1,12 +1,12 @@
 {
   "type": "module",
   "scripts": {
+    "lint": "oxlint",
     "dev": "tsx server.ts --dev",
     "start": "NODE_ENV=production node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:server": "tsdown server.ts",
-    "build:client": "NODE_ENV=production vite build",
-    "lint": "oxlint"
+    "build:client": "NODE_ENV=production vite build"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
