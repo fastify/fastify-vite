@@ -14,16 +14,14 @@ const server = Fastify({
   }
 })
 
-// @ts-ignore - pnpm module resolution issue
 await server.register(FastifyFormBody)
-// @ts-ignore - pnpm module resolution issue
+
 await server.register(FastifyVite, {
   // TODO handle via CLI path argument with proper resolve
   root: process.cwd(),
   renderer: '@fastify/react',
 })
 
-// @ts-ignore - pnpm module resolution issue
 await server.vite.ready()
 
 server.decorate<Database>('db', {
