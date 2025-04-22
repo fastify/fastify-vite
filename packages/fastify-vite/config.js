@@ -4,6 +4,7 @@ const {
   dirname,
   join,
   resolve,
+  parse,
   resolveIfRelative,
   isAbsolute,
   exists,
@@ -263,8 +264,8 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
         resolve(root, distDir),
       ]
     }
-    // Check for client/dist/ folder (default convention)
-    viteConfigDistFile = resolve(root, 'client', distDir, 'vite.config.json')
+    // Check for client/dist/ folder (legacy default convention)
+    viteConfigDistFile = join(root, 'client', 'dist', 'vite.config.json')
     if (exists(viteConfigDistFile)) {
       return [
         JSON.parse(await read(viteConfigDistFile, 'utf-8')),
