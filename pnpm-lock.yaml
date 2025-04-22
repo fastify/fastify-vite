@@ -1012,7 +1012,7 @@ importers:
         version: 7.4.0
       '@fastify/htmx':
         specifier: ^0.4.0
-        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@3.1.2)(typescript@5.8.2))(rollup@4.39.0)
+        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1)(rollup@4.39.0)
       '@fastify/one-line-logger':
         specifier: latest
         version: 2.0.2
@@ -1055,7 +1055,7 @@ importers:
         version: 7.4.0
       '@fastify/htmx':
         specifier: ^0.4.0
-        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@3.1.2)(typescript@5.8.2))(rollup@4.39.0)
+        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1)(rollup@4.39.0)
       '@fastify/one-line-logger':
         specifier: latest
         version: 2.0.2
@@ -1098,7 +1098,7 @@ importers:
         version: 7.4.0
       '@fastify/htmx':
         specifier: ^0.4.0
-        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@3.1.2)(typescript@5.8.2))(rollup@4.39.0)
+        version: 0.4.0(@kitajs/ts-html-plugin@4.1.1)(rollup@4.39.0)
       '@fastify/one-line-logger':
         specifier: latest
         version: 2.0.2
@@ -8569,17 +8569,6 @@ snapshots:
 
   '@fastify/forwarded@3.0.0': {}
 
-  '@fastify/htmx@0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@3.1.2)(typescript@5.8.2))(rollup@4.39.0)':
-    dependencies:
-      '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1)
-      '@rollup/plugin-inject': 5.0.5(rollup@4.39.0)
-      devalue: 5.1.1
-      htmx.org: 1.9.12
-      mlly: 1.7.4
-    transitivePeerDependencies:
-      - '@kitajs/ts-html-plugin'
-      - rollup
-
   '@fastify/htmx@0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))(rollup@4.39.0)':
     dependencies:
       '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.2))
@@ -8591,6 +8580,17 @@ snapshots:
       - '@kitajs/ts-html-plugin'
       - rollup
     optional: true
+
+  '@fastify/htmx@0.4.0(@kitajs/ts-html-plugin@4.1.1)(rollup@4.39.0)':
+    dependencies:
+      '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1)
+      '@rollup/plugin-inject': 5.0.5(rollup@4.39.0)
+      devalue: 5.1.1
+      htmx.org: 1.9.12
+      mlly: 1.7.4
+    transitivePeerDependencies:
+      - '@kitajs/ts-html-plugin'
+      - rollup
 
   '@fastify/merge-json-schemas@0.2.1':
     dependencies:
