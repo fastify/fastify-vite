@@ -8,6 +8,9 @@ export async function main (dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
+    // The compiled server will live in <root>/build
+    // which is the same depth as <root>/src, so 
+    // we can use import.meta.dirname here
     root: resolve(import.meta.dirname, '..'),
     distDir: resolve(import.meta.dirname, '..', 'build'),
     dev: dev || process.argv.includes('--dev'),

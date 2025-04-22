@@ -7406,6 +7406,46 @@ packages:
       yaml:
         optional: true
 
+  vite@6.3.2:
+    resolution: {integrity: sha512-ZSvGOXKGceizRQIZSz7TGJ0pS3QLlVY/9hwxVh17W3re67je1RKYzFHivZ/t0tubU78Vkyb9WnHPENSBCzbckg==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+
   vitefu@1.0.6:
     resolution: {integrity: sha512-+Rex1GlappUyNN6UfwbVZne/9cYC4+R2XDk9xkNXBKMw6HQagdX9PgZ8V2v1WUSK1wfBLp7qbI1+XSNIlB1xmA==}
     peerDependencies:
@@ -8843,7 +8883,7 @@ snapshots:
       '@fastify/htmx': 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(rollup@4.39.0)
       '@fastify/react': 0.6.0(@types/node@22.14.0)(@types/react@19.1.2)(lightningcss@1.29.2)
       '@fastify/vue': 1.0.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
@@ -8876,7 +8916,7 @@ snapshots:
       '@fastify/htmx': 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(rollup@4.39.0)
       '@fastify/react': 1.0.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
       '@fastify/vue': 1.0.6(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.2.2)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.39.0)(tsx@4.19.3)(typescript@5.8.3)(yaml@2.7.1)
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
@@ -8907,7 +8947,7 @@ snapshots:
       vue-router: 4.5.0(vue@3.5.13(typescript@5.8.3))
       youch: 3.3.4
     optionalDependencies:
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
@@ -8939,7 +8979,7 @@ snapshots:
       vue-router: 4.5.0(vue@3.5.13(typescript@5.8.3))
       youch: 3.3.4
     optionalDependencies:
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@kitajs/ts-html-plugin'
       - '@types/node'
@@ -9779,13 +9819,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.1.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))':
+  '@vitest/mocker@3.1.1(vite@6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@vitest/spy': 3.1.1
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
 
   '@vitest/pretty-format@3.1.1':
     dependencies:
@@ -14034,7 +14074,7 @@ snapshots:
       debug: 4.4.0
       es-module-lexer: 1.6.0
       pathe: 2.0.3
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -14100,6 +14140,22 @@ snapshots:
       esbuild: 0.25.2
       postcss: 8.5.3
       rollup: 4.39.0
+    optionalDependencies:
+      '@types/node': 22.14.0
+      fsevents: 2.3.3
+      jiti: 2.4.2
+      lightningcss: 1.29.2
+      tsx: 4.19.3
+      yaml: 2.7.1
+
+  vite@6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1):
+    dependencies:
+      esbuild: 0.25.2
+      fdir: 6.4.3(picomatch@4.0.2)
+      picomatch: 4.0.2
+      postcss: 8.5.3
+      rollup: 4.39.0
+      tinyglobby: 0.2.12
     optionalDependencies:
       '@types/node': 22.14.0
       fsevents: 2.3.3
@@ -14202,7 +14258,7 @@ snapshots:
   vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(@vitest/ui@3.1.1)(jiti@2.4.2)(jsdom@23.2.0)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1):
     dependencies:
       '@vitest/expect': 3.1.1
-      '@vitest/mocker': 3.1.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))
+      '@vitest/mocker': 3.1.1(vite@6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))
       '@vitest/pretty-format': 3.1.1
       '@vitest/runner': 3.1.1
       '@vitest/snapshot': 3.1.1
@@ -14218,7 +14274,7 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.0.2
       tinyrainbow: 2.0.0
-      vite: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
+      vite: 6.3.2(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
       vite-node: 3.1.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
