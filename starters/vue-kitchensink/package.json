@@ -12,7 +12,7 @@
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/vite": "8.0.0",
     "@fastify/vue": "1.0.0",
-    "fastify": "^5.2.2",
+    "fastify": "^5.3.2",
     "html-rewriter-wasm": "^0.4.1",
     "unihead": "^0.8.0",
     "vue": "^3.5.13",
