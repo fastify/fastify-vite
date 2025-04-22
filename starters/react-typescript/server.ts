@@ -10,12 +10,16 @@ const server = Fastify({
   }
 })
 
+// @ts-ignore
 await server.register(FastifyFormBody)
+// @ts-ignore
 await server.register(FastifyVite, {
-  root: import.meta.dirname,
+  // TODO handle via CLI path argument with proper resolve
+  root: process.cwd(),
   renderer: '@fastify/react',
 })
 
+// @ts-ignore
 await server.vite.ready()
 
 server.decorate('db', {
@@ -27,11 +31,13 @@ server.decorate('db', {
 })
 
 server.put('/api/todo/items', (req, reply) => {
+  // @ts-ignore
   server.db.todoList.push(req.body)
   reply.send({ ok: true })
 })
 
 server.delete('/api/todo/items', (req, reply) => {
+  // @ts-ignore
   server.db.todoList.splice(req.body, 1)
   reply.send({ ok: true })
 })

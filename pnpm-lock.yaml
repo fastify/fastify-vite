@@ -1307,6 +1307,15 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.1.1
         version: 4.1.2
+      '@types/node':
+        specifier: ^22.13.17
+        version: 22.14.0
+      '@types/react':
+        specifier: ^19.1.2
+        version: 19.1.2
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.2)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.4.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1))
@@ -1325,6 +1334,9 @@ importers:
       tsdown:
         specifier: ^0.9.1
         version: 0.9.1(typescript@5.8.3)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
       vite:
         specifier: ^6.2.4
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.3)(yaml@2.7.1)
@@ -2640,7 +2652,6 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
-    bundledDependencies: []
 
   '@fastify/vite@8.0.0':
     resolution: {integrity: sha512-QPoDwWL+umc8ASUny1m+obI+bJ5ZREemTu4pjj+0DgnXp+69sswxoHQfT3nsJrLtDuu1JwCtHTxLB/mFjwKu5g==}

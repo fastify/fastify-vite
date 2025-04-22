@@ -1,4 +1,4 @@
-import { join, dirname } from 'path'
+import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
 import viteReact from '@vitejs/plugin-react'
@@ -12,4 +12,7 @@ export default {
       ts: true
     }),
   ],
+  build: {
+    outDir: resolve(import.meta.dirname, 'dist')
+  },
 }

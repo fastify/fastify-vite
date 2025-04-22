@@ -5,7 +5,7 @@
     "dev": "tsx server.ts --dev",
     "start": "NODE_ENV=production node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "tsdown server.ts",
+    "build:server": "tsc && tsdown server.ts",
     "build:client": "NODE_ENV=production vite build"
   },
   "dependencies": {
@@ -24,12 +24,16 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
+    "@types/node": "^22.13.17",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.3.4",
     "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
     "tsdown": "^0.9.1",
+    "typescript": "^5.8.3",
     "vite": "^6.2.4"
   }
 }

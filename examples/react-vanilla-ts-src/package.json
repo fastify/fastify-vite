@@ -1,5 +1,5 @@
 {
-  "name": "example-react-vanilla",
+  "name": "example-react-vanilla-ts-src",
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",
