@@ -9,7 +9,7 @@ export async function main (dev?: boolean) {
 
   await server.register(FastifyVite, {
     root: resolve(import.meta.dirname, '..'),
-    distDir: resolve(import.meta.dirname, '..', 'dist'),
+    distDir: resolve(import.meta.dirname, '..', 'build'),
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction ({ createApp }: { createApp: () => React.ReactNode  }) {
       return () => {
