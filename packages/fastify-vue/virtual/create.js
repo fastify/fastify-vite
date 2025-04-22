@@ -48,7 +48,7 @@ export default async function create (ctx) {
   instance.use(router)
 
   if (typeof root.configure === 'function') {
-    await root.configure({ app: instance, router })
+    await root.configure({ app: instance, router, head })
   }
 
   return { instance, ctx, state: ctxHydration.state, router }
