@@ -22,9 +22,9 @@
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "catalog:",
     "oxlint": "catalog:",
-    "tsdown": "^0.9.1",
-    "tsx": "^4.19.3",
-    "typescript": "~5.8.2",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
     "vite": "catalog:"
   }
 }

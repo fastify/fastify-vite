@@ -19,8 +19,8 @@
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:",
     "oxlint": "catalog:",
-    "tsdown": "^0.9.1",
-    "tsx": "^4.19.3",
+    "tsdown": "catalog:",
+    "tsx": "catalog:",
     "vite": "catalog:",
     "vue-tsc": "^2.2.8"
   }
