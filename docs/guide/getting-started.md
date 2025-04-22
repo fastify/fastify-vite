@@ -152,25 +152,39 @@ export function createApp () {
 
 ## Directory structure
 
-This is what the directory structure for the example above looks like:
+**`@fastify/vite`** recommends one of the following directory structures for your application:
 
-```text{1,5,6}
+::: code-group
+```text{2,5,6} [without src directory]
+// For very simple servers
 ├── server.js
 ├── client/
-│    ├── base.jsx
 │    ├── mount.js
 │    └── index.html
 ├── vite.config.js
 └── package.json
 ```
+```text{3,6,7} [with src directory]
+// For servers that have many files or require a build step
+├── src/
+|    ├── server.js
+|    └── client/
+│        ├── mount.js
+│        └── index.html
+├── vite.config.js
+└── package.json
+```
+:::
+
+The choice to use a `src` directory or not is up to you. The primary benefit of using a `src` directory is if your server code requires any kind of build step where you want to separate your `src` files from `dist` files. For example, if your server is written in TypeScript you most likely want your `src` and `dist` files to be separate. It is also not uncommon for server code to be built using Webpack or Rollup. Even if your server does not require a build step, you may want to use a `src` directory anyway for better organization if your server code is divided into many files. If you **do** choose to use a `src` directory, you probably also want to customize the location of your `dist` directory; see: [the dist directory](/guide/build-and-deploy#the-dist-directory).
 
 In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`.  This is the recommended approach.
 
 ::: warning
-It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines your **project root** in Vite's context.
+It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines where your `index.html` is located. This is your **project root** in Vite's context.
 :::
 
-Regardless of whether you want to simply deliver a SPA bundle to the browser or perform SSR, projects using `@fastify/vite` will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vitejs.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vitejs.dev/config/).
+Regardless of whether you want to simply deliver a SPA bundle to the browser or perform SSR, projects using **`@fastify/vite`** will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vitejs.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vitejs.dev/config/).
 
 ## Architectural primitives
 
