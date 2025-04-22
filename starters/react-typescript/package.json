@@ -1,0 +1,35 @@
+{
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint",
+    "dev": "tsx server.ts --dev",
+    "start": "NODE_ENV=production node dist/server.js",
+    "build": "pnpm build:client && pnpm build:server",
+    "build:server": "tsdown server.ts",
+    "build:client": "NODE_ENV=production vite build"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^8.0.2",
+    "@fastify/one-line-logger": "^2.0.2",
+    "@fastify/react": "workspace:^",
+    "@fastify/vite": "workspace:^",
+    "fastify": "^5.2.2",
+    "history": "^5.3.0",
+    "minipass": "^7.1.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.5.0",
+    "unihead": "^0.8.0",
+    "valtio": "^2.1.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "oxlint": "^0.16.6",
+    "postcss": "^8.5.3",
+    "postcss-preset-env": "^10.1.5",
+    "tailwindcss": "^4.1.1",
+    "tsdown": "^0.9.1",
+    "vite": "^6.2.4"
+  }
+}

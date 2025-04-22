@@ -21,8 +21,8 @@ async function compileHtmlTemplate(source) {
   })
 
   const processComment = (text) => {
-    let trimmed
-    if (jsPath.test((trimmed = text.trim()))) {
+    const trimmed = text.trim()
+    if (jsPath.test(trimmed)) {
       params.push(trimmed)
       return `\${${trimmed} ?? ''}`
     }
@@ -44,7 +44,7 @@ async function compileHtmlTemplate(source) {
           }
         }
       }
-    }
+    },
   })
 
   rewriter.on('script', {

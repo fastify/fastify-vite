@@ -1,0 +1,22 @@
+{
+  "name": "example-react-vanilla", 
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "lint": "oxlint",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "catalog:",
+    "oxlint": "catalog:",
+    "vite": "catalog:"
+  }
+}

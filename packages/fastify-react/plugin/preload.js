@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
-import { join, parse as parsePath } from 'node:path'
+import { join, isAbsolute, parse as parsePath } from 'node:path'
 import { HTMLRewriter } from 'html-rewriter-wasm'
 
 const imageFileRE = /\.((png)|(jpg)|(svg)|(webp)|(gif))$/
@@ -10,13 +10,18 @@ export async function closeBundle(resolvedBundle) {
   }
   const { assetsInlineLimit } = this.environment.config.build
   const { root, base } = this.environment.config
-  const distDir = join(root, this.environment.config.build.outDir)
+  let distDir
+  if (isAbsolute(this.environment.config.build.outDir)) {
+    distDir = this.environment.config.build.outDir
+  } else {
+    distDir = join(root, this.environment.config.build.outDir)
+  }
   const indexHtml = readFileSync(join(distDir, 'index.html'), 'utf8')
   const pages = Object.fromEntries(
     Object.entries(resolvedBundle ?? {})
       .filter(([id, meta]) => {
         if (meta.facadeModuleId?.includes('/pages/')) {
-          meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.jsx$/, 'html/$1.html')
+          meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.(j|t)sx$/, 'html/$1.html')
           return true
         }
       })

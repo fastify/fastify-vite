@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, isAbsolute } from 'node:path'
 import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
@@ -111,8 +111,12 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     handler = (_, reply) => reply.html()
   } else {
     const { id } = route
-    const htmlPath = id.replace(/pages\/(.*?)\.jsx/, 'html/$1.html')
-    const htmlSource = readFileSync(join(config.vite.root, config.vite.build.outDir, htmlPath), 'utf8')
+    const htmlPath = id.replace(/pages\/(.*?)\.(j|t)sx/, 'html/$1.html')
+    let distDir = config.vite.build.outDir
+    if (!isAbsolute(config.vite.build.outDir)) {
+      distDir = join(config.vite.root, distDir)
+    }
+    const htmlSource = readFileSync(join(distDir, htmlPath), 'utf8')
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
     handler = (_, reply) => htmlFunction.call(reply)
   }

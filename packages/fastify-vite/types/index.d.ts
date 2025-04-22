@@ -58,8 +58,8 @@ interface RendererFunctions {
   ): (ctx: Ctx) => Promise<unknown>
   createRenderFunction(
     args: Loosen<{
-      routes: Array<RouteType>
-      create: (arg0: Record<string, unknown>) => unknown
+      routes?: Array<RouteType>
+      create?: (arg0: Record<string, unknown>) => unknown
       createApp: unknown
     }>,
   ): Promise<
@@ -67,7 +67,9 @@ interface RendererFunctions {
       server: unknown,
       req: unknown,
       reply: unknown,
-    ) => Ctx | { element: string; hydration: string }
+    ) =>
+      | (Ctx | { element: string; hydration?: string })
+      | Promise<Ctx | { element: string; hydration?: string }>
   >
 }
 
@@ -121,6 +123,7 @@ declare namespace fastifyVite {
       indexHtml?: string | Buffer
       dir?: string
     }
+    distDir?: string
   }
 
   export const fastifyVite: FastifyVitePlugin

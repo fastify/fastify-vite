@@ -12,14 +12,15 @@ import { closeBundle } from './preload.js'
 import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
-export default function viteFastifyVue () {
+export default function viteFastifyVue ({ ts } = {}) {
   const context = {
     root: null,
   }
   return [viteFastify({
-    clientModule: '$app/index.js'
+    clientModule: ts ? '$app/index.ts' : '$app/index.js'
   }), {
-    name: 'vite-plugin-fastify-vue',
+    // https://vite.dev/guide/api-plugin#conventions
+    name: 'vite-plugin-react-vue',
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
@@ -36,14 +37,18 @@ export default function viteFastifyVue () {
         const [, virtual] = id.split(prefix)
         if (virtual) {
           if (virtual === 'stores') {
-            const contextPath = join(context.root, 'context.js')
-            if (existsSync(contextPath)) {
-              const keys = parseStateKeys(readFileSync(contextPath, 'utf8'))
-              return generateStores(keys)
+            for (const contextPath of [
+              join(context.root, 'context.js'),
+              join(context.root, 'context.ts')
+            ]) {
+              if (existsSync(contextPath)) {
+                const keys = parseStateKeys(readFileSync(contextPath, 'utf8'))
+                return generateStores(keys)
+              }
             }
             return
           }
-          return loadVirtualModule(virtual)
+          return loadVirtualModule(virtual, { ts })
         }
       }
     },
@@ -53,7 +58,9 @@ export default function viteFastifyVue () {
     },
     closeBundle: {
       order: 'post',
-      handler: closeBundle.bind(context),
+      handler () {
+        closeBundle.call(this, context.resolvedBundle)
+      }
     },
   }]
 }
