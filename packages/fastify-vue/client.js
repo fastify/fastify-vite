@@ -47,7 +47,7 @@ export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
     // If we have a getData function registered for this route
     if (ctx.getData) {
       try {
-        ctx.data = await jsonDataFetch(to.fullPath, ctx.locale)
+        ctx.data = await jsonDataFetch(to.fullPath, ctx.localePrefix, ctx.locale)
       } catch (error) {
         ctx.error = error
       }
@@ -101,8 +101,9 @@ function memoImport (func) {
   }
 }
 
-export async function jsonDataFetch (path, locale) {
-  const response = await fetch(`/-/data/${locale + path}`)
+export async function jsonDataFetch (path, localePrefix, locale) {
+  const dataPath = localePrefix ? path : `/${locale+path}`
+  const response = await fetch(`/-/data${dataPath}`)
   let data
   let error
   try {

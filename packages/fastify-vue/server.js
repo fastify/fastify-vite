@@ -10,11 +10,24 @@ class Routes extends Array {
         locale: route.locale,
         layout: route.layout,
         domain: route.domain || '*',
+        localePrefix: route.localePrefix,
         getData: !!route.getData,
         getMeta: !!route.getMeta,
         onEnter: !!route.onEnter,
       }
     })
+  }
+}
+
+export function createBeforeEachHandler ({ routeMap, ctxHydration }) {
+  return function beforeCreate (to) {
+    // This navigation guard handles the case when the routes are
+    // the same in multiple locales but we are using domains to match
+    // which route to use.
+    const ctx = routeMap[ctxHydration.req.host + '__' + to.matched[0].path] ?? routeMap['*__' + to.matched[0].path]
+    if (to.name !== ctx.name) {
+      return { name: ctx.name, params: to.params, query: to.query }
+    }
   }
 }
 
@@ -33,6 +46,7 @@ export async function createRoutes (fromPromise, { localeDomains, localePrefix, 
             id: routeDef.path,
             name: routeDef.path ?? routeModule.path,
             path: routeDef.path ?? routeModule.path,
+            domain: '*',
             locale: defaultLocale,
             ...routeModule,
           }
@@ -48,6 +62,8 @@ export async function createRoutes (fromPromise, { localeDomains, localePrefix, 
         const baseRoute = {
           id: path,
           layout: routeModule.layout,
+          localePrefix,
+          domain: '*',
           name: path
             // Remove /pages and .jsx extension
             .slice(6, -4)
@@ -74,11 +90,6 @@ export async function createRoutes (fromPromise, { localeDomains, localePrefix, 
         if (baseRoute.name === '') {
           baseRoute.name = 'catch-all'
         }
-
-        // Add the default locale route
-        const baseLocaleRoute = Object.assign({}, baseRoute)
-        baseLocaleRoute.locale = defaultLocale
-        baseLocaleRoute.meta = { locale: defaultLocale }
 
         if (i18n) {
           // Add the customized locale routes
@@ -109,6 +120,10 @@ export async function createRoutes (fromPromise, { localeDomains, localePrefix, 
             ret.push(localeRoute)
           }
         } else {
+          // Add the default locale route
+          const baseLocaleRoute = Object.assign({}, baseRoute)
+          baseLocaleRoute.locale = defaultLocale
+          baseLocaleRoute.meta = { locale: defaultLocale }
           ret.push(baseLocaleRoute)
         }
 

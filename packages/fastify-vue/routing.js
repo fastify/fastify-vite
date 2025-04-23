@@ -140,7 +140,9 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    scope.get(`/-/data/${route.locale + routePath}`, {
+    // Ensure that the data path is prefixed with the locale
+    const dataPath = route.localePrefix ? routePath : `/${route.locale + routePath}`     
+    scope.get(`/-/data${dataPath}`, {
       onRequest,
       async handler (req, reply) {
         reply.send(await route.getData(req.route))

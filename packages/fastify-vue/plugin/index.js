@@ -28,12 +28,15 @@ export default function viteFastifyVue (fastifyVueOptions = {}) {
     throw new Error('localeDomains can only be used with localePrefix set to false')
   }
 
+  const localeInserts = {
+    $localeDomains: JSON.stringify(fastifyVueOptions.localeDomains),
+    $localePrefix: fastifyVueOptions.localePrefix,
+    $locales: JSON.stringify(fastifyVueOptions.locales),
+  }
+
   const virtualModuleInserts = {
-    'index.js': {
-      $localeDomains: JSON.stringify(fastifyVueOptions.localeDomains),
-      $localePrefix: fastifyVueOptions.localePrefix,
-      $locales: JSON.stringify(fastifyVueOptions.locales),
-    },
+    'index.js': localeInserts,
+    'index.ts': localeInserts,
   }
 
   return [viteFastify({

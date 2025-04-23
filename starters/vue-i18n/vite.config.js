@@ -5,7 +5,10 @@ import viteVue from '@vitejs/plugin-vue'
 export default {
   root: join(import.meta.dirname, 'client'),
   plugins: [
-    viteFastifyVue(),
+    viteFastifyVue({
+      locales: ['en', 'sv', 'da'], // The first locale is the default
+      localePrefix: true,
+    }),
     viteVue(),
   ],
 }
