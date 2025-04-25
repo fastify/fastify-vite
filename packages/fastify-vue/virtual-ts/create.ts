@@ -4,8 +4,8 @@ import {
   createHistory,
   serverRouteContext,
   routeLayout,
-  createBeforeEachHandler,
 } from '@fastify/vue/client'
+import { createClientBeforeEachHandler, createServerBeforeEachHandler } from '$app/index.ts'
 import { createHead as createClientHead } from '@unhead/vue/client'
 import { createHead as createServerHead } from '@unhead/vue/server'
 
@@ -40,9 +40,12 @@ export default async function create (ctx) {
   }
 
   if (isServer) {
+    if (createServerBeforeEachHandler) {
+      router.beforeEach(createServerBeforeEachHandler(ctx))
+    }
     instance.provide(serverRouteContext, ctxHydration)
   } else {
-    router.beforeEach(createBeforeEachHandler(ctx, layoutRef))
+    router.beforeEach(createClientBeforeEachHandler(ctx, layoutRef))
   }
 
   instance.use(router)

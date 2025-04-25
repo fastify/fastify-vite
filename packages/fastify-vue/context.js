@@ -25,6 +25,8 @@ export default class RouteContext {
     // Populated
     this.head = {}
     this.data = route.data
+    this.key = route.key
+    this.meta = route.meta
     this.state = null
     // Route settings
     this.layout = route.layout
@@ -51,6 +53,8 @@ export default class RouteContext {
       state: this.state,
       data: this.data,
       head: this.head,
+      key: this.key,
+      meta: this.meta,
       layout: this.layout,
       getMeta: this.getMeta,
       getData: this.getData,
