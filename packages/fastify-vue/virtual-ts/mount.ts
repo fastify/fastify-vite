@@ -1,4 +1,3 @@
-import Head from 'unihead/client'
 import { hydrateRoutes } from '@fastify/vue/client'
 import routes from '$app/routes.ts'
 import create from '$app/create.ts'
@@ -7,13 +6,11 @@ import * as root from '$app/root.vue'
 
 async function mountApp (...targets) {
   const ctxHydration = await extendContext(window.route, context)
-  const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await hydrateRoutes(routes)
   const routeMap = Object.fromEntries(
     resolvedRoutes.map((route) => [route.path, route]),
   )
   const { instance, router } = await create({
-    head,
     ctxHydration,
     routes: window.routes,
     routeMap,
