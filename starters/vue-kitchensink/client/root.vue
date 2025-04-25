@@ -10,8 +10,5 @@ export function scrollBehavior() {
 
 export function configure ({ app, router }) {
   // Use this to configure/extend your Vue app and router instance
-  router.beforeEach(async (to, from, next) => {
-    return next();
-  });
 }
 </script>
