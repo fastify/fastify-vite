@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "noEmit": true,
+    "outDir": "build",
     "target": "esnext",
     "lib": ["es2022", "DOM"],
     "module": "esnext",
@@ -13,7 +15,6 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "outDir": "dist",
     "jsx": "react-jsx",
   },
   "include": [

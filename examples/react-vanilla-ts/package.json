@@ -6,7 +6,7 @@
     "start": "NODE_ENV=production node build/server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build --app --emptyOutDir",
-    "build:server": "tsc && tsdown -d ./build src/server.ts",
+    "build:server": "tsc && tsdown",
     "lint": "oxlint",
     "test": "node --test"
   },

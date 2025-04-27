@@ -9,6 +9,8 @@ export default {
     viteReact()
   ],
   build: {
+    // Forces Vite to use a top-level dist folder,
+    // outside the project root defined above
     outDir: join(import.meta.dirname, 'build'),
   },
 }

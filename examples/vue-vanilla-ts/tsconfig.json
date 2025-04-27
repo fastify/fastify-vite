@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "target": "esnext",
     "lib": ["es2022", "DOM"],
     "module": "esnext",
@@ -12,8 +13,7 @@
     "isolatedDeclarations": false,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "outDir": "dist"
+    "skipLibCheck": true
   },
   "include": [
     "./globals.d.ts", 
