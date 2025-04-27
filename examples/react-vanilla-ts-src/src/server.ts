@@ -1,8 +1,8 @@
 
+import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'react-dom/server'
-import { resolve } from 'path'
 
 export async function main (dev?: boolean) {
   const server = Fastify()
@@ -12,6 +12,7 @@ export async function main (dev?: boolean) {
     // which is the same depth as <root>/src, so 
     // we can use import.meta.dirname here
     root: resolve(import.meta.dirname, '..'),
+    // Must match build.outDir in Vite config
     distDir: resolve(import.meta.dirname, '..', 'build'),
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction ({ createApp }: { createApp: () => React.ReactNode  }) {
