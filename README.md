@@ -14,20 +14,19 @@ This [Fastify](https://fastify.dev) plugin lets you:
 
 This repository is also the home of `@fastify/vue` and `@fastify/react`.
 
-Those are _renderer packages_ *for* `@fastify/vite` and provide basic Nuxt and Next.js-like (respectively) functionality for the latest versions of Vue and React. 
+Those are _renderer packages_ *for* `@fastify/vite` and provide basic Nuxt and Next.js-like functionality, respectively.
 
 See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
-Official examples can be found in [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples).
+Official examples (low-level integration) can be found in [`examples/`](https://github.com/fastify/fastify-vite/tree/main/examples).
 
-
+Official starters (DX-focused) using `@fastify/vue` and `@fastify/react` can be found in [`starters/`](https://github.com/fastify/fastify-vite/tree/main/starters).
 
 ## Team
 
 - Jonas Galvez [@galvez](https://github.com/galvez)
 - Wei Wang [@onlywei](https://github.com/onlywei)
 - Andreas Johansson [@zanmato](https://github.com/zanmato)
-- Gürgün Dayıoğlu [@gurgunday](https://github.com/gurgunday)
 
 ## Sponsors
 
