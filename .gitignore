@@ -5,6 +5,7 @@ docs/.vitepress/cache
 example/dist
 node_modules
 package-lock.json
+build
 dist
 .idea
 *.tsbuildinfo

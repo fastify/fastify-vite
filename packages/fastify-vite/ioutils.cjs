@@ -7,6 +7,7 @@ const {
   parse,
   dirname,
   basename,
+  sep,
 } = require('node:path')
 const { ensureDir, remove } = require('fs-extra')
 const klaw = require('klaw')
@@ -40,6 +41,8 @@ module.exports = {
   dirname,
   basename,
   remove,
+  isAbsolute,
+  sep,
   write: writeFile,
   read: readFile,
   exists: existsSync,

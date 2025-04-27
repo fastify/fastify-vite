@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["es2022", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "isolatedDeclarations": false,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "outDir": "build"
+  },
+  "include": [
+    "**/*.ts",
+  ],
+  "exclude": [
+    "**/build",
+    "**/*.test.ts"
+  ]
+}
