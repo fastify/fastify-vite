@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
+    "outDir": "build",
     "target": "esnext",
     "lib": ["es2022", "DOM"],
     "module": "esnext",
