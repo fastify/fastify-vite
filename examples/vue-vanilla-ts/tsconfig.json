@@ -13,13 +13,12 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "outDir": "build"
+    "outDir": "dist"
   },
   "include": [
-    "**/*.ts",
+    "./globals.d.ts", 
+    "./src/**/*.d.ts", 
+    "./src/**/*.ts",
   ],
-  "exclude": [
-    "**/build",
-    "**/*.test.ts"
-  ]
+  "exclude": ["**/*.test.ts"]
 }

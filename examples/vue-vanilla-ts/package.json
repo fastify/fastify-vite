@@ -2,11 +2,11 @@
   "name": "example-vue-vanilla-ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts --dev",
+    "dev": "tsx src/server.ts --dev",
     "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "vue-tsc && tsdown server.ts",
-    "build:client": "vite build",
+    "build:server": "vue-tsc && tsdown -d ./dist src/server.ts",
+    "build:client": "vite build --emptyOutDir",
     "lint": "oxlint",
     "test": "tsx --test"
   },
