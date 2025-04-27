@@ -1,6 +1,5 @@
 /* eslint-disable no-cond-assign */
 
-import React from 'react'
 import { Routes, Route, useLocation } from 'react-router'
 
 export function getPageRoutes (importMap) {

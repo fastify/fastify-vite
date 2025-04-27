@@ -1,5 +1,5 @@
 {
-  "name": "example-react-next",
+  "name": "example-react-next-mini",
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
