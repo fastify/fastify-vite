@@ -12,7 +12,9 @@ This [Fastify](https://fastify.dev) plugin lets you:
   - with configuration hooks to **ease router integration** and **other customizations**
 - automatically serve your Vite production bundle, inferred from a Vite configuration file.
 
-This repository is also the home of `@fastify/vue` and `@fastify/react`, which are _renderer packages_ *for* `@fastify/vite` and provide basic Nuxt and Next.js-like (respectively) functionality for the latest versions of Vue and React. 
+This repository is also the home of `@fastify/vue` and `@fastify/react`.
+
+Those are _renderer packages_ *for* `@fastify/vite` and provide basic Nuxt and Next.js-like (respectively) functionality for the latest versions of Vue and React. 
 
 See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
