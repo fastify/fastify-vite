@@ -4,11 +4,11 @@
   "scripts": {
     "dev": "tsx src/server.ts --dev",
     "start": "NODE_ENV=production node build/server.js",
-    "build": "pnpm build:client && pnpm build:server",
+    "build": "pnpm build:server && pnpm build:client",
     "build:client": "vite build --app --emptyOutDir",
-    "build:server": "tsc && tsdown",
+    "build:server": "tsc",
     "lint": "oxlint",
-    "test": "node --test"
+    "test": "node --experimental-strip-types --test"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
@@ -22,8 +22,6 @@
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "catalog:",
     "oxlint": "catalog:",
-    "tsdown": "catalog:",
-    "tsx": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

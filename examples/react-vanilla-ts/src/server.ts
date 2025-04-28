@@ -4,16 +4,15 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'react-dom/server'
 
+
 export async function main (dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
-    // The compiled server will live in <root>/build
-    // which is the same depth as <root>/src, so 
-    // we can use import.meta.dirname here
+    // The compiled server will live in <root>/build which is the same depth as <root>/src,
+    // so we can use import.meta.dirname here
     root: resolve(import.meta.dirname, '..'),
-    // Must match build.outDir in Vite config
-    distDir: resolve(import.meta.dirname, '..', 'build'),
+    distDir: resolve(import.meta.dirname, '..', 'build'), // Must match build.outDir in Vite config
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction ({ createApp }: { createApp: () => React.ReactNode  }) {
       return () => {

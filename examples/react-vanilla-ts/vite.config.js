@@ -1,16 +1,17 @@
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
 import viteReact from '@vitejs/plugin-react'
 
 export default {
-  root: join(import.meta.dirname, 'src', 'client'),
+  root: resolve(import.meta.dirname, 'src', 'client'),
   plugins: [
-    viteFastify(), 
+    viteFastify(),
     viteReact()
   ],
   build: {
+    emptyOutDir: true,
     // Forces Vite to use a top-level dist folder,
     // outside the project root defined above
-    outDir: join(import.meta.dirname, 'build'),
+    outDir: resolve(import.meta.dirname, 'build'),
   },
 }
