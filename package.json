@@ -1,7 +1,9 @@
 {
   "scripts": {
     "lint": "oxlint",
-    "test": "zx test.mjs"
+    "test": "zx package.mjs --test",
+    "prep-for-dev": "zx package.mjs --prep-for-dev",
+    "prep-for-release": "zx package.mjs --prep-for-release"
   },
   "private": "true",
   "devDependencies": {
