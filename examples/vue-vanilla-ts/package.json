@@ -3,10 +3,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",
-    "start": "node dist/server.js",
-    "build": "pnpm build:client && pnpm build:server",
-    "build:server": "vue-tsc && tsdown",
-    "build:client": "vite build --emptyOutDir",
+    "start": "node build/server.js",
+    "build": "pnpm build:server && pnpm build:client",
+    "build:server": "vue-tsc",
+    "build:client": "vite build",
     "lint": "oxlint",
     "test": "tsx --test"
   },
@@ -19,7 +19,6 @@
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:",
     "oxlint": "catalog:",
-    "tsdown": "catalog:",
     "tsx": "catalog:",
     "vite": "catalog:",
     "vue-tsc": "^2.2.8"
