@@ -2,6 +2,7 @@ import getDeepMergeFunction from '@fastify/deepmerge'
 import { isAbsolute, join, write, sep } from './ioutils.cjs'
 
 export function viteFastify({ spa, clientModule } = {}) {
+  let configuredOutDir
   let jsonFilePath
   let configToWrite = {}
   let resolvedConfig = {}
@@ -10,8 +11,9 @@ export function viteFastify({ spa, clientModule } = {}) {
     name: 'vite-fastify',
     enforce: 'pre',
     async config(config, { mode }) {
+      configuredOutDir = config.build?.outDir
       const dev = mode === 'development'
-      const outDir = config.build?.outDir ?? 'dist'
+      const outDir = configuredOutDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
       const {
         resolveClientModule,
@@ -88,11 +90,15 @@ export function viteFastify({ spa, clientModule } = {}) {
         fastify,
       }
 
-      const outDirs = Object.values(fastify.outDirs)
-      const commonDistFolder = outDirs.length > 1 
-        ? findCommonPath(outDirs)
-        // Handle SPA case where there's only dist/client
-        : outDirs[0].split(sep)[0]
+      let commonDistFolder = configuredOutDir // respect custom build.outDir config if provided
+      if (!commonDistFolder) {
+        const outDirs = Object.values(fastify.outDirs)
+        commonDistFolder = outDirs.length > 1
+          ? findCommonPath(outDirs)
+          // Handle SPA case where there's only dist/client
+          : outDirs[0].split(sep)[0]
+      }
+
       if (isAbsolute(commonDistFolder)) {
         jsonFilePath = join(commonDistFolder, 'vite.config.json')
       } else {
