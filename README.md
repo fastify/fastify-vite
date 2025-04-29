@@ -14,7 +14,7 @@ This [Fastify](https://fastify.dev) plugin lets you:
 
 This repository is also the home of `@fastify/vue` and `@fastify/react`.
 
-Those are _renderer packages_ *for* `@fastify/vite` and provide basic Nuxt and Next.js-like functionality, respectively.
+They provide basic Nuxt and Next.js-like functionality, respectively, through `@fastify/vite`.
 
 See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
