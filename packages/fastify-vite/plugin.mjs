@@ -1,6 +1,5 @@
-import { join, resolve } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { write } from './ioutils.cjs'
+import { isAbsolute, join, write, sep } from './ioutils.cjs'
 
 export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
@@ -10,7 +9,9 @@ export function viteFastify({ spa, clientModule } = {}) {
   return {
     name: 'vite-fastify',
     enforce: 'pre',
-    async config(config) {
+    async config(config, { mode }) {
+      const dev = mode === 'development'
+      const outDir = config.build?.outDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
       const {
         resolveClientModule,
@@ -22,14 +23,13 @@ export function viteFastify({ spa, clientModule } = {}) {
         config.environments = {}
       }
       config.environments.client = deepMerge(
-        createClientEnvironment(),
+        createClientEnvironment(dev, outDir),
         config.environments.client ?? {},
       )
       if (!spa) {
+        const ssrEntryPoint = clientModule ?? resolveClientModule(config.root)
         config.environments.ssr = deepMerge(
-          createSSREnvironment(
-            clientModule ?? resolveClientModule(config.root),
-          ),
+          createSSREnvironment(dev, outDir, ssrEntryPoint),
           config.environments.ssr ?? {},
         )
         if (!config.builder) {
@@ -49,6 +49,8 @@ export function viteFastify({ spa, clientModule } = {}) {
       const { assetsDir } = build || {}
 
       resolvedConfig = config
+
+      resolvedConfig.fastify = { clientModule }
 
       // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
       // configs in these executions are missing many properties. Since there is no advantage to
@@ -86,11 +88,16 @@ export function viteFastify({ spa, clientModule } = {}) {
         fastify,
       }
 
-      jsonFilePath = join(
-        root,
-        findCommonPath(Object.values(fastify.outDirs)),
-        'config.json',
-      )
+      const outDirs = Object.values(fastify.outDirs)
+      const commonDistFolder = outDirs.length > 1 
+        ? findCommonPath(outDirs)
+        // Handle SPA case where there's only dist/client
+        : outDirs[0].split(sep)[0]
+      if (isAbsolute(commonDistFolder)) {
+        jsonFilePath = join(commonDistFolder, 'vite.config.json')
+      } else {
+        jsonFilePath = join(root, commonDistFolder, 'vite.config.json')
+      }
     },
     async writeBundle() {
       await write(
@@ -102,7 +109,7 @@ export function viteFastify({ spa, clientModule } = {}) {
   }
 }
 
-function findCommonPath(paths) {
+export function findCommonPath(paths) {
   if (paths.length === 1) {
     return paths[0]
   }

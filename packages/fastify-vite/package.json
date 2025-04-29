@@ -43,12 +43,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "8.0.5",
+  "version": "8.1.0",
   "optionalDependencies": {
-    "vite": "^6.2.4",
-    "@fastify/vue": "workspace:^",
+    "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
-    "@fastify/htmx": "workspace:^"
+    "@fastify/vue": "workspace:^",
+    "vite": "^6.2.4"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",
@@ -64,7 +64,7 @@
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.17",
     "@vitest/ui": "^3.1.1",
-    "fastify": "^5.2.2",
+    "fastify": "catalog:",
     "typescript": "~5.8.2",
     "vitest": "^3.1.1"
   },
@@ -72,5 +72,8 @@
     "fastify": ">=5",
     "vite": ">=5"
   },
-  "keywords": ["fastify", "vite"]
+  "keywords": [
+    "fastify",
+    "vite"
+  ]
 }

@@ -1,5 +1,4 @@
 import test from 'node:test'
-import { setTimeout } from 'node:timers/promises'
 import { makeBuildTest, makeIndexTest } from '../test-factories.mjs'
 import { main } from './server.js'
 

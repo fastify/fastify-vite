@@ -23,7 +23,7 @@ async function setup(config) {
       root: config.vite.root,
     }
 
-    await setupEnvironments(viteEnvsConfig)
+    await setupEnvironments(viteEnvsConfig, { mode: 'development' })
 
     const { client: _, ...nonClientEnvs } = Object.fromEntries(
       Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
@@ -97,8 +97,10 @@ async function setup(config) {
         if (!this.entries[env]) {
           this.entries[env] = { ...(entryModule.default ?? entryModule) }
         } else {
-          Object.assign(this.entries[env], { ...(entryModule.default ?? entryModule) })
-        } 
+          Object.assign(this.entries[env], {
+            ...(entryModule.default ?? entryModule),
+          })
+        }
       }
     }
   }

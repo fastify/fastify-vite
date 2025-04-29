@@ -1,5 +1,5 @@
 // Vue 3's non-streaming server-side rendering function
-import { renderToString } from '@vue/server-renderer'
+import { renderToString } from 'vue/server-renderer'
 
 // Used to safely serialize JavaScript into
 // <script> tags, preventing a few types of attack
