@@ -16,7 +16,7 @@ class Routes extends Array {
   }
 }
 
-export async function createRoutes (fromPromise, { param } = { param: /\[([\.\w]+\+?)\]/ }) {
+export async function createRoutes (fromPromise, { param } = { param: /\[([.\w]+\+?)\]/ }) {
   const { default: from } = await fromPromise
   const importPaths = Object.keys(from)
   const promises = []

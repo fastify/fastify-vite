@@ -6,20 +6,31 @@ import { findExports } from 'mlly'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const virtualRoot = resolve(__dirname, '..', 'virtual')
+const virtualRootTS = resolve(__dirname, '..', 'virtual-ts')
 
 const virtualModules = [
   'mount.js',
-  'mount.ts',
   'routes.js',
   'router.vue',
+  'layouts/',
   'layout.vue',
   'create.js',
+  'root.vue',
+  'context.js',
+  'index.js',
+  'stores',
+  'hooks'
+]
+
+const virtualModulesTS = [
+  'mount.ts',
+  'routes.ts',
+  'router.vue',
+  'layouts/',
+  'layout.vue',
   'create.ts',
   'root.vue',
-  'layouts/',
-  'context.js',
   'context.ts',
-  'index.js',
   'index.ts',
   'stores',
   'hooks'
@@ -45,20 +56,35 @@ export async function resolveId (id) {
   }
 }
 
-export function loadVirtualModule (virtualInput) {
+export function loadVirtualModule (virtualInput, options) {
   let virtual = virtualInput
-  if (!/\.((mc)?ts)|((mc)?js)|(vue)$/.test(virtual)) {
-    virtual += '.js'
+  if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
+    virtual += options.ts ? '.ts' : '.js'
   }
-  if (!virtualModules.includes(virtual)) {
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  const code = readFileSync(resolve(virtualRoot, virtual), 'utf8')
+  let virtualRootDir = options.ts ? virtualRootTS : virtualRoot 
+  const codePath = resolve(virtualRootDir, virtual)
   return {
-    code,
+    code: readFileSync(codePath, 'utf8'),
     map: null,
   }
 }
+
+
+virtualModulesTS.includes = function (virtual) {
+  if (!virtual) {
+    return false
+  }
+  for (const entry of this) {
+    if (virtual.startsWith(entry)) {
+      return true
+    }
+  }
+  return false
+}
+
 
 virtualModules.includes = function (virtual) {
   if (!virtual) {
@@ -72,11 +98,16 @@ virtualModules.includes = function (virtual) {
   return false
 }
 
-function loadVirtualModuleOverride (viteProjectRoot, virtual) {
-  if (!virtualModules.includes(virtual)) {
+function loadVirtualModuleOverride (viteProjectRoot, virtualInput) {
+  let virtual = virtualInput
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  const overridePath = resolve(viteProjectRoot, virtual)
+  let overridePath = resolve(viteProjectRoot, virtual) 
+  if (existsSync(overridePath)) {
+    return overridePath
+  }
+  overridePath = overridePath.replace('.js', '.ts')
   if (existsSync(overridePath)) {
     return overridePath
   }
