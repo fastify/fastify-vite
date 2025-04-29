@@ -49,7 +49,6 @@ export default withMermaid({
       '/roadmap': { base: '/guide/', items: sidebarGuide() },
       '/contributing': { base: '/guide/', items: sidebarGuide() },
       '/sponsoring': { base: '/guide/', items: sidebarGuide() },
-      '/consulting': { base: '/guide/', items: sidebarGuide() },
     },
 
     editLink: {
@@ -333,6 +332,5 @@ function Common () {
     { text: 'Roadmap', base: '/', link: 'roadmap' },
     { text: 'Contributing', base: '/', link: 'contributing' },
     { text: 'Sponsoring', base: '/', link: 'sponsoring' },
-    { text: 'Consulting', base: '/', link: 'consulting' }
   ]
 }
