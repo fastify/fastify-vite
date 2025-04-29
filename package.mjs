@@ -16,6 +16,7 @@ if (process.argv.includes('--test')) {
     for (const example of [
       'react-vanilla',
       'react-vanilla-spa',
+      'react-vanilla-spa-ts',
       'react-vanilla-ts',
       'react-hydration',
       'react-next-mini',
