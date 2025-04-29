@@ -1,12 +1,6 @@
-#!/usr/bin/env node
-import { fileURLToPath } from 'node:url'
 
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
-
-// fetch() is natively available in Node.js v18
-// This example gets it from undici so it can work on v16 as well
-import { fetch } from 'undici'
 
 import renderer from './renderer.js'
 
@@ -33,8 +27,8 @@ export async function main (dev) {
   })
 
   await server.register(FastifyVite, {
-    root: import.meta.url,
-    dev: dev || process.argv.includes('--dev'),
+    root: import.meta.dirname,
+    dev: dev ?? process.argv.includes('--dev'),
     renderer
   })
 
@@ -43,7 +37,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.argv[1] === import.meta.filename) {
   const server = await main()
   await server.listen({ port: 3000 })
 }

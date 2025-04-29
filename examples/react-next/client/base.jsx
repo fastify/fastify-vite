@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { StaticRouter, BrowserRouter } from 'react-router'
 
 import routes from './routes.js'

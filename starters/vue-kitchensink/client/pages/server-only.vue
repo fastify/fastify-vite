@@ -10,10 +10,4 @@
 
 <script>
 export const serverOnly = true
-
-export function getMeta () {
-	return {
-		title: 'Server Only Page'
-	}
-}
 </script>

@@ -17,16 +17,3 @@ export function getMeta () {
 	}
 }
 </script>
-
-<script setup>
-import { useHead } from '@unhead/vue'
-
-useHead({
-  meta: [
-    {
-      name: 'description',
-      content: 'More head updates!'
-    }
-  ]
-})
-</script>

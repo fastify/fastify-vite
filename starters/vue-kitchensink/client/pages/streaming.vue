@@ -9,15 +9,6 @@ import Message from '/components/Message.vue'
 
 export const streaming = true
 
-export function getMeta () {
-	return {
-		title: 'Streaming Page',
-		bodyAttrs: {
-			class: 'streaming',
-		},
-	}
-}
-
 export default {
 	components: { Message },
 }

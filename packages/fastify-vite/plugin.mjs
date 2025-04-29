@@ -1,5 +1,5 @@
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { isAbsolute, join, write } from './ioutils.cjs'
+import { isAbsolute, join, write, sep } from './ioutils.cjs'
 
 export function viteFastify({ spa, clientModule } = {}) {
   let jsonFilePath
@@ -88,7 +88,11 @@ export function viteFastify({ spa, clientModule } = {}) {
         fastify,
       }
 
-      const commonDistFolder = findCommonPath(Object.values(fastify.outDirs))
+      const outDirs = Object.values(fastify.outDirs)
+      const commonDistFolder = outDirs.length > 1 
+        ? findCommonPath(outDirs)
+        // Handle SPA case where there's only dist/client
+        : outDirs[0].split(sep)[0]
       if (isAbsolute(commonDistFolder)) {
         jsonFilePath = join(commonDistFolder, 'vite.config.json')
       } else {
