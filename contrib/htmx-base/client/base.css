@@ -1,0 +1,64 @@
+/*
+Optional:
+https://tailwindcss.com/docs/preflight
+@tailwind base;
+*/
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-base: #f1f1f1;
+  --color-highlight: #ff80ff;
+}
+html {
+  background: #222;
+}
+#root {
+  width:  800px;
+  margin:  0 auto;
+  padding: 2em;
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-base);
+  margin-top: 60px;
+  & a {
+    color: var(--color-highlight);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-highlight);
+    &:hover {
+      color: #ffde00;
+    }
+    &:active {
+      color: #eecf00
+    }
+  }
+  & p {
+    font-size: 1.2em;
+  }
+  & ul {
+    & li {
+      &:not(:last-child) {
+        margin-bottom: 0.5em;
+      }
+      break-inside: avoid;
+      font-size: 1em;
+    }
+  }
+  & code {
+    color: #ffde00;
+    font-weight: bold;
+    font-family: 'Consolas', 'Andale Mono', monospace;
+    font-size: 0.9em;
+  }
+  & img {
+    width: 14em;
+  }
+  & button {
+    margin: 0 0.5em;
+  }
+}
