@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router'
 import { useAtom } from 'jotai'
 import { todoList } from '../state.js'

@@ -1,0 +1,29 @@
+{
+  "name": "example-react-vanilla-ts-src",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts --dev",
+    "start": "NODE_ENV=production node build/server.js",
+    "build": "pnpm build:server && pnpm build:client",
+    "build:client": "vite build --app --emptyOutDir",
+    "build:server": "tsc",
+    "lint": "oxlint",
+    "test": "tsx --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.17",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "catalog:",
+    "oxlint": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

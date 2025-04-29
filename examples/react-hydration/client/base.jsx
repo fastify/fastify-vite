@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { StaticRouter, BrowserRouter, Routes, Route } from 'react-router'
 import { Provider as StateProvider } from 'jotai'
 
