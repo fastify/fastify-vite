@@ -58,7 +58,8 @@
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "latest"
+    "@vitejs/plugin-vue": "latest",
+    "oxlint": "^0.16.8"
   },
   "optionalDependencies": {
     "vite": "^6.2.4"
