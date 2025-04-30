@@ -8,12 +8,11 @@
     "types": ["node"],
     "strict": true,
     "noUnusedLocals": true,
-    "declaration": true,
     "isolatedDeclarations": false,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "outDir": "dist",
+    "outDir": ".",
   },
   "include": [
     "./server.ts",

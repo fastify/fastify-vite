@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "oxlint",
     "dev": "tsx server.ts --dev",
-    "start": "node dist/server.js",
+    "start": "node server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
     "build:server": "tsc"
@@ -30,6 +30,7 @@
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
     "tsdown": "^0.9.1",
+    "typescript": "^5.8.3",
     "vite": "6.2.4"
   }
 }

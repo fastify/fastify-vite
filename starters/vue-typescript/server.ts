@@ -15,12 +15,11 @@ const server = Fastify({
   }
 })
 
+// @ts-ignore TODO
 await server.register(FastifyFormBody)
 
-console.log(process.argv)
-
 await server.register(FastifyVite, {
-  root: process.cwd(),
+  root: import.meta.dirname,
   renderer: '@fastify/vue',
 })
 

@@ -1232,9 +1232,6 @@ importers:
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1287,9 +1284,6 @@ importers:
       html-rewriter-wasm:
         specifier: ^0.4.1
         version: 0.4.1
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -1370,6 +1364,9 @@ importers:
       tsdown:
         specifier: ^0.9.1
         version: 0.9.9(typescript@5.8.3)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
       vite:
         specifier: 6.2.4
         version: 6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1)
@@ -2529,6 +2526,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
