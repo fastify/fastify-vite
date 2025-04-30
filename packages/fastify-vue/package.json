@@ -3,7 +3,7 @@
   "main": "index.js",
   "name": "@fastify/vue",
   "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -20,6 +20,16 @@
     "virtual/root.vue",
     "virtual/router.vue",
     "virtual/routes.js",
+    "virtual-ts/layouts/default.vue",
+    "virtual-ts/context.ts",
+    "virtual-ts/create.ts",
+    "virtual-ts/hooks.ts",
+    "virtual-ts/index.ts",
+    "virtual-ts/layout.vue",
+    "virtual-ts/mount.ts",
+    "virtual-ts/root.vue",
+    "virtual-ts/router.vue",
+    "virtual-ts/routes.ts",
     "index.js",
     "rendering.js",
     "templating.js",
@@ -48,7 +58,8 @@
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "latest"
+    "@vitejs/plugin-vue": "latest",
+    "oxlint": "^0.16.8"
   },
   "optionalDependencies": {
     "vite": "^6.2.4"

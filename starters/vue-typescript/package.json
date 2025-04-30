@@ -5,30 +5,32 @@
   "scripts": {
     "lint": "oxlint",
     "dev": "tsx server.ts --dev",
-    "start": "node dist/server.js",
+    "start": "node server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
-    "build:server": "tsdown server.ts"
+    "build:server": "tsc"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/vite": "workspace:^",
-    "@fastify/vue": "workspace:^",
+    "@fastify/vite": "latest",
+    "@fastify/vue": "^1.1.0",
+    "@unhead/vue": "^2.0.5",
     "fastify": "^5.3.2",
     "html-rewriter-wasm": "^0.4.1",
-    "unihead": "^0.8.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
+    "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "^5.2.3",
     "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
     "tsdown": "^0.9.1",
+    "typescript": "^5.8.3",
     "vite": "6.2.4"
   }
 }
