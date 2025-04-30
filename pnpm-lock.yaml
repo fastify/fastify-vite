@@ -1330,6 +1330,9 @@ importers:
       '@fastify/vue':
         specifier: workspace:^
         version: link:../../packages/fastify-vue
+      '@unhead/vue':
+        specifier: ^2.0.5
+        version: 2.0.8(vue@3.5.13(typescript@5.8.3))
       fastify:
         specifier: ^5.3.2
         version: 5.3.2
@@ -1346,6 +1349,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.1.1
         version: 4.1.2
+      '@types/node':
+        specifier: ^22.13.17
+        version: 22.14.0
       '@vitejs/plugin-vue':
         specifier: ^5.2.3
         version: 5.2.3(vite@6.2.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))

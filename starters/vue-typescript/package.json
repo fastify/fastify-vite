@@ -8,13 +8,14 @@
     "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
-    "build:server": "tsdown server.ts"
+    "build:server": "tsc"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/vite": "workspace:^",
     "@fastify/vue": "workspace:^",
+    "@unhead/vue": "^2.0.5",
     "fastify": "^5.3.2",
     "html-rewriter-wasm": "^0.4.1",
     "vue": "^3.5.13",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
+    "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "^5.2.3",
     "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
