@@ -632,6 +632,46 @@ importers:
         specifier: 'catalog:'
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1)
 
+  examples/react-vanilla-spa-ts:
+    dependencies:
+      '@fastify/vite':
+        specifier: workspace:^
+        version: link:../../packages/fastify-vite
+      fastify:
+        specifier: 'catalog:'
+        version: 5.3.2
+      react:
+        specifier: 'catalog:'
+        version: 19.1.0
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.1.0(react@19.1.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.17
+        version: 22.14.0
+      '@types/react':
+        specifier: ^19.1.2
+        version: 19.1.2
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.2(@types/react@19.1.2)
+      '@vitejs/plugin-react':
+        specifier: 'catalog:'
+        version: 4.4.1(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1))
+      oxlint:
+        specifier: 'catalog:'
+        version: 0.16.6
+      tsx:
+        specifier: 'catalog:'
+        version: 4.19.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1)
+
   examples/react-vanilla-ts:
     dependencies:
       '@fastify/vite':
@@ -1186,6 +1226,9 @@ importers:
       '@fastify/vue':
         specifier: workspace:^
         version: link:../../packages/fastify-vue
+      '@unhead/vue':
+        specifier: ^2.0.5
+        version: 2.0.8(vue@3.5.13(typescript@5.8.3))
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1235,9 +1278,9 @@ importers:
       '@fastify/vue':
         specifier: workspace:^
         version: link:../../packages/fastify-vue
-      client:
-        specifier: link:@unhead/vue/client
-        version: link:@unhead/vue/client
+      '@unhead/vue':
+        specifier: ^2.0.5
+        version: 2.0.8(vue@3.5.13(typescript@5.8.3))
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1293,9 +1336,6 @@ importers:
       html-rewriter-wasm:
         specifier: ^0.4.1
         version: 0.4.1
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
