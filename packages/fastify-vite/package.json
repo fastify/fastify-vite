@@ -43,7 +43,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "8.1.1",
+  "version": "8.1.2",
   "optionalDependencies": {
     "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
