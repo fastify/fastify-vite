@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream'
 import { renderToString, renderToNodeStream } from 'vue/server-renderer'
 import * as devalue from 'devalue'
-import Head from 'unihead'
+import { createHead, transformHtmlTemplate } from '@unhead/vue/server'
 import { createHtmlTemplates } from './templating.js'
 
 export async function createRenderFunction ({ routes, create }) {
@@ -45,6 +45,12 @@ export async function createHtmlFunction (source, _, config) {
   return async function () {
     const { routes, context, body } = await this.render()
 
+    // Apply head attributes
+    if (!context.useHead) {
+      context.useHead = createHead()
+    }
+
+    context.useHead.push(context.head)
     this.type('text/html')
 
     // Use template with client module import removed
@@ -94,35 +100,47 @@ export async function createHtmlFunction (source, _, config) {
   }
 }
 
-export function sendClientOnlyShell (templates, context) {
-  context.head = new Head(context.head).render()
-  return `${
-    templates.beforeElement(context)
-  }${
-    templates.afterElement(context)
-  }`
+export async function sendClientOnlyShell (templates, context) {
+  return await transformHtmlTemplate(
+    context.useHead,
+    `${
+      templates.beforeElement(context)
+    }${
+      templates.afterElement(context)
+    }`
+  )
 }
 
-export function sendShell (templates, context, body) {
-  context.head = new Head(context.head).render()
-  return `${
+export async function sendShell (templates, context, body) {
+  return await transformHtmlTemplate(
+    context.useHead,
+  `${
     templates.beforeElement(context)
   }${
     body
   }${
     templates.afterElement(context)
-  }`
+  }`)
 }
 
-export function streamShell (templates, context, body) {
-  context.head = new Head(context.head).render()
+export async function streamShell (templates, context, body) {
   return Readable.from(createShellStream(templates, context, body))
 }
 
 async function * createShellStream (templates, context, body) {
-  yield templates.beforeElement(context)
+  yield await transformHtmlTemplate(
+    context.useHead,
+    templates.beforeElement(context)
+  )
+
   for await (const chunk of body) {
-    yield chunk
+    yield await transformHtmlTemplate(
+      context.useHead,
+      chunk
+    )
   }
-  yield templates.afterElement(context)
+  yield await transformHtmlTemplate(
+    context.useHead,
+    templates.afterElement(context)
+  )
 }

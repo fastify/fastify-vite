@@ -1,8 +1,7 @@
-
 import { hydrateRoutes } from '@fastify/vue/client'
-import routes from '$app/routes.js'
-import create from '$app/create.js'
-import * as context from '$app/context.js'
+import routes from '$app/routes.ts'
+import create from '$app/create.ts'
+import * as context from '$app/context.ts'
 import * as root from '$app/root.vue'
 
 async function mountApp (...targets) {
@@ -16,9 +15,6 @@ async function mountApp (...targets) {
     routes: window.routes,
     routeMap,
   })
-
-  ctxHydration.useHead.push(window.route.head)
-
   await router.isReady()
   let mountTargetFound = false
   for (const target of targets) {
