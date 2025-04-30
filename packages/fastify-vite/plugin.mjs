@@ -69,7 +69,7 @@ export function viteFastify({ spa, clientModule } = {}) {
       fastify.entryPaths = Object.fromEntries(
         Object.entries(resolvedConfig.environments)
           .map(([env, envConfig]) => {
-            if (envConfig.build.outDir) {
+            if (envConfig.build?.outDir) {
               fastify.outDirs[env] = envConfig.build.outDir
             }
             if (envConfig.build?.rollupOptions?.input?.index) {
