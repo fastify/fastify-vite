@@ -62,7 +62,7 @@
     "oxlint": "^0.16.8"
   },
   "optionalDependencies": {
-    "vite": "^6.2.4"
+    "vite": "^5.4.19"
   },
   "publishConfig": {
     "access": "public"

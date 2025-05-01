@@ -48,7 +48,7 @@
     "@fastify/htmx": "workspace:^",
     "@fastify/react": "workspace:^",
     "@fastify/vue": "workspace:^",
-    "vite": "^6.2.4"
+    "vite": "^5.4.19"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",
