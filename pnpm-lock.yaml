@@ -1097,6 +1097,9 @@ importers:
       '@fastify/vite':
         specifier: workspace:^
         version: link:../../packages/fastify-vite
+      '@unhead/react':
+        specifier: ^2.0.8
+        version: 2.0.8(react@19.1.0)
       fastify:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1115,9 +1118,6 @@ importers:
       react-router:
         specifier: ^7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       valtio:
         specifier: ^2.1.4
         version: 2.1.4(@types/react@19.1.2)(react@19.1.0)
@@ -1179,9 +1179,6 @@ importers:
       react-router:
         specifier: ^7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       valtio:
         specifier: ^2.1.4
         version: 2.1.4(@types/react@19.1.2)(react@19.1.0)
@@ -1222,6 +1219,9 @@ importers:
       '@fastify/vite':
         specifier: workspace:^
         version: link:../../packages/fastify-vite
+      '@unhead/react':
+        specifier: ^2.0.8
+        version: 2.0.8(react@19.1.0)
       fastify:
         specifier: ^5.3.2
         version: 5.3.2
@@ -1240,9 +1240,6 @@ importers:
       react-router:
         specifier: ^7.5.0
         version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      unihead:
-        specifier: ^0.8.0
-        version: 0.8.0
       valtio:
         specifier: ^2.1.4
         version: 2.1.4(@types/react@19.1.2)(react@19.1.0)
@@ -2598,6 +2595,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vite@8.1.2':
     resolution: {integrity: sha512-W/XC2wmDjGwzQGa1SFphn+7w6KlzOYpK69yWAV4T3c3BZb5JcFgrM/f/ZRQpQ4kgYZfNs5UbfC6CA5Zccw2xtw==}

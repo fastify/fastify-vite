@@ -17,7 +17,7 @@ Below is an overview of all individual documentation topics and the order in whi
 
 ## Runtime requirements
 
-- [Node.js](https://nodejs.org/en/) v18 — you should upgrade to [v20 LTS](https://nodejs.org/en/blog/announcements/v20-release-announce) to benefit from [massive performance improvements](https://blog.rafaelgss.dev/state-of-nodejs-performance-2023)!
+- [Node.js](https://nodejs.org/en/) v22+.
 - We recommend PNPM as a package manager.
 
 Support for other JavaScript environments with HTTP support based on the [Fetch](https://fetch.spec.whatwg.org/) and [Service Worker](https://www.w3.org/TR/service-workers/) standards is coming when [`fastify-edge`](https://github.com/galvez/fastify-edge) is finished.
