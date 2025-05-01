@@ -51,7 +51,7 @@ giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 - [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
   - And its peer dependencies:
     - **`devalue`**
-    - **`unihead`**
+    - **`@unhead/vue`**
     - **`vue`**
     - **`vue-router`**
 

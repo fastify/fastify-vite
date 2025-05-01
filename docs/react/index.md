@@ -53,7 +53,7 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
     - **`react`**
     - **`react-dom`**
     - **`react-router`**
-    - **`unihead`**
+    - **`@unhead/react`**
     - **`valtio`**
 
 - [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-react) for the React application shell.
