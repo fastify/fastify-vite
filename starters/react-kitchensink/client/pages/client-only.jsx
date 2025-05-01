@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { useHead } from '@unhead/react'
 
 export const clientOnly = true
 
@@ -9,6 +10,14 @@ export function getMeta () {
 }
 
 export default function ClientOnly () {
+  useHead({
+    meta: [
+      {
+        name: 'description',
+        content: 'More head updates!'
+      }
+    ]
+  })
   return (
     <>
       <p>This route is rendered on the client only!</p>

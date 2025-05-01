@@ -33,7 +33,7 @@ export function useServerAction(action, options = {}) {
   return actionData[action]
 }
 
-export function AppRoute({ head, ctxHydration, ctx, children }) {
+export function AppRoute({ ctxHydration, ctx, children }) {
   // If running on the server, assume all data
   // functions have already ran through the preHandler hook
   if (isServer) {
@@ -100,7 +100,8 @@ export function AppRoute({ head, ctxHydration, ctx, children }) {
   if (!ctx.firstRender && ctx.getMeta) {
     const updateMeta = async () => {
       const { getMeta } = await ctx.loader()
-      head.update(await getMeta(ctx))
+      ctx.head = await getMeta(ctx)
+      ctxHydration.useHead.push(ctx.head)
     }
     waitResource(path, 'updateMeta', updateMeta)
   }
