@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "lint": "oxlint",
+    "build": "pnpm -r run build",
+    "lint": "oxlint --fix",
     "test": "zx package.mjs --test",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
@@ -8,7 +9,6 @@
   "private": "true",
   "devDependencies": {
     "execa": "^9.5.2",
-    "fastify": "^5.2.2",
     "oxlint": "^0.9.10",
     "vite": "^6.2.5",
     "vitest": "^1.3.0",

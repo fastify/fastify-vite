@@ -4,7 +4,7 @@
 
 By default, routes are loaded from the `<project-root>/pages` folder, where `<project-root>` refers to the `root` setting in your Vite configuration file.
 
-The route paths are **dynamically inferred from the directory structure**, very much like **Nuxt.js**, and passed to the **Vue Router** instance in `/:create.js`
+The route paths are **dynamically inferred from the directory structure**, very much like **Nuxt.js**, and passed to the **Vue Router** instance in `$app/create.js`
 
 Alternatively, you can also export a `path` constant from your route modules, in which case it will be used to **override the dynamically inferred paths**:
 

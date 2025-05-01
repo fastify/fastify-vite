@@ -2,7 +2,7 @@
 
 # Route Context
 
-In **`@fastify/react`** applications, the **route context** is an object available in every [**route module**](/react/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/react/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.jsx` smart import — a default implementation is provided by **`@fastivy/react`** but you can extend or create your own by providing your own implementation of the `core.js` file.
+In **`@fastify/react`** applications, the **route context** is an object available in every [**route module**](/react/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/react/route-context#init-module), and accessed via the `useRouteContext()` hook.
 
 This route context implementation is extremely simple and deliberately limited to essential features. Its goal is to be easy to understand, extend or completely modify if needed. Note that some aspects of this implementation are tightly coupled to the server. In **`@fastify/react`**'s source code, you can see the implementation of [`server/context.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-react/server/context.js) and [its use in `createRoute()`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-react/index.js) that first populates the route context object on the server and prepares it for hydration.
 
@@ -15,7 +15,7 @@ import FastifyReact from '@fastify/react'
 
 const server  = Fastify()
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.dirname,
   renderer: {
     ...FastifyReact,
     createRoute () {
@@ -86,7 +86,7 @@ export const actions = {
 ```jsx [client/pages/using-data.jsx]
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export function getMeta () {
   return { title: 'Todo List — Using Data' }
@@ -135,7 +135,7 @@ export default function Index (props) {
 ```jsx [client/pages/using-store.jsx]
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
@@ -174,10 +174,12 @@ export default function Index (props) {
 
 ## Access hook
 
-As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, implemented in the `core.js` internal file and made available via `/:core.js` [smart import](/react/project-structure#smart-imports), which allows it to be shadowed by your own implementation in your project directory.
+As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, available via the `@fastfiy/react/client` module.
+
+> Contrary to all other [virtual modules](https://fastify-vite.dev/config/react/virtual-modules), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/react/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
 
 ```js
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export default function Index (props) {
   const { ... } = useRouteContext()

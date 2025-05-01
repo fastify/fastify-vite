@@ -7,5 +7,6 @@ node_modules
 package-lock.json
 build
 dist
+build
 .idea
 *.tsbuildinfo
