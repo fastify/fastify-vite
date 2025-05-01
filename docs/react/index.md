@@ -86,9 +86,7 @@ All dependencies from **react-base**.
 
 ## Known limitations
 
-- It's currently impossible to run **multiple** Vite development server middleware in your Fastify server, which means `@fastify/vite` can **only be registered once**. Configuration for this is somewhat tricky and there isn't documentation on how to do it. Once [#108](https://github.com/fastify/fastify-vite/pull/108) is completed and merged, it will open the path to have a Vite development server factory that can create instances on-demand, but that approach still remains to be tested.
-
-  If you're looking into a microfrontend setup, consider [this approach](https://dev.to/getjv/react-micro-frontends-with-vite-5442).
+- It's currently impossible to run **multiple** Vite development server middleware in your Fastify server, which means `@fastify/vite` can **only be registered once**.
 
 - `@fastify/react` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/react/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer. SPA support is planned for the next major release, see the [project roadmap](/roadmap).
 
