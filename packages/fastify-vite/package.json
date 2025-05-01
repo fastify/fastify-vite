@@ -44,12 +44,6 @@
     "access": "public"
   },
   "version": "8.1.2",
-  "optionalDependencies": {
-    "@fastify/htmx": "workspace:^",
-    "@fastify/react": "workspace:^",
-    "@fastify/vue": "workspace:^",
-    "vite": "^6.2.4"
-  },
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",
     "@fastify/middie": "^9.0.3",

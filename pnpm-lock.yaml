@@ -994,18 +994,8 @@ importers:
       klaw:
         specifier: ^4.1.0
         version: 4.1.0
-    optionalDependencies:
-      '@fastify/htmx':
-        specifier: workspace:^
-        version: link:../fastify-htmx
-      '@fastify/react':
-        specifier: workspace:^
-        version: link:../fastify-react
-      '@fastify/vue':
-        specifier: workspace:^
-        version: link:../fastify-vue
       vite:
-        specifier: ^6.2.4
+        specifier: '>=5'
         version: 6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.19.3)(yaml@2.7.1)
     devDependencies:
       '@biomejs/biome':
@@ -2592,6 +2582,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vite@8.1.2':
     resolution: {integrity: sha512-W/XC2wmDjGwzQGa1SFphn+7w6KlzOYpK69yWAV4T3c3BZb5JcFgrM/f/ZRQpQ4kgYZfNs5UbfC6CA5Zccw2xtw==}
