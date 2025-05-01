@@ -136,7 +136,7 @@ async function * createShellStream (templates, context, body) {
   for await (const chunk of body) {
     yield await transformHtmlTemplate(
       context.useHead,
-      chunk
+      chunk.toString()
     )
   }
   yield await transformHtmlTemplate(
