@@ -8,7 +8,6 @@
     "types": ["node"],
     "strict": true,
     "noUnusedLocals": true,
-    "declaration": true,
     "isolatedDeclarations": false,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

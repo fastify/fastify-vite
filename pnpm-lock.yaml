@@ -957,9 +957,6 @@ importers:
       react-router:
         specifier: ^7.5.0
         version: 7.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      unihead:
-        specifier: latest
-        version: 0.8.0
       valtio:
         specifier: latest
         version: 2.1.4(@types/react@19.1.2)(react@19.1.0)
@@ -2595,7 +2592,6 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
-    bundledDependencies: []
 
   '@fastify/vite@8.1.2':
     resolution: {integrity: sha512-W/XC2wmDjGwzQGa1SFphn+7w6KlzOYpK69yWAV4T3c3BZb5JcFgrM/f/ZRQpQ4kgYZfNs5UbfC6CA5Zccw2xtw==}
@@ -13542,7 +13538,8 @@ snapshots:
 
   unicorn-magic@0.3.0: {}
 
-  unihead@0.8.0: {}
+  unihead@0.8.0:
+    optional: true
 
   unist-util-stringify-position@3.0.3:
     dependencies:
