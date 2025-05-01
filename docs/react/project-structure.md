@@ -99,13 +99,13 @@ The Vite application HTML template:
 <div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
-<script type="module" src="/:mount.js"></script>
+<script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 
 It needs to have `head`, `element` and `hydration` placeholders.
 
-And it must import `/:mount.js` as the main module.
+And it must import `/$app/mount.js` as the main module.
 
 </td>
 </tr>
@@ -167,11 +167,11 @@ export default {
 }
 ```
 ```js [client/index.js]
-import routes from '/:routes.js'
-import create from '/:create.jsx'
+import routes from '$app/routes.js'
+import create from '$app/create.jsx'
 
 export default {
-  context: import('/:context.js'),
+  context: import('$app/context.js'),
   routes,
   create,
 }
@@ -188,7 +188,7 @@ export default {
 <div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
-<script type="module" src="/:mount.js"></script>
+<script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 ```js [client/pages/index.jsx]
@@ -250,11 +250,11 @@ The core files of **`@fastify/react`** that make all of that (and a bit more) wo
 
 <div style="font-size: 1.2em !important">
 
-The way this works is via the `/:` prefix.
+The way this works is via the `$app/` prefix.
 
 </div>
 
-Notice how `client/index.html` imports the React application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.jsx` and the [route context](/react/route-context) initialization module from `/:context.js`.
+Notice how `client/index.html` imports the React application mounting script from `$app/mount.js`, and `client/index.js` loads routes from `$app/routes.js`, the application factory function from `$app/create.jsx` and the [route context](/react/route-context) initialization module from `$app/context.js`.
 
 What this prefix does is **first check if the file exists** in your Vite project root directory, **and if not**, provide the **default versions** stored inside the `@fastify/react` package instead.
 
@@ -271,12 +271,12 @@ Below is a quick rundown of all smart imports available.
 <tr>
 <td>
 
-`/:core.js`
+`$app/core.js`
 
 </td>
 <td>
 
-This is used by `/:create.jsx` internally to create your React application instance, but it's also the location where to import the [`useRouteContext()`](/react/route-context) hook from.
+This is used by `$app/create.jsx` internally to create your React application instance.
 
 It also exports the `isServer` convenience flag.
 
@@ -285,7 +285,7 @@ It also exports the `isServer` convenience flag.
 <tr>
 <td>
 
-`/:create.jsx`
+`$app/create.jsx`
 
 </td>
 <td>
@@ -297,7 +297,7 @@ Where your React application factory function is exported from. It must be named
 <tr>
 <td>
 
-`/:mount.js`
+`$app/mount.js`
 
 </td>
 <td>
@@ -309,7 +309,7 @@ The Vite application mount script, imported by `index.html`.
 <tr>
 <td>
 
-`/:resource.js`
+`$app/resource.js`
 
 </td>
 <td>
@@ -321,7 +321,7 @@ Utilities to enable suspensed state in data fetching.
 <tr>
 <td>
 
-`/:root.jsx`
+`$app/root.jsx`
 
 </td>
 <td>
@@ -333,7 +333,7 @@ The main React component for your application.
 <tr>
 <td>
 
-`/:context.js`
+`$app/context.js`
 
 </td>
 <td>
@@ -345,7 +345,7 @@ The [route context](/react/route-context) initialization file.
 <tr>
 <td>
 
-`/:layouts/default.jsx`
+`$app/layouts/default.jsx`
 
 </td>
 <td>
@@ -363,15 +363,15 @@ The graph below indicates the relationships between them:
 
 ```mermaid
 flowchart TD
-    R("/:resource.js") --> A
-    V("/:root.jsx") --> B
-    A("/:core.jsx") --> B("/:create.jsx")
-    C("/:routes.js") --> D
+    R("$app/resource.js") --> A
+    V("$app/root.jsx") --> B
+    A("$app/core.jsx") --> B("$app/create.jsx")
+    C("$app/routes.js") --> D
     C --> E
-    B --> D("/:mount.js")
-    B --> E("/:index.js")
-    T("/:context.js") --> D
-    T("/:context.js") --> E
+    B --> D("$app/mount.js")
+    B --> E("$app/index.js")
+    T("$app/context.js") --> D
+    T("$app/context.js") --> E
     D --> CSR("Client-Side Rendering")
     E --> SSR("Server-Side Rendering")
 ```

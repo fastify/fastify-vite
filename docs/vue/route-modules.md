@@ -119,7 +119,7 @@ The objet returned by `getData()` gets automatically assigned as `data` in the [
 </template>
 
 <script>
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 
 export function getData (ctx) {
   return {

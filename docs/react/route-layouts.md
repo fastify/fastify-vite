@@ -2,7 +2,7 @@
 
 `@fastify/react` will automatically load layouts from the `layouts/` folder.
 
-By default, the `/:layouts/default.jsx` [**smart import**](/react/project-structure#smart-imports) is used. If a project is missing `/layouts/default.jsx` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
+By default, the `$app/layouts/default.jsx` [**smart import**](/react/project-structure#smart-imports) is used. If a project is missing `/layouts/default.jsx` file, the one provided by the virtual module is automatically used. **The default layout is defined as follows**:
 
 ```jsx
 import { Suspense } from 'react'
@@ -26,7 +26,7 @@ That will cause the route to be wrapped in the layout component exported by a Re
 
 ```jsx
 import { Suspense } from 'react'
-import { useRouteContext } from '/:core.jsx'
+import { useRouteContext } from '@fastify/react/client'
 
 export default function Auth ({ children }) {
   const { actions, state, snapshot } = useRouteContext()

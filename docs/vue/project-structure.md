@@ -99,13 +99,13 @@ The Vite application HTML template:
 <div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
-<script type="module" src="/:mount.js"></script>
+<script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 
 It needs to have `head`, `element` and `hydration` placeholders.
 
-And it must import `/:mount.js` as the main module.
+And it must import `$app/mount.js` as the main module.
 
 </td>
 </tr>
@@ -167,11 +167,11 @@ export default {
 }
 ```
 ```js [client/index.js]
-import routes from '/:routes.js'
-import create from '/:create.js'
+import routes from '$app/routes.js'
+import create from '$app/create.js'
 
 export default {
-  context: import('/:context.js'),
+  context: import('$app/context.js'),
   routes,
   create,
 }
@@ -188,7 +188,7 @@ export default {
 <div id="root"><!-- element --></div>
 </body>
 <!-- hydration -->
-<script type="module" src="/:mount.js"></script>
+<script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 ```vue [client/pages/index.vue]
@@ -259,11 +259,11 @@ The core files of **`@fastify/vue`** that make all of that (and a bit more) work
 
 <div style="font-size: 1.2em !important">
 
-The way this works is via the `/:` prefix.
+The way this works is via the `$app/` prefix.
 
 </div>
 
-Notice how `client/index.html` imports the Vue application mounting script from `/:mount.js`, and `client/index.js` loads routes from `/:routes.js`, the application factory function from `/:create.js` and the [route context](/vue/route-context) initialization module from `/:context.js`.
+Notice how `client/index.html` imports the Vue application mounting script from `$app/mount.js`, and `client/index.js` loads routes from `$app/routes.js`, the application factory function from `$app/create.js` and the [route context](/vue/route-context) initialization module from `$app/context.js`.
 
 What this prefix does is **first check if the file exists** in your Vite project root directory, **and if not**, provide the **default versions** stored inside the `@fastify/vue` package instead.
 
@@ -280,12 +280,12 @@ Below is a quick rundown of all smart imports available.
 <tr>
 <td>
 
-`/:core.js`
+`$app/core.js`
 
 </td>
 <td>
 
-This is used by `/:create.js` internally to create your Vue application instance, but it's also the location where to import the [`useRouteContext()`](/vue/route-context) hook from.
+This is used by `$app/create.js` internally to create your Vue application instance, but it's also the location where to import the [`useRouteContext()`](/vue/route-context) hook from.
 
 It also exports the `isServer` convenience flag.
 
@@ -294,7 +294,7 @@ It also exports the `isServer` convenience flag.
 <tr>
 <td>
 
-`/:create.js`
+`$app/create.js`
 
 </td>
 <td>
@@ -306,7 +306,7 @@ Where your Vue application factory function is exported from. It must be named `
 <tr>
 <td>
 
-`/:mount.js`
+`$app/mount.js`
 
 </td>
 <td>
@@ -318,21 +318,21 @@ The Vite application mount script, imported by `index.html`.
 <tr>
 <td>
 
-`/:router.vue`
+`$app/router.vue`
 
 </td>
 <td>
 
 The main Vue Router component for your application.
 
-Loaded by `/:root.vue`.
+Loaded by `$app/root.vue`.
 
 </td>
 </tr>
 <tr>
 <td>
 
-`/:root.vue`
+`$app/root.vue`
 
 </td>
 <td>
@@ -346,7 +346,7 @@ It can also export a `configure({ app, router })` function to let you further ex
 <tr>
 <td>
 
-`/:context.js`
+`$app/context.js`
 
 </td>
 <td>
@@ -358,7 +358,7 @@ The [route context](/vue/route-context) initialization file.
 <tr>
 <td>
 
-`/:layouts/default.vue`
+`$app/layouts/default.vue`
 
 </td>
 <td>
@@ -376,14 +376,14 @@ The graph below indicates the relationships between them:
 
 ```mermaid
 flowchart TD
-    V("/:root.vue") --> B
-    A("/:core.js") --> B("/:create.js")
-    C("/:routes.js") --> D
+    V("$app/root.vue") --> B
+    A("$app/core.js") --> B("$app/create.js")
+    C("$app/routes.js") --> D
     C --> E
-    B --> D("/:mount.js")
-    B --> E("/:index.js")
-    T("/:context.js") --> D
-    T("/:context.js") --> E
+    B --> D("/$app/mount.js")
+    B --> E("$app/index.js")
+    T("$app/context.js") --> D
+    T("$app/context.js") --> E
     D --> CSR("Client-Side Rendering")
     E --> SSR("Server-Side Rendering")
 ```

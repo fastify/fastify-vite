@@ -2,7 +2,7 @@
 
 # Route Context
 
-In **`@fastify/vue`** applications, the **route context** is an object available in every [**route module**](/vue/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/vue/route-context#init-module), and accessed via the `useRouteContext()` hook available from the `/:core.js` smart import — a default implementation is provided by **`@fastivy/vue`** but you can extend or create your own by providing your own implementation of the `core.js` file.
+In **`@fastify/vue`** applications, the **route context** is an object available in every [**route module**](/vue/route-modules) and [**layout module**](/react/route-layouts). It is populated via the [**route context initialization module**](/vue/route-context#init-module), and accessed via the `useRouteContext()` hook.
 
 This route context implementation is extremely simple and deliberately limited to essential features. Its goal is to be easy to understand, extend or completely modify if needed. Note that some aspects of this implementation are tightly coupled to the server. In **`@fastify/vue`**'s source code, you can see the implementation of [`server/context.js`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/server/context.js) and [its use in `createRoute()`](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vue/index.js) that first populates the route context object on the server and prepares it for hydration.
 
@@ -15,7 +15,7 @@ import FastifyVue from '@fastify/vue'
 
 const server  = Fastify()
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.dirname,
   renderer: {
     ...FastifyVue,
     createRoute () {
@@ -110,7 +110,7 @@ export const actions = {
 
 <script>
 import { ref, reactive } from 'vue'
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 
 export function getMeta () {
   return { title: 'Todo List — Using Data' }
@@ -161,7 +161,7 @@ export default {
 
 <script>
 import { ref } from 'vue'
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 
 export function getMeta () {
   return { title: 'Todo List — Using Store' }
@@ -184,11 +184,13 @@ export default {
 
 ## Access hook
 
-As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, implemented in the `core.js` internal file and made available via `/:core.js` [smart import](/vue/project-structure#smart-imports), which allows it to be shadowed by your own implementation in your project directory.
+As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, available via the `@fastfiy/vue/client` module.
+
+> Contrary to all other [virtual modules](https://fastify-vite.dev/config/vue/virtual-modules), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/vue/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
 
 ```js
 <script setup>
-import { useRouteContext } from '/:core.js'
+import { useRouteContext } from '@fastify/vue/client'
 const { ... } = useRouteContext()
 </script>
 ```

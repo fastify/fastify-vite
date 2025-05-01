@@ -1,5 +1,4 @@
-import { join, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { join } from 'path'
 
 import viteReact from '@vitejs/plugin-react'
 import viteFastifyReact from '@fastify/react/plugin'
@@ -12,7 +11,4 @@ export default {
       ts: true
     }),
   ],
-  build: {
-    outDir: resolve(import.meta.dirname, 'dist')
-  },
 }

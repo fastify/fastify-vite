@@ -3,9 +3,9 @@
   "scripts": {
     "lint": "oxlint",
     "dev": "tsx server.ts --dev",
-    "start": "NODE_ENV=production node dist/server.js",
+    "start": "NODE_ENV=production node server.js",
     "build": "pnpm build:client && pnpm build:server",
-    "build:server": "tsc && tsdown server.ts",
+    "build:server": "tsc",
     "build:client": "NODE_ENV=production vite build"
   },
   "dependencies": {
@@ -13,13 +13,13 @@
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/react": "workspace:^",
     "@fastify/vite": "workspace:^",
+    "@unhead/react": "^2.0.8",
     "fastify": "^5.3.2",
     "history": "^5.3.0",
     "minipass": "^7.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.5.0",
-    "unihead": "^0.8.0",
     "valtio": "^2.1.4"
   },
   "devDependencies": {
