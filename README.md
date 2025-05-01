@@ -1,6 +1,6 @@
 <br>
 
-<img src="https://github.com/fastify/fastify-vite/assets/12291/7f711a83-91df-41d5-abf9-ae4f38ed24d3" style="width: 250px">
+<a href="https://fastify-vite.dev/"><img src="https://github.com/fastify/fastify-vite/assets/12291/7f711a83-91df-41d5-abf9-ae4f38ed24d3" style="width: 250px"></a>
 
 # **`@fastify/vite`**
 
