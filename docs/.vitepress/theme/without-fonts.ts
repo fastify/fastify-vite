@@ -1,3 +1,5 @@
+import { h } from 'vue'
+
 import './styles/vars.css'
 import './styles/base.css'
 import './styles/utils.css'
@@ -25,11 +27,16 @@ export { default as VPTeamPage } from './components/VPTeamPage.vue'
 export { default as VPTeamPageTitle } from './components/VPTeamPageTitle.vue'
 export { default as VPTeamPageSection } from './components/VPTeamPageSection.vue'
 export { default as VPTeamMembers } from './components/VPTeamMembers.vue'
+import HLM from './HLM.vue'
 
 export { useSidebar } from './composables/sidebar'
 
 const theme: Theme = {
-  Layout,
+  Layout() {
+    return h(Layout, null, {
+      // 'home-hero-before': () => h(HLM),
+    })
+  },
   enhanceApp: ({ app }) => {
     app.component('Badge', VPBadge)
   }

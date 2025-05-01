@@ -5,20 +5,17 @@ layout: home
 hero:
   name: "@fastify/vite"
   text: "Titans Combined"
-  tagline: Cleanly and elegantly integrate <b><a href="https://fastify.dev/" target="_blank">Fastify</a></b> and <b><a href="https://vitejs.dev/" target="_blank">Vite</a></b> to create a <b>minimal</b>, <b>low overhead</b>, <b>blazing fast™</b> setup for <b>full stack monoliths</b>.
+  tagline: Cleanly and elegantly integrate <b><a href="https://fastify.dev/" target="_blank">Fastify</a></b> and <b><a href="https://vitejs.dev/" target="_blank">Vite</a></b> to create a <b>minimal</b>, <b>low overhead</b> setup for <b>full stack monoliths</b>.
   actions:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
     - theme: brand
-      text: "@fastify/vue"
+      text: "Vue"
       link: /vue/index
     - theme: brand
-      text: "@fastify/react"
+      text: "React"
       link: /react/index
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/fastify/fastify-vite
   image:
     src: /fastify-vite.svg
     alt: "@fastify/vite"
