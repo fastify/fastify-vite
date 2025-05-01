@@ -12,26 +12,18 @@ import { closeBundle } from './preload.js'
 import { parseStateKeys } from './parsers.js'
 import { generateStores } from './stores.js'
 
-export default function viteFastifyReactPlugin () {
+export default function viteFastifyReactPlugin ({ ts } = {}) {
   const context = {
     root: null,
   }
   return [viteFastify({
-    clientModule: '$app/index.js'
+    clientModule: ts ? '$app/index.ts' : '$app/index.js'
   }), {
-    name: 'vite-plugin-fastify-react',
+    // https://vite.dev/guide/api-plugin#conventions
+    name: 'vite-plugin-react-fastify',
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
-    configEnvironment (name, config, { mode }) {
-      if (mode === 'production') {
-        config.build.minify = true
-        config.build.sourcemap = false
-      }
-      if (name === 'ssr') {
-        config.build.manifest = false
-      }
-    },
     async load (id) {
       if (id.includes('?server') && !this.environment.config.build?.ssr) {
         const source = loadSource(id)
@@ -44,14 +36,6 @@ export default function viteFastifyReactPlugin () {
       if (prefix.test(id)) {
         const [, virtual] = id.split(prefix)
         if (virtual) {
-          if (virtual === 'stores') {
-            const contextPath = join(context.root, 'context.js')
-            if (existsSync(contextPath)) {
-              const keys = parseStateKeys(readFileSync(contextPath, 'utf8'))
-              return generateStores(keys)
-            }
-            return
-          }
           return loadVirtualModule(virtual)
         }
       }
