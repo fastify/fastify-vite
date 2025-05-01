@@ -1,23 +1,27 @@
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import Head from 'unihead/client'
 import { hydrateRoutes } from '@fastify/react/client'
-import routes from '$app/routes.ts'
-import create from '$app/create.tsx'
-import * as context from '$app/context.ts'
+import { createHead } from '@unhead/react/client'
+import routes from '$app/routes.js'
+import create from '$app/create.jsx'
+import * as context from '$app/context.js'
 
 async function mountApp (...targets) {
   const ctxHydration = await extendContext(window.route, context)
-  const head = new Head(window.route.head, window.document)
   const resolvedRoutes = await hydrateRoutes(routes)
   const routeMap = Object.fromEntries(
     resolvedRoutes.map((route) => [route.path, route]),
   )
+  const useHead = createHead()
+  ctxHydration.useHead = useHead
+  ctxHydration.useHead.push(window.route.head)
+
   const app = create({
-    head,
     ctxHydration,
     routes: window.routes,
     routeMap,
   })
+
+
   let mountTargetFound = false
   for (const target of targets) {
     const targetElem = document.querySelector(target)
