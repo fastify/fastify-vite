@@ -1,3 +1,5 @@
+import { createHead } from '@unhead/react/server'
+
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
@@ -15,10 +17,12 @@ export default class RouteContext {
   }
 
   constructor(server, req, reply, route) {
+    this.app = null
     this.server = server
     this.req = req
     this.reply = reply
     this.head = {}
+    this.useHead = createHead()
     this.actionData = {}
     this.state = null
     this.data = route.data
@@ -46,6 +50,7 @@ export default class RouteContext {
       actionData: this.actionData,
       state: this.state,
       data: this.data,
+      head: this.head,
       layout: this.layout,
       getMeta: this.getMeta,
       getData: this.getData,

@@ -6,7 +6,7 @@ import { Minipass } from 'minipass'
 // which enables the combination of React.lazy() and Suspense
 import { renderToPipeableStream } from 'react-dom/server'
 import * as devalue from 'devalue'
-import Head from 'unihead'
+import { transformHtmlTemplate } from '@unhead/react/server'
 import { createHtmlTemplates } from './templating.js'
 
 // Helper function to get an AsyncIterable (via PassThrough)
@@ -46,6 +46,7 @@ export function onAllReady(app) {
 export async function createRenderFunction ({ routes, create }) {
   // Used when hydrating React Router on the client
   const routeMap = Object.fromEntries(routes.map(_ => [_.path, _]))
+
   // Registered as reply.render()
   return function () {
     if (this.request.route.streaming) {
@@ -80,6 +81,7 @@ export async function createHtmlFunction (source, _, config) {
   return async function () {
     const { routes, context, body } = await this.render()
 
+    context.useHead.push(context.head)
     this.type('text/html')
 
     // Use template with client module import removed
@@ -116,24 +118,35 @@ export async function createHtmlFunction (source, _, config) {
   }
 }
 
-export function sendClientOnlyShell (templates, context, body) {
-  context.head = new Head(context.head).render()
-  return `${
-    templates.beforeElement(context)
-  }${
-    templates.afterElement(context)
-  }`
+export async function sendClientOnlyShell (templates, context) {
+  return await transformHtmlTemplate(
+    context.useHead,
+    `${
+      templates.beforeElement(context)
+    }${
+      templates.afterElement(context)
+    }`
+  )
 }
 
 export function streamShell (templates, context, body) {
-  context.head = new Head(context.head).render()
   return Readable.from(createShellStream(templates, context, body))
 }
 
 async function * createShellStream (templates, context, body) {
-  yield templates.beforeElement(context)
+  yield await transformHtmlTemplate(
+    context.useHead,
+    templates.beforeElement(context)
+  )
+
   for await (const chunk of body) {
-    yield chunk
+    yield await transformHtmlTemplate(
+      context.useHead,
+      chunk.toString()
+    )
   }
-  yield templates.afterElement(context)
+  yield await transformHtmlTemplate(
+    context.useHead,
+    templates.afterElement(context)
+  )
 }
