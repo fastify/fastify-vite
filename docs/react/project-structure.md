@@ -88,22 +88,22 @@ These are detailed further below on this page.
 The Vite application HTML template:
 
 ```html
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="./base.css">
-<!-- head -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<link rel="stylesheet" href="/base.css" />
 <div id="root"><!-- element --></div>
-</body>
 <!-- hydration -->
 <script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 
-It needs to have `head`, `element` and `hydration` placeholders.
+It needs to have `element` and `hydration` placeholders.
+
+The `<html>` and `<head>` tags are processed by [unhead](https://github.com/unjs/unhead).
 
 And it must import `/$app/mount.js` as the main module.
 
