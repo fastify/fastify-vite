@@ -4,13 +4,13 @@ import FastifyVite from '@fastify/vite'
 
 import { renderToString } from 'react-dom/server'
 
-export async function main (dev) {
+export async function main(dev) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
-    root: import.meta.url,
+    root: import.meta.dirname,
     dev: dev ?? process.argv.includes('--dev'),
-    createRenderFunction ({ createApp }) {
+    createRenderFunction({ createApp }) {
       return () => {
         return {
           element: renderToString(createApp())

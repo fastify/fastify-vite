@@ -140,7 +140,7 @@ const server = Fastify({
 })
 
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.dirname,
   renderer: '@fastify/vue',
 })
 

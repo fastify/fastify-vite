@@ -3,7 +3,7 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 
-export async function main (dev) {
+export async function main(dev) {
   const server = Fastify({
     logger: {
       transport: {
@@ -13,7 +13,7 @@ export async function main (dev) {
   })
 
   await server.register(FastifyVite, {
-    root: import.meta.url,
+    root: import.meta.dirname,
     renderer,
   })
 

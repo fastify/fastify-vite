@@ -9,7 +9,7 @@ export async function main(dev) {
 
   await server.register(fastifyVite, {
     dev,
-    root: import.meta.url,
+    root: import.meta.dirname,
   })
 
   await server.vite.ready()
