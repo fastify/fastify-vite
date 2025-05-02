@@ -20,7 +20,7 @@ export default function viteFastifyVue ({ ts } = {}) {
     clientModule: ts ? '$app/index.ts' : '$app/index.js'
   }), {
     // https://vite.dev/guide/api-plugin#conventions
-    name: 'vite-plugin-react-vue',
+    name: 'vite-plugin-vue-fastify',
     config,
     configResolved: configResolved.bind(context),
     resolveId: resolveId.bind(context),
