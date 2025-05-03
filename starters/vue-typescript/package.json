@@ -4,11 +4,12 @@
   "type": "module",
   "scripts": {
     "lint": "oxlint",
-    "dev": "tsx server.ts --dev",
-    "start": "node server.js",
+    "dev": "tsx src/server.ts --dev",
+    "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
-    "build:server": "tsc"
+    "build:server": "tsc",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
