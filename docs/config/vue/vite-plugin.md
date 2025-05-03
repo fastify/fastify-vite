@@ -3,14 +3,14 @@
 The **`@fastify/vue/plugin`** Vite plugin has the following options:
 
 ```js {14-15}
-import { join } from 'path'
+import { resolve } from 'node:path'
 
 import viteVue from '@vitejs/plugin-vue'
 import viteFastify from '@fastify/vite/plugin'
 import viteFastifyVue from '@fastify/vue/plugin'
 
 export default {
-  root: join(import.meta.dirname, 'client'),
+  root: resolve(import.meta.dirname, 'client'),
   plugins: [
     viteVue(),
     viteFastify(),

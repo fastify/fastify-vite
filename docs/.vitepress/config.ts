@@ -1,5 +1,5 @@
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import type { DefaultTheme } from 'vitepress'
-import { withMermaid } from "vitepress-plugin-mermaid";
 
 export default withMermaid({
   lang: 'en-US',
