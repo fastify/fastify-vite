@@ -15,7 +15,7 @@ To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
 
 ```js {4-9}
   await server.register(FastifyVite, {
-    root: import.meta.url,
+    root: import.meta.dirname,
     createRenderFunction ({ createApp }) {
       return () => {
         return {
@@ -124,7 +124,7 @@ That is to say, `reply.html()` is the same as `reply.html(reply.render())`.
 const server = Fastify()
 
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.dirname,
   dev: process.argv.includes('--dev'),
   createRenderFunction ({ createApp }) {
     return () => {

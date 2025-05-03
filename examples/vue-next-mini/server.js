@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 import ky from 'ky-universal'
 
-export async function main (dev) {
+export async function main(dev) {
   const server = Fastify({ logger: true, ignoreTrailingSlash: true })
 
   server.decorate('ky', ky.create({
@@ -28,7 +27,7 @@ export async function main (dev) {
 
   await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
-    root: import.meta.url,
+    root: import.meta.dirname,
     renderer
   })
 
@@ -37,7 +36,7 @@ export async function main (dev) {
   return server
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.argv[1] === import.meta.filename) {
   const server = await main()
   await server.listen({ port: 3000 })
 }
