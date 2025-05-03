@@ -12,7 +12,7 @@ const server = Fastify({
 
 await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
-  root: import.meta.url,
+  root: import.meta.dirname,
   renderer: '@fastify/react',
 })
 

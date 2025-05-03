@@ -1,8 +1,7 @@
-
+import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import FastifyFormBody from '@fastify/formbody'
-
 interface Database {
   todoList: string[]
 }
@@ -15,12 +14,13 @@ const server = Fastify({
   }
 })
 
-// @ts-ignore TODO
 await server.register(FastifyFormBody)
 
 await server.register(FastifyVite, {
-  root: import.meta.dirname,
-  renderer: '@fastify/vue',
+  // TODO handle via CLI path argument with proper resolve
+  root: resolve(import.meta.dirname, '..'),
+  distDir: import.meta.dirname, // This file will also live in the dist folder when built
+  renderer: '@fastify/react',
 })
 
 await server.vite.ready()

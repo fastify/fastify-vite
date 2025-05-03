@@ -10,8 +10,8 @@
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/vite": "workspace:^",
-    "@fastify/vue": "workspace:^",
+    "@fastify/vite": "^8.1.2",
+    "@fastify/vue": "^1.1.1",
     "@unhead/vue": "^2.0.5",
     "fastify": "^5.2.2",
     "html-rewriter-wasm": "^0.4.1",

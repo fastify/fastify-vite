@@ -2,17 +2,18 @@
   "type": "module",
   "scripts": {
     "lint": "oxlint",
-    "dev": "tsx server.ts --dev",
-    "start": "NODE_ENV=production node server.js",
+    "dev": "tsx src/server.ts --dev",
+    "start": "NODE_ENV=production node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
     "build:server": "tsc",
-    "build:client": "NODE_ENV=production vite build"
+    "build:client": "NODE_ENV=production vite build",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/react": "workspace:^",
-    "@fastify/vite": "workspace:^",
+    "@fastify/react": "^1.1.0",
+    "@fastify/vite": "^8.1.2",
     "@unhead/react": "^2.0.8",
     "fastify": "^5.3.2",
     "history": "^5.3.0",
@@ -32,7 +33,6 @@
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
-    "tsdown": "^0.9.1",
     "typescript": "^5.8.3",
     "vite": "^6.2.4"
   }
