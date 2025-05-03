@@ -1,10 +1,10 @@
 # Roadmap
 
 
-<table>
+<table class="roadmap">
 <thead>
 <tr>
-<th>Next releases</th>
+<th>Next majors</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -12,9 +12,15 @@
 <tr>
 <td valign="top">
 
-`@fastify/react`
+<br>
 
-`@fastify/vue`
+<span class="release">
+
+**`@fastify/vite@9.0.0`**
+
+</span>
+
+<br>
 
 <small>
 
@@ -22,19 +28,23 @@
 
 </small>
 
-March 2024
+July 2025
 
 </td>
 <td valign="top">
 
-Planned for the next minor release:
+Planned for this release:
 
-- Implement Vite's Runtime API.
-- Full hot reload support even without `createRenderFunction()`
+- **Rewrite core in TypeScript**
+- **Deprecate CJS support**
+- **Revised HMR integration**
+
+For a long time `@fastify/vite` resisted a TypeScript rewrite, staying true to Fastify's original JavaScript style, which to this date remains CJS written in the same form as seen in Node.js' own internal JavaScript libraries. 
+
+The next major release of `@fastify/vite` will have a TypeScript core and will be compiled to ESM. This release will be coupled with a PR to Fastify itself supporting `import()` Promises in plugin registration calls. 
 
 </td>
 </tr>
+
 </tbody>
 </table>
-
-For **`@fastify/vue`** and **`@fastify/react`**, until the `v1.0.0` release everything can change, and I'd very much like to see [new contributors](/contributing) enhancing the currernt core application shell implemented on those packages and changing what this roadmap looks like in the process!

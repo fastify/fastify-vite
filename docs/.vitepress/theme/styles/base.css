@@ -250,3 +250,17 @@ mjx-container {
 mjx-container > svg {
   margin: auto;
 }
+
+table.roadmap {
+  table-layout: fixed;
+  width: 100%;
+
+}
+
+table.roadmap td:nth-child(2n) {
+  width: 100%;
+}
+
+.release {
+  font-size: 1.2em;
+}
