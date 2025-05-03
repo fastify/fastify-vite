@@ -11,7 +11,7 @@ const server = Fastify({
 
 await server.register(FastifyVite, {
   root: import.meta.url,
-  renderer: import.meta.resolve('@fastify/react'),
+  renderer: '@fastify/react',
 })
 
 server.setErrorHandler((error, req, reply) => {

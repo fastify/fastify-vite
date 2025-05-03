@@ -31,7 +31,7 @@ server.delete('/api/todo/items', (req, reply) => {
 await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
   root: import.meta.url,
-  renderer: import.meta.resolve('@fastify/vue'),
+  renderer: '@fastify/vue',
 })
 
 await server.vite.ready()

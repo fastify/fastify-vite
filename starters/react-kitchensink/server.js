@@ -13,7 +13,7 @@ const server = Fastify({
 await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
   root: import.meta.url,
-  renderer: import.meta.resolve('@fastify/react'),
+  renderer: '@fastify/react',
 })
 
 await server.vite.ready()

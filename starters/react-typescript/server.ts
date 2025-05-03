@@ -19,7 +19,7 @@ await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
   // TODO handle via CLI path argument with proper resolve
   root: process.cwd(),
-  renderer: import.meta.resolve('@fastify/react'),
+  renderer: '@fastify/react',
 })
 
 await server.vite.ready()

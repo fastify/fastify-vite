@@ -20,7 +20,7 @@ await server.register(FastifyFormBody)
 
 await server.register(FastifyVite, {
   root: import.meta.dirname,
-  renderer: import.meta.resolve('@fastify/vue'),
+  renderer: '@fastify/vue',
 })
 
 await server.vite.ready()
