@@ -20,20 +20,13 @@ export const path = '/my-page'
 
 ## Routes location
 
-You can also change the glob pattern used to determine where to route modules from. Internally, this setting is passed to [Vite's glob importer](https://vitejs.dev/guide/features.html#glob-import).
-
-In your Vite configuration file:
+Internally, the route modules location is set via the `$app/routes.js` [virtual module](/vue/project-structure#smart-imports), which is defined as follows by default:
 
 ```js
-import viteFastifyVue from '@fastify/vue/plugin'
-
-export default {
-  plugins: [
-    // ...
-    viteFastifyVue({ globPattern: '/views/**/*.vue' }),
-  ]
-}
+export default import.meta.glob('/pages/**/*.vue')
 ```
+
+To change the location where routes are loaded from, just place a `routes.js` file at your Vite project's root directory and `@fastify/vue/plugin` will automatically recognize it and use it instead.
 
 ## Dynamic parameters
 

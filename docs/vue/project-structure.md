@@ -43,8 +43,6 @@ A `@fastify/vue` project must have at the very least:
 
 A Fastify server file that registers `@fastify/vite`.
 
-Or a **plugin** file if running [`fastify-cli`]() or [`platformatic`]().
-
 </td>
 </tr>
 <tr>
