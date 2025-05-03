@@ -30,7 +30,7 @@ server.decorate('db', {
 await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
   root: import.meta.url,
-  renderer: import.meta.resolve('@fastify/htmx'),
+  renderer: '@fastify/htmx',
 })
 
 await server.vite.ready()
