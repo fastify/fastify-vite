@@ -1,12 +1,9 @@
 import { readFileSync, existsSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { findExports } from 'mlly'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
-const virtualRoot = resolve(__dirname, '..', 'virtual')
-const virtualRootTS = resolve(__dirname, '..', 'virtual-ts')
+const virtualRoot = resolve(import.meta.dirname, '..', 'virtual')
+const virtualRootTS = resolve(import.meta.dirname, '..', 'virtual-ts')
 
 const virtualModules = [
   'mount.js',
@@ -38,7 +35,7 @@ const virtualModulesTS = [
 
 export const prefix = /^\/?\$app\//
 
-export async function resolveId (id) {
+export async function resolveId(id) {
   // Paths are prefixed with .. on Windows by the glob import
   if (process.platform === 'win32' && /^\.\.\/[C-Z]:/.test(id)) {
     return id.substring(3)
@@ -56,7 +53,7 @@ export async function resolveId (id) {
   }
 }
 
-export function loadVirtualModule (virtualInput, options) {
+export function loadVirtualModule(virtualInput, options) {
   let virtual = virtualInput
   if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
     virtual += options.ts ? '.ts' : '.js'
@@ -64,7 +61,7 @@ export function loadVirtualModule (virtualInput, options) {
   if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  let virtualRootDir = options.ts ? virtualRootTS : virtualRoot 
+  let virtualRootDir = options.ts ? virtualRootTS : virtualRoot
   const codePath = resolve(virtualRootDir, virtual)
   return {
     code: readFileSync(codePath, 'utf8'),
@@ -98,12 +95,12 @@ virtualModules.includes = function (virtual) {
   return false
 }
 
-function loadVirtualModuleOverride (viteProjectRoot, virtualInput) {
+function loadVirtualModuleOverride(viteProjectRoot, virtualInput) {
   let virtual = virtualInput
   if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
-  let overridePath = resolve(viteProjectRoot, virtual) 
+  let overridePath = resolve(viteProjectRoot, virtual)
   if (existsSync(overridePath)) {
     return overridePath
   }
@@ -113,14 +110,14 @@ function loadVirtualModuleOverride (viteProjectRoot, virtualInput) {
   }
 }
 
-export function loadSource (id) {
+export function loadSource(id) {
   const filePath = id
     .replace(/\?client$/, '')
     .replace(/\?server$/, '')
   return readFileSync(filePath, 'utf8')
 }
 
-export function createPlaceholderExports (source) {
+export function createPlaceholderExports(source) {
   let pExports = ''
   for (const exp of findExports(source)) {
     switch (exp.type) {

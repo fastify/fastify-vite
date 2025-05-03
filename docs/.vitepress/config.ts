@@ -1,8 +1,5 @@
-import { createRequire } from 'module'
-import { defineConfig, type DefaultTheme } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import { withMermaid } from "vitepress-plugin-mermaid";
-
-const require = createRequire(import.meta.url)
 
 export default withMermaid({
   lang: 'en-US',

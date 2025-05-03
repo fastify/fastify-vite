@@ -148,16 +148,13 @@ await server.vite.ready()
 await server.listen({ port: 3000 })
 ```
 ```js [vite.config.js]
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { resolve } from 'node:path'
 
 import viteVue from '@vitejs/plugin-vue'
 import fastifyVue from '@fastify/vue/plugin'
 
-const path = fileURLToPath(import.meta.url)
-
 export default {
-  root: join(dirname(path), 'client'),
+  root: resolve(import.meta.dirname, 'client'),
   plugins: [
     viteVue(),
     fastifyVue(),
