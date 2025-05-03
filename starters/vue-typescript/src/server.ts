@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import FastifyFormBody from '@fastify/formbody'
@@ -14,12 +15,13 @@ const server = Fastify({
   }
 })
 
+// @ts-ignore TODO
 await server.register(FastifyFormBody)
 
 await server.register(FastifyVite, {
-  // TODO handle via CLI path argument with proper resolve
-  root: process.cwd(),
-  renderer: '@fastify/react',
+  root: resolve(import.meta.dirname, '..'),
+  distDir: import.meta.dirname, // This file will also live in the dist folder when built
+  renderer: '@fastify/vue',
 })
 
 await server.vite.ready()
