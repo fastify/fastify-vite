@@ -59,7 +59,7 @@ import FastifyVite from '@fastify/vite'
 const server = Fastify()
 
 await server.register(FastifyVite, {
-  root: import.meta.url, // where to look for vite.config.js
+  root: import.meta.dirname, // where to look for vite.config.js
   dev: process.argv.includes('--dev'),
   spa: true
 })
