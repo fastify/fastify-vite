@@ -83,7 +83,6 @@ giget gh:fastify/fastify-vite/starters/react-kitchensink#dev your-app
 
 All dependencies from **react-base**.
 
-
 ## Known limitations
 
 - It's currently impossible to run **multiple** Vite development servers, which means `@fastify/vite` can **only be registered once**. Vite's new [Environment API](https://vite.dev/guide/api-environment) was created to avoid this necessity.

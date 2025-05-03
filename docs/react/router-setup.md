@@ -18,7 +18,13 @@ export defaut function MyPage () {
 
 ## Routes location
 
-You can also change the glob pattern used to determine where to route modules from. Internally, this setting is passed to [Vite's glob importer](https://vitejs.dev/guide/features.html#glob-import).
+Internally, the route modules location is set via the `$app/routes.js` [virtual module](/react/project-structure#smart-imports), which is defined as follows by default:
+
+```js
+export default import.meta.glob('/pages/**/*.{jsx,tsx}')
+```
+
+To change the location where routes are loaded from, just place a `routes.js` file at your Vite project's root directory and `@fastify/react/plugin` will automatically recognize it and use it instead.
 
 In your Vite configuration file:
 
