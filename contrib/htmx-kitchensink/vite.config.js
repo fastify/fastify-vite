@@ -1,8 +1,10 @@
-import { join } from 'node:path'
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
 import viteFastifyHtmx from '@fastify/htmx/plugin'
 
 export default {
-  root: join(import.meta.dirname, 'client'),
+  root: join(dirname(fileURLToPath(import.meta.url)), 'client'),
   plugins: [
     viteFastifyHtmx()
   ],

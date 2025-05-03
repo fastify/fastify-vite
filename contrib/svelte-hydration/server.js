@@ -4,11 +4,11 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 
-export async function main(dev) {
+export async function main (dev) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
-    root: import.meta.dirname,
+    root: import.meta.url,
     dev: dev || process.argv.includes('--dev'),
     renderer
   })

@@ -3,13 +3,14 @@ import { fileURLToPath } from 'node:url'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
-export async function main(dev) {
+export async function main (dev) {
   const server = Fastify()
+  const root = import.meta.url
 
   await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
-    root: import.meta.dirname,
-    createRenderFunction({ Page }) {
+    root,
+    createRenderFunction ({ Page }) {
       return () => {
         const { html: element } = Page.render()
         return { element }
@@ -26,7 +27,7 @@ export async function main(dev) {
   return server
 }
 
-if (process.argv[1] === import.meta.filename) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const server = await main()
   await server.listen({ port: 3000 })
 }
