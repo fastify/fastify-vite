@@ -1,5 +1,6 @@
 {
 	"editor.tabSize": 2,
+	"editor.insertSpaces": true,
 	"[javascript]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features",
 	},
