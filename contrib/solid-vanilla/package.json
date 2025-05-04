@@ -1,4 +1,5 @@
 {
+  "name": "solid-vanilla",
   "private": true,
   "type": "module",
   "scripts": {

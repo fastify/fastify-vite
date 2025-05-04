@@ -1,4 +1,5 @@
 {
+  "name": "react-base",
   "private": true,
   "type": "module",
   "scripts": {

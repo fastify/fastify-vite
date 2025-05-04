@@ -1,4 +1,5 @@
 {
+  "name": "svelte-vanilla",
   "private": true,
   "type": "module",
   "scripts": {

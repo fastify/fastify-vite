@@ -1,4 +1,5 @@
 {
+  "name": "react-kitchensink",
   "private": true,
   "type": "module",
   "scripts": {

@@ -1,4 +1,5 @@
 {
+  "name": "react-typescript",
   "private": true,
   "type": "module",
   "scripts": {
