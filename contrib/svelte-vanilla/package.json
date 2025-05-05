@@ -1,4 +1,6 @@
 {
+  "name": "svelte-vanilla",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
