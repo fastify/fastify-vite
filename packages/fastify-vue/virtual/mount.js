@@ -9,7 +9,7 @@ async function mountApp (...targets) {
   const ctxHydration = await extendContext(window.route, context)
   const resolvedRoutes = await hydrateRoutes(routes)
   const routeMap = Object.fromEntries(
-    resolvedRoutes.map((route) => [route.path, route]),
+    resolvedRoutes.map((route) => [route.key, route]),
   )
   const { instance, router } = await create({
     ctxHydration,
