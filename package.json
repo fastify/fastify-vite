@@ -8,6 +8,7 @@
   },
   "private": "true",
   "devDependencies": {
+    "@changesets/cli": "^2.29.2",
     "execa": "^9.5.2",
     "oxlint": "^0.9.10",
     "vite": "^6.2.5",

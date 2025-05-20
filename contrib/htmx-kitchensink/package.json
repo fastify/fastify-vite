@@ -1,6 +1,7 @@
 {
   "name": "htmx-kitchensink",
   "description": "The htmx-kitchensink starter template for @fastify/htmx",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
