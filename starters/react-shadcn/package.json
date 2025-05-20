@@ -14,6 +14,7 @@
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/react": "^1.1.0",
     "@fastify/vite": "^8.1.2",
+    "@radix-ui/react-select": "^2.2.4",
     "@radix-ui/react-slot": "^1.2.2",
     "@unhead/react": "^2.0.8",
     "class-variance-authority": "^0.7.1",
