@@ -4,7 +4,7 @@ $.verbose = true
 import { join } from 'node:path'
 import { readFileSync, writeFileSync } from 'node:fs'
 
-const root = path.resolve(__dirname)
+const root = import.meta.dirname
 
 const fastifyViteVersion = getVersion('fastify-vite')
 const fastifyVueVersion = getVersion('fastify-vue')
@@ -31,7 +31,7 @@ if (process.argv.includes('--prep-for-release')) {
   await prepForRelease()
 }
 
-async function prepForRelease () {
+async function prepForRelease() {
   const starterRoot = join(root, 'starters')
   cd(starterRoot)
   // Remove optionalDependencies from @fastify/vite's package.json
@@ -51,10 +51,12 @@ async function prepForRelease () {
     }
     writeFileSync(join(starterRoot, starter, 'package.json'), JSON.stringify(pkgJSON, null, 2))
   }
+  cd(root)
+  await $`pnpm i`
   process.exit()
 }
 
-async function prepForDev () {
+async function prepForDev() {
   const starterRoot = join(root, 'starters')
   cd(starterRoot)
   // Add optionalDependencies to @fastify/vite's package.json
@@ -82,7 +84,7 @@ async function prepForDev () {
   process.exit()
 }
 
-async function runAllTests () {
+async function runAllTests() {
   cd(join(root, 'packages/fastify-vite'))
 
   await $`npx vitest run`
@@ -111,7 +113,7 @@ async function runAllTests () {
   process.exit()
 }
 
-function getVersion (pkg) {
+function getVersion(pkg) {
   const pkgJSON = JSON.parse(
     readFileSync(join(root, 'packages', pkg, 'package.json'))
   )

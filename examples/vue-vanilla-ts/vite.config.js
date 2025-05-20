@@ -1,9 +1,9 @@
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 import viteFastifyPlugin from '@fastify/vite/plugin'
 import vuePlugin from '@vitejs/plugin-vue'
 
 export default {
-  root: join(import.meta.dirname, 'src', 'client'),
+  root: resolve(import.meta.dirname, 'src', 'client'),
   plugins: [
     viteFastifyPlugin(),
     vuePlugin(),
@@ -11,7 +11,7 @@ export default {
   build: {
     // Forces Vite to use a top-level dist folder,
     // outside the project root defined above
-    outDir: join(import.meta.dirname, 'build'),
+    outDir: resolve(import.meta.dirname, 'build'),
     emptyOutDir: true,
   }
 }
