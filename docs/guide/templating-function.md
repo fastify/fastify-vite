@@ -7,7 +7,7 @@ As per Vite's documentation, `index.html` is a special file made part of the mod
 
 When you run the `vite build` command, `index.html` is what Vite automatically looks for. Given this special nature, you probably want to keep it as simple as possible, using HTML comments to specify content placeholders. That's the pattern used across the official SSR examples from [Vite's playground](https://github.com/vitejs/vite/tree/main/packages/playground).
 
-**`@fastify/vite`** will automatically add ([decorate](https://fastify.dev/docs/latest/Reference/Decorators/)) a `html()` method on the **Fastify** `Reply` class. This method sends your Vite project's `index.html` to the client with the appropriate media tyope (`text/html`). But it can also replace variable placeholders in your `index.html`. That's because **`@fastify/vite`** packs a helper function that **turns an HTML document with placeholders indicated by HTML comments into a precompiled templating function**:
+**`@fastify/vite`** will automatically add ([decorate](https://fastify.dev/docs/latest/Reference/Decorators/)) a `html()` method on the **Fastify** `Reply` class. This method sends your Vite project's `index.html` to the client with the appropriate media type (`text/html`). But it can also replace variable placeholders in your `index.html`. That's because **`@fastify/vite`** packs a helper function that **turns an HTML document with placeholders indicated by HTML comments into a precompiled templating function**:
 
 ```js
 import { createHtmlTemplateFunction } from '@fastify/vite/utils'
