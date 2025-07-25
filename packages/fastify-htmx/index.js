@@ -108,7 +108,7 @@ async function prepareClient(clientModule, scope, config) {
 }
 
 // The return value of this function gets registered as reply.html()
-export function createHtmlFunction(source, scope, config) {
+export function createHtmlFunction(source, _, config) {
   const htmlTemplate = config.createHtmlTemplateFunction(source)
   return function (ctx) {
     this.type('text/html')
@@ -117,7 +117,7 @@ export function createHtmlFunction(source, scope, config) {
   }
 }
 
-export function createRouteHandler({ client, route }, scope, config) {
+export function createRouteHandler({ client, route }, scope) {
   if (route.fragment) {
     return async (req, reply) => {
       req.route = route
