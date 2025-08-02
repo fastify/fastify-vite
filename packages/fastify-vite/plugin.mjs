@@ -1,5 +1,6 @@
+import { isAbsolute, join, sep } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { isAbsolute, join, write, sep } from './ioutils.cjs'
+import { writeFile } from 'node:fs/promises'
 
 export function viteFastify({ spa, clientModule } = {}) {
   let configuredOutDir
@@ -106,7 +107,7 @@ export function viteFastify({ spa, clientModule } = {}) {
       }
     },
     async writeBundle() {
-      await write(
+      await writeFile(
         jsonFilePath,
         JSON.stringify(configToWrite, undefined, 2),
         'utf-8',
@@ -119,7 +120,7 @@ export function findCommonPath(paths) {
   if (paths.length === 1) {
     return paths[0]
   }
-  const segments = paths.map((path) => path.split('/'))
+  const segments = paths.map((path) => path.split(sep))
   const minLength = Math.min(...segments.map((arr) => arr.length))
   const commonSegments = []
   for (let i = 0; i < minLength; i++) {
@@ -131,7 +132,7 @@ export function findCommonPath(paths) {
     }
   }
 
-  return commonSegments.join('/')
+  return commonSegments.join(sep)
 }
 
 export default viteFastify
