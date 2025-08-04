@@ -52,7 +52,8 @@
     "find-cache-dir": "^5.0.0",
     "fs-extra": "^11.3.0",
     "html-rewriter-wasm": "^0.4.1",
-    "klaw": "^4.1.0"
+    "klaw": "^4.1.0",
+    "package-directory": "^8.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

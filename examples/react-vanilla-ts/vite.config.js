@@ -5,7 +5,7 @@ import viteReact from '@vitejs/plugin-react'
 export default {
   root: resolve(import.meta.dirname, 'src', 'client'),
   plugins: [
-    viteFastify(),
+    viteFastify({ useRelativePaths: true }),
     viteReact()
   ],
   build: {

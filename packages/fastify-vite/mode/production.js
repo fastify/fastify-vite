@@ -23,8 +23,16 @@ async function setup(config) {
   let ssrOutDir
 
   if (vite.fastify) {
-    clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, vite.root)
-    ssrOutDir = resolveIfRelative(vite.fastify.outDirs.ssr || '', vite.root)
+    const { outDirs, usePathsRelativeToAppRoot } = vite.fastify
+
+    let outDirRoot = vite.root
+    if (usePathsRelativeToAppRoot) {
+      const { packageDirectory } = await import('package-directory')
+      outDirRoot = await packageDirectory()
+    }
+
+    clientOutDir = resolveIfRelative(outDirs.client, outDirRoot)
+    ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
   } else {
     // Backwards compatibility for projects that do not use the viteFastify plugin.
     const outDir = resolveIfRelative(vite.build.outDir, vite.root)
@@ -37,11 +45,11 @@ async function setup(config) {
   const { assetsDir } = vite.build
 
   if (!exists(clientOutDir)) {
-    throw new Error('No client distribution bundle found.')
+    throw new Error(`No client distribution bundle found at ${clientOutDir}.`)
   }
 
   if (!spa && !exists(ssrOutDir)) {
-    throw new Error('No SSR distribution bundle found.')
+    throw new Error(`No SSR distribution bundle found at ${ssrOutDir}.`)
   }
 
   // We also register fastify-static to serve all static files
