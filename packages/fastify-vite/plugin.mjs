@@ -1,8 +1,9 @@
+import { isAbsolute, join, relative, sep } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { isAbsolute, join, write, sep } from './ioutils.cjs'
+import { writeFile } from 'node:fs/promises'
 
-export function viteFastify({ spa, clientModule } = {}) {
-  let configuredOutDir
+export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}) {
+  let customOutDir
   let jsonFilePath
   let configToWrite = {}
   let resolvedConfig = {}
@@ -10,10 +11,10 @@ export function viteFastify({ spa, clientModule } = {}) {
   return {
     name: 'vite-fastify',
     enforce: 'pre',
-    async config(config, { mode }) {
-      configuredOutDir = config.build?.outDir
-      const dev = mode === 'development'
-      const outDir = configuredOutDir ?? 'dist'
+    async config(rawConfig, { mode }) {
+      customOutDir = rawConfig.build?.outDir
+      const isDevMode = mode === 'development'
+      const outDir = customOutDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
       const {
         resolveClientModule,
@@ -21,25 +22,25 @@ export function viteFastify({ spa, clientModule } = {}) {
         createClientEnvironment,
       } = await import('./config.js')
 
-      if (!config.environments) {
-        config.environments = {}
+      if (!rawConfig.environments) {
+        rawConfig.environments = {}
       }
-      config.environments.client = deepMerge(
-        createClientEnvironment(dev, outDir),
-        config.environments.client ?? {},
+      rawConfig.environments.client = deepMerge(
+        createClientEnvironment(isDevMode, outDir),
+        rawConfig.environments.client ?? {},
       )
       if (!spa) {
-        const ssrEntryPoint = clientModule ?? resolveClientModule(config.root)
-        config.environments.ssr = deepMerge(
-          createSSREnvironment(dev, outDir, ssrEntryPoint),
-          config.environments.ssr ?? {},
+        const ssrEntryPoint = clientModule ?? resolveClientModule(rawConfig.root)
+        rawConfig.environments.ssr = deepMerge(
+          createSSREnvironment(isDevMode, outDir, ssrEntryPoint),
+          rawConfig.environments.ssr ?? {},
         )
-        if (!config.builder) {
-          config.builder = {}
+        if (!rawConfig.builder) {
+          rawConfig.builder = {}
         }
         // Write the JSON file after the bundle finishes writing to avoid getting deleted by emptyOutDir
-        if (!config.builder.buildApp) {
-          config.builder.buildApp = async (builder) => {
+        if (!rawConfig.builder.buildApp) {
+          rawConfig.builder.buildApp = async (builder) => {
             await builder.build(builder.environments.client)
             await builder.build(builder.environments.ssr)
           }
@@ -90,7 +91,12 @@ export function viteFastify({ spa, clientModule } = {}) {
         fastify,
       }
 
-      let commonDistFolder = configuredOutDir // respect custom build.outDir config if provided
+      if (useRelativePaths) {
+        await makeAllPathsRelative(configToWrite)
+        fastify.usePathsRelativeToAppRoot = !!customOutDir
+      }
+
+      let commonDistFolder = customOutDir // respect custom build.outDir config if provided
       if (!commonDistFolder) {
         const outDirs = Object.values(fastify.outDirs)
         commonDistFolder = outDirs.length > 1
@@ -106,7 +112,7 @@ export function viteFastify({ spa, clientModule } = {}) {
       }
     },
     async writeBundle() {
-      await write(
+      await writeFile(
         jsonFilePath,
         JSON.stringify(configToWrite, undefined, 2),
         'utf-8',
@@ -119,7 +125,7 @@ export function findCommonPath(paths) {
   if (paths.length === 1) {
     return paths[0]
   }
-  const segments = paths.map((path) => path.split('/'))
+  const segments = paths.map((path) => path.split(sep))
   const minLength = Math.min(...segments.map((arr) => arr.length))
   const commonSegments = []
   for (let i = 0; i < minLength; i++) {
@@ -131,7 +137,23 @@ export function findCommonPath(paths) {
     }
   }
 
-  return commonSegments.join('/')
+  return commonSegments.join(sep)
+}
+
+async function makeAllPathsRelative(viteConfig) {
+  const { packageDirectory } = await import('package-directory')
+  const applicationRootDirectory = await packageDirectory() // location of user's package.json
+  const { build, fastify } = viteConfig
+
+  viteConfig.root = relative(applicationRootDirectory, viteConfig.root)
+
+  if (build?.outDir) {
+    build.outDir = relative(applicationRootDirectory, build.outDir)
+  }
+
+  Object.keys(fastify.outDirs).forEach((key) => {
+    fastify.outDirs[key] = relative(applicationRootDirectory, fastify.outDirs[key])
+  })
 }
 
 export default viteFastify

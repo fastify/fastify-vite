@@ -52,15 +52,16 @@
     "find-cache-dir": "^5.0.0",
     "fs-extra": "^11.3.0",
     "html-rewriter-wasm": "^0.4.1",
-    "klaw": "^4.1.0"
+    "klaw": "^4.1.0",
+    "package-directory": "^8.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.17",
-    "@vitest/ui": "^3.1.1",
+    "@vitest/ui": "catalog:",
     "fastify": "catalog:",
     "typescript": "~5.8.2",
-    "vitest": "^3.1.1"
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "fastify": ">=5",
