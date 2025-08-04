@@ -13,7 +13,7 @@
     "@fastify/vite": "^8.1.2",
     "@fastify/vue": "^1.1.1",
     "@unhead/vue": "^2.0.5",
-    "fastify": "^5.2.2",
+    "fastify": "^5.4.0",
     "html-rewriter-wasm": "^0.4.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
