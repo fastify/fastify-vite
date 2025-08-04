@@ -22,10 +22,9 @@
     "./plugin": "./plugin.cjs"
   },
   "dependencies": {
-    "@kitajs/html": "^4.2.7",
+    "@kitajs/html": "^4.2.9",
     "@rollup/plugin-inject": "^5.0.5",
-    "devalue": "^5.1.1",
-    "htmx.org": "^2.0.4",
+    "htmx.org": "^2.0.6",
     "mlly": "^1.7.4"
   },
   "publishConfig": {

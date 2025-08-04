@@ -1,7 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { dirname, extname, join, resolve } from 'node:path'
 import { renderToStream } from '@kitajs/html/suspense.js'
-import * as devalue from 'devalue'
 import { findStaticImports, resolvePath } from 'mlly'
 
 export default {
