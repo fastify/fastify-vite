@@ -58,10 +58,10 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.17",
-    "@vitest/ui": "^3.1.1",
+    "@vitest/ui": "catalog:",
     "fastify": "catalog:",
     "typescript": "~5.8.2",
-    "vitest": "^3.1.1"
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "fastify": ">=5",
