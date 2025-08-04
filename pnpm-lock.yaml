@@ -1089,10 +1089,10 @@ importers:
         version: 2.0.2
       '@fastify/react':
         specifier: ^1.1.0
-        version: 1.1.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.0(@types/react@19.1.2)(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.1.0)
@@ -1150,10 +1150,10 @@ importers:
         version: 2.0.2
       '@fastify/react':
         specifier: ^1.1.0
-        version: 1.1.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.0(@types/react@19.1.2)(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.1.0)
@@ -1211,10 +1211,10 @@ importers:
         version: 2.0.2
       '@fastify/react':
         specifier: ^1.1.0
-        version: 1.1.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.0(@types/react@19.1.2)(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.1.0)
@@ -1283,11 +1283,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.1.1
-        version: 1.1.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.1(@types/node@22.14.0)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.8.3))
@@ -1332,11 +1332,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.1.1
-        version: 1.1.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.1(@types/node@22.14.0)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.8.3))
@@ -1381,11 +1381,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.1.2
-        version: 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        specifier: ^8.2.0
+        version: 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.1.1
-        version: 1.1.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+        version: 1.1.1(@types/node@22.14.0)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.8.3))
@@ -2740,10 +2740,11 @@ packages:
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
     bundledDependencies: []
 
-  '@fastify/vite@8.1.2':
-    resolution: {integrity: sha512-W/XC2wmDjGwzQGa1SFphn+7w6KlzOYpK69yWAV4T3c3BZb5JcFgrM/f/ZRQpQ4kgYZfNs5UbfC6CA5Zccw2xtw==}
+  '@fastify/vite@8.2.0':
+    resolution: {integrity: sha512-mKE0+2jWAe+zk9x85BdzzGiY2tIBcqHk/8YJsz7YlFzuqE7Un0WmGFP1kcqe8PS5GSt6YFSeuAYKiFztjwp4SQ==}
     peerDependencies:
       fastify: '>=5'
+      vite: '>=5'
 
   '@fastify/vue@1.1.1':
     resolution: {integrity: sha512-hcVTkceQPQulbpQJjrrCezJ0O0UhJ4QIrydJSALGrHhP2ejPKJg5OEzqLuN33VOvhW9OrKvbMnBXDMhLwQDb8Q==}
@@ -8424,18 +8425,6 @@ snapshots:
 
   '@fastify/forwarded@3.0.0': {}
 
-  '@fastify/htmx@0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(rollup@4.46.2)':
-    dependencies:
-      '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))
-      '@rollup/plugin-inject': 5.0.5(rollup@4.46.2)
-      devalue: 5.1.1
-      htmx.org: 1.9.12
-      mlly: 1.7.4
-    transitivePeerDependencies:
-      - '@kitajs/ts-html-plugin'
-      - rollup
-    optional: true
-
   '@fastify/htmx@0.4.0(@kitajs/ts-html-plugin@4.1.1)(rollup@4.46.2)':
     dependencies:
       '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1)
@@ -8474,9 +8463,9 @@ snapshots:
       '@fastify/forwarded': 3.0.0
       ipaddr.js: 2.2.0
 
-  '@fastify/react@1.1.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)':
+  '@fastify/react@1.1.0(@types/react@19.1.2)(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
-      '@fastify/vite': 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+      '@fastify/vite': 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react': 2.0.8(react@19.1.0)
       acorn: 8.14.1
       acorn-strip-function: 1.2.0
@@ -8492,22 +8481,9 @@ snapshots:
       valtio: 2.1.5(@types/react@19.1.2)(react@19.1.0)
       youch: 3.3.4
     transitivePeerDependencies:
-      - '@kitajs/ts-html-plugin'
-      - '@types/node'
       - '@types/react'
       - fastify
-      - jiti
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - typescript
-      - yaml
+      - vite
 
   '@fastify/send@2.1.0':
     dependencies:
@@ -8561,7 +8537,7 @@ snapshots:
       - sugarss
       - terser
 
-  '@fastify/vite@8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)':
+  '@fastify/vite@8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.1.0
       '@fastify/middie': 9.0.3
@@ -8572,31 +8548,12 @@ snapshots:
       fs-extra: 11.3.0
       html-rewriter-wasm: 0.4.1
       klaw: 4.1.0
-    optionalDependencies:
-      '@fastify/htmx': 0.4.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(rollup@4.46.2)
-      '@fastify/react': 1.1.0(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
-      '@fastify/vue': 1.1.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+      package-directory: 8.1.0
       vite: 6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
-    transitivePeerDependencies:
-      - '@kitajs/ts-html-plugin'
-      - '@types/node'
-      - '@types/react'
-      - jiti
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - typescript
-      - yaml
 
-  '@fastify/vue@1.1.1(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)':
+  '@fastify/vue@1.1.1(@types/node@22.14.0)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))(@types/node@22.14.0)(@types/react@19.1.2)(fastify@5.4.0)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.46.2)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.7.1)
+      '@fastify/vite': 8.2.0(fastify@5.4.0)(vite@6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/vue': 2.0.8(vue@3.5.13(typescript@5.8.3))
       acorn: 8.14.1
       acorn-walk: 8.3.4
@@ -8609,14 +8566,11 @@ snapshots:
     optionalDependencies:
       vite: 6.3.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
     transitivePeerDependencies:
-      - '@kitajs/ts-html-plugin'
       - '@types/node'
-      - '@types/react'
       - fastify
       - jiti
       - less
       - lightningcss
-      - rollup
       - sass
       - sass-embedded
       - stylus
@@ -8665,12 +8619,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@kitajs/html@3.1.2(@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3))':
-    dependencies:
-      '@kitajs/ts-html-plugin': 4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3)
-      csstype: 3.1.3
-    optional: true
-
   '@kitajs/html@3.1.2(@kitajs/ts-html-plugin@4.1.1)':
     dependencies:
       '@kitajs/ts-html-plugin': 4.1.1(@kitajs/html@3.1.2)(typescript@5.8.3)
@@ -8687,15 +8635,6 @@ snapshots:
       tslib: 2.8.1
       typescript: 5.8.3
       yargs: 17.7.2
-
-  '@kitajs/ts-html-plugin@4.1.1(@kitajs/html@4.2.7)(typescript@5.8.3)':
-    dependencies:
-      '@kitajs/html': 4.2.7
-      chalk: 4.1.2
-      tslib: 2.8.1
-      typescript: 5.8.3
-      yargs: 17.7.2
-    optional: true
 
   '@lukeed/ms@2.0.2': {}
 
