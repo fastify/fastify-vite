@@ -1,5 +1,4 @@
 import { createRoutes } from '/routing.js'
-export { createClientBeforeEachHandler, createServerBeforeEachHandler } from '/routing.js'
 
 export default {
   routes: createRoutes(import('$app/routes.js')),
