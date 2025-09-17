@@ -43,7 +43,7 @@ catalogs:
       specifier: ^5.8.3
       version: 5.8.3
     vite:
-      specifier: ^6.3.5
+      specifier: ^6.3.6
       version: 6.3.6
     vitest:
       specifier: ^3.2.4
@@ -2891,6 +2891,7 @@ packages:
 
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
+    bundledDependencies: []
 
   '@fastify/vite@8.2.0':
     resolution: {integrity: sha512-mKE0+2jWAe+zk9x85BdzzGiY2tIBcqHk/8YJsz7YlFzuqE7Un0WmGFP1kcqe8PS5GSt6YFSeuAYKiFztjwp4SQ==}
