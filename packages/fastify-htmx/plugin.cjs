@@ -1,9 +1,8 @@
-const { readFileSync, existsSync } = require('fs')
-const { dirname, join, resolve } = require('path')
-const { fileURLToPath } = require('url')
+const { readFileSync, existsSync } = require('node:fs')
+const { resolve } = require('node:path')
 const inject = require('@rollup/plugin-inject')
 
-function viteFastifyHtmx(config = {}) {
+function viteFastifyHtmx() {
   const prefix = /^\/:/
   const virtualRoot = resolve(__dirname, 'virtual')
   const virtualModules = [

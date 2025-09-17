@@ -14,7 +14,7 @@
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/vite": "^8.1.2",
+    "@fastify/vite": "^8.2.0",
     "@fastify/vue": "^1.1.1",
     "@unhead/vue": "^2.0.5",
     "fastify": "^5.4.0",
@@ -32,6 +32,6 @@
     "tailwindcss": "^4.1.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
-    "vite": "^6.3.4"
+    "vite": "^6.3.6"
   }
 }
