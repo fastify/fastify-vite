@@ -23,7 +23,7 @@ async function createRoute ({ handler, errorHandler, route }, scope, config) {
   if (route.getServerSideProps) {
     // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
-      reply.send(await route.getServerSideProps({
+      return reply.send(await route.getServerSideProps({
         req,
         ky: scope.ky
       }))
