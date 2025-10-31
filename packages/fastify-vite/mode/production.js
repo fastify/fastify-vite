@@ -1,6 +1,12 @@
 const { join, resolve } = require('node:path')
 const FastifyStatic = require('@fastify/static')
-const { parse, resolveIfRelative, read, exists } = require('../ioutils.cjs')
+const {
+  parse,
+  resolveIfRelative,
+  read,
+  exists,
+  determineOutDirRoot,
+} = require('../ioutils.cjs')
 
 function fileUrl(str) {
   if (typeof str !== 'string') {
@@ -23,19 +29,15 @@ async function setup(config) {
   let ssrOutDir
 
   if (vite.fastify) {
-    const { outDirs, usePathsRelativeToAppRoot } = vite.fastify
+    const { outDirs } = vite.fastify
 
-    let outDirRoot = vite.root
-    if (usePathsRelativeToAppRoot) {
-      const { packageDirectory } = await import('package-directory')
-      outDirRoot = await packageDirectory()
-    }
+    const outDirRoot = await determineOutDirRoot(vite)
 
-    clientOutDir = resolveIfRelative(outDirs.client, outDirRoot)
-    ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
+    clientOutDir = await resolveIfRelative(outDirs.client, outDirRoot)
+    ssrOutDir = await resolveIfRelative(outDirs.ssr || '', outDirRoot)
   } else {
     // Backwards compatibility for projects that do not use the viteFastify plugin.
-    const outDir = resolveIfRelative(vite.build.outDir, vite.root)
+    const outDir = await resolveIfRelative(vite.build.outDir, vite.root)
 
     clientOutDir = resolve(outDir, 'client')
     ssrOutDir = resolve(outDir, 'server')
