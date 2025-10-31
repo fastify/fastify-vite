@@ -11,6 +11,7 @@ const {
   stat,
   read,
   sep,
+  determineOutDirRoot,
 } = require('./ioutils.cjs')
 const { createHtmlTemplateFunction } = require('./html.js')
 
@@ -317,25 +318,19 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(vite) {
-  const { usePathsRelativeToAppRoot } = vite.fastify
-  if (usePathsRelativeToAppRoot) {
-    const { packageDirectory } = await import('package-directory')
-    return await packageDirectory()
-  }
-  return vite.root
-}
-
 async function resolveSSRBundle({ dev, vite }) {
   const bundle = {}
   let clientOutDir
 
   if (!dev) {
     if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, await determineOutDirRoot(vite))
+      clientOutDir = await resolveIfRelative(
+        vite.fastify.outDirs.client,
+        await determineOutDirRoot(vite),
+      )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      bundle.dir = await resolveIfRelative(vite.build.outDir, vite.root)
       clientOutDir = resolve(bundle.dir, 'client')
     }
 
@@ -369,10 +364,13 @@ async function resolveSPABundle({ dev, vite }) {
     let clientOutDir
 
     if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, await determineOutDirRoot(vite))
+      clientOutDir = await resolveIfRelative(
+        vite.fastify.outDirs.client,
+        await determineOutDirRoot(vite),
+      )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      bundle.dir = await resolveIfRelative(vite.build.outDir, vite.root)
       clientOutDir = resolve(bundle.dir, 'client')
     }
 
