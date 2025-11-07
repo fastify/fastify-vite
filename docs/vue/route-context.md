@@ -186,7 +186,7 @@ export default {
 
 As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, available via the `@fastfiy/vue/client` module.
 
-> Contrary to all other [virtual modules](https://github.com/fastify/fastify-vite/config/vue/virtual-modules), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/vue/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
+> Contrary to all other [virtual modules](https://github.com/fastify/fastify-vite/blob/main/docs/config/vue/virtual-modules.md), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/vue/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
 
 ```js
 <script setup>
