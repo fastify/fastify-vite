@@ -45,4 +45,5 @@ jobs:
         uses: Yuri6037/Action-FakeTTY@v1.1
 
       - name: Run tests
+        shell: 'script --return --quiet --command "bash {0}"'
         run: pnpm test
