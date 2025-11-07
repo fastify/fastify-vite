@@ -43,7 +43,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "8.2.0",
+  "version": "8.2.1",
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",
     "@fastify/middie": "^9.0.3",
