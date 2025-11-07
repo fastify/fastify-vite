@@ -84,5 +84,5 @@
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "homepage": "https://fastify-vite.dev/react/"
+  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-react"
 }

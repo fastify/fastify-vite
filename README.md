@@ -1,6 +1,6 @@
 <br>
 
-<a href="https://fastify-vite.dev/"><img src="https://github.com/fastify/fastify-vite/assets/12291/7f711a83-91df-41d5-abf9-ae4f38ed24d3" style="width: 250px"></a>
+<a href="https://github.com/fastify/fastify-vite/"><img src="https://github.com/fastify/fastify-vite/assets/12291/7f711a83-91df-41d5-abf9-ae4f38ed24d3" style="width: 250px"></a>
 
 # **`@fastify/vite`**
 
@@ -15,8 +15,6 @@ This [Fastify](https://fastify.dev) plugin lets you:
 This repository is also the home of `@fastify/vue` and `@fastify/react`.
 
 They provide basic Nuxt and Next.js-like functionality, respectively, through `@fastify/vite`.
-
-See the [full documentation suite](https://fastify-vite.dev) to learn more.
 
 Official examples (low-level integration) can be found in [`examples/`](https://github.com/fastify/fastify-vite/tree/main/examples).
 

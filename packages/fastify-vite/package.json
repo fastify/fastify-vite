@@ -30,7 +30,7 @@
     "./utils": "./utils.js",
     "./plugin": "./plugin.mjs"
   },
-  "homepage": "https://fastify-vite.dev/",
+  "homepage": "https://github.com/fastify/fastify-vite",
   "license": "MIT",
   "main": "index.js",
   "name": "@fastify/vite",

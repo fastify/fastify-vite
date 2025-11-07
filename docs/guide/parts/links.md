@@ -2,7 +2,7 @@
 [react]: https://react.dev/
 [fastify-cli]: https://github.com/fastify/fastify-cli
 [fastify-static]: https://github.com/fastify/fastify-static
-[fastify-vite]: https://fastify-vite.dev
+[fastify-vite]: https://github.com/fastify/fastify-vite
 [fastify]: https://fastify.dev/
 [next]: https://nextjs.org/
 [nuxt]: https://nuxt.com/

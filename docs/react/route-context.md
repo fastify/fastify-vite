@@ -176,7 +176,7 @@ export default function Index (props) {
 
 As shown in the snippets above, the **route context** is accessed via the **`useRouteContext()`** hook, available via the `@fastfiy/react/client` module.
 
-> Contrary to all other [virtual modules](https://fastify-vite.dev/config/react/virtual-modules), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/react/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
+> Contrary to all other [virtual modules](https://github.com/fastify/fastify-vite/blob/main/docs/config/react/virtual-modules.md), which are available via the `$app` prefix, the `useRouteContext()` hook is provided by `@fastify/react/client`. This file is responsible for defining the route context, the Valtio state and also provides a couple of helpers. It's the only part of the setup you're encouraged to avoid changing. But in highly customized setups, you could still provide your own `useRouteContext()` from a local module.
 
 ```js
 import { useRouteContext } from '@fastify/react/client'

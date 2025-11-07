@@ -1,5 +1,5 @@
 <br>
 
-**`@fastify/vue`** is the official [**`@fastify/vite`**](https://fastify-vite.dev) renderer for Vue.
+**`@fastify/vue`** is the official [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) renderer for Vue.
 
-See the [documentation suite](https://fastify-vite.dev) to learn more.
+See the [documentation suite](https://github.com/fastify/fastify-vite) to learn more.
