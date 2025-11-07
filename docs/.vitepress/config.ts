@@ -18,7 +18,7 @@ export default withMermaid({
   },
 
   sitemap: {
-    hostname: 'https://fastify-vite.dev',
+    hostname: 'https://github.com/fastify/fastify-vite',
   },
 
   /* prettier-ignore */

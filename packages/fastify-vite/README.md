@@ -6,4 +6,4 @@
 
 This [Fastify](https://fastify.dev) plugin allows you to run Vite's development server as middleware, **expose** your [Vite](https://vitejs.dev) application to your Fastify application, with configuration hooks to **ease router integration** and **other customizations**, and also automatically serve Vite builds, inferred from a Vite configuration file.
 
-See the [full documentation suite](https://fastify-vite.dev) to learn more.
+See the [full documentation suite](https://github.com/fastify/fastify-vite) to learn more.

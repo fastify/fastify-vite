@@ -79,5 +79,5 @@
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "homepage": "https://fastify-vite.dev/vue/"
+  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue"
 }
