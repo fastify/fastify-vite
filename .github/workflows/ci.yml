@@ -41,5 +41,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --ignore-scripts
 
+      - name: faketty
+        uses: Yuri6037/Action-FakeTTY@v1.1
+
       - name: Run tests
         run: pnpm test
