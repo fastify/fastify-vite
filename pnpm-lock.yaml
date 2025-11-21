@@ -15,6 +15,9 @@ catalogs:
     '@vitest/ui':
       specifier: ^3.2.4
       version: 3.2.4
+    devalue:
+      specifier: ^5.1.1
+      version: 5.4.2
     fastify:
       specifier: ^5.4.0
       version: 5.4.0
@@ -69,8 +72,8 @@ importers:
         specifier: 'catalog:'
         version: 3.2.4(@types/debug@4.1.12)(@types/node@22.14.0)(@vitest/ui@3.2.4)(jiti@2.4.2)(jsdom@23.2.0)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
       zx:
-        specifier: ^8.7.2
-        version: 8.7.2
+        specifier: ^8.8.5
+        version: 8.8.5
 
   contrib/htmx-base:
     dependencies:
@@ -94,7 +97,7 @@ importers:
         version: 5.0.5(rollup@4.50.1)
       fastify:
         specifier: latest
-        version: 5.6.1
+        version: 5.6.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -137,7 +140,7 @@ importers:
         version: 5.0.5(rollup@4.50.1)
       fastify:
         specifier: latest
-        version: 5.6.1
+        version: 5.6.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -180,7 +183,7 @@ importers:
         version: 5.0.5(rollup@4.50.1)
       fastify:
         specifier: latest
-        version: 5.6.1
+        version: 5.6.2
       htmx.org:
         specifier: ^1.9.10
         version: 1.9.12
@@ -935,7 +938,7 @@ importers:
         version: 8.3.4
       devalue:
         specifier: latest
-        version: 5.4.2
+        version: 5.5.0
       history:
         specifier: latest
         version: 5.3.0
@@ -959,7 +962,7 @@ importers:
         version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       valtio:
         specifier: latest
-        version: 2.1.8(@types/react@19.1.2)(react@19.1.0)
+        version: 2.2.0(@types/react@19.1.2)(react@19.1.0)
       youch:
         specifier: ^3.3.4
         version: 3.3.4
@@ -1048,7 +1051,7 @@ importers:
         version: 8.3.4
       devalue:
         specifier: latest
-        version: 5.4.2
+        version: 5.5.0
       html-rewriter-wasm:
         specifier: ^0.4.1
         version: 0.4.1
@@ -1067,7 +1070,7 @@ importers:
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: latest
-        version: 6.0.1(vite@6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
+        version: 6.0.2(vite@6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       oxlint:
         specifier: ^0.16.8
         version: 0.16.8
@@ -3147,8 +3150,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@paralleldrive/cuid2@2.2.2':
-    resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
+  '@paralleldrive/cuid2@2.3.1':
+    resolution: {integrity: sha512-XO7cAxhnTZl0Yggq6jOgjiOHhbgcO4NqFqwSmQpjK3b6TEE6Uj/jfSk6wzYyemh3+I0sHirKSetjQwn5cZktFw==}
+
+  '@pinojs/redact@0.4.0':
+    resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -3165,8 +3171,8 @@ packages:
     peerDependencies:
       preact: 10.x
 
-  '@rolldown/pluginutils@1.0.0-beta.29':
-    resolution: {integrity: sha512-NIJgOsMjbxAXvoGq/X0gD7VPMQ8j9g0BiDaNjVNVjvl+iKXxL3Jre0v31RmBYeLEmkbj2s02v8vFTbUXi5XS2Q==}
+  '@rolldown/pluginutils@1.0.0-beta.50':
+    resolution: {integrity: sha512-5e76wQiQVeL1ICOZVUg4LSOVYg9jyhGCin+icYozhsUzM+fHE7kddi1bdiE0jwVqTfkjba3jUFbEkoC9WkdvyA==}
 
   '@rollup/plugin-inject@5.0.5':
     resolution: {integrity: sha512-2+DEJbNBoPROPkgTDNe8/1YXWcqxbN5DTjASVIOx8HS+pITXushyNiBV56RB08zuptzz8gT3YfkqriTBVycepg==}
@@ -3549,8 +3555,8 @@ packages:
       vite: ^5.0.0 || ^6.0.0
       vue: ^3.2.25
 
-  '@vitejs/plugin-vue@6.0.1':
-    resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
+  '@vitejs/plugin-vue@6.0.2':
+    resolution: {integrity: sha512-iHmwV3QcVGGvSC1BG5bZ4z6iwa1SOpAPWmnjOErd4Ske+lZua5K9TtAVdx0gMBClJ28DViCbSmZitjWZsWO3LA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -4369,6 +4375,9 @@ packages:
   devalue@5.4.2:
     resolution: {integrity: sha512-MwPZTKEPK2k8Qgfmqrd48ZKVvzSQjgW0lXLxiIBA8dQjtf/6mw6pggHNLcyDKyf+fI6eXxlQwPsfaCMTU5U+Bw==}
 
+  devalue@5.5.0:
+    resolution: {integrity: sha512-69sM5yrHfFLJt0AZ9QqZXGCPfJ7fQjvpln3Rq5+PS03LD32Ost1Q9N+eEnaQwGRIriKkMImXD56ocjQmfjbV3w==}
+
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
@@ -4762,8 +4771,8 @@ packages:
   fastify@5.4.0:
     resolution: {integrity: sha512-I4dVlUe+WNQAhKSyv15w+dwUh2EPiEl4X2lGYMmNSgF83WzTMAPKGdWEv5tPsCQOb+SOZwz8Vlta2vF+OeDgRw==}
 
-  fastify@5.6.1:
-    resolution: {integrity: sha512-WjjlOciBF0K8pDUPZoGPhqhKrQJ02I8DKaDIfO51EL0kbSMwQFl85cRwhOvmSDWoukNOdTo27gLN549pLCcH7Q==}
+  fastify@5.6.2:
+    resolution: {integrity: sha512-dPugdGnsvYkBlENLhCgX8yhyGCsCPrpA8lFWbTNU428l+YOnLgYHR69hzV8HWPC79n536EqzqQtvhtdaCE0dKg==}
 
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
@@ -5958,6 +5967,10 @@ packages:
   pino-std-serializers@7.0.0:
     resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
 
+  pino@10.1.0:
+    resolution: {integrity: sha512-0zZC2ygfdqvqK8zJIr1e+wT1T/L+LF6qvqvbzEQ6tiMAoTqEVK9a1K3YRu8HEUvGEvNqZyPJTtb2sNIoTkB83w==}
+    hasBin: true
+
   pino@9.6.0:
     resolution: {integrity: sha512-i85pKRCt4qMjZ1+L7sy2Ag4t1atFcdbEt76+7iRJn1g2BvsnRMGu9p8pivl9fs63M2kF/A0OacFZhTub+m/qMg==}
     hasBin: true
@@ -7032,8 +7045,8 @@ packages:
       react:
         optional: true
 
-  valtio@2.1.8:
-    resolution: {integrity: sha512-fjTPbJyKEmfVBZUOh3V0OtMHoFUGr4+4XpejjxhNJE/IS2l8rDbyJuzi3w/fZWBDyk7BJOpG+lmvTK5iiVhXuQ==}
+  valtio@2.2.0:
+    resolution: {integrity: sha512-l/zzQahUIm+dfUUP9fIecNVEWJLea9shMC1Bb1aK+v4XNOEzoq796Qax+yzMemmqpltuxfH7kPJy62FVGJDEtw==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=18.0.0'
@@ -7447,8 +7460,8 @@ packages:
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
 
-  zx@8.7.2:
-    resolution: {integrity: sha512-4Wtl46msLFx6QW6GjLu1aRnFhavukT4VSp4tdXvfRIBRNW3RP7Si3RlRFD7YeQeecQBacVFRQQgm5LTvE/YEGQ==}
+  zx@8.8.5:
+    resolution: {integrity: sha512-SNgDF5L0gfN7FwVOdEFguY3orU5AkfFZm9B5YSHog/UDHv+lvmd82ZAsOenOkQixigwH2+yyH198AwNdKhj+RA==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
 
@@ -8563,7 +8576,7 @@ snapshots:
     dependencies:
       '@kitajs/html': 3.1.2(@kitajs/ts-html-plugin@4.1.1)
       '@rollup/plugin-inject': 5.0.5(rollup@4.50.1)
-      devalue: 5.4.2
+      devalue: 5.5.0
       htmx.org: 1.9.12
       mlly: 1.7.4
     transitivePeerDependencies:
@@ -8604,7 +8617,7 @@ snapshots:
       acorn: 8.14.1
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
-      devalue: 5.4.2
+      devalue: 5.5.0
       history: 5.3.0
       html-rewriter-wasm: 0.4.1
       minipass: 7.1.2
@@ -8612,7 +8625,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       react-router: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      valtio: 2.1.8(@types/react@19.1.2)(react@19.1.0)
+      valtio: 2.2.0(@types/react@19.1.2)(react@19.1.0)
       youch: 3.3.4
     transitivePeerDependencies:
       - '@types/react'
@@ -8691,7 +8704,7 @@ snapshots:
       '@unhead/vue': 2.0.8(vue@3.5.13(typescript@5.8.3))
       acorn: 8.14.1
       acorn-walk: 8.3.4
-      devalue: 5.4.2
+      devalue: 5.5.0
       html-rewriter-wasm: 0.4.1
       mlly: 1.7.4
       vue: 3.5.13(typescript@5.8.3)
@@ -8871,7 +8884,7 @@ snapshots:
   '@oramacloud/client@1.0.0-beta.21(typescript@5.8.3)':
     dependencies:
       '@orama/orama': 1.2.11
-      '@paralleldrive/cuid2': 2.2.2
+      '@paralleldrive/cuid2': 2.3.1
       react: 18.3.1
       vue: 3.5.13(typescript@5.8.3)
     transitivePeerDependencies:
@@ -8949,9 +8962,11 @@ snapshots:
   '@oxlint/win32-x64@0.9.10':
     optional: true
 
-  '@paralleldrive/cuid2@2.2.2':
+  '@paralleldrive/cuid2@2.3.1':
     dependencies:
       '@noble/hashes': 1.8.0
+
+  '@pinojs/redact@0.4.0': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -8965,7 +8980,7 @@ snapshots:
       '@preact/signals-core': 1.8.0
       preact: 10.26.4
 
-  '@rolldown/pluginutils@1.0.0-beta.29': {}
+  '@rolldown/pluginutils@1.0.0-beta.50': {}
 
   '@rollup/plugin-inject@5.0.5(rollup@4.50.1)':
     dependencies:
@@ -9330,9 +9345,9 @@ snapshots:
       vite: 6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
       vue: 3.5.13(typescript@5.8.3)
 
-  '@vitejs/plugin-vue@6.0.1(vite@6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
+  '@vitejs/plugin-vue@6.0.2(vite@6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
     dependencies:
-      '@rolldown/pluginutils': 1.0.0-beta.29
+      '@rolldown/pluginutils': 1.0.0-beta.50
       vite: 6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
       vue: 3.5.13(typescript@5.8.3)
 
@@ -10223,6 +10238,8 @@ snapshots:
 
   devalue@5.4.2: {}
 
+  devalue@5.5.0: {}
+
   didyoumean@1.2.2: {}
 
   diff@5.2.0: {}
@@ -10845,7 +10862,7 @@ snapshots:
       semver: 7.7.1
       toad-cache: 3.7.0
 
-  fastify@5.6.1:
+  fastify@5.6.2:
     dependencies:
       '@fastify/ajv-compiler': 4.0.2
       '@fastify/error': 4.1.0
@@ -10856,7 +10873,7 @@ snapshots:
       fast-json-stringify: 6.0.1
       find-my-way: 9.3.0
       light-my-request: 6.6.0
-      pino: 9.6.0
+      pino: 10.1.0
       process-warning: 5.0.0
       rfdc: 1.4.1
       secure-json-parse: 4.0.0
@@ -12135,6 +12152,20 @@ snapshots:
 
   pino-std-serializers@7.0.0: {}
 
+  pino@10.1.0:
+    dependencies:
+      '@pinojs/redact': 0.4.0
+      atomic-sleep: 1.0.0
+      on-exit-leak-free: 2.1.2
+      pino-abstract-transport: 2.0.0
+      pino-std-serializers: 7.0.0
+      process-warning: 5.0.0
+      quick-format-unescaped: 4.0.4
+      real-require: 0.2.0
+      safe-stable-stringify: 2.5.0
+      sonic-boom: 4.2.0
+      thread-stream: 3.1.0
+
   pino@9.6.0:
     dependencies:
       atomic-sleep: 1.0.0
@@ -13340,7 +13371,7 @@ snapshots:
       '@types/react': 19.1.2
       react: 19.1.0
 
-  valtio@2.1.8(@types/react@19.1.2)(react@19.1.0):
+  valtio@2.2.0(@types/react@19.1.2)(react@19.1.0):
     dependencies:
       proxy-compare: 3.0.1
     optionalDependencies:
@@ -13744,4 +13775,4 @@ snapshots:
 
   zimmerframe@1.1.2: {}
 
-  zx@8.7.2: {}
+  zx@8.8.5: {}
