@@ -17,9 +17,9 @@ function fileUrl(str) {
   return encodeURI(`file://${pathName}`)
 }
 
-function adaptPath(path) {
-  return process.platform === 'win32' ? new URL(fileUrl(path)) : path
-}
+const adaptPath = process.platform === 'win32'
+  ? (path) => new URL(fileUrl(path))
+  : (path) => path
 
 async function setup(config) {
   const { spa, vite } = config
