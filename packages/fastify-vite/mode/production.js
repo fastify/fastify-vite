@@ -1,4 +1,4 @@
-const { join, resolve } = require('node:path')
+const { join, resolve, isAbsolute } = require('node:path')
 const FastifyStatic = require('@fastify/static')
 const { parse, resolveIfRelative, read, exists } = require('../ioutils.cjs')
 
@@ -15,6 +15,10 @@ function fileUrl(str) {
   }
 
   return encodeURI(`file://${pathName}`)
+}
+
+function adaptPath(path) {
+  return process.platform === 'win32' ? new URL(fileUrl(path)) : path
 }
 
 async function setup(config) {
@@ -124,16 +128,26 @@ async function setup(config) {
 
   return { client, routes: client?.routes }
 
-  async function loadBundle(viteRoot, distOutDir, entryPath) {
+  function retrievePath(viteConfig, env, serverFile) {
+    const viteRoot = viteConfig.root
+    const distOutDir = viteConfig.fastify.outDirs[env]
+    if (viteConfig.fastify.usePathsRelativeToAppRoot) {
+      return resolve(distOutDir, serverFile)
+    }
+    if (isAbsolute(distOutDir)) {
+      return resolve(distOutDir, serverFile)
+    }
+    return resolve(viteRoot, distOutDir, serverFile)
+  }
+
+  async function loadBundle(viteConfig, env, entryPath) {
     const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
     let bundlePath
     for (const serverFile of bundleFiles) {
+      const path = retrievePath(viteConfig, env, serverFile)
       // Use file path on Windows
-      bundlePath =
-        process.platform === 'win32'
-          ? new URL(fileUrl(resolve(viteRoot, distOutDir, serverFile)))
-          : resolve(viteRoot, distOutDir, serverFile)
+      bundlePath = adaptPath(path)
       if (exists(bundlePath)) {
         break
       }
@@ -164,18 +178,15 @@ async function setup(config) {
         ssrManifestPath = manifestPath
       }
     }
-    const ssrManifest =
-      process.platform === 'win32'
-        ? new URL(fileUrl(ssrManifestPath))
-        : ssrManifestPath
+    const ssrManifest = adaptPath(ssrManifestPath)
 
     const entries = {}
     for (const [env, entryPath] of Object.entries(
       config.vite.fastify.entryPaths,
     )) {
       entries[env] = await loadBundle(
-        config.vite.root,
-        config.vite.fastify.outDirs[env],
+        config.vite,
+        env,
         entryPath,
       )
     }

@@ -13,7 +13,7 @@ import { createHtmlTemplates } from './templating.js'
 // from the renderToPipeableStream() onShellReady event
 export function onShellReady(app) {
   const duplex = new Minipass()
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
       const pipeable = renderToPipeableStream(app, {
         onShellReady() {
@@ -30,7 +30,7 @@ export function onShellReady(app) {
 // from the renderToPipeableStream() onAllReady event
 export function onAllReady(app) {
   const duplex = new Minipass()
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
       const pipeable = renderToPipeableStream(app, {
         onAllReady() {
