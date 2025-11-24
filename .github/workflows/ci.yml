@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
 
     permissions:
       contents: read
@@ -19,6 +19,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x, 24.x, 25.x]
+        runs-on: ['ubuntu-latest', 'windows-latest', 'macos-latest']
 
     steps:
       - name: Checkout code
