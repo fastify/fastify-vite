@@ -129,7 +129,6 @@ async function setup(config) {
   return { client, routes: client?.routes }
 
   function retrievePath(viteConfig, env, serverFile) {
-    const viteRoot = viteConfig.root
     const distOutDir = viteConfig.fastify.outDirs[env]
     if (viteConfig.fastify.usePathsRelativeToAppRoot) {
       return resolve(distOutDir, serverFile)
@@ -137,7 +136,7 @@ async function setup(config) {
     if (isAbsolute(distOutDir)) {
       return resolve(distOutDir, serverFile)
     }
-    return resolve(viteRoot, distOutDir, serverFile)
+    return resolve(viteConfig.root, distOutDir, serverFile)
   }
 
   async function loadBundle(viteConfig, env, entryPath) {
