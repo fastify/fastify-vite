@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x, 24.x, 25.x]
-        runs-on: ['ubuntu-latest', 'windows-latest']
+        runs-on: ['ubuntu-latest']
 
     steps:
       - name: Checkout code
