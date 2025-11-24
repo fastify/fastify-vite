@@ -137,9 +137,9 @@ async function setup(config) {
       } else {
         bundlePath = resolve(viteConfig.root, distOutDir, serverFile)
       }
-      bundlePath = process.platform === 'win32'
-        ? (path) => new URL(fileUrl(path))
-        : (path) => path
+      if (process.platform === 'win32') {
+        bundlePath = new URL(fileUrl(bundlePath))
+      }
       if (exists(bundlePath)) {
         break
       }
