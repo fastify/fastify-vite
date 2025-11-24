@@ -127,19 +127,22 @@ async function setup(config) {
   async function loadBundle(viteConfig, distOutDir, entryPath) {
     const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
+
+    const fixWin32Path = process.platform === 'win32'
+      ? (filePath) => new URL(fileUrl(filePath))
+      : (filePath) => filePath
+
+    const getBundlePath = (
+      viteConfig.fastify.usePathsRelativeToAppRoot ||
+      isAbsolute(distOutDir)
+    )
+      ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
+      : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
+
     let bundlePath
 
     for (const serverFile of bundleFiles) {
-      if (viteConfig.fastify.usePathsRelativeToAppRoot) {
-        bundlePath = resolve(distOutDir, serverFile)
-      } else if (isAbsolute(distOutDir)) {
-        bundlePath = resolve(distOutDir, serverFile)
-      } else {
-        bundlePath = resolve(viteConfig.root, distOutDir, serverFile)
-      }
-      if (process.platform === 'win32') {
-        bundlePath = new URL(fileUrl(bundlePath))
-      }
+      bundlePath = getBundlePath(serverFile)
       if (exists(bundlePath)) {
         break
       }
