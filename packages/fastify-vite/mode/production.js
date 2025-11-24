@@ -171,7 +171,7 @@ async function setup(config) {
       }
     }
     const ssrManifest =
-        process.platform === 'win32'
+      process.platform === 'win32'
         ? new URL(fileUrl(ssrManifestPath))
         : ssrManifestPath
 
