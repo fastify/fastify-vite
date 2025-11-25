@@ -1,4 +1,4 @@
-const { join, resolve } = require('node:path')
+const { join, resolve, isAbsolute } = require('node:path')
 const FastifyStatic = require('@fastify/static')
 const { parse, resolveIfRelative, read, exists } = require('../ioutils.cjs')
 
@@ -124,16 +124,25 @@ async function setup(config) {
 
   return { client, routes: client?.routes }
 
-  async function loadBundle(viteRoot, distOutDir, entryPath) {
+  async function loadBundle(viteConfig, distOutDir, entryPath) {
     const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
+
+    const fixWin32Path = process.platform === 'win32'
+      ? (filePath) => new URL(fileUrl(filePath))
+      : (filePath) => filePath
+
+    const getBundlePath = (
+      viteConfig.fastify.usePathsRelativeToAppRoot ||
+      isAbsolute(distOutDir)
+    )
+      ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
+      : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
+
     let bundlePath
+
     for (const serverFile of bundleFiles) {
-      // Use file path on Windows
-      bundlePath =
-        process.platform === 'win32'
-          ? new URL(fileUrl(resolve(viteRoot, distOutDir, serverFile)))
-          : resolve(viteRoot, distOutDir, serverFile)
+      bundlePath = getBundlePath(serverFile)
       if (exists(bundlePath)) {
         break
       }
@@ -174,7 +183,7 @@ async function setup(config) {
       config.vite.fastify.entryPaths,
     )) {
       entries[env] = await loadBundle(
-        config.vite.root,
+        config.vite,
         config.vite.fastify.outDirs[env],
         entryPath,
       )
