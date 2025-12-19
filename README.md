@@ -20,8 +20,6 @@ Official examples (low-level integration) can be found in [`examples/`](https://
 
 Official starters (DX-focused) using `@fastify/vue` and `@fastify/react` can be found in [`starters/`](https://github.com/fastify/fastify-vite/tree/main/starters).
 
-The package's author [has also written a book covering the stack](https://hire.jonasgalvez.com.br/happy-little-monoliths).
-
 ## Team
 
 - Jonas Galvez [@galvez](https://github.com/galvez)
