@@ -65,7 +65,7 @@
   },
   "peerDependencies": {
     "fastify": ">=5",
-    "vite": ">=5"
+    "vite": ">=6"
   },
   "keywords": [
     "fastify",
