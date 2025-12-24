@@ -1,8 +1,12 @@
+import { writeFile } from 'node:fs/promises'
 import { isAbsolute, join, relative, sep } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
-import { writeFile } from 'node:fs/promises'
 
-export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}) {
+export function viteFastify({
+  spa,
+  clientModule,
+  useRelativePaths = false,
+} = {}) {
   let customOutDir
   let jsonFilePath
   let configToWrite = {}
@@ -30,7 +34,8 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
         rawConfig.environments.client ?? {},
       )
       if (!spa) {
-        const ssrEntryPoint = clientModule ?? resolveClientModule(rawConfig.root)
+        const ssrEntryPoint =
+          clientModule ?? resolveClientModule(rawConfig.root)
         rawConfig.environments.ssr = deepMerge(
           createSSREnvironment(isDevMode, outDir, ssrEntryPoint),
           rawConfig.environments.ssr ?? {},
@@ -99,10 +104,11 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
       let commonDistFolder = customOutDir // respect custom build.outDir config if provided
       if (!commonDistFolder) {
         const outDirs = Object.values(fastify.outDirs)
-        commonDistFolder = outDirs.length > 1
-          ? findCommonPath(outDirs)
-          // Handle SPA case where there's only dist/client
-          : outDirs[0].split(sep)[0]
+        commonDistFolder =
+          outDirs.length > 1
+            ? findCommonPath(outDirs)
+            : // Handle SPA case where there's only dist/client
+              outDirs[0].split(sep)[0]
       }
 
       if (isAbsolute(commonDistFolder)) {
@@ -152,7 +158,10 @@ async function makeAllPathsRelative(viteConfig) {
   }
 
   Object.keys(fastify.outDirs).forEach((key) => {
-    fastify.outDirs[key] = relative(applicationRootDirectory, fastify.outDirs[key])
+    fastify.outDirs[key] = relative(
+      applicationRootDirectory,
+      fastify.outDirs[key],
+    )
   })
 }
 
