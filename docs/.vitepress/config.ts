@@ -5,6 +5,7 @@ export default withMermaid({
   lang: 'en-US',
   title: '@fastify/vite',
   description: 'Vite & Vue powered static site generator.',
+  base: '/fastify-vite/',
 
   lastUpdated: true,
   cleanUrls: true,
@@ -18,7 +19,7 @@ export default withMermaid({
   },
 
   sitemap: {
-    hostname: 'https://github.com/fastify/fastify-vite',
+    hostname: 'https://fastify.github.io/fastify-vite',
   },
 
   /* prettier-ignore */
