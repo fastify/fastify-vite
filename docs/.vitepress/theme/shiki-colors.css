@@ -1,0 +1,8 @@
+/* Apply Shiki syntax highlighting colors */
+.vp-doc [class*='language-'] code span {
+  color: var(--shiki-light);
+}
+
+.dark .vp-doc [class*='language-'] code span {
+  color: var(--shiki-dark);
+}

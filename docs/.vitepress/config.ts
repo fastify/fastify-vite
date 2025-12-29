@@ -1,7 +1,8 @@
-import { withMermaid } from 'vitepress-plugin-mermaid'
 import type { DefaultTheme } from 'vitepress'
+import { defineConfig } from 'vitepress'
+import { MermaidMarkdown } from 'vitepress-plugin-mermaid'
 
-export default withMermaid({
+export default defineConfig({
   lang: 'en-US',
   title: '@fastify/vite',
   description: 'Vite & Vue powered static site generator.',
@@ -13,8 +14,11 @@ export default withMermaid({
   markdown: {
     math: true,
     theme: {
-      light: 'min-light',
-      dark: 'dracula',
+      light: 'github-light',
+      dark: 'github-dark',
+    },
+    config(md) {
+      md.use(MermaidMarkdown)
     }
   },
 
