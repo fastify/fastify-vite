@@ -11,7 +11,6 @@ const config = withMermaid({
   cleanUrls: true,
 
   markdown: {
-    math: true,
     theme: {
       light: 'github-light',
       dark: 'github-dark',
