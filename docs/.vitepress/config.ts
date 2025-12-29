@@ -61,7 +61,7 @@ const config = withMermaid({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2021-present Jonas Galvez'
     },
-  }
+  },
 })
 
 // https://github.com/emersonbottero/vitepress-plugin-mermaid/issues/83
