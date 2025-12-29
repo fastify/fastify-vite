@@ -1,28 +1,15 @@
 {
   "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
   "devDependencies": {
     "@orama/plugin-vitepress": "3.1.18",
     "markdown-it-mathjax3": "^4.3.2",
     "mermaid": "^11.12.2",
     "vitepress": "1.6.4",
     "vitepress-plugin-mermaid": "^2.0.17"
-  },
-  "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
-  },
-  "dependencies": {
-    "@braintree/sanitize-url": "^7.1.1",
-    "@docsearch/css": "^4.4.0",
-    "@docsearch/js": "^4.4.0",
-    "@vueuse/core": "^14.1.0",
-    "@vueuse/integrations": "^14.1.0",
-    "cytoscape": "^3.33.1",
-    "cytoscape-cose-bilkent": "^4.1.0",
-    "dayjs": "^1.11.19",
-    "debug": "^4.4.3",
-    "mark.js": "^8.11.1",
-    "minisearch": "^7.2.0"
   }
 }
