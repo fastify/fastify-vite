@@ -27,7 +27,6 @@ export { default as VPTeamPage } from './components/VPTeamPage.vue'
 export { default as VPTeamPageTitle } from './components/VPTeamPageTitle.vue'
 export { default as VPTeamPageSection } from './components/VPTeamPageSection.vue'
 export { default as VPTeamMembers } from './components/VPTeamMembers.vue'
-import HLM from './HLM.vue'
 
 export { useSidebar } from './composables/sidebar'
 

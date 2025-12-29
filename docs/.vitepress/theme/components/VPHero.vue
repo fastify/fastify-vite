@@ -3,7 +3,6 @@ import { type Ref, inject } from 'vue'
 import type { DefaultTheme } from 'vitepress/theme'
 import VPButton from './VPButton.vue'
 import VPImage from './VPImage.vue'
-import HLM from '../HLM.vue'
 
 export interface HeroAction {
   theme?: 'brand' | 'alt'
@@ -25,7 +24,6 @@ const heroImageSlotExists = inject('hero-image-slot-exists') as Ref<boolean>
 <template>
   <div class="VPHero" :class="{ 'has-image': image || heroImageSlotExists }">
     <div class="container">
-      <HLM />
       <div class="main">
         <slot name="home-hero-info">
           <h1 v-if="name" class="name">
