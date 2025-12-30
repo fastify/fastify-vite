@@ -1,13 +1,20 @@
-vite.config.js.timestamp-*
-docs/.vitepress/cache
-.nyc_output
+.claude/
 .DS_Store
-example/dist
-node_modules
-package-lock.json
-settings.local.json
+.idea
+.nyc_output
 build
 dist
-build
-.idea
+node_modules
 *.tsbuildinfo
+
+# This project uses pnpm, so we do not want other lock files
+bun.lockb
+package-lock.json
+yarn.lock
+
+# Vite logs files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# vitepress cache directory
+**/.vitepress/cache

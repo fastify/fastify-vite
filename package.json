@@ -8,7 +8,6 @@
   },
   "private": "true",
   "devDependencies": {
-    "execa": "^9.6.0",
     "oxlint": "^0.9.10",
     "vite": "catalog:",
     "vitest": "catalog:",

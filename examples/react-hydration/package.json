@@ -13,12 +13,12 @@
     "devalue": "catalog:",
     "fastify": "catalog:",
     "jotai": "^2.12.2",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-router": "catalog:"
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "catalog:react"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-react": "catalog:react",
     "oxlint": "catalog:",
     "vite": "catalog:"
   }
