@@ -50,7 +50,7 @@
     "@fastify/static": "^9.0.0",
     "fastify-plugin": "^5.1.0",
     "fs-extra": "^11.3.3",
-    "html-rewriter-wasm": "^0.4.1",
+    "html-rewriter-wasm": "catalog:",
     "klaw": "^4.1.0",
     "package-directory": "^8.1.0"
   },

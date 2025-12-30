@@ -63,16 +63,16 @@
     "@unhead/vue": "^2.0.5",
     "acorn": "^8.12.1",
     "acorn-walk": "^8.3.4",
-    "devalue": "latest",
-    "html-rewriter-wasm": "^0.4.1",
+    "devalue": "catalog:",
+    "html-rewriter-wasm": "catalog:",
     "mlly": "^1.5.0",
-    "vue": "^3.5.8",
-    "vue-router": "^4.4.5",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue",
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "latest",
-    "oxlint": "^0.16.8"
+    "@vitejs/plugin-vue": "catalog:vue",
+    "oxlint": "catalog:"
   },
   "optionalDependencies": {
     "vite": "catalog:"

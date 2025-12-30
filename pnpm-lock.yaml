@@ -12,6 +12,9 @@ catalogs:
     fastify:
       specifier: ^5.6.2
       version: 5.6.2
+    html-rewriter-wasm:
+      specifier: ^0.4.1
+      version: 0.4.1
     oxlint:
       specifier: ^0.16.6
       version: 0.16.12
@@ -894,13 +897,13 @@ importers:
         specifier: ^8.3.4
         version: 8.3.4
       devalue:
-        specifier: latest
+        specifier: 'catalog:'
         version: 5.6.1
       history:
         specifier: latest
         version: 5.3.0
       html-rewriter-wasm:
-        specifier: ^0.4.1
+        specifier: 'catalog:'
         version: 0.4.1
       minipass:
         specifier: latest
@@ -909,14 +912,14 @@ importers:
         specifier: ^1.7.4
         version: 1.7.4
       react:
-        specifier: ^19.2.3
+        specifier: catalog:react
         version: 19.2.3
       react-dom:
-        specifier: ^19.2.3
+        specifier: catalog:react
         version: 19.2.3(react@19.2.3)
       react-router:
-        specifier: ^7.5.0
-        version: 7.5.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: catalog:react
+        version: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       valtio:
         specifier: latest
         version: 2.2.0(@types/react@19.1.2)(react@19.2.3)
@@ -946,7 +949,7 @@ importers:
         specifier: ^11.3.3
         version: 11.3.3
       html-rewriter-wasm:
-        specifier: ^0.4.1
+        specifier: 'catalog:'
         version: 0.4.1
       klaw:
         specifier: ^4.1.0
@@ -996,7 +999,7 @@ importers:
         version: link:../fastify-vite
       '@unhead/vue':
         specifier: ^2.0.5
-        version: 2.0.8(vue@3.5.13(typescript@5.9.3))
+        version: 2.0.8(vue@3.5.26(typescript@5.9.3))
       acorn:
         specifier: ^8.12.1
         version: 8.14.1
@@ -1004,30 +1007,30 @@ importers:
         specifier: ^8.3.4
         version: 8.3.4
       devalue:
-        specifier: latest
+        specifier: 'catalog:'
         version: 5.6.1
       html-rewriter-wasm:
-        specifier: ^0.4.1
+        specifier: 'catalog:'
         version: 0.4.1
       mlly:
         specifier: ^1.5.0
         version: 1.7.4
       vue:
-        specifier: ^3.5.8
-        version: 3.5.13(typescript@5.9.3)
+        specifier: catalog:vue
+        version: 3.5.26(typescript@5.9.3)
       vue-router:
-        specifier: ^4.4.5
-        version: 4.5.0(vue@3.5.13(typescript@5.9.3))
+        specifier: catalog:vue
+        version: 4.6.4(vue@3.5.26(typescript@5.9.3))
       youch:
         specifier: ^3.3.4
         version: 3.3.4
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: latest
-        version: 6.0.3(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.9.3))
+        specifier: catalog:vue
+        version: 5.2.4(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))(vue@3.5.26(typescript@5.9.3))
       oxlint:
-        specifier: ^0.16.8
-        version: 0.16.8
+        specifier: 'catalog:'
+        version: 0.16.12
     optionalDependencies:
       vite:
         specifier: 'catalog:'
@@ -1294,9 +1297,6 @@ importers:
       fastify:
         specifier: ^5.6.2
         version: 5.6.2
-      html-rewriter-wasm:
-        specifier: ^0.4.1
-        version: 0.4.1
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.9.3)
@@ -1343,9 +1343,6 @@ importers:
       fastify:
         specifier: ^5.6.2
         version: 5.6.2
-      html-rewriter-wasm:
-        specifier: ^0.4.1
-        version: 0.4.1
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.9.3)
@@ -2824,11 +2821,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@oxlint/darwin-arm64@0.16.8':
-    resolution: {integrity: sha512-1w7Jbrp0WUkbXlGb/x3nh7MK8EzCS8USR2Q8Yo0ZMmCNXmxxfkL07B9wSmlKcJ7y9MSfFkpF4Md5r6jwJNeWLg==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@oxlint/darwin-arm64@0.9.10':
     resolution: {integrity: sha512-eOXKZYq5bnCSgDefgM5bzAg+4Fc//Rc4yjgKN8iDWUARweCaChiQXb6TXX8MfEfs6qayEMy6yVj0pqoFz0B1aw==}
     cpu: [arm64]
@@ -2841,11 +2833,6 @@ packages:
 
   '@oxlint/darwin-x64@0.16.6':
     resolution: {integrity: sha512-VezC8yep+1TxVtBsTQz2OHJs9aTuIQ7ISyl5rn1QVQXeG7wdFIIFln3ilu2TtaMjnswEdEsCDqBjyoF1euqQow==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@oxlint/darwin-x64@0.16.8':
-    resolution: {integrity: sha512-zWMKa8kNmtQfBHG5j4HGiOT1azjgs4rFsjAADWHBQ6qsqdW0evhQt9666JYJA2kKtuoWiIPv4UypV5s2QI9oCQ==}
     cpu: [x64]
     os: [darwin]
 
@@ -2864,11 +2851,6 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint/linux-arm64-gnu@0.16.8':
-    resolution: {integrity: sha512-AK6x1UN/Wz0C+kpV70J3cKgKl+b6Jrh4EDAY6JY99F7DMlNAbKtRtBZAb3IMiuukv/mqbTvb7Z7+dUIp/DHOkA==}
-    cpu: [arm64]
-    os: [linux]
-
   '@oxlint/linux-arm64-gnu@0.9.10':
     resolution: {integrity: sha512-0Zn+vqHhrZyufFBfq9WOgiIool0gCR14BLsdS+0Dwd9o+kNxPGA5q7erQFkiC4rpkxtfBHeD3iIKMMt7d29Kyw==}
     cpu: [arm64]
@@ -2881,11 +2863,6 @@ packages:
 
   '@oxlint/linux-arm64-musl@0.16.6':
     resolution: {integrity: sha512-PolYYEhYELXaQ0ht0g6Z827rRVDgbi/PQcHFpctiDHbSruW3udIOy9nEOAUt0agSHYrdZcC0NWzISE+CPrM0Yw==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@oxlint/linux-arm64-musl@0.16.8':
-    resolution: {integrity: sha512-+VJNo9NGYjP/8qFvcMk6IR4waRENbXolDk6SsfWXnub/b0UpXd8dH+cFSo9VPsHoLQ1+/A2WbqTxO+XkkaUXYw==}
     cpu: [arm64]
     os: [linux]
 
@@ -2904,11 +2881,6 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@oxlint/linux-x64-gnu@0.16.8':
-    resolution: {integrity: sha512-1AN2P3AUfW04jmaiEh/NnV3/oZKrXMScqbihZ8bclKdwKanEyNX+McCfpUZ6/L1h1imCj9tR1ChNq0LaPrJfAg==}
-    cpu: [x64]
-    os: [linux]
-
   '@oxlint/linux-x64-gnu@0.9.10':
     resolution: {integrity: sha512-JHbkMUnibqaSMBvLHyqTL5cWxcGW+jw+Ppt2baLISpvo34a6fBR+PI7v/A92sEDWe0W1rPhypzCwA8mKpkQ3DA==}
     cpu: [x64]
@@ -2921,11 +2893,6 @@ packages:
 
   '@oxlint/linux-x64-musl@0.16.6':
     resolution: {integrity: sha512-p3Njn7MzBsIJr+23HtxItA86UP01xhcWfwU35RGWVyTNbXIdNoAkaD+DjXQj2KSEauO7rRDAZbrTA+40NWNNkQ==}
-    cpu: [x64]
-    os: [linux]
-
-  '@oxlint/linux-x64-musl@0.16.8':
-    resolution: {integrity: sha512-FyG47d0ypwpIv+OEgTQe+qV9UDgeEoNJW0p50/zUkQhe3LVC20qNztvFp0X9uTm1V7ihY8GCZKC1ooeD3+eWWw==}
     cpu: [x64]
     os: [linux]
 
@@ -2944,11 +2911,6 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@oxlint/win32-arm64@0.16.8':
-    resolution: {integrity: sha512-fUnKMhcyChO7nLh5TS/yELOx7FG1827GShIalQr6L9SnDGeKjjzBrJwpc3jFtTB4Ti6wX+7yB7JYOo2EgoRdvQ==}
-    cpu: [arm64]
-    os: [win32]
-
   '@oxlint/win32-arm64@0.9.10':
     resolution: {integrity: sha512-LXDnk7vKHT3IY6G1jq0O7+XMhtcHOYuxLGIx4KP+4xS6vKgBY+Bsq4xV3AtmtKlvnXkP5FxHpfLmcEtm5AWysA==}
     cpu: [arm64]
@@ -2961,11 +2923,6 @@ packages:
 
   '@oxlint/win32-x64@0.16.6':
     resolution: {integrity: sha512-DqkFdDX1ULoizFBg21TMIe6B5L2a59KljqpN1S7H4+IXhxmRcc71bpZ7FRwrxjrlRhtCD4SAPTZadBI9qRhViw==}
-    cpu: [x64]
-    os: [win32]
-
-  '@oxlint/win32-x64@0.16.8':
-    resolution: {integrity: sha512-gpvVsWH8HJQP6UWGyDlZdslmk6CNTtjEl8MLD6Mhx+2L02ypaYkA0pyTKPaLQrn0O2D+CT0WAh53YtxCf903qA==}
     cpu: [x64]
     os: [win32]
 
@@ -3576,13 +3533,6 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0
-      vue: ^3.2.25
-
-  '@vitejs/plugin-vue@6.0.3':
-    resolution: {integrity: sha512-TlGPkLFLVOY3T7fZrwdvKpjprR3s4fxRln0ORDo1VQ7HHyxJwTlrjKU3kpVWTlaAjIEuCTokmjkZnr8Tpc925w==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    peerDependencies:
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
       vue: ^3.2.25
 
   '@vitest/expect@4.0.16':
@@ -5811,11 +5761,6 @@ packages:
 
   oxlint@0.16.6:
     resolution: {integrity: sha512-pesehI0loV2h2k95mFRsUg6uNgGw2RPs1pcuAfPRJUwGehkfraMVCQofwqsMUeufmXygweH734vhKzQ24r3djA==}
-    engines: {node: '>=8.*'}
-    hasBin: true
-
-  oxlint@0.16.8:
-    resolution: {integrity: sha512-UmpfqkynkudIY8orqAvYelQXJ1YNMecwJ422ZtJ84vbtIQ2HH96WBhqLAEoUgDB7yu/LpxMQrjukFOJQkh+mQw==}
     engines: {node: '>=8.*'}
     hasBin: true
 
@@ -8617,7 +8562,7 @@ snapshots:
       mlly: 1.7.4
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
-      react-router: 7.5.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react-router: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       valtio: 2.2.0(@types/react@19.1.2)(react@19.2.3)
       youch: 3.3.4
     transitivePeerDependencies:
@@ -8639,7 +8584,7 @@ snapshots:
       mlly: 1.7.4
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
-      react-router: 7.5.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react-router: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       valtio: 2.2.0(@types/react@19.1.2)(react@19.2.3)
       youch: 3.3.4
     transitivePeerDependencies:
@@ -8774,7 +8719,7 @@ snapshots:
       html-rewriter-wasm: 0.4.1
       mlly: 1.7.4
       vue: 3.5.26(typescript@5.9.3)
-      vue-router: 4.5.0(vue@3.5.26(typescript@5.9.3))
+      vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
       youch: 3.3.4
     optionalDependencies:
       vite: 6.4.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
@@ -8803,7 +8748,7 @@ snapshots:
       html-rewriter-wasm: 0.4.1
       mlly: 1.7.4
       vue: 3.5.26(typescript@5.9.3)
-      vue-router: 4.5.0(vue@3.5.26(typescript@5.9.3))
+      vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
       youch: 3.3.4
     optionalDependencies:
       vite: 6.4.1(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
@@ -8952,9 +8897,6 @@ snapshots:
   '@oxlint/darwin-arm64@0.16.6':
     optional: true
 
-  '@oxlint/darwin-arm64@0.16.8':
-    optional: true
-
   '@oxlint/darwin-arm64@0.9.10':
     optional: true
 
@@ -8962,9 +8904,6 @@ snapshots:
     optional: true
 
   '@oxlint/darwin-x64@0.16.6':
-    optional: true
-
-  '@oxlint/darwin-x64@0.16.8':
     optional: true
 
   '@oxlint/darwin-x64@0.9.10':
@@ -8976,9 +8915,6 @@ snapshots:
   '@oxlint/linux-arm64-gnu@0.16.6':
     optional: true
 
-  '@oxlint/linux-arm64-gnu@0.16.8':
-    optional: true
-
   '@oxlint/linux-arm64-gnu@0.9.10':
     optional: true
 
@@ -8986,9 +8922,6 @@ snapshots:
     optional: true
 
   '@oxlint/linux-arm64-musl@0.16.6':
-    optional: true
-
-  '@oxlint/linux-arm64-musl@0.16.8':
     optional: true
 
   '@oxlint/linux-arm64-musl@0.9.10':
@@ -9000,9 +8933,6 @@ snapshots:
   '@oxlint/linux-x64-gnu@0.16.6':
     optional: true
 
-  '@oxlint/linux-x64-gnu@0.16.8':
-    optional: true
-
   '@oxlint/linux-x64-gnu@0.9.10':
     optional: true
 
@@ -9010,9 +8940,6 @@ snapshots:
     optional: true
 
   '@oxlint/linux-x64-musl@0.16.6':
-    optional: true
-
-  '@oxlint/linux-x64-musl@0.16.8':
     optional: true
 
   '@oxlint/linux-x64-musl@0.9.10':
@@ -9024,9 +8951,6 @@ snapshots:
   '@oxlint/win32-arm64@0.16.6':
     optional: true
 
-  '@oxlint/win32-arm64@0.16.8':
-    optional: true
-
   '@oxlint/win32-arm64@0.9.10':
     optional: true
 
@@ -9034,9 +8958,6 @@ snapshots:
     optional: true
 
   '@oxlint/win32-x64@0.16.6':
-    optional: true
-
-  '@oxlint/win32-x64@0.16.8':
     optional: true
 
   '@oxlint/win32-x64@0.9.10':
@@ -9649,12 +9570,6 @@ snapshots:
     dependencies:
       vite: 7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
       vue: 3.5.26(typescript@5.9.3)
-
-  '@vitejs/plugin-vue@6.0.3(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.9.3))':
-    dependencies:
-      '@rolldown/pluginutils': 1.0.0-beta.53
-      vite: 7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
-      vue: 3.5.13(typescript@5.9.3)
 
   '@vitest/expect@4.0.16':
     dependencies:
@@ -12234,17 +12149,6 @@ snapshots:
       '@oxlint/win32-arm64': 0.16.6
       '@oxlint/win32-x64': 0.16.6
 
-  oxlint@0.16.8:
-    optionalDependencies:
-      '@oxlint/darwin-arm64': 0.16.8
-      '@oxlint/darwin-x64': 0.16.8
-      '@oxlint/linux-arm64-gnu': 0.16.8
-      '@oxlint/linux-arm64-musl': 0.16.8
-      '@oxlint/linux-x64-gnu': 0.16.8
-      '@oxlint/linux-x64-musl': 0.16.8
-      '@oxlint/win32-arm64': 0.16.8
-      '@oxlint/win32-x64': 0.16.8
-
   oxlint@0.9.10:
     optionalDependencies:
       '@oxlint/darwin-arm64': 0.9.10
@@ -13883,11 +13787,6 @@ snapshots:
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.13(typescript@5.9.3)
-
-  vue-router@4.5.0(vue@3.5.26(typescript@5.9.3)):
-    dependencies:
-      '@vue/devtools-api': 6.6.4
-      vue: 3.5.26(typescript@5.9.3)
 
   vue-router@4.6.4(vue@3.5.26(typescript@5.9.3)):
     dependencies:
