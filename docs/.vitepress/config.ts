@@ -1,11 +1,11 @@
 import type { DefaultTheme } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
-const config = withMermaid({
+export default withMermaid({
   lang: 'en-US',
   title: '@fastify/vite',
   description: 'Vite & Vue powered static site generator.',
-  base: '/fastify-vite/',
+  base: '/',
 
   lastUpdated: true,
   cleanUrls: true,
@@ -18,7 +18,7 @@ const config = withMermaid({
   },
 
   sitemap: {
-    hostname: 'https://fastify.github.io/fastify-vite',
+    hostname: 'https://vite.fastify.dev',
   },
 
   /* prettier-ignore */
@@ -62,24 +62,6 @@ const config = withMermaid({
     },
   },
 })
-
-// https://github.com/emersonbottero/vitepress-plugin-mermaid/issues/83
-// Filter out transitive dependencies that pnpm doesn't expose. Otherwise we would have to install
-// them into package.json just to make vitepress-plugin-mermaid work without warnings.
-if (config.vite?.optimizeDeps?.include) {
-  const EXCLUDED_DEPS = new Set([
-    '@braintree/sanitize-url',
-    'dayjs',
-    'debug',
-    'cytoscape-cose-bilkent',
-    'cytoscape'
-  ])
-  config.vite.optimizeDeps.include = config.vite.optimizeDeps.include.filter(
-    (dep) => !EXCLUDED_DEPS.has(dep)
-  )
-}
-
-export default config
 
 function nav(): DefaultTheme.NavItem[] {
   return [
