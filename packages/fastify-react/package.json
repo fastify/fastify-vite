@@ -1,12 +1,29 @@
 {
-  "scripts": {
-    "lint": "biome check --apply-unsafe ."
+  "name": "@fastify/react",
+  "version": "1.1.1",
+  "description": "The official @fastify/vite renderer for React",
+  "keywords": [
+    "fastify",
+    "vite",
+    "react"
+  ],
+  "homepage": "https://fastify.github.io/fastify-vite/react/",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "type": "module",
   "main": "index.js",
-  "name": "@fastify/react",
-  "description": "The official @fastify/vite renderer for React",
-  "version": "1.1.1",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -42,12 +59,8 @@
     "server.js",
     "templating.js"
   ],
-  "license": "MIT",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
+  "scripts": {
+    "lint": "biome check --apply-unsafe ."
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
@@ -55,14 +68,14 @@
     "acorn": "^8.14.1",
     "acorn-strip-function": "^1.2.0",
     "acorn-walk": "^8.3.4",
-    "devalue": "latest",
+    "devalue": "catalog:",
     "history": "latest",
-    "html-rewriter-wasm": "^0.4.1",
+    "html-rewriter-wasm": "catalog:",
     "minipass": "latest",
     "mlly": "^1.7.4",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-router": "^7.5.0",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "catalog:react",
     "valtio": "latest",
     "youch": "^3.3.4"
   },
@@ -71,18 +84,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
-  },
-  "keywords": [
-    "fastify",
-    "vite",
-    "react"
-  ],
-  "bugs": {
-    "url": "https://github.com/fastify/fastify-vite/issues"
-  },
-  "homepage": "https://fastify.github.io/fastify-vite/react/"
+  }
 }

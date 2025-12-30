@@ -1,9 +1,29 @@
 {
+  "name": "@fastify/vue",
+  "version": "1.1.2",
+  "description": "The official @fastify/vite renderer for Vue",
+  "keywords": [
+    "fastify",
+    "vite",
+    "vue"
+  ],
+  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
   "type": "module",
   "main": "index.js",
-  "name": "@fastify/vue",
-  "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.1.2",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -38,46 +58,26 @@
     "client.js",
     "server.js"
   ],
-  "license": "MIT",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
-  },
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/vue": "^2.0.5",
     "acorn": "^8.12.1",
     "acorn-walk": "^8.3.4",
-    "devalue": "latest",
-    "html-rewriter-wasm": "^0.4.1",
+    "devalue": "catalog:",
+    "html-rewriter-wasm": "catalog:",
     "mlly": "^1.5.0",
-    "vue": "^3.5.8",
-    "vue-router": "^4.4.5",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue",
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "latest",
-    "oxlint": "^0.16.8"
+    "@vitejs/plugin-vue": "catalog:vue",
+    "oxlint": "catalog:"
   },
   "optionalDependencies": {
     "vite": "catalog:"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
-  },
-  "keywords": [
-    "fastify",
-    "vite",
-    "vue"
-  ],
-  "bugs": {
-    "url": "https://github.com/fastify/fastify-vite/issues"
-  },
-  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue"
+  }
 }
