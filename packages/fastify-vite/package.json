@@ -1,14 +1,32 @@
 {
-  "scripts": {
-    "test": "vitest run --no-file-parallelism",
-    "test:type": "vitest --ui --typecheck",
-    "lint": "biome check --write ."
-  },
+  "name": "@fastify/vite",
+  "version": "8.2.1",
+  "description": "Official Fastify plugin for Vite integration.",
+  "keywords": [
+    "fastify",
+    "vite"
+  ],
+  "homepage": "https://fastify.github.io/fastify-vite/",
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
-  "deprecated": false,
-  "description": "Official Fastify plugin for Vite integration.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "main": "index.js",
+  "types": "./types/index.d.ts",
+  "typings": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./index.js",
+      "require": "./index.js"
+    },
+    "./utils": "./utils.js",
+    "./plugin": "./plugin.mjs"
+  },
   "files": [
     "config.js",
     "html.js",
@@ -21,29 +39,11 @@
     "types/index.d.ts",
     "utils.js"
   ],
-  "exports": {
-    ".": {
-      "types": "./types/index.d.ts",
-      "import": "./index.js",
-      "require": "./index.js"
-    },
-    "./utils": "./utils.js",
-    "./plugin": "./plugin.mjs"
+  "scripts": {
+    "test": "vitest run --no-file-parallelism",
+    "test:type": "vitest --ui --typecheck",
+    "lint": "biome check --write ."
   },
-  "homepage": "https://fastify.github.io/fastify-vite/",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "@fastify/vite",
-  "types": "./types/index.d.ts",
-  "typings": "./types/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "version": "8.2.1",
   "dependencies": {
     "@fastify/deepmerge": "^3.0.0",
     "@fastify/middie": "^9.0.3",
@@ -67,8 +67,8 @@
     "fastify": ">=5",
     "vite": ">=6"
   },
-  "keywords": [
-    "fastify",
-    "vite"
-  ]
+  "publishConfig": {
+    "access": "public"
+  },
+  "deprecated": false
 }
