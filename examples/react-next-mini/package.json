@@ -15,13 +15,13 @@
     "jotai": "^2.12.2",
     "ky": "^1.8.0",
     "ky-universal": "^0.12.0",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-router": "catalog:",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "catalog:react",
     "undici": "^7.7.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-react": "catalog:react",
     "oxlint": "catalog:",
     "vite": "catalog:"
   }

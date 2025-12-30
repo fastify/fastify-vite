@@ -6,12 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@vitejs/plugin-react':
-      specifier: ^4.4.1
-      version: 4.4.1
-    '@vitejs/plugin-vue':
-      specifier: ^5.2.3
-      version: 5.2.4
     '@vitest/ui':
       specifier: ^3.2.4
       version: 3.2.4
@@ -24,18 +18,6 @@ catalogs:
     oxlint:
       specifier: ^0.16.6
       version: 0.16.8
-    react:
-      specifier: ^19.1.0
-      version: 19.1.0
-    react-dom:
-      specifier: ^19.1.0
-      version: 19.1.0
-    react-router:
-      specifier: ^7.5.1
-      version: 7.5.2
-    solid-js:
-      specifier: ^1.9.5
-      version: 1.9.5
     tsx:
       specifier: ^4.19.3
       version: 4.20.3
@@ -48,6 +30,27 @@ catalogs:
     vitest:
       specifier: ^3.2.4
       version: 3.2.4
+  react:
+    '@vitejs/plugin-react':
+      specifier: ^4.4.1
+      version: 4.4.1
+    react:
+      specifier: ^19.1.0
+      version: 19.1.0
+    react-dom:
+      specifier: ^19.1.0
+      version: 19.1.0
+    react-router:
+      specifier: ^7.5.1
+      version: 7.5.2
+  solid:
+    solid-js:
+      specifier: ^1.9.5
+      version: 1.9.5
+  vue:
+    '@vitejs/plugin-vue':
+      specifier: ^5.2.3
+      version: 5.2.4
     vue:
       specifier: ^3.5.13
       version: 3.5.26
@@ -219,7 +222,7 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       solid-js:
-        specifier: 'catalog:'
+        specifier: catalog:solid
         version: 1.9.5
     devDependencies:
       '@babel/core':
@@ -268,7 +271,7 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       solid-js:
-        specifier: 'catalog:'
+        specifier: catalog:solid
         version: 1.9.5
     devDependencies:
       '@babel/core':
@@ -433,17 +436,17 @@ importers:
         specifier: ^2.12.2
         version: 2.12.2(@types/react@19.1.2)(react@19.1.0)
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
       react-router:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -473,20 +476,20 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(ky@1.8.0)(web-streams-polyfill@3.3.3)
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
       react-router:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       undici:
         specifier: ^7.7.0
         version: 7.7.0
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -510,17 +513,17 @@ importers:
         specifier: ^2.12.2
         version: 2.12.2(@types/react@19.1.2)(react@19.1.0)
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
       react-router:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -538,14 +541,14 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -563,14 +566,14 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
     devDependencies:
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -588,10 +591,10 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
     devDependencies:
       '@types/node':
@@ -604,7 +607,7 @@ importers:
         specifier: ^19.1.2
         version: 19.1.2(@types/react@19.1.2)
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -628,10 +631,10 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       react:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0
       react-dom:
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 19.1.0(react@19.1.0)
     devDependencies:
       '@types/node':
@@ -644,7 +647,7 @@ importers:
         specifier: ^19.1.2
         version: 19.1.2(@types/react@19.1.2)
       '@vitejs/plugin-react':
-        specifier: 'catalog:'
+        specifier: catalog:react
         version: 4.4.1(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       oxlint:
         specifier: 'catalog:'
@@ -674,14 +677,14 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
       vue-router:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 4.5.0(vue@3.5.26(typescript@5.8.3))
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       oxlint:
         specifier: 'catalog:'
@@ -711,14 +714,14 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(ky@1.8.0)(web-streams-polyfill@3.3.3)
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
       vue-router:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 4.5.0(vue@3.5.26(typescript@5.8.3))
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       oxlint:
         specifier: 'catalog:'
@@ -739,10 +742,10 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
       vue-router:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 4.5.0(vue@3.5.26(typescript@5.8.3))
     devDependencies:
       '@babel/core':
@@ -752,7 +755,7 @@ importers:
         specifier: ^7.27.0
         version: 7.27.0(@babel/core@7.26.10)(eslint@9.23.0(jiti@2.4.2))
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       eslint:
         specifier: ^9.23.0
@@ -791,11 +794,11 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       oxlint:
         specifier: 'catalog:'
@@ -813,11 +816,11 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       oxlint:
         specifier: 'catalog:'
@@ -835,14 +838,14 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       vue:
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 3.5.26(typescript@5.8.3)
     devDependencies:
       '@types/node':
         specifier: ^22.13.17
         version: 22.14.0
       '@vitejs/plugin-vue':
-        specifier: 'catalog:'
+        specifier: catalog:vue
         version: 5.2.4(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))(vue@3.5.26(typescript@5.8.3))
       oxlint:
         specifier: 'catalog:'
@@ -9493,7 +9496,7 @@ snapshots:
       '@vue/reactivity': 3.5.13
       '@vue/runtime-core': 3.5.13
       '@vue/shared': 3.5.13
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   '@vue/runtime-dom@3.5.26':
     dependencies:

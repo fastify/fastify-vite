@@ -10,7 +10,7 @@
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "fastify": "catalog:",
-    "solid-js": "catalog:"
+    "solid-js": "catalog:solid"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",

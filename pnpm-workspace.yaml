@@ -6,19 +6,26 @@ packages:
   - starters/*
 
 catalog:
-  '@vitejs/plugin-react': ^4.4.1
-  '@vitejs/plugin-vue': ^5.2.3
   '@vitest/ui': ^3.2.4
   devalue: ^5.1.1
   fastify: ^5.4.0
   oxlint: ^0.16.6
-  react: ^19.1.0
-  react-dom: ^19.1.0
-  react-router: ^7.5.1
-  solid-js: ^1.9.5
   tsx: ^4.19.3
   typescript: ^5.8.3
   vite: ^7.3.0
   vitest: ^3.2.4
-  vue: ^3.5.13
-  vue-router: ^4.5.0
+
+catalogs:
+  react:
+    '@vitejs/plugin-react': ^4.4.1
+    react: ^19.1.0
+    react-dom: ^19.1.0
+    react-router: ^7.5.1
+
+  vue:
+    '@vitejs/plugin-vue': ^5.2.3
+    vue: ^3.5.13
+    vue-router: ^4.5.0
+
+  solid:
+    solid-js: ^1.9.5

@@ -11,10 +11,10 @@
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "fastify": "catalog:",
-    "vue": "catalog:"
+    "vue": "catalog:vue"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue": "catalog:vue",
     "oxlint": "catalog:",
     "vite": "catalog:"
   }

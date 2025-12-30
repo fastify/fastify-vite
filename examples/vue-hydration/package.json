@@ -13,11 +13,11 @@
     "@fastify/vite": "workspace:^",
     "devalue": "catalog:",
     "fastify": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue": "catalog:vue",
     "oxlint": "catalog:",
     "vite": "catalog:"
   }
