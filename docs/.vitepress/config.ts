@@ -45,7 +45,6 @@ const config = withMermaid({
       '/config/': { base: '/config/', items: sidebarConfig() },
       '/roadmap': { base: '/guide/', items: sidebarGuide() },
       '/contributing': { base: '/guide/', items: sidebarGuide() },
-      '/sponsoring': { base: '/guide/', items: sidebarGuide() },
     },
 
     editLink: {
@@ -346,6 +345,5 @@ function Common () {
     { text: 'Configuration', base: '/config/', link: 'index' },
     { text: 'Roadmap', base: '/', link: 'roadmap' },
     { text: 'Contributing', base: '/', link: 'contributing' },
-    { text: 'Sponsoring', base: '/', link: 'sponsoring' },
   ]
 }
