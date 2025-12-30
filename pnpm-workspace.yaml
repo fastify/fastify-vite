@@ -1,9 +1,9 @@
 packages:
   - docs/
   - packages/**
-  - examples/**
-  - contrib/**
-  - starters/**
+  - examples/*
+  - contrib/*
+  - starters/*
 
 catalog:
   '@vitejs/plugin-react': ^4.4.1
