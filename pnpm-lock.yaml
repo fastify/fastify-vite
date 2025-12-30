@@ -7,7 +7,7 @@ settings:
 catalogs:
   default:
     devalue:
-      specifier: ^5.1.1
+      specifier: ^5.6.1
       version: 5.6.1
     fastify:
       specifier: ^5.6.2
