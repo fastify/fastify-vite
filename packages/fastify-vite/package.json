@@ -58,6 +58,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.17",
+    "@vitest/ui": "4.0.16",
     "fastify": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
