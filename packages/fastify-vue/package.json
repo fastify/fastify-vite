@@ -1,9 +1,29 @@
 {
+  "name": "@fastify/vue",
+  "version": "1.1.2",
+  "description": "The official @fastify/vite renderer for Vue",
+  "keywords": [
+    "fastify",
+    "vite",
+    "vue"
+  ],
+  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
   "type": "module",
   "main": "index.js",
-  "name": "@fastify/vue",
-  "description": "The official @fastify/vite renderer for Vue",
-  "version": "1.1.2",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
   "files": [
     "plugin/index.js",
     "plugin/parsers.js",
@@ -38,13 +58,6 @@
     "client.js",
     "server.js"
   ],
-  "license": "MIT",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
-  },
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/vue": "^2.0.5",
@@ -66,18 +79,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
-  },
-  "keywords": [
-    "fastify",
-    "vite",
-    "vue"
-  ],
-  "bugs": {
-    "url": "https://github.com/fastify/fastify-vite/issues"
-  },
-  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue"
+  }
 }

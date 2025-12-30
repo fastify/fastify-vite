@@ -1,12 +1,27 @@
 {
-  "scripts": {
-    "lint": "biome check --apply ."
+  "name": "@fastify/htmx",
+  "version": "0.4.1",
+  "description": "The official @fastify/vite renderer for HTMX",
+  "keywords": [
+    "fastify",
+    "vite",
+    "htmx"
+  ],
+  "homepage": "https://github.com/fastify/fastify-vite#readme",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "type": "module",
   "main": "index.js",
-  "name": "@fastify/htmx",
-  "description": "The official @fastify/vite renderer for HTMX",
-  "version": "0.4.1",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin.cjs"
+  },
   "files": [
     "virtual/layouts/default.jsx",
     "virtual/client.js",
@@ -16,10 +31,8 @@
     "index.js",
     "plugin.cjs"
   ],
-  "license": "MIT",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin.cjs"
+  "scripts": {
+    "lint": "biome check --apply ."
   },
   "dependencies": {
     "@kitajs/html": "^4.2.9",
@@ -27,23 +40,10 @@
     "htmx.org": "^2.0.6",
     "mlly": "^1.7.4"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fastify/fastify-vite.git"
-  },
-  "keywords": [
-    "fastify",
-    "vite",
-    "htmx"
-  ],
-  "bugs": {
-    "url": "https://github.com/fastify/fastify-vite/issues"
-  },
-  "homepage": "https://github.com/fastify/fastify-vite#readme"
+  "publishConfig": {
+    "access": "public"
+  }
 }
