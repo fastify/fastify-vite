@@ -34,7 +34,7 @@
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "vite": "^7.3.0"
   }
 }
