@@ -6,14 +6,13 @@ packages:
   - starters/*
 
 catalog:
-  '@vitest/ui': ^3.2.4
   devalue: ^5.1.1
   fastify: ^5.4.0
   oxlint: ^0.16.6
   tsx: ^4.19.3
   typescript: ^5.8.3
   vite: ^7.3.0
-  vitest: ^3.2.4
+  vitest: ^4.0.16
 
 catalogs:
   react:
