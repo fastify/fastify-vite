@@ -44,6 +44,9 @@ jobs:
       - name: Lint code
         run: pnpm lint
 
+      - name: Check formatting
+        run: pnpm format:check
+
       - name: Run tests
         shell: 'script --return --quiet --command "bash {0}"'
         run: pnpm test
