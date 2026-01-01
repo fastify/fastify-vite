@@ -9,6 +9,7 @@
   },
   "private": "true",
   "devDependencies": {
+    "@changesets/cli": "^2.29.8",
     "oxlint": "^1.36.0",
     "vite": "catalog:",
     "vitest": "catalog:",
