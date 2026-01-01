@@ -1,4 +1,6 @@
 {
+  "name": "react-kitchensink-starter",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

@@ -1,6 +1,7 @@
 {
-  "name": "starter-vue-typescript",
+  "name": "vue-typescript-starter",
   "description": "TypeScript starter template for @fastify/vue",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",

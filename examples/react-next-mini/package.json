@@ -1,5 +1,6 @@
 {
-  "name": "example-react-next-mini",
+  "name": "@fastify-vite/example-react-next-mini",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

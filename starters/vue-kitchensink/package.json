@@ -1,6 +1,7 @@
 {
-  "name": "vue-kitchensink",
+  "name": "vue-kitchensink-starter",
   "description": "The vue-kitchensink starter template for @fastify/vue",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

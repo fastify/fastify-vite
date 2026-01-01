@@ -1,5 +1,6 @@
 {
-  "name": "example-vue-vanilla",
+  "name": "@fastify-vite/example-vue-vanilla",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

@@ -1,6 +1,7 @@
 {
   "name": "htmx-base-ts",
   "description": "The htmx-base-ts starter template for @fastify/htmx",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

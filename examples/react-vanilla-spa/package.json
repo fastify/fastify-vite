@@ -1,5 +1,6 @@
 {
-  "name": "example-react-vanilla-spa",
+  "name": "@fastify-vite/example-react-vanilla-spa",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

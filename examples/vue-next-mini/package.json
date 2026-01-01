@@ -1,5 +1,6 @@
 {
-  "name": "example-vue-next",
+  "name": "@fastify-vite/example-vue-next",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

@@ -1,5 +1,6 @@
 {
-  "name": "example-react-hydration",
+  "name": "@fastify-vite/example-react-hydration",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
