@@ -4,7 +4,6 @@
     "dev": "node server.js --dev",
     "start": "node server.js",
     "build": "vite build --app",
-    "lint": "eslint . --ext .js,.svelte --fix",
     "test": "node --test"
   },
   "dependencies": {
@@ -13,16 +12,7 @@
     "svelte": "^5.25.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/eslint-parser": "^7.27.0",
     "@fastify/vite": "workspace:^",
-    "eslint": "^9.23.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.17.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-svelte": "^3.5.0",
     "vite": "catalog:"
   }
 }
