@@ -1,6 +1,8 @@
 {
   "scripts": {
     "build": "pnpm -r run build",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
     "lint": " pnpm -r run lint && oxlint .",
     "lint:fix": "pnpm -r run lint:fix && oxlint --fix .",
     "test": "zx package.mjs --test",
@@ -10,6 +12,7 @@
   "private": "true",
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
+    "oxfmt": "^0.21.0",
     "oxlint": "^1.36.0",
     "vite": "catalog:",
     "vitest": "catalog:",
