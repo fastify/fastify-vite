@@ -41,8 +41,7 @@
   ],
   "scripts": {
     "test": "vitest run --no-file-parallelism",
-    "test:type": "vitest --ui --typecheck",
-    "lint": "biome check --write ."
+    "test:type": "vitest --ui --typecheck"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.1.0",
@@ -55,7 +54,6 @@
     "package-directory": "^8.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.19.3",
     "@vitest/ui": "4.0.16",
     "fastify": "catalog:",
