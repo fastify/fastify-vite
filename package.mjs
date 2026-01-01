@@ -81,6 +81,7 @@ async function prepForDev() {
   }
   cd(root)
   await $`pnpm i`
+  await $`pnpm format`
   process.exit()
 }
 
