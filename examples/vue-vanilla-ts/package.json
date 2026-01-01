@@ -7,7 +7,6 @@
     "build": "pnpm build:server && pnpm build:client",
     "build:server": "vue-tsc",
     "build:client": "vite build",
-    "lint": "oxlint",
     "test": "tsx --test"
   },
   "dependencies": {
@@ -18,7 +17,6 @@
   "devDependencies": {
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:vue",
-    "oxlint": "catalog:",
     "tsx": "catalog:",
     "vite": "catalog:",
     "vue-tsc": "^2.2.8"

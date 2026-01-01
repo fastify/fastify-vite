@@ -5,7 +5,6 @@
     "dev": "node server.js --dev",
     "start": "node server.js",
     "build": "vite build",
-    "lint": "oxlint",
     "test": "node --test"
   },
   "dependencies": {
@@ -15,7 +14,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:vue",
-    "oxlint": "catalog:",
     "vite": "catalog:"
   }
 }

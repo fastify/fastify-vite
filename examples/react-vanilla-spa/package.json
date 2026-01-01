@@ -5,7 +5,6 @@
     "dev": "node server.js --dev",
     "start": "NODE_ENV=production node server.js",
     "build": "vite build",
-    "lint": "oxlint",
     "test": "node --test"
   },
   "dependencies": {
@@ -16,7 +15,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "catalog:react",
-    "oxlint": "catalog:",
     "vite": "catalog:"
   }
 }

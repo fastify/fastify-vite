@@ -7,7 +7,6 @@
     "build": "pnpm build:server && pnpm build:client",
     "build:client": "vite build --app",
     "build:server": "tsc",
-    "lint": "oxlint",
     "test": "tsx --test"
   },
   "dependencies": {
@@ -21,7 +20,6 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "catalog:react",
-    "oxlint": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"

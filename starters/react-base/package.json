@@ -3,8 +3,7 @@
   "scripts": {
     "dev": "node server.js --dev",
     "start": "NODE_ENV=production node server.js",
-    "build": "NODE_ENV=production vite build",
-    "lint": "oxlint"
+    "build": "NODE_ENV=production vite build"
   },
   "dependencies": {
     "@fastify/one-line-logger": "^2.0.2",
@@ -22,7 +21,6 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
     "@vitejs/plugin-react": "^5.1.2",
-    "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
