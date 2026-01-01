@@ -2,5 +2,9 @@
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "categories": {
     "correctness": "error"
+  },
+  "ignorePatterns": ["contrib/**"],
+  "rules": {
+    "no-unused-vars": "off"
   }
 }

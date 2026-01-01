@@ -37,12 +37,16 @@ async function prepareClient(clientModule, scope, config) {
     // Predecorate Request and Reply objects
     if (route.decorateRequest) {
       for (const prop of route.decorateRequest) {
-        !scope.hasRequestDecorator(prop) && scope.decorateRequest(prop, null)
+        if (!scope.hasRequestDecorator(prop)) {
+          scope.decorateRequest(prop, null)
+        }
       }
     }
     if (route.decorateReply) {
       for (const prop of route.decorateReply) {
-        !scope.hasReplyDecorator(prop) && scope.decorateReply(prop, null)
+        if (!scope.hasReplyDecorator(prop)) {
+          scope.decorateReply(prop, null)
+        }
       }
     }
     // prefetch layout file path

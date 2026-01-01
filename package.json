@@ -2,6 +2,7 @@
   "scripts": {
     "build": "pnpm -r run build",
     "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
     "test": "zx package.mjs --test",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
