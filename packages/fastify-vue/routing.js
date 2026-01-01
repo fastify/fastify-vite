@@ -111,7 +111,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     handler = (_, reply) => reply.html()
   } else {
     const { id } = route
-    const htmlPath = id.replace(/pages\/(.*?)\.vue$/, 'html/$1.html')
+    const htmlPath = id.replace(/pages\/(.+)\.vue$/, 'html/$1.html')
     let distDir = config.vite.build.outDir
     if (!isAbsolute(config.vite.build.outDir)) {
       distDir = join(config.vite.root, distDir)
@@ -122,7 +122,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   }
 
   // Replace wildcard routes with Fastify compatible syntax
-  const routePath = route.path.replace(/:[^+]+\+/, '*')
+  const routePath = route.path.replace(/:\w+\+/, '*')
 
   unshiftHook(route, 'onRequest', onRequest)
   unshiftHook(route, 'preHandler', preHandler)
