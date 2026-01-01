@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --ignore-scripts
 
+      - name: Lint code
+        run: pnpm lint
+
       - name: Run tests
         shell: 'script --return --quiet --command "bash {0}"'
         run: pnpm test
