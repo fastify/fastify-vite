@@ -11,8 +11,8 @@
   "dependencies": {
     "@fastify/formbody": "^8.0.2",
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/vite": "^8.2.3",
-    "@fastify/vue": "^1.1.4",
+    "@fastify/vite": "^8.2.0",
+    "@fastify/vue": "^1.1.1",
     "@unhead/vue": "^2.0.5",
     "fastify": "^5.6.2",
     "vue": "^3.5.13",
