@@ -21,7 +21,6 @@ export default withMermaid({
     hostname: 'https://vite.fastify.dev',
   },
 
-  /* prettier-ignore */
   head: [
     // ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
     // ['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
@@ -86,14 +85,8 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-/* prettier-ignore */
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
-  return [
-    Guide(),
-    Vue(true),
-    React(true),
-    ...Common(),
-  ]
+  return [Guide(), Vue(true), React(true), ...Common()]
 }
 
 function sidebarVue(): DefaultTheme.SidebarItem[] {
