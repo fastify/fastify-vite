@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@fastify/one-line-logger": "^2.0.2",
-    "@fastify/react": "^1.1.2",
-    "@fastify/vite": "^8.2.2",
+    "@fastify/react": "^1.1.3",
+    "@fastify/vite": "^8.2.3",
     "@unhead/react": "^2.0.8",
     "fastify": "^5.6.2",
     "history": "^5.3.0",
