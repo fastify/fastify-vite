@@ -105,7 +105,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     handler = (_, reply) => reply.html()
   } else {
     const { id } = route
-    const htmlPath = id.replace(/pages\/(.+)\.(j|t)sx$/, 'html/$1.html')
+    const htmlPath = id.replace('pages/', 'html/').replace(/\.(j|t)sx$/, '.html')
     let distDir = config.vite.build.outDir
     if (!isAbsolute(config.vite.build.outDir)) {
       distDir = join(config.vite.root, distDir)
