@@ -1,14 +1,14 @@
 {
   "scripts": {
     "build": "pnpm -r run build",
-    "lint": "oxlint --fix",
+    "lint": "oxlint .",
     "test": "zx package.mjs --test",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
   },
   "private": "true",
   "devDependencies": {
-    "oxlint": "^0.9.10",
+    "oxlint": "^1.36.0",
     "vite": "catalog:",
     "vitest": "catalog:",
     "zx": "^8.8.5"
