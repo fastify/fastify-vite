@@ -116,7 +116,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   }
 
   // Replace wildcard routes with Fastify compatible syntax
-  const routePath = route.path.replace(/:\w+\+/, '*')
+  const routePath = route.path.replace(/:\w[\w-]*\+/, '*')
 
   unshiftHook(route, 'onRequest', onRequest)
   unshiftHook(route, 'preHandler', preHandler)
