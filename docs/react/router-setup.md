@@ -11,7 +11,7 @@ Alternatively, you can also export a `path` constant from your route modules, in
 ```jsx
 export const path = '/my-page'
 
-export defaut function MyPage () {
+export default function MyPage() {
   return <p>Route with path export</p>
 }
 ```
