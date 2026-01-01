@@ -59,9 +59,7 @@
     "server.js",
     "templating.js"
   ],
-  "scripts": {
-    "lint": "biome check --apply-unsafe ."
-  },
+  "scripts": {},
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/react": "^2.0.8",
@@ -78,9 +76,6 @@
     "react-router": "catalog:react",
     "valtio": "latest",
     "youch": "^3.3.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.2"
   },
   "publishConfig": {
     "access": "public"

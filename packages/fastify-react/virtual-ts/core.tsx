@@ -72,7 +72,6 @@ export function AppRoute({ ctxHydration, ctx, children }) {
 
   // When the next route renders client-side,
   // force it to execute all URMA hooks again
-  // biome-ignore lint/correctness/useExhaustiveDependencies: I'm inclined to believe you, Biome, but I'm not risking it.
   useEffect(() => {
     window.route.firstRender = false
     window.route.actionData = {}

@@ -71,8 +71,7 @@
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:vue",
-    "oxlint": "catalog:"
+    "@vitejs/plugin-vue": "catalog:vue"
   },
   "optionalDependencies": {
     "vite": "catalog:"

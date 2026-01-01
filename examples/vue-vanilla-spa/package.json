@@ -5,7 +5,8 @@
     "dev": "node server.js --dev",
     "start": "node server.js",
     "build": "vite build",
-    "lint": "oxlint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "node --test"
   },
   "dependencies": {
@@ -14,8 +15,11 @@
     "vue": "catalog:vue"
   },
   "devDependencies": {
+    "@eslint/js": "catalog:eslint",
     "@vitejs/plugin-vue": "catalog:vue",
-    "oxlint": "catalog:",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "globals": "catalog:eslint",
     "vite": "catalog:"
   }
 }

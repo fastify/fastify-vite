@@ -3,7 +3,6 @@
   "description": "TypeScript starter template for @fastify/vue",
   "type": "module",
   "scripts": {
-    "lint": "oxlint",
     "dev": "tsx src/server.ts --dev",
     "start": "node dist/server.js",
     "build": "pnpm build:client && pnpm build:server",
@@ -25,7 +24,6 @@
     "@tailwindcss/postcss": "^4.1.1",
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "^5.2.3",
-    "oxlint": "^0.16.6",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",

@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  ci:
     runs-on: ${{ matrix.runs-on }}
 
     permissions:
@@ -40,6 +40,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --ignore-scripts
+
+      - name: Lint code
+        run: pnpm lint
 
       - name: Run tests
         shell: 'script --return --quiet --command "bash {0}"'

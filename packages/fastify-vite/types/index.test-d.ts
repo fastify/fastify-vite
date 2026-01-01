@@ -29,7 +29,6 @@ const options = {
   },
   renderer: {
     createErrorHandler(client, scope, config) {
-      // biome-ignore lint/suspicious/noExplicitAny: testing only
       return (error: Error, req?: any, reply?: any) => {}
     },
     createRoute({ client }, scope, config) {},
