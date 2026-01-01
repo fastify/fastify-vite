@@ -59,17 +59,8 @@ async function prepForRelease() {
 async function prepForDev() {
   const starterRoot = join(root, 'starters')
   cd(starterRoot)
-  // Add optionalDependencies to @fastify/vite's package.json
-  let mainPkgJSONPath = join(root, 'packages', 'fastify-vite', 'package.json')
-  let pkgJSON = JSON.parse(readFileSync(mainPkgJSONPath))
-  pkgJSON.optionalDependencies = {
-    '@fastify/vue': 'workspace:^',
-    '@fastify/react': 'workspace:^',
-    vite: 'latest',
-  }
-  writeFileSync(mainPkgJSONPath, JSON.stringify(pkgJSON, null, 2))
   for (const starter of starters) {
-    pkgJSON = JSON.parse(readFileSync(join(starterRoot, starter, 'package.json')))
+    const pkgJSON = JSON.parse(readFileSync(join(starterRoot, starter, 'package.json')))
     pkgJSON.dependencies['@fastify/vite'] = 'workspace:^'
     if (pkgJSON.dependencies['@fastify/vue']) {
       pkgJSON.dependencies['@fastify/vue'] = 'workspace:^'
