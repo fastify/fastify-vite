@@ -19,14 +19,17 @@ Bullet points are used for clarity.
 - Route modules **may** be either loaded automatically from a `pages/` folder, following the **Next.js** convention of inferring paths from the directory layout itself, including square brackets for dynamic routes — **or** — they can set their own path by exporting a `path` constant.
 
 - Core renderers **should** make it possible to customize the location where route modules are loaded from.
+
   > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react] this is done **via their accompanying Vite plugins**, which accept a `globPattern` parameter indicating what should be passed to `import.meta.glob()`. It does this by preprocessing the internal `routes.js` file.
 
 - Route modules **must** have a **universal context object** that is shared between client and server. This means this object needs to be embedded into the HTML document and made part of the client hydration phase.
 
 - It **must** be possible for **route modules** to export a function that runs on the server before the component, but can also run on the client via an API request, similar to the way `getServerSideProps()` works in **Next.js**. The **core renderer** **must** store data retrieved on the server in the universal route context object, assumed to be part of the client hydration phase.
+
   > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a `getData()` function, which runs on the server during SSR and also on-demand during CSR navigation via an API endpoint that gets automatically registered via [`createRoute()`](/config/#createroute).
 
 - It **must** be possible for **route modules** to export a function to set HTML page metadata (`<title>` and `<meta>` tags) seamlessly (SSR and CSR).
+
   > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export a `getMeta()` function, which runs on the server during SSR writings tags directly to the `index.html` template, but also dynamically on-demand during CSR navigation.
 
 - Route modules **may** be able to define a **layout component**, and that be automatically loaded and made available to wrap them.
@@ -37,14 +40,13 @@ Bullet points are used for clarity.
 - It **must** be possible to render route modules in at least three modes:
   1. **Seamless SSR to CSR** — the default behavior of **Next.js** and **Nuxt.js**, **must** also be the default behavior of core renderers.
   2. **CSR Only**, where **SSR** is skipped altogether and rendering takes place client-side only.
-    This can be useful for resource intensive route modules which don't really require to be server-side rendered.
+     This can be useful for resource intensive route modules which don't really require to be server-side rendered.
   3. **SSR Only**, where no **CSR** bundle is delivered to the client and rendering is server-side only, producing static markup.
 
 - It **should** also be possible to render route modules in **streaming** mode.
 
 - Route modules **must** be able to specify their rendering modes.
   > In [**`@fastify/vue`**][fastify-vue] and [**`@fastify/react`**][fastify-react], route modules can export `serverOnly`, `clientOnly` and `streaming` flags to alter the default behavior.
-
 
 ## General conventions
 

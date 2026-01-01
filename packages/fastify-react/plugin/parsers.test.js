@@ -23,6 +23,6 @@ test('parseStateKeys', (t) => {
 
     }
   }
-  `;
+  `
   assert.equal(['user', 'todoList'], parseStateKeys(b))
 })

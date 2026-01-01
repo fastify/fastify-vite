@@ -1,4 +1,3 @@
-
 Introduction
 Getting Started
 Project Structure
@@ -19,7 +18,6 @@ onEnter Event
 Head Management
 Virtual Modules
 
-
 ## Install
 
 ## Usage
@@ -31,4 +29,3 @@ Virtual Modules
 ### Creating reply.html(), the HTML rendering function
 
 ## Deployment
-

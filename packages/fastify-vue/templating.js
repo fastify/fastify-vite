@@ -1,7 +1,7 @@
 import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 import { HTMLRewriter } from 'html-rewriter-wasm'
 
-export async function createHtmlTemplates (source, config) {
+export async function createHtmlTemplates(source, config) {
   const el = '<!-- element -->'
 
   const universal = source.split(el)
@@ -22,7 +22,7 @@ export async function createHtmlTemplates (source, config) {
   }
 }
 
-async function removeClientModule (html, config) {
+async function removeClientModule(html, config) {
   const decoder = new TextDecoder()
 
   let output = ''
@@ -31,7 +31,7 @@ async function removeClientModule (html, config) {
   })
 
   rewriter.on('script', {
-    element (element) {
+    element(element) {
       for (const [attr, value] of element.attributes) {
         if (attr === 'type' && value === 'module') {
           element.replace('')

@@ -9,9 +9,9 @@ interface Database {
 const server = Fastify({
   logger: {
     transport: {
-      target: '@fastify/one-line-logger'
-    }
-  }
+      target: '@fastify/one-line-logger',
+    },
+  },
 })
 
 await server.register(FastifyFormBody)
@@ -26,11 +26,7 @@ await server.register(FastifyVite, {
 await server.vite.ready()
 
 server.decorate<Database>('db', {
-  todoList: [
-    'Do laundry',
-    'Respond to emails',
-    'Write report',
-  ]
+  todoList: ['Do laundry', 'Respond to emails', 'Write report'],
 })
 
 server.put<{

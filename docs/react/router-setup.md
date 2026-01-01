@@ -42,4 +42,3 @@ export default {
 ## Dynamic parameters
 
 Dynamic route parameters uses `[param]` for a singular parameter and `[param+]` for wildcard routes.
-

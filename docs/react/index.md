@@ -28,7 +28,6 @@ Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't r
 
 ### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
 
-
 The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
 
 #### Download
@@ -69,7 +68,6 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 ### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
-
 
 #### Download
 

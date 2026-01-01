@@ -90,9 +90,7 @@ async function compileHtmlTemplate(source) {
 async function createHtmlTemplateFunction(source) {
   const [compiled, params] = await compileHtmlTemplate(source)
   return new Function(
-    params.length
-      ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }`
-      : '',
+    params.length ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }` : '',
     `return \`${compiled}\``,
   )
 }

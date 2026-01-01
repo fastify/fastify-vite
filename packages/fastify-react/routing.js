@@ -4,7 +4,7 @@ import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
-export async function prepareClient (entries, _) {
+export async function prepareClient(entries, _) {
   const client = entries.ssr
   if (client.context instanceof Promise) {
     client.context = await client.context
@@ -19,7 +19,7 @@ export async function prepareClient (entries, _) {
   return client
 }
 
-export function createErrorHandler (_, scope, config) {
+export function createErrorHandler(_, scope, config) {
   return async (error, req, reply) => {
     req.log.error(error)
     if (config.dev) {
@@ -35,25 +35,19 @@ export function createErrorHandler (_, scope, config) {
   }
 }
 
-export async function createRoute ({ client, errorHandler, route }, scope, config) {
+export async function createRoute({ client, errorHandler, route }, scope, config) {
   if (route.configure) {
     await route.configure(scope)
   }
 
   // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(client.routes.map(_ => [_.path, _]))
+  const routeMap = Object.fromEntries(client.routes.map((_) => [_.path, _]))
 
   // Extend with route context initialization module
   RouteContext.extend(client.context)
 
   const onRequest = async (req, reply) => {
-    req.route = await RouteContext.create(
-      scope,
-      req,
-      reply,
-      route,
-      client.context,
-    )
+    req.route = await RouteContext.create(scope, req, reply, route, client.context)
   }
 
   const preHandler = [
@@ -67,7 +61,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
         })
         req.route.app = app
       }
-    }
+    },
   ]
 
   if (route.getData) {
@@ -123,7 +117,7 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
 
   // Replace wildcard routes with Fastify compatible syntax
   const routePath = route.path.replace(/:[^+]+\+/, '*')
-  
+
   unshiftHook(route, 'onRequest', onRequest)
   unshiftHook(route, 'preHandler', preHandler)
 
@@ -139,14 +133,14 @@ export async function createRoute ({ client, errorHandler, route }, scope, confi
     // If getData is provided, register JSON endpoint for it
     scope.get(`/-/data${routePath}`, {
       onRequest,
-      async handler (req, reply) {
+      async handler(req, reply) {
         reply.send(await route.getData(req.route))
       },
     })
   }
 }
 
-function unshiftHook (route, hookName, hook) {
+function unshiftHook(route, hookName, hook) {
   if (!route[hookName]) {
     route[hookName] = []
   }

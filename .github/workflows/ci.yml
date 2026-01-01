@@ -34,7 +34,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          cache: "pnpm"
+          cache: 'pnpm'
           check-latest: true
           node-version: ${{ matrix.node-version }}
 
@@ -43,6 +43,9 @@ jobs:
 
       - name: Lint code
         run: pnpm lint
+
+      - name: Check formatting
+        run: pnpm format:check
 
       - name: Run tests
         shell: 'script --return --quiet --command "bash {0}"'

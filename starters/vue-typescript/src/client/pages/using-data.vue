@@ -1,9 +1,7 @@
 <template>
   <h2>Todo List — Using Data</h2>
   <ul>
-    <li
-      v-for="(item, i) in todoList"
-      :key="`item-${i}`">
+    <li v-for="(item, i) in todoList" :key="`item-${i}`">
       {{ item }}
     </li>
   </ul>
@@ -15,10 +13,13 @@
     <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do
-  list will be lost, because they're bound to this route component only.</p>
-  <p>See the <router-link to="/using-store">/using-store</router-link> example to learn
-  how to use the application global state for it.
+  <p>
+    When you navigate away from this route, any additions to the to-do list will be lost, because
+    they're bound to this route component only.
+  </p>
+  <p>
+    See the <router-link to="/using-store">/using-store</router-link> example to learn how to use
+    the application global state for it.
   </p>
 </template>
 

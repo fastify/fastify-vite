@@ -4,8 +4,5 @@ import viteVue from '@vitejs/plugin-vue'
 
 export default {
   root: join(import.meta.dirname, 'client'),
-  plugins: [
-    viteFastifyVue(),
-    viteVue(),
-  ],
+  plugins: [viteFastifyVue(), viteVue()],
 }

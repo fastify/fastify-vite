@@ -6,6 +6,6 @@ export default [
   },
   {
     path: '/other',
-    component: () => import('./views/other.vue')
-  }
+    component: () => import('./views/other.vue'),
+  },
 ]

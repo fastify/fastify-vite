@@ -14,11 +14,9 @@ describe('createHtmlTemplateFunction', () => {
     const resultStr = templateFn({ element: 'walalalala' })
 
     expect(resultStr).toBe(
-      [
-        '<!doctype html>',
-        'walalalala',
-        '<script type="module" src="./mount.js"></script>',
-      ].join('\n'),
+      ['<!doctype html>', 'walalalala', '<script type="module" src="./mount.js"></script>'].join(
+        '\n',
+      ),
     )
   })
 

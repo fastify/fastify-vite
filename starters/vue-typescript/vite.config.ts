@@ -9,8 +9,8 @@ export default {
     outDir: join(import.meta.dirname, 'dist'),
   },
   plugins: [
-    viteFastifyVue({ 
-      ts: true
+    viteFastifyVue({
+      ts: true,
     }),
     viteVue(),
   ],

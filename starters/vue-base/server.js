@@ -4,9 +4,9 @@ import FastifyVite from '@fastify/vite'
 const server = Fastify({
   logger: {
     transport: {
-      target: '@fastify/one-line-logger'
-    }
-  }
+      target: '@fastify/one-line-logger',
+    },
+  },
 })
 
 await server.register(FastifyVite, {

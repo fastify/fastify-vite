@@ -5,13 +5,8 @@ import viteFastifyReact from '@fastify/react/plugin'
 
 export default {
   root: resolve(import.meta.dirname, 'client'),
-  plugins: [
-    viteReact(),
-    viteFastifyReact(),
-  ],
+  plugins: [viteReact(), viteFastifyReact()],
   ssr: {
-    external: [
-      'use-sync-external-store'
-    ]
+    external: ['use-sync-external-store'],
   },
 }

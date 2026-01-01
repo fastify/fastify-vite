@@ -8,18 +8,16 @@ export function useRouteContext() {
   const routeContext = useContext(RouteContext)
   if (routeContext.state) {
     routeContext.snapshot = isServer
-      ? routeContext.state ?? {}
+      ? (routeContext.state ?? {})
       : useSnapshot(routeContext.state ?? {})
   }
   return routeContext
 }
 
-export async function hydrateRoutes (fromInput) {
+export async function hydrateRoutes(fromInput) {
   let from = fromInput
   if (Array.isArray(from)) {
-    from = Object.fromEntries(
-      from.map((route) => [route.path, route]),
-    )
+    from = Object.fromEntries(from.map((route) => [route.path, route]))
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
@@ -28,7 +26,7 @@ export async function hydrateRoutes (fromInput) {
   })
 }
 
-function memoImport (func) {
+function memoImport(func) {
   // Otherwise we get a ReferenceError, but since this function
   // is only ran once for each route, there's no overhead
   const kFuncExecuted = Symbol('kFuncExecuted')

@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-export default function Other () {
+export default function Other() {
   return (
     <>
       <p>This page is just for demonstrating client-side navigation.</p>

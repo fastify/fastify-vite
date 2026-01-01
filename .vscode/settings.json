@@ -1,15 +1,15 @@
 {
-	"editor.tabSize": 2,
-	"editor.insertSpaces": true,
-	"[javascript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features",
-	},
-	"javascript.format.semicolons": "remove",
-	"typescript.format.semicolons": "remove",
-	"javascript.preferences.quoteStyle": "auto",
-	"oxc.enable": true,
-	"typescript.preferences.quoteStyle": "auto",
-	"[markdown]": {
-		"editor.formatOnSave": false,
-	}
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "files.insertFinalNewline": true,
+  "oxc.enable": true,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }

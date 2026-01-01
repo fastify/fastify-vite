@@ -12,11 +12,7 @@ export default function Root({ url, routes, head, ctxHydration, routeMap }) {
               key={path}
               path={path}
               element={
-                <AppRoute
-                  head={head}
-                  ctxHydration={ctxHydration}
-                  ctx={routeMap[path]}
-                >
+                <AppRoute head={head} ctxHydration={ctxHydration} ctx={routeMap[path]}>
                   <Component />
                 </AppRoute>
               }

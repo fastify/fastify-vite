@@ -1,7 +1,7 @@
 import * as acorn from 'acorn'
 import * as walk from 'acorn-walk'
 
-export function parseStateKeys (code) {
+export function parseStateKeys(code) {
   const ast = acorn.parse(code, { sourceType: 'module', ecmaVersion: 2020 })
 
   let objectKeys = []
@@ -25,7 +25,7 @@ export function parseStateKeys (code) {
           }
         }
       }
-    }
+    },
   })
 
   return objectKeys

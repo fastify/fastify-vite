@@ -1,25 +1,21 @@
 import { Suspense } from 'react'
 import { useRouteContext } from '@fastify/react/client'
 
-export default function Auth ({ children }) {
+export default function Auth({ children }) {
   const { actions, state, snapshot } = useRouteContext()
   const authenticate = () => actions.authenticate(state)
   return (
     <Suspense>
-      {snapshot.user.authenticated
-        ? children
-        : <Login onClick={() => authenticate()} /> }
+      {snapshot.user.authenticated ? children : <Login onClick={() => authenticate()} />}
     </Suspense>
   )
 }
 
-function Login ({ onClick }) {
+function Login({ onClick }) {
   return (
     <>
       <p>This route needs authentication.</p>
-      <button onClick={onClick}>
-        Click this button to authenticate.
-      </button>
+      <button onClick={onClick}>Click this button to authenticate.</button>
     </>
   )
 }

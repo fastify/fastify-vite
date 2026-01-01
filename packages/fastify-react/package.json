@@ -4,8 +4,8 @@
   "description": "The official @fastify/vite renderer for React",
   "keywords": [
     "fastify",
-    "vite",
-    "react"
+    "react",
+    "vite"
   ],
   "homepage": "https://fastify.github.io/fastify-vite/react/",
   "bugs": {
@@ -16,22 +16,29 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "type": "module",
-  "main": "index.js",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
-  },
   "files": [
+    "client.js",
+    "context.js",
+    "index.js",
+    "rendering.js",
+    "routing.js",
+    "server.js",
+    "templating.js",
     "plugin/index.js",
     "plugin/parsers.js",
     "plugin/parsers.test.js",
     "plugin/preload.js",
     "plugin/stores.js",
     "plugin/virtual.js",
-    "virtual/layouts/default.jsx",
+    "virtual-ts/context.ts",
+    "virtual-ts/core.tsx",
+    "virtual-ts/create.tsx",
+    "virtual-ts/index.ts",
+    "virtual-ts/layouts.ts",
+    "virtual-ts/mount.ts",
+    "virtual-ts/resource.ts",
+    "virtual-ts/root.tsx",
+    "virtual-ts/routes.ts",
     "virtual/context.js",
     "virtual/core.jsx",
     "virtual/create.jsx",
@@ -42,23 +49,19 @@
     "virtual/root.jsx",
     "virtual/routes.js",
     "virtual-ts/layouts/default.tsx",
-    "virtual-ts/context.ts",
-    "virtual-ts/core.tsx",
-    "virtual-ts/create.tsx",
-    "virtual-ts/index.ts",
-    "virtual-ts/layouts.ts",
-    "virtual-ts/mount.ts",
-    "virtual-ts/resource.ts",
-    "virtual-ts/root.tsx",
-    "virtual-ts/routes.ts",
-    "client.js",
-    "context.js",
-    "index.js",
-    "rendering.js",
-    "routing.js",
-    "server.js",
-    "templating.js"
+    "virtual/layouts/default.jsx"
   ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {},
   "dependencies": {
     "@fastify/vite": "workspace:^",
@@ -76,8 +79,5 @@
     "react-router": "catalog:react",
     "valtio": "latest",
     "youch": "^3.3.4"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

@@ -1,5 +1,3 @@
-
-
 # Rendering modes
 
 [Route modules](/vue/route-modules)'s default rendering mode is **Seamless SSR to CSR**, akin to **Nuxt.js** and **Next.js**), but it can be customized as follows.
@@ -65,5 +63,3 @@ export default {
 ```
 
 [This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/streaming.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
-
-

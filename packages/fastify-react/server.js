@@ -1,7 +1,7 @@
 // Otherwise we get a ReferenceError, but since
 // this function is only ran once, there's no overhead
 class Routes extends Array {
-  toJSON () {
+  toJSON() {
     return this.map((route) => {
       return {
         id: route.id,
@@ -39,71 +39,68 @@ export function prepareServer(server) {
   })
 }
 
-export async function createRoutes (fromPromise, { param } = { param: /\[([.\w]+\+?)\]/ }) {
+export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\+?)\]/ }) {
   const { default: from } = await fromPromise
   const importPaths = Object.keys(from)
   const promises = []
   if (Array.isArray(from)) {
     for (const routeDef of from) {
       promises.push(
-        getRouteModule(routeDef.path, routeDef.component)
-          .then((routeModule) => {
-            return {
-              id: routeDef.path,
-              name: routeDef.path ?? routeModule.path,
-              path: routeDef.path ?? routeModule.path,
-              ...routeModule,
-            }
-          }),
+        getRouteModule(routeDef.path, routeDef.component).then((routeModule) => {
+          return {
+            id: routeDef.path,
+            name: routeDef.path ?? routeModule.path,
+            path: routeDef.path ?? routeModule.path,
+            ...routeModule,
+          }
+        }),
       )
     }
   } else {
     // Ensure that static routes have precedence over the dynamic ones
-    for (const path of importPaths.sort((a, b) => a > b ? -1 : 1)) {
+    for (const path of importPaths.sort((a, b) => (a > b ? -1 : 1))) {
       promises.push(
-        getRouteModule(path, from[path])
-          .then((routeModule) => {
-            const route = {
-              id: path,
-              layout: routeModule.layout,
-              name: path
+        getRouteModule(path, from[path]).then((routeModule) => {
+          const route = {
+            id: path,
+            layout: routeModule.layout,
+            name: path
+              // Remove /pages and .vue extension
+              .slice(6, -4)
+              // Remove params
+              .replace(param, '')
+              // Remove leading and trailing slashes
+              .replace(/^\/*|\/*$/g, '')
+              // Replace slashes with underscores
+              .replace(/\//g, '_'),
+            path:
+              routeModule.path ??
+              path
                 // Remove /pages and .vue extension
                 .slice(6, -4)
-                // Remove params
-                .replace(param, '')
-                // Remove leading and trailing slashes
-                .replace(/^\/*|\/*$/g, '')
-                // Replace slashes with underscores
-                .replace(/\//g, '_'),
-              path:
-                routeModule.path ??
-                path
-                  // Remove /pages and .vue extension
-                  .slice(6, -4)
-                  // Replace [id] with :id and [slug+] with :slug+
-                  .replace(param, (_, m) => `:${m}`)
-                  .replace(/:\w+\+/, (_, m) => `*`)
-                  // Replace '/index' with '/'
-                  .replace(/\/index$/, '/')
-                  // Remove trailing slashs
-                  .replace(/(.+)\/+$/, (...m) => m[1]),
-              ...routeModule,
-            }
+                // Replace [id] with :id and [slug+] with :slug+
+                .replace(param, (_, m) => `:${m}`)
+                .replace(/:\w+\+/, (_, m) => `*`)
+                // Replace '/index' with '/'
+                .replace(/\/index$/, '/')
+                // Remove trailing slashs
+                .replace(/(.+)\/+$/, (...m) => m[1]),
+            ...routeModule,
+          }
 
-            if (route.name === '') {
-              route.name = 'catch-all'
-            }
+          if (route.name === '') {
+            route.name = 'catch-all'
+          }
 
-            return route
-          }),
+          return route
+        }),
       )
     }
   }
-  return new Routes(...await Promise.all(promises))
+  return new Routes(...(await Promise.all(promises)))
 }
 
-
-function getRouteModuleExports (routeModule) {
+function getRouteModuleExports(routeModule) {
   return {
     // The Route component (default export)
     component: routeModule.default,
@@ -133,7 +130,7 @@ function getRouteModuleExports (routeModule) {
   }
 }
 
-async function getRouteModule (path, routeModuleInput) {
+async function getRouteModule(path, routeModuleInput) {
   if (typeof routeModuleInput === 'function') {
     const routeModule = await routeModuleInput()
     return getRouteModuleExports(routeModule)

@@ -15,6 +15,18 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
+  "files": [
+    "config.js",
+    "html.js",
+    "index.js",
+    "ioutils.cjs",
+    "plugin.mjs",
+    "setup.js",
+    "utils.js",
+    "mode/development.js",
+    "mode/production.js",
+    "types/index.d.ts"
+  ],
   "main": "index.js",
   "types": "./types/index.d.ts",
   "typings": "./types/index.d.ts",
@@ -27,18 +39,9 @@
     "./utils": "./utils.js",
     "./plugin": "./plugin.mjs"
   },
-  "files": [
-    "config.js",
-    "html.js",
-    "index.js",
-    "ioutils.cjs",
-    "mode/development.js",
-    "mode/production.js",
-    "plugin.mjs",
-    "setup.js",
-    "types/index.d.ts",
-    "utils.js"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "vitest run --no-file-parallelism",
     "test:type": "vitest --ui --typecheck"
@@ -63,9 +66,6 @@
   "peerDependencies": {
     "fastify": ">=5",
     "vite": ">=6"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "deprecated": false
 }

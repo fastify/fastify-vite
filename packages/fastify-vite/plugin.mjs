@@ -16,11 +16,8 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
       const isDevMode = mode === 'development'
       const outDir = customOutDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
-      const {
-        resolveClientModule,
-        createSSREnvironment,
-        createClientEnvironment,
-      } = await import('./config.js')
+      const { resolveClientModule, createSSREnvironment, createClientEnvironment } =
+        await import('./config.js')
 
       if (!rawConfig.environments) {
         rawConfig.environments = {}
@@ -99,10 +96,11 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
       let commonDistFolder = customOutDir // respect custom build.outDir config if provided
       if (!commonDistFolder) {
         const outDirs = Object.values(fastify.outDirs)
-        commonDistFolder = outDirs.length > 1
-          ? findCommonPath(outDirs)
-          // Handle SPA case where there's only dist/client
-          : outDirs[0].split(sep)[0]
+        commonDistFolder =
+          outDirs.length > 1
+            ? findCommonPath(outDirs)
+            : // Handle SPA case where there's only dist/client
+              outDirs[0].split(sep)[0]
       }
 
       if (isAbsolute(commonDistFolder)) {
@@ -112,11 +110,7 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
       }
     },
     async writeBundle() {
-      await writeFile(
-        jsonFilePath,
-        JSON.stringify(configToWrite, undefined, 2),
-        'utf-8',
-      )
+      await writeFile(jsonFilePath, JSON.stringify(configToWrite, undefined, 2), 'utf-8')
     },
   }
 }

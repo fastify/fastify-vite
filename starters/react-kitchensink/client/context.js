@@ -15,7 +15,7 @@ export default (ctx) => {
 // State initializer, must be a function called state
 // as this is a special context.js export and has
 // special processing, e.g., serialization and hydration
-export function state () {
+export function state() {
   return {
     user: {
       authenticated: false,
@@ -27,17 +27,17 @@ export function state () {
 // Grouped actions that operate on the state. This export
 // could be named anything, no special processing involved.
 export const actions = {
-  authenticate (state) {
+  authenticate(state) {
     state.user.authenticated = true
   },
   todoList: {
-    async add (state, item) {
+    async add(state, item) {
       await sendJSON('/api/todo/items', { method: 'put', json: item })
       state.todoList.push(item)
     },
-    async remove (state, index) {
+    async remove(state, index) {
       await sendJSON('/api/todo/items', { method: 'delete', json: index })
       state.todoList.splice(index, 1)
     },
-  }
+  },
 }

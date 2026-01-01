@@ -4,9 +4,9 @@ import FastifyVite from '@fastify/vite'
 const server = Fastify({
   logger: {
     transport: {
-      target: '@fastify/one-line-logger'
-    }
-  }
+      target: '@fastify/one-line-logger',
+    },
+  },
 })
 
 await server.register(FastifyVite, {
@@ -22,11 +22,7 @@ server.setErrorHandler((error, req, reply) => {
 await server.vite.ready()
 
 server.decorate('db', {
-  todoList: [
-    'Do laundry',
-    'Respond to emails',
-    'Write report',
-  ]
+  todoList: ['Do laundry', 'Respond to emails', 'Write report'],
 })
 
 server.put('/api/todo/items', (req, reply) => {

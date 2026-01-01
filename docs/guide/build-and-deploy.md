@@ -49,9 +49,9 @@ export default {
 
 The `viteFastify` plugin can be given the following options:
 
-* `spa` - Set this to `true` to disable the SSR build entirely. Default: `false`.
-* `clientModule` - The location of the SSR entry point, relative to the index.html file. Defaults to `index.js`. You can also use an absolute path to be extra safe.
-* `useRelativePaths` - Set this to `true` to avoid saving absolute paths in the `vite.config.json` file. This is useful if the machine you run the build on is NOT the machine you plan to run the server on (for example: if you build on a local machine but then copy the results into a Docker container). This results in a more hermetic application distribution. In a future release, this will be defaulted to `true`.
+- `spa` - Set this to `true` to disable the SSR build entirely. Default: `false`.
+- `clientModule` - The location of the SSR entry point, relative to the index.html file. Defaults to `index.js`. You can also use an absolute path to be extra safe.
+- `useRelativePaths` - Set this to `true` to avoid saving absolute paths in the `vite.config.json` file. This is useful if the machine you run the build on is NOT the machine you plan to run the server on (for example: if you build on a local machine but then copy the results into a Docker container). This results in a more hermetic application distribution. In a future release, this will be defaulted to `true`.
 
 Assuming you do not need to build your Fastify server itself, the only build script you need in your `package.json` file is below:
 
@@ -109,6 +109,7 @@ To achieve this, you need to do two things:
 If you do not do the above two steps, you could end up with two separate `dist` folders that you will need to handle on your own. Below is an example of this setup using `tsc` as the custom server build process:
 
 ::: code-group
+
 ```js{7} [vite.config.js]
 import { resolve } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
@@ -123,6 +124,7 @@ export default {
   ],
 }
 ```
+
 ```json{3} [tsconfig.json]
 {
   "compilerOptions": {
@@ -130,6 +132,7 @@ export default {
   }
 }
 ```
+
 :::
 
 ## Running in production mode

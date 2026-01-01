@@ -2,46 +2,47 @@
 
 import { Routes, Route, useLocation } from 'react-router'
 
-export function getPageRoutes (importMap) {
-  return Object.keys(importMap)
-    // Ensure that static routes have
-    // precedence over the dynamic ones
-    .sort((a, b) => a > b ? -1 : 1)
-    .map((path) => ({
-      path: path
-        // Remove /pages and .jsx extension
-        .slice(6, -4)
-        // Replace [id] with :id
-        .replace(/\[(\w+)\]/, (_, m) => `:${m}`)
-        // Replace '/index' with '/'
-        .replace(/\/index$/, '/'),
-      // The React component (default export)
-      component: importMap[path].default,
-      // The getServerSideProps individual export
-      getServerSideProps: importMap[path].getServerSideProps
-    }))
-}
-
-export function PageManager ({ routes, ctx }) {
+export function getPageRoutes(importMap) {
   return (
-    <Routes>{
-      routes.map(({ path, component, getServerSideProps }) => {
-        return <Route key={path} path={path} element={
-          <Page
-            ctx={ctx}
-            hasServerSideProps={!!getServerSideProps}
-            component={component} />
-        } />
-      })
-    }</Routes>
+    Object.keys(importMap)
+      // Ensure that static routes have
+      // precedence over the dynamic ones
+      .toSorted((a, b) => (a > b ? -1 : 1))
+      .map((path) => ({
+        path: path
+          // Remove /pages and .jsx extension
+          .slice(6, -4)
+          // Replace [id] with :id
+          .replace(/\[(\w+)\]/, (_, m) => `:${m}`)
+          // Replace '/index' with '/'
+          .replace(/\/index$/, '/'),
+        // The React component (default export)
+        component: importMap[path].default,
+        // The getServerSideProps individual export
+        getServerSideProps: importMap[path].getServerSideProps,
+      }))
   )
 }
 
-function Page ({
-  ctx,
-  hasServerSideProps,
-  component: Component
-}) {
+export function PageManager({ routes, ctx }) {
+  return (
+    <Routes>
+      {routes.map(({ path, component, getServerSideProps }) => {
+        return (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <Page ctx={ctx} hasServerSideProps={!!getServerSideProps} component={component} />
+            }
+          />
+        )
+      })}
+    </Routes>
+  )
+}
+
+function Page({ ctx, hasServerSideProps, component: Component }) {
   // If running on the server...
   // See if we already have serverSideProps populated
   // via the registered preHandler hook and passed
@@ -82,13 +83,13 @@ function Page ({
 
 const suspenseMap = new Map()
 
-function fetchWithSuspense (path) {
+function fetchWithSuspense(path) {
   let loader
   // When fetchWithSuspense() is called the first time inside
   // a component, it'll create the resource object (loader) for
   // tracking its state, but the next time it's called, it'll
   // return the same resource object previously saved
-  if (loader = suspenseMap.get(path)) {
+  if ((loader = suspenseMap.get(path))) {
     // Handle error, suspended state or return loaded data
     if (loader.error || loader.data?.statusCode === 500) {
       if (loader.data?.statusCode === 500) {
@@ -108,13 +109,19 @@ function fetchWithSuspense (path) {
       suspended: true,
       error: null,
       data: null,
-      promise: null
+      promise: null,
     }
     loader.promise = fetch(`/json${path}`)
       .then((response) => response.json())
-      .then((loaderData) => { loader.data = loaderData })
-      .catch((loaderError) => { loader.error = loaderError })
-      .finally(() => { loader.suspended = false })
+      .then((loaderData) => {
+        loader.data = loaderData
+      })
+      .catch((loaderError) => {
+        loader.error = loaderError
+      })
+      .finally(() => {
+        loader.suspended = false
+      })
 
     // Save the active suspended state to track it
     suspenseMap.set(path, loader)

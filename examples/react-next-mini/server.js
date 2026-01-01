@@ -1,10 +1,9 @@
-
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
 import renderer from './renderer.js'
 
-export async function main (dev) {
+export async function main(dev) {
   const server = Fastify({ ignoreTrailingSlash: true })
 
   server.decorate('fetchJSON', async (path) => {
@@ -13,11 +12,7 @@ export async function main (dev) {
   })
 
   server.get('/api/todo-list', (_, reply) => {
-    reply.send([
-      'Do laundry',
-      'Respond to emails',
-      'Write report'
-    ])
+    reply.send(['Do laundry', 'Respond to emails', 'Write report'])
   })
 
   server.setErrorHandler((err, req, reply) => {
@@ -29,7 +24,7 @@ export async function main (dev) {
   await server.register(FastifyVite, {
     root: import.meta.dirname,
     dev: dev ?? process.argv.includes('--dev'),
-    renderer
+    renderer,
   })
 
   await server.vite.ready()

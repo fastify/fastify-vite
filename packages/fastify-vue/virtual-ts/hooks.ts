@@ -1,9 +1,9 @@
 import { useRouteContext } from '@fastify/vue/client'
 
-export function useState () {
+export function useState() {
   return useRouteContext().state
 }
 
-export function useData () {
+export function useData() {
   return useRouteContext().data
 }

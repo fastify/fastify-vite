@@ -5,7 +5,7 @@ import base from './base.vue'
 import routes from './routes.js'
 import createState from './state.js'
 
-export async function createApp (ctx, url) {
+export async function createApp(ctx, url) {
   const instance = createSSRApp(base)
   const history = import.meta.env.SSR ? createMemoryHistory() : createWebHistory()
   const router = createRouter({ history, routes })

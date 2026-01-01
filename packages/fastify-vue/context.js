@@ -1,8 +1,7 @@
-
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
-  static async create (server, req, reply, route, contextInit) {
+  static async create(server, req, reply, route, contextInit) {
     const routeContext = new RouteContext(server, req, reply, route)
     if (contextInit) {
       if (contextInit.state) {
@@ -15,7 +14,7 @@ export default class RouteContext {
     return routeContext
   }
 
-  constructor (server, req, reply, route) {
+  constructor(server, req, reply, route) {
     this.server = server
     this.req = req
     this.reply = reply
@@ -36,7 +35,7 @@ export default class RouteContext {
     this.onEnter = !!route.onEnter
   }
 
-  [routeContextInspect] () {
+  [routeContextInspect]() {
     return {
       ...this,
       actions: this.actions,
@@ -46,7 +45,7 @@ export default class RouteContext {
     }
   }
 
-  toJSON () {
+  toJSON() {
     return {
       state: this.state,
       data: this.data,

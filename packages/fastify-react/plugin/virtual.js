@@ -2,7 +2,6 @@ import { readFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { findExports } from 'mlly'
 
-
 const virtualRoot = resolve(import.meta.dirname, '..', 'virtual')
 const virtualRootTS = resolve(import.meta.dirname, '..', 'virtual-ts')
 
@@ -68,7 +67,6 @@ export function loadVirtualModule(virtualInput) {
   }
 }
 
-
 virtualModulesTS.includes = function (virtual) {
   if (!virtual) {
     return false
@@ -80,7 +78,6 @@ virtualModulesTS.includes = function (virtual) {
   }
   return false
 }
-
 
 virtualModules.includes = function (virtual) {
   if (!virtual) {
@@ -110,9 +107,7 @@ function loadVirtualModuleOverride(viteProjectRoot, virtualInput) {
 }
 
 export function loadSource(id) {
-  const filePath = id
-    .replace(/\?client$/, '')
-    .replace(/\?server$/, '')
+  const filePath = id.replace(/\?client$/, '').replace(/\?server$/, '')
   return readFileSync(filePath, 'utf8')
 }
 

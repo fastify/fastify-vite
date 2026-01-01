@@ -8,8 +8,6 @@ export async function getServerSideProps ({ req, ky }) {
 <template>
   <p>{{ $serverSideProps.item }}</p>
   <p>
-    <router-link to="/">
-      Go to the index
-    </router-link>
+    <router-link to="/"> Go to the index </router-link>
   </p>
 </template>

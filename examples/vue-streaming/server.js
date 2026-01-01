@@ -11,7 +11,7 @@ export async function main(dev) {
   await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
     root: import.meta.dirname,
-    renderer
+    renderer,
   })
 
   server.setErrorHandler((err, req, reply) => {

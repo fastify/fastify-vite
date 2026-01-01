@@ -3,20 +3,20 @@ import { useHead } from '@unhead/react'
 
 export const clientOnly = true
 
-export function getMeta () {
+export function getMeta() {
   return {
-    title: 'Client Only Page'
+    title: 'Client Only Page',
   }
 }
 
-export default function ClientOnly () {
+export default function ClientOnly() {
   useHead({
     meta: [
       {
         name: 'description',
-        content: 'More head updates!'
-      }
-    ]
+        content: 'More head updates!',
+      },
+    ],
   })
   return (
     <>
@@ -26,7 +26,9 @@ export default function ClientOnly () {
       </p>
       <p>⁂</p>
       <p>When this route is rendered on the server, no SSR takes place.</p>
-      <p>See the output of <code>curl http://localhost:3000/client-only</code>.</p>
+      <p>
+        See the output of <code>curl http://localhost:3000/client-only</code>.
+      </p>
     </>
   )
 }

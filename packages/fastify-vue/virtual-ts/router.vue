@@ -6,18 +6,12 @@ import Layout from '$app/layout.vue'
   <RouterView v-slot="{ Component }">
     <template v-if="$isServer">
       <Layout>
-        <component
-          :is="Component"
-          :key="$route.path"
-        />
+        <component :is="Component" :key="$route.path" />
       </Layout>
     </template>
     <Suspense v-else>
       <Layout>
-        <component
-          :is="Component"
-          :key="$route.path"
-        />
+        <component :is="Component" :key="$route.path" />
       </Layout>
     </Suspense>
   </RouterView>

@@ -64,5 +64,3 @@ function Message () {
 ```
 
 [This example](https://github.com/fastify/fastify-vite/blob/dev/starters/react-kitchensink/client/pages/streaming.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template.
-
-

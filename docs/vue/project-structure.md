@@ -127,6 +127,7 @@ If you don't have any, no client routes are rendered.
 Explore the main files in the various tabs of the snippet below:
 
 ::: code-group
+
 ```js [server.js]
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
@@ -147,6 +148,7 @@ await server.register(FastifyVite, {
 await server.vite.ready()
 await server.listen({ port: 3000 })
 ```
+
 ```js [vite.config.js]
 import { resolve } from 'node:path'
 
@@ -161,6 +163,7 @@ export default {
   ],
 }
 ```
+
 ```js [client/index.js]
 import routes from '$app/routes.js'
 import create from '$app/create.js'
@@ -171,6 +174,7 @@ export default {
   create,
 }
 ```
+
 ```html [client/index.html]
 <!DOCTYPE html>
 <html>
@@ -186,6 +190,7 @@ export default {
 <script type="module" src="/$app/mount.js"></script>
 </html>
 ```
+
 ```vue [client/pages/index.vue]
 <template>
   <h1>{{ message }}</h1>
@@ -212,6 +217,7 @@ img {
 }
 </style>
 ```
+
 :::
 
 [vue-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base
@@ -386,7 +392,6 @@ flowchart TD
 ## Special directories
 
 Even though this is implied in previous references in the documentation, for completeness sake, below is a list of all the special directories in **`@fastify/vue`** applications that are processed differently and in an automated fashion.
-
 
 <table>
 <thead>

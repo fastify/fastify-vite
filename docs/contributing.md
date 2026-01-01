@@ -16,16 +16,7 @@ In summary, before you submit a pull request, perform the following steps:
 
 ## Formatting & Linting
 
-This project uses [oxlint](https://oxc.rs/docs/guide/usage/linter.html) to lint. Unfortunately, the oxc formatter is not yet available nor are there any VSCode extensions ready for use yet.
-
-Please make sure to adhere to the following style conventions:
-
-- **No tabs**
-- **No semicolons**
-- **Two-space indendation **
-- **Singlequoted strings**
-
-If you use VSCode, the included `.vscode/settings.json` should be able to perform the formatting necessary for now as we wait for the oxc formatter to and its corresponding VSCode extension to be released.
+This project uses [oxlint](https://oxc.rs/docs/guide/usage/linter.html) to lint and [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) to format.
 
 ## Development & Testing
 

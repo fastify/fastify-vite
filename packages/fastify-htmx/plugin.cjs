@@ -5,13 +5,7 @@ const inject = require('@rollup/plugin-inject')
 function viteFastifyHtmx() {
   const prefix = /^\/:/
   const virtualRoot = resolve(__dirname, 'virtual')
-  const virtualModules = [
-    'client.js',
-    'layouts/',
-    'layouts.js',
-    'routes.js',
-    'root.jsx',
-  ]
+  const virtualModules = ['client.js', 'layouts/', 'layouts.js', 'routes.js', 'root.jsx']
   virtualModules.includes = function (virtual) {
     if (!virtual) {
       return false

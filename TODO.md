@@ -1,4 +1,3 @@
-
 - Core
   - A script to turn on starter development mode.
     - That is, change the @fastify/vite and @fastify/vue versions in
