@@ -1,5 +1,11 @@
 # @fastify/vue
 
+## 1.1.5
+
+### Patch Changes
+
+- ad49933: Address polynomial RedDoS issue in route regex identified by CodeQL
+
 ## 1.1.4
 
 ### Patch Changes
