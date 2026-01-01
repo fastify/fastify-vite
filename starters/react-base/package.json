@@ -1,4 +1,6 @@
 {
+  "name": "react-base-starter",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

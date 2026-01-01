@@ -1,5 +1,6 @@
 {
-  "name": "example-react-streaming",
+  "name": "@fastify-vite/example-react-streaming",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

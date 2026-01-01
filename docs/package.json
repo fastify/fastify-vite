@@ -1,4 +1,6 @@
 {
+  "name": "@fastify-vite/docs",
+  "private": true,
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev",

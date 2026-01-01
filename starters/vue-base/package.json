@@ -1,6 +1,7 @@
 {
-  "name": "vue-base",
+  "name": "vue-base-starter",
   "description": "The vue-base starter template for @fastify/vue",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",

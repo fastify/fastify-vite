@@ -1,5 +1,6 @@
 {
-  "name": "example-vue-vanilla-ts",
+  "name": "@fastify-vite/example-vue-vanilla-ts",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",

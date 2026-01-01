@@ -1,4 +1,6 @@
 {
+  "name": "@fastify-vite/cjs-test-fixture",
+  "private": true,
   "scripts": {
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr ./index.js",

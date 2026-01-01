@@ -1,5 +1,6 @@
 {
-  "name": "example-react-vanilla-ts-src",
+  "name": "@fastify-vite/example-react-vanilla-ts-src",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",

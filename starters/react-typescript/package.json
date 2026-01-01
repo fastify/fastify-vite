@@ -1,4 +1,6 @@
 {
+  "name": "react-typescript-starter",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts --dev",
