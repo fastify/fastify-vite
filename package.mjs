@@ -52,6 +52,7 @@ async function prepForRelease() {
   }
   cd(root)
   await $`pnpm i`
+  await $`pnpm format`
   process.exit()
 }
 
