@@ -3,7 +3,7 @@ import assert from 'node:assert'
 import { join } from 'path'
 import { loadConfigFromFile, createBuilder, build } from 'vite'
 
-export function makeIndexTest ({ main, dev }) {
+export function makeIndexTest({ main, dev }) {
   return async () => {
     const server = await main(dev)
     const response = await server.inject({ method: 'GET', url: '/' })
@@ -13,7 +13,6 @@ export function makeIndexTest ({ main, dev }) {
   }
 }
 
-
 // export function makeBuildTest () {
 //   return async () => {
 //     const builder = await createBuilder()
@@ -21,22 +20,25 @@ export function makeIndexTest ({ main, dev }) {
 //   }
 // }
 
-export function makeSPABuildTest ({ cwd }) {
+export function makeSPABuildTest({ cwd }) {
   return async () => {
     const configFile = join(cwd, 'vite.config.js')
-    const config = await loadConfigFromFile({ 
-      command: 'build', 
-      mode: 'production'
-    }, configFile)
+    const config = await loadConfigFromFile(
+      {
+        command: 'build',
+        mode: 'production',
+      },
+      configFile,
+    )
     await build(config)
   }
 }
 
-export function makeBuildTest ({ cwd }) {
+export function makeBuildTest({ cwd }) {
   return async () => {
     const configFile = join(cwd, 'vite.config.js')
-    // const config = await loadConfigFromFile({ 
-    //   command: 'build', 
+    // const config = await loadConfigFromFile({
+    //   command: 'build',
     //   mode: 'production'
     // }, configFile)
     const builder = await createBuilder({ configFile })

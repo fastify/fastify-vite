@@ -18,20 +18,19 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default {
   createHtmlFunction,
-  createRenderFunction
+  createRenderFunction,
 }
 
 // The return value of this function gets registered as reply.html()
-async function createHtmlFunction (source, scope, config) {
+async function createHtmlFunction(source, scope, config) {
   const [headSource, footer] = source.split('<!-- element -->')
   const headTemplate = await createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {
     const head = headTemplate({
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     })
     this.type('text/html')
-    const readable = Readable
-      .from(streamHtml(head, stream, footer))
+    const readable = Readable.from(streamHtml(head, stream, footer))
       // Errors from React SSR can be captured here
       .on('error', console.log)
     this.send(readable)
@@ -39,15 +38,11 @@ async function createHtmlFunction (source, scope, config) {
   }
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   // createApp is exported by client/index.js
   return function ({ server, req, reply }) {
     const data = {
-      todoList: [
-        'Do laundry',
-        'Respond to emails',
-        'Write report'
-      ]
+      todoList: ['Do laundry', 'Respond to emails', 'Write report'],
     }
     // Creates main React component with all the SSR context it needs
     const app = createApp({ data, server, req, reply }, req.url)
@@ -58,7 +53,7 @@ function createRenderFunction ({ createApp }) {
 }
 
 // Helper function to prepend and append chunks the body stream
-async function * streamHtml (head, body, footer) {
+async function* streamHtml(head, body, footer) {
   for await (const chunk of await head) {
     yield chunk
   }
@@ -74,17 +69,17 @@ async function * streamHtml (head, body, footer) {
 
 // Helper function to get an AsyncIterable (via PassThrough)
 // from the limited stream returned by renderToPipeableStream()
-function toReadable (app) {
+function toReadable(app) {
   const duplex = new PassThrough()
   return new Promise((resolve, reject) => {
     try {
       const pipeable = renderToPipeableStream(app, {
-        onShellReady () {
+        onShellReady() {
           resolve(pipeable.pipe(duplex))
         },
-        onShellError (error) {
+        onShellError(error) {
           reject(error)
-        }
+        },
       })
     } catch (error) {
       resolve(error)

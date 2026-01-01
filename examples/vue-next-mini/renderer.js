@@ -9,44 +9,46 @@ import { uneval } from 'devalue'
 export default {
   createRenderFunction,
   createRoute,
-  prepareServer
+  prepareServer,
 }
 
-export function prepareServer (server) {
+export function prepareServer(server) {
   server.log.info('prepareServer() hook picked up from configuration!')
 }
 
-async function createRoute ({ handler, errorHandler, route }, scope, config) {
+async function createRoute({ handler, errorHandler, route }, scope, config) {
   if (route.configure) {
     await route.configure(scope)
   }
   if (route.getServerSideProps) {
     // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
-      reply.send(await route.getServerSideProps({
-        req,
-        ky: scope.ky
-      }))
+      reply.send(
+        await route.getServerSideProps({
+          req,
+          ky: scope.ky,
+        }),
+      )
     })
   }
   scope.get(route.path, {
     // If getServerSideProps is provided,
     // make sure it runs before the SSR route handler
-    ...route.getServerSideProps && {
-      async preHandler (req, reply) {
+    ...(route.getServerSideProps && {
+      async preHandler(req, reply) {
         req.serverSideProps = await route.getServerSideProps({
           req,
-          ky: scope.ky
+          ky: scope.ky,
         })
-      }
-    },
+      },
+    }),
     handler,
     errorHandler,
-    ...route
+    ...route,
   })
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   return async function ({ app: server, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
@@ -60,7 +62,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${uneval({ serverSideProps })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ serverSideProps })}</script>`,
     }
   }
 }

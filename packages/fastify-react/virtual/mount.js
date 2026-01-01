@@ -5,12 +5,10 @@ import routes from '$app/routes.js'
 import create from '$app/create.jsx'
 import * as context from '$app/context.js'
 
-async function mountApp (...targets) {
+async function mountApp(...targets) {
   const ctxHydration = await extendContext(window.route, context)
   const resolvedRoutes = await hydrateRoutes(routes)
-  const routeMap = Object.fromEntries(
-    resolvedRoutes.map((route) => [route.path, route]),
-  )
+  const routeMap = Object.fromEntries(resolvedRoutes.map((route) => [route.path, route]))
   const useHead = createHead()
   ctxHydration.useHead = useHead
   ctxHydration.useHead.push(window.route.head)
@@ -20,7 +18,6 @@ async function mountApp (...targets) {
     routes: window.routes,
     routeMap,
   })
-
 
   let mountTargetFound = false
   for (const target of targets) {
@@ -42,14 +39,17 @@ async function mountApp (...targets) {
 
 mountApp('#root', 'main')
 
-async function extendContext (ctx, {
-  // The route context initialization function
-  default: setter,
-  // We destructure state here just to discard it from extra
-  state,
-  // Other named exports from context.js
-  ...extra
-}) {
+async function extendContext(
+  ctx,
+  {
+    // The route context initialization function
+    default: setter,
+    // We destructure state here just to discard it from extra
+    state,
+    // Other named exports from context.js
+    ...extra
+  },
+) {
   Object.assign(ctx, extra)
   if (setter) {
     await setter(ctx)

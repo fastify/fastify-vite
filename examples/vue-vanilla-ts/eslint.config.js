@@ -12,7 +12,7 @@ export default [
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   ...tseslint.configs.recommended,
-  
+
   // Base configuration for all JavaScript/TypeScript files (server-side defaults)
   {
     files: ['**/*.js', '**/*.ts', '**/*.mjs'],
@@ -71,4 +71,3 @@ export default [
     ignores: ['**/build/**', '**/dist/**'],
   },
 ]
-

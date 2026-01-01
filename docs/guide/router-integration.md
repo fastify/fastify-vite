@@ -14,6 +14,7 @@ The **[vue-hydration][vue-hydration]** is an educational example that illustrate
 Let's start by examining the server file below. The first thing to notice is that `dev` is not set in the **`@fastify/vite`** plugin options. That's because the check for the `--dev` flag is actually the default behavior of **`@fastify/vite`**. You can use the `dev` flag if you need to use an environment variable to do set it, for instance, but if you just use `--dev` then it doesn't need to be set at all.
 
 ::: code-group
+
 ```js [server.js]
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
@@ -35,6 +36,7 @@ await server.register(FastifyVite, {
 await server.vite.ready()
 await server.listen({ port: 3000 })
 ```
+
 :::
 
 Secondly, there's only one option set other than `root`, and that is [`renderer`](/config/#renderer). This is a convenience wrapper object to nearly all configuration options (except `root`, `dev`, `spa` and `renderer` itself), so you can package `@fastify/vite` configurations as packages, as is the case for the `@fastify/vue` and `@fastify/react` core renderer packages.
@@ -42,6 +44,7 @@ Secondly, there's only one option set other than `root`, and that is [`renderer`
 In this setup, we're leveraging [`createRoute()`](/config/#createroute) and [`createRenderFunction()`](/config/#createrenderfunction) to customize the way routes are registered and to define a rendering function that embeds server-side data on the final HTML document so it can part of the **hydration** process on the client.
 
 ::: code-group
+
 ```js [renderer.js]
 import { renderToString } from '@vue/server-renderer'
 import { uneval } from 'devalue'
@@ -76,6 +79,7 @@ function createRenderFunction ({ createApp }) {
   }
 }
 ```
+
 ```js [client/routes.js]
 export default [
   {
@@ -89,6 +93,7 @@ export default [
   }
 ]
 ```
+
 ```js [client/index.js]
 import { createApp } from './base.js'
 import routes from './routes.js'
@@ -100,7 +105,8 @@ export default {
   createApp
 }
 ```
-```html [client/index.html]
+
+````html [client/index.html]
 <!DOCTYPE html>
 <!-- hydration -->
 <div id="root"><!-- element --></div>
@@ -120,7 +126,7 @@ flowchart TD
     X[client/routes.js] --> A
     B -->D(client/index.html)
     C -->|"for (const route of routes)"| G("createRoute(route)")
-```
+````
 
 Notice how `addFoobarHook` is a flag set in one of the client-side routes (in `client/routes.js`), just to demonstrante how it can be used to customize route registration, in this case setting `foobarHook` as an [`onRequest`](https://fastify.dev/docs/latest/Reference/Hooks/#onrequest) hook.
 

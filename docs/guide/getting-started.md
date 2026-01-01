@@ -31,20 +31,23 @@ This basic SPA setup requires a Vite configuration file, the Fastify server file
 
 To run this project, `fastify`, `@fastify/vite`, `react` and `react-dom` are the only dependencies required. Vite is only required in development.
 
-
 ::: code-group
+
 ```bash [npm]
 npm i fastify @fastify/vite react react-dom
 npm i vite -D
 ```
+
 ```bash [pnpm]
 pnpm add fastify @fastify/vite react react-dom
 pnpm add vite -D
 ```
+
 ```bash [yarn]
 yarn add fastify @fastify/vite react react-dom
 yarn add vite -D
 ```
+
 :::
 
 ### The Fastify server
@@ -52,6 +55,7 @@ yarn add vite -D
 In `server.js`, notice how starting the development mode is conditioned to the presence of a `--dev` CLI argument passed to the Node.js process — could also be an environment variable. The default value for the `dev` configuration option is actually what you see in this snippet, a CLI argument check for `--dev`. All `server.js` files in the [`examples/`](https://github.com/fastify/fastify-vite/tree/dev/examples) are **using this default behavior**.
 
 ::: code-group
+
 ```js [server.js]
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
@@ -71,6 +75,7 @@ server.get('/', (req, reply) => {
 await server.vite.ready()
 await server.listen({ port: 3000 })
 ```
+
 :::
 
 This Fastify server only has a root route and it replies with the result of `reply.html()`. This `html()` method is added by `@fastify/vite`, using the result of the `createHtmlFunction()` configuration hook, and will seamlessly serve either the development or production version of your `index.html`, according to the `dev` configuration setting passed to the `@fastify/vite` plugin options, with or without server-side rendered markup.
@@ -86,6 +91,7 @@ In dev mode, `@fastify/vite` looks up the Vite configuration options by importin
 To support this kind of production build, `@fastify/vite` ships with a Vite plugin that saves the handful of properties that it needs from the resolved Vite configuration object into a cached JSON file. Then, `@fastify/vite` will be able to read this JSON file instead of loading `vite` in production.
 
 ::: code-group
+
 ```js [vite.config.js]
 import { resolve } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
@@ -99,6 +105,7 @@ export default {
   ],
 }
 ```
+
 ```json [package.json]
 {
   "type": "module",
@@ -118,6 +125,7 @@ export default {
   }
 }
 ```
+
 :::
 
 In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite.
@@ -125,6 +133,7 @@ In `package.json`, take note of how the `dev`, `start` and `build` commands are 
 Then for the client code, cleanly separated in the `client/` directory, you have `index.html` loading `mount.js`, `base.jsx` with a React component and `mount.js` loading it. Notice that Vite requires you to have an `index.html` file as it's [the front-and-central build entry point](https://vitejs.dev/guide/#index-html-and-project-root).
 
 ::: code-group
+
 ```html [client/index.html]
 <!DOCTYPE html>
 <div id="root"><!-- element --></div>
@@ -148,6 +157,7 @@ export function createApp () {
   )
 }
 ```
+
 :::
 
 ## Directory structure
@@ -155,6 +165,7 @@ export function createApp () {
 **`@fastify/vite`** recommends one of the following directory structures for your application:
 
 ::: code-group
+
 ```text{2,5,6} [without src directory]
 // For very simple servers
 ├── server.js
@@ -164,6 +175,7 @@ export function createApp () {
 ├── vite.config.js
 └── package.json
 ```
+
 ```text{3,6,7} [with src directory]
 // For servers that have many files or require a build step
 ├── src/
@@ -174,11 +186,12 @@ export function createApp () {
 ├── vite.config.js
 └── package.json
 ```
+
 :::
 
 The choice to use a `src` directory or not is up to you. The primary benefit of using a `src` directory is if your server code requires any kind of build step where you want to separate your `src` files from `dist` files. For example, if your server is written in TypeScript you most likely want your `src` and `dist` files to be separate. It is also not uncommon for server code to be built using Webpack or Rollup. Even if your server does not require a build step, you may want to use a `src` directory anyway for better organization if your server code is divided into many files. If you **do** choose to use a `src` directory, you probably also want to customize the location of your `dist` directory; see: [the dist directory](/guide/build-and-deploy#the-dist-directory).
 
-In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`.  This is the recommended approach.
+In all examples in this documentation, the client application code is kept in a `client/` directory, to be explicitly separated from the server code and configuration files. In the `vite.config.js` previously shown, the project **root** is set as `client`. This is the recommended approach.
 
 ::: warning
 It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines where your `index.html` is located. This is your **project root** in Vite's context.

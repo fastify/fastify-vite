@@ -1,14 +1,13 @@
-
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
-export async function main (dev) {
+export async function main(dev) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
     root: import.meta.dirname,
     dev: dev ?? process.argv.includes('--dev'),
-    spa: true
+    spa: true,
   })
 
   server.get('/', (req, reply) => {

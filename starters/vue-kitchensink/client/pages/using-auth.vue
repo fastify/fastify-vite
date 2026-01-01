@@ -1,9 +1,7 @@
 <template>
   <h2>Todo List — Using Custom Layout</h2>
   <ul>
-    <li
-      v-for="(item, i) in todoList.state"
-      :key="`item-${i}`">
+    <li v-for="(item, i) in todoList.state" :key="`item-${i}`">
       {{ item }}
     </li>
   </ul>
@@ -15,9 +13,11 @@
     <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
-  <p>This example is exactly the same as <router-link to="/using-store">/using-store</router-link>,
-  except it's wrapped in a custom layout which blocks it until
-  <code>user.authenticated</code> is <code>true</code> in the global state.</p>
+  <p>
+    This example is exactly the same as <router-link to="/using-store">/using-store</router-link>,
+    except it's wrapped in a custom layout which blocks it until <code>user.authenticated</code> is
+    <code>true</code> in the global state.
+  </p>
 </template>
 
 <script>

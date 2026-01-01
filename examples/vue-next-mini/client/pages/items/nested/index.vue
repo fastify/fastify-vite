@@ -8,17 +8,13 @@ export async function getServerSideProps ({ ky }) {
 
 <template>
   <ul>
-    <li
-      v-for="(listItem, i) in $serverSideProps.todoList"
-      :key="`item-${i}`">
+    <li v-for="(listItem, i) in $serverSideProps.todoList" :key="`item-${i}`">
       <router-link :to="`/items/nested/${i}`">
         {{ listItem }}
       </router-link>
     </li>
   </ul>
   <p>
-    <router-link to="/">
-      Go to the index
-    </router-link>
+    <router-link to="/"> Go to the index </router-link>
   </p>
 </template>

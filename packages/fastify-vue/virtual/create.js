@@ -11,15 +11,13 @@ import { createHead as createServerHead } from '@unhead/vue/server'
 
 import * as root from '$app/root.vue'
 
-export default async function create (ctx) {
+export default async function create(ctx) {
   const { routes, ctxHydration } = ctx
 
-  const instance = ctxHydration.clientOnly
-    ? createApp(root.default)
-    : createSSRApp(root.default)
+  const instance = ctxHydration.clientOnly ? createApp(root.default) : createSSRApp(root.default)
 
   let scrollBehavior = null
-  if (typeof root.scrollBehavior === "function") {
+  if (typeof root.scrollBehavior === 'function') {
     scrollBehavior = root.scrollBehavior
   }
 

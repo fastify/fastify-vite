@@ -1,5 +1,5 @@
 <template>
-	<p>This route is rendered on the client only!</p>
+  <p>This route is rendered on the client only!</p>
   <p>
     <router-link to="/">Go back to the index</router-link>
   </p>

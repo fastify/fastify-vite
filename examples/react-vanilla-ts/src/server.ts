@@ -1,11 +1,9 @@
-
 import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import { renderToString } from 'react-dom/server'
 
-
-export async function main (dev?: boolean) {
+export async function main(dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {
@@ -14,13 +12,13 @@ export async function main (dev?: boolean) {
     root: resolve(import.meta.dirname, '..'),
     distDir: resolve(import.meta.dirname, '..', 'build'), // Must match build.outDir in Vite config
     dev: dev || process.argv.includes('--dev'),
-    async createRenderFunction ({ createApp }: { createApp: () => React.ReactNode  }) {
+    async createRenderFunction({ createApp }: { createApp: () => React.ReactNode }) {
       return () => {
         return {
           element: renderToString(createApp()),
         }
       }
-    }
+    },
   })
 
   server.get('/', (req, reply) => {

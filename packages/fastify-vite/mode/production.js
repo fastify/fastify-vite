@@ -62,9 +62,7 @@ async function setup(config) {
     await scope.register(FastifyStatic, {
       root,
       prefix: join(
-        URL.canParse(vite.base)
-          ? new URL(vite.base).pathname
-          : vite.base || '/',
+        URL.canParse(vite.base) ? new URL(vite.base).pathname : vite.base || '/',
         assetsDir,
       ).replace(/\\/g, '/'),
     })
@@ -99,26 +97,17 @@ async function setup(config) {
     value: ssrManifest,
   })
 
-  const client =
-    !config.spa && (await config.prepareClient(entries, this.scope, config))
+  const client = !config.spa && (await config.prepareClient(entries, this.scope, config))
 
   // Set reply.html() function with production version of index.html
   this.scope.decorateReply(
     'html',
-    await config.createHtmlFunction(
-      config.bundle.indexHtml,
-      this.scope,
-      config,
-    ),
+    await config.createHtmlFunction(config.bundle.indexHtml, this.scope, config),
   )
 
   if (config.hasRenderFunction) {
     // Set reply.render() function with the client module production bundle
-    const renderFunction = await config.createRenderFunction(
-      client,
-      this.scope,
-      config,
-    )
+    const renderFunction = await config.createRenderFunction(client, this.scope, config)
     this.scope.decorateReply('render', renderFunction)
   }
 
@@ -128,16 +117,15 @@ async function setup(config) {
     const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
 
-    const fixWin32Path = process.platform === 'win32'
-      ? (filePath) => new URL(fileUrl(filePath))
-      : (filePath) => filePath
+    const fixWin32Path =
+      process.platform === 'win32'
+        ? (filePath) => new URL(fileUrl(filePath))
+        : (filePath) => filePath
 
-    const getBundlePath = (
-      viteConfig.fastify.usePathsRelativeToAppRoot ||
-      isAbsolute(distOutDir)
-    )
-      ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
-      : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
+    const getBundlePath =
+      viteConfig.fastify.usePathsRelativeToAppRoot || isAbsolute(distOutDir)
+        ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
+        : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
 
     let bundlePath
 
@@ -174,19 +162,11 @@ async function setup(config) {
       }
     }
     const ssrManifest =
-      process.platform === 'win32'
-        ? new URL(fileUrl(ssrManifestPath))
-        : ssrManifestPath
+      process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath)) : ssrManifestPath
 
     const entries = {}
-    for (const [env, entryPath] of Object.entries(
-      config.vite.fastify.entryPaths,
-    )) {
-      entries[env] = await loadBundle(
-        config.vite,
-        config.vite.fastify.outDirs[env],
-        entryPath,
-      )
+    for (const [env, entryPath] of Object.entries(config.vite.fastify.entryPaths)) {
+      entries[env] = await loadBundle(config.vite, config.vite.fastify.outDirs[env], entryPath)
     }
     return {
       entries,

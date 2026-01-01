@@ -24,9 +24,9 @@ const data = useData()
   <h1>Form example with dynamic URL</h1>
   <form method="post">
     <label for="name">Magic number:</label>
-    <br>
-    <input type="text" id="number" name="number" :value="data.number">
-    <br>
-    <input type="submit" value="Submit">
+    <br />
+    <input type="text" id="number" name="number" :value="data.number" />
+    <br />
+    <input type="submit" value="Submit" />
   </form>
 </template>

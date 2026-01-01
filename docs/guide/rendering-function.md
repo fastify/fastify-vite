@@ -24,7 +24,7 @@ To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
       }
     }
   })
-````
+```
 
 `createRenderFunction()` receives as the first parameter a reference to your **Vite application module**, i.e., your client application. The function it returns is added ([decorated](https://fastify.dev/docs/v2.15.x/Documentation/Decorators/)) to the Fastify `Reply` class as `render()`.
 
@@ -32,7 +32,7 @@ To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
 
 This is what **Vite application module** or **client module** refers to.
 
-You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/#clientmodule) configuration option, which lets you specify a custom module path for **`@fastify/vite`** to load.  Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
+You can change this behavior (looking for `index.js`) via the [`clientModule`](/config/#clientmodule) configuration option, which lets you specify a custom module path for **`@fastify/vite`** to load. Having `client/index.js` though is a simple, straighforward convention that requires no additional configuration.
 
 The best way to really grasp `createRenderFunction()` is by exploring an example. Consider the project layout from the [`react-vanilla`][react-vanilla] example:
 
@@ -52,6 +52,7 @@ The best way to really grasp `createRenderFunction()` is by exploring an example
 Let's focus on the main React component:
 
 ::: code-group
+
 ```jsx [client/base.jsx]
 import React from 'react'
 
@@ -61,6 +62,7 @@ export function createApp () {
   )
 }
 ```
+
 :::
 
 The React component to be server-side rendered is in `client/base.jsx`.
@@ -75,16 +77,18 @@ The only difference is that it won't have to **re-render** **pre-rendered** mark
 The [Vue 3 SSR documentation](https://vuejs.org/guide/scaling-up/ssr.html) has a **concise explanation** that **applies to all other frameworks**:
 
 > _To make the client-side app interactive, Vue needs to perform the hydration step. During hydration, it creates the same Vue application that was run on the server, matches each component to the DOM nodes it should control, and attaches DOM event listeners._
-:::
+> :::
 
 In the [react-vanilla][react-vanilla] example, both `client/mount.js` and `client/index.js` load `client/base.jsx`. The first is loaded by `client/index.html` and used for CSR and the latter is loaded by **`@fastify/vite`** and provided to the `prepareClient()` and `createRenderFunction()` hooks.
 
 ::: code-group
+
 ```html [client/index.html]
 <!DOCTYPE html>
 <div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
 ```
+
 ```js [client/mount.js]
 import { hydrateRoot } from 'react-dom/client'
 import { createApp } from './base.jsx'
@@ -94,12 +98,14 @@ const mountElement = document.getElementById('root')
 // hydrateRoot() avoids re-rendering prerendered markup
 hydrateRoot(mountElement, createApp())
 ```
+
 ```js [client/index.js]
 import { createApp } from './base.jsx'
 
 // Provides component needed to perform SSR
 export default { createApp }
 ```
+
 :::
 
 ```mermaid
@@ -120,6 +126,7 @@ You can pass an object to `reply.html()` with the variables to replace. If you d
 
 That is to say, `reply.html()` is the same as `reply.html(reply.render())`.
 ::: code-group
+
 ```js {6-11,16} [server.js]
 const server = Fastify()
 
@@ -141,8 +148,8 @@ server.get('/', (req, reply) => {
 
 await server.vite.ready()
 await server.listen({ port: 3000 })
-````
+```
+
 :::
 
 What is see above is a simplified version (without imports and the adjustments for easier testing) from the [`react-vanilla`][react-vanilla] SSR example.
-

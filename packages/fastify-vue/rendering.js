@@ -4,9 +4,9 @@ import * as devalue from 'devalue'
 import { createHead, transformHtmlTemplate } from '@unhead/vue/server'
 import { createHtmlTemplates } from './templating.js'
 
-export async function createRenderFunction ({ routes, create }) {
+export async function createRenderFunction({ routes, create }) {
   // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(routes.map(_ => [_.path, _]))
+  const routeMap = Object.fromEntries(routes.map((_) => [_.path, _]))
   // Registered as reply.render()
   return function () {
     if (this.request.route.streaming) {
@@ -16,7 +16,7 @@ export async function createRenderFunction ({ routes, create }) {
   }
 }
 
-async function createStreamingResponse (req, routes) {
+async function createStreamingResponse(req, routes) {
   req.route.router.push(req.url)
   await req.route.router.isReady()
   // SSR stream
@@ -24,7 +24,7 @@ async function createStreamingResponse (req, routes) {
   return { routes, context: req.route, body }
 }
 
-async function createResponse (req, routes) {
+async function createResponse(req, routes) {
   let body
   if (!req.route.clientOnly) {
     req.route.router.push(req.url)
@@ -36,7 +36,7 @@ async function createResponse (req, routes) {
 }
 
 // The return value of this function gets registered as reply.html()
-export async function createHtmlFunction (source, _, config) {
+export async function createHtmlFunction(source, _, config) {
   // Creates `universal` and `serverOnly` sets of
   // HTML `beforeElement` and `afterElement` templates
   const templates = await createHtmlTemplates(source, config)
@@ -59,29 +59,19 @@ export async function createHtmlFunction (source, _, config) {
       context.hydration = ''
 
       if (context.streaming) {
-        return streamShell(
-          templates.serverOnly,
-          context,
-          body,
-        )
+        return streamShell(templates.serverOnly, context, body)
       }
-      return sendShell(
-        templates.serverOnly,
-        context,
-        body,
-      )
+      return sendShell(templates.serverOnly, context, body)
     }
 
     // Embed full hydration script
-    context.hydration = (
-      `<script>\nwindow.route = ${
-        // Server data payload
-        devalue.uneval(context.toJSON())
-      }\nwindow.routes = ${
-        // Universal router payload
-        devalue.uneval(routes.toJSON())
-      }\n</script>`
-    )
+    context.hydration = `<script>\nwindow.route = ${
+      // Server data payload
+      devalue.uneval(context.toJSON())
+    }\nwindow.routes = ${
+      // Universal router payload
+      devalue.uneval(routes.toJSON())
+    }\n</script>`
 
     // In all other cases use universal,
     // template which works the same for SSR and CSR.
@@ -100,47 +90,29 @@ export async function createHtmlFunction (source, _, config) {
   }
 }
 
-export async function sendClientOnlyShell (templates, context) {
+export async function sendClientOnlyShell(templates, context) {
   return await transformHtmlTemplate(
     context.useHead,
-    `${
-      templates.beforeElement(context)
-    }${
-      templates.afterElement(context)
-    }`
+    `${templates.beforeElement(context)}${templates.afterElement(context)}`,
   )
 }
 
-export async function sendShell (templates, context, body) {
+export async function sendShell(templates, context, body) {
   return await transformHtmlTemplate(
     context.useHead,
-  `${
-    templates.beforeElement(context)
-  }${
-    body
-  }${
-    templates.afterElement(context)
-  }`)
+    `${templates.beforeElement(context)}${body}${templates.afterElement(context)}`,
+  )
 }
 
-export async function streamShell (templates, context, body) {
+export async function streamShell(templates, context, body) {
   return Readable.from(createShellStream(templates, context, body))
 }
 
-async function * createShellStream (templates, context, body) {
-  yield await transformHtmlTemplate(
-    context.useHead,
-    templates.beforeElement(context)
-  )
+async function* createShellStream(templates, context, body) {
+  yield await transformHtmlTemplate(context.useHead, templates.beforeElement(context))
 
   for await (const chunk of body) {
-    yield await transformHtmlTemplate(
-      context.useHead,
-      chunk.toString()
-    )
+    yield await transformHtmlTemplate(context.useHead, chunk.toString())
   }
-  yield await transformHtmlTemplate(
-    context.useHead,
-    templates.afterElement(context)
-  )
+  yield await transformHtmlTemplate(context.useHead, templates.afterElement(context))
 }

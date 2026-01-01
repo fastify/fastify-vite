@@ -18,7 +18,6 @@ Note that a top-level `<Suspense>` wrapper is necessary because **`@fastify/reac
 
 > React Router's [nested routes](https://reactrouter.com/docs/en/v6/getting-started/concepts#nested-routes) aren't supported yet.
 
-
 #### Source from `packages/fastify-react/virtual/routes.js`:
 
 <<< @../../packages/fastify-react/virtual/routes.js

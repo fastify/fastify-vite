@@ -16,7 +16,7 @@ const virtualModules = [
   'context.js',
   'index.js',
   'stores',
-  'hooks'
+  'hooks',
 ]
 
 const virtualModulesTS = [
@@ -30,7 +30,7 @@ const virtualModulesTS = [
   'context.ts',
   'index.ts',
   'stores',
-  'hooks'
+  'hooks',
 ]
 
 export const prefix = /^\/?\$app\//
@@ -69,7 +69,6 @@ export function loadVirtualModule(virtualInput, options) {
   }
 }
 
-
 virtualModulesTS.includes = function (virtual) {
   if (!virtual) {
     return false
@@ -81,7 +80,6 @@ virtualModulesTS.includes = function (virtual) {
   }
   return false
 }
-
 
 virtualModules.includes = function (virtual) {
   if (!virtual) {
@@ -111,9 +109,7 @@ function loadVirtualModuleOverride(viteProjectRoot, virtualInput) {
 }
 
 export function loadSource(id) {
-  const filePath = id
-    .replace(/\?client$/, '')
-    .replace(/\?server$/, '')
+  const filePath = id.replace(/\?client$/, '').replace(/\?server$/, '')
   return readFileSync(filePath, 'utf8')
 }
 

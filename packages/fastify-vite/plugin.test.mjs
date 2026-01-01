@@ -12,7 +12,9 @@ describe('findCommonPath', () => {
   })
 
   it('should find the common path among multiple paths', () => {
-    expect(findCommonPath(['a/b/c'.split('/').join(sep), 'a/b/d'.split('/').join(sep)])).toBe('a/b'.split('/').join(sep))
+    expect(findCommonPath(['a/b/c'.split('/').join(sep), 'a/b/d'.split('/').join(sep)])).toBe(
+      'a/b'.split('/').join(sep),
+    )
   })
 
   it('should return an empty string if there is no common path', () => {
@@ -20,15 +22,29 @@ describe('findCommonPath', () => {
   })
 
   it('should handle paths of different lengths', () => {
-    expect(findCommonPath(['a/b/c/d'.split('/').join(sep), 'a/b'.split('/').join(sep)])).toBe('a/b'.split('/').join(sep))
+    expect(findCommonPath(['a/b/c/d'.split('/').join(sep), 'a/b'.split('/').join(sep)])).toBe(
+      'a/b'.split('/').join(sep),
+    )
   })
 
   it('should handle more than two paths', () => {
-    expect(findCommonPath(['a/b/c'.split('/').join(sep), 'a/b/d'.split('/').join(sep), 'a/b/e'.split('/').join(sep)])).toBe('a/b'.split('/').join(sep))
+    expect(
+      findCommonPath([
+        'a/b/c'.split('/').join(sep),
+        'a/b/d'.split('/').join(sep),
+        'a/b/e'.split('/').join(sep),
+      ]),
+    ).toBe('a/b'.split('/').join(sep))
   })
 
   it('should return the full path if all paths are identical', () => {
-    expect(findCommonPath(['a/b/c'.split('/').join(sep), 'a/b/c'.split('/').join(sep), 'a/b/c'.split('/').join(sep)])).toBe('a/b/c'.split('/').join(sep))
+    expect(
+      findCommonPath([
+        'a/b/c'.split('/').join(sep),
+        'a/b/c'.split('/').join(sep),
+        'a/b/c'.split('/').join(sep),
+      ]),
+    ).toBe('a/b/c'.split('/').join(sep))
   })
 
   it('should work with root paths', () => {

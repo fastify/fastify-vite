@@ -1,4 +1,4 @@
-@import 'tailwindcss'; 
+@import 'tailwindcss';
 
 :root {
   --color-base: #f1f1f1;
@@ -8,10 +8,10 @@ html {
   background: #222;
 }
 #root {
-  width:  800px;
-  margin:  0 auto;
+  width: 800px;
+  margin: 0 auto;
   padding: 2em;
-  box-shadow: 5px 5px 30px rgba(0,0,0,0.4);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -28,7 +28,7 @@ html {
       color: #ffde00;
     }
     &:active {
-      color: #eecf00
+      color: #eecf00;
     }
   }
   & p {

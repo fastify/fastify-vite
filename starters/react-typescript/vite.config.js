@@ -12,7 +12,7 @@ export default {
   plugins: [
     viteReact(),
     viteFastifyReact({
-      ts: true
+      ts: true,
     }),
   ],
 }

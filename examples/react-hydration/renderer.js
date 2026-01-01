@@ -8,17 +8,13 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default { createRenderFunction }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   // createApp is exported by client/index.js
   return async function ({ app, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const data = {
-      todoList: [
-        'Do laundry',
-        'Respond to emails',
-        'Write report'
-      ]
+      todoList: ['Do laundry', 'Respond to emails', 'Write report'],
     }
     // Creates main React component with all the SSR context it needs
     const main = createApp({ data, server: app, req, reply }, req.url)
@@ -28,7 +24,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     }
   }
 }

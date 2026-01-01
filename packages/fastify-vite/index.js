@@ -29,9 +29,11 @@ class Vite {
         require('./mode/production')
 
     // Get handler function and routes based on the Vite server bundle
-    const { client, routes, handler, errorHandler } = await this[
-      kMode
-    ].setup.call(this, this.config, this.createServer)
+    const { client, routes, handler, errorHandler } = await this[kMode].setup.call(
+      this,
+      this.config,
+      this.createServer,
+    )
 
     // Register individual Fastify routes for each the client-provided routes
     if (routes && typeof routes[Symbol.iterator] === 'function') {
@@ -42,9 +44,7 @@ class Vite {
             const handler = await this.config.createRouteHandler(
               {
                 client: this.scope[this[kMode].hot].client ?? client,
-                route:
-                  this.scope[this[kMode].hot].routeHash?.get(route.path) ??
-                  route,
+                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
               },
               this.scope,
               this.config,
@@ -55,9 +55,7 @@ class Vite {
             const errorHandler = await this.config.createErrorHandler(
               {
                 client: this.scope[this[kMode].hot].client ?? client,
-                route:
-                  this.scope[this[kMode].hot].routeHash?.get(route.path) ??
-                  route,
+                route: this.scope[this[kMode].hot].routeHash?.get(route.path) ?? route,
               },
               this.scope,
               this.config,

@@ -1,12 +1,7 @@
 // Definitions by: Jens <https://github.com/jens-ox>
 /// <reference types="node" />
 
-import type {
-  FastifyInstance,
-  FastifyPluginAsync,
-  FastifyReply,
-  FastifyRequest,
-} from 'fastify'
+import type { FastifyInstance, FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify'
 import type { UserConfig } from 'vite'
 declare module 'fastify' {
   interface FastifyReply {
@@ -21,9 +16,7 @@ declare module 'fastify' {
   }
 }
 
-type FastifyVitePlugin = FastifyPluginAsync<
-  NonNullable<fastifyVite.FastifyViteOptions>
->
+type FastifyVitePlugin = FastifyPluginAsync<NonNullable<fastifyVite.FastifyViteOptions>>
 
 type RouteType = Partial<{
   server: unknown
@@ -88,11 +81,7 @@ interface RendererOption<
     args: Loosen<{
       client?: C
       handler?: (...args: unknown[]) => unknown
-      errorHandler: (
-        error: Error,
-        req?: FastifyRequest,
-        reply?: FastifyReply,
-      ) => void
+      errorHandler: (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
       route?: RouteType
     }>,
     scope: FastifyInstance,
@@ -103,11 +92,7 @@ interface RendererOption<
     scope: FastifyInstance,
     config?: unknown,
   ): (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
-  prepareClient(
-    clientModule: CM,
-    scope?: FastifyInstance,
-    config?: unknown,
-  ): Promise<C>
+  prepareClient(clientModule: CM, scope?: FastifyInstance, config?: unknown): Promise<C>
 }
 
 declare namespace fastifyVite {

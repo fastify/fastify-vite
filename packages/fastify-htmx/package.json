@@ -4,8 +4,8 @@
   "description": "The official @fastify/vite renderer for HTMX",
   "keywords": [
     "fastify",
-    "vite",
-    "htmx"
+    "htmx",
+    "vite"
   ],
   "homepage": "https://github.com/fastify/fastify-vite#readme",
   "bugs": {
@@ -16,29 +16,29 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
+  "files": [
+    "index.js",
+    "plugin.cjs",
+    "virtual/client.js",
+    "virtual/layouts.js",
+    "virtual/root.jsx",
+    "virtual/routes.js",
+    "virtual/layouts/default.jsx"
+  ],
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./plugin": "./plugin.cjs"
   },
-  "files": [
-    "virtual/layouts/default.jsx",
-    "virtual/client.js",
-    "virtual/layouts.js",
-    "virtual/root.jsx",
-    "virtual/routes.js",
-    "index.js",
-    "plugin.cjs"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {},
   "dependencies": {
     "@kitajs/html": "^4.2.9",
     "@rollup/plugin-inject": "^5.0.5",
     "htmx.org": "^2.0.6",
     "mlly": "^1.7.4"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

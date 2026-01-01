@@ -1,4 +1,3 @@
-
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
@@ -13,10 +12,10 @@ export async function main(dev) {
     createRenderFunction({ createApp }) {
       return () => {
         return {
-          element: renderToString(createApp())
+          element: renderToString(createApp()),
         }
       }
-    }
+    },
   })
 
   server.get('/', (req, reply) => {

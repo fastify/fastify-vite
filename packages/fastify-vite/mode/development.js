@@ -14,10 +14,7 @@ async function setup(config) {
       throw new Error("@fastify/vite's Vite plugin not registered")
     }
 
-    const { config: setupEnvironments } = findPlugin(
-      config.vite,
-      'vite-fastify',
-    )
+    const { config: setupEnvironments } = findPlugin(config.vite, 'vite-fastify')
 
     const viteEnvsConfig = {
       root: config.vite.root,
@@ -32,23 +29,21 @@ async function setup(config) {
     for (const env of Object.keys(nonClientEnvs)) {
       const environment = viteEnvsConfig.environments[env]
       if (environment.build?.rollupOptions?.input?.index) {
-        const modulePath =
-          environment.build.rollupOptions.input.index.startsWith(
-            config.virtualModulePrefix,
-          )
-            ? environment.build.rollupOptions.input.index
-            : resolve(
-                config.vite.root,
-                environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
-              )
+        const modulePath = environment.build.rollupOptions.input.index.startsWith(
+          config.virtualModulePrefix,
+        )
+          ? environment.build.rollupOptions.input.index
+          : resolve(
+              config.vite.root,
+              environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
+            )
         entryModulePaths[env] = modulePath
       }
     }
     return entryModulePaths
   }
 
-  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } =
-    await import('vite')
+  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
 
   // Middie seems to work well for running Vite's development server
   // Unsure if fastify-express is warranted here
@@ -83,9 +78,7 @@ async function setup(config) {
       return
     }
 
-    for (const [env, envConfig] of Object.entries(
-      this.devServer.environments,
-    )) {
+    for (const [env, envConfig] of Object.entries(this.devServer.environments)) {
       if (env === 'client') {
         continue
       }
@@ -119,16 +112,9 @@ async function setup(config) {
   // Load fresh index.html template and client module before every request
   this.scope.addHook('onRequest', async (req, reply) => {
     await loadEntries()
-    this.scope[hot].client = await config.prepareClient(
-      this.entries,
-      this.scope,
-      config,
-    )
+    this.scope[hot].client = await config.prepareClient(this.entries, this.scope, config)
     if (this.scope[hot].client) {
-      if (
-        client.routes &&
-        typeof client.routes[Symbol.iterator] === 'function'
-      ) {
+      if (client.routes && typeof client.routes[Symbol.iterator] === 'function') {
         if (!this.scope[hot].routeHash) {
           this.scope[hot].routeHash = new Map()
         }
@@ -141,25 +127,14 @@ async function setup(config) {
     }
     const indexHtmlPath = join(config.vite.root, 'index.html')
     const indexHtml = await read(indexHtmlPath, 'utf8')
-    const transformedHtml = await this.devServer.transformIndexHtml(
-      req.url,
-      indexHtml,
-    )
+    const transformedHtml = await this.devServer.transformIndexHtml(req.url, indexHtml)
 
     // Set reply.html() function with latest version of index.html
-    reply.html = await config.createHtmlFunction(
-      transformedHtml,
-      this.scope,
-      config,
-    )
+    reply.html = await config.createHtmlFunction(transformedHtml, this.scope, config)
 
     // Set reply.render() function with latest version of the client module
     if (config.hasRenderFunction) {
-      reply.render = await config.createRenderFunction(
-        this.scope[hot].client,
-        this.scope,
-        config,
-      )
+      reply.render = await config.createRenderFunction(this.scope[hot].client, this.scope, config)
     }
   })
 
@@ -168,9 +143,7 @@ async function setup(config) {
 
   await loadEntries()
 
-  const client =
-    !config.spa &&
-    (await config.prepareClient(this.entries, this.scope, config))
+  const client = !config.spa && (await config.prepareClient(this.entries, this.scope, config))
 
   return {
     config,

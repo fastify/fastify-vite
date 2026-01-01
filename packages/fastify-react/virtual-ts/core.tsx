@@ -18,11 +18,7 @@ export function createServerAction(name) {
 export function useServerAction(action, options = {}) {
   if (import.meta.env.SSR) {
     const { req, server } = useRouteContext()
-    req.route.actionData[action] = waitFetch(
-      `${server.serverURL}${action}`,
-      options,
-      req.fetchMap,
-    )
+    req.route.actionData[action] = waitFetch(`${server.serverURL}${action}`, options, req.fetchMap)
     return req.route.actionData[action]
   }
   const { actionData } = useRouteContext()
@@ -43,9 +39,7 @@ export function AppRoute({ ctxHydration, ctx, children }) {
         value={{
           ...ctx,
           ...ctxHydration,
-          state: isServer
-            ? ctxHydration.state ?? {}
-            : proxy(ctxHydration.state ?? {}),
+          state: isServer ? (ctxHydration.state ?? {}) : proxy(ctxHydration.state ?? {}),
         }}
       >
         <Layout>{children}</Layout>
@@ -124,9 +118,7 @@ export function AppRoute({ ctxHydration, ctx, children }) {
       value={{
         ...ctxHydration,
         ...ctx,
-        state: isServer
-          ? ctxHydration.state ?? {}
-          : proxy(ctxHydration.state ?? {}),
+        state: isServer ? (ctxHydration.state ?? {}) : proxy(ctxHydration.state ?? {}),
       }}
     >
       <Layout>{children}</Layout>

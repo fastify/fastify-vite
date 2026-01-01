@@ -1,7 +1,7 @@
 <template>
-	<Message :secs="2" />
-	<Message :secs="4" />
-	<Message :secs="6" />
+  <Message :secs="2" />
+  <Message :secs="4" />
+  <Message :secs="6" />
 </template>
 
 <script>

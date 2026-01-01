@@ -27,9 +27,7 @@ async function prepareClient(clientModule, scope, config) {
   try {
     defaultLayout = await resolveLayoutFilePath(config.vite.root, 'default')
   } catch (e) {
-    scope.log.info(
-      'No default layout specified. Falling back to virtual layout.',
-    )
+    scope.log.info('No default layout specified. Falling back to virtual layout.')
   }
 
   const { routes } = clientModule
@@ -52,10 +50,7 @@ async function prepareClient(clientModule, scope, config) {
     // prefetch layout file path
     let layoutFilePath = null
     if (route.layout) {
-      layoutFilePath = await resolveLayoutFilePath(
-        config.vite.root,
-        route.layout,
-      )
+      layoutFilePath = await resolveLayoutFilePath(config.vite.root, route.layout)
     } else if (defaultLayout) {
       layoutFilePath = defaultLayout
     }
@@ -66,21 +61,14 @@ async function prepareClient(clientModule, scope, config) {
       assets = await findClientImports(config, layoutFilePath)
     }
     // Extract the route's imports
-    const { css, svg, js } = await findClientImports(
-      config,
-      route.modulePath,
-      assets,
-    )
+    const { css, svg, js } = await findClientImports(config, route.modulePath, assets)
     route[kPrefetch] = ''
     for (const stylesheet of css) {
       if (config.dev) {
         route[kPrefetch] += `  <link rel="stylesheet" href="/${stylesheet}">\n`
       } else if (config.ssrManifest[stylesheet]) {
-        const [asset] = config.ssrManifest[stylesheet].filter((s) =>
-          s.endsWith('.css'),
-        )
-        route[kPrefetch] +=
-          `  <link rel="stylesheet" href="${asset}" crossorigin>\n`
+        const [asset] = config.ssrManifest[stylesheet].filter((s) => s.endsWith('.css'))
+        route[kPrefetch] += `  <link rel="stylesheet" href="${asset}" crossorigin>\n`
       }
     }
     for (const image of svg) {
@@ -88,9 +76,7 @@ async function prepareClient(clientModule, scope, config) {
         route[kPrefetch] +=
           `  <link as="image" rel="preload" href="/${image}" fetchpriority="high">\n`
       } else if (config.ssrManifest[image]) {
-        const [asset] = config.ssrManifest[image].filter((s) =>
-          s.endsWith('.svg'),
-        )
+        const [asset] = config.ssrManifest[image].filter((s) => s.endsWith('.svg'))
         route[kPrefetch] +=
           `  <link as="image" rel="preload" href="${asset}" fetchpriority="high">\n`
       }
@@ -99,11 +85,8 @@ async function prepareClient(clientModule, scope, config) {
       if (config.dev) {
         route[kPrefetch] += `<script src="/${script}" type="module"></script>\n`
       } else if (config.ssrManifest[script]) {
-        const [asset] = config.ssrManifest[script].filter((s) =>
-          s.endsWith('.js'),
-        )
-        route[kPrefetch] +=
-          `<script src="${asset}" type="module" crossorigin></script>\n`
+        const [asset] = config.ssrManifest[script].filter((s) => s.endsWith('.js'))
+        route[kPrefetch] += `<script src="${asset}" type="module" crossorigin></script>\n`
       }
     }
   }
@@ -125,9 +108,7 @@ export function createRouteHandler({ client, route }, scope) {
     return async (req, reply) => {
       req.route = route
       reply.type('text/html')
-      return reply.send(
-        await route.default({ app: scope, req, reply, client, route }),
-      )
+      return reply.send(await route.default({ app: scope, req, reply, client, route }))
     }
   }
   return async (req, reply) => {
@@ -180,11 +161,7 @@ async function renderHead(client, route, ctx) {
   return rendered
 }
 
-async function findClientImports(
-  config,
-  path,
-  { js = [], css = [], svg = [] } = {},
-) {
+async function findClientImports(config, path, { js = [], css = [], svg = [] } = {}) {
   const {
     dev,
     vite: { root },
@@ -207,12 +184,9 @@ async function findClientImports(
         // resolve the file extension which allows for
         // resolved client imports without specified extensions
         try {
-          const filePathWithExtension = await resolvePath(
-            join(root, resolved),
-            {
-              extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
-            },
-          )
+          const filePathWithExtension = await resolvePath(join(root, resolved), {
+            extensions: ['.mjs', '.cjs', '.js', '.jsx', '.ts', '.tsx'],
+          })
           const specifier = filePathWithExtension.replace(root, '')
 
           return specifier

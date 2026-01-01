@@ -6,7 +6,7 @@ import { PageManager } from './next.jsx'
 
 const Router = import.meta.env.SSR ? StaticRouter : BrowserRouter
 
-export function createApp (ctx, url) {
+export function createApp(ctx, url) {
   return (
     <Suspense>
       <Router location={url}>

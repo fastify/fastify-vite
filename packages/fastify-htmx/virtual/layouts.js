@@ -5,11 +5,7 @@ const appLayouts = import.meta.glob('/layouts/*.{jsx,tsx}', {
   import: 'default',
 })
 
-if (
-  !Object.keys(appLayouts).some((path) =>
-    path.match(/\/layouts\/default\.(j|t)sx/),
-  )
-) {
+if (!Object.keys(appLayouts).some((path) => path.match(/\/layouts\/default\.(j|t)sx/))) {
   appLayouts['/layouts/default.jsx'] = DefaultLayout
 }
 

@@ -7,16 +7,15 @@ import ky from 'ky-universal'
 export async function main(dev) {
   const server = Fastify({ logger: true, ignoreTrailingSlash: true })
 
-  server.decorate('ky', ky.create({
-    prefixUrl: 'http://localhost:3000/',
-  }))
+  server.decorate(
+    'ky',
+    ky.create({
+      prefixUrl: 'http://localhost:3000/',
+    }),
+  )
 
   server.get('/api/todo-list', (_, reply) => {
-    reply.send([
-      'Do laundry',
-      'Respond to emails',
-      'Write report',
-    ])
+    reply.send(['Do laundry', 'Respond to emails', 'Write report'])
   })
 
   server.setErrorHandler((err, req, reply) => {
@@ -28,7 +27,7 @@ export async function main(dev) {
   await server.register(FastifyVite, {
     dev: dev || process.argv.includes('--dev'),
     root: import.meta.dirname,
-    renderer
+    renderer,
   })
 
   await server.vite.ready()

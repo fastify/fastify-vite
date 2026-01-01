@@ -1,10 +1,8 @@
-
 import { resolve } from 'node:path'
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 
-
-export async function main (dev?: boolean) {
+export async function main(dev?: boolean) {
   const server = Fastify()
 
   await server.register(FastifyVite, {

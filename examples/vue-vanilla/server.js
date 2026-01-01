@@ -10,9 +10,9 @@ export async function main(dev) {
     dev: dev || process.argv.includes('--dev'),
     async createRenderFunction({ createApp }) {
       return async () => ({
-        element: await renderToString(createApp())
+        element: await renderToString(createApp()),
       })
-    }
+    },
   })
 
   server.setErrorHandler((err, req, reply) => {

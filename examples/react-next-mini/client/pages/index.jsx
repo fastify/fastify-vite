@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-export default function Index (props) {
+export default function Index() {
   return (
     <>
       <p>

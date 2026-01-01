@@ -1,4 +1,3 @@
-
 export function generateStores(keys) {
   let code = `
 import { useRouteContext } from '@fastify/react/client'
@@ -34,6 +33,6 @@ export const ${key} = new Proxy({
   }
   return {
     code,
-    map: null
+    map: null,
   }
 }

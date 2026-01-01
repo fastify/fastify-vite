@@ -49,16 +49,14 @@ export default withMermaid({
 
     editLink: {
       pattern: 'https://github.com/fastify/fastify-vite/edit/main/docs/:path',
-      text: 'Edit this page on GitHub'
+      text: 'Edit this page on GitHub',
     },
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/fastify/fastify-vite' }
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/fastify/fastify-vite' }],
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2021-present Jonas Galvez'
+      copyright: 'Copyright © 2021-present Jonas Galvez',
     },
   },
 })
@@ -68,23 +66,23 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: 'Guide',
       link: '/guide/getting-started',
-      activeMatch: '/guide/'
+      activeMatch: '/guide/',
     },
     {
       text: 'Vue',
       link: '/vue/index',
-      activeMatch: '/vue/'
+      activeMatch: '/vue/',
     },
     {
       text: 'React',
       link: '/react/index',
-      activeMatch: '/react/'
+      activeMatch: '/react/',
     },
     {
       text: 'Configuration',
       link: '/config/index',
-      activeMatch: '/config/'
-    }
+      activeMatch: '/config/',
+    },
   ]
 }
 
@@ -99,39 +97,29 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 }
 
 function sidebarVue(): DefaultTheme.SidebarItem[] {
-  return [
-    Guide(true),
-    Vue(),
-    React(true),
-    ...Common(),
-  ]
+  return [Guide(true), Vue(), React(true), ...Common()]
 }
 
 function sidebarReact(): DefaultTheme.SidebarItem[] {
-  return [
-    Guide(true),
-    Vue(true),
-    React(),
-    ...Common(),
-  ]
+  return [Guide(true), Vue(true), React(), ...Common()]
 }
 
 function sidebarConfig(): DefaultTheme.SidebarItem[] {
   return [
     {
-      'text': 'Base options',
-      'link': 'index#base-options',
+      text: 'Base options',
+      link: 'index#base-options',
       collapsed: false,
       items: [
         { text: 'root', link: 'index#root' },
         { text: 'dev', link: 'index#dev' },
         { text: 'spa', link: 'index#spa' },
-        { text: 'renderer', link: 'index#renderer' }
+        { text: 'renderer', link: 'index#renderer' },
       ],
     },
     {
-      'text': 'Renderer options',
-      'link': 'index#renderer-options',
+      text: 'Renderer options',
+      link: 'index#renderer-options',
       collapsed: false,
       items: [
         { text: 'clientModule', link: 'index#clientmodule' },
@@ -140,8 +128,8 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
         { text: 'createHtmlFunction', link: 'index#createhtmlfunction-source-scope-config' },
         { text: 'createRouteHandler', link: 'index#createroutehandler-client-route-scope-config' },
         { text: 'createErrorHandler', link: 'index#createerrorhandler-client-route-scope-config' },
-        { text: 'createRoute', link: 'index#createroute-handler-errorhandler-route-scope-config' }
-      ]
+        { text: 'createRoute', link: 'index#createroute-handler-errorhandler-route-scope-config' },
+      ],
     },
     {
       text: '@fastify/vue',
@@ -158,10 +146,10 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
             { text: '$app/core.js', link: 'vue/virtual-modules#core-js' },
             { text: '$app/create.js', link: 'vue/virtual-modules#create-js' },
             { text: '$app/layouts/default.vue', link: 'vue/virtual-modules#layouts-default-vue' },
-            { text: '$app/mount.js', link: 'vue/virtual-modules#mount-js' }
-          ]
+            { text: '$app/mount.js', link: 'vue/virtual-modules#mount-js' },
+          ],
         },
-      ]
+      ],
     },
     {
       text: '@fastify/react',
@@ -178,39 +166,41 @@ function sidebarConfig(): DefaultTheme.SidebarItem[] {
             { text: '$app/create.jsx', link: 'react/virtual-modules#create-jsx' },
             { text: '$app/layouts/default.jsx', link: 'react/virtual-modules#layouts-default-jsx' },
             { text: '$app/mount.js', link: 'react/virtual-modules#mount-js' },
-            { text: '$app/resource.js', link: 'react/virtual-modules#resource-js' }
-          ]
+            { text: '$app/resource.js', link: 'react/virtual-modules#resource-js' },
+          ],
         },
-      ]
+      ],
     },
   ]
 }
 
-function Guide (collapsed = false) {
+function Guide(collapsed = false) {
   return {
     collapsed,
     text: 'Guide',
     base: '/guide/',
     items: [
-      { text: 'Getting Started', link: 'getting-started',
+      {
+        text: 'Getting Started',
+        link: 'getting-started',
         items: [
           { text: 'Why not a framework?', link: 'getting-started#why-not-a-framework' },
           { text: 'A quick walkthrough', link: 'getting-started#a-quick-walkthrough' },
           { text: 'Directory structure', link: 'getting-started#directory-structure' },
-          { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' }
+          { text: 'Architectural primitives', link: 'getting-started#architectural-primitives' },
         ],
       },
-      { text: 'Rendering Function', link: 'rendering-function', },
-      { text: 'Router Integration', link: 'router-integration', },
+      { text: 'Rendering Function', link: 'rendering-function' },
+      { text: 'Router Integration', link: 'router-integration' },
       { text: 'Templating Function', link: 'templating-function' },
       { text: 'Build and Deploy', link: 'build-and-deploy' },
       { text: 'Core Renderers', link: 'core-renderers' },
-      { text: 'Known Limitations', link: 'known-limitations' }
-    ]
+      { text: 'Known Limitations', link: 'known-limitations' },
+    ],
   }
 }
 
-function Vue (collapsed = false) {
+function Vue(collapsed = false) {
   return {
     collapsed,
     text: '@fastify/vue',
@@ -222,7 +212,7 @@ function Vue (collapsed = false) {
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
           { text: 'Runtime requirements', link: 'index#runtime-requirements' },
-          { text: 'Known limitations', link: 'index#known-limitations' }
+          { text: 'Known limitations', link: 'index#known-limitations' },
         ],
       },
       {
@@ -231,15 +221,15 @@ function Vue (collapsed = false) {
         items: [
           { text: 'Essential files', link: 'project-structure#essential-files' },
           { text: 'Smart imports', link: 'project-structure#smart-imports' },
-          { text: 'Special directories', link: 'project-structure#special-directories' }
-        ]
+          { text: 'Special directories', link: 'project-structure#special-directories' },
+        ],
       },
       {
         text: 'Router Setup',
         link: 'router-setup',
         items: [
           { text: 'Routes location', link: 'router-setup#routes-location' },
-          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
+          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' },
         ],
       },
       {
@@ -248,7 +238,7 @@ function Vue (collapsed = false) {
         items: [
           { text: 'Data fetching', link: 'route-modules#data-fetching' },
           { text: 'Page metadata', link: 'route-modules#page-metadata' },
-          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' }
+          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
         ],
       },
       {
@@ -257,16 +247,16 @@ function Vue (collapsed = false) {
         items: [
           { text: 'Init module', link: 'route-context#init-module' },
           { text: 'Access hook', link: 'route-context#access-hook' },
-          { text: 'Execution order', link: 'route-context#execution-order' }
-        ]
+          { text: 'Execution order', link: 'route-context#execution-order' },
+        ],
       },
       { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Rendering Modes', link: 'rendering-modes' }
-    ]
+      { text: 'Rendering Modes', link: 'rendering-modes' },
+    ],
   }
 }
 
-function React (collapsed = false) {
+function React(collapsed = false) {
   return {
     collapsed,
     text: '@fastify/react',
@@ -278,7 +268,7 @@ function React (collapsed = false) {
         items: [
           { text: 'Starter templates', link: 'index#starter-templates' },
           { text: 'Runtime requirements', link: 'index#runtime-requirements' },
-          { text: 'Known limitations', link: 'index#known-limitations' }
+          { text: 'Known limitations', link: 'index#known-limitations' },
         ],
       },
       {
@@ -287,15 +277,15 @@ function React (collapsed = false) {
         items: [
           { text: 'Essential files', link: 'project-structure#essential-files' },
           { text: 'Smart imports', link: 'project-structure#smart-imports' },
-          { text: 'Special directories', link: 'project-structure#special-directories' }
-        ]
+          { text: 'Special directories', link: 'project-structure#special-directories' },
+        ],
       },
       {
         text: 'Router Setup',
         link: 'router-setup',
         items: [
           { text: 'Routes location', link: 'router-setup#routes-location' },
-          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' }
+          { text: 'Dynamic parameters', link: 'router-setup#dynamic-parameters' },
         ],
       },
       {
@@ -304,7 +294,7 @@ function React (collapsed = false) {
         items: [
           { text: 'Data fetching', link: 'route-modules#data-fetching' },
           { text: 'Page metadata', link: 'route-modules#page-metadata' },
-          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' }
+          { text: 'The onEnter event', link: 'route-modules#the-onenter-event' },
         ],
       },
       {
@@ -313,16 +303,16 @@ function React (collapsed = false) {
         items: [
           { text: 'Init module', link: 'route-context#init-module' },
           { text: 'Access hook', link: 'route-context#access-hook' },
-          { text: 'Execution order', link: 'route-context#execution-order' }
-        ]
+          { text: 'Execution order', link: 'route-context#execution-order' },
+        ],
       },
       { text: 'Route Layouts', link: 'route-layouts' },
-      { text: 'Rendering Modes', link: 'rendering-modes' }
-    ]
+      { text: 'Rendering Modes', link: 'rendering-modes' },
+    ],
   }
 }
 
-function Common () {
+function Common() {
   return [
     { text: 'Configuration', base: '/config/', link: 'index' },
     { text: 'Roadmap', base: '/', link: 'roadmap' },

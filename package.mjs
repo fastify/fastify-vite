@@ -1,4 +1,3 @@
-
 $.verbose = true
 
 import { join } from 'node:path'
@@ -65,7 +64,7 @@ async function prepForDev() {
   pkgJSON.optionalDependencies = {
     '@fastify/vue': 'workspace:^',
     '@fastify/react': 'workspace:^',
-    'vite': 'latest'
+    vite: 'latest',
   }
   writeFileSync(mainPkgJSONPath, JSON.stringify(pkgJSON, null, 2))
   for (const starter of starters) {
@@ -114,8 +113,6 @@ async function runAllTests() {
 }
 
 function getVersion(pkg) {
-  const pkgJSON = JSON.parse(
-    readFileSync(join(root, 'packages', pkg, 'package.json'))
-  )
+  const pkgJSON = JSON.parse(readFileSync(join(root, 'packages', pkg, 'package.json')))
   return pkgJSON.version
 }

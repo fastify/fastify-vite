@@ -1,14 +1,6 @@
 const { existsSync, lstatSync } = require('node:fs')
 const { writeFile, readFile } = require('node:fs/promises')
-const {
-  isAbsolute,
-  join,
-  resolve,
-  parse,
-  dirname,
-  basename,
-  sep,
-} = require('node:path')
+const { isAbsolute, join, resolve, parse, dirname, basename, sep } = require('node:path')
 const { ensureDir, remove } = require('fs-extra')
 const klaw = require('klaw')
 
@@ -20,9 +12,7 @@ async function* walk(dir, ignorePatterns = []) {
   const sliceAt = dir.length + (dir.endsWith('/') ? 0 : 1)
   for await (const match of klaw(dir)) {
     const pathEntry = match.path.slice(sliceAt)
-    if (
-      ignorePatterns.some((ignorePattern) => ignorePattern.test(match.path))
-    ) {
+    if (ignorePatterns.some((ignorePattern) => ignorePattern.test(match.path))) {
       continue
     }
     if (pathEntry === '') {

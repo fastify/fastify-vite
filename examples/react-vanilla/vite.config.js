@@ -4,8 +4,5 @@ import viteReact from '@vitejs/plugin-react'
 
 export default {
   root: join(import.meta.dirname, 'client'),
-  plugins: [
-    viteFastify({ useRelativePaths: true }),
-    viteReact()
-  ],
+  plugins: [viteFastify({ useRelativePaths: true }), viteReact()],
 }

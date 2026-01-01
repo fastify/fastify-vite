@@ -1,4 +1,3 @@
 import { createApp } from './base'
 
-createApp()
-  .mount('#root')
+createApp().mount('#root')

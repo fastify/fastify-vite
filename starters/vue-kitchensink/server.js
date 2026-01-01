@@ -5,17 +5,13 @@ import FastifyFormBody from '@fastify/formbody'
 const server = Fastify({
   logger: {
     transport: {
-      target: '@fastify/one-line-logger'
-    }
-  }
+      target: '@fastify/one-line-logger',
+    },
+  },
 })
 
 server.decorate('db', {
-  todoList: [
-    'Do laundry',
-    'Respond to emails',
-    'Write report',
-  ]
+  todoList: ['Do laundry', 'Respond to emails', 'Write report'],
 })
 
 server.put('/api/todo/items', (req, reply) => {

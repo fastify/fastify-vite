@@ -25,19 +25,19 @@
 
 ### Available Rule Categories
 
-| Category | Description | Example Rules |
-|----------|-------------|---------------|
-| **eslint** | Core JavaScript rules | `no-unused-vars`, `no-const-assign`, `eqeqeq` |
+| Category       | Description               | Example Rules                                              |
+| -------------- | ------------------------- | ---------------------------------------------------------- |
+| **eslint**     | Core JavaScript rules     | `no-unused-vars`, `no-const-assign`, `eqeqeq`              |
 | **typescript** | TypeScript-specific rules | `no-explicit-any`, `no-misused-promises`, `await-thenable` |
-| **react** | React best practices | `jsx-key`, `rules-of-hooks`, `exhaustive-deps` |
-| **unicorn** | Code quality improvements | `prefer-string-starts-ends-with`, `no-array-reduce` |
-| **import** | Import/export management | `no-cycle`, `no-unresolved`, `no-duplicates` |
-| **jsx-a11y** | Accessibility rules | `alt-text`, `aria-props`, `label-has-associated-control` |
-| **jest** | Jest testing rules | Test-specific best practices |
-| **node** | Node.js rules | Node.js-specific patterns |
-| **promise** | Promise handling | Promise usage patterns |
-| **vue** | Vue.js rules | Vue component rules |
-| **nextjs** | Next.js rules | Next.js-specific patterns |
+| **react**      | React best practices      | `jsx-key`, `rules-of-hooks`, `exhaustive-deps`             |
+| **unicorn**    | Code quality improvements | `prefer-string-starts-ends-with`, `no-array-reduce`        |
+| **import**     | Import/export management  | `no-cycle`, `no-unresolved`, `no-duplicates`               |
+| **jsx-a11y**   | Accessibility rules       | `alt-text`, `aria-props`, `label-has-associated-control`   |
+| **jest**       | Jest testing rules        | Test-specific best practices                               |
+| **node**       | Node.js rules             | Node.js-specific patterns                                  |
+| **promise**    | Promise handling          | Promise usage patterns                                     |
+| **vue**        | Vue.js rules              | Vue component rules                                        |
+| **nextjs**     | Next.js rules             | Next.js-specific patterns                                  |
 
 ---
 
@@ -50,6 +50,7 @@ Since oxlint has "no support for stylistic rules" by design, you need a separate
 **Package**: `oxfmt@^0.21.0` (published 2025-12-29)
 
 **Why oxfmt?**
+
 - ✅ **Unified toolchain** - Both linter and formatter from Oxc project
 - ✅ **30x faster than Prettier**
 - ✅ **Prettier-compatible** formatting for JS/TS (can even read `.prettierrc` files!)
@@ -59,11 +60,13 @@ Since oxlint has "no support for stylistic rules" by design, you need a separate
 - ✅ **Very active development** - v0.21.0 released today (2025-12-29)!
 
 **What about alpha status?**
+
 - ⚠️ **Alpha status** - Still experimental (but functional and stable)
 - ⚠️ **Default printWidth is 100** (vs Prettier's 80) - easily configurable
 - ⚠️ **Some Prettier features unsupported** (plugins, package.json config)
 
 **Is alpha acceptable?**
+
 - ✅ **YES** - Formatters are low-risk (worst case: reformat once and switch)
 - ✅ **Easy rollback** - If issues arise, can switch to Prettier in 5 minutes
 - ✅ **Proven in practice** - Active community usage, frequent releases
@@ -79,6 +82,7 @@ Since oxlint has "no support for stylistic rules" by design, you need a separate
 - **oxfmt (v0.21.0)**: All formatting (Prettier-compatible)
 
 **Rationale**:
+
 1. **Unified Oxc ecosystem** - Both tools from the same project, consistent updates
 2. **Maximum performance** - Oxlint (50-100x faster) + oxfmt (30x faster)
 3. **Simpler mental model** - One toolchain to learn and configure
@@ -92,10 +96,11 @@ Since oxlint has "no support for stylistic rules" by design, you need a separate
 ### Single Root Installation for Mixed Frameworks ✅
 
 **Your monorepo has**:
+
 - React packages (fastify-react, react examples)
 - Vue packages (fastify-vue, vue examples)
-- Svelte packages (contrib/svelte-*)
-- Solid packages (contrib/solid-*)
+- Svelte packages (contrib/svelte-\*)
+- Solid packages (contrib/solid-\*)
 - HTMX packages (fastify-htmx)
 
 **You only need ONE oxlint installation at root!** No per-package configs needed.
@@ -104,19 +109,20 @@ Since oxlint has "no support for stylistic rules" by design, you need a separate
 
 Oxlint is **file-extension aware**:
 
-| File Type | Rules Applied | Example Files |
-|-----------|---------------|---------------|
-| `.jsx`, `.tsx` | React rules (jsx-key, rules-of-hooks, etc.) | All React components |
-| `.vue` | Vue rules | All Vue components |
-| `.svelte` | Svelte-compatible rules | Svelte components |
-| `.ts`, `.tsx` | TypeScript rules | Type definitions, TS files |
-| `.js`, `.mjs`, `.cjs` | Core JavaScript rules | Config files, utilities |
+| File Type             | Rules Applied                               | Example Files              |
+| --------------------- | ------------------------------------------- | -------------------------- |
+| `.jsx`, `.tsx`        | React rules (jsx-key, rules-of-hooks, etc.) | All React components       |
+| `.vue`                | Vue rules                                   | All Vue components         |
+| `.svelte`             | Svelte-compatible rules                     | Svelte components          |
+| `.ts`, `.tsx`         | TypeScript rules                            | Type definitions, TS files |
+| `.js`, `.mjs`, `.cjs` | Core JavaScript rules                       | Config files, utilities    |
 
 **No manual configuration needed** - oxlint automatically applies the right rules based on file extension!
 
 ### What Gets Linted Automatically
 
 Running `pnpm lint` from root will:
+
 - ✅ Apply React rules to `packages/fastify-react/**/*.jsx`
 - ✅ Apply Vue rules to `packages/fastify-vue/**/*.vue`
 - ✅ Apply TypeScript rules to `**/*.ts` files
@@ -134,6 +140,7 @@ Running `pnpm lint` from root will:
 #### 1.1 Update `/package.json`
 
 **Before**:
+
 ```json
 {
   "scripts": {
@@ -154,6 +161,7 @@ Running `pnpm lint` from root will:
 ```
 
 **After**:
+
 ```json
 {
   "scripts": {
@@ -178,6 +186,7 @@ Running `pnpm lint` from root will:
 ```
 
 **Changes**:
+
 - ✅ Update `oxlint` from `^0.9.10` → `^1.36.0`
 - ✅ Add `oxfmt: ^0.21.0` to root devDependencies
 - ✅ Update `lint` script to `oxlint .`
@@ -187,6 +196,7 @@ Running `pnpm lint` from root will:
 #### 1.2 Update `/pnpm-workspace.yaml`
 
 **Before**:
+
 ```yaml
 packages:
   - docs/
@@ -207,6 +217,7 @@ catalog:
 ```
 
 **After**:
+
 ```yaml
 packages:
   - docs/
@@ -226,6 +237,7 @@ catalog:
 ```
 
 **Changes**:
+
 - ❌ **REMOVE** `oxlint: ^0.16.6` from catalog (will use root version only)
 
 #### 1.3 Create `/oxlintrc.json` (OPTIONAL - Skip This!)
@@ -233,17 +245,20 @@ catalog:
 **You probably DON'T need this file!** Oxlint is designed to work without configuration and has excellent defaults.
 
 **Skip creating this file unless** you want to:
+
 - Disable specific rules (e.g., `unicorn/filename-case`)
 - Change rule severity levels
 - Add custom ignore patterns beyond the defaults
 
 Oxlint automatically:
+
 - ✅ Applies React rules to `.jsx`/`.tsx` files
 - ✅ Applies Vue rules to `.vue` files
 - ✅ Applies TypeScript rules to `.ts`/`.tsx` files
 - ✅ Ignores `node_modules`, `dist`, etc.
 
 **If you do want to customize**, here's an example:
+
 ```json
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
@@ -258,6 +273,7 @@ Oxlint automatically:
 #### 1.4 Create `/oxfmt.config.json` (Optional)
 
 **New File**:
+
 ```json
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxfmt/configuration_schema.json",
@@ -282,11 +298,13 @@ Oxlint automatically:
 **Current State**: Your VSCode is configured to use the built-in TypeScript formatter.
 
 **Why update this?**
+
 - Developers get **real-time linting feedback** in their editor
 - **Format on save** with oxfmt
 - Consistent experience between CLI and editor
 
 **Before**:
+
 ```json
 {
 	"editor.tabSize": 2,
@@ -304,6 +322,7 @@ Oxlint automatically:
 ```
 
 **After**:
+
 ```json
 {
 	"editor.tabSize": 2,
@@ -333,6 +352,7 @@ Oxlint automatically:
 ```
 
 **Changes**:
+
 - ✅ Enable Oxc extension (`oxc.enable: true`)
 - ✅ Enable experimental oxfmt formatter (`oxc.fmt.experimental: true`)
 - ✅ Set oxfmt as default formatter for JS/TS/JSX/TSX/Vue
@@ -344,6 +364,7 @@ Oxlint automatically:
 #### 1.6 Create `/.vscode/extensions.json` (Recommended Extensions)
 
 **New File** (Optional but recommended):
+
 ```json
 {
 	"recommendations": [
@@ -392,12 +413,14 @@ Remove `oxlint` from `devDependencies` in the following package.json files:
 **Remove `"lint"` script from**:
 
 **Core Packages** (4 files):
+
 - `/packages/fastify-vite/package.json` - Remove `"lint": "biome check --write ."`
 - `/packages/fastify-react/package.json` - Remove `"lint": "biome check --apply-unsafe ."`
 - `/packages/fastify-htmx/package.json` - Remove `"lint": "biome check --apply ."`
 - `/packages/fastify-vue/package.json` - No lint script (no action needed)
 
 **Starters** (6 files):
+
 - `/starters/react-base/package.json` - Remove `"lint": "oxlint"`
 - `/starters/react-typescript/package.json` - Remove `"lint": "oxlint"`
 - `/starters/react-kitchensink/package.json` - Remove `"lint": "oxlint"`
@@ -406,6 +429,7 @@ Remove `oxlint` from `devDependencies` in the following package.json files:
 - `/starters/vue-kitchensink/package.json` - No lint script (no action needed)
 
 **Examples - React** (7 files):
+
 - `/examples/react-vanilla/package.json` - Remove `"lint": "oxlint"`
 - `/examples/react-vanilla-spa/package.json` - Remove `"lint": "oxlint"`
 - `/examples/react-vanilla-spa-ts/package.json` - Remove `"lint": "oxlint"`
@@ -415,6 +439,7 @@ Remove `oxlint` from `devDependencies` in the following package.json files:
 - `/examples/react-streaming/package.json` - Remove `"lint": "oxlint --fix"`
 
 **Examples - Vue** (7 files):
+
 - `/examples/vue-vanilla/package.json` - Remove `"lint": "oxlint"`
 - `/examples/vue-vanilla-spa/package.json` - Remove `"lint": "oxlint"`
 - `/examples/vue-vanilla-ts/package.json` - Remove `"lint": "oxlint"`
@@ -424,6 +449,7 @@ Remove `oxlint` from `devDependencies` in the following package.json files:
 - `/examples/vue-streaming/package.json` - Remove `"lint": "eslint . --ext .js,.vue --fix"`
 
 **Contrib** (7 files):
+
 - `/contrib/htmx-base/package.json` - Remove `"lint": "eslint . --ext .js,.jsx --fix"`
 - `/contrib/htmx-base-ts/package.json` - Remove `"lint": "eslint . --ext .js,.jsx --fix"`
 - `/contrib/htmx-kitchensink/package.json` - Remove `"lint": "eslint . --ext .js,.jsx --fix"`
@@ -486,12 +512,14 @@ These are no longer needed - oxfmt handles formatting for the entire monorepo.
 #### 6.2 Remove ESLint Dependencies (If Present)
 
 Check and remove ESLint-related dependencies from package.json files in:
+
 - `/starters/vue-base/package.json`
 - `/starters/vue-kitchensink/package.json`
 - `/examples/vue-*` packages
 - `/contrib/*` packages
 
 **Typical ESLint dependencies to remove**:
+
 ```json
 "eslint": "^8.x.x",
 "eslint-plugin-react": "^7.x.x",
@@ -619,6 +647,7 @@ Your `.github/workflows/ci.yml` currently only runs tests, not linting. You need
 ```
 
 **Complete updated ci.yml** (lines 41-46):
+
 ```yaml
       - name: Install dependencies
         run: pnpm install --ignore-scripts
@@ -635,6 +664,7 @@ Your `.github/workflows/ci.yml` currently only runs tests, not linting. You need
 ```
 
 This ensures:
+
 - ✅ All PRs are linted before merge
 - ✅ Code formatting is consistent
 - ✅ CI fails fast if linting errors exist (before running slower tests)
@@ -659,6 +689,7 @@ pnpm install
 ### Partial Rollback:
 
 Keep oxlint at root but restore individual package linters:
+
 1. Don't remove individual lint scripts
 2. Keep old config files
 3. Use both root `pnpm lint` and package-specific linting in parallel
@@ -668,17 +699,20 @@ Keep oxlint at root but restore individual package linters:
 ## Expected Benefits
 
 ### Performance
+
 - **50-100x faster linting** compared to ESLint
 - Parallel processing across CPU cores
 - Near-instant feedback during development
 
 ### Maintenance
+
 - **Single configuration file** (`/oxlintrc.json`)
 - **Single version** to manage (no version conflicts)
 - **Consistent rules** across all packages
 - **Easier onboarding** for new contributors
 
 ### Developer Experience
+
 - Faster pre-commit hooks
 - Faster CI/CD pipelines
 - Unified linting commands
@@ -697,12 +731,14 @@ Keep oxlint at root but restore individual package linters:
 **JavaScript Plugin System**: Oxlint has a JS plugin system (technical preview) that supports ESLint plugins, BUT it explicitly does NOT support Vue/Svelte template parsing yet. The Oxc team is "implementing the remaining features over the next few months" according to their [JS Plugins documentation](https://oxc.rs/docs/guide/usage/linter/js-plugins.html).
 
 **Mitigation Options for Now**:
+
 1. **Accept this limitation** (recommended) - Most critical issues are in `<script>` sections
 2. **Keep ESLint in specific packages** - Only for Vue/Svelte packages that need template linting
 3. **Use language servers** - Vue/Svelte language servers provide template validation in IDEs
 4. **Wait for JS plugin support** - Coming in the next few months, then you can use `eslint-plugin-vue` via oxlint
 
 **Future Path**: Once JS plugins support custom parsers, you'll be able to configure `.oxlintrc.json` like:
+
 ```json
 {
   "jsPlugins": ["eslint-plugin-vue"],
@@ -731,6 +767,7 @@ Keep oxlint at root but restore individual package linters:
 If full migration is too risky, consider:
 
 **Hybrid Approach**:
+
 - Use oxlint at root for common files
 - Keep ESLint in specific packages (Vue, Svelte, Solid)
 - Gradually migrate package by package
@@ -740,6 +777,7 @@ If full migration is too risky, consider:
 ## File Change Summary
 
 ### Files to Create (0-3):
+
 - `/oxlintrc.json` (OPTIONAL - only if you want to customize rules)
 - `/oxfmt.config.json` (OPTIONAL - oxfmt works well without config)
 - `/.vscode/extensions.json` (OPTIONAL - recommends Oxc extension to developers)
@@ -747,6 +785,7 @@ If full migration is too risky, consider:
 **Config files needed**: Possibly ZERO! But VSCode setup is recommended for better DX.
 
 ### Files to Modify (45):
+
 - `/package.json` ✏️
 - `/pnpm-workspace.yaml` ✏️
 - `/.github/workflows/ci.yml` ✏️ (ADD linting steps!)
@@ -754,6 +793,7 @@ If full migration is too risky, consider:
 - 41 package.json files (remove lint scripts, remove dependencies)
 
 ### Files to Delete (16+):
+
 - 10+ ESLint config files (.eslintrc, .eslintrc.yml, .eslintrc.json)
 - 3 Biome config files (biome.json in packages/fastify-vite, fastify-react, fastify-htmx)
 
@@ -764,12 +804,14 @@ If full migration is too risky, consider:
 ## Migration Checklist
 
 ### Pre-Migration
+
 - [ ] Backup current codebase (`git commit -am "Pre-oxlint migration checkpoint"`)
 - [ ] Document current linting rules in use
 - [ ] Review current ESLint errors/warnings baseline
 - [ ] Communicate migration plan to team
 
 ### Phase 1: Root Setup
+
 - [ ] Update `/package.json` (oxlint + oxfmt dependencies, scripts)
 - [ ] Update `/pnpm-workspace.yaml` (remove oxlint from catalog)
 - [ ] Update `/.vscode/settings.json` (configure Oxc extension)
@@ -780,28 +822,33 @@ If full migration is too risky, consider:
 - [ ] Test `pnpm lint` and `pnpm format` at root
 
 ### Phase 2: Remove Individual Package Oxlint
+
 - [ ] Remove oxlint from 4 starters
 - [ ] Remove oxlint from 7 React examples
 - [ ] Remove oxlint from 3 Vue examples
 - [ ] Run `pnpm install` to update lock file
 
 ### Phase 3: Remove Lint Scripts
+
 - [ ] Remove lint scripts from 4 core packages
 - [ ] Remove lint scripts from 6 starters
 - [ ] Remove lint scripts from 14 examples
 - [ ] Remove lint scripts from 7 contrib packages
 
 ### Phase 4: Remove ESLint Configs
-- [ ] Delete 10+ .eslintrc* files
+
+- [ ] Delete 10+ .eslintrc\* files
 - [ ] Remove ESLint dependencies from affected packages
 - [ ] Run `pnpm install` to update lock file
 
 ### Phase 5: Remove Biome Configs
+
 - [ ] Delete 3 biome.json files from packages
 - [ ] Remove @biomejs/biome from 3 package.json files
 - [ ] Run `pnpm install` to update lock file
 
 ### Phase 6: Testing
+
 - [ ] Run `pnpm lint` - should complete successfully
 - [ ] Run `pnpm lint:fix` - should auto-fix issues
 - [ ] Run `pnpm format` - should format all files
@@ -811,6 +858,7 @@ If full migration is too risky, consider:
 - [ ] Review and fix any new linting errors
 
 ### Phase 7: Documentation & CI
+
 - [ ] **UPDATE `.github/workflows/ci.yml`** - ADD lint and format:check steps
 - [ ] **Notify team** to install Oxc VSCode extension
 - [ ] Update CONTRIBUTING.md with new linting instructions (if exists)
@@ -818,6 +866,7 @@ If full migration is too risky, consider:
 - [ ] Document any oxlint-specific conventions
 
 ### Post-Migration
+
 - [ ] Run full test suite (`pnpm test`)
 - [ ] Create migration summary commit
 - [ ] **Ensure all developers install Oxc extension** for real-time feedback
@@ -853,6 +902,7 @@ If full migration is too risky, consider:
 ## Conclusion
 
 This migration will significantly improve linting and formatting performance while reducing maintenance overhead by:
+
 - Updating from severely outdated oxlint versions (0.9.10/0.16.6) to latest (1.36.0)
 - Adding blazing-fast oxfmt (v0.21.0) for formatting
 - Consolidating 3 different linters into a single unified Oxc toolchain

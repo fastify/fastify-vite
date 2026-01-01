@@ -96,9 +96,7 @@ const DefaultConfig = {
       return null
     }
     const routes =
-      typeof clientModule.routes === 'function'
-        ? await clientModule.routes()
-        : clientModule.routes
+      typeof clientModule.routes === 'function' ? await clientModule.routes() : clientModule.routes
     return Object.assign({}, clientModule, { routes })
   },
 
@@ -219,9 +217,7 @@ async function configure(options = {}) {
   }
 
   config.clientModule =
-    vite.fastify.clientModule ??
-    config.clientModule ??
-    resolveClientModule(vite.root)
+    vite.fastify.clientModule ?? config.clientModule ?? resolveClientModule(vite.root)
 
   return config
 }
@@ -259,22 +255,14 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
     // Check for top-level dist/ folder
     viteConfigDistFile = resolve(viteDistDir, 'vite.config.json')
     if (exists(viteConfigDistFile)) {
-      return [
-        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        resolve(root, distDir),
-      ]
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, distDir)]
     }
     // Check for client/dist/ folder (legacy default convention)
     viteConfigDistFile = join(root, 'client', 'dist', 'vite.config.json')
     if (exists(viteConfigDistFile)) {
-      return [
-        JSON.parse(await read(viteConfigDistFile, 'utf-8')),
-        resolve(root, 'client', distDir),
-      ]
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, 'client', distDir)]
     }
-    console.warn(
-      `Failed to load cached Vite configuration from ${viteConfigDistFile}`,
-    )
+    console.warn(`Failed to load cached Vite configuration from ${viteConfigDistFile}`)
     process.exit(1)
   }
 

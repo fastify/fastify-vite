@@ -37,6 +37,7 @@ The `client/context.js` file you see below is taken from the [`vue-kitchensink`]
 Make sure to see the page examples in the other snippet tabs:
 
 ::: code-group
+
 ```js [client/context.js]
 // Thin layer on top of fetch()
 // to automatically perform JSON requests
@@ -180,6 +181,7 @@ export default {
 }
 </script>
 ```
+
 :::
 
 ## Access hook

@@ -9,7 +9,7 @@ import globals from 'globals'
 export default [
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
-  
+
   // Base configuration for all JavaScript files (server-side defaults)
   {
     files: ['**/*.js'],
@@ -44,4 +44,3 @@ export default [
     ignores: ['**/build/**', '**/dist/**'],
   },
 ]
-

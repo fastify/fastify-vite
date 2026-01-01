@@ -1,7 +1,6 @@
-
 import { useRouteContext } from '@fastify/react/client'
 
-export function getData ({ req, reply }) {
+export function getData({ req, reply }) {
   if (req.method === 'POST') {
     if (req.body.number !== '42') {
       return reply.redirect('/')
@@ -9,12 +8,12 @@ export function getData ({ req, reply }) {
     return req.body
   } else {
     return {
-      number: ''
+      number: '',
     }
   }
 }
 
-export default function Form () {
+export default function Form() {
   const { data } = useRouteContext()
   return (
     <>

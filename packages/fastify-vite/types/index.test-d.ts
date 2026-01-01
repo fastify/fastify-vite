@@ -9,11 +9,7 @@ const FastifyViteRequire = require('..')
 const options = {
   root: process.cwd(),
   spa: false,
-  async prepareClient({
-    routes: routesPromise,
-    context: contextPromise,
-    ...others
-  }) {
+  async prepareClient({ routes: routesPromise, context: contextPromise, ...others }) {
     const context = await contextPromise
     const resolvedRoutes = await routesPromise
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -46,19 +42,11 @@ const options = {
 describe('test by options', () => {
   it('import & require', () => {
     expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyVite)
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(
-      FastifyViteAll.default,
-    )
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(
-      FastifyViteRequire.default,
-    )
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions>>(
-      FastifyViteRequire.fastifyVite,
-    )
+    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyViteAll.default)
+    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyViteRequire.default)
+    expectTypeOf<FastifyPluginAsync<FastifyViteOptions>>(FastifyViteRequire.fastifyVite)
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    expectTypeOf(options.createHtmlFunction)
-      .parameter(0)
-      .toEqualTypeOf('string')
+    expectTypeOf(options.createHtmlFunction).parameter(0).toEqualTypeOf('string')
   })
 })
 

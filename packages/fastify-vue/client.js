@@ -6,15 +6,15 @@ export const createHistory = isServer ? createMemoryHistory : createWebHistory
 export const serverRouteContext = Symbol('serverRouteContext')
 export const routeLayout = Symbol('routeLayout')
 
-export function useRouteContext () {
+export function useRouteContext() {
   if (isServer) {
     return inject(serverRouteContext)
   }
   return useRoute().meta[serverRouteContext]
 }
 
-export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
-  return async function beforeCreate (to) {
+export function createBeforeEachHandler({ routeMap, ctxHydration }, layout) {
+  return async function beforeCreate(to) {
     // The client-side route context
     const ctx = routeMap[to.matched[0].path]
     // Indicates whether or not this is a first render on the client
@@ -64,12 +64,10 @@ export function createBeforeEachHandler ({ routeMap, ctxHydration }, layout) {
   }
 }
 
-export async function hydrateRoutes (fromInput) {
+export async function hydrateRoutes(fromInput) {
   let from = fromInput
   if (Array.isArray(from)) {
-    from = Object.fromEntries(
-      from.map((route) => [route.path, route]),
-    )
+    from = Object.fromEntries(from.map((route) => [route.path, route]))
   }
   return window.routes.map((route) => {
     route.loader = memoImport(from[route.id])
@@ -78,7 +76,7 @@ export async function hydrateRoutes (fromInput) {
   })
 }
 
-function memoImport (func) {
+function memoImport(func) {
   // Otherwise we get a ReferenceError, but since this function
   // is only ran once for each route, there's no overhead
   const kFuncExecuted = Symbol('kFuncExecuted')
@@ -93,7 +91,7 @@ function memoImport (func) {
   }
 }
 
-export async function jsonDataFetch (path) {
+export async function jsonDataFetch(path) {
   const response = await fetch(`/-/data${path}`)
   let data
   let error

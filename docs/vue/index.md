@@ -67,7 +67,6 @@ giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 
 The **vue-kitchensink** starter template includes all of **vue-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
-
 #### Download
 
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.

@@ -18,19 +18,18 @@ export async function closeBundle(resolvedBundle) {
   }
   const indexHtml = readFileSync(join(distDir, 'index.html'), 'utf8')
   const pages = Object.fromEntries(
-    Object.entries(resolvedBundle ?? {})
-      .filter(([id, meta]) => {
-        if (meta.facadeModuleId?.includes('/pages/')) {
-          meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.(j|t)sx$/, 'html/$1.html')
-          return true
-        }
-      })
+    Object.entries(resolvedBundle ?? {}).filter(([id, meta]) => {
+      if (meta.facadeModuleId?.includes('/pages/')) {
+        meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.(j|t)sx$/, 'html/$1.html')
+        return true
+      }
+    }),
   )
   for (const page of Object.values(pages)) {
     const jsImports = page.imports
     const cssImports = page.viteMetadata.importedCss
     const images = page.moduleIds.filter((img) => {
-      return (page.modules[img].originalLength > assetsInlineLimit) && imageFileRE.test(img)
+      return page.modules[img].originalLength > assetsInlineLimit && imageFileRE.test(img)
     })
     let imagePreloads = '\n'
     for (let image of images) {
@@ -45,17 +44,12 @@ export async function closeBundle(resolvedBundle) {
     for (const js of jsImports) {
       jsPreloads += `  <link rel="modulepreload" crossorigin href="${base}${js}">\n`
     }
-    const pageHtml = await appendHead(
-      indexHtml,
-      imagePreloads,
-      cssPreloads,
-      jsPreloads
-    )
+    const pageHtml = await appendHead(indexHtml, imagePreloads, cssPreloads, jsPreloads)
     writeHtml(page, pageHtml, distDir)
   }
 }
 
-async function appendHead (html, ...tags) {
+async function appendHead(html, ...tags) {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
   let output = ''

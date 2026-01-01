@@ -8,32 +8,28 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default { createRenderFunction, createRoute }
 
-async function foobarHook (req) {
+async function foobarHook(req) {
   req.server.log.info(`Hello from ${req.url} and foobarHook`)
 }
 
-function createRoute ({ handler, errorHandler, route }, scope, config) {
+function createRoute({ handler, errorHandler, route }, scope, config) {
   scope.route({
     url: route.path,
     method: 'GET',
     handler,
     errorHandler,
-    ...route.triggerFoobarHook && {
+    ...(route.triggerFoobarHook && {
       onRequest: foobarHook,
-    }
+    }),
   })
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   return async function ({ app: server, req, reply }) {
     // Server data that we want to be used for SSR
     // and made available on the client for hydration
     const data = {
-      todoList: [
-        'Do laundry',
-        'Respond to emails',
-        'Write report'
-      ]
+      todoList: ['Do laundry', 'Respond to emails', 'Write report'],
     }
     // Creates Vue application instance with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.raw.url)
@@ -44,7 +40,7 @@ function createRenderFunction ({ createApp }) {
       // Server-side rendered HTML fragment
       element,
       // The SSR context data is also passed to the template, inlined for hydration
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     }
   }
 }

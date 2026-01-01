@@ -4,10 +4,10 @@ import Other from './views/other.jsx'
 export default [
   {
     path: '/',
-    component: Index
+    component: Index,
   },
   {
     path: '/other',
-    component: Other
-  }
+    component: Other,
+  },
 ]

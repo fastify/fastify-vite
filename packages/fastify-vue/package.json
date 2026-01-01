@@ -16,21 +16,28 @@
     "type": "git",
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
-  "type": "module",
-  "main": "index.js",
-  "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
-  },
   "files": [
+    "client.js",
+    "context.js",
+    "index.js",
+    "rendering.js",
+    "routing.js",
+    "server.js",
+    "templating.js",
     "plugin/index.js",
     "plugin/parsers.js",
     "plugin/preload.js",
     "plugin/stores.js",
     "plugin/virtual.js",
-    "virtual/layouts/default.vue",
+    "virtual-ts/context.ts",
+    "virtual-ts/create.ts",
+    "virtual-ts/hooks.ts",
+    "virtual-ts/index.ts",
+    "virtual-ts/layout.vue",
+    "virtual-ts/mount.ts",
+    "virtual-ts/root.vue",
+    "virtual-ts/router.vue",
+    "virtual-ts/routes.ts",
     "virtual/context.js",
     "virtual/create.js",
     "virtual/hooks.js",
@@ -41,23 +48,19 @@
     "virtual/router.vue",
     "virtual/routes.js",
     "virtual-ts/layouts/default.vue",
-    "virtual-ts/context.ts",
-    "virtual-ts/create.ts",
-    "virtual-ts/hooks.ts",
-    "virtual-ts/index.ts",
-    "virtual-ts/layout.vue",
-    "virtual-ts/mount.ts",
-    "virtual-ts/root.vue",
-    "virtual-ts/router.vue",
-    "virtual-ts/routes.ts",
-    "index.js",
-    "rendering.js",
-    "templating.js",
-    "routing.js",
-    "context.js",
-    "client.js",
-    "server.js"
+    "virtual/layouts/default.vue"
   ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./plugin": "./plugin/index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/vue": "^2.0.5",
@@ -75,8 +78,5 @@
   },
   "optionalDependencies": {
     "vite": "catalog:"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

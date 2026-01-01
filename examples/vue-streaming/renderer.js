@@ -17,35 +17,30 @@ import { uneval } from 'devalue'
 // The @fastify/vite renderer overrides
 export default {
   createHtmlFunction,
-  createRenderFunction
+  createRenderFunction,
 }
 
 // The return value of this function gets registered as reply.html()
-async function createHtmlFunction (source, scope, config) {
+async function createHtmlFunction(source, scope, config) {
   const [headSource, footer] = source.split('<!-- element -->')
   const headTemplate = await createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {
     const head = headTemplate({
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     })
     this.type('text/html')
-    const readable = Readable
-      .from(streamHtml(head, stream, footer))
+    const readable = Readable.from(streamHtml(head, stream, footer))
       // Errors from Vue SSR can be captured here
       .on('error', console.log)
     this.send(readable)
   }
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   // createApp is exported by client/index.js
   return async function ({ app: server, req, reply }) {
     const data = {
-      todoList: [
-        'Do laundry',
-        'Respond to emails',
-        'Write report'
-      ]
+      todoList: ['Do laundry', 'Respond to emails', 'Write report'],
     }
     // Creates Vue app instance with all the SSR context it needs
     const app = await createApp({ data, server, req, reply }, req.url)
@@ -57,7 +52,7 @@ function createRenderFunction ({ createApp }) {
 }
 
 // Helper function to prepend and append chunks the body stream
-async function * streamHtml (head, body, footer) {
+async function* streamHtml(head, body, footer) {
   yield head
   // renderToNodeStream() returns an AsyncIterator so we can just await on it
   for await (const chunk of body) {
