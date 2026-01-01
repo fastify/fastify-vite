@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "node server.js --dev",
     "build": "vite build",
-    "start": "node server.js",
-    "lint": "eslint . --ext .js,.jsx --fix"
+    "start": "node server.js"
   },
   "dependencies": {
     "@fastify/one-line-logger": "^2.0.2",

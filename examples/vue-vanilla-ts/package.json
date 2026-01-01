@@ -7,6 +7,8 @@
     "build": "pnpm build:server && pnpm build:client",
     "build:server": "vue-tsc",
     "build:client": "vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "tsx --test"
   },
   "dependencies": {
@@ -15,10 +17,16 @@
     "vue": "catalog:vue"
   },
   "devDependencies": {
+    "@eslint/js": "catalog:eslint",
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:vue",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "globals": "catalog:eslint",
     "tsx": "catalog:",
+    "typescript-eslint": "catalog:eslint",
     "vite": "catalog:",
+    "vue-eslint-parser": "catalog:eslint",
     "vue-tsc": "^2.2.8"
   }
 }

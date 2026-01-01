@@ -39,4 +39,5 @@ export async function main (dev?: boolean) {
 if (process.argv[1] === import.meta.filename) {
   const server = await main()
   await server.listen({ port: 3000 })
+  console.log('Server is running on port 3000')
 }

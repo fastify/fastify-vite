@@ -1,4 +1,4 @@
-/* eslint-disable no-cond-assign */
+ 
 
 export function getPageRoutes (importMap) {
   return Object.keys(importMap)
