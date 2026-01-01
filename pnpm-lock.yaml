@@ -969,11 +969,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react@19.1.2)(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -1027,11 +1027,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react@19.1.2)(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -1085,11 +1085,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: workspace:^
-        version: link:../../packages/fastify-react
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react@19.1.2)(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -1155,11 +1155,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vue
+        specifier: ^1.1.3
+        version: 1.1.3(@types/node@22.19.3)(fastify@5.6.2)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.9.3))
@@ -1204,11 +1204,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vue
+        specifier: ^1.1.3
+        version: 1.1.3(@types/node@22.19.3)(fastify@5.6.2)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.9.3))
@@ -1250,11 +1250,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vite
+        specifier: ^8.2.2
+        version: 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: workspace:^
-        version: link:../../packages/fastify-vue
+        specifier: ^1.1.3
+        version: 1.1.3(@types/node@22.14.0)(fastify@5.6.2)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.13(typescript@5.9.3))
@@ -2573,6 +2573,9 @@ packages:
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
 
+  '@fastify/react@1.1.2':
+    resolution: {integrity: sha512-aj2uTJNp6DdEbN094iwX3fNH1pGlQaX1azbp4QTdkIio0nDaegjj3CizvX72ZblwXGHrZjPq+g0NDdkRKt6YkA==}
+
   '@fastify/send@2.1.0':
     resolution: {integrity: sha512-yNYiY6sDkexoJR0D8IDy3aRP3+L4wdqCpvx5WP+VtEU58sn7USmKynBzDQex5X42Zzvw2gNzzYgP90UfWShLFA==}
 
@@ -2588,6 +2591,15 @@ packages:
   '@fastify/vite@6.0.7':
     resolution: {integrity: sha512-+dRo9KUkvmbqdmBskG02SwigWl06Mwkw8SBDK1zTNH6vd4DyXbRvI7RmJEmBkLouSU81KTzy1+OzwHSffqSD6w==}
     bundledDependencies: []
+
+  '@fastify/vite@8.2.2':
+    resolution: {integrity: sha512-M22nPvdiEcdo/VNGFL27d0Rtm/shg/57SR0MsMwR6K6SCpjLv3Dvn2hibA8HC7ih8GcbnlKl4pdyJu9EbUMhoA==}
+    peerDependencies:
+      fastify: '>=5'
+      vite: '>=6'
+
+  '@fastify/vue@1.1.3':
+    resolution: {integrity: sha512-15mae8GuD81IHzfsnKbUnYgtIiMKVv2/6sQ24wtlGp31XEJCpxHLd4ImepCUp1aJwT6C04Hpa4lV4jou3fTANQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -8100,6 +8112,50 @@ snapshots:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
 
+  '@fastify/react@1.1.2(@types/react@19.1.2)(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
+    dependencies:
+      '@fastify/vite': 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+      '@unhead/react': 2.0.8(react@19.2.3)
+      acorn: 8.15.0
+      acorn-strip-function: 1.2.0
+      acorn-walk: 8.3.4
+      devalue: 5.6.1
+      history: 5.3.0
+      html-rewriter-wasm: 0.4.1
+      minipass: 7.1.2
+      mlly: 1.8.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      react-router: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.3)
+      youch: 3.3.4
+    transitivePeerDependencies:
+      - '@types/react'
+      - fastify
+      - vite
+
+  '@fastify/react@1.1.2(@types/react@19.1.2)(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
+    dependencies:
+      '@fastify/vite': 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+      '@unhead/react': 2.0.8(react@19.2.3)
+      acorn: 8.15.0
+      acorn-strip-function: 1.2.0
+      acorn-walk: 8.3.4
+      devalue: 5.6.1
+      history: 5.3.0
+      html-rewriter-wasm: 0.4.1
+      minipass: 7.1.2
+      mlly: 1.8.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      react-router: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.3)
+      youch: 3.3.4
+    transitivePeerDependencies:
+      - '@types/react'
+      - fastify
+      - vite
+
   '@fastify/send@2.1.0':
     dependencies:
       '@lukeed/ms': 2.0.2
@@ -8151,6 +8207,90 @@ snapshots:
       - stylus
       - sugarss
       - terser
+
+  '@fastify/vite@8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
+    dependencies:
+      '@fastify/deepmerge': 3.1.0
+      '@fastify/middie': 9.0.3
+      '@fastify/static': 9.0.0
+      fastify: 5.6.2
+      fastify-plugin: 5.1.0
+      fs-extra: 11.3.3
+      html-rewriter-wasm: 0.4.1
+      klaw: 4.1.0
+      package-directory: 8.1.0
+      vite: 7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
+
+  '@fastify/vite@8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
+    dependencies:
+      '@fastify/deepmerge': 3.1.0
+      '@fastify/middie': 9.0.3
+      '@fastify/static': 9.0.0
+      fastify: 5.6.2
+      fastify-plugin: 5.1.0
+      fs-extra: 11.3.3
+      html-rewriter-wasm: 0.4.1
+      klaw: 4.1.0
+      package-directory: 8.1.0
+      vite: 7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
+
+  '@fastify/vue@1.1.3(@types/node@22.14.0)(fastify@5.6.2)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
+    dependencies:
+      '@fastify/vite': 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+      '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
+      acorn: 8.15.0
+      acorn-walk: 8.3.4
+      devalue: 5.6.1
+      html-rewriter-wasm: 0.4.1
+      mlly: 1.8.0
+      vue: 3.5.26(typescript@5.9.3)
+      vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
+      youch: 3.3.4
+    optionalDependencies:
+      vite: 7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - fastify
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - typescript
+      - yaml
+
+  '@fastify/vue@1.1.3(@types/node@22.19.3)(fastify@5.6.2)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)':
+    dependencies:
+      '@fastify/vite': 8.2.2(fastify@5.6.2)(vite@7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+      '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
+      acorn: 8.15.0
+      acorn-walk: 8.3.4
+      devalue: 5.6.1
+      html-rewriter-wasm: 0.4.1
+      mlly: 1.8.0
+      vue: 3.5.26(typescript@5.9.3)
+      vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
+      youch: 3.3.4
+    optionalDependencies:
+      vite: 7.3.0(@types/node@22.19.3)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
+    transitivePeerDependencies:
+      - '@types/node'
+      - fastify
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - typescript
+      - yaml
 
   '@humanfs/core@0.19.1': {}
 
