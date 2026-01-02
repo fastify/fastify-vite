@@ -1,4 +1,4 @@
-name: CI
+name: Integration Tests
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  ci:
+  integration-tests:
     runs-on: ${{ matrix.runs-on }}
 
     permissions:
@@ -41,11 +41,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint code
-        run: pnpm lint
-
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Run unit tests
-        run: pnpm test
+      - name: Run integration tests
+        run: pnpm test:examples

@@ -1,12 +1,13 @@
 {
   "private": "true",
   "scripts": {
-    "build": "pnpm -r run build",
+    "build": "pnpm --filter './packages/*' run --if-present build",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": " pnpm -r run lint && oxlint .",
     "lint:fix": "pnpm -r run lint:fix && oxlint --fix .",
-    "test": "zx package.mjs --test",
+    "test": "pnpm --filter './packages/*' run --if-present test",
+    "test:examples": "pnpm --filter './examples/*' run test",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
   },

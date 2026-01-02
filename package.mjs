@@ -18,10 +18,6 @@ const starters = [
   'vue-typescript',
 ]
 
-if (process.argv.includes('--test')) {
-  await runAllTests()
-}
-
 if (process.argv.includes('--prep-for-dev')) {
   await prepForDev()
 }
@@ -73,35 +69,6 @@ async function prepForDev() {
   cd(root)
   await $`pnpm i`
   await $`pnpm format`
-  process.exit()
-}
-
-async function runAllTests() {
-  cd(join(root, 'packages/fastify-vite'))
-
-  await $`pnpm vitest run`
-  await $`sleep 1`
-
-  if (process.stdout.isTTY) {
-    for (const example of [
-      'react-vanilla',
-      'react-vanilla-spa',
-      'react-vanilla-spa-ts',
-      'react-vanilla-ts',
-      'react-hydration',
-      'react-next-mini',
-      'react-streaming',
-      'vue-vanilla',
-      'vue-vanilla-spa',
-      'vue-vanilla-ts',
-      'vue-hydration',
-      'vue-next-mini',
-      'vue-streaming',
-    ]) {
-      cd(join(root, 'examples', example))
-      await $`node --test`
-    }
-  }
   process.exit()
 }
 
