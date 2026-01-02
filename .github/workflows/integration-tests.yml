@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Integration
 
 on:
   push:
@@ -11,8 +11,9 @@ permissions:
   contents: read
 
 jobs:
-  integration-tests:
-    runs-on: ${{ matrix.runs-on }}
+  examples:
+    name: examples (${{ matrix.node-version }})
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read
@@ -20,7 +21,6 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x, 24.x, 25.x]
-        runs-on: ['ubuntu-latest']
 
     steps:
       - name: Checkout code

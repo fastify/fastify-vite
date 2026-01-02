@@ -11,16 +11,11 @@ permissions:
   contents: read
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.runs-on }}
+  lint-and-test:
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read
-
-    strategy:
-      matrix:
-        node-version: [22.x, 24.x, 25.x]
-        runs-on: ['ubuntu-latest']
 
     steps:
       - name: Checkout code
@@ -36,7 +31,7 @@ jobs:
         with:
           cache: 'pnpm'
           check-latest: true
-          node-version: ${{ matrix.node-version }}
+          node-version: 24.x
 
       - name: Install dependencies
         run: pnpm install
