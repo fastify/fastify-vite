@@ -21,13 +21,9 @@
 
 <br>
 
-<small>
+<small>**Target date**</small>
 
-**Target date**
-
-</small>
-
-July 2025
+July 2026
 
 </td>
 <td valign="top">
@@ -36,7 +32,6 @@ Planned for this release:
 
 - **Rewrite core in TypeScript**
 - **Deprecate CJS support**
-- **Revised HMR integration**
 
 For a long time `@fastify/vite` resisted a TypeScript rewrite, staying true to Fastify's original JavaScript style, which to this date remains CJS written in the same form as seen in Node.js' own internal JavaScript libraries.
 
