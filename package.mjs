@@ -79,7 +79,7 @@ async function prepForDev() {
 async function runAllTests() {
   cd(join(root, 'packages/fastify-vite'))
 
-  await $`npx vitest run`
+  await $`pnpm vitest run`
   await $`sleep 1`
 
   if (process.stdout.isTTY) {
