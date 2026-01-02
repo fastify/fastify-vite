@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.eslint.json",
   "files": ["**/*.ts"],
   "compilerOptions": {
     "target": "esnext",
