@@ -1,0 +1,44 @@
+{
+  "name": "@fastify/create-vite-app",
+  "version": "0.0.0",
+  "description": "Scaffolding tool for Fastify + Vite applications",
+  "type": "module",
+  "bin": {
+    "create-vite-app": "./dist/index.js",
+    "fastify-create-vite-app": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "dev": "node src/index.ts",
+    "build": "tsc",
+    "prepublishOnly": "pnpm build",
+    "test": "node --test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git",
+    "directory": "packages/create-vite-app"
+  },
+  "keywords": [
+    "fastify",
+    "vite",
+    "create-fastify-app",
+    "scaffold",
+    "cli"
+  ],
+  "author": "Fastify Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
