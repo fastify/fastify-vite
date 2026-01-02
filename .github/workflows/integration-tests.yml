@@ -1,4 +1,4 @@
-name: CI
+name: Integration
 
 on:
   push:
@@ -11,11 +11,16 @@ permissions:
   contents: read
 
 jobs:
-  lint-and-test:
+  examples:
+    name: examples (${{ matrix.node-version }})
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
+
+    strategy:
+      matrix:
+        node-version: [22.x, 24.x, 25.x]
 
     steps:
       - name: Checkout code
@@ -31,16 +36,10 @@ jobs:
         with:
           cache: 'pnpm'
           check-latest: true
-          node-version: 24.x
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint code
-        run: pnpm lint
-
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Run unit tests
-        run: pnpm test
+      - name: Run integration tests
+        run: pnpm test:examples
