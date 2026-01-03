@@ -68,39 +68,50 @@ async function setup(config) {
   this.scope.use(this.devServer.middlewares)
 
   this.entries = {}
+  let loadEntriesInProgress = false
 
   const loadEntries = async () => {
-    if (!this.runners) {
-      this.runners = {}
-    }
-
-    const entryModulePaths = await loadEntryModulePaths()
-
-    if (!entryModulePaths) {
+    // Prevent concurrent loadEntries calls to avoid race conditions
+    if (loadEntriesInProgress) {
       return
     }
+    loadEntriesInProgress = true
 
-    for (const [env, envConfig] of Object.entries(this.devServer.environments)) {
-      if (env === 'client') {
-        continue
+    try {
+      if (!this.runners) {
+        this.runners = {}
       }
-      // Close old runner for this environment before replacing it
-      if (this.runners[env] && typeof this.runners[env].close === 'function') {
-        await this.runners[env].close()
-      }
-      const runner = createServerModuleRunner(envConfig)
-      this.runners[env] = runner
 
-      if (env in entryModulePaths) {
-        const entryModule = await runner.import(entryModulePaths[env])
-        if (!this.entries[env]) {
-          this.entries[env] = { ...(entryModule.default ?? entryModule) }
-        } else {
-          Object.assign(this.entries[env], {
-            ...(entryModule.default ?? entryModule),
-          })
+      const entryModulePaths = await loadEntryModulePaths()
+
+      if (!entryModulePaths) {
+        return
+      }
+
+      for (const [env, envConfig] of Object.entries(this.devServer.environments)) {
+        if (env === 'client') {
+          continue
+        }
+        // Close old runner for this environment before replacing it
+        if (this.runners[env] && typeof this.runners[env].close === 'function') {
+          await this.runners[env].close()
+        }
+        const runner = createServerModuleRunner(envConfig)
+        this.runners[env] = runner
+
+        if (env in entryModulePaths) {
+          const entryModule = await runner.import(entryModulePaths[env])
+          if (!this.entries[env]) {
+            this.entries[env] = { ...(entryModule.default ?? entryModule) }
+          } else {
+            Object.assign(this.entries[env], {
+              ...(entryModule.default ?? entryModule),
+            })
+          }
         }
       }
+    } finally {
+      loadEntriesInProgress = false
     }
   }
 
