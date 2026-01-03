@@ -139,7 +139,18 @@ async function setup(config) {
   })
 
   // Close the dev server when Fastify closes
-  this.scope.addHook('onClose', async () => await this.devServer.close())
+  this.scope.addHook('onClose', async () => {
+    // Clean up module runners first
+    if (this.runners) {
+      for (const runner of Object.values(this.runners)) {
+        if (runner && typeof runner.close === 'function') {
+          await runner.close()
+        }
+      }
+    }
+    // Then close the dev server
+    await this.devServer.close()
+  })
 
   await loadEntries()
 
