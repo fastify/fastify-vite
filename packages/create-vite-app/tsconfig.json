@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "rewriteRelativeImportExtensions": true,
+    "rootDir": "./src",
+    "allowImportingTsExtensions": true,
+    "noEmit": false
+  },
+  "include": ["src/**/*"]
+}

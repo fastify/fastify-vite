@@ -1,0 +1,50 @@
+{
+  "name": "@fastify/create-vite-app",
+  "version": "0.0.0",
+  "description": "Scaffolding tool for Fastify + Vite applications",
+  "keywords": [
+    "cli",
+    "create-fastify-app",
+    "fastify",
+    "scaffold",
+    "vite"
+  ],
+  "license": "MIT",
+  "author": "Fastify Team",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git",
+    "directory": "packages/create-vite-app"
+  },
+  "bin": {
+    "create-vite-app": "./dist/index.js",
+    "fastify-create-vite-app": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm generate-versions && pnpm copy-examples && tsc",
+    "copy-examples": "node scripts/copy-examples.ts",
+    "generate-versions": "node scripts/generate-versions.ts",
+    "prepublishOnly": "pnpm build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "zx": "catalog:"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

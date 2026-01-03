@@ -5,6 +5,7 @@ packages:
   - starters/*
 
 catalog:
+  '@types/node': ^24.10.4
   devalue: ^5.6.1
   fastify: ^5.6.2
   html-rewriter-wasm: ^0.4.1
@@ -12,6 +13,7 @@ catalog:
   typescript: ^5.9.3
   vite: ^7.3.0
   vitest: ^4.0.16
+  zx: ^8.8.5
 
 catalogs:
   eslint:
