@@ -70,15 +70,9 @@ async function setup(config) {
   this.entries = {}
 
   const loadEntries = async () => {
-    // Close old runners before creating new ones to prevent resource leaks
-    if (this.runners) {
-      for (const runner of Object.values(this.runners)) {
-        if (runner && typeof runner.close === 'function') {
-          await runner.close()
-        }
-      }
+    if (!this.runners) {
+      this.runners = {}
     }
-    this.runners = {}
 
     const entryModulePaths = await loadEntryModulePaths()
 
@@ -89,6 +83,10 @@ async function setup(config) {
     for (const [env, envConfig] of Object.entries(this.devServer.environments)) {
       if (env === 'client') {
         continue
+      }
+      // Close old runner for this environment before replacing it
+      if (this.runners[env] && typeof this.runners[env].close === 'function') {
+        await this.runners[env].close()
       }
       const runner = createServerModuleRunner(envConfig)
       this.runners[env] = runner
