@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "dev": "node src/index.ts",
-    "build": "tsc",
+    "build": "node scripts/generate-versions.ts && tsc",
     "prepublishOnly": "pnpm build",
     "test": "node --test"
   },
@@ -37,8 +37,12 @@
   "engines": {
     "node": ">=22.18.0"
   },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0"
+  },
   "devDependencies": {
     "typescript": "catalog:",
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "yaml": "^2.8.2"
   }
 }

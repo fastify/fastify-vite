@@ -4,7 +4,7 @@
 Build a CLI scaffolding tool that copies the `examples/react-vanilla-spa/` template and resolves pnpm catalog versions at build time.
 
 ## Requirements Summary
-- **Template source**: `examples/react-vanilla-spa/` (no dedicated templates folder)
+- **Template source**: `examples/react-vanilla-spa/` (bundled at build time)
 - **Prompts**: Project name only (using @clack/prompts)
 - **Versions**: Baked in at build time from `pnpm-workspace.yaml`
 - **Post-scaffold**: Auto-detect package manager and install dependencies
@@ -12,38 +12,27 @@ Build a CLI scaffolding tool that copies the `examples/react-vanilla-spa/` templ
 
 ---
 
-## Implementation Steps
+## Implementation (Completed)
 
 ### Step 1: Add dependencies
 **File**: `packages/create-vite-app/package.json`
 
-Add:
-- `@clack/prompts` - interactive CLI prompts
-- `yaml` (devDependency) - parse pnpm-workspace.yaml at build time
+Added:
+- `@clack/prompts` ^0.11.0 - interactive CLI prompts
+- `yaml` ^2.8.2 (devDependency) - parse pnpm-workspace.yaml at build time
 
-### Step 2: Create build script to generate versions
-**New file**: `packages/create-vite-app/scripts/generate-versions.ts`
+### Step 2: Create build script
+**File**: `packages/create-vite-app/scripts/generate-versions.ts`
 
-This script will:
-1. Read `../../pnpm-workspace.yaml` for catalog versions
-2. Read `../fastify-vite/package.json` for @fastify/vite version (workspace:^ reference)
-3. Parse catalog and catalogs sections
-4. Write `src/versions.ts` with resolved versions:
-```ts
-export const versions = {
-  '@fastify/vite': '^8.2.3',
-  'fastify': '^5.6.2',
-  'vite': '^7.3.0',
-  'react': '^19.2.3',
-  'react-dom': '^19.2.3',
-  '@vitejs/plugin-react': '^5.1.2',
-}
-```
+This script:
+1. Reads `pnpm-workspace.yaml` for catalog versions
+2. Reads `packages/fastify-vite/package.json` for @fastify/vite version
+3. Writes `src/versions.json` with resolved versions
+4. Copies template files from `examples/react-vanilla-spa` to `templates/react-spa`
 
 ### Step 3: Update build script in package.json
 **File**: `packages/create-vite-app/package.json`
 
-Change build to:
 ```json
 "build": "node scripts/generate-versions.ts && tsc"
 ```
@@ -53,54 +42,36 @@ Change build to:
 ### Step 4: Rewrite src/index.ts
 **File**: `packages/create-vite-app/src/index.ts`
 
-Structure:
-```ts
-#!/usr/bin/env node
-import * as p from '@clack/prompts'
-import { versions } from './versions.js'
-// ... fs utilities
+Features:
+- Interactive project name prompt using @clack/prompts
+- Copies template files from bundled `templates/react-spa`
+- Transforms package.json (resolves versions, updates name)
+- Auto-detects package manager and installs dependencies
+- Shows spinner during operations
 
-async function main() {
-  p.intro('Create Fastify + Vite App')
+### Step 5: Create .gitignore
+**File**: `packages/create-vite-app/.gitignore`
 
-  // 1. Get project name (with CLI arg fallback)
-  const projectName = await p.text({...})
-
-  // 2. Copy template files from examples/react-vanilla-spa
-  //    - Skip: node_modules, dist, *.test.js
-  //    - Transform package.json with resolved versions
-
-  // 3. Detect package manager (npm/pnpm/yarn/bun)
-  // 4. Run install with spinner
-
-  p.outro('Done! Run: cd <project> && npm run dev')
-}
-```
-
-### Step 5: Add template copying logic
-**File**: `packages/create-vite-app/src/index.ts`
-
-Key functions:
-- `copyTemplate(source, dest)` - recursively copy, skip ignored files
-- `transformPackageJson(content, projectName, versions)` - replace workspace:/catalog: refs
-- `detectPackageManager()` - check lockfiles or npm_config_user_agent
-- `installDependencies(pm, cwd)` - spawn install process
+Ignores build-time generated files:
+- `src/versions.json`
+- `templates/`
 
 ---
 
-## Files to Modify/Create
+## Files Modified/Created
 
 | File | Action |
 |------|--------|
-| `packages/create-vite-app/package.json` | Modify - add deps, update build script |
-| `packages/create-vite-app/scripts/generate-versions.ts` | Create |
-| `packages/create-vite-app/src/versions.ts` | Generated (gitignored) |
-| `packages/create-vite-app/src/index.ts` | Rewrite |
-| `packages/create-vite-app/.gitignore` | Create - ignore src/versions.ts |
+| `packages/create-vite-app/package.json` | Modified - added deps, updated build script |
+| `packages/create-vite-app/scripts/generate-versions.ts` | Created |
+| `packages/create-vite-app/src/versions.json` | Generated (gitignored) |
+| `packages/create-vite-app/src/index.ts` | Rewritten |
+| `packages/create-vite-app/.gitignore` | Created |
+| `packages/create-vite-app/templates/` | Generated (gitignored) |
 
 ---
 
-## Template Files Copied (from examples/react-vanilla-spa/)
+## Generated Project Structure
 
 ```
 project-name/
@@ -109,7 +80,7 @@ project-name/
 │   ├── base.jsx
 │   ├── index.html
 │   └── mount.js
-├── package.json      (transformed)
+├── package.json      (transformed with resolved versions)
 ├── server.js
 └── vite.config.js
 ```
