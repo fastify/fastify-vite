@@ -13,6 +13,7 @@ catalog:
   typescript: ^5.9.3
   vite: ^7.3.0
   vitest: ^4.0.16
+  zx: ^8.8.5
 
 catalogs:
   eslint:

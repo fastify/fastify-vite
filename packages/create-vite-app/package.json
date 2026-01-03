@@ -36,12 +36,13 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@clack/prompts": "^0.11.0"
+    "@clack/prompts": "^0.11.0",
+    "zx": "catalog:"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "catalog:",
-    "typescript": "catalog:",
-    "yaml": "^2.8.2"
+    "typescript": "catalog:"
   },
   "engines": {
     "node": ">=22.18.0"
