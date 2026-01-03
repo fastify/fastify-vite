@@ -70,6 +70,14 @@ async function setup(config) {
   this.entries = {}
 
   const loadEntries = async () => {
+    // Close old runners before creating new ones to prevent resource leaks
+    if (this.runners) {
+      for (const runner of Object.values(this.runners)) {
+        if (runner && typeof runner.close === 'function') {
+          await runner.close()
+        }
+      }
+    }
     this.runners = {}
 
     const entryModulePaths = await loadEntryModulePaths()
