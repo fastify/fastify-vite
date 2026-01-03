@@ -7,6 +7,7 @@ The official scaffolding tool for **Fastify + Vite** applications.
 You do not need to install this package globally. You can run it directly using your package manager of choice.
 
 ### npm
+
 ```bash
 npm create @fastify/vite-app@latest
 # or with a specific project name
@@ -14,11 +15,13 @@ npm create @fastify/vite-app@latest my-app
 ```
 
 ### pnpm
+
 ```bash
 pnpm create @fastify/vite-app@latest
 ```
 
 ### yarn
+
 ```bash
 yarn create @fastify/vite-app
 ```
