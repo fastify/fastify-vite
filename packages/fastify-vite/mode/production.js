@@ -127,14 +127,22 @@ async function setup(config) {
         ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
         : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
 
-    let bundlePath
+    let bundlePath = null
 
     for (const serverFile of bundleFiles) {
-      bundlePath = getBundlePath(serverFile)
-      if (exists(bundlePath)) {
+      const path = getBundlePath(serverFile)
+      if (exists(path)) {
+        bundlePath = path
         break
       }
     }
+
+    if (!bundlePath) {
+      throw new Error(
+        `Could not find server bundle. Tried:\n  - ${getBundlePath(bundleFiles[0])}\n  - ${getBundlePath(bundleFiles[1])}\n\nEnsure the production build completed successfully.`,
+      )
+    }
+
     let bundle = await import(bundlePath)
     if (typeof bundle.default === 'function') {
       bundle = await bundle.default(config)
