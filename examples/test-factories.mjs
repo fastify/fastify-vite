@@ -1,4 +1,3 @@
-import { setTimeout } from 'node:timers/promises'
 import assert from 'node:assert'
 import { join } from 'path'
 import { loadConfigFromFile, createBuilder, build } from 'vite'
@@ -8,7 +7,6 @@ export function makeIndexTest({ main, dev }) {
     const server = await main(dev)
     const response = await server.inject({ method: 'GET', url: '/' })
     assert.strictEqual(response.statusCode, 200)
-    await setTimeout(3000)
     await server.close()
   }
 }
