@@ -52,6 +52,11 @@ const DefaultConfig = {
   // Vite's configuration file location
   root: null,
 
+  // Application root directory for resolving relative paths.
+  // When useRelativePaths is enabled and you're running from outside the project directory, set
+  // this to an absolute path to the folder containing your package.json using import.meta.dirname.
+  appRoot: null,
+
   // Vite's resolved config
   vite: null,
 
@@ -195,7 +200,7 @@ async function configure(options = {}) {
   Object.assign(config, { vite, viteConfig })
 
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite })
+  const bundle = await resolveBundle({ dev, vite, appRoot: config.appRoot })
   Object.assign(config, { bundle })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)
@@ -305,22 +310,28 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(vite) {
+async function determineOutDirRoot(vite, appRoot) {
   const { usePathsRelativeToAppRoot } = vite.fastify
   if (usePathsRelativeToAppRoot) {
+    if (appRoot) {
+      return appRoot
+    }
     const { packageDirectory } = await import('package-directory')
     return await packageDirectory()
   }
   return vite.root
 }
 
-async function resolveSSRBundle({ dev, vite }) {
+async function resolveSSRBundle({ dev, vite, appRoot }) {
   const bundle = {}
   let clientOutDir
 
   if (!dev) {
     if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, await determineOutDirRoot(vite))
+      clientOutDir = resolveIfRelative(
+        vite.fastify.outDirs.client,
+        await determineOutDirRoot(vite, appRoot),
+      )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
       bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
@@ -351,13 +362,16 @@ async function resolveSSRBundle({ dev, vite }) {
   return bundle
 }
 
-async function resolveSPABundle({ dev, vite }) {
+async function resolveSPABundle({ dev, vite, appRoot }) {
   const bundle = {}
   if (!dev) {
     let clientOutDir
 
     if (vite.fastify) {
-      clientOutDir = resolveIfRelative(vite.fastify.outDirs.client, await determineOutDirRoot(vite))
+      clientOutDir = resolveIfRelative(
+        vite.fastify.outDirs.client,
+        await determineOutDirRoot(vite, appRoot),
+      )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
       bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
