@@ -309,8 +309,8 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(vite, packageJsonLocation) {
-  const { usePathsRelativeToAppRoot } = vite.fastify
+async function determineOutDirRoot(viteConfig, packageJsonLocation) {
+  const { usePathsRelativeToAppRoot } = viteConfig.fastify
   if (usePathsRelativeToAppRoot) {
     if (packageJsonLocation) {
       return packageJsonLocation
@@ -318,7 +318,11 @@ async function determineOutDirRoot(vite, packageJsonLocation) {
     const { packageDirectory } = await import('package-directory')
     return await packageDirectory()
   }
-  return vite.root
+  // When packageJsonLocation is provided, resolve relative vite.root against it
+  if (packageJsonLocation && !isAbsolute(viteConfig.root)) {
+    return resolve(packageJsonLocation, viteConfig.root)
+  }
+  return viteConfig.root
 }
 
 async function resolveSSRBundle({ dev, vite, packageJsonLocation }) {
