@@ -16,7 +16,11 @@ If you're looking into a microfrontend setup, consider [this approach](https://d
 
 ## Using @fastify/middie Directly
 
-`@fastify/vite` internally registers `@fastify/middie` to run Vite's development server middleware. If you need to register `@fastify/middie` yourself (e.g., to pass custom options), register it **before** `@fastify/vite`:
+`@fastify/vite` internally registers `@fastify/middie` in **development mode** to run Vite's dev server middleware. If you need to use middie yourself:
+
+**In development mode:** You can either register middie before `@fastify/vite` (it will detect this and skip its own registration), or simply use `server.use()` after calling `server.vite.ready()`.
+
+**In production mode:** `@fastify/vite` does not register middie since Vite's dev server isn't used. If you need middie in production, you must register it yourself.
 
 ```js
 import Fastify from 'fastify'
@@ -25,9 +29,7 @@ import FastifyVite from '@fastify/vite'
 
 const server = Fastify()
 
-// Register middie first with your options
-await server.register(middie, { /* your options */ })
+// Register middie first - works in both dev and production
+await server.register(middie)
 await server.register(FastifyVite, { /* options */ })
 ```
-
-`@fastify/vite` checks if middie is already registered and skips its own registration if so.
