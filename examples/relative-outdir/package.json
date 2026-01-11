@@ -1,0 +1,19 @@
+{
+  "name": "@fastify-vite/example-relative-outdir",
+  "private": true,
+  "description": "Demonstrates issue #303: vite.config.json path mismatch with relative outDir",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}
