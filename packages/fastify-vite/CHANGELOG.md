@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 31d2759: Fix pathing for relative outDirs in vite configs. #350
+- 31d2759: Fix a bug where using a relative path for `build.outDir` instead of an absolute path in vite configs did not work. #350
 
 ## 8.3.0
 
