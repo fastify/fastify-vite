@@ -25,7 +25,9 @@
     "utils.js",
     "mode/development.js",
     "mode/production.js",
-    "types/index.d.ts"
+    "types/index.d.ts",
+    "types/plugin.d.ts",
+    "types/utils.d.ts"
   ],
   "main": "index.js",
   "types": "./types/index.d.ts",
@@ -36,15 +38,21 @@
       "import": "./index.js",
       "require": "./index.js"
     },
-    "./utils": "./utils.js",
-    "./plugin": "./plugin.mjs"
+    "./utils": {
+      "types": "./types/utils.d.ts",
+      "import": "./utils.js",
+      "require": "./utils.js"
+    },
+    "./plugin": {
+      "types": "./types/plugin.d.ts",
+      "import": "./plugin.mjs"
+    }
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "vitest run --no-file-parallelism",
-    "test:type": "vitest --ui --typecheck"
+    "test": "vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.1.0",
@@ -58,7 +66,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.3",
-    "@vitest/ui": "4.0.16",
     "fastify": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

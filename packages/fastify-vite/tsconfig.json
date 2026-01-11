@@ -1,5 +1,4 @@
 {
-  "files": ["**/*.ts"],
   "compilerOptions": {
     "target": "esnext",
     "lib": ["ES2020"],
