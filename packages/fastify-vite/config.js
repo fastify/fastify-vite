@@ -4,13 +4,11 @@ const {
   dirname,
   join,
   resolve,
-  parse,
   resolveIfRelative,
   isAbsolute,
   exists,
   stat,
   read,
-  sep,
 } = require('./ioutils.cjs')
 const { createHtmlTemplateFunction } = require('./html.js')
 
@@ -52,10 +50,9 @@ const DefaultConfig = {
   // Vite's configuration file location
   root: null,
 
-  // Application root directory for resolving relative paths.
-  // When useRelativePaths is enabled and you're running from outside the project directory, set
-  // this to an absolute path to the folder containing your package.json using import.meta.dirname.
-  appRoot: null,
+  // Absolute path to the directory containing your package.json for resolving relative paths.
+  // Useful to set if you plan to start the server from outside the project directory.
+  packageJsonLocation: null,
 
   // Vite's resolved config
   vite: null,
@@ -200,7 +197,7 @@ async function configure(options = {}) {
   Object.assign(config, { vite, viteConfig })
 
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite, appRoot: config.appRoot })
+  const bundle = await resolveBundle({ dev, vite, packageJsonLocation: config.packageJsonLocation })
   Object.assign(config, { bundle })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)
@@ -310,11 +307,11 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(vite, appRoot) {
+async function determineOutDirRoot(vite, packageJsonLocation) {
   const { usePathsRelativeToAppRoot } = vite.fastify
   if (usePathsRelativeToAppRoot) {
-    if (appRoot) {
-      return appRoot
+    if (packageJsonLocation) {
+      return packageJsonLocation
     }
     const { packageDirectory } = await import('package-directory')
     return await packageDirectory()
@@ -322,7 +319,7 @@ async function determineOutDirRoot(vite, appRoot) {
   return vite.root
 }
 
-async function resolveSSRBundle({ dev, vite, appRoot }) {
+async function resolveSSRBundle({ dev, vite, packageJsonLocation }) {
   const bundle = {}
   let clientOutDir
 
@@ -330,7 +327,7 @@ async function resolveSSRBundle({ dev, vite, appRoot }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, appRoot),
+        await determineOutDirRoot(vite, packageJsonLocation),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
@@ -362,7 +359,7 @@ async function resolveSSRBundle({ dev, vite, appRoot }) {
   return bundle
 }
 
-async function resolveSPABundle({ dev, vite, appRoot }) {
+async function resolveSPABundle({ dev, vite, packageJsonLocation }) {
   const bundle = {}
   if (!dev) {
     let clientOutDir
@@ -370,7 +367,7 @@ async function resolveSPABundle({ dev, vite, appRoot }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, appRoot),
+        await determineOutDirRoot(vite, packageJsonLocation),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.

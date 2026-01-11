@@ -27,8 +27,8 @@ async function setup(config) {
 
     let outDirRoot = vite.root
     if (usePathsRelativeToAppRoot) {
-      if (config.appRoot) {
-        outDirRoot = config.appRoot
+      if (config.packageJsonLocation) {
+        outDirRoot = config.packageJsonLocation
       } else {
         const { packageDirectory } = await import('package-directory')
         outDirRoot = await packageDirectory()
@@ -129,8 +129,9 @@ async function setup(config) {
     let getBundlePath
     if (isAbsolute(distOutDir)) {
       getBundlePath = (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
-    } else if (viteConfig.fastify.usePathsRelativeToAppRoot && config.appRoot) {
-      getBundlePath = (serverFile) => fixWin32Path(resolve(config.appRoot, distOutDir, serverFile))
+    } else if (viteConfig.fastify.usePathsRelativeToAppRoot && config.packageJsonLocation) {
+      getBundlePath = (serverFile) =>
+        fixWin32Path(resolve(config.packageJsonLocation, distOutDir, serverFile))
     } else if (viteConfig.fastify.usePathsRelativeToAppRoot) {
       getBundlePath = (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
     } else {
