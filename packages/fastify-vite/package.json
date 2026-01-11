@@ -65,7 +65,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.3",
-    "@vitest/ui": "4.0.16",
     "fastify": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
