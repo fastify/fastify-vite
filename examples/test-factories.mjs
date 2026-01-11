@@ -45,3 +45,22 @@ export function makeBuildTest({ cwd }) {
     await builder.buildApp()
   }
 }
+
+/**
+ * This test verifies the server can start when cwd is different from the project directory:
+ * https://github.com/fastify/fastify-vite/issues/298
+ */
+export function makeStartFromOutsideTest({ main }) {
+  return async () => {
+    const originalCwd = process.cwd()
+    try {
+      process.chdir(join(import.meta.dirname, '..'))
+      const server = await main()
+      const response = await server.inject({ method: 'GET', url: '/' })
+      assert.strictEqual(response.statusCode, 200)
+      await server.close()
+    } finally {
+      process.chdir(originalCwd)
+    }
+  }
+}

@@ -25,10 +25,12 @@ async function setup(config) {
   if (vite.fastify) {
     const { outDirs, usePathsRelativeToAppRoot } = vite.fastify
 
-    let outDirRoot = vite.root
+    let outDirRoot
     if (usePathsRelativeToAppRoot) {
       const { packageDirectory } = await import('package-directory')
-      outDirRoot = await packageDirectory()
+      outDirRoot = await packageDirectory({ cwd: config.root })
+    } else {
+      outDirRoot = resolveIfRelative(vite.root, config.root)
     }
 
     clientOutDir = resolveIfRelative(outDirs.client, outDirRoot)
@@ -122,10 +124,17 @@ async function setup(config) {
         ? (filePath) => new URL(fileUrl(filePath))
         : (filePath) => filePath
 
-    const getBundlePath =
-      viteConfig.fastify.usePathsRelativeToAppRoot || isAbsolute(distOutDir)
-        ? (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
-        : (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
+    let getBundlePath
+    if (isAbsolute(distOutDir)) {
+      getBundlePath = (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
+    } else if (viteConfig.fastify.usePathsRelativeToAppRoot) {
+      const { packageDirectory } = await import('package-directory')
+      const pkgDir = await packageDirectory({ cwd: config.root })
+      getBundlePath = (serverFile) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
+    } else {
+      const resolvedRoot = resolveIfRelative(viteConfig.root, config.root)
+      getBundlePath = (serverFile) => fixWin32Path(resolve(resolvedRoot, distOutDir, serverFile))
+    }
 
     let bundlePath
 
