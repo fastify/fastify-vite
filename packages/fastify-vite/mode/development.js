@@ -46,8 +46,10 @@ async function setup(config) {
   const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
 
   // Middie seems to work well for running Vite's development server
-  // Unsure if fastify-express is warranted here
-  await this.scope.register(middie)
+  // Check if middie is already registered (allows users to register it themselves)
+  if (!this.scope.hasDecorator('use')) {
+    await this.scope.register(middie)
+  }
 
   // Create and enable Vite's Dev Server middleware
   const devServerOptions = mergeConfig(
