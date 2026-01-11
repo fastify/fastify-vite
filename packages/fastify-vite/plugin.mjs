@@ -45,7 +45,7 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
       }
     },
     async configResolved(config = {}) {
-      const { base, build, isProduction, root } = config
+      const { base, build, isProduction, root: resolvedViteRoot } = config
       const { assetsDir } = build || {}
 
       resolvedConfig = config
@@ -80,7 +80,7 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
 
       configToWrite = {
         base,
-        root,
+        root: resolvedViteRoot,
         build: {
           assetsDir,
           outDir: fastify.outDirs.client ?? 'dist/client',
@@ -88,13 +88,19 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
         fastify,
       }
 
+      let applicationRootDirectory
       if (useRelativePaths) {
-        await makeAllPathsRelative(configToWrite)
-        fastify.usePathsRelativeToAppRoot = !!customOutDir
+        applicationRootDirectory = await makeAllPathsRelative(configToWrite)
+        fastify.usePathsRelativeToAppRoot = true
       }
 
-      let commonDistFolder = customOutDir // respect custom build.outDir config if provided
-      if (!commonDistFolder) {
+      let commonDistFolder
+      if (customOutDir && !useRelativePaths) {
+        // When useRelativePaths is enabled, derive commonDistFolder from the
+        // already-converted relative paths (relative to project root) instead
+        // of using customOutDir (which is relative to vite's root, not project root).
+        commonDistFolder = customOutDir
+      } else {
         const outDirs = Object.values(fastify.outDirs)
         commonDistFolder =
           outDirs.length > 1
@@ -105,8 +111,10 @@ export function viteFastify({ spa, clientModule, useRelativePaths = false } = {}
 
       if (isAbsolute(commonDistFolder)) {
         jsonFilePath = join(commonDistFolder, 'vite.config.json')
+      } else if (useRelativePaths) {
+        jsonFilePath = join(applicationRootDirectory, commonDistFolder, 'vite.config.json')
       } else {
-        jsonFilePath = join(root, commonDistFolder, 'vite.config.json')
+        jsonFilePath = join(resolvedViteRoot, commonDistFolder, 'vite.config.json')
       }
     },
     async writeBundle() {
@@ -134,20 +142,27 @@ export function findCommonPath(paths) {
   return commonSegments.join(sep)
 }
 
-async function makeAllPathsRelative(viteConfig) {
+async function makeAllPathsRelative(resolvedViteConfigToWrite) {
   const { packageDirectory } = await import('package-directory')
   const applicationRootDirectory = await packageDirectory() // location of user's package.json
-  const { build, fastify } = viteConfig
+  const { build, fastify, root: absoluteViteRoot } = resolvedViteConfigToWrite
 
-  viteConfig.root = relative(applicationRootDirectory, viteConfig.root)
+  resolvedViteConfigToWrite.root = relative(applicationRootDirectory, absoluteViteRoot)
 
   if (build?.outDir) {
-    build.outDir = relative(applicationRootDirectory, build.outDir)
+    const absoluteOutDir = isAbsolute(build.outDir)
+      ? build.outDir
+      : join(absoluteViteRoot, build.outDir)
+    build.outDir = relative(applicationRootDirectory, absoluteOutDir)
   }
 
   Object.keys(fastify.outDirs).forEach((key) => {
-    fastify.outDirs[key] = relative(applicationRootDirectory, fastify.outDirs[key])
+    const outDir = fastify.outDirs[key]
+    const absoluteOutDir = isAbsolute(outDir) ? outDir : join(absoluteViteRoot, outDir)
+    fastify.outDirs[key] = relative(applicationRootDirectory, absoluteOutDir)
   })
+
+  return applicationRootDirectory
 }
 
 export default viteFastify
