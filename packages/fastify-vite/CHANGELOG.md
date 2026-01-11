@@ -1,5 +1,15 @@
 # @fastify/vite
 
+## 8.4.0
+
+### Minor Changes
+
+- bc8e057: Add TypeScript types to the `viteFastify` plugin and utils exports. #352
+
+### Patch Changes
+
+- 943af16: Check decorators before registering `@fastify/middie` internally. This should allow middie to be registered separately if users want to configure specific options.
+
 ## 8.3.1
 
 ### Patch Changes
