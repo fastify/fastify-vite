@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@fastify/middie':
+      specifier: ^9.1.0
+      version: 9.1.0
     devalue:
       specifier: ^5.6.1
       version: 5.6.1
@@ -123,8 +126,8 @@ importers:
   examples/middie-compat:
     dependencies:
       '@fastify/middie':
-        specifier: ^9.0.3
-        version: 9.0.3
+        specifier: 'catalog:'
+        version: 9.1.0
       '@fastify/vite':
         specifier: workspace:^
         version: link:../../packages/fastify-vite
@@ -669,8 +672,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       '@fastify/middie':
-        specifier: ^9.0.3
-        version: 9.0.3
+        specifier: 'catalog:'
+        version: 9.1.0
       '@fastify/static':
         specifier: ^9.0.0
         version: 9.0.0
@@ -2180,6 +2183,9 @@ packages:
 
   '@fastify/middie@9.0.3':
     resolution: {integrity: sha512-7OYovKXp9UKYeVMcjcFLMcSpoMkmcZmfnG+eAvtdiatN35W7c+r9y1dRfpA+pfFVNuHGGqI3W+vDTmjvcfLcMA==}
+
+  '@fastify/middie@9.1.0':
+    resolution: {integrity: sha512-cObruXSFB5CCqn2m9sF5ktf6pNQX+QQth2N39FGXXV+8M4O+dWzkvqjqzwpIWvwvIffP9+O7KaLN+5xVgFFdWw==}
 
   '@fastify/one-line-logger@2.0.2':
     resolution: {integrity: sha512-Z7bLKOfZF0QhDCk8zOTJ7TeFWK2XrSo4sZtGoDzZDe3oKqN8NAOrLGmqKA6ERiD02OOVkW8GkOpj+H2DX3n0lQ==}
@@ -3825,6 +3831,10 @@ packages:
 
   find-my-way@9.3.0:
     resolution: {integrity: sha512-eRoFWQw+Yv2tuYlK2pjFS2jGXSxSppAs3hSQjfxVKxM5amECzIgYYc1FEI8ZmhSh/Ig+FrKEz43NLRKJjYCZVg==}
+    engines: {node: '>=20'}
+
+  find-my-way@9.4.0:
+    resolution: {integrity: sha512-5Ye4vHsypZRYtS01ob/iwHzGRUDELlsoCftI/OZFhcLs1M0tkGPcXldE80TAZC5yYuJMBPJQQ43UHlqbJWiX2w==}
     engines: {node: '>=20'}
 
   find-up-simple@1.0.1:
@@ -6679,6 +6689,14 @@ snapshots:
       path-to-regexp: 8.3.0
       reusify: 1.1.0
 
+  '@fastify/middie@9.1.0':
+    dependencies:
+      '@fastify/error': 4.2.0
+      fastify-plugin: 5.1.0
+      find-my-way: 9.4.0
+      path-to-regexp: 8.3.0
+      reusify: 1.1.0
+
   '@fastify/one-line-logger@2.0.2':
     dependencies:
       pino-pretty: 13.0.0
@@ -8697,6 +8715,12 @@ snapshots:
       to-regex-range: 5.0.1
 
   find-my-way@9.3.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-querystring: 1.1.2
+      safe-regex2: 5.0.0
+
+  find-my-way@9.4.0:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-querystring: 1.1.2

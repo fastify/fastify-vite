@@ -8,7 +8,7 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@fastify/middie": "^9.0.3",
+    "@fastify/middie": "catalog:",
     "@fastify/vite": "workspace:^",
     "fastify": "catalog:"
   },
