@@ -50,12 +50,6 @@ const DefaultConfig = {
   // Vite's configuration file location
   root: null,
 
-  /**
-   * Absolute path to the directory containing your package.json for resolving relative paths.
-   * Useful to set if you plan to start the fastify server from outside the project directory.
-   */
-  packageJsonLocation: null,
-
   // Vite's resolved config
   vite: null,
 
@@ -195,11 +189,12 @@ async function configure(options = {}) {
   const root = resolveRoot(options.distDir ?? 'dist', options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
   const config = Object.assign(defaultConfig, { ...options })
+  config.root = root // Store resolved root for use in production.js
   const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
   Object.assign(config, { vite, viteConfig })
 
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite, packageJsonLocation: config.packageJsonLocation })
+  const bundle = await resolveBundle({ dev, vite, root })
   Object.assign(config, { bundle })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)
@@ -309,23 +304,16 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(viteConfig, packageJsonLocation) {
-  const { usePathsRelativeToAppRoot } = viteConfig.fastify
+async function determineOutDirRoot(vite, root) {
+  const { usePathsRelativeToAppRoot } = vite.fastify
   if (usePathsRelativeToAppRoot) {
-    if (packageJsonLocation) {
-      return packageJsonLocation
-    }
     const { packageDirectory } = await import('package-directory')
-    return await packageDirectory()
+    return await packageDirectory({ cwd: root })
   }
-  // When packageJsonLocation is provided, resolve relative vite.root against it
-  if (packageJsonLocation && !isAbsolute(viteConfig.root)) {
-    return resolve(packageJsonLocation, viteConfig.root)
-  }
-  return viteConfig.root
+  return resolveIfRelative(vite.root, root)
 }
 
-async function resolveSSRBundle({ dev, vite, packageJsonLocation }) {
+async function resolveSSRBundle({ dev, vite, root }) {
   const bundle = {}
   let clientOutDir
 
@@ -333,7 +321,7 @@ async function resolveSSRBundle({ dev, vite, packageJsonLocation }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, packageJsonLocation),
+        await determineOutDirRoot(vite, root),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
@@ -365,7 +353,7 @@ async function resolveSSRBundle({ dev, vite, packageJsonLocation }) {
   return bundle
 }
 
-async function resolveSPABundle({ dev, vite, packageJsonLocation }) {
+async function resolveSPABundle({ dev, vite, root }) {
   const bundle = {}
   if (!dev) {
     let clientOutDir
@@ -373,7 +361,7 @@ async function resolveSPABundle({ dev, vite, packageJsonLocation }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, packageJsonLocation),
+        await determineOutDirRoot(vite, root),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.

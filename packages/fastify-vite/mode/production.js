@@ -25,17 +25,12 @@ async function setup(config) {
   if (vite.fastify) {
     const { outDirs, usePathsRelativeToAppRoot } = vite.fastify
 
-    let outDirRoot = vite.root
+    let outDirRoot
     if (usePathsRelativeToAppRoot) {
-      if (config.packageJsonLocation) {
-        outDirRoot = config.packageJsonLocation
-      } else {
-        const { packageDirectory } = await import('package-directory')
-        outDirRoot = await packageDirectory()
-      }
-    } else if (config.packageJsonLocation && !isAbsolute(vite.root)) {
-      // When packageJsonLocation is provided, resolve relative vite.root against it
-      outDirRoot = resolve(config.packageJsonLocation, vite.root)
+      const { packageDirectory } = await import('package-directory')
+      outDirRoot = await packageDirectory({ cwd: config.root })
+    } else {
+      outDirRoot = resolveIfRelative(vite.root, config.root)
     }
 
     clientOutDir = resolveIfRelative(outDirs.client, outDirRoot)
@@ -132,17 +127,13 @@ async function setup(config) {
     let getBundlePath
     if (isAbsolute(distOutDir)) {
       getBundlePath = (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
-    } else if (viteConfig.fastify.usePathsRelativeToAppRoot && config.packageJsonLocation) {
-      getBundlePath = (serverFile) =>
-        fixWin32Path(resolve(config.packageJsonLocation, distOutDir, serverFile))
     } else if (viteConfig.fastify.usePathsRelativeToAppRoot) {
-      getBundlePath = (serverFile) => fixWin32Path(resolve(distOutDir, serverFile))
-    } else if (config.packageJsonLocation && !isAbsolute(viteConfig.root)) {
-      // When packageJsonLocation is provided, resolve relative paths against it
-      getBundlePath = (serverFile) =>
-        fixWin32Path(resolve(config.packageJsonLocation, viteConfig.root, distOutDir, serverFile))
+      const { packageDirectory } = await import('package-directory')
+      const pkgDir = await packageDirectory({ cwd: config.root })
+      getBundlePath = (serverFile) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
     } else {
-      getBundlePath = (serverFile) => fixWin32Path(resolve(viteConfig.root, distOutDir, serverFile))
+      const resolvedRoot = resolveIfRelative(viteConfig.root, config.root)
+      getBundlePath = (serverFile) => fixWin32Path(resolve(resolvedRoot, distOutDir, serverFile))
     }
 
     let bundlePath
