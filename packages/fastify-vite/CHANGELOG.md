@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 8.3.1
+
+### Patch Changes
+
+- 31d2759: Fix a bug where using a relative path for `build.outDir` instead of an absolute path in vite configs did not work. #350
+
 ## 8.3.0
 
 ### Minor Changes
