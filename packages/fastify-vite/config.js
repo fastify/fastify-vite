@@ -50,8 +50,10 @@ const DefaultConfig = {
   // Vite's configuration file location
   root: null,
 
-  // Absolute path to the directory containing your package.json for resolving relative paths.
-  // Useful to set if you plan to start the server from outside the project directory.
+  /**
+   * Absolute path to the directory containing your package.json for resolving relative paths.
+   * Useful to set if you plan to start the fastify server from outside the project directory.
+   */
   packageJsonLocation: null,
 
   // Vite's resolved config
