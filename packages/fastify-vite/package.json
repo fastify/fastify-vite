@@ -40,6 +40,7 @@
     },
     "./utils": {
       "types": "./types/utils.d.ts",
+      "import": "./utils.js",
       "require": "./utils.js"
     },
     "./plugin": {
