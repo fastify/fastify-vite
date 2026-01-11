@@ -32,6 +32,7 @@ This example tests two scenarios:
 ## Expected Behavior
 
 Both scenarios work in **development mode**:
+
 - No "decorator already added" errors
 - `server.use()` is available for adding Express middleware
 
