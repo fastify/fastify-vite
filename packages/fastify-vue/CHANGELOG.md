@@ -1,5 +1,11 @@
 # @fastify/vue
 
+## 1.1.6
+
+### Patch Changes
+
+- 20d1a82: #295 fix: return reply in async handlers
+
 ## 1.1.5
 
 ### Patch Changes
