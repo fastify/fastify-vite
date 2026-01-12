@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "oxfmt": "^0.21.0",
-    "oxlint": "^1.36.0",
+    "oxfmt": "^0.24.0",
+    "oxlint": "^1.39.0",
     "vite": "catalog:",
     "vitest": "catalog:",
     "zx": "^8.8.5"
