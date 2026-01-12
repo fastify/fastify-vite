@@ -134,7 +134,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     scope.get(`/-/data${routePath}`, {
       onRequest,
       async handler(req, reply) {
-        reply.send(await route.getData(req.route))
+        return reply.send(await route.getData(req.route))
       },
     })
   }
