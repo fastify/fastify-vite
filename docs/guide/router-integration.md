@@ -51,30 +51,30 @@ import { uneval } from 'devalue'
 
 export default { createRenderFunction, createRoute }
 
-async function foobarHook (req) {
+async function foobarHook(req) {
   req.server.log.info(`Hello from ${req.url} and foobarHook`)
 }
 
-function createRoute ({ handler, errorHandler, route }, scope, config) {
+function createRoute({ handler, errorHandler, route }, scope, config) {
   scope.route({
     url: route.path,
     method: 'GET',
     handler,
     errorHandler,
-    ...route.addFoobarHook && {
+    ...(route.addFoobarHook && {
       onRequest: foobarHook,
-    }
+    }),
   })
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   return async function (server, req, reply) {
     const data = { todoList: ['Do laundry', 'Respond to emails', 'Write report'] }
     const app = await createApp({ data, server, req, reply }, req.raw.url)
     const element = await renderToString(app.instance, app.ctx)
     return {
       element,
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     }
   }
 }
@@ -89,8 +89,8 @@ export default [
   },
   {
     path: '/other',
-    component: () => import('./views/other.vue')
-  }
+    component: () => import('./views/other.vue'),
+  },
 ]
 ```
 
@@ -102,7 +102,7 @@ export default {
   // Provides client-side navigation routes to server
   routes,
   // Provides function needed to perform SSR
-  createApp
+  createApp,
 }
 ```
 

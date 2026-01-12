@@ -23,12 +23,12 @@
 import { ref } from 'vue'
 import { todoList } from '$app/stores'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Store' }
 }
 
 export default {
-  setup () {
+  setup() {
     const inputValue = ref(null)
     const addItem = async () => {
       await todoList.add(inputValue.value)

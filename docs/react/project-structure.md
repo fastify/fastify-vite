@@ -88,14 +88,14 @@ The Vite application HTML template:
 ```html
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<link rel="stylesheet" href="/base.css" />
-<div id="root"><!-- element --></div>
-<!-- hydration -->
-<script type="module" src="/$app/mount.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <link rel="stylesheet" href="/base.css" />
+  <div id="root"><!-- element --></div>
+  <!-- hydration -->
+  <script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 
@@ -136,8 +136,8 @@ const server = Fastify({
   logger: {
     transport: {
       target: '@fastify/one-line-logger',
-    }
-  }
+    },
+  },
 })
 
 await server.register(FastifyVite, {
@@ -157,10 +157,7 @@ import fastifyReact from '@fastify/react/plugin'
 
 export default {
   root: resolve(import.meta.dirname, 'client'),
-  plugins: [
-    viteReact(),
-    fastifyReact(),
-  ],
+  plugins: [viteReact(), fastifyReact()],
 }
 ```
 
@@ -178,16 +175,16 @@ export default {
 ```html [client/index.html]
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="./base.css">
-<!-- head -->
-</head>
-<body>
-<div id="root"><!-- element --></div>
-</body>
-<!-- hydration -->
-<script type="module" src="/$app/mount.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./base.css" />
+    <!-- head -->
+  </head>
+  <body>
+    <div id="root"><!-- element --></div>
+  </body>
+  <!-- hydration -->
+  <script type="module" src="/$app/mount.js"></script>
 </html>
 ```
 

@@ -14,16 +14,16 @@ The default behavior of `prepareClient()` is to just load the module as-is, but 
 To illustrate, a snippet from the [`react-vanilla`][react-vanilla] SSR example:
 
 ```js {4-9}
-  await server.register(FastifyVite, {
-    root: import.meta.dirname,
-    createRenderFunction ({ createApp }) {
-      return () => {
-        return {
-          element: renderToString(createApp())
-        }
+await server.register(FastifyVite, {
+  root: import.meta.dirname,
+  createRenderFunction({ createApp }) {
+    return () => {
+      return {
+        element: renderToString(createApp()),
       }
     }
-  })
+  },
+})
 ```
 
 `createRenderFunction()` receives as the first parameter a reference to your **Vite application module**, i.e., your client application. The function it returns is added ([decorated](https://fastify.dev/docs/v2.15.x/Documentation/Decorators/)) to the Fastify `Reply` class as `render()`.
@@ -56,10 +56,8 @@ Let's focus on the main React component:
 ```jsx [client/base.jsx]
 import React from 'react'
 
-export function createApp () {
-  return (
-    <p>Hello world from React and** **`@fastify/vite`**!**</p>
-  )
+export function createApp() {
+  return <p>Hello world from React and** **`@fastify/vite`**!**</p>
 }
 ```
 
@@ -133,13 +131,13 @@ const server = Fastify()
 await server.register(FastifyVite, {
   root: import.meta.dirname,
   dev: process.argv.includes('--dev'),
-  createRenderFunction ({ createApp }) {
+  createRenderFunction({ createApp }) {
     return () => {
       return {
-        element: renderToString(createApp())
+        element: renderToString(createApp()),
       }
     }
-  }
+  },
 })
 
 server.get('/', (req, reply) => {

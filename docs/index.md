@@ -3,24 +3,24 @@
 layout: home
 
 hero:
-  name: "@fastify/vite"
-  text: "Titans Combined"
+  name: '@fastify/vite'
+  text: 'Titans Combined'
   tagline: Cleanly and elegantly integrate <b><a href="https://fastify.dev/" target="_blank">Fastify</a></b> and <b><a href="https://vitejs.dev/" target="_blank">Vite</a></b> to create a <b>minimal</b>, <b>low overhead</b> setup for <b>full stack monoliths</b>.
   actions:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
     - theme: brand
-      text: "Vue"
+      text: 'Vue'
       link: /vue/index
     - theme: brand
-      text: "React"
+      text: 'React'
       link: /react/index
   image:
     src: /fastify-vite.svg
-    alt: "@fastify/vite"
+    alt: '@fastify/vite'
 
-title: "@fastify/vite"
+title: '@fastify/vite'
 titleTemplate: Fastify plugin for Vite integration
 
 features:

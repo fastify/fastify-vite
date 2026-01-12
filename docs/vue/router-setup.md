@@ -41,6 +41,6 @@ In your `root.vue` file:
 ```js
 export function scrollBehavior() {
   // Always scroll to the top
-  return { top: 0, left: 0 };
+  return { top: 0, left: 0 }
 }
 ```

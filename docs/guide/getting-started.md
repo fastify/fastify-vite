@@ -65,7 +65,7 @@ const server = Fastify()
 await server.register(FastifyVite, {
   root: import.meta.dirname, // where to look for vite.config.js
   dev: process.argv.includes('--dev'),
-  spa: true
+  spa: true,
 })
 
 server.get('/', (req, reply) => {
@@ -99,10 +99,7 @@ import viteReact from '@vitejs/plugin-react'
 
 export default {
   root: resolve(import.meta.dirname, 'client'),
-  plugins: [
-    viteFastify(),
-    viteReact({ jsxRuntime: 'classic' }),
-  ],
+  plugins: [viteFastify(), viteReact({ jsxRuntime: 'classic' })],
 }
 ```
 
@@ -151,10 +148,8 @@ root.render(createApp())
 ```jsx [client/base.jsx]
 import React from 'react'
 
-export function createApp () {
-  return (
-    <p>Hello world from React and @fastify/vite!</p>
-  )
+export function createApp() {
+  return <p>Hello world from React and @fastify/vite!</p>
 }
 ```
 

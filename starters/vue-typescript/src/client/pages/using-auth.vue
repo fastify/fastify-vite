@@ -26,18 +26,18 @@ import { todoList } from '$app/stores'
 
 export const layout = 'auth'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Using Custom Layout' }
 }
 
 export default {
-  setup () {
+  setup() {
     const inputValue = ref(null)
     const addItem = async () => {
       await todoList.add(inputValue.value)
       inputValue.value = ''
     }
     return { todoList, inputValue, addItem }
-  }
+  },
 }
 </script>

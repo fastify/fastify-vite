@@ -40,9 +40,9 @@ const message = state.message
 </script>
 
 <script>
-export function getMeta () {
+export function getMeta() {
   return {
-    title: 'Welcome to @fastify/vue!'
+    title: 'Welcome to @fastify/vue!',
   }
 }
 </script>

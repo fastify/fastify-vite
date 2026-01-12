@@ -121,17 +121,17 @@ The objet returned by `getData()` gets automatically assigned as `data` in the [
 <script>
 import { useRouteContext } from '@fastify/vue/client'
 
-export function getData (ctx) {
+export function getData(ctx) {
   return {
     message: 'Hello from getData!',
   }
 }
 
 export default {
-  setup () {
+  setup() {
     const { data } = useRouteContext()
     return { data }
-  }
+  },
 }
 </script>
 ```
@@ -144,76 +144,78 @@ To populate `<head>` elements, export a `getMeta()` function that returns an obj
 
 ```ts
 interface ReactiveHead {
-    /**
-     * The `<title>` HTML element defines the document's title that is shown in a browser's title bar or a page's tab.
-     * It only contains text; tags within the element are ignored.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
-     */
-    title?: ResolvableTitle;
-    /**
-     * Generate the title from a template.
-     */
-    titleTemplate?: ResolvableTitleTemplate;
-    /**
-     * Variables used to substitute in the title and meta content.
-     */
-    templateParams?: ResolvableProperties<{
-        separator?: '|' | '-' | '·' | string;
-    } & Record<string, Stringable | ResolvableProperties<Record<string, Stringable>>>>;
-    /**
-     * The `<base>` HTML element specifies the base URL to use for all relative URLs in a document.
-     * There can be only one <base> element in a document.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-     */
-    base?: ResolvableBase;
-    /**
-     * The `<link>` HTML element specifies relationships between the current document and an external resource.
-     * This element is most commonly used to link to stylesheets, but is also used to establish site icons
-     * (both "favicon" style icons and icons for the home screen and apps on mobile devices) among other things.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-as
-     */
-    link?: ResolvableArray<ResolvableLink>;
-    /**
-     * The `<meta>` element represents metadata that cannot be expressed in other HTML elements, like `<link>` or `<script>`.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-     */
-    meta?: ResolvableArray<ResolvableMeta>;
-    /**
-     * The `<style>` HTML element contains style information for a document, or part of a document.
-     * It contains CSS, which is applied to the contents of the document containing the `<style>` element.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style
-     */
-    style?: ResolvableArray<(ResolvableStyle | string)>;
-    /**
-     * The `<script>` HTML element is used to embed executable code or data; this is typically used to embed or refer to JavaScript code.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
-     */
-    script?: ResolvableArray<(ResolvableScript | string)>;
-    /**
-     * The `<noscript>` HTML element defines a section of HTML to be inserted if a script type on the page is unsupported
-     * or if scripting is currently turned off in the browser.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript
-     */
-    noscript?: ResolvableArray<(ResolvableNoscript | string)>;
-    /**
-     * Attributes for the `<html>` HTML element.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html
-     */
-    htmlAttrs?: ResolvableHtmlAttributes;
-    /**
-     * Attributes for the `<body>` HTML element.
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/body
-     */
-    bodyAttrs?: ResolvableBodyAttributes;
+  /**
+   * The `<title>` HTML element defines the document's title that is shown in a browser's title bar or a page's tab.
+   * It only contains text; tags within the element are ignored.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
+   */
+  title?: ResolvableTitle
+  /**
+   * Generate the title from a template.
+   */
+  titleTemplate?: ResolvableTitleTemplate
+  /**
+   * Variables used to substitute in the title and meta content.
+   */
+  templateParams?: ResolvableProperties<
+    {
+      separator?: '|' | '-' | '·' | string
+    } & Record<string, Stringable | ResolvableProperties<Record<string, Stringable>>>
+  >
+  /**
+   * The `<base>` HTML element specifies the base URL to use for all relative URLs in a document.
+   * There can be only one <base> element in a document.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+   */
+  base?: ResolvableBase
+  /**
+   * The `<link>` HTML element specifies relationships between the current document and an external resource.
+   * This element is most commonly used to link to stylesheets, but is also used to establish site icons
+   * (both "favicon" style icons and icons for the home screen and apps on mobile devices) among other things.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-as
+   */
+  link?: ResolvableArray<ResolvableLink>
+  /**
+   * The `<meta>` element represents metadata that cannot be expressed in other HTML elements, like `<link>` or `<script>`.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+   */
+  meta?: ResolvableArray<ResolvableMeta>
+  /**
+   * The `<style>` HTML element contains style information for a document, or part of a document.
+   * It contains CSS, which is applied to the contents of the document containing the `<style>` element.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style
+   */
+  style?: ResolvableArray<ResolvableStyle | string>
+  /**
+   * The `<script>` HTML element is used to embed executable code or data; this is typically used to embed or refer to JavaScript code.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
+   */
+  script?: ResolvableArray<ResolvableScript | string>
+  /**
+   * The `<noscript>` HTML element defines a section of HTML to be inserted if a script type on the page is unsupported
+   * or if scripting is currently turned off in the browser.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript
+   */
+  noscript?: ResolvableArray<ResolvableNoscript | string>
+  /**
+   * Attributes for the `<html>` HTML element.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html
+   */
+  htmlAttrs?: ResolvableHtmlAttributes
+  /**
+   * Attributes for the `<body>` HTML element.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/body
+   */
+  bodyAttrs?: ResolvableBodyAttributes
 }
 ```
 
@@ -227,20 +229,18 @@ It will populate the `head` object in the [route context](/vue/route-context).
 </template>
 
 <script>
-export function getData () {
+export function getData() {
   return {
     page: {
       title: 'Page title',
-    }
+    },
   }
 }
 
-export function getMeta (ctx) {
+export function getMeta(ctx) {
   return {
     title: ctx.data.page.title,
-    meta: [
-      { name: 'twitter:title', content: ctx.data.page.title },
-    ]
+    meta: [{ name: 'twitter:title', content: ctx.data.page.title }],
   }
 }
 </script>
@@ -260,11 +260,11 @@ It receives the [route context](/vue/route-context) as first parameter, so you c
 </template>
 
 <script>
-export function onEnter (ctx) {
-  if (ctx.server?.underPressure) {
-    ctx.clientOnly = true
+  export function onEnter(ctx) {
+    if (ctx.server?.underPressure) {
+      ctx.clientOnly = true
+    }
   }
-}
 </script>
 ```
 

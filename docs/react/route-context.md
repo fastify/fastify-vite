@@ -13,17 +13,16 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import FastifyReact from '@fastify/react'
 
-const server  = Fastify()
+const server = Fastify()
 await server.register(FastifyVite, {
   root: import.meta.dirname,
   renderer: {
     ...FastifyReact,
-    createRoute () {
+    createRoute() {
       // Your custom create Route implementation
-    }
-  }
+    },
+  },
 })
-
 ```
 
 ## Init module
@@ -56,7 +55,7 @@ export default (ctx) => {
 // State initializer, must be a function called state
 // as this is a special context.js export and needs
 // special processing, e.g., serialization and hydration
-export function state () {
+export function state() {
   return {
     user: {
       authenticated: false,
@@ -68,19 +67,19 @@ export function state () {
 // Grouped actions that operate on the state. This export
 // could be named anything, no special processing involved.
 export const actions = {
-  authenticate (state) {
+  authenticate(state) {
     state.user.authenticated = true
   },
   todoList: {
-    async add (state, item) {
+    async add(state, item) {
       await sendJSON('/api/todo/items', { method: 'put', json: item })
       state.todoList.push(item)
     },
-    async remove (state, index) {
+    async remove(state, index) {
       await sendJSON('/api/todo/items', { method: 'delete', json: index })
       state.todoList.splice(index, 1)
     },
-  }
+  },
 }
 ```
 
@@ -89,32 +88,32 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { useRouteContext } from '@fastify/react/client'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Data' }
 }
 
-export function getData ({ server }) {
+export function getData({ server }) {
   return {
-    todoList: server.db.todoList
+    todoList: server.db.todoList,
   }
 }
 
-export default function Index (props) {
-  const {data} = useRouteContext()
+export default function Index(props) {
+  const { data } = useRouteContext()
   const [todoList, updateTodoList] = useState(data.todoList)
   const [input, setInput] = useState(null)
   const addItem = (value) => {
-    updateTodoList(list => [...list, value])
+    updateTodoList((list) => [...list, value])
     input.value = ''
   }
   return (
     <>
       <h2>Todo List — Using Data</h2>
-      <ul>{
-        todoList.map((item, i) => {
+      <ul>
+        {todoList.map((item, i) => {
           return <li key={`item-${i}`}>{item}</li>
-        })
-      }</ul>
+        })}
+      </ul>
       <div>
         <input ref={setInput} />
         <button onClick={() => addItem(input.value)}>Add</button>
@@ -123,10 +122,13 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do
-      list will be lost, because they're bound to this route component only.</p>
-      <p>See the <Link to="/using-store">/using-store</Link> example to learn
-      how to use the application global state for it.
+      <p>
+        When you navigate away from this route, any additions to the to-do list will be lost,
+        because they're bound to this route component only.
+      </p>
+      <p>
+        See the <Link to="/using-store">/using-store</Link> example to learn how to use the
+        application global state for it.
       </p>
     </>
   )
@@ -138,12 +140,12 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { useRouteContext } from '@fastify/react/client'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Store' }
 }
 
-export default function Index (props) {
-  const {snapshot, state, actions} = useRouteContext()
+export default function Index(props) {
+  const { snapshot, state, actions } = useRouteContext()
   const [input, setInput] = useState(null)
   const addItem = async (value) => {
     await actions.todoList.add(state, value)
@@ -152,11 +154,11 @@ export default function Index (props) {
   return (
     <>
       <h2>Todo List — Using Store</h2>
-      <ul>{
-        snapshot.todoList.map((item, i) => {
+      <ul>
+        {snapshot.todoList.map((item, i) => {
           return <li key={`item-${i}`}>{item}</li>
-        })
-      }</ul>
+        })}
+      </ul>
       <div>
         <input ref={setInput} />
         <button onClick={() => addItem(input.value)}>Add</button>
@@ -165,8 +167,10 @@ export default function Index (props) {
         <Link to="/">Go back to the index</Link>
       </p>
       <p>⁂</p>
-      <p>When you navigate away from this route, any additions to the to-do
-      list are not lost, because they're bound to the global application state.</p>
+      <p>
+        When you navigate away from this route, any additions to the to-do list are not lost,
+        because they're bound to the global application state.
+      </p>
     </>
   )
 }

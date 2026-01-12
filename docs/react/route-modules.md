@@ -116,14 +116,14 @@ The objet returned by `getData()` gets automatically assigned as `data` in the [
 ```jsx
 import { useRouteContext } from '$app/core.jsx'
 
-export function getData (ctx) {
+export function getData(ctx) {
   return {
     message: 'Hello from getData!',
   }
 }
 
-export default function Index (props) {
-  const {data} = useRouteContext()
+export default function Index(props) {
+  const { data } = useRouteContext()
   return <p>{data.message}</p>
 }
 ```
@@ -144,24 +144,26 @@ interface ReactiveHead {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title
    */
-  title?: ResolvableTitle;
+  title?: ResolvableTitle
   /**
    * Generate the title from a template.
    */
-  titleTemplate?: ResolvableTitleTemplate;
+  titleTemplate?: ResolvableTitleTemplate
   /**
    * Variables used to substitute in the title and meta content.
    */
-  templateParams?: ResolvableProperties<{
-      separator?: '|' | '-' | '·' | string;
-  } & Record<string, Stringable | ResolvableProperties<Record<string, Stringable>>>>;
+  templateParams?: ResolvableProperties<
+    {
+      separator?: '|' | '-' | '·' | string
+    } & Record<string, Stringable | ResolvableProperties<Record<string, Stringable>>>
+  >
   /**
    * The `<base>` HTML element specifies the base URL to use for all relative URLs in a document.
    * There can be only one <base> element in a document.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
    */
-  base?: ResolvableBase;
+  base?: ResolvableBase
   /**
    * The `<link>` HTML element specifies relationships between the current document and an external resource.
    * This element is most commonly used to link to stylesheets, but is also used to establish site icons
@@ -169,45 +171,45 @@ interface ReactiveHead {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#attr-as
    */
-  link?: ResolvableArray<ResolvableLink>;
+  link?: ResolvableArray<ResolvableLink>
   /**
    * The `<meta>` element represents metadata that cannot be expressed in other HTML elements, like `<link>` or `<script>`.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
    */
-  meta?: ResolvableArray<ResolvableMeta>;
+  meta?: ResolvableArray<ResolvableMeta>
   /**
    * The `<style>` HTML element contains style information for a document, or part of a document.
    * It contains CSS, which is applied to the contents of the document containing the `<style>` element.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style
    */
-  style?: ResolvableArray<(ResolvableStyle | string)>;
+  style?: ResolvableArray<ResolvableStyle | string>
   /**
    * The `<script>` HTML element is used to embed executable code or data; this is typically used to embed or refer to JavaScript code.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script
    */
-  script?: ResolvableArray<(ResolvableScript | string)>;
+  script?: ResolvableArray<ResolvableScript | string>
   /**
    * The `<noscript>` HTML element defines a section of HTML to be inserted if a script type on the page is unsupported
    * or if scripting is currently turned off in the browser.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript
    */
-  noscript?: ResolvableArray<(ResolvableNoscript | string)>;
+  noscript?: ResolvableArray<ResolvableNoscript | string>
   /**
    * Attributes for the `<html>` HTML element.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html
    */
-  htmlAttrs?: ResolvableHtmlAttributes;
+  htmlAttrs?: ResolvableHtmlAttributes
   /**
    * Attributes for the `<body>` HTML element.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/body
    */
-  bodyAttrs?: ResolvableBodyAttributes;
+  bodyAttrs?: ResolvableBodyAttributes
 }
 ```
 
@@ -216,25 +218,23 @@ It receives the [route context](/react/route-context) as first parameter and run
 It will populate the `head` object in the [route context](/react/route-context).
 
 ```jsx
-export function getData () {
+export function getData() {
   return {
     page: {
       title: 'Page title',
-    }
+    },
   }
 }
 
-export function getMeta (ctx) {
+export function getMeta(ctx) {
   return {
     title: ctx.data.page.title,
-    meta: [
-      { name: 'twitter:title', content: ctx.data.page.title },
-    ]
+    meta: [{ name: 'twitter:title', content: ctx.data.page.title }],
   }
 }
 
-export default function Index (props) {
-  const {data} = useRouteContext()
+export default function Index(props) {
+  const { data } = useRouteContext()
   return <p>Route with title and meta tags.</p>
 }
 ```
@@ -246,13 +246,13 @@ The `onEnter()` function export is executed **just before** the route renders, *
 It receives the [route context](/react/route-context) as first parameter, so you can use it to make changes to `data`, `head` and `state` if needed.
 
 ```jsx
-export function onEnter (ctx) {
+export function onEnter(ctx) {
   if (ctx.server?.underPressure) {
     ctx.clientOnly = true
   }
 }
 
-export function Index () {
+export function Index() {
   return <p>No pre-rendered HTML sent to the browser.</p>
 }
 ```

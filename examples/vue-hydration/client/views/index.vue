@@ -17,13 +17,13 @@
 export default {
   inject: ['state'],
   data: () => ({
-    item: ''
+    item: '',
   }),
   methods: {
-    async addItem () {
+    async addItem() {
       this.state.todoList.push(this.item)
       this.item = ''
-    }
-  }
+    },
+  },
 }
 </script>

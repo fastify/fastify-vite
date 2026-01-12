@@ -1,5 +1,5 @@
 <script>
-export async function getServerSideProps ({ req, ky }) {
+export async function getServerSideProps({ req, ky }) {
   if (Math.random() > 0.5) {
     throw new Error('This error was intentionally thrown')
   }

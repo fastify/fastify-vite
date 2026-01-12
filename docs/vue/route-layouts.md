@@ -25,9 +25,7 @@ That'll will cause the route to be wrapped in the layout component exported by a
   <div class="contents">
     <template v-if="!state.user.authenticated">
       <p>This route needs authentication.</p>
-      <button @click="authenticate">
-        Click this button to authenticate.
-      </button>
+      <button @click="authenticate">Click this button to authenticate.</button>
     </template>
     <slot v-else></slot>
   </div>
@@ -37,13 +35,13 @@ That'll will cause the route to be wrapped in the layout component exported by a
 import { useRouteContext } from '@fastify/vue/client'
 
 export default {
-  setup () {
+  setup() {
     const { actions, state } = useRouteContext()
     return {
       state,
-      authenticate: () => actions.authenticate(state)
+      authenticate: () => actions.authenticate(state),
     }
-  }
+  },
 }
 </script>
 ```
