@@ -1,7 +1,7 @@
 <script>
-export async function getServerSideProps ({ ky }) {
+export async function getServerSideProps({ ky }) {
   return {
-    todoList: await ky('api/todo-list').json()
+    todoList: await ky('api/todo-list').json(),
   }
 }
 </script>

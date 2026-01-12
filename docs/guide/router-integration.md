@@ -51,30 +51,30 @@ import { uneval } from 'devalue'
 
 export default { createRenderFunction, createRoute }
 
-async function foobarHook (req) {
+async function foobarHook(req) {
   req.server.log.info(`Hello from ${req.url} and foobarHook`)
 }
 
-function createRoute ({ handler, errorHandler, route }, scope, config) {
+function createRoute({ handler, errorHandler, route }, scope, config) {
   scope.route({
     url: route.path,
     method: 'GET',
     handler,
     errorHandler,
-    ...route.addFoobarHook && {
+    ...(route.addFoobarHook && {
       onRequest: foobarHook,
-    }
+    }),
   })
 }
 
-function createRenderFunction ({ createApp }) {
+function createRenderFunction({ createApp }) {
   return async function (server, req, reply) {
     const data = { todoList: ['Do laundry', 'Respond to emails', 'Write report'] }
     const app = await createApp({ data, server, req, reply }, req.raw.url)
     const element = await renderToString(app.instance, app.ctx)
     return {
       element,
-      hydration: `<script>window.hydration = ${uneval({ data })}</script>`
+      hydration: `<script>window.hydration = ${uneval({ data })}</script>`,
     }
   }
 }
@@ -89,8 +89,8 @@ export default [
   },
   {
     path: '/other',
-    component: () => import('./views/other.vue')
-  }
+    component: () => import('./views/other.vue'),
+  },
 ]
 ```
 
@@ -102,20 +102,22 @@ export default {
   // Provides client-side navigation routes to server
   routes,
   // Provides function needed to perform SSR
-  createApp
+  createApp,
 }
 ```
 
-````html [client/index.html]
+```html [client/index.html]
 <!DOCTYPE html>
 <!-- hydration -->
 <div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
+```
+
 :::
 
 The key thing to understand in this example is that **`@fastify/vite`** automatically executes [`createRoute()`](/config/#createroute) **for each of the routes defined** in the **`routes`** key from your client module default export.
 
-As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/#createroute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which *also* imports `client/base.js`.
+As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/#createroute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which _also_ imports `client/base.js`.
 
 ```mermaid
 flowchart TD
@@ -126,7 +128,7 @@ flowchart TD
     X[client/routes.js] --> A
     B -->D(client/index.html)
     C -->|"for (const route of routes)"| G("createRoute(route)")
-````
+```
 
 Notice how `addFoobarHook` is a flag set in one of the client-side routes (in `client/routes.js`), just to demonstrante how it can be used to customize route registration, in this case setting `foobarHook` as an [`onRequest`](https://fastify.dev/docs/latest/Reference/Hooks/#onrequest) hook.
 

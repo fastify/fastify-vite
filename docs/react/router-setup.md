@@ -35,7 +35,7 @@ export default {
   plugins: [
     // ...
     viteFastifyReact({ globPattern: '/views/**/*.tsx' }),
-  ]
+  ],
 }
 ```
 

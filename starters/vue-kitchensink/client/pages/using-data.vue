@@ -27,18 +27,18 @@
 import { ref, reactive } from 'vue'
 import { useData } from '$app/hooks'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Data' }
 }
 
-export function getData ({ server }) {
-	return {
-		todoList: server.db.todoList
-	}
+export function getData({ server }) {
+  return {
+    todoList: server.db.todoList,
+  }
 }
 
 export default {
-  setup () {
+  setup() {
     const data = useData()
     const inputValue = ref(null)
     const todoList = reactive(data.todoList)
@@ -47,6 +47,6 @@ export default {
       inputValue.value = ''
     }
     return { inputValue, todoList, addItem }
-  }
+  },
 }
 </script>

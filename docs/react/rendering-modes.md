@@ -45,7 +45,7 @@ import React, { Suspense } from 'react'
 
 export const streaming = true
 
-export default function Index () {
+export default function Index() {
   return (
     <Suspense fallback={<p>Waiting for content</p>}>
       <Message />
@@ -53,11 +53,11 @@ export default function Index () {
   )
 }
 
-function Message () {
+function Message() {
   const message = afterSeconds({
     id: 'index',
     message: 'Delayed by Suspense API',
-    seconds: 5
+    seconds: 5,
   })
   return <p>{message}</p>
 }

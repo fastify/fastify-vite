@@ -11,9 +11,9 @@
 <script>
 export const clientOnly = true
 
-export function getMeta () {
-	return {
-		title: 'Client Only Page'
-	}
+export function getMeta() {
+  return {
+    title: 'Client Only Page',
+  }
 }
 </script>

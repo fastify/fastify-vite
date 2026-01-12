@@ -1,10 +1,10 @@
 <script>
 export const layout = 'default'
 
-export function getData ({ req }) {
-  let pathMatch = req.params['*'];
+export function getData({ req }) {
+  let pathMatch = req.params['*']
   if (pathMatch.charAt(pathMatch.length - 1) == '/') {
-    pathMatch = pathMatch.substr(0, pathMatch.length - 1);
+    pathMatch = pathMatch.substr(0, pathMatch.length - 1)
   }
 
   return {

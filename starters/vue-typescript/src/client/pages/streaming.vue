@@ -10,6 +10,6 @@ import Message from '/components/Message.vue'
 export const streaming = true
 
 export default {
-	components: { Message },
+  components: { Message },
 }
 </script>

@@ -12,12 +12,8 @@ When you run the `vite build` command, `index.html` is what Vite automatically l
 ```js
 import { createHtmlTemplateFunction } from '@fastify/vite/utils'
 
-const template = createHtmlTemplateFunction(
-  '<main><!-- foobar --></main>'
-)
-console.log(
-  template({ foobar: 'This will be inserted' })
-)
+const template = createHtmlTemplateFunction('<main><!-- foobar --></main>')
+console.log(template({ foobar: 'This will be inserted' }))
 ```
 
 The snippet above prints out `<main>This will be inserted</main>`.
@@ -27,7 +23,7 @@ By default, that function is used internally by the `createHtmlFunction()` confi
 Notice that `createHtmlTemplateFunction()` is not only a utility you can import from `@fastify/vite/utils`, but is also set as configuration hook within `@fastify/vite`. If you want to use a different templating engine, just provide a different `createHtmlTemplateFunction()` implementation and it will be automatically used by the [**default definition of `createHtmlFunction()`**](https://github.com/fastify/fastify-vite/blob/dev/packages/fastify-vite/config.js#L58):
 
 ```js
-function createHtmlFunction (source, scope, config) {
+function createHtmlFunction(source, scope, config) {
   const indexHtmlTemplate = config.createHtmlTemplateFunction(source)
   if (config.spa) {
     return function () {
@@ -38,7 +34,7 @@ function createHtmlFunction (source, scope, config) {
   }
   return async function (ctx) {
     this.type('text/html')
-    this.send(indexHtmlTemplate(ctx ?? await this.render()))
+    this.send(indexHtmlTemplate(ctx ?? (await this.render())))
     return this
   }
 }

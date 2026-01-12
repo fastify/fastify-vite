@@ -13,17 +13,16 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import FastifyVue from '@fastify/vue'
 
-const server  = Fastify()
+const server = Fastify()
 await server.register(FastifyVite, {
   root: import.meta.dirname,
   renderer: {
     ...FastifyVue,
-    createRoute () {
+    createRoute() {
       // Your custom create Route implementation
-    }
-  }
+    },
+  },
 })
-
 ```
 
 ## Init module
@@ -56,7 +55,7 @@ export default (ctx) => {
 // State initializer, must be a function called state
 // as this is a special context.js export and needs
 // special processing, e.g., serialization and hydration
-export function state () {
+export function state() {
   return {
     user: {
       authenticated: false,
@@ -68,19 +67,19 @@ export function state () {
 // Grouped actions that operate on the state. This export
 // could be named anything, no special processing involved.
 export const actions = {
-  authenticate (state) {
+  authenticate(state) {
     state.user.authenticated = true
   },
   todoList: {
-    async add (state, item) {
+    async add(state, item) {
       await sendJSON('/api/todo/items', { method: 'put', json: item })
       state.todoList.push(item)
     },
-    async remove (state, index) {
+    async remove(state, index) {
       await sendJSON('/api/todo/items', { method: 'delete', json: index })
       state.todoList.splice(index, 1)
     },
-  }
+  },
 }
 ```
 
@@ -88,9 +87,7 @@ export const actions = {
 <template>
   <h2>Todo List — Using Data</h2>
   <ul>
-    <li
-      v-for="(item, i) in todoList"
-      :key="`item-${i}`">
+    <li v-for="(item, i) in todoList" :key="`item-${i}`">
       {{ item }}
     </li>
   </ul>
@@ -102,10 +99,13 @@ export const actions = {
     <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do
-  list will be lost, because they're bound to this route component only.</p>
-  <p>See the <router-link to="/using-store">/using-store</router-link> example to learn
-  how to use the application global state for it.
+  <p>
+    When you navigate away from this route, any additions to the to-do list will be lost, because
+    they're bound to this route component only.
+  </p>
+  <p>
+    See the <router-link to="/using-store">/using-store</router-link> example to learn how to use
+    the application global state for it.
   </p>
 </template>
 
@@ -113,18 +113,18 @@ export const actions = {
 import { ref, reactive } from 'vue'
 import { useRouteContext } from '@fastify/vue/client'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Data' }
 }
 
-export function getData ({ server }) {
+export function getData({ server }) {
   return {
-    todoList: server.db.todoList
+    todoList: server.db.todoList,
   }
 }
 
 export default {
-  setup () {
+  setup() {
     const { data } = useRouteContext()
     const inputValue = ref(null)
     const todoList = reactive(data.todoList)
@@ -133,7 +133,7 @@ export default {
       inputValue.value = ''
     }
     return { inputValue, todoList, addItem }
-  }
+  },
 }
 </script>
 ```
@@ -142,9 +142,7 @@ export default {
 <template>
   <h2>Todo List — Using Store</h2>
   <ul>
-    <li
-      v-for="(item, i) in state.todoList"
-      :key="`item-${i}`">
+    <li v-for="(item, i) in state.todoList" :key="`item-${i}`">
       {{ item }}
     </li>
   </ul>
@@ -156,20 +154,22 @@ export default {
     <router-link to="/">Go back to the index</router-link>
   </p>
   <p>⁂</p>
-  <p>When you navigate away from this route, any additions to the to-do
-  list are not lost, because they're bound to the global application state.</p>
+  <p>
+    When you navigate away from this route, any additions to the to-do list are not lost, because
+    they're bound to the global application state.
+  </p>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { useRouteContext } from '@fastify/vue/client'
 
-export function getMeta () {
+export function getMeta() {
   return { title: 'Todo List — Using Store' }
 }
 
 export default {
-  setup () {
+  setup() {
     const inputValue = ref(null)
     const { state, actions } = useRouteContext()
     const addItem = async () => {
