@@ -1,0 +1,19 @@
+{
+  "name": "@fastify-vite/example-prefix-support",
+  "private": true,
+  "description": "Demonstrates issue #358: static assets should respect registration prefix",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}
