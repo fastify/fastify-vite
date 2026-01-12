@@ -106,16 +106,18 @@ export default {
 }
 ```
 
-````html [client/index.html]
+```html [client/index.html]
 <!DOCTYPE html>
 <!-- hydration -->
 <div id="root"><!-- element --></div>
 <script type="module" src="/mount.js"></script>
+```
+
 :::
 
 The key thing to understand in this example is that **`@fastify/vite`** automatically executes [`createRoute()`](/config/#createroute) **for each of the routes defined** in the **`routes`** key from your client module default export.
 
-As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/#createroute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which *also* imports `client/base.js`.
+As long as each object in the `routes` array (or function returning an array) has a `path` property, **`@fastify/vite`** will use it to register an individual Fastify route for your client-side route, by default. By providing your own [`createRoute()`](/config/#createroute) definition, you can customize it however you want. In this example, `client/routes.js` is shared by `client/base.js` and `client/index.js`, which _also_ imports `client/base.js`.
 
 ```mermaid
 flowchart TD
@@ -126,7 +128,7 @@ flowchart TD
     X[client/routes.js] --> A
     B -->D(client/index.html)
     C -->|"for (const route of routes)"| G("createRoute(route)")
-````
+```
 
 Notice how `addFoobarHook` is a flag set in one of the client-side routes (in `client/routes.js`), just to demonstrante how it can be used to customize route registration, in this case setting `foobarHook` as an [`onRequest`](https://fastify.dev/docs/latest/Reference/Hooks/#onrequest) hook.
 
