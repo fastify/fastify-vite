@@ -9,10 +9,6 @@ export interface ViteFastifyPluginOptions {
    * Path to the client module entry point
    */
   clientModule?: string
-  /**
-   * Use paths relative to the application root directory
-   */
-  useRelativePaths?: boolean
 }
 
 /**

@@ -8,10 +8,7 @@ describe('plugin types', () => {
     expectTypeOf(viteFastify({})).toExtend<Plugin>()
     expectTypeOf(viteFastify({ spa: true })).toExtend<Plugin>()
     expectTypeOf(viteFastify({ clientModule: './client.js' })).toExtend<Plugin>()
-    expectTypeOf(viteFastify({ useRelativePaths: true })).toExtend<Plugin>()
-    expectTypeOf(
-      viteFastify({ spa: false, clientModule: './client.js', useRelativePaths: false }),
-    ).toExtend<Plugin>()
+    expectTypeOf(viteFastify({ spa: false, clientModule: './client.js' })).toExtend<Plugin>()
   })
 
   it('findCommonPath accepts string array and returns string', () => {
@@ -23,6 +20,5 @@ describe('plugin types', () => {
     const options: ViteFastifyPluginOptions = {}
     expectTypeOf(options.spa).toEqualTypeOf<boolean | undefined>()
     expectTypeOf(options.clientModule).toEqualTypeOf<string | undefined>()
-    expectTypeOf(options.useRelativePaths).toEqualTypeOf<boolean | undefined>()
   })
 })

@@ -51,7 +51,8 @@ The `viteFastify` plugin can be given the following options:
 
 - `spa` - Set this to `true` to disable the SSR build entirely. Default: `false`.
 - `clientModule` - The location of the SSR entry point, relative to the index.html file. Defaults to `index.js`. You can also use an absolute path to be extra safe.
-- `useRelativePaths` - Set this to `true` to avoid saving absolute paths in the `vite.config.json` file. This is useful if the machine you run the build on is NOT the machine you plan to run the server on (for example: if you build on a local machine but then copy the results into a Docker container). This results in a more hermetic application distribution. In a future release, this will be defaulted to `true`.
+
+Note: All paths in the generated `vite.config.json` are relative to the application root directory (where `package.json` is located). This ensures hermetic builds that work across different machines (e.g., building locally and deploying to Docker).
 
 Assuming you do not need to build your Fastify server itself, the only build script you need in your `package.json` file is below:
 
@@ -134,6 +135,27 @@ export default {
 ```
 
 :::
+
+### Finding vite.config.json at runtime
+
+At runtime, **`@fastify/vite`** automatically locates your application root (by finding the nearest `package.json`, starting from the location of your `vite.config.js` file) then searches for `vite.config.json` in these standard locations (checking `dist/` first, then `build/`):
+
+1. `dist/vite.config.json` or `build/vite.config.json`
+2. One level deeper (e.g., `dist/client/vite.config.json`)
+3. `client/dist/vite.config.json` or `client/build/vite.config.json`
+
+If you use a different folder name (e.g., `out` or `output`), you must specify the `distDir` option:
+
+```js
+import { resolve } from 'node:path'
+
+await server.register(FastifyVite, {
+  root: import.meta.dirname, // the search for package.json begins here
+  distDir: 'output',
+})
+```
+
+**Note:** If you pass an absolute path to `distDir`, no searching will happen and we will directly look for `vite.config.json` inside your given absolute path only.
 
 ## Running in production mode
 
