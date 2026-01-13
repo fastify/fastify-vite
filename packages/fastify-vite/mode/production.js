@@ -56,6 +56,9 @@ async function setup(config) {
 
   // We also register fastify-static to serve all static files
   // in production (dev server takes care of this)
+  // Use opts.prefix from registration (flows through to config.prefix)
+  const registrationPrefix = config.prefix || ''
+  const basePathname = URL.canParse(vite.base) ? new URL(vite.base).pathname : vite.base || '/'
   await this.scope.register(async function assetFiles(scope) {
     const root = [resolve(clientOutDir, assetsDir)]
     if (exists(resolve(ssrOutDir, assetsDir))) {
@@ -63,10 +66,7 @@ async function setup(config) {
     }
     await scope.register(FastifyStatic, {
       root,
-      prefix: join(
-        URL.canParse(vite.base) ? new URL(vite.base).pathname : vite.base || '/',
-        assetsDir,
-      ).replace(/\\/g, '/'),
+      prefix: join(registrationPrefix, basePathname, assetsDir).replace(/\\/g, '/'),
     })
   })
 
@@ -74,6 +74,7 @@ async function setup(config) {
   await this.scope.register(async function publicFiles(scope) {
     await scope.register(FastifyStatic, {
       root: clientOutDir,
+      prefix: join(registrationPrefix, basePathname).replace(/\\/g, '/'),
       index: false,
       wildcard: false,
       allowedPath(path) {

@@ -29,4 +29,5 @@ pnpm test
 
 Some examples exist primarily to reproduce and test specific issues:
 
+- `prefix-support` — Reproduces [issue #358](https://github.com/fastify/fastify-vite/issues/358) (static routes respect registration prefix)
 - `relative-outdir` — Reproduces [issue #303](https://github.com/fastify/fastify-vite/issues/303) (nested root with relative outDir)
