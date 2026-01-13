@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 8.4.1
+
+### Patch Changes
+
+- 8abfaf8: Fix static routes to respect registration prefix. When registering @fastify/vite with a `prefix` option, static assets and public files are now correctly served under that prefix.
+
 ## 8.4.0
 
 ### Minor Changes
