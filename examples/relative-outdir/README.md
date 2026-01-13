@@ -14,7 +14,7 @@ export default {
   build: {
     outDir: '../../dist/build',
   },
-  plugins: [viteFastify({ spa: true, useRelativePaths: true })],
+  plugins: [viteFastify({ spa: true })],
 }
 ```
 

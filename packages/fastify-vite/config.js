@@ -304,13 +304,9 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   ]
 }
 
-async function determineOutDirRoot(vite, root) {
-  const { usePathsRelativeToAppRoot } = vite.fastify
-  if (usePathsRelativeToAppRoot) {
-    const { packageDirectory } = await import('package-directory')
-    return await packageDirectory({ cwd: root })
-  }
-  return resolveIfRelative(vite.root, root)
+async function getApplicationRootDir(root) {
+  const { packageDirectory } = await import('package-directory')
+  return await packageDirectory({ cwd: root })
 }
 
 async function resolveSSRBundle({ dev, vite, root }) {
@@ -321,7 +317,7 @@ async function resolveSSRBundle({ dev, vite, root }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, root),
+        await getApplicationRootDir(root),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
@@ -361,7 +357,7 @@ async function resolveSPABundle({ dev, vite, root }) {
     if (vite.fastify) {
       clientOutDir = resolveIfRelative(
         vite.fastify.outDirs.client,
-        await determineOutDirRoot(vite, root),
+        await getApplicationRootDir(root),
       )
     } else {
       // Backwards compatibility for projects that do not use the viteFastify plugin.
