@@ -41,7 +41,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   }
 
   // Used when hydrating Vue Router on the client
-  const routeMap = Object.fromEntries(client.routes.map((_) => [_.path, _]))
+  const routeMap = Object.fromEntries(client.routes.map((_) => [_.key, _]))
 
   // Extend with route context initialization module
   RouteContext.extend(client.context)
@@ -122,7 +122,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   }
 
   // Replace wildcard routes with Fastify compatible syntax
-  const routePath = route.path.replace(/:\w[\w-]*\+/, '*')
+  const routePath = route.path.replace(/:\w[\w-]*\+.*/, '*')
 
   unshiftHook(route, 'onRequest', onRequest)
   unshiftHook(route, 'preHandler', preHandler)
@@ -137,7 +137,8 @@ export async function createRoute({ client, errorHandler, route }, scope, config
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    scope.get(`/-/data${routePath}`, {
+    const dataPath = (route.dataPath ?? route.path).replace(/:\w[\w-]*\+.*/, '*')
+    scope.get(`/-/data${dataPath}`, {
       onRequest,
       async handler(req, reply) {
         return reply.send(await route.getData(req.route))
