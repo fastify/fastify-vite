@@ -136,6 +136,27 @@ export default {
 
 :::
 
+### Finding vite.config.json at runtime
+
+At runtime, **`@fastify/vite`** automatically locates your application root (by finding the nearest `package.json`, starting from the location of your `vite.config.js` file) then searches for `vite.config.json` in these standard locations (checking `dist/` first, then `build/`):
+
+1. `dist/vite.config.json` or `build/vite.config.json`
+2. One level deeper (e.g., `dist/client/vite.config.json`)
+3. `client/dist/vite.config.json` or `client/build/vite.config.json`
+
+If you use a different folder name (e.g., `out` or `output`), you must specify the `distDir` option:
+
+```js
+import { resolve } from 'node:path'
+
+await server.register(FastifyVite, {
+  root: import.meta.dirname, // the search for package.json begins here
+  distDir: 'output',
+})
+```
+
+**Note:** If you pass an absolute path to `distDir`, no searching will happen and we will directly look for `vite.config.json` inside your given absolute path only.
+
 ## Running in production mode
 
 Once your build processes are complete and your `dist` directory is populated, you should be able to run a Fastify server with **`@fastify/vite`** in production mode. Run `node server.js` without the `--dev` flag to see. Don't forget to include your `dist` directory as part of your deployment.

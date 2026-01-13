@@ -42,14 +42,20 @@ function createSSREnvironment(dev, outDir, clientModule) {
 }
 
 const DefaultConfig = {
-  // Main distribution dir
-  distDir: resolve(process.cwd(), 'dist'),
-
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
 
   // Vite's configuration file location
   root: null,
+
+  /**
+   * Override the directory to search for `vite.config.json` in production mode.
+   * By default, the runtime automatically finds the app root via `package.json`
+   * and searches in both `dist/` and `build/` folders.
+   * Only specify this if you use a different folder name (e.g., `out`).
+   * If a relative path is provided, it is resolved relative to the app root.
+   */
+  distDir: null,
 
   // Vite's resolved config
   vite: null,
@@ -187,7 +193,7 @@ const DefaultConfig = {
 
 async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
-  const root = resolveRoot(options.distDir ?? 'dist', options.root)
+  const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
   const config = Object.assign(defaultConfig, { ...options })
   config.root = root // Store resolved root for use in production.js
@@ -232,7 +238,7 @@ function resolveClientModule(root) {
   return null
 }
 
-function resolveRoot(distDir, path) {
+function resolveRoot(path) {
   let root = path
   if (root.startsWith('file:')) {
     root = fileURLToPath(root)
@@ -243,32 +249,36 @@ function resolveRoot(distDir, path) {
   return root
 }
 
-function findViteConfigJson(root, viteDistDir) {
-  // Check directly in distDir (e.g., dist/vite.config.json)
-  let configPath = join(viteDistDir, 'vite.config.json')
-  if (exists(configPath)) {
-    return configPath
-  }
+function findViteConfigJson(appRoot, folderNames = ['dist', 'build']) {
+  for (const folderName of folderNames) {
+    const folder = join(appRoot, folderName)
 
-  // Check one level deeper in distDir (e.g., dist/build/vite.config.json)
-  try {
-    for (const entry of readdirSync(viteDistDir)) {
-      const entryPath = join(viteDistDir, entry)
-      if (stat(entryPath).isDirectory()) {
-        configPath = join(entryPath, 'vite.config.json')
-        if (exists(configPath)) {
-          return configPath
+    // Check folder/vite.config.json
+    let configPath = join(folder, 'vite.config.json')
+    if (exists(configPath)) {
+      return configPath
+    }
+
+    // Check one level deeper (e.g., dist/client/vite.config.json)
+    try {
+      for (const entry of readdirSync(folder)) {
+        const entryPath = join(folder, entry)
+        if (stat(entryPath).isDirectory()) {
+          configPath = join(entryPath, 'vite.config.json')
+          if (exists(configPath)) {
+            return configPath
+          }
         }
       }
+    } catch {
+      // Directory doesn't exist or can't be read
     }
-  } catch {
-    // Directory doesn't exist or can't be read
-  }
 
-  // Check client/dist/ - common pattern for projects with nested client folder
-  configPath = join(root, 'client', 'dist', 'vite.config.json')
-  if (exists(configPath)) {
-    return configPath
+    // Check client/folder/ - common pattern for projects with nested client folder
+    configPath = join(appRoot, 'client', folderName, 'vite.config.json')
+    if (exists(configPath)) {
+      return configPath
+    }
   }
 
   return null
@@ -278,15 +288,23 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   const command = 'build'
   const mode = dev ? 'development' : 'production'
   if (!dev) {
-    let viteDistDir = distDir
-    if (!isAbsolute(viteDistDir)) {
-      viteDistDir = join(root, viteDistDir)
+    const appRoot = await getApplicationRootDir(root)
+    let viteConfigDistFile
+    if (distDir) {
+      if (isAbsolute(distDir)) {
+        viteConfigDistFile = join(dirname(distDir), 'vite.config.json')
+      } else {
+        viteConfigDistFile = findViteConfigJson(appRoot, [distDir])
+      }
+    } else {
+      // Auto-detect from standard locations relative to app root
+      viteConfigDistFile = findViteConfigJson(appRoot)
     }
-    const viteConfigDistFile = findViteConfigJson(root, viteDistDir)
     if (viteConfigDistFile) {
       return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), dirname(viteConfigDistFile)]
     }
-    console.warn(`Failed to load cached Vite configuration. Searched in: ${viteDistDir}`)
+    const searchedIn = distDir || `${appRoot}/{dist,build}`
+    console.warn(`Failed to load cached Vite configuration. Searched in: ${searchedIn}`)
     process.exit(1)
   }
 

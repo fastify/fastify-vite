@@ -108,6 +108,13 @@ declare namespace fastifyVite {
       indexHtml?: string | Buffer
       dir?: string
     }
+    /**
+     * Override the directory to search for `vite.config.json` in production mode.
+     * By default, the runtime automatically finds the app root via `package.json`
+     * and searches in both `dist/` and `build/` folders.
+     * Only specify this if you use a different folder name (e.g., `out`).
+     * If a relative path is provided, it is resolved relative to the app root.
+     */
     distDir?: string
   }
 
