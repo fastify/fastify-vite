@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert'
+import { setTimeout } from 'node:timers/promises'
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { makeBuildTest } from '../test-factories.mjs'
@@ -87,6 +88,17 @@ test('prefix-support (issue #358)', async (t) => {
       'Public file should NOT be accessible at unprefixed path /test.txt',
     )
 
+    await server.close()
+  })
+
+  // In dev mode, Vite's middleware serves static files directly,
+  // so the prefix option doesn't affect static file routing.
+  // This test verifies dev mode is unaffected by this issue.
+  await t.test('render index page in dev mode', async () => {
+    const server = await main(true) // dev mode
+    const response = await server.inject({ method: 'GET', url: '/app' })
+    assert.strictEqual(response.statusCode, 200)
+    await setTimeout(3000)
     await server.close()
   })
 })
