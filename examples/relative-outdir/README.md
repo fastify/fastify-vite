@@ -1,12 +1,10 @@
 # relative-outdir
 
-This example reproduces [issue #303](https://github.com/fastify/fastify-vite/issues/303) and serves as an integration test to verify the fix.
+This example demonstrates using a custom `build.outDir` with a nested `root` directory, verifying the fix for [issue #303](https://github.com/fastify/fastify-vite/issues/303).
 
-## The Bug
+## Configuration
 
-When using a nested `root` directory with a relative `build.outDir`, the `vite.config.json` file is written to a location that the production runtime cannot find.
-
-**Configuration:**
+**vite.config.js:**
 
 ```javascript
 export default {
@@ -18,16 +16,4 @@ export default {
 }
 ```
 
-**Result:**
-
-- `vite.config.json` is written to: `dist/build/vite.config.json`
-- Production runtime looks in: `dist/vite.config.json`, then `client/dist/vite.config.json`
-- Neither path matches, causing startup failure
-
-## Expected Behavior
-
-Once issue #303 is fixed, this example should:
-
-1. Build successfully with `pnpm build`
-2. Start in production with `pnpm start`
-3. Pass all integration tests
+The production runtime automatically searches for `vite.config.json` in the `dist/` folder and its subdirectories.

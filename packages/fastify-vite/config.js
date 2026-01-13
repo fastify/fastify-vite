@@ -1,4 +1,5 @@
 const { fileURLToPath } = require('node:url')
+const { readdirSync } = require('node:fs')
 
 const {
   dirname,
@@ -242,6 +243,37 @@ function resolveRoot(distDir, path) {
   return root
 }
 
+function findViteConfigJson(root, viteDistDir) {
+  // Check directly in distDir (e.g., dist/vite.config.json)
+  let configPath = join(viteDistDir, 'vite.config.json')
+  if (exists(configPath)) {
+    return configPath
+  }
+
+  // Check one level deeper in distDir (e.g., dist/build/vite.config.json)
+  try {
+    for (const entry of readdirSync(viteDistDir)) {
+      const entryPath = join(viteDistDir, entry)
+      if (stat(entryPath).isDirectory()) {
+        configPath = join(entryPath, 'vite.config.json')
+        if (exists(configPath)) {
+          return configPath
+        }
+      }
+    }
+  } catch {
+    // Directory doesn't exist or can't be read
+  }
+
+  // Check client/dist/ - common pattern for projects with nested client folder
+  configPath = join(root, 'client', 'dist', 'vite.config.json')
+  if (exists(configPath)) {
+    return configPath
+  }
+
+  return null
+}
+
 async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
   const command = 'build'
   const mode = dev ? 'development' : 'production'
@@ -250,18 +282,11 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
     if (!isAbsolute(viteDistDir)) {
       viteDistDir = join(root, viteDistDir)
     }
-    let viteConfigDistFile
-    // Check for top-level dist/ folder
-    viteConfigDistFile = resolve(viteDistDir, 'vite.config.json')
-    if (exists(viteConfigDistFile)) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, distDir)]
+    const viteConfigDistFile = findViteConfigJson(root, viteDistDir)
+    if (viteConfigDistFile) {
+      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), dirname(viteConfigDistFile)]
     }
-    // Check for client/dist/ folder (legacy default convention)
-    viteConfigDistFile = join(root, 'client', 'dist', 'vite.config.json')
-    if (exists(viteConfigDistFile)) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), resolve(root, 'client', distDir)]
-    }
-    console.warn(`Failed to load cached Vite configuration from ${viteConfigDistFile}`)
+    console.warn(`Failed to load cached Vite configuration. Searched in: ${viteDistDir}`)
     process.exit(1)
   }
 
