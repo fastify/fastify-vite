@@ -10,10 +10,10 @@ The client gets the server-side rendered markup without any accompanying JavaScr
 
 You should use this setting to deliver lighter pages when there's no need to run any code on them, such as statically generated content sites.
 
-```vue
+```jsx
 export const serverOnly = true
 
-export function Index () {
+export function Index() {
   return <p>No JavaScript sent to the browser.</p>
 }
 ```
@@ -26,10 +26,10 @@ If a route module exports `clientOnly` set to `true`, no SSR will take place, on
 
 You can use this setting to save server resources on internal pages where SSR makes no significant diference for search engines or UX in general, such as a password-protected admin section.
 
-```vue
+```jsx
 export const clientOnly = true
 
-export function Index () {
+export function Index() {
   return <p>No pre-rendered HTML sent to the browser.</p>
 }
 ```

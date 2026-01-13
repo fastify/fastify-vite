@@ -1,6 +1,5 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "embeddedLanguageFormatting": "off",
   "ignorePatterns": [".changeset/*.md"],
   "semi": false,
   "singleQuote": true
