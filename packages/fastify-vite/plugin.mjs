@@ -130,8 +130,8 @@ export function findCommonPath(paths) {
 
 async function makeAllPathsRelative(resolvedViteConfigToWrite) {
   const { packageDirectory } = await import('package-directory')
-  const applicationRootDirectory = await packageDirectory() // location of user's package.json
   const { build, fastify, root: absoluteViteRoot } = resolvedViteConfigToWrite
+  const applicationRootDirectory = await packageDirectory({ cwd: absoluteViteRoot })
 
   resolvedViteConfigToWrite.root = relative(applicationRootDirectory, absoluteViteRoot)
 
