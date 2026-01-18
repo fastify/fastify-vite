@@ -22,6 +22,7 @@
     "@types/node": "^22.13.17",
     "@vitejs/plugin-vue": "catalog:vue",
     "eslint": "catalog:eslint",
+    "eslint-config-prettier": "catalog:eslint",
     "eslint-plugin-vue": "catalog:eslint",
     "globals": "catalog:eslint",
     "tsx": "catalog:",
