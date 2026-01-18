@@ -7,6 +7,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 import vueParser from 'vue-eslint-parser'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   js.configs.recommended,
@@ -70,4 +71,5 @@ export default [
   {
     ignores: ['**/build/**', '**/dist/**'],
   },
+  eslintConfigPrettier,
 ]
