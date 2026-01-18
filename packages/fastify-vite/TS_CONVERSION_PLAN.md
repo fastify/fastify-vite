@@ -53,7 +53,7 @@ By the end of this phase, there should be no more JavaScript files in the packag
 10. Add a `build` script for this package (or workspace) to emit `dist/` without changing exports yet.
 11. Note: Unit tests (`pnpm test`) can run directly on `.ts` sources via Node.js 22+ type stripping. However, `pnpm test:examples` imports `@fastify/vite` from package exports, so CI must run `pnpm build` before `pnpm test:examples` once exports point to `dist/` (Phase 7).
 
-## Phase 3: Preserve module formats with TS extensions (temporary)
+## Phase 3: Preserve module formats with TS extensions (temporary) (completed)
 
 12. Decide TS file extensions per module format:
     - Use `.mts` for ESM sources (current `plugin.mjs`).

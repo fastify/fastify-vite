@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { existsSync, lstatSync } = require('node:fs')
 const { writeFile, readFile } = require('node:fs/promises')
 const { isAbsolute, join, resolve, parse, dirname, basename, sep } = require('node:path')
