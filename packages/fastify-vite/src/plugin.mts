@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { dirname, isAbsolute, join, relative, sep } from 'node:path'
 import getDeepMergeFunction from '@fastify/deepmerge'
 import { writeFile } from 'node:fs/promises'

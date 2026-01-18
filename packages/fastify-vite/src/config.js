@@ -10,7 +10,7 @@ const {
   exists,
   stat,
   read,
-} = require('./ioutils.cjs')
+} = require('./ioutils.cts')
 const { createHtmlTemplateFunction } = require('./html.js')
 
 function createClientEnvironment(dev, outDir) {
