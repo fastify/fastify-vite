@@ -37,6 +37,9 @@ catalogs:
     eslint:
       specifier: ^9.39.2
       version: 9.39.2
+    eslint-config-prettier:
+      specifier: ^10.1.8
+      version: 10.1.8
     eslint-plugin-vue:
       specifier: ^10.6.2
       version: 10.6.2
@@ -415,6 +418,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -461,6 +467,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -498,6 +507,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -529,6 +541,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -560,6 +575,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -594,6 +612,9 @@ importers:
       eslint:
         specifier: catalog:eslint
         version: 9.39.2(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: catalog:eslint
+        version: 10.1.8(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: catalog:eslint
         version: 10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2)))
@@ -3687,6 +3708,12 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  eslint-config-prettier@10.1.8:
+    resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
 
   eslint-plugin-vue@10.6.2:
     resolution: {integrity: sha512-nA5yUs/B1KmKzvC42fyD0+l9Yd+LtEpVhWRbXuDj0e+ZURcTtyRbMDWUeJmTAh2wC6jC83raS63anNM2YT3NPw==}
@@ -8485,6 +8512,10 @@ snapshots:
   escape-html@1.0.3: {}
 
   escape-string-regexp@4.0.0: {}
+
+  eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.4.2)):
+    dependencies:
+      eslint: 9.39.2(jiti@2.4.2)
 
   eslint-plugin-vue@10.6.2(@typescript-eslint/parser@8.51.0(eslint@9.39.2(jiti@2.4.2))(typescript@5.9.3))(eslint@9.39.2(jiti@2.4.2))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.4.2))):
     dependencies:
