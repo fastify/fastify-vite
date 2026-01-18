@@ -7,7 +7,7 @@ import * as root from '$app/root.vue'
 async function mountApp(...targets) {
   const ctxHydration = await extendContext(window.route, context)
   const resolvedRoutes = await hydrateRoutes(routes)
-  const routeMap = Object.fromEntries(resolvedRoutes.map((route) => [route.path, route]))
+  const routeMap = Object.fromEntries(resolvedRoutes.map((route) => [route.key, route]))
   const { instance, router } = await create({
     ctxHydration,
     routes: window.routes,

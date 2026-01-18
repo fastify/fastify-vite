@@ -6,7 +6,7 @@ packages:
 
 catalog:
   '@fastify/middie': ^9.1.0
-  devalue: ^5.6.1
+  devalue: ^5.6.2
   fastify: ^5.6.2
   html-rewriter-wasm: ^0.4.1
   tsx: ^4.21.0
@@ -30,6 +30,6 @@ catalogs:
   solid:
     solid-js: ^1.9.5
   vue:
-    '@vitejs/plugin-vue': ^5.2.4
+    '@vitejs/plugin-vue': ^6.0.3
     vue: ^3.5.26
     vue-router: ^4.6.4

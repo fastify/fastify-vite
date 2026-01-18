@@ -279,7 +279,7 @@ Value of the current route module's `clientOnly` export.
 </td>
 <td>
 
-Disables cleint-side rendering (ships static markup).
+Disables client-side rendering (ships static markup).
 
 </td>
 </tr>

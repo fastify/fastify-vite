@@ -6,6 +6,7 @@ class Routes extends Array {
       return {
         id: route.id,
         path: route.path,
+        key: route.key,
         name: route.name,
         layout: route.layout,
         getData: !!route.getData,
@@ -28,6 +29,7 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
             id: routeDef.path,
             name: routeDef.path ?? routeModule.path,
             path: routeDef.path ?? routeModule.path,
+            key: routeDef.path ?? routeModule.path,
             ...routeModule,
           }
         }),
@@ -59,10 +61,12 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
                 .replace(param, (_, m) => `:${m}`)
                 // Replace '/index' with '/'
                 .replace(/\/index$/, '/')
-                // Remove trailing slashs
+                // Remove trailing slashes
                 .replace(/(.+)\/+$/, (...m) => m[1]),
             ...routeModule,
           }
+
+          route.key = route.path
 
           if (route.name === '') {
             route.name = 'catch-all'

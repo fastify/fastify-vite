@@ -1,5 +1,11 @@
 # @fastify/vue
 
+## 1.2.0
+
+### Minor Changes
+
+- c1ee10b: Added `key` and `meta` to route mapping
+
 ## 1.1.6
 
 ### Patch Changes
