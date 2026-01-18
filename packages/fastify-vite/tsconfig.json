@@ -2,7 +2,17 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": ["ES2020"],
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "allowJs": true,
+    "checkJs": false,
+    "rootDir": "src",
+    "skipLibCheck": true
   },
-  "include": ["types/*.test-d.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.js", "src/**/*.test.mjs", "src/**/*.test.cjs"]
 }

@@ -46,7 +46,7 @@ Use this at the end of each phase:
 
 By the end of this phase, there should be no more JavaScript files in the package root.
 
-## Phase 2: TypeScript build scaffolding (no runtime change)
+## Phase 2: TypeScript build scaffolding (no runtime change) (completed)
 
 8. Update the existing `tsconfig.json` to cover runtime sources with `declaration: true`, `declarationMap: true`, `sourceMap: true`, `emitDeclarationOnly: false`, and `outDir: dist/`.
 9. Enable `allowJs: true` and `checkJs: false` initially to let TS compile existing JS as a no-op.

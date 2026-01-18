@@ -52,6 +52,7 @@
     "access": "public"
   },
   "scripts": {
+    "build": "tsc",
     "test": "vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
