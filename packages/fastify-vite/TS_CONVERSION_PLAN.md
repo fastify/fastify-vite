@@ -33,7 +33,7 @@ Use this at the end of each phase:
 - **Create a git commit** at the end of each phase to checkpoint progress.
 - Do not make multiple git commits per phase. Amend the one commit if needed.
 
-## Phase 1: Create `src/` layout (minimal behavior change)
+## Phase 1: Create `src/` layout (minimal behavior change) (completed)
 
 4. Add `src/` and move runtime source files into it (no code edits yet):
    - `src/config.js`, `src/html.js`, `src/index.js`, `src/setup.js`, `src/utils.js`

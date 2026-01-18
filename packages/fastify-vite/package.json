@@ -16,36 +16,36 @@
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "files": [
-    "config.js",
-    "html.js",
-    "index.js",
-    "ioutils.cjs",
-    "plugin.mjs",
-    "setup.js",
-    "utils.js",
-    "mode/development.js",
-    "mode/production.js",
+    "src/config.js",
+    "src/html.js",
+    "src/index.js",
+    "src/ioutils.cjs",
+    "src/plugin.mjs",
+    "src/setup.js",
+    "src/utils.js",
     "types/index.d.ts",
     "types/plugin.d.ts",
-    "types/utils.d.ts"
+    "types/utils.d.ts",
+    "src/mode/development.js",
+    "src/mode/production.js"
   ],
-  "main": "index.js",
+  "main": "src/index.js",
   "types": "./types/index.d.ts",
   "typings": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./index.js",
-      "require": "./index.js"
+      "import": "./src/index.js",
+      "require": "./src/index.js"
     },
     "./utils": {
       "types": "./types/utils.d.ts",
-      "import": "./utils.js",
-      "require": "./utils.js"
+      "import": "./src/utils.js",
+      "require": "./src/utils.js"
     },
     "./plugin": {
       "types": "./types/plugin.d.ts",
-      "import": "./plugin.mjs"
+      "import": "./src/plugin.mjs"
     }
   },
   "publishConfig": {

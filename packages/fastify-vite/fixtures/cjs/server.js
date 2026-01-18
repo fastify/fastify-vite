@@ -1,5 +1,5 @@
 const Fastify = require('fastify')
-const fastifyVite = require('../../index.js')
+const fastifyVite = require('../../src/index.js')
 
 async function main(dev) {
   const server = Fastify()

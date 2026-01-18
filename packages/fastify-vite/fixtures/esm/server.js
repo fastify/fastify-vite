@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import fastifyVite from '../../index.js'
+import fastifyVite from '../../src/index.js'
 
 export async function main(dev) {
   const server = Fastify()
