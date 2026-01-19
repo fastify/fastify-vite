@@ -1,6 +1,3 @@
-const { fileURLToPath } = require('node:url')
-const { readdirSync } = require('node:fs')
-
 const {
   dirname,
   join,
@@ -8,13 +5,17 @@ const {
   resolveIfRelative,
   isAbsolute,
   exists,
-  stat,
   read,
 } = require('./ioutils.cts')
-const { createHtmlTemplateFunction } = require('./html.ts')
 const { createClientEnvironment, createSSREnvironment } = require('./config/environments.ts')
 const { DefaultConfig } = require('./config/defaults.ts')
-
+const {
+  findConfigFile,
+  findViteConfigJson,
+  getApplicationRootDir,
+  resolveClientModule,
+  resolveRoot,
+} = require('./config/paths.ts')
 
 async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
@@ -51,62 +52,6 @@ async function configure(options = {}) {
     vite.fastify.clientModule ?? config.clientModule ?? resolveClientModule(vite.root)
 
   return config
-}
-
-function resolveClientModule(root) {
-  for (const ext of ['js', 'mjs', 'mts', 'ts', 'cjs', 'jsx', 'tsx']) {
-    const indexFile = join(root, `index.${ext}`)
-    if (exists(indexFile)) {
-      return `/index.${ext}`
-    }
-  }
-  return null
-}
-
-function resolveRoot(path) {
-  let root = path
-  if (root.startsWith('file:')) {
-    root = fileURLToPath(root)
-  }
-  if (stat(root).isFile()) {
-    root = dirname(root)
-  }
-  return root
-}
-
-function findViteConfigJson(appRoot, folderNames = ['dist', 'build']) {
-  for (const folderName of folderNames) {
-    const folder = join(appRoot, folderName)
-
-    // Check folder/vite.config.json
-    let configPath = join(folder, 'vite.config.json')
-    if (exists(configPath)) {
-      return configPath
-    }
-
-    // Check one level deeper (e.g., dist/client/vite.config.json)
-    try {
-      for (const entry of readdirSync(folder)) {
-        const entryPath = join(folder, entry)
-        if (stat(entryPath).isDirectory()) {
-          configPath = join(entryPath, 'vite.config.json')
-          if (exists(configPath)) {
-            return configPath
-          }
-        }
-      }
-    } catch {
-      // Directory doesn't exist or can't be read
-    }
-
-    // Check client/folder/ - common pattern for projects with nested client folder
-    configPath = join(appRoot, 'client', folderName, 'vite.config.json')
-    if (exists(configPath)) {
-      return configPath
-    }
-  }
-
-  return null
 }
 
 async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
@@ -170,11 +115,6 @@ async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
     }),
     configFile,
   ]
-}
-
-async function getApplicationRootDir(root) {
-  const { packageDirectory } = await import('package-directory')
-  return await packageDirectory({ cwd: root })
 }
 
 async function resolveSSRBundle({ dev, vite, root }) {
@@ -242,15 +182,6 @@ async function resolveSPABundle({ dev, vite, root }) {
     bundle.manifest = []
   }
   return bundle
-}
-
-function findConfigFile(root) {
-  for (const ext of ['js', 'mjs', 'ts']) {
-    const configFile = join(root, `vite.config.${ext}`)
-    if (exists(configFile)) {
-      return configFile
-    }
-  }
 }
 
 module.exports = {
