@@ -41,5 +41,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build @fastify/vite
+        run: pnpm --filter @fastify/vite build
+
       - name: Run integration tests
         run: pnpm test:examples

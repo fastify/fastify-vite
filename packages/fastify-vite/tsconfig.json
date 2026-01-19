@@ -12,7 +12,8 @@
     "allowJs": true,
     "checkJs": false,
     "rootDir": "src",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "rewriteRelativeImportExtensions": true
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.js", "src/**/*.test.mts", "src/**/*.test.cjs"]

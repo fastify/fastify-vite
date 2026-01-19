@@ -62,7 +62,7 @@ By the end of this phase, there should be no more JavaScript files in the packag
 
 13. Update `tsconfig.json` `module`/`moduleResolution` to `NodeNext` so `.mts/.cts` emit `.mjs/.cjs` correctly.
 
-## Phase 4: Switch package exports to emitted output (start building before examples)
+## Phase 4: Switch package exports to emitted output (start building before examples) (completed)
 
 14. Update `tsconfig.json` to include `src/` runtime sources so `pnpm build` emits `dist/`.
 15. Add/update a `build` script if needed and ensure it outputs to `dist/`.
