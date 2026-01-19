@@ -23,7 +23,6 @@
   ],
   "main": "dist/index.js",
   "types": "./types/index.d.ts",
-  "typings": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
