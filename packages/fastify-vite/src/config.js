@@ -1,21 +1,13 @@
 const {
-  dirname,
-  join,
   resolve,
   resolveIfRelative,
-  isAbsolute,
   exists,
   read,
 } = require('./ioutils.cts')
 const { createClientEnvironment, createSSREnvironment } = require('./config/environments.ts')
 const { DefaultConfig } = require('./config/defaults.ts')
-const {
-  findConfigFile,
-  findViteConfigJson,
-  getApplicationRootDir,
-  resolveClientModule,
-  resolveRoot,
-} = require('./config/paths.ts')
+const { resolveClientModule, resolveRoot } = require('./config/paths.ts')
+const { resolveViteConfig } = require('./config/vite-config.ts')
 
 async function configure(options = {}) {
   const defaultConfig = { ...DefaultConfig }
@@ -54,68 +46,6 @@ async function configure(options = {}) {
   return config
 }
 
-async function resolveViteConfig(root, dev, { spa, distDir } = {}) {
-  const command = 'build'
-  const mode = dev ? 'development' : 'production'
-  if (!dev) {
-    const appRoot = await getApplicationRootDir(root)
-    let viteConfigDistFile
-    if (distDir) {
-      if (isAbsolute(distDir)) {
-        viteConfigDistFile = join(dirname(distDir), 'vite.config.json')
-      } else {
-        viteConfigDistFile = findViteConfigJson(appRoot, [distDir])
-      }
-    } else {
-      // Auto-detect from standard locations relative to app root
-      viteConfigDistFile = findViteConfigJson(appRoot)
-    }
-    if (viteConfigDistFile) {
-      return [JSON.parse(await read(viteConfigDistFile, 'utf-8')), dirname(viteConfigDistFile)]
-    }
-    const searchedIn = distDir || `${appRoot}/{dist,build}`
-    console.warn(`Failed to load cached Vite configuration. Searched in: ${searchedIn}`)
-    process.exit(1)
-  }
-
-  let configFile = findConfigFile(root)
-  if (!configFile) {
-    return [null, null]
-  }
-  const { resolveConfig } = await import('vite')
-  const resolvedConfig = await resolveConfig(
-    {
-      configFile,
-    },
-    command,
-    mode,
-  )
-  if (process.platform === 'win32') {
-    configFile = `file://${configFile}`
-  }
-  let userConfig = await import(configFile).then((m) => m.default)
-  if (userConfig.default) {
-    userConfig = userConfig.default
-  }
-  if (typeof userConfig === 'function') {
-    userConfig = await userConfig({
-      command,
-      mode,
-      ssrBuild: !spa,
-    })
-  }
-  userConfig.fastify = resolvedConfig.fastify
-
-  return [
-    Object.assign(userConfig, {
-      build: {
-        assetsDir: resolvedConfig.build.assetsDir,
-        outDir: resolvedConfig.build.outDir,
-      },
-    }),
-    configFile,
-  ]
-}
 
 async function resolveSSRBundle({ dev, vite, root }) {
   const bundle = {}
