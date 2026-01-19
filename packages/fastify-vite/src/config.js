@@ -11,7 +11,7 @@ const {
   stat,
   read,
 } = require('./ioutils.cts')
-const { createHtmlTemplateFunction } = require('./html.js')
+const { createHtmlTemplateFunction } = require('./html.ts')
 
 function createClientEnvironment(dev, outDir) {
   return {
