@@ -86,7 +86,6 @@ By the end of this phase, there should be no more JavaScript files in the packag
     - Pause and allow me to review after splitting each module out.
     - `src/config/environments.ts`: `createClientEnvironment`, `createSSREnvironment`.
     - `src/config/defaults.ts`: `DefaultConfig` and renderer hook wiring.
-    - `src/config/renderer.ts`: `prepareClient`, `createHtmlFunction`, `createRoute`, `createRouteHandler`, `createErrorHandler`.
     - `src/config/paths.ts`: `resolveRoot`, `resolveClientModule`, `findConfigFile`, `findViteConfigJson`, `getApplicationRootDir`.
     - `src/config/vite-config.ts`: `resolveViteConfig`.
     - `src/config/bundle.ts`: `resolveSSRBundle`, `resolveSPABundle`.
