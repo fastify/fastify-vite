@@ -1,15 +1,17 @@
-// @ts-nocheck
-const { existsSync, lstatSync } = require('node:fs')
-const { writeFile, readFile } = require('node:fs/promises')
-const { isAbsolute, join, resolve, parse, dirname, basename, sep } = require('node:path')
-const { ensureDir, remove } = require('fs-extra')
-const klaw = require('klaw')
+import { existsSync, lstatSync, Stats } from 'node:fs'
+import { writeFile, readFile } from 'node:fs/promises'
+import { isAbsolute, join, resolve, parse, dirname, basename, sep } from 'node:path'
+import { ensureDir, remove } from 'fs-extra'
+import klaw from 'klaw'
 
-function resolveIfRelative(p, root) {
+export function resolveIfRelative(p: string, root: string, f: string): string {
   return isAbsolute(p) ? p : resolve(root, p)
 }
 
-async function* walk(dir, ignorePatterns = []) {
+export async function* walk(
+  dir: string,
+  ignorePatterns: RegExp[] = [],
+): AsyncIterable<{ stats: Stats; path: string }> {
   const sliceAt = dir.length + (dir.endsWith('/') ? 0 : 1)
   for await (const match of klaw(dir)) {
     const pathEntry = match.path.slice(sliceAt)
@@ -23,20 +25,18 @@ async function* walk(dir, ignorePatterns = []) {
   }
 }
 
-module.exports = {
+export {
   parse,
   join,
   resolve,
-  resolveIfRelative,
-  walk,
   dirname,
   basename,
   remove,
   isAbsolute,
   sep,
-  write: writeFile,
-  read: readFile,
-  exists: existsSync,
-  stat: lstatSync,
-  ensure: ensureDir,
+  writeFile as write,
+  readFile as read,
+  existsSync as exists,
+  lstatSync as stat,
+  ensureDir as ensure,
 }

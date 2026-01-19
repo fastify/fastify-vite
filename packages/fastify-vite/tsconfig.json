@@ -14,8 +14,8 @@
     "rootDir": "src",
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "esnext",
+    "target": "esnext"
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.js", "src/**/*.test.mts", "src/**/*.test.cjs"],
+  "exclude": ["src/**/*.test.js", "src/**/*.test.mts", "src/**/*.test.cjs"]
 }
