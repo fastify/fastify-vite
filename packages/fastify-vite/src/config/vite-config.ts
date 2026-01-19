@@ -1,21 +1,11 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
-import type { ResolvedConfig, UserConfig } from 'vite'
-
+import type { UserConfig } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
+import type { ResolvedViteConfigWithFastify, ViteFastifyConfig } from './types.ts'
 
-type ViteFastifyConfig = {
-  clientModule?: string
-  entryPaths?: Record<string, string>
-  outDirs?: Record<string, string>
-}
-
-interface ResolvedViteConfigWithFastify extends ResolvedConfig {
-  fastify?: ViteFastifyConfig
-}
-
-interface UserConfigWithFastify extends UserConfig {
+interface ExtendedUserConfig extends UserConfig {
   fastify?: ViteFastifyConfig
 }
 
@@ -23,13 +13,13 @@ type UserConfigFn = (args: {
   command: string
   mode: string
   ssrBuild: boolean
-}) => UserConfigWithFastify | Promise<UserConfigWithFastify>
+}) => ExtendedUserConfig | Promise<ExtendedUserConfig>
 
 type UserConfigModule =
-  | UserConfigWithFastify
+  | ExtendedUserConfig
   | UserConfigFn
   | {
-      default: UserConfigWithFastify | UserConfigFn
+      default: ExtendedUserConfig | UserConfigFn
     }
 
 function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'build']) {
@@ -76,15 +66,16 @@ function findConfigFile(root: string) {
   }
 }
 
-type ResolveViteConfigOptions = {
-  spa?: boolean
-  distDir?: string
-}
-
 async function resolveViteConfig(
   root: string,
   dev: boolean,
-  { spa, distDir }: ResolveViteConfigOptions = {},
+  {
+    spa,
+    distDir,
+  }: {
+    spa?: boolean
+    distDir?: string
+  } = {},
 ) {
   const command = 'build'
   const mode = dev ? 'development' : 'production'
@@ -141,7 +132,7 @@ async function resolveViteConfig(
           ssrBuild: !spa,
         })
       : userConfig
-  ) as UserConfigWithFastify
+  ) as ExtendedUserConfig
   resolvedUserConfig.fastify = resolvedConfig.fastify
 
   return [

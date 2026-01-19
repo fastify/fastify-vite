@@ -1,5 +1,5 @@
 const middie = require('@fastify/middie')
-const { join, resolve, read, exists } = require('../ioutils.cts')
+const { join, resolve, read } = require('../ioutils.ts')
 
 const hot = Symbol('hotModuleReplacementProxy')
 

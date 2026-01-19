@@ -88,8 +88,8 @@ By the end of this phase, there should be no more JavaScript files in the packag
     - `src/config/defaults.ts`: `DefaultConfig` and renderer hook wiring.
     - `src/config/paths.ts`: `resolveRoot`, `resolveClientModule`, `findConfigFile`, `findViteConfigJson`, `getApplicationRootDir`.
     - `src/config/vite-config.ts`: `resolveViteConfig`.
-    - `src/config/bundle.ts`: `resolveSSRBundle`, `resolveSPABundle`.
-    - `src/config/types.ts`: config, bundle, and renderer hook types (use `import type` from `fastify`).
+    - `src/config/bundle.ts`: `resolveSSRBundle`, `resolveSPABundle`. (completed)
+    - `src/config/types.ts`: config, bundle, and renderer hook types (use `import type` from `fastify`). (completed)
     - Keep `src/config.ts` as the public surface (`configure`, re-exports) and preserve default export behavior.
 25. Convert `mode/development.js` to TS, keeping runtime behavior unchanged.
 26. Convert `mode/production.js` to TS, keeping runtime behavior unchanged.

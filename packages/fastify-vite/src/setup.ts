@@ -1,5 +1,5 @@
 import { parse as parsePath } from 'node:path'
-import { join, walk, ensure, exists, write, read } from './ioutils.cts'
+import { join, walk, ensure, exists, write, read } from './ioutils.ts'
 
 export interface RendererInfo {
   path: string
