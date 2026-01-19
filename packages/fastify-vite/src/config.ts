@@ -1,15 +1,15 @@
-const { createClientEnvironment, createSSREnvironment } = require('./config/environments.ts')
-const { DefaultConfig } = require('./config/defaults.ts')
-const { resolveClientModule, resolveRoot } = require('./config/paths.ts')
-const { resolveViteConfig } = require('./config/vite-config.ts')
-const { resolveSSRBundle, resolveSPABundle } = require('./config/bundle.ts')
+import { DefaultConfig } from './config/defaults.ts'
+import { resolveClientModule, resolveRoot } from './config/paths.ts'
+import { resolveViteConfig } from './config/vite-config.ts'
+import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
+import type { ConfigOptions, RuntimeConfig } from './config/types.ts'
 
-async function configure(options = {}) {
+export async function configure(options: Partial<ConfigOptions> = {}): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const config = Object.assign(defaultConfig, { ...options })
-  config.root = root // Store resolved root for use in production.js
+  const config = Object.assign(defaultConfig, { ...options }) as RuntimeConfig
+  config.root = root
   const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
   Object.assign(config, { vite, viteConfig })
 
@@ -40,13 +40,3 @@ async function configure(options = {}) {
 
   return config
 }
-
-module.exports = {
-  configure,
-  createClientEnvironment,
-  createSSREnvironment,
-  resolveClientModule,
-  resolveSSRBundle,
-  resolveSPABundle,
-}
-module.exports.default = module.exports

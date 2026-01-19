@@ -80,7 +80,7 @@ By the end of this phase, there should be no more JavaScript files in the packag
 
 ## Phase 6: Config and mode conversions (depend on leaf modules)
 
-24. Convert `config.js` to TS, splitting it into smaller modules first to keep types scoped and make the largest runtime file easier to annotate and review:
+24. Convert `config.js` to TS, splitting it into smaller modules first to keep types scoped and make the largest runtime file easier to annotate and review (completed):
     - Move code without behavior changes; update internal imports to point at the new modules.
     - Update `src/config.js` each time a helper is moved so the change is reviewable atomically.
     - Pause and allow me to review after splitting each module out.
