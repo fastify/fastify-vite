@@ -1,8 +1,8 @@
-const { HTMLRewriter } = require('html-rewriter-wasm')
+import { HTMLRewriter } from 'html-rewriter-wasm'
 
 const jsPath = /^[a-zA-Z_$][a-zA-Z_$.0-9]*$/
 
-async function compileHtmlTemplate(source) {
+async function compileHtmlTemplate(source: string): Promise<[string, string[]]> {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
 
@@ -11,7 +11,7 @@ async function compileHtmlTemplate(source) {
   let isScriptTag = false
   let isScript = false
 
-  const params = []
+  const params: string[] = []
   const rewriter = new HTMLRewriter((chunk) => {
     decoded = decoder.decode(chunk)
     if (isScript) {
@@ -20,7 +20,7 @@ async function compileHtmlTemplate(source) {
     output += decoded
   })
 
-  const processComment = (text) => {
+  const processComment = (text: string): string | null => {
     const trimmed = text.trim()
     if (jsPath.test(trimmed)) {
       params.push(trimmed)
@@ -52,9 +52,9 @@ async function compileHtmlTemplate(source) {
       element.prepend('${"')
       element.append('"}')
       isScriptTag = true
-    },
-    end() {
-      isScriptTag = false
+      element.onEndTag(() => {
+        isScriptTag = false
+      })
     },
   })
 
@@ -87,14 +87,14 @@ async function compileHtmlTemplate(source) {
   return [output, params]
 }
 
-async function createHtmlTemplateFunction(source) {
+async function createHtmlTemplateFunction(
+  source: string,
+): Promise<(data?: Record<string, unknown>) => string> {
   const [compiled, params] = await compileHtmlTemplate(source)
   return new Function(
     params.length ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }` : '',
     `return \`${compiled}\``,
-  )
+  ) as (data?: Record<string, unknown>) => string
 }
 
-module.exports = {
-  createHtmlTemplateFunction,
-}
+export { createHtmlTemplateFunction }

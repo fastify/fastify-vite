@@ -4,6 +4,7 @@
     "correctness": "error"
   },
   "rules": {
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
     "no-unused-vars": "warn"
   }
 }

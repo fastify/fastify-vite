@@ -1,7 +1,16 @@
-const { parse: parsePath } = require('node:path')
-const { join, walk, ensure, exists, write, read } = require('./ioutils.cts')
+import { parse as parsePath } from 'node:path'
+import { join, walk, ensure, exists, write, read } from './ioutils.cts'
 
-async function ejectBlueprint(base, { root, renderer }) {
+export interface RendererInfo {
+  path: string
+}
+
+export interface SetupOptions {
+  root: string
+  renderer: RendererInfo
+}
+
+async function ejectBlueprint(base: string, { root, renderer }: SetupOptions): Promise<void> {
   await ensure(root)
   for await (const { stats, path } of walk(join(renderer.path, 'blueprint'))) {
     const filePath = join(root, path)
@@ -14,7 +23,7 @@ async function ejectBlueprint(base, { root, renderer }) {
   }
 }
 
-async function ensureConfigFile(base, { root, renderer }) {
+async function ensureConfigFile(base: string, { renderer }: SetupOptions): Promise<string> {
   const sourcePath = join(renderer.path, 'config.mjs')
   const targetPath = join(base, 'vite.config.js')
   if (exists(sourcePath) && !exists(targetPath)) {
@@ -24,5 +33,5 @@ async function ensureConfigFile(base, { root, renderer }) {
   return targetPath
 }
 
-module.exports = { ensureConfigFile, ejectBlueprint }
-module.exports.default = module.exports
+export { ensureConfigFile, ejectBlueprint }
+export default { ensureConfigFile, ejectBlueprint }

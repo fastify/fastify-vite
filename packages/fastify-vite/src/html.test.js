@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { describe, expect, test } from 'vitest'
-import { createHtmlTemplateFunction } from './html.js'
+import { createHtmlTemplateFunction } from './html.ts'
 
 describe('createHtmlTemplateFunction', () => {
   test('replaces comments without spaces <!-- element -->', async () => {

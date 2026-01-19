@@ -1,19 +1,20 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "checkJs": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
     "lib": ["ES2020"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "emitDeclarationOnly": false,
     "outDir": "dist",
-    "allowJs": true,
-    "checkJs": false,
+    "rewriteRelativeImportExtensions": true,
     "rootDir": "src",
     "skipLibCheck": true,
-    "rewriteRelativeImportExtensions": true
+    "sourceMap": true,
+    "target": "esnext"
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.js", "src/**/*.test.mts", "src/**/*.test.cjs"]
