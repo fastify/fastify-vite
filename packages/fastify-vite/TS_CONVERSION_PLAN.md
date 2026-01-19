@@ -62,46 +62,53 @@ By the end of this phase, there should be no more JavaScript files in the packag
 
 13. Update `tsconfig.json` `module`/`moduleResolution` to `NodeNext` so `.mts/.cts` emit `.mjs/.cjs` correctly.
 
-## Phase 4: Incremental file conversions (small, low-risk first)
+## Phase 4: Switch package exports to emitted output (start building before examples)
 
-14. Convert `utils.js` to `utils.ts`, moving types from `types/utils.d.ts` into the source.
-15. Convert `html.js` to `html.ts` and ensure any DOM/HTML types are explicit.
-16. Convert `config.js` and `setup.js` to TS, adding minimal type annotations for options/config objects.
-17. Convert `mode/development.js` and `mode/production.js` to TS, keeping runtime behavior unchanged.
+14. Update `tsconfig.json` to include `src/` runtime sources so `pnpm build` emits `dist/`.
+15. Add/update a `build` script if needed and ensure it outputs to `dist/`.
+16. Update `package.json` `main`/`exports` to point to `dist/` outputs.
+17. Update `files` to include `dist/` and remove JS source files from publish list once stable.
+18. Update `.github/workflows/integration-tests.yml` to run `pnpm build` before `pnpm test:examples`.
+19. From this phase onward, always run `pnpm build` before `pnpm test:examples`.
 
-## Phase 5: Core entry points and plugin surface
+## Phase 5: Incremental file conversions (small, low-risk first)
 
-18. Convert `index.js` to `index.ts`, moving types from `types/index.d.ts` into the source.
-19. Convert `plugin.mjs` to `plugin.mts`, moving types from `types/plugin.d.ts` into the source.
-20. Convert `ioutils.cjs` to `ioutils.cts`, ensuring CJS interop is preserved (temporary until ESM-only phase).
+20. Convert `utils.js` to `utils.ts`, moving types from `types/utils.d.ts` into the source.
+21. Convert `html.js` to `html.ts` and ensure any DOM/HTML types are explicit.
+22. Convert `setup.js` to TS, adding minimal type annotations for options/config objects.
 
-## Phase 6: Types consolidation
+## Phase 6: Core entry points and plugin surface
 
-21. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers.
-22. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily).
+23. Convert `index.js` to `index.ts`, moving types from `types/index.d.ts` into the source.
+24. Convert `plugin.mjs` to `plugin.mts`, moving types from `types/plugin.d.ts` into the source.
+25. Convert `ioutils.cjs` to `ioutils.cts`, ensuring CJS interop is preserved (temporary until ESM-only phase).
+26. Delay converting `config.js`, `mode/development.js`, and `mode/production.js` until after the main surface is stable.
 
-## Phase 7: Switch package exports to emitted output
+## Phase 7: Types consolidation
 
-23. Update `package.json` `main`/`exports` to point to `dist/` outputs.
-24. Update `files` to include `dist/` and remove JS source files from publish list once stable.
-25. Update `.github/workflows/integration-tests.yml` to run `pnpm build` before `pnpm test:examples`.
-26. Keep a temporary validation window where both source and `dist/` are published (if needed).
-27. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`.
+27. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers.
+28. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily).
 
-## Phase 8: Tests, fixtures, and cleanup
+## Phase 8: Types cleanup and remaining runtime conversions
 
-28. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`).
-29. Remove obsolete JS sources once TS build is the sole runtime source.
-30. Add a changeset if package behavior or public exports change.
+29. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`.
+30. Convert `config.js` to TS, adding minimal type annotations for options/config objects.
+31. Convert `mode/development.js` and `mode/production.js` to TS, keeping runtime behavior unchanged.
 
-## Phase 9: Shift to ESM-only sources and outputs
+## Phase 9: Tests, fixtures, and cleanup
 
-31. Set package `type: "module"` and emit only `.js` ESM outputs.
-32. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly.
-33. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings.
-34. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage).
+32. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`).
+33. Remove obsolete JS sources once TS build is the sole runtime source.
+34. Add a changeset if package behavior or public exports change.
 
-## Phase 10: Follow-up hardening
+## Phase 10: Shift to ESM-only sources and outputs
 
-35. Tighten `noImplicitAny`/`strict` settings only after the TS migration is stable.
-36. Add type-level tests to replace or extend current `types/*.test-d.ts` coverage.
+35. Set package `type: "module"` and emit only `.js` ESM outputs.
+36. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly.
+37. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings.
+38. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage).
+
+## Phase 11: Follow-up hardening
+
+39. Tighten `noImplicitAny`/`strict` settings only after the TS migration is stable.
+40. Add type-level tests to replace or extend current `types/*.test-d.ts` coverage.
