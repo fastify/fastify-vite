@@ -45,7 +45,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run --no-file-parallelism && vitest --typecheck.only --run"
+    "test": "pnpm build && vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.1.0",
