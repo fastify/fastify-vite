@@ -12,34 +12,7 @@ const {
   read,
 } = require('./ioutils.cts')
 const { createHtmlTemplateFunction } = require('./html.ts')
-
-function createClientEnvironment(dev, outDir) {
-  return {
-    build: {
-      outDir: `${outDir}/client`,
-      minify: !dev,
-      sourcemap: dev,
-      manifest: true,
-    },
-  }
-}
-
-function createSSREnvironment(dev, outDir, clientModule) {
-  return {
-    build: {
-      outDir: `${outDir}/server`,
-      ssr: true,
-      minify: !dev,
-      sourcemap: dev,
-      emitAssets: true,
-      rollupOptions: {
-        input: {
-          index: clientModule,
-        },
-      },
-    },
-  }
-}
+const { createClientEnvironment, createSSREnvironment } = require('./config/environments.ts')
 
 const DefaultConfig = {
   // Whether or not to enable Vite's Dev Server

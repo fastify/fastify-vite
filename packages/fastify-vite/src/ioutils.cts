@@ -4,7 +4,7 @@ import { isAbsolute, join, resolve, parse, dirname, basename, sep } from 'node:p
 import { ensureDir, remove } from 'fs-extra'
 import klaw from 'klaw'
 
-export function resolveIfRelative(p: string, root: string, f: string): string {
+export function resolveIfRelative(p: string, root: string): string {
   return isAbsolute(p) ? p : resolve(root, p)
 }
 
