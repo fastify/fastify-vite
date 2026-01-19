@@ -16,36 +16,27 @@
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "files": [
-    "src/config.js",
-    "src/html.js",
-    "src/index.js",
-    "src/ioutils.cts",
-    "src/plugin.mts",
-    "src/setup.js",
-    "src/utils.js",
     "types/index.d.ts",
     "types/plugin.d.ts",
     "types/utils.d.ts",
-    "src/mode/development.js",
-    "src/mode/production.js"
+    "dist/**/*"
   ],
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "types": "./types/index.d.ts",
-  "typings": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./src/index.js",
-      "require": "./src/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./utils": {
       "types": "./types/utils.d.ts",
-      "import": "./src/utils.js",
-      "require": "./src/utils.js"
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.js"
     },
     "./plugin": {
       "types": "./types/plugin.d.ts",
-      "import": "./src/plugin.mts"
+      "import": "./dist/plugin.mjs"
     }
   },
   "publishConfig": {
@@ -53,7 +44,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run --no-file-parallelism && vitest --typecheck.only --run"
+    "test": "pnpm build && vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
     "@fastify/deepmerge": "^3.1.0",
