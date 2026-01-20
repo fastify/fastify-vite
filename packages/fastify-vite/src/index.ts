@@ -3,59 +3,18 @@ import type { Manifest, UserConfig } from 'vite'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import type {
-  Bundle,
-  ClientEntries,
-  ClientModule,
-  ClientRouteArgs,
-  CreateErrorHandler,
-  CreateHtmlFunction,
-  CreateHtmlTemplateFunction,
-  CreateRoute,
-  CreateRouteArgs,
-  CreateRouteHandler,
-  Ctx,
   DecoratedReply,
   DevRuntimeConfig,
-  HtmlFunction,
-  Loosen,
   ProdRuntimeConfig,
   RenderContext,
-  RendererFunctions,
   RendererOption,
-  RenderFunction,
   RenderResult,
   RouteDefinition,
-  RouteType,
   RuntimeConfig,
 } from './types.ts'
 
 // Re-export types for consumers
-export type {
-  Bundle,
-  ClientEntries,
-  ClientModule,
-  ClientRouteArgs,
-  CreateErrorHandler,
-  CreateHtmlFunction,
-  CreateHtmlTemplateFunction,
-  CreateRoute,
-  CreateRouteArgs,
-  CreateRouteHandler,
-  Ctx,
-  DecoratedReply,
-  DevRuntimeConfig,
-  HtmlFunction,
-  Loosen,
-  ProdRuntimeConfig,
-  RenderContext,
-  RendererFunctions,
-  RendererOption,
-  RenderFunction,
-  RenderResult,
-  RouteDefinition,
-  RouteType,
-  RuntimeConfig,
-}
+export type { DevRuntimeConfig, ProdRuntimeConfig, RenderContext, RouteDefinition, RuntimeConfig }
 
 // Module augmentation for Fastify
 declare module 'fastify' {
