@@ -17,5 +17,5 @@
     "target": "esnext"
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.js", "src/**/*.test.mts", "src/**/*.test.cjs"]
+  "exclude": ["src/**/*.test.js", "src/**/*.test.ts"]
 }

@@ -1,4 +1,3 @@
-import { readFile } from 'node:fs/promises'
 import { describe, expect, test } from 'vitest'
 import { createHtmlTemplateFunction } from './html.ts'
 

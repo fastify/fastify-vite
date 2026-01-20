@@ -104,22 +104,44 @@ By the end of this phase, there should be no more JavaScript files in the packag
 29. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers. (completed)
 30. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily). (completed)
 
-## Phase 9: Types cleanup
+## Phase 9: Types cleanup (completed)
 
-31. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`.
+31. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`. (completed)
+    - Removed `types/index.d.ts`, `types/plugin.d.ts`, `types/utils.d.ts`.
+    - Kept `types/index.test-d.ts` and `types/plugin.test-d.ts` for type testing.
+    - Updated `types/plugin.test-d.ts` to import from `../dist/plugin.mjs`.
+    - Updated `files` array in `package.json` to remove `types/*.d.ts` entries.
 
-## Phase 10: Tests, fixtures, and cleanup
+## Phase 10: Tests, fixtures, and cleanup (completed)
 
-32. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`).
-33. Remove obsolete JS sources once TS build is the sole runtime source.
-34. Add a changeset if package behavior or public exports change.
+32. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`). (completed)
+    - `src/html.test.js` imports from `./html.ts` (relative to src).
+    - `src/index.test.js` imports from `../fixtures/` which import from `../../src/index.js` and `../../src/index.ts`.
+    - Examples import from `@fastify/vite` via package exports resolving to `dist/`.
+33. Remove obsolete JS sources once TS build is the sole runtime source. (completed)
+    - Removed `src/mode/development.js` and `src/mode/production.js` (CJS shims that were no longer used).
+34. Add a changeset if package behavior or public exports change. (completed)
+    - No changeset needed; public API unchanged. Existing changeset covers the 9.0.0 release.
 
-## Phase 11: Shift to ESM-only sources and outputs
+## Phase 11: Shift to ESM-only sources and outputs (completed)
 
-35. Set package `type: "module"` and emit only `.js` ESM outputs.
-36. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly.
-37. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings.
-38. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage).
+35. Set package `type: "module"` and emit only `.js` ESM outputs. (completed)
+    - Added `"type": "module"` to package.json.
+36. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly. (completed)
+    - Renamed `src/plugin.mts` to `src/plugin.ts`.
+    - Renamed `src/plugin.test.mts` to `src/plugin.test.ts`.
+    - Updated tsconfig.json exclude pattern from `.test.mts` to `.test.ts`.
+    - Updated import in `plugin.test.ts` from `./plugin.mts` to `./plugin.ts`.
+    - Updated import in `types/plugin.test-d.ts` from `../dist/plugin.mjs` to `../dist/plugin.js`.
+37. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings. (completed)
+    - Removed `require` entries from all exports.
+    - Updated `./plugin` export types from `./dist/plugin.d.mts` to `./dist/plugin.d.ts`.
+    - Updated `./plugin` export import from `./dist/plugin.mjs` to `./dist/plugin.js`.
+38. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage). (completed)
+    - Removed `require('..')` from `types/index.test-d.ts` and replaced with ESM import.
+    - Renamed `fixtures/cjs/server.js` to `fixtures/cjs/server.cjs` to preserve CJS behavior.
+    - Updated `src/index.test.js` import to reference `.cjs` file.
+    - Updated `fixtures/esm/server.js` import to use `.ts` extension.
 
 ## Phase 12: Follow-up hardening
 

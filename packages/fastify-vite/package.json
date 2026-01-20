@@ -16,27 +16,23 @@
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "files": [
-    "types/index.d.ts",
-    "types/plugin.d.ts",
-    "types/utils.d.ts",
     "dist/**/*"
   ],
+  "type": "module",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js"
     },
     "./utils": {
       "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js",
-      "require": "./dist/utils.js"
+      "import": "./dist/utils.js"
     },
     "./plugin": {
-      "types": "./dist/plugin.d.mts",
-      "import": "./dist/plugin.mjs"
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/plugin.js"
     }
   },
   "publishConfig": {
