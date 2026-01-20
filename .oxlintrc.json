@@ -3,8 +3,15 @@
   "categories": {
     "correctness": "error"
   },
+  "plugins": ["import"],
   "rules": {
-    "import/extensions": ["error", "always", { "ignorePackages": true }],
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "ignorePackages": true
+      }
+    ],
     "no-unused-vars": "warn"
   }
 }

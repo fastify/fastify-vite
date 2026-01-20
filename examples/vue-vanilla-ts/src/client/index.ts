@@ -1,4 +1,4 @@
-import { createApp } from './base'
+import { createApp } from './base.ts'
 
 export default {
   // Provides function needed to perform SSR

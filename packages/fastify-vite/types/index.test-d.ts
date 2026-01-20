@@ -1,8 +1,8 @@
 import type { Server } from 'node:http'
 import Fastify, { type FastifyPluginCallback } from 'fastify'
 import { describe, expectTypeOf, it } from 'vitest'
-import * as FastifyViteAll from '..'
-import FastifyVite, { fastifyVite, type FastifyViteOptions } from '..'
+import * as FastifyViteAll from '../src/index.ts'
+import FastifyVite, { fastifyVite, type FastifyViteOptions } from '../src/index.ts'
 
 const options = {
   root: process.cwd(),
