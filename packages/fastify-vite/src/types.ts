@@ -166,13 +166,16 @@ export interface ConfigOptions {
 
   virtualModulePrefix: string
 
+  /** URL prefix for static asset routes in production mode */
+  prefix?: string
+
   prepareServer: (scope: FastifyInstance, config: RuntimeConfig) => void
 
   prepareClient: (
     entries: ClientEntries,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => Promise<unknown>
+  ) => Promise<ClientModule | undefined>
 
   createHtmlTemplateFunction: CreateHtmlTemplateFunction
 
@@ -185,7 +188,21 @@ export interface ConfigOptions {
   createErrorHandler: CreateErrorHandler
 }
 
-export interface RuntimeConfig extends ConfigOptions {
+interface BaseRuntimeConfig extends Omit<ConfigOptions, 'dev' | 'vite'> {
   hasRenderFunction?: boolean
   ssrManifest?: unknown
 }
+
+/** Runtime config in development mode with full Vite resolved config */
+export interface DevRuntimeConfig extends BaseRuntimeConfig {
+  dev: true
+  vite: ExtendedResolvedViteConfig
+}
+
+/** Runtime config in production mode with serialized Vite config from vite.config.json */
+export interface ProdRuntimeConfig extends BaseRuntimeConfig {
+  dev: false
+  vite: ExtendedResolvedViteConfig | SerializableViteConfig
+}
+
+export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig

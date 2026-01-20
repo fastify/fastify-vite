@@ -174,26 +174,38 @@ By the end of this phase, there should be no more JavaScript files in the packag
     }
     ```
 
-## Phase 13: Production typing
+## Phase 13: Production typing (completed)
 
-43. Remove prod-mode `any` for output directories and assets access by narrowing `config.vite` with a discriminated union so `packages/fastify-vite/src/mode/production.ts:56` and `packages/fastify-vite/src/mode/production.ts:62` stop using `as ResolvedConfig as any`.
-44. Add `prefix?: string` to `ConfigOptions`/`FastifyViteOptions` and use it to remove `(config as any).prefix` at `packages/fastify-vite/src/mode/production.ts:72`.
-45. Type `prepareClient`/`createRenderFunction` usage in `packages/fastify-vite/src/mode/production.ts:112`, `packages/fastify-vite/src/mode/production.ts:120`, and `packages/fastify-vite/src/mode/production.ts:124` with `ClientEntries`/`ClientModule` so `client` and `routes` return types are no longer cast.
-46. Switch `RuntimeConfig.vite` to a discriminated union so dev/prod paths narrow safely:
+43. Remove prod-mode `any` for output directories and assets access by narrowing `config.vite` with a discriminated union so `packages/fastify-vite/src/mode/production.ts:56` and `packages/fastify-vite/src/mode/production.ts:62` stop using `as ResolvedConfig as any`. (completed)
+    - Created `DevRuntimeConfig` and `ProdRuntimeConfig` discriminated union types.
+    - Updated `production.ts` to use `ProdRuntimeConfig` and access `vite.build.outDir`/`vite.build.assetsDir` without `as any` casts.
+    - Updated `development.ts` to use `DevRuntimeConfig` and remove unnecessary `as ResolvedConfig` casts.
+44. Add `prefix?: string` to `ConfigOptions`/`FastifyViteOptions` and use it to remove `(config as any).prefix` at `packages/fastify-vite/src/mode/production.ts:72`. (completed)
+    - Added `prefix?: string` to `ConfigOptions` in `types.ts`.
+    - Added `prefix?: string` to `FastifyViteOptions` in `index.ts`.
+    - Updated `production.ts` to use `config.prefix` directly.
+45. Type `prepareClient`/`createRenderFunction` usage in `packages/fastify-vite/src/mode/production.ts:112`, `packages/fastify-vite/src/mode/production.ts:120`, and `packages/fastify-vite/src/mode/production.ts:124` with `ClientEntries`/`ClientModule` so `client` and `routes` return types are no longer cast. (completed)
+    - Updated `prepareClient` return type in `ConfigOptions` from `Promise<unknown>` to `Promise<ClientModule | undefined>`.
+    - Updated `production.ts` to explicitly type `client` as `ClientModule | undefined`.
+    - Removed `as any` casts from `prepareClient` and `createRenderFunction` calls.
+    - Removed unused `viteConfig` parameter from `loadBundle` helper function.
+46. Switch `RuntimeConfig.vite` to a discriminated union so dev/prod paths narrow safely: (completed)
 
     ```ts
-    interface DevRuntimeConfig extends ConfigOptions {
+    interface DevRuntimeConfig extends BaseRuntimeConfig {
       dev: true
       vite: ExtendedResolvedViteConfig
     }
 
-    interface ProdRuntimeConfig extends ConfigOptions {
+    interface ProdRuntimeConfig extends BaseRuntimeConfig {
       dev: false
-      vite: SerializableViteConfig
+      vite: ExtendedResolvedViteConfig | SerializableViteConfig
     }
 
     export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig
     ```
+
+    - Exported `DevRuntimeConfig` and `ProdRuntimeConfig` types for consumers.
 
 ## Phase 14: Type imports and consolidation
 

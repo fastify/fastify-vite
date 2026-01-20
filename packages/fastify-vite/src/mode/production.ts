@@ -2,13 +2,13 @@ import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { isAbsolute, join, parse, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
-import type { ResolvedConfig } from 'vite'
 import FastifyStatic from '@fastify/static'
 import type {
   ClientEntries,
   ClientModule,
   ExtendedResolvedViteConfig,
-  RuntimeConfig,
+  ProdRuntimeConfig,
+  SerializableViteConfig,
 } from '../types.ts'
 import { resolveIfRelative } from '../ioutils.ts'
 
@@ -36,30 +36,29 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
-export async function setup(this: SetupContext, config: RuntimeConfig) {
+export async function setup(this: SetupContext, config: ProdRuntimeConfig) {
   const { spa, vite } = config
   let clientOutDir: string
   let ssrOutDir: string
+  let assetsDir: string
 
-  const viteConfig = vite as ExtendedResolvedViteConfig
-
-  if (viteConfig.fastify) {
-    const { outDirs } = viteConfig.fastify!
+  if (vite.fastify?.outDirs) {
+    const { outDirs } = vite.fastify
 
     const { packageDirectory } = await import('package-directory')
     const outDirRoot = await packageDirectory({ cwd: config.root })
 
     clientOutDir = resolveIfRelative(outDirs.client!, outDirRoot)
     ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
+    assetsDir = (vite as ExtendedResolvedViteConfig).build.assetsDir
   } else {
-    const viteBaseConfig = vite as ResolvedConfig
-    const outDir = resolveIfRelative((viteBaseConfig as any).build.outDir, viteBaseConfig.root)
+    const viteBaseConfig = vite as SerializableViteConfig
+    const outDir = resolveIfRelative(viteBaseConfig.build!.outDir!, viteBaseConfig.root!)
 
     clientOutDir = resolve(outDir, 'client')
     ssrOutDir = resolve(outDir, 'server')
+    assetsDir = viteBaseConfig.build!.assetsDir!
   }
-
-  const { assetsDir } = (vite as ResolvedConfig as any).build
 
   if (!existsSync(clientOutDir)) {
     throw new Error(`No client distribution bundle found at ${clientOutDir}.`)
@@ -69,11 +68,10 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
     throw new Error(`No SSR distribution bundle found at ${ssrOutDir}.`)
   }
 
-  const registrationPrefix = (config as any).prefix || ''
-  const viteBaseConfig = vite as ResolvedConfig
-  const basePathname = URL.canParse(viteBaseConfig.base)
-    ? new URL(viteBaseConfig.base).pathname
-    : viteBaseConfig.base || '/'
+  const registrationPrefix = config.prefix || ''
+  const basePathname = URL.canParse(vite.base ?? '')
+    ? new URL(vite.base!).pathname
+    : vite.base || '/'
   await this.scope.register(async function assetFiles(scope: FastifyInstance) {
     const root = [resolve(clientOutDir, assetsDir)]
     if (existsSync(resolve(ssrOutDir, assetsDir))) {
@@ -109,25 +107,23 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
     value: ssrManifest,
   })
 
-  const client = !config.spa && (await config.prepareClient(entries as any, this.scope, config))
+  const client: ClientModule | undefined = !config.spa
+    ? await config.prepareClient(entries, this.scope, config)
+    : undefined
 
   this.scope.decorateReply(
     'html',
     await config.createHtmlFunction(config.bundle.indexHtml!, this.scope, config),
   )
 
-  if (config.hasRenderFunction) {
-    const renderFunction = await config.createRenderFunction(client as any, this.scope, config)
+  if (config.hasRenderFunction && client) {
+    const renderFunction = await config.createRenderFunction(client, this.scope, config)
     this.scope.decorateReply('render', renderFunction)
   }
 
-  return { client, routes: (client as any)?.routes }
+  return { client, routes: client?.routes }
 
-  async function loadBundle(
-    viteConfig: ExtendedResolvedViteConfig,
-    distOutDir: string,
-    entryPath: string,
-  ): Promise<EntryBundle> {
+  async function loadBundle(distOutDir: string, entryPath: string): Promise<EntryBundle> {
     const parsedNamed = parse(entryPath).name
     const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
 
@@ -180,9 +176,9 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
       process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath!)) : ssrManifestPath!
 
     const entries: ClientEntries = {}
-    if (viteConfig.fastify?.entryPaths) {
-      for (const [env, entryPath] of Object.entries(viteConfig.fastify!.entryPaths!)) {
-        const bundle = await loadBundle(viteConfig, viteConfig.fastify!.outDirs![env]!, entryPath)
+    if (vite.fastify?.entryPaths) {
+      for (const [env, entryPath] of Object.entries(vite.fastify.entryPaths)) {
+        const bundle = await loadBundle(vite.fastify.outDirs![env]!, entryPath)
         if (bundle) {
           entries[env] = bundle as unknown as ClientModule
         }
