@@ -11,7 +11,9 @@ import type {
   CreateRoute,
   CreateRouteHandler,
   DecoratedReply,
+  DevRuntimeConfig,
   HtmlFunction,
+  ProdRuntimeConfig,
   RenderContext,
   RenderFunction,
   RenderResult,
@@ -29,7 +31,9 @@ export type {
   CreateRoute,
   CreateRouteHandler,
   DecoratedReply,
+  DevRuntimeConfig,
   HtmlFunction,
+  ProdRuntimeConfig,
   RenderContext,
   RenderFunction,
   RenderResult,
@@ -149,6 +153,11 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
    * If a relative path is provided, it is resolved relative to the app root.
    */
   distDir?: string
+  /**
+   * URL prefix for static asset routes in production mode.
+   * Use this when mounting @fastify/vite under a path prefix.
+   */
+  prefix?: string
 }
 
 interface ModeModule {

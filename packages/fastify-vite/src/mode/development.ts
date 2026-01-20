@@ -14,8 +14,8 @@ import type {
   ClientEntries,
   ClientModule,
   DecoratedReply,
+  DevRuntimeConfig,
   RouteDefinition,
-  RuntimeConfig,
 } from '../types.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
@@ -73,14 +73,14 @@ function hasIterableRoutes(
   )
 }
 
-export async function setup(this: SetupContext, config: RuntimeConfig) {
+export async function setup(this: SetupContext, config: DevRuntimeConfig) {
   const loadEntryModulePaths = async (): Promise<Record<string, string> | null> => {
     if (config.spa) {
       return null
     }
     const entryModulePaths: Record<string, string> = {}
 
-    const viteConfig = config.vite as ResolvedConfig
+    const viteConfig = config.vite
 
     if (!hasPlugin(viteConfig, 'vite-fastify')) {
       throw new Error("@fastify/vite's Vite plugin not registered")
@@ -140,7 +140,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
   }
   const devServerOptions = mergeConfig(
     defineConfig(baseConfig) as UserConfig,
-    config.vite as UserConfig,
+    config.vite as unknown as UserConfig,
   ) as InlineConfig
 
   this.devServer = await createServer(devServerOptions)
@@ -205,7 +205,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
         }
       }
     }
-    const viteConfig = config.vite as ResolvedConfig
+    const viteConfig = config.vite
     const indexHtmlPath = join(viteConfig.root, 'index.html')
     const indexHtml = await readFile(indexHtmlPath, 'utf8')
     const transformedHtml = await this.devServer.transformIndexHtml(req.url, indexHtml)
