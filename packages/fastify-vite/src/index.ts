@@ -1,43 +1,59 @@
 import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
-import type { UserConfig } from 'vite'
+import type { Manifest, UserConfig } from 'vite'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import type {
+  Bundle,
   ClientEntries,
   ClientModule,
+  ClientRouteArgs,
   CreateErrorHandler,
   CreateHtmlFunction,
   CreateHtmlTemplateFunction,
   CreateRoute,
+  CreateRouteArgs,
   CreateRouteHandler,
+  Ctx,
   DecoratedReply,
   DevRuntimeConfig,
   HtmlFunction,
+  Loosen,
   ProdRuntimeConfig,
   RenderContext,
+  RendererFunctions,
+  RendererOption,
   RenderFunction,
   RenderResult,
   RouteDefinition,
+  RouteType,
   RuntimeConfig,
 } from './types.ts'
 
 // Re-export types for consumers
 export type {
+  Bundle,
   ClientEntries,
   ClientModule,
+  ClientRouteArgs,
   CreateErrorHandler,
   CreateHtmlFunction,
   CreateHtmlTemplateFunction,
   CreateRoute,
+  CreateRouteArgs,
   CreateRouteHandler,
+  Ctx,
   DecoratedReply,
   DevRuntimeConfig,
   HtmlFunction,
+  Loosen,
   ProdRuntimeConfig,
   RenderContext,
+  RendererFunctions,
+  RendererOption,
   RenderFunction,
   RenderResult,
   RouteDefinition,
+  RouteType,
   RuntimeConfig,
 }
 
@@ -53,86 +69,6 @@ declare module 'fastify' {
   }
 }
 
-// Types for renderer options
-type Loosen<T> = T & Record<string, unknown>
-
-type RouteType = Partial<{
-  server: unknown
-  req: unknown
-  reply: unknown
-  head: unknown
-  state: unknown
-  data: Record<string, unknown>
-  firstRender: boolean
-  layout: unknown
-  getMeta: unknown
-  getData: unknown
-  onEnter: unknown
-  streaming: unknown
-  clientOnly: unknown
-  serverOnly: unknown
-}>
-
-type Ctx = Loosen<{
-  routes: Array<RouteType>
-  context: unknown
-  body: unknown
-  stream: unknown
-  data: unknown
-}>
-
-interface RendererFunctions {
-  createHtmlTemplateFunction(source: string): unknown
-  createHtmlFunction(
-    source: string,
-    scope?: unknown,
-    config?: unknown,
-  ): (ctx: Ctx) => Promise<unknown>
-  createRenderFunction(
-    args: Loosen<{
-      routes?: Array<RouteType>
-      create?: (arg0: Record<string, unknown>) => unknown
-      createApp: unknown
-    }>,
-  ): Promise<
-    (
-      server: unknown,
-      req: unknown,
-      reply: unknown,
-    ) =>
-      | (Ctx | { element: string; hydration?: string })
-      | Promise<Ctx | { element: string; hydration?: string }>
-  >
-}
-
-interface RendererOption<
-  CM = string | Record<string, unknown> | unknown,
-  C = unknown,
-> extends RendererFunctions {
-  clientModule: CM
-  createErrorHandler(
-    client: C,
-    scope: FastifyInstance,
-    config?: unknown,
-  ): (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
-  createRoute(
-    args: Loosen<{
-      client?: C
-      handler?: (...args: unknown[]) => unknown
-      errorHandler: (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
-      route?: RouteType
-    }>,
-    scope: FastifyInstance,
-    config: unknown,
-  ): void
-  createRouteHandler(
-    client: C,
-    scope: FastifyInstance,
-    config?: unknown,
-  ): (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
-  prepareClient(clientModule: CM, scope?: FastifyInstance, config?: unknown): Promise<C>
-}
-
 export interface FastifyViteOptions extends Partial<RendererOption> {
   dev?: boolean
   root: string
@@ -141,7 +77,7 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
   vite?: UserConfig
   viteConfig?: string
   bundle?: {
-    manifest?: object
+    manifest?: Manifest
     indexHtml?: string | Buffer
     dir?: string
   }

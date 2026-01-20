@@ -207,12 +207,28 @@ By the end of this phase, there should be no more JavaScript files in the packag
 
     - Exported `DevRuntimeConfig` and `ProdRuntimeConfig` types for consumers.
 
-## Phase 14: Type imports and consolidation
+## Phase 14: Type imports and consolidation (completed)
 
-47. Replace local Vite config loader types with Vite exports (`UserConfigExport`, `UserConfigFn`) in `packages/fastify-vite/src/config/vite-config.ts:7`.
-48. Replace `bundle.manifest` types with `Manifest` in `packages/fastify-vite/src/types.ts:32` and `packages/fastify-vite/src/types.ts:38`.
-49. Replace `ssrManifest` with `Manifest` (or `Manifest | undefined`) in `packages/fastify-vite/src/types.ts:190`.
-50. Consolidate duplicate and overlapping types by merging `BundleInfo`/`Bundle` (`packages/fastify-vite/src/types.ts:31`, `packages/fastify-vite/src/types.ts:37`), moving `RouteType`/`Ctx`/`RendererOption` from `packages/fastify-vite/src/index.ts` into `packages/fastify-vite/src/types.ts`, and replacing inline args with `CreateRouteArgs` (`packages/fastify-vite/src/config/defaults.ts:86`, `packages/fastify-vite/src/types.ts:129`).
+47. Replace local Vite config loader types with Vite exports (`UserConfigExport`, `UserConfigFn`) in `packages/fastify-vite/src/config/vite-config.ts:7`. (completed)
+    - Imported `ConfigEnv` and `UserConfigExport` from Vite.
+    - Created `ExtendedUserConfigFn` type that uses Vite's `ConfigEnv`.
+    - Updated `UserConfigModule` to include `UserConfigExport`.
+    - Changed `ssrBuild` to `isSsrBuild` to align with Vite's `ConfigEnv` interface.
+48. Replace `bundle.manifest` types with `Manifest` in `packages/fastify-vite/src/types.ts:32` and `packages/fastify-vite/src/types.ts:38`. (completed)
+    - Imported `Manifest` from Vite.
+    - Updated `BundleInfo.manifest` to use `Manifest` type.
+    - Merged `Bundle` as a deprecated type alias for `BundleInfo`.
+    - Fixed `bundle.ts` to use empty object `{}` instead of array `[]` for dev mode manifest.
+49. Replace `ssrManifest` with `Manifest` (or `Manifest | undefined`) in `packages/fastify-vite/src/types.ts:190`. (completed)
+    - Updated `BaseRuntimeConfig.ssrManifest` to use `Manifest` type.
+50. Consolidate duplicate and overlapping types by merging `BundleInfo`/`Bundle` (`packages/fastify-vite/src/types.ts:31`, `packages/fastify-vite/src/types.ts:37`), moving `RouteType`/`Ctx`/`RendererOption` from `packages/fastify-vite/src/index.ts` into `packages/fastify-vite/src/types.ts`, and replacing inline args with `CreateRouteArgs` (`packages/fastify-vite/src/config/defaults.ts:86`, `packages/fastify-vite/src/types.ts:129`). (completed)
+    - Moved `Loosen`, `RouteType`, `Ctx`, `RendererFunctions`, `RendererOption` from `index.ts` to `types.ts`.
+    - Added `ClientRouteArgs` type for the common `{ client, route }` pattern.
+    - Updated `CreateRouteHandler` and `CreateErrorHandler` to use `ClientRouteArgs`.
+    - Made `CreateRouteArgs` extend `ClientRouteArgs`.
+    - Updated `defaults.ts` to use `ClientRouteArgs` type.
+    - Updated `FastifyViteOptions.bundle.manifest` to use `Manifest` type.
+    - Re-exported all moved types from `index.ts` for consumers.
 
 ## Phase 15: Strictness and verification
 

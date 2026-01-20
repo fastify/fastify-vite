@@ -1,20 +1,20 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
+import type { ConfigEnv, UserConfigExport } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
 import type { ExtendedUserConfig, ExtendedResolvedViteConfig } from '../types.ts'
 
-type UserConfigFn = (args: {
-  command: string
-  mode: string
-  ssrBuild: boolean
-}) => ExtendedUserConfig | Promise<ExtendedUserConfig>
+/** Function that returns an extended user config, matching Vite's UserConfigFn signature */
+type ExtendedUserConfigFn = (env: ConfigEnv) => ExtendedUserConfig | Promise<ExtendedUserConfig>
 
+/** Module shape when importing a vite.config file - handles both direct and default exports */
 type UserConfigModule =
+  | UserConfigExport
   | ExtendedUserConfig
-  | UserConfigFn
+  | ExtendedUserConfigFn
   | {
-      default: ExtendedUserConfig | UserConfigFn
+      default: UserConfigExport | ExtendedUserConfig | ExtendedUserConfigFn
     }
 
 function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'build']) {
@@ -119,15 +119,15 @@ async function resolveViteConfig(
   ) {
     userConfig = userConfig.default
   }
-  const resolvedUserConfig = (
+  const resolvedUserConfig = (await Promise.resolve(
     typeof userConfig === 'function'
-      ? await userConfig({
+      ? userConfig({
           command,
           mode,
-          ssrBuild: !spa,
+          isSsrBuild: !spa,
         })
-      : userConfig
-  ) as ExtendedUserConfig
+      : userConfig,
+  )) as ExtendedUserConfig
   resolvedUserConfig.fastify = resolvedConfig.fastify
 
   return [
