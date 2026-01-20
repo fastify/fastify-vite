@@ -42,7 +42,7 @@ export async function resolveSSRBundle({
       }
     }
   } else {
-    bundle.manifest = []
+    bundle.manifest = {}
   }
   return bundle
 }
@@ -72,7 +72,7 @@ export async function resolveSPABundle({
     }
     bundle.indexHtml = await readFile(indexHtmlPath, 'utf8')
   } else {
-    bundle.manifest = []
+    bundle.manifest = {}
   }
   return bundle
 }

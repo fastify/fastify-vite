@@ -2,12 +2,12 @@ import type { FastifyInstance } from 'fastify'
 import { createHtmlTemplateFunction } from '../html.ts'
 import type {
   ClientEntries,
+  ClientRouteArgs,
   CreateRouteArgs,
   ConfigOptions,
   ErrorHandler,
   HtmlFunction,
   RenderResult,
-  RouteDefinition,
   RouteHandler,
   RuntimeConfig,
 } from '../types.ts'
@@ -84,7 +84,7 @@ export const DefaultConfig: ConfigOptions = {
   },
 
   createRouteHandler(
-    { client, route }: { client?: unknown; route?: RouteDefinition },
+    { client, route }: ClientRouteArgs,
     scope: FastifyInstance,
     config: RuntimeConfig,
   ): RouteHandler {
@@ -113,7 +113,11 @@ export const DefaultConfig: ConfigOptions = {
     }
   },
 
-  createErrorHandler(_args, _scope: FastifyInstance, config: RuntimeConfig): ErrorHandler {
+  createErrorHandler(
+    _args: ClientRouteArgs,
+    _scope: FastifyInstance,
+    config: RuntimeConfig,
+  ): ErrorHandler {
     return (error, req, reply) => {
       if (config.dev) {
         console.log(error)
