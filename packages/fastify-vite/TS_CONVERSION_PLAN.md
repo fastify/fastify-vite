@@ -94,10 +94,10 @@ By the end of this phase, there should be no more JavaScript files in the packag
 25. Convert `mode/development.js` to TS, keeping runtime behavior unchanged. (completed)
 26. Convert `mode/production.js` to TS, keeping runtime behavior unchanged. (completed)
 
-## Phase 7: Entry points and plugin surface (depend on config/mode)
+## Phase 7: Entry points and plugin surface (depend on config/mode) (completed)
 
-27. Convert `plugin.mjs` to `plugin.mts`, moving types from `types/plugin.d.ts` into the source.
-28. Convert `index.js` to `index.ts`, moving types from `types/index.d.ts` into the source.
+27. Convert `plugin.mjs` to `plugin.mts`, moving types from `types/plugin.d.ts` into the source. (completed)
+28. Convert `index.js` to `index.ts`, moving types from `types/index.d.ts` into the source. (completed)
 
 ## Phase 8: Types consolidation
 

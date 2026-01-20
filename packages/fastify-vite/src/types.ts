@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type { ResolvedConfig } from 'vite'
+import type { ResolvedConfig, UserConfig } from 'vite'
 
 export type ViteFastifyConfig = {
   clientModule?: string
@@ -7,8 +7,25 @@ export type ViteFastifyConfig = {
   outDirs?: Record<string, string>
 }
 
-export interface ResolvedViteConfigWithFastify extends ResolvedConfig {
+/** The fastify extension added to Vite configs */
+export interface WithFastifyConfig {
   fastify?: ViteFastifyConfig
+}
+
+/** Vite ResolvedConfig extended with fastify properties */
+export interface ExtendedResolvedViteConfig extends ResolvedConfig, WithFastifyConfig {}
+
+/** Vite UserConfig extended with fastify properties */
+export interface ExtendedUserConfig extends UserConfig, WithFastifyConfig {}
+
+/** The JSON structure written to vite.config.json by the plugin */
+export interface SerializableViteConfig extends WithFastifyConfig {
+  base?: string
+  root?: string
+  build?: {
+    assetsDir?: string
+    outDir?: string
+  }
 }
 
 export interface BundleInfo {
@@ -25,7 +42,7 @@ export interface Bundle {
 
 export type BundleConfig = {
   dev: boolean
-  vite: ResolvedViteConfigWithFastify
+  vite: ExtendedResolvedViteConfig
   root: string
 }
 
@@ -66,9 +83,13 @@ export type RenderFunction = (
   ctx?: RenderContext,
 ) => RenderResult | Promise<RenderResult>
 
-export interface DecoratedReply extends FastifyReply {
-  render?: (ctx?: RenderContext) => RenderResult | Promise<RenderResult>
-  html?: (ctx?: RenderResult) => FastifyReply | Promise<FastifyReply>
+/**
+ * A FastifyReply that has been decorated with html() and render() methods.
+ * This is the reply type available after vite.ready() has been called.
+ */
+export type DecoratedReply = FastifyReply & {
+  render: (ctx?: RenderContext) => RenderResult | Promise<RenderResult>
+  html: (ctx?: RenderResult) => FastifyReply | Promise<FastifyReply>
 }
 
 export type HtmlTemplateFunction = (data?: RenderResult) => string
@@ -76,9 +97,9 @@ export type HtmlTemplateFunction = (data?: RenderResult) => string
 export type CreateHtmlTemplateFunction = (source: string) => Promise<HtmlTemplateFunction>
 
 export type HtmlFunction = (
-  this: DecoratedReply,
+  this: FastifyReply,
   ctx?: RenderResult,
-) => DecoratedReply | Promise<DecoratedReply>
+) => FastifyReply | Promise<FastifyReply>
 
 export type CreateHtmlFunction = (
   source: string,

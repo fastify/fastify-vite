@@ -1,13 +1,8 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
-import type { UserConfig } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type { ResolvedViteConfigWithFastify, ViteFastifyConfig } from '../types.ts'
-
-interface ExtendedUserConfig extends UserConfig {
-  fastify?: ViteFastifyConfig
-}
+import type { ExtendedUserConfig, ExtendedResolvedViteConfig } from '../types.ts'
 
 type UserConfigFn = (args: {
   command: string
@@ -111,7 +106,7 @@ async function resolveViteConfig(
     },
     command,
     mode,
-  )) as ResolvedViteConfigWithFastify
+  )) as ExtendedResolvedViteConfig
   if (process.platform === 'win32') {
     configFile = `file://${configFile}`
   }
