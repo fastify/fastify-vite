@@ -22,20 +22,20 @@
     "dist/**/*"
   ],
   "main": "dist/index.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
     "./utils": {
-      "types": "./types/utils.d.ts",
+      "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js",
       "require": "./dist/utils.js"
     },
     "./plugin": {
-      "types": "./types/plugin.d.ts",
+      "types": "./dist/plugin.d.mts",
       "import": "./dist/plugin.mjs"
     }
   },
