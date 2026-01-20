@@ -1,10 +1,22 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type { Plugin as VitePlugin, ResolvedConfig, ViteDevServer } from 'vite'
+import type {
+  InlineConfig,
+  Plugin as VitePlugin,
+  ResolvedConfig,
+  UserConfig,
+  ViteDevServer,
+} from 'vite'
 import type { ModuleRunner } from 'vite/module-runner'
-import middie from '@fastify/middie'
-import type { DecoratedReply, RouteDefinition, RuntimeConfig } from '../types.ts'
+import middie, { type Handler as MiddieHandler } from '@fastify/middie'
+import type {
+  ClientEntries,
+  ClientModule,
+  DecoratedReply,
+  RouteDefinition,
+  RuntimeConfig,
+} from '../types.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
 
@@ -24,12 +36,41 @@ interface ViteEnvironmentsConfig {
   >
 }
 
+interface HotState {
+  client?: ClientModule
+  routeHash?: Map<string, RouteDefinition>
+}
+
+/** Fastify scope after being decorated with hot state */
+interface HotScope extends FastifyInstance {
+  [hot]: HotState
+}
+
 interface SetupContext {
   scope: FastifyInstance
   devServer: ViteDevServer
-  entries: Record<string, unknown>
+  entries: ClientEntries
   runners: Record<string, ModuleRunner>
-  [key: symbol]: any
+}
+
+/** Module loaded via ModuleRunner that may have a default export */
+interface LoadedEntryModule {
+  default?: ClientModule
+  [key: string]: unknown
+}
+
+/** Check if an object has iterable routes */
+function hasIterableRoutes(
+  client: unknown,
+): client is ClientModule & { routes: Iterable<RouteDefinition> } {
+  if (!client || typeof client !== 'object') return false
+  const maybeClient = client as { routes?: unknown }
+  const routes = maybeClient.routes
+  return (
+    !!routes &&
+    typeof routes !== 'string' && // strings are iterable, but not desired here
+    typeof (routes as Iterable<unknown>)[Symbol.iterator] === 'function'
+  )
 }
 
 export async function setup(this: SetupContext, config: RuntimeConfig) {
@@ -87,7 +128,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
     await this.scope.register(middie)
   }
 
-  const baseConfig: any = {
+  const baseConfig: InlineConfig = {
     configFile: false,
     server: {
       middlewareMode: true,
@@ -97,10 +138,14 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
     },
     appType: 'custom',
   }
-  const devServerOptions = mergeConfig(defineConfig(baseConfig) as any, config.vite as any) as any
+  const devServerOptions = mergeConfig(
+    defineConfig(baseConfig) as UserConfig,
+    config.vite as UserConfig,
+  ) as InlineConfig
 
   this.devServer = await createServer(devServerOptions)
-  this.scope.use(this.devServer.middlewares as any)
+  // Connect.Server implements the middleware handler interface
+  this.scope.use(this.devServer.middlewares as unknown as MiddieHandler)
 
   this.entries = {}
 
@@ -121,19 +166,20 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
       this.runners[env] = runner
 
       if (env in entryModulePaths) {
-        const entryModule = await runner.import(entryModulePaths[env])
+        const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
+        const clientModule: ClientModule = entryModule.default ?? entryModule
         if (!this.entries[env]) {
-          this.entries[env] = { ...((entryModule as any).default ?? entryModule) }
+          this.entries[env] = { ...clientModule }
         } else {
-          Object.assign(this.entries[env], {
-            ...((entryModule as any).default ?? entryModule),
-          })
+          Object.assign(this.entries[env], clientModule)
         }
       }
     }
   }
 
   this.scope.decorate(hot, {})
+  // After decoration, the scope has the hot state
+  const hotScope = this.scope as HotScope
 
   this.scope.decorateReply('render', null)
   this.scope.decorateReply('html', null)
@@ -145,17 +191,17 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
 
   this.scope.addHook('onRequest', async (req: FastifyRequest, reply: FastifyReply) => {
     await loadEntries()
-    const client = !config.spa && (await config.prepareClient(this.entries, this.scope, config))
-    this.scope[hot].client = client
-    if (this.scope[hot].client) {
-      if ((client as any).routes && typeof (client as any).routes[Symbol.iterator] === 'function') {
-        if (!this.scope[hot].routeHash) {
-          this.scope[hot].routeHash = new Map<string, RouteDefinition>()
-        }
-        for (const route of (client as any).routes) {
-          if (route.path) {
-            this.scope[hot].routeHash.set(route.path, route)
-          }
+    const clientResult =
+      !config.spa && (await config.prepareClient(this.entries, this.scope, config))
+    const client = clientResult ? (clientResult as ClientModule) : undefined
+    hotScope[hot].client = client
+    if (client && hasIterableRoutes(client)) {
+      if (!hotScope[hot].routeHash) {
+        hotScope[hot].routeHash = new Map<string, RouteDefinition>()
+      }
+      for (const route of client.routes) {
+        if (route.path) {
+          hotScope[hot].routeHash.set(route.path, route)
         }
       }
     }
@@ -169,7 +215,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
 
     if (config.hasRenderFunction) {
       decoratedReply.render = await config.createRenderFunction(
-        this.scope[hot].client,
+        hotScope[hot].client,
         this.scope,
         config,
       )
@@ -180,12 +226,13 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
 
   await loadEntries()
 
-  const client = !config.spa && (await config.prepareClient(this.entries, this.scope, config))
+  const clientResult = !config.spa && (await config.prepareClient(this.entries, this.scope, config))
+  const client = clientResult ? (clientResult as ClientModule) : undefined
 
   return {
     config,
     client,
-    routes: (client as any)?.routes,
+    routes: client && hasIterableRoutes(client) ? client.routes : undefined,
   }
 }
 

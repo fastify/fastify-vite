@@ -143,7 +143,66 @@ By the end of this phase, there should be no more JavaScript files in the packag
     - Updated `src/index.test.js` import to reference `.cjs` file.
     - Updated `fixtures/esm/server.js` import to use `.ts` extension.
 
-## Phase 12: Follow-up hardening
+## Phase 12: Dev mode typing (completed)
 
-39. Tighten `noImplicitAny`/`strict` settings only after the TS migration is stable.
-40. Add type-level tests to replace or extend current `types/*.test-d.ts` coverage.
+39. Replace the `baseConfig`/`mergeConfig` casts in `packages/fastify-vite/src/mode/development.ts:90` and `packages/fastify-vite/src/mode/development.ts:100` with `InlineConfig`/`UserConfig` so `devServerOptions` is typed without `any`. (completed)
+40. Type the Vite dev middleware bridge at `packages/fastify-vite/src/mode/development.ts:103` using `ViteDevServer['middlewares']` (or `Connect.Server`) so `scope.use` no longer needs `as any`. (completed)
+    - Imported `Handler as MiddieHandler` from `@fastify/middie` and cast middlewares appropriately.
+41. Type entry loading in `packages/fastify-vite/src/mode/development.ts:126` and `packages/fastify-vite/src/mode/development.ts:129` by narrowing the `entryModule` default export to `ClientModule` and keep `entries` as `ClientEntries`. (completed)
+    - Added `LoadedEntryModule` interface for modules loaded via ModuleRunner.
+    - Updated `SetupContext.entries` to use `ClientEntries` type.
+42. Add typed HMR state/scope and update the dev-mode setup context so route hydration no longer relies on `any` at `packages/fastify-vite/src/mode/development.ts:151`, `packages/fastify-vite/src/mode/development.ts:155`, and `packages/fastify-vite/src/mode/development.ts:188`: (completed)
+    - Added `HotState` and `HotScope` interfaces.
+    - Added `hasIterableRoutes` type guard for proper narrowing.
+    - Used type assertion after decoration to access hot state safely.
+
+    ```ts
+    interface HotState {
+      client?: ClientModule
+      routeHash?: Map<string, RouteDefinition>
+    }
+
+    interface HotScope extends FastifyInstance {
+      [hot]: HotState
+    }
+
+    interface SetupContext {
+      scope: FastifyInstance // HotScope used after decoration
+      devServer: ViteDevServer
+      entries: ClientEntries
+      runners: Record<string, ModuleRunner>
+    }
+    ```
+
+## Phase 13: Production typing
+
+43. Remove prod-mode `any` for output directories and assets access by narrowing `config.vite` with a discriminated union so `packages/fastify-vite/src/mode/production.ts:56` and `packages/fastify-vite/src/mode/production.ts:62` stop using `as ResolvedConfig as any`.
+44. Add `prefix?: string` to `ConfigOptions`/`FastifyViteOptions` and use it to remove `(config as any).prefix` at `packages/fastify-vite/src/mode/production.ts:72`.
+45. Type `prepareClient`/`createRenderFunction` usage in `packages/fastify-vite/src/mode/production.ts:112`, `packages/fastify-vite/src/mode/production.ts:120`, and `packages/fastify-vite/src/mode/production.ts:124` with `ClientEntries`/`ClientModule` so `client` and `routes` return types are no longer cast.
+46. Switch `RuntimeConfig.vite` to a discriminated union so dev/prod paths narrow safely:
+
+    ```ts
+    interface DevRuntimeConfig extends ConfigOptions {
+      dev: true
+      vite: ExtendedResolvedViteConfig
+    }
+
+    interface ProdRuntimeConfig extends ConfigOptions {
+      dev: false
+      vite: SerializableViteConfig
+    }
+
+    export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig
+    ```
+
+## Phase 14: Type imports and consolidation
+
+47. Replace local Vite config loader types with Vite exports (`UserConfigExport`, `UserConfigFn`) in `packages/fastify-vite/src/config/vite-config.ts:7`.
+48. Replace `bundle.manifest` types with `Manifest` in `packages/fastify-vite/src/types.ts:32` and `packages/fastify-vite/src/types.ts:38`.
+49. Replace `ssrManifest` with `Manifest` (or `Manifest | undefined`) in `packages/fastify-vite/src/types.ts:190`.
+50. Consolidate duplicate and overlapping types by merging `BundleInfo`/`Bundle` (`packages/fastify-vite/src/types.ts:31`, `packages/fastify-vite/src/types.ts:37`), moving `RouteType`/`Ctx`/`RendererOption` from `packages/fastify-vite/src/index.ts` into `packages/fastify-vite/src/types.ts`, and replacing inline args with `CreateRouteArgs` (`packages/fastify-vite/src/config/defaults.ts:86`, `packages/fastify-vite/src/types.ts:129`).
+
+## Phase 15: Strictness and verification
+
+51. Enable `noImplicitAny: true` in `packages/fastify-vite/tsconfig.json` and fix resulting errors within `@fastify/vite` only.
+52. Keep `types/*.test-d.ts` but focus on public API assertions (plugin options shape, Fastify reply augmentation, `RuntimeConfig`/`RenderContext`) and run `pnpm --filter @fastify/vite test`, `pnpm test:examples`, `pnpm lint:fix`, and `pnpm format`.
