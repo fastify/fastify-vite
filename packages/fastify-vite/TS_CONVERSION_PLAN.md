@@ -104,15 +104,24 @@ By the end of this phase, there should be no more JavaScript files in the packag
 29. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers. (completed)
 30. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily). (completed)
 
-## Phase 9: Types cleanup
+## Phase 9: Types cleanup (completed)
 
-31. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`.
+31. Remove the handwritten `types/*.d.ts` files once `exports` `types` entries point to `dist/`. (completed)
+    - Removed `types/index.d.ts`, `types/plugin.d.ts`, `types/utils.d.ts`.
+    - Kept `types/index.test-d.ts` and `types/plugin.test-d.ts` for type testing.
+    - Updated `types/plugin.test-d.ts` to import from `../dist/plugin.mjs`.
+    - Updated `files` array in `package.json` to remove `types/*.d.ts` entries.
 
-## Phase 10: Tests, fixtures, and cleanup
+## Phase 10: Tests, fixtures, and cleanup (completed)
 
-32. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`).
-33. Remove obsolete JS sources once TS build is the sole runtime source.
-34. Add a changeset if package behavior or public exports change.
+32. Verify unit tests import from `src/` (relative paths) and integration tests (`examples/`) import via `@fastify/vite` (resolved through package exports to `dist/`). (completed)
+    - `src/html.test.js` imports from `./html.ts` (relative to src).
+    - `src/index.test.js` imports from `../fixtures/` which import from `../../src/index.js` and `../../src/index.ts`.
+    - Examples import from `@fastify/vite` via package exports resolving to `dist/`.
+33. Remove obsolete JS sources once TS build is the sole runtime source. (completed)
+    - Removed `src/mode/development.js` and `src/mode/production.js` (CJS shims that were no longer used).
+34. Add a changeset if package behavior or public exports change. (completed)
+    - No changeset needed; public API unchanged. Existing changeset covers the 9.0.0 release.
 
 ## Phase 11: Shift to ESM-only sources and outputs
 

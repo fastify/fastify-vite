@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 import { describe, expectTypeOf, it } from 'vitest'
-import viteFastify, { findCommonPath, type ViteFastifyPluginOptions } from './plugin'
+import viteFastify, { findCommonPath, type ViteFastifyPluginOptions } from '../dist/plugin.mjs'
 
 describe('plugin types', () => {
   it('viteFastify returns a Vite Plugin', () => {

@@ -16,9 +16,6 @@
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "files": [
-    "types/index.d.ts",
-    "types/plugin.d.ts",
-    "types/utils.d.ts",
     "dist/**/*"
   ],
   "main": "dist/index.js",

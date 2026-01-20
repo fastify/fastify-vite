@@ -49,7 +49,7 @@ declare module 'fastify' {
   }
 }
 
-// Types from types/index.d.ts, migrated into source
+// Types for renderer options
 type Loosen<T> = T & Record<string, unknown>
 
 type RouteType = Partial<{
