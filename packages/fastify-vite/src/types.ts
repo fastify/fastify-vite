@@ -1,5 +1,33 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type { Manifest, ResolvedConfig, UserConfig } from 'vite'
+import type { Manifest, ResolvedConfig as ViteResolvedConfig, UserConfig } from 'vite'
+
+/** User-provided options for the @fastify/vite plugin */
+export interface FastifyViteOptions extends Partial<RendererOption> {
+  dev?: boolean
+  root: string
+  spa?: boolean
+  renderer?: string | Partial<RendererOption>
+  vite?: UserConfig
+  viteConfig?: string
+  bundle?: {
+    manifest?: Manifest
+    indexHtml?: string | Buffer
+    dir?: string
+  }
+  /**
+   * Override the directory to search for `vite.config.json` in production mode.
+   * By default, the runtime automatically finds the app root via `package.json`
+   * and searches in both `dist/` and `build/` folders.
+   * Only specify this if you use a different folder name (e.g., `out`).
+   * If a relative path is provided, it is resolved relative to the app root.
+   */
+  distDir?: string
+  /**
+   * URL prefix for static asset routes in production mode.
+   * Use this when mounting @fastify/vite under a path prefix.
+   */
+  prefix?: string
+}
 
 export type ViteFastifyConfig = {
   clientModule?: string
@@ -13,7 +41,7 @@ export interface WithFastifyConfig {
 }
 
 /** Vite ResolvedConfig extended with fastify properties */
-export interface ExtendedResolvedViteConfig extends ResolvedConfig, WithFastifyConfig {}
+export interface ExtendedResolvedViteConfig extends ViteResolvedConfig, WithFastifyConfig {}
 
 /** Vite UserConfig extended with fastify properties */
 export interface ExtendedUserConfig extends UserConfig, WithFastifyConfig {}
@@ -224,36 +252,39 @@ export type CreateRoute = (
   config: RuntimeConfig,
 ) => void | Promise<void>
 
-export interface ConfigOptions {
-  dev: boolean
+/** Keys from RendererOption that need different signatures in ResolvedConfig */
+type RendererFunctionKeys =
+  | 'prepareClient'
+  | 'createHtmlTemplateFunction'
+  | 'createHtmlFunction'
+  | 'createRenderFunction'
+  | 'createRoute'
+  | 'createRouteHandler'
+  | 'createErrorHandler'
+  | 'clientModule'
 
-  root?: string
-
-  distDir?: string
-
-  vite?: unknown
-
+/** Internal resolved configuration after defaults and renderer merged */
+export interface ResolvedFastifyViteConfig extends Required<
+  Omit<
+    FastifyViteOptions,
+    'bundle' | 'vite' | 'renderer' | 'viteConfig' | 'distDir' | 'prefix' | RendererFunctionKeys
+  >
+> {
+  // These stay optional (filled in by configure())
   viteConfig?: string
-
-  bundle: Bundle
-
-  renderer: Record<string, unknown> | string
-
-  createRenderFunction?: (
-    clientModule: ClientModule,
-    scope: FastifyInstance,
-    config: RuntimeConfig,
-  ) => RenderFunction | Promise<RenderFunction>
-
-  clientModule?: string
-
-  spa: boolean
-
-  virtualModulePrefix: string
-
-  /** URL prefix for static asset routes in production mode */
+  distDir?: string
   prefix?: string
 
+  // Override types that differ from FastifyViteOptions
+  bundle: Bundle
+  vite?: unknown
+  renderer: Record<string, unknown> | string
+
+  // Internal properties not in FastifyViteOptions
+  virtualModulePrefix: string
+  clientModule?: string
+
+  // Renderer functions with resolved signatures (required, with defaults)
   prepareServer: (scope: FastifyInstance, config: RuntimeConfig) => void
 
   prepareClient: (
@@ -271,9 +302,15 @@ export interface ConfigOptions {
   createRouteHandler: CreateRouteHandler
 
   createErrorHandler: CreateErrorHandler
+
+  createRenderFunction?: (
+    clientModule: ClientModule,
+    scope: FastifyInstance,
+    config: RuntimeConfig,
+  ) => RenderFunction | Promise<RenderFunction>
 }
 
-interface BaseRuntimeConfig extends Omit<ConfigOptions, 'dev' | 'vite'> {
+interface BaseRuntimeConfig extends Omit<ResolvedFastifyViteConfig, 'dev' | 'vite'> {
   hasRenderFunction?: boolean
   ssrManifest?: Manifest
 }

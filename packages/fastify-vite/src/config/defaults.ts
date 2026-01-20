@@ -4,7 +4,7 @@ import type {
   ClientEntries,
   ClientRouteArgs,
   CreateRouteArgs,
-  ConfigOptions,
+  ResolvedFastifyViteConfig,
   ErrorHandler,
   HtmlFunction,
   RenderResult,
@@ -12,7 +12,7 @@ import type {
   RuntimeConfig,
 } from '../types.ts'
 
-export const DefaultConfig: ConfigOptions = {
+export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
   bundle: {

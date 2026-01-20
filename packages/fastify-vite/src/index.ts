@@ -1,20 +1,26 @@
 import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
-import type { Manifest, UserConfig } from 'vite'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import type {
   DecoratedReply,
   DevRuntimeConfig,
+  FastifyViteOptions,
   ProdRuntimeConfig,
   RenderContext,
-  RendererOption,
   RenderResult,
   RouteDefinition,
   RuntimeConfig,
 } from './types.ts'
 
 // Re-export types for consumers
-export type { DevRuntimeConfig, ProdRuntimeConfig, RenderContext, RouteDefinition, RuntimeConfig }
+export type {
+  DevRuntimeConfig,
+  FastifyViteOptions,
+  ProdRuntimeConfig,
+  RenderContext,
+  RouteDefinition,
+  RuntimeConfig,
+}
 
 // Module augmentation for Fastify
 declare module 'fastify' {
@@ -26,33 +32,6 @@ declare module 'fastify' {
   interface FastifyInstance {
     vite: Vite
   }
-}
-
-export interface FastifyViteOptions extends Partial<RendererOption> {
-  dev?: boolean
-  root: string
-  spa?: boolean
-  renderer?: string | Partial<RendererOption>
-  vite?: UserConfig
-  viteConfig?: string
-  bundle?: {
-    manifest?: Manifest
-    indexHtml?: string | Buffer
-    dir?: string
-  }
-  /**
-   * Override the directory to search for `vite.config.json` in production mode.
-   * By default, the runtime automatically finds the app root via `package.json`
-   * and searches in both `dist/` and `build/` folders.
-   * Only specify this if you use a different folder name (e.g., `out`).
-   * If a relative path is provided, it is resolved relative to the app root.
-   */
-  distDir?: string
-  /**
-   * URL prefix for static asset routes in production mode.
-   * Use this when mounting @fastify/vite under a path prefix.
-   */
-  prefix?: string
 }
 
 interface ModeModule {
@@ -92,7 +71,7 @@ class Vite {
 
   async ready(): Promise<void> {
     // Process all user-provided options and compute all Vite configuration settings
-    this.config = await configure(this[kOptions] as unknown as Parameters<typeof configure>[0])
+    this.config = await configure(this[kOptions])
 
     // Configure the Fastify server instance — used mostly by renderer packages
     if (this.config.prepareServer) {
