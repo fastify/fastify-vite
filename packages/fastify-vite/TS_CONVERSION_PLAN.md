@@ -99,10 +99,10 @@ By the end of this phase, there should be no more JavaScript files in the packag
 27. Convert `plugin.mjs` to `plugin.mts`, moving types from `types/plugin.d.ts` into the source. (completed)
 28. Convert `index.js` to `index.ts`, moving types from `types/index.d.ts` into the source. (completed)
 
-## Phase 8: Types consolidation
+## Phase 8: Types consolidation (completed)
 
-29. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers.
-30. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily).
+29. Verify emitted `.d.ts` files in `dist/` are compatible with existing consumers. (completed)
+30. Update `package.json` `types` and `exports` `types` entries to point to emitted declarations in `dist/` (keep handwritten files temporarily). (completed)
 
 ## Phase 9: Types cleanup
 
