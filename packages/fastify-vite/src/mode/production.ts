@@ -5,10 +5,10 @@ import type { FastifyInstance } from 'fastify'
 import type { ResolvedConfig } from 'vite'
 import FastifyStatic from '@fastify/static'
 import type {
-  RuntimeConfig,
   ClientEntries,
   ClientModule,
-  ResolvedViteConfigWithFastify,
+  ExtendedResolvedViteConfig,
+  RuntimeConfig,
 } from '../types.ts'
 import { resolveIfRelative } from '../ioutils.ts'
 
@@ -41,7 +41,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
   let clientOutDir: string
   let ssrOutDir: string
 
-  const viteConfig = vite as ResolvedViteConfigWithFastify
+  const viteConfig = vite as ExtendedResolvedViteConfig
 
   if (viteConfig.fastify) {
     const { outDirs } = viteConfig.fastify!
@@ -124,7 +124,7 @@ export async function setup(this: SetupContext, config: RuntimeConfig) {
   return { client, routes: (client as any)?.routes }
 
   async function loadBundle(
-    viteConfig: ResolvedViteConfigWithFastify,
+    viteConfig: ExtendedResolvedViteConfig,
     distOutDir: string,
     entryPath: string,
   ): Promise<EntryBundle> {

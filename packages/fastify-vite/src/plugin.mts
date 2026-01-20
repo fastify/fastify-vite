@@ -1,18 +1,39 @@
-// @ts-nocheck
 import { dirname, isAbsolute, join, relative, sep } from 'node:path'
-import getDeepMergeFunction from '@fastify/deepmerge'
 import { writeFile } from 'node:fs/promises'
+import getDeepMergeFunction from '@fastify/deepmerge'
+import type { Plugin, ResolvedConfig, UserConfig } from 'vite'
+import type {
+  ExtendedResolvedViteConfig,
+  SerializableViteConfig,
+  ViteFastifyConfig,
+} from './types.ts'
 
-export function viteFastify({ spa, clientModule } = {}) {
-  let customOutDir
-  let jsonFilePath
-  let configToWrite = {}
-  let resolvedConfig = {}
+export interface ViteFastifyPluginOptions {
+  /**
+   * Enable SPA mode (no SSR environment)
+   */
+  spa?: boolean
+  /**
+   * Path to the client module entry point
+   */
+  clientModule?: string
+}
+
+/**
+ * Vite plugin for Fastify integration.
+ * Configures Vite environments for client and SSR builds.
+ */
+export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
+  const { spa, clientModule } = options
+  let customOutDir: string | undefined
+  let jsonFilePath: string
+  let configToWrite: SerializableViteConfig = {}
+  let resolvedConfig: ExtendedResolvedViteConfig = {} as ExtendedResolvedViteConfig
 
   return {
     name: 'vite-fastify',
     enforce: 'pre',
-    async config(rawConfig, { mode }) {
+    async config(rawConfig: UserConfig, { mode }): Promise<void> {
       customOutDir = rawConfig.build?.outDir
       const isDevMode = mode === 'development'
       const outDir = customOutDir ?? 'dist'
@@ -46,11 +67,11 @@ export function viteFastify({ spa, clientModule } = {}) {
         }
       }
     },
-    async configResolved(config = {}) {
+    async configResolved(config: ResolvedConfig): Promise<void> {
       const { base, build, isProduction, root: resolvedViteRoot } = config
-      const { assetsDir } = build || {}
+      const { assetsDir } = build
 
-      resolvedConfig = config
+      resolvedConfig = config as ExtendedResolvedViteConfig
 
       resolvedConfig.fastify = { clientModule }
 
@@ -63,21 +84,24 @@ export function viteFastify({ spa, clientModule } = {}) {
 
       // For SSR builds, `vite build` is executed twice: once for client and once for server.
       // We need to merge the two configs and make both `outDir` properties available.
-      const fastify = {
+      const fastify: ViteFastifyConfig = {
         outDirs: {},
       }
       fastify.entryPaths = Object.fromEntries(
         Object.entries(resolvedConfig.environments)
           .map(([env, envConfig]) => {
-            if (envConfig.build?.outDir) {
-              fastify.outDirs[env] = envConfig.build.outDir
+            const envBuild = envConfig.build as
+              | { outDir?: string; rollupOptions?: { input?: { index?: string } } }
+              | undefined
+            if (envBuild?.outDir) {
+              fastify.outDirs[env] = envBuild.outDir
             }
-            if (envConfig.build?.rollupOptions?.input?.index) {
-              return [env, envConfig.build?.rollupOptions?.input?.index]
+            if (envBuild?.rollupOptions?.input?.index) {
+              return [env, envBuild.rollupOptions.input.index]
             }
             return false
           })
-          .filter(Boolean),
+          .filter(Boolean) as [string, string][],
       )
 
       configToWrite = {
@@ -105,13 +129,16 @@ export function viteFastify({ spa, clientModule } = {}) {
         jsonFilePath = join(applicationRootDirectory, commonDistFolder, 'vite.config.json')
       }
     },
-    async writeBundle() {
+    async writeBundle(): Promise<void> {
       await writeFile(jsonFilePath, JSON.stringify(configToWrite, undefined, 2), 'utf-8')
     },
   }
 }
 
-export function findCommonPath(paths) {
+/**
+ * Finds the common path prefix among an array of paths.
+ */
+export function findCommonPath(paths: string[]): string {
   if (paths.length === 1) {
     return paths[0]
   }
@@ -130,25 +157,31 @@ export function findCommonPath(paths) {
   return commonSegments.join(sep)
 }
 
-async function makeAllPathsRelative(resolvedViteConfigToWrite) {
+async function makeAllPathsRelative(
+  resolvedViteConfigToWrite: SerializableViteConfig,
+): Promise<string> {
   const { packageDirectory } = await import('package-directory')
   const { build, fastify, root: absoluteViteRoot } = resolvedViteConfigToWrite
   const applicationRootDirectory = await packageDirectory({ cwd: absoluteViteRoot })
 
-  resolvedViteConfigToWrite.root = relative(applicationRootDirectory, absoluteViteRoot)
+  if (absoluteViteRoot) {
+    resolvedViteConfigToWrite.root = relative(applicationRootDirectory, absoluteViteRoot)
 
-  if (build?.outDir) {
-    const absoluteOutDir = isAbsolute(build.outDir)
-      ? build.outDir
-      : join(absoluteViteRoot, build.outDir)
-    build.outDir = relative(applicationRootDirectory, absoluteOutDir)
+    if (build?.outDir) {
+      const absoluteOutDir = isAbsolute(build.outDir)
+        ? build.outDir
+        : join(absoluteViteRoot, build.outDir)
+      build.outDir = relative(applicationRootDirectory, absoluteOutDir)
+    }
+
+    if (fastify?.outDirs) {
+      Object.keys(fastify.outDirs).forEach((key) => {
+        const outDir = fastify.outDirs[key]
+        const absoluteOutDir = isAbsolute(outDir) ? outDir : join(absoluteViteRoot, outDir)
+        fastify.outDirs[key] = relative(applicationRootDirectory, absoluteOutDir)
+      })
+    }
   }
-
-  Object.keys(fastify.outDirs).forEach((key) => {
-    const outDir = fastify.outDirs[key]
-    const absoluteOutDir = isAbsolute(outDir) ? outDir : join(absoluteViteRoot, outDir)
-    fastify.outDirs[key] = relative(applicationRootDirectory, absoluteOutDir)
-  })
 
   return applicationRootDirectory
 }
