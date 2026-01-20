@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
 import type { UserConfig } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type { ResolvedViteConfigWithFastify, ViteFastifyConfig } from './types.ts'
+import type { ResolvedViteConfigWithFastify, ViteFastifyConfig } from '../types.ts'
 
 interface ExtendedUserConfig extends UserConfig {
   fastify?: ViteFastifyConfig

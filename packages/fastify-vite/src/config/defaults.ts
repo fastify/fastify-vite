@@ -10,7 +10,7 @@ import type {
   RouteDefinition,
   RouteHandler,
   RuntimeConfig,
-} from './types.ts'
+} from '../types.ts'
 
 export const DefaultConfig: ConfigOptions = {
   // Whether or not to enable Vite's Dev Server

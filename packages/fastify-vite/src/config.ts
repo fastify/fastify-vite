@@ -2,7 +2,7 @@ import { DefaultConfig } from './config/defaults.ts'
 import { resolveClientModule, resolveRoot } from './config/paths.ts'
 import { resolveViteConfig } from './config/vite-config.ts'
 import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
-import type { ConfigOptions, RuntimeConfig } from './config/types.ts'
+import type { ConfigOptions, RuntimeConfig } from './types.ts'
 
 export async function configure(options: Partial<ConfigOptions> = {}): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }
