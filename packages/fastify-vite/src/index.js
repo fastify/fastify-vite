@@ -1,5 +1,5 @@
 const fp = require('fastify-plugin')
-const { configure } = require('./config.js')
+const { configure } = require('./config.ts')
 
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')

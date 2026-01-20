@@ -71,18 +71,28 @@ By the end of this phase, there should be no more JavaScript files in the packag
 18. Update `.github/workflows/integration-tests.yml` to run `pnpm build` before `pnpm test:examples`.
 19. From this phase onward, always run `pnpm build` before `pnpm test:examples`.
 
-## Phase 5: Leaf conversions (no internal dependencies)
+## Phase 5: Leaf conversions (no internal dependencies) (completed)
 
 20. Convert `html.js` to `html.ts` and ensure any DOM/HTML types are explicit.
 21. Confirm `ioutils.cts` is stable as the base internal utility module (no change unless adding types).
 22. Convert `setup.js` to `setup.ts`, adding minimal type annotations for options/config objects.
 23. Convert `utils.js` to `utils.ts`, moving types from `types/utils.d.ts` into the source.
 
-## Phase 6: Config and mode conversions (depend on leaf modules)
+## Phase 6: Config and mode conversions (depend on leaf modules) (completed)
 
-24. Convert `config.js` to TS, adding minimal type annotations for options/config objects.
-25. Convert `mode/development.js` to TS, keeping runtime behavior unchanged.
-26. Convert `mode/production.js` to TS, keeping runtime behavior unchanged.
+24. Convert `config.js` to TS, splitting it into smaller modules first to keep types scoped and make the largest runtime file easier to annotate and review (completed):
+    - Move code without behavior changes; update internal imports to point at the new modules.
+    - Update `src/config.js` each time a helper is moved so the change is reviewable atomically.
+    - Pause and allow me to review after splitting each module out.
+    - `src/config/environments.ts`: `createClientEnvironment`, `createSSREnvironment`.
+    - `src/config/defaults.ts`: `DefaultConfig` and renderer hook wiring.
+    - `src/config/paths.ts`: `resolveRoot`, `resolveClientModule`, `findConfigFile`, `findViteConfigJson`, `getApplicationRootDir`.
+    - `src/config/vite-config.ts`: `resolveViteConfig`.
+    - `src/config/bundle.ts`: `resolveSSRBundle`, `resolveSPABundle`. (completed)
+    - `src/config/types.ts`: config, bundle, and renderer hook types (use `import type` from `fastify`). (completed)
+    - Keep `src/config.ts` as the public surface (`configure`, re-exports) and preserve default export behavior.
+25. Convert `mode/development.js` to TS, keeping runtime behavior unchanged. (completed)
+26. Convert `mode/production.js` to TS, keeping runtime behavior unchanged. (completed)
 
 ## Phase 7: Entry points and plugin surface (depend on config/mode)
 

@@ -17,8 +17,9 @@ export function viteFastify({ spa, clientModule } = {}) {
       const isDevMode = mode === 'development'
       const outDir = customOutDir ?? 'dist'
       const deepMerge = getDeepMergeFunction()
-      const { resolveClientModule, createSSREnvironment, createClientEnvironment } =
-        await import('./config.js')
+      const { resolveClientModule } = await import('./config/paths.ts')
+      const { createSSREnvironment, createClientEnvironment } =
+        await import('./config/environments.ts')
 
       if (!rawConfig.environments) {
         rawConfig.environments = {}
