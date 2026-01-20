@@ -6,7 +6,7 @@ import type { ModuleRunner } from 'vite/module-runner'
 import middie from '@fastify/middie'
 import type { DecoratedReply, RouteDefinition, RuntimeConfig } from '../types.ts'
 
-const hot = Symbol('hotModuleReplacementProxy')
+export const hot = Symbol('hotModuleReplacementProxy')
 
 interface ViteEnvironmentsConfig {
   root: string
