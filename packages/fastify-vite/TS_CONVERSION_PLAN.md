@@ -143,12 +143,18 @@ By the end of this phase, there should be no more JavaScript files in the packag
     - Updated `src/index.test.js` import to reference `.cjs` file.
     - Updated `fixtures/esm/server.js` import to use `.ts` extension.
 
-## Phase 12: Dev mode typing
+## Phase 12: Dev mode typing (completed)
 
-39. Replace the `baseConfig`/`mergeConfig` casts in `packages/fastify-vite/src/mode/development.ts:90` and `packages/fastify-vite/src/mode/development.ts:100` with `InlineConfig`/`UserConfig` so `devServerOptions` is typed without `any`.
-40. Type the Vite dev middleware bridge at `packages/fastify-vite/src/mode/development.ts:103` using `ViteDevServer['middlewares']` (or `Connect.Server`) so `scope.use` no longer needs `as any`.
-41. Type entry loading in `packages/fastify-vite/src/mode/development.ts:126` and `packages/fastify-vite/src/mode/development.ts:129` by narrowing the `entryModule` default export to `ClientModule` and keep `entries` as `ClientEntries`.
-42. Add typed HMR state/scope and update the dev-mode setup context so route hydration no longer relies on `any` at `packages/fastify-vite/src/mode/development.ts:151`, `packages/fastify-vite/src/mode/development.ts:155`, and `packages/fastify-vite/src/mode/development.ts:188`:
+39. Replace the `baseConfig`/`mergeConfig` casts in `packages/fastify-vite/src/mode/development.ts:90` and `packages/fastify-vite/src/mode/development.ts:100` with `InlineConfig`/`UserConfig` so `devServerOptions` is typed without `any`. (completed)
+40. Type the Vite dev middleware bridge at `packages/fastify-vite/src/mode/development.ts:103` using `ViteDevServer['middlewares']` (or `Connect.Server`) so `scope.use` no longer needs `as any`. (completed)
+    - Imported `Handler as MiddieHandler` from `@fastify/middie` and cast middlewares appropriately.
+41. Type entry loading in `packages/fastify-vite/src/mode/development.ts:126` and `packages/fastify-vite/src/mode/development.ts:129` by narrowing the `entryModule` default export to `ClientModule` and keep `entries` as `ClientEntries`. (completed)
+    - Added `LoadedEntryModule` interface for modules loaded via ModuleRunner.
+    - Updated `SetupContext.entries` to use `ClientEntries` type.
+42. Add typed HMR state/scope and update the dev-mode setup context so route hydration no longer relies on `any` at `packages/fastify-vite/src/mode/development.ts:151`, `packages/fastify-vite/src/mode/development.ts:155`, and `packages/fastify-vite/src/mode/development.ts:188`: (completed)
+    - Added `HotState` and `HotScope` interfaces.
+    - Added `hasIterableRoutes` type guard for proper narrowing.
+    - Used type assertion after decoration to access hot state safely.
 
     ```ts
     interface HotState {
@@ -161,7 +167,7 @@ By the end of this phase, there should be no more JavaScript files in the packag
     }
 
     interface SetupContext {
-      scope: HotScope
+      scope: FastifyInstance // HotScope used after decoration
       devServer: ViteDevServer
       entries: ClientEntries
       runners: Record<string, ModuleRunner>
