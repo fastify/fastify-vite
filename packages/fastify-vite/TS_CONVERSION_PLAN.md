@@ -230,7 +230,12 @@ By the end of this phase, there should be no more JavaScript files in the packag
     - Updated `FastifyViteOptions.bundle.manifest` to use `Manifest` type.
     - Re-exported all moved types from `index.ts` for consumers.
 
-## Phase 15: Strictness and verification
+## Phase 15: Strictness and verification (completed)
 
-51. Enable `noImplicitAny: true` in `packages/fastify-vite/tsconfig.json` and fix resulting errors within `@fastify/vite` only.
-52. Keep `types/*.test-d.ts` but focus on public API assertions (plugin options shape, Fastify reply augmentation, `RuntimeConfig`/`RenderContext`) and run `pnpm --filter @fastify/vite test`, `pnpm test:examples`, `pnpm lint:fix`, and `pnpm format`.
+51. Enable `noImplicitAny: true` in `packages/fastify-vite/tsconfig.json` and fix resulting errors within `@fastify/vite` only. (completed)
+    - Added `noImplicitAny: true` to tsconfig.json.
+    - Installed `@types/fs-extra` and `@types/klaw` as dev dependencies for proper module typing.
+    - Fixed `config.ts` renderer settings loop by using `as const` for type-safe indexing.
+    - Removed unused `prepareEnvironments` setting from the renderer copy loop.
+52. Keep `types/*.test-d.ts` but focus on public API assertions (plugin options shape, Fastify reply augmentation, `RuntimeConfig`/`RenderContext`) and run `pnpm --filter @fastify/vite test`, `pnpm test:examples`, `pnpm lint:fix`, and `pnpm format`. (completed)
+    - All tests pass, linting passes with warnings only, formatting applied.

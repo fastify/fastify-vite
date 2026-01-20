@@ -20,7 +20,8 @@ export async function configure(options: Partial<ConfigOptions> = {}): Promise<R
     const { default: renderer, ...named } = await import(config.renderer)
     config.renderer = { ...renderer, ...named }
   }
-  for (const setting of [
+  // Settings that can be provided by a renderer package to override defaults
+  const rendererSettings = [
     'clientModule',
     'createErrorHandler',
     'createHtmlFunction',
@@ -29,10 +30,14 @@ export async function configure(options: Partial<ConfigOptions> = {}): Promise<R
     'createRoute',
     'createRouteHandler',
     'prepareServer',
-    'prepareEnvironments',
     'prepareClient',
-  ]) {
-    config[setting] = config.renderer[setting] || config[setting]
+  ] as const
+  type RendererSettingKey = (typeof rendererSettings)[number]
+
+  for (const setting of rendererSettings) {
+    const rendererConfig = config.renderer as Record<string, unknown>
+    const configRecord = config as unknown as Record<RendererSettingKey, unknown>
+    configRecord[setting] = rendererConfig[setting] ?? configRecord[setting]
   }
 
   config.clientModule =
