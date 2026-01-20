@@ -123,12 +123,25 @@ By the end of this phase, there should be no more JavaScript files in the packag
 34. Add a changeset if package behavior or public exports change. (completed)
     - No changeset needed; public API unchanged. Existing changeset covers the 9.0.0 release.
 
-## Phase 11: Shift to ESM-only sources and outputs
+## Phase 11: Shift to ESM-only sources and outputs (completed)
 
-35. Set package `type: "module"` and emit only `.js` ESM outputs.
-36. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly.
-37. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings.
-38. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage).
+35. Set package `type: "module"` and emit only `.js` ESM outputs. (completed)
+    - Added `"type": "module"` to package.json.
+36. Rename any `.mts`/`.cts` sources to `.ts` and update imports/exports accordingly. (completed)
+    - Renamed `src/plugin.mts` to `src/plugin.ts`.
+    - Renamed `src/plugin.test.mts` to `src/plugin.test.ts`.
+    - Updated tsconfig.json exclude pattern from `.test.mts` to `.test.ts`.
+    - Updated import in `plugin.test.ts` from `./plugin.mts` to `./plugin.ts`.
+    - Updated import in `types/plugin.test-d.ts` from `../dist/plugin.mjs` to `../dist/plugin.js`.
+37. Update `package.json` `main`/`exports` to ESM-only paths and remove CJS mappings. (completed)
+    - Removed `require` entries from all exports.
+    - Updated `./plugin` export types from `./dist/plugin.d.mts` to `./dist/plugin.d.ts`.
+    - Updated `./plugin` export import from `./dist/plugin.mjs` to `./dist/plugin.js`.
+38. Replace all `require` usage with `import` across the package and tests for ESM consistency (keep CJS fixtures for historical/compat coverage). (completed)
+    - Removed `require('..')` from `types/index.test-d.ts` and replaced with ESM import.
+    - Renamed `fixtures/cjs/server.js` to `fixtures/cjs/server.cjs` to preserve CJS behavior.
+    - Updated `src/index.test.js` import to reference `.cjs` file.
+    - Updated `fixtures/esm/server.js` import to use `.ts` extension.
 
 ## Phase 12: Follow-up hardening
 

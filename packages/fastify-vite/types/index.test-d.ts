@@ -1,10 +1,8 @@
 import type { Server } from 'node:http'
-import Fastify, { type FastifyPluginAsync } from 'fastify'
+import Fastify, { type FastifyPluginCallback } from 'fastify'
 import { describe, expectTypeOf, it } from 'vitest'
 import * as FastifyViteAll from '..'
-import FastifyVite, { type FastifyViteOptions } from '..'
-
-const FastifyViteRequire = require('..')
+import FastifyVite, { fastifyVite, type FastifyViteOptions } from '..'
 
 const options = {
   root: process.cwd(),
@@ -40,11 +38,10 @@ const options = {
 } satisfies FastifyViteOptions
 
 describe('test by options', () => {
-  it('import & require', () => {
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyVite)
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyViteAll.default)
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions, Server>>(FastifyViteRequire.default)
-    expectTypeOf<FastifyPluginAsync<FastifyViteOptions>>(FastifyViteRequire.fastifyVite)
+  it('import default and named exports', () => {
+    expectTypeOf<FastifyPluginCallback<FastifyViteOptions, Server>>(FastifyVite)
+    expectTypeOf<FastifyPluginCallback<FastifyViteOptions, Server>>(FastifyViteAll.default)
+    expectTypeOf<FastifyPluginCallback<FastifyViteOptions>>(fastifyVite)
     // eslint-disable-next-line @typescript-eslint/unbound-method
     expectTypeOf(options.createHtmlFunction).parameter(0).toEqualTypeOf('string')
   })
