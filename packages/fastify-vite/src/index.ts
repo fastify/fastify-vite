@@ -52,7 +52,7 @@ const kOptions = Symbol('kOptions')
 class FastifyViteDecoration {
   scope: FastifyInstance
   createServer?: unknown
-  config!: RuntimeConfig
+  runtimeConfig!: RuntimeConfig
   devServer?: unknown
   entries?: Record<string, unknown>
   runners?: Record<string, unknown>;
@@ -69,15 +69,15 @@ class FastifyViteDecoration {
 
   async ready(): Promise<void> {
     // Process all user-provided options and compute all Vite configuration settings
-    this.config = await configure(this[kOptions])
+    this.runtimeConfig = await configure(this[kOptions])
 
     // Configure the Fastify server instance — used mostly by renderer packages
-    if (this.config.prepareServer) {
-      await this.config.prepareServer(this.scope, this.config)
+    if (this.runtimeConfig.prepareServer) {
+      await this.runtimeConfig.prepareServer(this.scope, this.runtimeConfig)
     }
 
     // Determine which setup function to use
-    if (this.config.dev) {
+    if (this.runtimeConfig.dev) {
       // Boots Vite's development server and ensures hot reload
       this[kMode] = (await import('./mode/development.ts')) as ModeModule
     } else {
@@ -86,16 +86,20 @@ class FastifyViteDecoration {
     }
 
     // Get handler function and routes based on the Vite server bundle
-    const { client, routes } = await this[kMode].setup.call(this, this.config, this.createServer)
+    const { client, routes } = await this[kMode].setup.call(
+      this,
+      this.runtimeConfig,
+      this.createServer,
+    )
 
     // Register individual Fastify routes for each the client-provided routes
     if (routes && typeof (routes as Iterable<RouteDefinition>)[Symbol.iterator] === 'function') {
       for (const route of routes as Iterable<RouteDefinition>) {
-        if (this.config.dev) {
+        if (this.runtimeConfig.dev) {
           const hotSymbol = this[kMode].hot!
           const hmrHandler = async (req: FastifyRequest, reply: FastifyReply) => {
             // Create route handler and route error handler functions
-            const handler = await this.config.createRouteHandler(
+            const handler = await this.runtimeConfig.createRouteHandler(
               {
                 client:
                   (this.scope as unknown as Record<symbol, { client?: unknown }>)[hotSymbol]
@@ -109,7 +113,7 @@ class FastifyViteDecoration {
                   )[hotSymbol]?.routeHash?.get(route.path!) ?? route,
               },
               this.scope,
-              this.config,
+              this.runtimeConfig,
             )
             return await handler(req, reply as DecoratedReply)
           }
@@ -118,7 +122,7 @@ class FastifyViteDecoration {
             req: FastifyRequest,
             reply: FastifyReply,
           ) => {
-            const errorHandler = await this.config.createErrorHandler(
+            const errorHandler = await this.runtimeConfig.createErrorHandler(
               {
                 client:
                   (this.scope as unknown as Record<symbol, { client?: unknown }>)[hotSymbol]
@@ -132,12 +136,12 @@ class FastifyViteDecoration {
                   )[hotSymbol]?.routeHash?.get(route.path!) ?? route,
               },
               this.scope,
-              this.config,
+              this.runtimeConfig,
             )
             return await errorHandler(error, req, reply)
           }
 
-          await this.config.createRoute(
+          await this.runtimeConfig.createRoute(
             {
               client,
               route,
@@ -149,26 +153,26 @@ class FastifyViteDecoration {
               },
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
         } else {
           // Create route handler and route error handler functions
-          const handler = await this.config.createRouteHandler(
+          const handler = await this.runtimeConfig.createRouteHandler(
             { client, route },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
 
-          const errorHandler = await this.config.createErrorHandler(
+          const errorHandler = await this.runtimeConfig.createErrorHandler(
             {
               client,
               route,
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
 
-          await this.config.createRoute(
+          await this.runtimeConfig.createRoute(
             {
               client,
               handler,
@@ -176,7 +180,7 @@ class FastifyViteDecoration {
               route,
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
         }
       }
