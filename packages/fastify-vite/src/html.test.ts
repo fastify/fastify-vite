@@ -1,8 +1,8 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { createHtmlTemplateFunction } from './html.ts'
 
 describe('createHtmlTemplateFunction', () => {
-  test('replaces comments without spaces <!-- element -->', async () => {
+  it('replaces comments without spaces <!-- element -->', async () => {
     const templateFn = await createHtmlTemplateFunction(
       [
         '<!doctype html>',
@@ -19,7 +19,7 @@ describe('createHtmlTemplateFunction', () => {
     )
   })
 
-  test('leaves comments with spaces alone', async () => {
+  it('leaves comments with spaces alone', async () => {
     const templateFn = await createHtmlTemplateFunction(
       [
         '<!-- arbitrary comment -->',
@@ -42,7 +42,7 @@ describe('createHtmlTemplateFunction', () => {
     )
   })
 
-  test('doesnt break with certain special characers (#165/1)', async () => {
+  it('doesnt break with certain special characers (#165/1)', async () => {
     const html = [
       '<script>',
       `console.log(\`%c Example 1 + 1 = \${1 + 1}\`, 'color: blue;');`,
@@ -53,7 +53,7 @@ describe('createHtmlTemplateFunction', () => {
     expect(resultStr).toBe(html)
   })
 
-  test('doesnt break with certain special characers (#165/2)', async () => {
+  it('doesnt break with certain special characers (#165/2)', async () => {
     const html = [
       '<script>',
       `console.log(\`%c Example 1 + 1 = \\\${1 + 1}\`, 'color: blue;');`,
@@ -64,7 +64,7 @@ describe('createHtmlTemplateFunction', () => {
     expect(resultStr).toBe(html)
   })
 
-  test('identifies placeholders in attributes', async () => {
+  it('identifies placeholders in attributes', async () => {
     const html = ['<script nonce="#nonce#">', '</script>'].join('\n')
     const templateFn = await createHtmlTemplateFunction(html)
     const resultStr = templateFn({ nonce: 'foobar' })
