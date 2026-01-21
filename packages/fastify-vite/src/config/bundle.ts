@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 
 import { resolveIfRelative } from '../ioutils.ts'
 import { getApplicationRootDir } from './paths.ts'
-import type { Bundle, BundleConfig } from '../types.ts'
+import type { Bundle, BundleConfig } from '../types/bundle.ts'
 
 export async function resolveSSRBundle({
   dev,

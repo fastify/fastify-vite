@@ -1,99 +1,35 @@
 import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
-import type { Manifest, UserConfig } from 'vite'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import type {
-  Bundle,
-  ClientEntries,
-  ClientModule,
-  ClientRouteArgs,
-  CreateErrorHandler,
-  CreateHtmlFunction,
-  CreateHtmlTemplateFunction,
-  CreateRoute,
-  CreateRouteArgs,
-  CreateRouteHandler,
-  Ctx,
-  DecoratedReply,
   DevRuntimeConfig,
-  HtmlFunction,
-  Loosen,
+  FastifyViteOptions,
   ProdRuntimeConfig,
-  RenderContext,
-  RendererFunctions,
-  RendererOption,
-  RenderFunction,
-  RenderResult,
-  RouteDefinition,
-  RouteType,
   RuntimeConfig,
-} from './types.ts'
+} from './types/options.ts'
+import type { DecoratedReply, ReplyDotRenderContext, ReplyDotRenderResult } from './types/reply.ts'
+import type { RouteDefinition } from './types/route.ts'
 
 // Re-export types for consumers
 export type {
-  Bundle,
-  ClientEntries,
-  ClientModule,
-  ClientRouteArgs,
-  CreateErrorHandler,
-  CreateHtmlFunction,
-  CreateHtmlTemplateFunction,
-  CreateRoute,
-  CreateRouteArgs,
-  CreateRouteHandler,
-  Ctx,
-  DecoratedReply,
   DevRuntimeConfig,
-  HtmlFunction,
-  Loosen,
+  FastifyViteOptions,
   ProdRuntimeConfig,
-  RenderContext,
-  RendererFunctions,
-  RendererOption,
-  RenderFunction,
-  RenderResult,
+  ReplyDotRenderContext as RenderContext,
   RouteDefinition,
-  RouteType,
   RuntimeConfig,
 }
 
 // Module augmentation for Fastify
 declare module 'fastify' {
   interface FastifyReply {
-    html(ctx?: RenderResult): FastifyReply | Promise<FastifyReply>
-    render(ctx?: RenderContext): RenderResult | Promise<RenderResult>
+    html(ctx?: ReplyDotRenderResult): FastifyReply | Promise<FastifyReply>
+    render(ctx?: ReplyDotRenderContext): ReplyDotRenderResult | Promise<ReplyDotRenderResult>
   }
 
   interface FastifyInstance {
     vite: Vite
   }
-}
-
-export interface FastifyViteOptions extends Partial<RendererOption> {
-  dev?: boolean
-  root: string
-  spa?: boolean
-  renderer?: string | Partial<RendererOption>
-  vite?: UserConfig
-  viteConfig?: string
-  bundle?: {
-    manifest?: Manifest
-    indexHtml?: string | Buffer
-    dir?: string
-  }
-  /**
-   * Override the directory to search for `vite.config.json` in production mode.
-   * By default, the runtime automatically finds the app root via `package.json`
-   * and searches in both `dist/` and `build/` folders.
-   * Only specify this if you use a different folder name (e.g., `out`).
-   * If a relative path is provided, it is resolved relative to the app root.
-   */
-  distDir?: string
-  /**
-   * URL prefix for static asset routes in production mode.
-   * Use this when mounting @fastify/vite under a path prefix.
-   */
-  prefix?: string
 }
 
 interface ModeModule {
@@ -133,7 +69,7 @@ class Vite {
 
   async ready(): Promise<void> {
     // Process all user-provided options and compute all Vite configuration settings
-    this.config = await configure(this[kOptions] as unknown as Parameters<typeof configure>[0])
+    this.config = await configure(this[kOptions])
 
     // Configure the Fastify server instance — used mostly by renderer packages
     if (this.config.prepareServer) {

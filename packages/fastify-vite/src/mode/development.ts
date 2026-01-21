@@ -10,13 +10,10 @@ import type {
 } from 'vite'
 import type { ModuleRunner } from 'vite/module-runner'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
-import type {
-  ClientEntries,
-  ClientModule,
-  DecoratedReply,
-  DevRuntimeConfig,
-  RouteDefinition,
-} from '../types.ts'
+import type { ClientEntries, ClientModule } from '../types/client.ts'
+import type { DevRuntimeConfig } from '../types/options.ts'
+import type { DecoratedReply } from '../types/reply.ts'
+import type { RouteDefinition } from '../types/route.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
 

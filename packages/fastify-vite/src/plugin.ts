@@ -6,7 +6,7 @@ import type {
   ExtendedResolvedViteConfig,
   SerializableViteConfig,
   ViteFastifyConfig,
-} from './types.ts'
+} from './types/vite-configs.ts'
 
 export interface ViteFastifyPluginOptions {
   /**

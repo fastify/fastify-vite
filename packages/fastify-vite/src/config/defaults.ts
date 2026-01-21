@@ -1,18 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import { createHtmlTemplateFunction } from '../html.ts'
-import type {
-  ClientEntries,
-  ClientRouteArgs,
-  CreateRouteArgs,
-  ConfigOptions,
-  ErrorHandler,
-  HtmlFunction,
-  RenderResult,
-  RouteHandler,
-  RuntimeConfig,
-} from '../types.ts'
+import type { ClientEntries } from '../types/client.ts'
+import type { CreateRouteArgs, ErrorHandler, RouteHandler } from '../types/handlers.ts'
+import type { ResolvedFastifyViteConfig, RuntimeConfig } from '../types/options.ts'
+import type { ReplyDotHtmlFunction, ReplyDotRenderResult } from '../types/reply.ts'
+import type { ClientRouteArgs } from '../types/route.ts'
 
-export const DefaultConfig: ConfigOptions = {
+export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
   bundle: {
@@ -43,7 +37,7 @@ export const DefaultConfig: ConfigOptions = {
     source: string,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ): Promise<HtmlFunction> {
+  ): Promise<ReplyDotHtmlFunction> {
     const indexHtmlTemplate = await config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
@@ -53,13 +47,13 @@ export const DefaultConfig: ConfigOptions = {
       }
     }
     if (config.hasRenderFunction) {
-      return async function (ctx: RenderResult) {
+      return async function (ctx: ReplyDotRenderResult) {
         this.type('text/html')
         this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
         return this
       }
     }
-    return async function (ctx: RenderResult) {
+    return async function (ctx: ReplyDotRenderResult) {
       this.type('text/html')
       this.send(await indexHtmlTemplate(ctx))
       return this

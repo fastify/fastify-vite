@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
 import type { ConfigEnv, UserConfigExport } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type { ExtendedUserConfig, ExtendedResolvedViteConfig } from '../types.ts'
+import type { ExtendedUserConfig, ExtendedResolvedViteConfig } from '../types/vite-configs.ts'
 
 /** Function that returns an extended user config, matching Vite's UserConfigFn signature */
 type ExtendedUserConfigFn = (env: ConfigEnv) => ExtendedUserConfig | Promise<ExtendedUserConfig>
