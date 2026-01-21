@@ -2,7 +2,7 @@ import { DefaultConfig } from './config/defaults.ts'
 import { resolveClientModule, resolveRoot } from './config/paths.ts'
 import { resolveViteConfig } from './config/vite-config.ts'
 import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
-import type { FastifyViteOptions, RuntimeConfig } from './types.ts'
+import type { FastifyViteOptions, RuntimeConfig } from './types/options.ts'
 
 export async function configure(options: FastifyViteOptions): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }

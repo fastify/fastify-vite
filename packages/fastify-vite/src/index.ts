@@ -2,15 +2,13 @@ import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyReque
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import type {
-  DecoratedReply,
   DevRuntimeConfig,
   FastifyViteOptions,
   ProdRuntimeConfig,
-  ReplyDotRenderContext,
-  ReplyDotRenderResult,
-  RouteDefinition,
   RuntimeConfig,
-} from './types.ts'
+} from './types/options.ts'
+import type { DecoratedReply, ReplyDotRenderContext, ReplyDotRenderResult } from './types/reply.ts'
+import type { RouteDefinition } from './types/route.ts'
 
 // Re-export types for consumers
 export type {

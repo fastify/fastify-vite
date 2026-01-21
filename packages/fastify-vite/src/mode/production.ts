@@ -3,13 +3,9 @@ import { readFile } from 'node:fs/promises'
 import { isAbsolute, join, parse, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
 import FastifyStatic from '@fastify/static'
-import type {
-  ClientEntries,
-  ClientModule,
-  ExtendedResolvedViteConfig,
-  ProdRuntimeConfig,
-  SerializableViteConfig,
-} from '../types.ts'
+import type { ClientEntries, ClientModule } from '../types/client.ts'
+import type { ProdRuntimeConfig } from '../types/options.ts'
+import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
 
 type EntryBundle =

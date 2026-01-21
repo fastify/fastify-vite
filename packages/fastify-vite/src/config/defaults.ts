@@ -1,16 +1,10 @@
 import type { FastifyInstance } from 'fastify'
 import { createHtmlTemplateFunction } from '../html.ts'
-import type {
-  ClientEntries,
-  ClientRouteArgs,
-  CreateRouteArgs,
-  ResolvedFastifyViteConfig,
-  ErrorHandler,
-  ReplyDotHtmlFunction,
-  ReplyDotRenderResult,
-  RouteHandler,
-  RuntimeConfig,
-} from '../types.ts'
+import type { ClientEntries } from '../types/client.ts'
+import type { CreateRouteArgs, ErrorHandler, RouteHandler } from '../types/handlers.ts'
+import type { ResolvedFastifyViteConfig, RuntimeConfig } from '../types/options.ts'
+import type { ReplyDotHtmlFunction, ReplyDotRenderResult } from '../types/reply.ts'
+import type { ClientRouteArgs } from '../types/route.ts'
 
 export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
   // Whether or not to enable Vite's Dev Server
