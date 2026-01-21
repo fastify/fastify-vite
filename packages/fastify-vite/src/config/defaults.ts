@@ -6,8 +6,8 @@ import type {
   CreateRouteArgs,
   ResolvedFastifyViteConfig,
   ErrorHandler,
-  HtmlFunction,
-  RenderResult,
+  ReplyDotHtmlFunction,
+  ReplyDotRenderResult,
   RouteHandler,
   RuntimeConfig,
 } from '../types.ts'
@@ -43,7 +43,7 @@ export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
     source: string,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ): Promise<HtmlFunction> {
+  ): Promise<ReplyDotHtmlFunction> {
     const indexHtmlTemplate = await config.createHtmlTemplateFunction(source)
     if (config.spa) {
       return function () {
@@ -53,13 +53,13 @@ export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
       }
     }
     if (config.hasRenderFunction) {
-      return async function (ctx: RenderResult) {
+      return async function (ctx: ReplyDotRenderResult) {
         this.type('text/html')
         this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
         return this
       }
     }
-    return async function (ctx: RenderResult) {
+    return async function (ctx: ReplyDotRenderResult) {
       this.type('text/html')
       this.send(await indexHtmlTemplate(ctx))
       return this

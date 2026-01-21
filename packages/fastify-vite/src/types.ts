@@ -80,7 +80,7 @@ export interface ClientEntries {
   [key: string]: unknown
 }
 
-export interface RenderContext {
+export interface ReplyDotRenderContext {
   app?: FastifyInstance
   server?: FastifyInstance
   req?: FastifyRequest
@@ -98,7 +98,7 @@ export interface RouteDefinition {
   [key: string]: unknown
 }
 
-export type RenderResult = Record<string, unknown>
+export type ReplyDotRenderResult = Record<string, unknown>
 
 // Renderer types for plugin configuration
 
@@ -186,34 +186,34 @@ export interface RendererOption<
   prepareClient(clientModule: CM, scope?: FastifyInstance, config?: unknown): Promise<C>
 }
 
-export type RenderFunction = (
+export type ReplyDotRenderFunction = (
   this: FastifyReply,
-  ctx?: RenderContext,
-) => RenderResult | Promise<RenderResult>
+  ctx?: ReplyDotRenderContext,
+) => ReplyDotRenderResult | Promise<ReplyDotRenderResult>
 
 /**
  * A FastifyReply that has been decorated with html() and render() methods.
  * This is the reply type available after vite.ready() has been called.
  */
-export type DecoratedReply = FastifyReply & {
-  render: (ctx?: RenderContext) => RenderResult | Promise<RenderResult>
-  html: (ctx?: RenderResult) => FastifyReply | Promise<FastifyReply>
+export interface DecoratedReply extends FastifyReply {
+  render: (ctx?: ReplyDotRenderContext) => ReplyDotRenderResult | Promise<ReplyDotRenderResult>
+  html: (ctx?: ReplyDotRenderResult) => FastifyReply | Promise<FastifyReply>
 }
 
-export type HtmlTemplateFunction = (data?: RenderResult) => string
+export type HtmlTemplateFunction = (data?: ReplyDotRenderResult) => string
 
 export type CreateHtmlTemplateFunction = (source: string) => Promise<HtmlTemplateFunction>
 
-export type HtmlFunction = (
+export type ReplyDotHtmlFunction = (
   this: FastifyReply,
-  ctx?: RenderResult,
+  ctx?: ReplyDotRenderResult,
 ) => FastifyReply | Promise<FastifyReply>
 
 export type CreateHtmlFunction = (
   source: string,
   scope: FastifyInstance,
   config: RuntimeConfig,
-) => Promise<HtmlFunction>
+) => Promise<ReplyDotHtmlFunction>
 
 export type RouteHandler = (
   req: FastifyRequest,
@@ -307,7 +307,7 @@ export interface ResolvedFastifyViteConfig extends Required<
     clientModule: ClientModule,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => RenderFunction | Promise<RenderFunction>
+  ) => ReplyDotRenderFunction | Promise<ReplyDotRenderFunction>
 }
 
 interface BaseRuntimeConfig extends Omit<ResolvedFastifyViteConfig, 'dev' | 'vite'> {

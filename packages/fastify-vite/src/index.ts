@@ -6,8 +6,8 @@ import type {
   DevRuntimeConfig,
   FastifyViteOptions,
   ProdRuntimeConfig,
-  RenderContext,
-  RenderResult,
+  ReplyDotRenderContext,
+  ReplyDotRenderResult,
   RouteDefinition,
   RuntimeConfig,
 } from './types.ts'
@@ -17,7 +17,7 @@ export type {
   DevRuntimeConfig,
   FastifyViteOptions,
   ProdRuntimeConfig,
-  RenderContext,
+  ReplyDotRenderContext as RenderContext,
   RouteDefinition,
   RuntimeConfig,
 }
@@ -25,8 +25,8 @@ export type {
 // Module augmentation for Fastify
 declare module 'fastify' {
   interface FastifyReply {
-    html(ctx?: RenderResult): FastifyReply | Promise<FastifyReply>
-    render(ctx?: RenderContext): RenderResult | Promise<RenderResult>
+    html(ctx?: ReplyDotRenderResult): FastifyReply | Promise<FastifyReply>
+    render(ctx?: ReplyDotRenderContext): ReplyDotRenderResult | Promise<ReplyDotRenderResult>
   }
 
   interface FastifyInstance {
