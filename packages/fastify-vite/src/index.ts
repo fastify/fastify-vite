@@ -28,13 +28,13 @@ declare module 'fastify' {
   }
 
   interface FastifyInstance {
-    vite: Vite
+    vite: FastifyViteDecoration
   }
 }
 
 interface ModeModule {
   setup: (
-    this: Vite,
+    this: FastifyViteDecoration,
     config: RuntimeConfig,
     createServer?: unknown,
   ) => Promise<{
@@ -49,7 +49,7 @@ interface ModeModule {
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')
 
-class Vite {
+class FastifyViteDecoration {
   scope: FastifyInstance
   createServer?: unknown
   config!: RuntimeConfig
@@ -184,12 +184,12 @@ class Vite {
   }
 }
 
-const plugin: FastifyPluginCallback<FastifyViteOptions> = (scope, options, done) => {
-  scope.decorate('vite', new Vite(scope, options))
+const pluginFn: FastifyPluginCallback<FastifyViteOptions> = (scope, options, done) => {
+  scope.decorate('vite', new FastifyViteDecoration(scope, options))
   done()
 }
 
-const fastifyVite = fp(plugin, {
+const fastifyVite = fp(pluginFn, {
   fastify: '5.x',
   name: '@fastify/vite',
 })
