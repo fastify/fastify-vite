@@ -1,6 +1,10 @@
 import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
+import type { ViteDevServer } from 'vite'
+import type { ModuleRunner } from 'vite/module-runner'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
+import type { SetupFunctionContext } from './mode/types.ts'
+import type { ClientEntries } from './types/client.ts'
 import type {
   DevRuntimeConfig,
   FastifyViteOptions,
@@ -34,7 +38,7 @@ declare module 'fastify' {
 
 interface ModeModule {
   setup: (
-    this: FastifyViteDecoration,
+    this: SetupFunctionContext,
     config: RuntimeConfig,
     createServer?: unknown,
   ) => Promise<{
@@ -49,13 +53,13 @@ interface ModeModule {
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')
 
-class FastifyViteDecoration {
+class FastifyViteDecoration implements SetupFunctionContext {
   scope: FastifyInstance
   createServer?: unknown
   runtimeConfig!: RuntimeConfig
-  devServer?: unknown
-  entries?: Record<string, unknown>
-  runners?: Record<string, unknown>;
+  devServer?: ViteDevServer
+  entries?: ClientEntries
+  runners?: Record<string, ModuleRunner>;
   [key: symbol]: unknown
 
   private [kOptions]: FastifyViteOptions

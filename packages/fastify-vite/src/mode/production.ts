@@ -7,16 +7,13 @@ import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
 import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
+import type { SetupFunctionContext } from './types.ts'
 
 type EntryBundle =
   | {
       default?: unknown
     }
   | Record<string, unknown>
-
-interface SetupContext {
-  scope: FastifyInstance
-}
 
 function fileUrl(str: string): string {
   if (typeof str !== 'string') {
@@ -32,7 +29,7 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
-export async function setup(this: SetupContext, config: ProdRuntimeConfig) {
+export async function setup(this: SetupFunctionContext, config: ProdRuntimeConfig) {
   const { spa, vite } = config
   let clientOutDir: string
   let ssrOutDir: string

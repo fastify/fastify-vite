@@ -1,19 +1,13 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type {
-  InlineConfig,
-  Plugin as VitePlugin,
-  ResolvedConfig,
-  UserConfig,
-  ViteDevServer,
-} from 'vite'
-import type { ModuleRunner } from 'vite/module-runner'
+import type { InlineConfig, Plugin as VitePlugin, ResolvedConfig, UserConfig } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
-import type { ClientEntries, ClientModule } from '../types/client.ts'
+import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
 import type { DecoratedReply } from '../types/reply.ts'
 import type { RouteDefinition } from '../types/route.ts'
+import type { SetupFunctionContext } from './types.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
 
@@ -43,13 +37,6 @@ interface HotScope extends FastifyInstance {
   [hot]: HotState
 }
 
-interface SetupContext {
-  scope: FastifyInstance
-  devServer: ViteDevServer
-  entries: ClientEntries
-  runners: Record<string, ModuleRunner>
-}
-
 /** Module loaded via ModuleRunner that may have a default export */
 interface LoadedEntryModule {
   default?: ClientModule
@@ -70,8 +57,8 @@ function hasIterableRoutes(
   )
 }
 
-export async function setup(this: SetupContext, config: DevRuntimeConfig) {
-  const loadEntryModulePaths = async (): Promise<Record<string, string> | null> => {
+export async function setup(this: SetupFunctionContext, config: DevRuntimeConfig) {
+  async function loadEntryModulePaths(): Promise<Record<string, string> | null> {
     if (config.spa) {
       return null
     }
