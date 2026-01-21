@@ -68,17 +68,19 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
       }
     },
     async configResolved(config: ResolvedConfig): Promise<void> {
-      const { base, build, isProduction, root: resolvedViteRoot } = config
+      const { base, build, mode, root: resolvedViteRoot } = config
       const { assetsDir } = build
 
       resolvedConfig = config as ExtendedResolvedViteConfig
 
       resolvedConfig.fastify = { clientModule }
 
-      // During vite dev builds, this function can be called multiple times. Sometimes, the resolved
+      // During vite dev, this function can be called multiple times. Sometimes, the resolved
       // configs in these executions are missing many properties. Since there is no advantage to
       // running this function during dev, we save build time and prevent errors by returning early.
-      if (!isProduction) {
+      // Note: We check `mode` instead of `isProduction` because `isProduction` depends on NODE_ENV,
+      // which may be set to 'test' by test runners like vitest, even during production builds.
+      if (mode !== 'production') {
         return
       }
 
