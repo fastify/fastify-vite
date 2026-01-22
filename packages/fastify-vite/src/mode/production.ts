@@ -29,6 +29,87 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
+async function loadBundle(
+  distOutDir: string,
+  entryPath: string,
+  rootDir: string,
+  config: ProdRuntimeConfig,
+): Promise<EntryBundle> {
+  const parsedNamed = parse(entryPath).name
+  const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
+
+  const fixWin32Path =
+    process.platform === 'win32'
+      ? (filePath: string) => new URL(fileUrl(filePath))
+      : (filePath: string) => filePath
+
+  let getBundlePath: (serverFile: string) => string | URL
+  if (isAbsolute(distOutDir)) {
+    getBundlePath = (serverFile: string) => fixWin32Path(resolve(distOutDir, serverFile))
+  } else {
+    const { packageDirectory } = await import('package-directory')
+    const pkgDir = await packageDirectory({ cwd: rootDir })
+    getBundlePath = (serverFile: string) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
+  }
+
+  let bundlePath: string | URL
+
+  for (const serverFile of bundleFiles) {
+    bundlePath = getBundlePath(serverFile)
+    if (existsSync(bundlePath)) {
+      break
+    }
+  }
+  let bundle = await import(bundlePath as string)
+  if (typeof bundle.default === 'function') {
+    bundle = await bundle.default(config)
+  }
+  return bundle.default || bundle
+}
+
+async function loadEntries(
+  config: ProdRuntimeConfig,
+  clientOutDir: string,
+  viteConfig: SerializableViteConfig | ExtendedResolvedViteConfig,
+) {
+  if (config.spa) {
+    return {}
+  }
+  let ssrManifestPath: string
+  const manifestPaths = [
+    resolve(clientOutDir, 'ssr-manifest.json'),
+    resolve(clientOutDir, '.vite/ssr-manifest.json'),
+    resolve(clientOutDir, '.vite/manifest.json'),
+  ]
+  for (const manifestPath of manifestPaths) {
+    if (existsSync(manifestPath)) {
+      ssrManifestPath = manifestPath
+      break
+    }
+  }
+  const ssrManifestPathOrUrl =
+    process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath!)) : ssrManifestPath!
+
+  const entries: ClientEntries = {}
+  if (viteConfig.fastify?.entryPaths) {
+    for (const [env, entryPath] of Object.entries(viteConfig.fastify.entryPaths)) {
+      const bundle = await loadBundle(
+        viteConfig.fastify.outDirs![env]!,
+        entryPath,
+        config.root,
+        config,
+      )
+      if (bundle) {
+        entries[env] = bundle as unknown as ClientModule
+      }
+    }
+  }
+  return {
+    entries,
+    ssrManifest: JSON.parse(await readFile(ssrManifestPathOrUrl as string, 'utf8')),
+  }
+}
+
 export async function setup(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
 ): Promise<ClientModule | undefined> {
@@ -96,7 +177,7 @@ export async function setup(
     value: typeof config.createRenderFunction === 'function',
   })
 
-  const { entries, ssrManifest } = await loadEntries()
+  const { entries, ssrManifest } = await loadEntries(config, clientOutDir, vite)
 
   Object.defineProperty(config, 'ssrManifest', {
     writable: false,
@@ -122,71 +203,4 @@ export async function setup(
   }
 
   return client
-
-  async function loadBundle(distOutDir: string, entryPath: string): Promise<EntryBundle> {
-    const parsedNamed = parse(entryPath).name
-    const bundleFiles = [`${parsedNamed}.js`, `${parsedNamed}.mjs`]
-
-    const fixWin32Path =
-      process.platform === 'win32'
-        ? (filePath: string) => new URL(fileUrl(filePath))
-        : (filePath: string) => filePath
-
-    let getBundlePath: (serverFile: string) => string | URL
-    if (isAbsolute(distOutDir)) {
-      getBundlePath = (serverFile: string) => fixWin32Path(resolve(distOutDir, serverFile))
-    } else {
-      const { packageDirectory } = await import('package-directory')
-      const pkgDir = await packageDirectory({ cwd: config.root })
-      getBundlePath = (serverFile: string) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
-    }
-
-    let bundlePath: string | URL
-
-    for (const serverFile of bundleFiles) {
-      bundlePath = getBundlePath(serverFile)
-      if (existsSync(bundlePath)) {
-        break
-      }
-    }
-    let bundle = await import(bundlePath as string)
-    if (typeof bundle.default === 'function') {
-      bundle = await bundle.default(config)
-    }
-    return bundle.default || bundle
-  }
-
-  async function loadEntries() {
-    if (config.spa) {
-      return {}
-    }
-    let ssrManifestPath: string
-    const manifestPaths = [
-      resolve(clientOutDir, 'ssr-manifest.json'),
-      resolve(clientOutDir, '.vite/ssr-manifest.json'),
-      resolve(clientOutDir, '.vite/manifest.json'),
-    ]
-    for (const manifestPath of manifestPaths) {
-      if (existsSync(manifestPath)) {
-        ssrManifestPath = manifestPath
-        break
-      }
-    }
-    const ssrManifestPathOrUrl =
-      process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath!)) : ssrManifestPath!
-
-    const entries: ClientEntries = {}
-    if (vite.fastify?.entryPaths) {
-      for (const [env, entryPath] of Object.entries(vite.fastify.entryPaths)) {
-        const bundle = await loadBundle(vite.fastify.outDirs![env]!, entryPath)
-        if (bundle) {
-          entries[env] = bundle as unknown as ClientModule
-        }
-      }
-    }
-    return {
-      entries,
-      ssrManifest: JSON.parse(await readFile(ssrManifestPathOrUrl as string, 'utf8')),
-    }
-  }
 }
