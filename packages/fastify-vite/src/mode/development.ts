@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import type { InlineConfig, Plugin as VitePlugin, ResolvedConfig, UserConfig } from 'vite'
+import { createServer, createServerModuleRunner, defineConfig, mergeConfig } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
 import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
@@ -43,60 +44,88 @@ interface LoadedEntryModule {
   [key: string]: unknown
 }
 
+async function loadEntryModulePaths(
+  config: DevRuntimeConfig,
+): Promise<Record<string, string> | null> {
+  if (config.spa) {
+    return null
+  }
+  const entryModulePaths: Record<string, string> = {}
+
+  const viteConfig = config.vite
+
+  if (!hasPlugin(viteConfig, 'vite-fastify')) {
+    throw new Error("@fastify/vite's Vite plugin not registered")
+  }
+
+  const plugin = findPlugin(viteConfig, 'vite-fastify')
+  const configHook = plugin.config
+
+  const setupEnvironments = typeof configHook === 'function' ? configHook : configHook?.handler
+  if (!setupEnvironments) {
+    throw new Error("@fastify/vite's Vite plugin has no config hook")
+  }
+
+  const viteEnvsConfig: ViteEnvironmentsConfig = {
+    root: viteConfig.root,
+    environments: {},
+  }
+
+  await setupEnvironments.call({}, viteEnvsConfig, { mode: 'development' })
+
+  const { client: _, ...nonClientEnvs } = Object.fromEntries(
+    Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
+  )
+
+  for (const env of Object.keys(nonClientEnvs)) {
+    const environment = viteEnvsConfig.environments[env]
+    if (environment.build?.rollupOptions?.input?.index) {
+      const modulePath = environment.build.rollupOptions.input.index.startsWith(
+        config.virtualModulePrefix,
+      )
+        ? environment.build.rollupOptions.input.index
+        : resolve(viteConfig.root, environment.build.rollupOptions.input.index.replace(/^\/+/, ''))
+      entryModulePaths[env] = modulePath
+    }
+  }
+  return entryModulePaths
+}
+
+async function loadEntries(
+  fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
+  config: DevRuntimeConfig,
+): Promise<void> {
+  fastifyViteDecoration.runners = {}
+
+  const entryModulePaths = await loadEntryModulePaths(config)
+
+  if (!entryModulePaths) {
+    return
+  }
+
+  for (const [env, envConfig] of Object.entries(fastifyViteDecoration.devServer!.environments)) {
+    if (env === 'client') {
+      continue
+    }
+    const runner = createServerModuleRunner(envConfig)
+    fastifyViteDecoration.runners[env] = runner
+
+    if (env in entryModulePaths) {
+      const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
+      const clientModule: ClientModule = entryModule.default ?? entryModule
+      if (!fastifyViteDecoration.entries![env]) {
+        fastifyViteDecoration.entries![env] = { ...clientModule }
+      } else {
+        Object.assign(fastifyViteDecoration.entries![env], clientModule)
+      }
+    }
+  }
+}
+
 export async function setup(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
 ): Promise<ClientModule | undefined> {
   const config = fastifyViteDecoration.runtimeConfig as DevRuntimeConfig
-
-  async function loadEntryModulePaths(): Promise<Record<string, string> | null> {
-    if (config.spa) {
-      return null
-    }
-    const entryModulePaths: Record<string, string> = {}
-
-    const viteConfig = config.vite
-
-    if (!hasPlugin(viteConfig, 'vite-fastify')) {
-      throw new Error("@fastify/vite's Vite plugin not registered")
-    }
-
-    const plugin = findPlugin(viteConfig, 'vite-fastify')
-    const configHook = plugin.config
-
-    const setupEnvironments = typeof configHook === 'function' ? configHook : configHook?.handler
-    if (!setupEnvironments) {
-      throw new Error("@fastify/vite's Vite plugin has no config hook")
-    }
-
-    const viteEnvsConfig: ViteEnvironmentsConfig = {
-      root: viteConfig.root,
-      environments: {},
-    }
-
-    await setupEnvironments.call({}, viteEnvsConfig, { mode: 'development' })
-
-    const { client: _, ...nonClientEnvs } = Object.fromEntries(
-      Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
-    )
-
-    for (const env of Object.keys(nonClientEnvs)) {
-      const environment = viteEnvsConfig.environments[env]
-      if (environment.build?.rollupOptions?.input?.index) {
-        const modulePath = environment.build.rollupOptions.input.index.startsWith(
-          config.virtualModulePrefix,
-        )
-          ? environment.build.rollupOptions.input.index
-          : resolve(
-              viteConfig.root,
-              environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
-            )
-        entryModulePaths[env] = modulePath
-      }
-    }
-    return entryModulePaths
-  }
-
-  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
 
   if (!fastifyViteDecoration.scope.hasDecorator('use')) {
     await fastifyViteDecoration.scope.register(middie)
@@ -125,34 +154,6 @@ export async function setup(
 
   fastifyViteDecoration.entries = {}
 
-  const loadEntries = async () => {
-    fastifyViteDecoration.runners = {}
-
-    const entryModulePaths = await loadEntryModulePaths()
-
-    if (!entryModulePaths) {
-      return
-    }
-
-    for (const [env, envConfig] of Object.entries(fastifyViteDecoration.devServer.environments)) {
-      if (env === 'client') {
-        continue
-      }
-      const runner = createServerModuleRunner(envConfig)
-      fastifyViteDecoration.runners[env] = runner
-
-      if (env in entryModulePaths) {
-        const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
-        const clientModule: ClientModule = entryModule.default ?? entryModule
-        if (!fastifyViteDecoration.entries[env]) {
-          fastifyViteDecoration.entries[env] = { ...clientModule }
-        } else {
-          Object.assign(fastifyViteDecoration.entries[env], clientModule)
-        }
-      }
-    }
-  }
-
   fastifyViteDecoration.scope.decorate(hot, {})
   // After decoration, the scope has the hot state
   const hotScope = fastifyViteDecoration.scope as HotScope
@@ -168,7 +169,7 @@ export async function setup(
   fastifyViteDecoration.scope.addHook(
     'onRequest',
     async (req: FastifyRequest, reply: FastifyReply) => {
-      await loadEntries()
+      await loadEntries(fastifyViteDecoration, config)
       const clientResult =
         !config.spa &&
         (await config.prepareClient(
@@ -191,7 +192,7 @@ export async function setup(
       const viteConfig = config.vite
       const indexHtmlPath = join(viteConfig.root, 'index.html')
       const indexHtml = await readFile(indexHtmlPath, 'utf8')
-      const transformedHtml = await fastifyViteDecoration.devServer.transformIndexHtml(
+      const transformedHtml = await fastifyViteDecoration.devServer!.transformIndexHtml(
         req.url,
         indexHtml,
       )
@@ -213,9 +214,9 @@ export async function setup(
     },
   )
 
-  fastifyViteDecoration.scope.addHook('onClose', () => fastifyViteDecoration.devServer.close())
+  fastifyViteDecoration.scope.addHook('onClose', () => fastifyViteDecoration.devServer!.close())
 
-  await loadEntries()
+  await loadEntries(fastifyViteDecoration, config)
 
   const clientResult =
     !config.spa &&
