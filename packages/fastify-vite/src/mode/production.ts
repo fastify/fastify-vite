@@ -7,7 +7,7 @@ import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
 import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
-import type { SetupFunctionContext } from './types.ts'
+import type { FastifyViteDecorationPriorToSetup } from './support.ts'
 
 type EntryBundle =
   | {
@@ -29,7 +29,10 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
-export async function setup(this: SetupFunctionContext, config: ProdRuntimeConfig) {
+export async function setup(
+  fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
+): Promise<ClientModule | undefined> {
+  const config = fastifyViteDecoration.runtimeConfig as ProdRuntimeConfig
   const { spa, vite } = config
   let clientOutDir: string
   let ssrOutDir: string
@@ -65,7 +68,7 @@ export async function setup(this: SetupFunctionContext, config: ProdRuntimeConfi
   const basePathname = URL.canParse(vite.base ?? '')
     ? new URL(vite.base!).pathname
     : vite.base || '/'
-  await this.scope.register(async function assetFiles(scope: FastifyInstance) {
+  await fastifyViteDecoration.scope.register(async function assetFiles(scope: FastifyInstance) {
     const root = [resolve(clientOutDir, assetsDir)]
     if (existsSync(resolve(ssrOutDir, assetsDir))) {
       root.push(resolve(ssrOutDir, assetsDir))
@@ -76,7 +79,7 @@ export async function setup(this: SetupFunctionContext, config: ProdRuntimeConfi
     })
   })
 
-  await this.scope.register(async function publicFiles(scope: FastifyInstance) {
+  await fastifyViteDecoration.scope.register(async function publicFiles(scope: FastifyInstance) {
     await scope.register(FastifyStatic, {
       root: clientOutDir,
       prefix: join(registrationPrefix, basePathname).replace(/\\/g, '/'),
@@ -101,20 +104,24 @@ export async function setup(this: SetupFunctionContext, config: ProdRuntimeConfi
   })
 
   const client: ClientModule | undefined = !config.spa
-    ? await config.prepareClient(entries, this.scope, config)
+    ? await config.prepareClient(entries, fastifyViteDecoration.scope, config)
     : undefined
 
-  this.scope.decorateReply(
+  fastifyViteDecoration.scope.decorateReply(
     'html',
-    await config.createHtmlFunction(config.bundle.indexHtml!, this.scope, config),
+    await config.createHtmlFunction(config.bundle.indexHtml!, fastifyViteDecoration.scope, config),
   )
 
   if (config.hasRenderFunction && client) {
-    const renderFunction = await config.createRenderFunction(client, this.scope, config)
-    this.scope.decorateReply('render', renderFunction)
+    const renderFunction = await config.createRenderFunction(
+      client,
+      fastifyViteDecoration.scope,
+      config,
+    )
+    fastifyViteDecoration.scope.decorateReply('render', renderFunction)
   }
 
-  return { client, routes: client?.routes }
+  return client
 
   async function loadBundle(distOutDir: string, entryPath: string): Promise<EntryBundle> {
     const parsedNamed = parse(entryPath).name

@@ -3,8 +3,8 @@ import type { ViteDevServer } from 'vite'
 import type { ModuleRunner } from 'vite/module-runner'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
-import type { SetupFunctionContext } from './mode/types.ts'
-import type { ClientEntries } from './types/client.ts'
+import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './mode/support.ts'
+import type { ClientEntries, ClientModule } from './types/client.ts'
 import type {
   DevRuntimeConfig,
   FastifyViteOptions,
@@ -37,23 +37,14 @@ declare module 'fastify' {
 }
 
 interface ModeModule {
-  setup: (
-    this: SetupFunctionContext,
-    config: RuntimeConfig,
-    createServer?: unknown,
-  ) => Promise<{
-    client: unknown
-    routes?: Iterable<RouteDefinition>
-    handler?: unknown
-    errorHandler?: unknown
-  }>
+  setup: (ctx: FastifyViteDecorationPriorToSetup) => Promise<ClientModule | undefined>
   hot?: symbol
 }
 
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')
 
-class FastifyViteDecoration implements SetupFunctionContext {
+class FastifyViteDecoration implements FastifyViteDecorationPriorToSetup {
   scope: FastifyInstance
   createServer?: unknown
   runtimeConfig!: RuntimeConfig
@@ -89,16 +80,12 @@ class FastifyViteDecoration implements SetupFunctionContext {
       this[kMode] = (await import('./mode/production.ts')) as ModeModule
     }
 
-    // Get handler function and routes based on the Vite server bundle
-    const { client, routes } = await this[kMode].setup.call(
-      this,
-      this.runtimeConfig,
-      this.createServer,
-    )
+    // Get client module based on the Vite server bundle
+    const client = await this[kMode].setup(this)
 
     // Register individual Fastify routes for each the client-provided routes
-    if (routes && typeof (routes as Iterable<RouteDefinition>)[Symbol.iterator] === 'function') {
-      for (const route of routes as Iterable<RouteDefinition>) {
+    if (hasIterableRoutes(client)) {
+      for (const route of client.routes) {
         if (this.runtimeConfig.dev) {
           const hotSymbol = this[kMode].hot!
           const hmrHandler = async (req: FastifyRequest, reply: FastifyReply) => {
