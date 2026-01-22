@@ -3,7 +3,7 @@
   "categories": {
     "correctness": "error"
   },
-  "plugins": ["import"],
+  "plugins": ["import", "typescript"],
   "rules": {
     "import/extensions": [
       "error",
@@ -12,6 +12,7 @@
         "ignorePackages": true
       }
     ],
-    "no-unused-vars": "warn"
+    "no-unused-vars": "off",
+    "typescript/consistent-type-definitions": "error"
   }
 }
