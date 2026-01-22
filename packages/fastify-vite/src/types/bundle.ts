@@ -7,7 +7,7 @@ export interface Bundle {
   dir?: string
 }
 
-export type BundleConfig = {
+export interface BundleConfig {
   dev: boolean
   vite: ExtendedResolvedViteConfig
   root: string

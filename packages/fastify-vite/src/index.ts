@@ -1,6 +1,10 @@
 import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
+import type { ViteDevServer } from 'vite'
+import type { ModuleRunner } from 'vite/module-runner'
 import fp from 'fastify-plugin'
 import { configure } from './config.ts'
+import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './mode/support.ts'
+import type { ClientEntries, ClientModule } from './types/client.ts'
 import type {
   DevRuntimeConfig,
   FastifyViteOptions,
@@ -28,34 +32,25 @@ declare module 'fastify' {
   }
 
   interface FastifyInstance {
-    vite: Vite
+    vite: FastifyViteDecoration
   }
 }
 
 interface ModeModule {
-  setup: (
-    this: Vite,
-    config: RuntimeConfig,
-    createServer?: unknown,
-  ) => Promise<{
-    client: unknown
-    routes?: Iterable<RouteDefinition>
-    handler?: unknown
-    errorHandler?: unknown
-  }>
+  setup: (ctx: FastifyViteDecorationPriorToSetup) => Promise<ClientModule | undefined>
   hot?: symbol
 }
 
 const kMode = Symbol('kMode')
 const kOptions = Symbol('kOptions')
 
-class Vite {
+class FastifyViteDecoration implements FastifyViteDecorationPriorToSetup {
   scope: FastifyInstance
   createServer?: unknown
-  config!: RuntimeConfig
-  devServer?: unknown
-  entries?: Record<string, unknown>
-  runners?: Record<string, unknown>;
+  runtimeConfig!: RuntimeConfig
+  devServer?: ViteDevServer
+  entries?: ClientEntries
+  runners?: Record<string, ModuleRunner>;
   [key: symbol]: unknown
 
   private [kOptions]: FastifyViteOptions
@@ -69,15 +64,15 @@ class Vite {
 
   async ready(): Promise<void> {
     // Process all user-provided options and compute all Vite configuration settings
-    this.config = await configure(this[kOptions])
+    this.runtimeConfig = await configure(this[kOptions])
 
     // Configure the Fastify server instance — used mostly by renderer packages
-    if (this.config.prepareServer) {
-      await this.config.prepareServer(this.scope, this.config)
+    if (this.runtimeConfig.prepareServer) {
+      await this.runtimeConfig.prepareServer(this.scope, this.runtimeConfig)
     }
 
     // Determine which setup function to use
-    if (this.config.dev) {
+    if (this.runtimeConfig.dev) {
       // Boots Vite's development server and ensures hot reload
       this[kMode] = (await import('./mode/development.ts')) as ModeModule
     } else {
@@ -85,17 +80,17 @@ class Vite {
       this[kMode] = (await import('./mode/production.ts')) as ModeModule
     }
 
-    // Get handler function and routes based on the Vite server bundle
-    const { client, routes } = await this[kMode].setup.call(this, this.config, this.createServer)
+    // Get client module based on the Vite server bundle
+    const client = await this[kMode].setup(this)
 
     // Register individual Fastify routes for each the client-provided routes
-    if (routes && typeof (routes as Iterable<RouteDefinition>)[Symbol.iterator] === 'function') {
-      for (const route of routes as Iterable<RouteDefinition>) {
-        if (this.config.dev) {
+    if (hasIterableRoutes(client)) {
+      for (const route of client.routes) {
+        if (this.runtimeConfig.dev) {
           const hotSymbol = this[kMode].hot!
           const hmrHandler = async (req: FastifyRequest, reply: FastifyReply) => {
             // Create route handler and route error handler functions
-            const handler = await this.config.createRouteHandler(
+            const handler = await this.runtimeConfig.createRouteHandler(
               {
                 client:
                   (this.scope as unknown as Record<symbol, { client?: unknown }>)[hotSymbol]
@@ -109,7 +104,7 @@ class Vite {
                   )[hotSymbol]?.routeHash?.get(route.path!) ?? route,
               },
               this.scope,
-              this.config,
+              this.runtimeConfig,
             )
             return await handler(req, reply as DecoratedReply)
           }
@@ -118,7 +113,7 @@ class Vite {
             req: FastifyRequest,
             reply: FastifyReply,
           ) => {
-            const errorHandler = await this.config.createErrorHandler(
+            const errorHandler = await this.runtimeConfig.createErrorHandler(
               {
                 client:
                   (this.scope as unknown as Record<symbol, { client?: unknown }>)[hotSymbol]
@@ -132,12 +127,12 @@ class Vite {
                   )[hotSymbol]?.routeHash?.get(route.path!) ?? route,
               },
               this.scope,
-              this.config,
+              this.runtimeConfig,
             )
             return await errorHandler(error, req, reply)
           }
 
-          await this.config.createRoute(
+          await this.runtimeConfig.createRoute(
             {
               client,
               route,
@@ -149,26 +144,26 @@ class Vite {
               },
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
         } else {
           // Create route handler and route error handler functions
-          const handler = await this.config.createRouteHandler(
+          const handler = await this.runtimeConfig.createRouteHandler(
             { client, route },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
 
-          const errorHandler = await this.config.createErrorHandler(
+          const errorHandler = await this.runtimeConfig.createErrorHandler(
             {
               client,
               route,
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
 
-          await this.config.createRoute(
+          await this.runtimeConfig.createRoute(
             {
               client,
               handler,
@@ -176,7 +171,7 @@ class Vite {
               route,
             },
             this.scope,
-            this.config,
+            this.runtimeConfig,
           )
         }
       }
@@ -184,12 +179,12 @@ class Vite {
   }
 }
 
-const plugin: FastifyPluginCallback<FastifyViteOptions> = (scope, options, done) => {
-  scope.decorate('vite', new Vite(scope, options))
+const pluginFn: FastifyPluginCallback<FastifyViteOptions> = (scope, options, done) => {
+  scope.decorate('vite', new FastifyViteDecoration(scope, options))
   done()
 }
 
-const fastifyVite = fp(plugin, {
+const fastifyVite = fp(pluginFn, {
   fastify: '5.x',
   name: '@fastify/vite',
 })

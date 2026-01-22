@@ -47,7 +47,7 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
               // Remove /pages and .vue extension
               .slice(6, -4)
               // Remove params
-              .replace(param, (_, m) => ``)
+              .replace(param, () => '')
               // Remove leading and trailing slashes
               .replace(/^\/*|\/*$/g, '')
               // Replace slashes with underscores

@@ -1,4 +1,5 @@
-import { existsSync, lstatSync, Stats } from 'node:fs'
+import { existsSync, lstatSync } from 'node:fs'
+import type { Stats } from 'node:fs'
 import { writeFile, readFile } from 'node:fs/promises'
 import { isAbsolute, join, resolve, parse, dirname, basename, sep } from 'node:path'
 import { ensureDir, remove } from 'fs-extra'

@@ -12,7 +12,7 @@ export function getData({ server }) {
   }
 }
 
-export default function Index(props) {
+export default function Index() {
   const { data } = useRouteContext()
   const [todoList, updateTodoList] = useState(data.todoList)
   const [input, setInput] = useState(null)

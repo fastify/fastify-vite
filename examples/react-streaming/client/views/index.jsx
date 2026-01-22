@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { useAtom } from 'jotai'
 import { todoList } from '../state.js'
 
-export default function Index(props) {
+export default function Index() {
   const [state, updateState] = useAtom(todoList)
   const [input, setInput] = useState(null)
   const addItem = async () => {

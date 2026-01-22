@@ -18,7 +18,7 @@ export async function closeBundle(resolvedBundle) {
   }
   const indexHtml = readFileSync(join(distDir, 'index.html'), 'utf8')
   const pages = Object.fromEntries(
-    Object.entries(resolvedBundle ?? {}).filter(([id, meta]) => {
+    Object.entries(resolvedBundle ?? {}).filter(([, meta]) => {
       if (meta.facadeModuleId?.includes('/pages/')) {
         meta.htmlPath = meta.facadeModuleId.replace(/.*pages\/(.*)\.(j|t)sx$/, 'html/$1.html')
         return true

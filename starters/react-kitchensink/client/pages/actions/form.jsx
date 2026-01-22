@@ -5,7 +5,7 @@ const isAdmin = createServerAction()
 
 export function configure(server) {
   server.post(isAdmin, async (req, reply) => {
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       setTimeout(resolve, 1000)
     })
     const username = req.body.username

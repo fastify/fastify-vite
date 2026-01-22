@@ -1,19 +1,14 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type {
-  InlineConfig,
-  Plugin as VitePlugin,
-  ResolvedConfig,
-  UserConfig,
-  ViteDevServer,
-} from 'vite'
-import type { ModuleRunner } from 'vite/module-runner'
+import type { InlineConfig, Plugin as VitePlugin, ResolvedConfig, UserConfig } from 'vite'
+import { createServer, createServerModuleRunner, defineConfig, mergeConfig } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
-import type { ClientEntries, ClientModule } from '../types/client.ts'
+import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
 import type { DecoratedReply } from '../types/reply.ts'
 import type { RouteDefinition } from '../types/route.ts'
+import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './support.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
 
@@ -43,86 +38,97 @@ interface HotScope extends FastifyInstance {
   [hot]: HotState
 }
 
-interface SetupContext {
-  scope: FastifyInstance
-  devServer: ViteDevServer
-  entries: ClientEntries
-  runners: Record<string, ModuleRunner>
-}
-
 /** Module loaded via ModuleRunner that may have a default export */
 interface LoadedEntryModule {
   default?: ClientModule
   [key: string]: unknown
 }
 
-/** Check if an object has iterable routes */
-function hasIterableRoutes(
-  client: unknown,
-): client is ClientModule & { routes: Iterable<RouteDefinition> } {
-  if (!client || typeof client !== 'object') return false
-  const maybeClient = client as { routes?: unknown }
-  const routes = maybeClient.routes
-  return (
-    !!routes &&
-    typeof routes !== 'string' && // strings are iterable, but not desired here
-    typeof (routes as Iterable<unknown>)[Symbol.iterator] === 'function'
-  )
-}
+async function loadEntryModulePaths(
+  config: DevRuntimeConfig,
+): Promise<Record<string, string> | null> {
+  if (config.spa) {
+    return null
+  }
+  const entryModulePaths: Record<string, string> = {}
 
-export async function setup(this: SetupContext, config: DevRuntimeConfig) {
-  const loadEntryModulePaths = async (): Promise<Record<string, string> | null> => {
-    if (config.spa) {
-      return null
-    }
-    const entryModulePaths: Record<string, string> = {}
+  const viteConfig = config.vite
 
-    const viteConfig = config.vite
-
-    if (!hasPlugin(viteConfig, 'vite-fastify')) {
-      throw new Error("@fastify/vite's Vite plugin not registered")
-    }
-
-    const plugin = findPlugin(viteConfig, 'vite-fastify')
-    const configHook = plugin.config
-
-    const setupEnvironments = typeof configHook === 'function' ? configHook : configHook?.handler
-    if (!setupEnvironments) {
-      throw new Error("@fastify/vite's Vite plugin has no config hook")
-    }
-
-    const viteEnvsConfig: ViteEnvironmentsConfig = {
-      root: viteConfig.root,
-      environments: {},
-    }
-
-    await setupEnvironments.call({}, viteEnvsConfig, { mode: 'development' })
-
-    const { client: _, ...nonClientEnvs } = Object.fromEntries(
-      Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
-    )
-
-    for (const env of Object.keys(nonClientEnvs)) {
-      const environment = viteEnvsConfig.environments[env]
-      if (environment.build?.rollupOptions?.input?.index) {
-        const modulePath = environment.build.rollupOptions.input.index.startsWith(
-          config.virtualModulePrefix,
-        )
-          ? environment.build.rollupOptions.input.index
-          : resolve(
-              viteConfig.root,
-              environment.build.rollupOptions.input.index.replace(/^\/+/, ''),
-            )
-        entryModulePaths[env] = modulePath
-      }
-    }
-    return entryModulePaths
+  if (!hasPlugin(viteConfig, 'vite-fastify')) {
+    throw new Error("@fastify/vite's Vite plugin not registered")
   }
 
-  const { createServer, createServerModuleRunner, mergeConfig, defineConfig } = await import('vite')
+  const plugin = findPlugin(viteConfig, 'vite-fastify')
+  const configHook = plugin.config
 
-  if (!this.scope.hasDecorator('use')) {
-    await this.scope.register(middie)
+  const setupEnvironments = typeof configHook === 'function' ? configHook : configHook?.handler
+  if (!setupEnvironments) {
+    throw new Error("@fastify/vite's Vite plugin has no config hook")
+  }
+
+  const viteEnvsConfig: ViteEnvironmentsConfig = {
+    root: viteConfig.root,
+    environments: {},
+  }
+
+  await setupEnvironments.call({}, viteEnvsConfig, { mode: 'development' })
+
+  const { client: _, ...nonClientEnvs } = Object.fromEntries(
+    Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
+  )
+
+  for (const env of Object.keys(nonClientEnvs)) {
+    const environment = viteEnvsConfig.environments[env]
+    if (environment.build?.rollupOptions?.input?.index) {
+      const modulePath = environment.build.rollupOptions.input.index.startsWith(
+        config.virtualModulePrefix,
+      )
+        ? environment.build.rollupOptions.input.index
+        : resolve(viteConfig.root, environment.build.rollupOptions.input.index.replace(/^\/+/, ''))
+      entryModulePaths[env] = modulePath
+    }
+  }
+  return entryModulePaths
+}
+
+async function loadEntries(
+  fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
+  config: DevRuntimeConfig,
+): Promise<void> {
+  fastifyViteDecoration.runners = {}
+
+  const entryModulePaths = await loadEntryModulePaths(config)
+
+  if (!entryModulePaths) {
+    return
+  }
+
+  for (const [env, envConfig] of Object.entries(fastifyViteDecoration.devServer!.environments)) {
+    if (env === 'client') {
+      continue
+    }
+    const runner = createServerModuleRunner(envConfig)
+    fastifyViteDecoration.runners[env] = runner
+
+    if (env in entryModulePaths) {
+      const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
+      const clientModule: ClientModule = entryModule.default ?? entryModule
+      if (!fastifyViteDecoration.entries![env]) {
+        fastifyViteDecoration.entries![env] = { ...clientModule }
+      } else {
+        Object.assign(fastifyViteDecoration.entries![env], clientModule)
+      }
+    }
+  }
+}
+
+export async function setup(
+  fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
+): Promise<ClientModule | undefined> {
+  const config = fastifyViteDecoration.runtimeConfig as DevRuntimeConfig
+
+  if (!fastifyViteDecoration.scope.hasDecorator('use')) {
+    await fastifyViteDecoration.scope.register(middie)
   }
 
   const baseConfig: InlineConfig = {
@@ -130,7 +136,7 @@ export async function setup(this: SetupContext, config: DevRuntimeConfig) {
     server: {
       middlewareMode: true,
       hmr: {
-        server: this.scope.server,
+        server: fastifyViteDecoration.scope.server,
       },
     },
     appType: 'custom',
@@ -140,97 +146,84 @@ export async function setup(this: SetupContext, config: DevRuntimeConfig) {
     config.vite as unknown as UserConfig,
   ) as InlineConfig
 
-  this.devServer = await createServer(devServerOptions)
+  fastifyViteDecoration.devServer = await createServer(devServerOptions)
   // Connect.Server implements the middleware handler interface
-  this.scope.use(this.devServer.middlewares as unknown as MiddieHandler)
+  fastifyViteDecoration.scope.use(
+    fastifyViteDecoration.devServer.middlewares as unknown as MiddieHandler,
+  )
 
-  this.entries = {}
+  fastifyViteDecoration.entries = {}
 
-  const loadEntries = async () => {
-    this.runners = {}
-
-    const entryModulePaths = await loadEntryModulePaths()
-
-    if (!entryModulePaths) {
-      return
-    }
-
-    for (const [env, envConfig] of Object.entries(this.devServer.environments)) {
-      if (env === 'client') {
-        continue
-      }
-      const runner = createServerModuleRunner(envConfig)
-      this.runners[env] = runner
-
-      if (env in entryModulePaths) {
-        const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
-        const clientModule: ClientModule = entryModule.default ?? entryModule
-        if (!this.entries[env]) {
-          this.entries[env] = { ...clientModule }
-        } else {
-          Object.assign(this.entries[env], clientModule)
-        }
-      }
-    }
-  }
-
-  this.scope.decorate(hot, {})
+  fastifyViteDecoration.scope.decorate(hot, {})
   // After decoration, the scope has the hot state
-  const hotScope = this.scope as HotScope
+  const hotScope = fastifyViteDecoration.scope as HotScope
 
-  this.scope.decorateReply('render', null)
-  this.scope.decorateReply('html', null)
+  fastifyViteDecoration.scope.decorateReply('render', null)
+  fastifyViteDecoration.scope.decorateReply('html', null)
 
   Object.defineProperty(config, 'hasRenderFunction', {
     writable: false,
     value: typeof config.createRenderFunction === 'function',
   })
 
-  this.scope.addHook('onRequest', async (req: FastifyRequest, reply: FastifyReply) => {
-    await loadEntries()
-    const clientResult =
-      !config.spa && (await config.prepareClient(this.entries, this.scope, config))
-    const client = clientResult ? (clientResult as ClientModule) : undefined
-    hotScope[hot].client = client
-    if (client && hasIterableRoutes(client)) {
-      if (!hotScope[hot].routeHash) {
-        hotScope[hot].routeHash = new Map<string, RouteDefinition>()
-      }
-      for (const route of client.routes) {
-        if (route.path) {
-          hotScope[hot].routeHash.set(route.path, route)
+  fastifyViteDecoration.scope.addHook(
+    'onRequest',
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      await loadEntries(fastifyViteDecoration, config)
+      const clientResult =
+        !config.spa &&
+        (await config.prepareClient(
+          fastifyViteDecoration.entries,
+          fastifyViteDecoration.scope,
+          config,
+        ))
+      const client = clientResult ? (clientResult as ClientModule) : undefined
+      hotScope[hot].client = client
+      if (client && hasIterableRoutes(client)) {
+        if (!hotScope[hot].routeHash) {
+          hotScope[hot].routeHash = new Map<string, RouteDefinition>()
+        }
+        for (const route of client.routes) {
+          if (route.path) {
+            hotScope[hot].routeHash.set(route.path, route)
+          }
         }
       }
-    }
-    const viteConfig = config.vite
-    const indexHtmlPath = join(viteConfig.root, 'index.html')
-    const indexHtml = await readFile(indexHtmlPath, 'utf8')
-    const transformedHtml = await this.devServer.transformIndexHtml(req.url, indexHtml)
+      const viteConfig = config.vite
+      const indexHtmlPath = join(viteConfig.root, 'index.html')
+      const indexHtml = await readFile(indexHtmlPath, 'utf8')
+      const transformedHtml = await fastifyViteDecoration.devServer!.transformIndexHtml(
+        req.url,
+        indexHtml,
+      )
 
-    const decoratedReply = reply as DecoratedReply
-    decoratedReply.html = await config.createHtmlFunction(transformedHtml, this.scope, config)
-
-    if (config.hasRenderFunction) {
-      decoratedReply.render = await config.createRenderFunction(
-        hotScope[hot].client,
-        this.scope,
+      const decoratedReply = reply as DecoratedReply
+      decoratedReply.html = await config.createHtmlFunction(
+        transformedHtml,
+        fastifyViteDecoration.scope,
         config,
       )
-    }
-  })
 
-  this.scope.addHook('onClose', () => this.devServer.close())
+      if (config.hasRenderFunction) {
+        decoratedReply.render = await config.createRenderFunction(
+          hotScope[hot].client,
+          fastifyViteDecoration.scope,
+          config,
+        )
+      }
+    },
+  )
 
-  await loadEntries()
+  fastifyViteDecoration.scope.addHook('onClose', () => fastifyViteDecoration.devServer!.close())
 
-  const clientResult = !config.spa && (await config.prepareClient(this.entries, this.scope, config))
+  await loadEntries(fastifyViteDecoration, config)
+
+  const clientResult =
+    !config.spa &&
+    (await config.prepareClient(fastifyViteDecoration.entries, fastifyViteDecoration.scope, config))
   const client = clientResult ? (clientResult as ClientModule) : undefined
 
-  return {
-    config,
-    client,
-    routes: client && hasIterableRoutes(client) ? client.routes : undefined,
-  }
+  return client
 }
 
 function findPlugin(config: ResolvedConfig, pluginName: string): VitePlugin {
