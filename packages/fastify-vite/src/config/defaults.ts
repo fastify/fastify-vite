@@ -19,7 +19,7 @@ export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
 
   virtualModulePrefix: '$app',
 
-  prepareServer(scope, config) {},
+  prepareServer(_scope, _config) {},
 
   async prepareClient(entries: ClientEntries) {
     const clientModule = entries.ssr

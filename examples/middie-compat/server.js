@@ -25,7 +25,7 @@ export async function mainMiddieFirst(dev) {
     return reply.html()
   })
 
-  server.get('/middleware-test', (req, reply) => {
+  server.get('/middleware-test', (req) => {
     return { customMiddleware: req.raw.customMiddleware ?? false }
   })
 
@@ -56,7 +56,7 @@ export async function mainViteFirst(dev) {
     return reply.html()
   })
 
-  server.get('/middleware-test', (req, reply) => {
+  server.get('/middleware-test', (req) => {
     return { customMiddleware: req.raw.customMiddleware ?? false }
   })
 

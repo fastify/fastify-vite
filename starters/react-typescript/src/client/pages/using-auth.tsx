@@ -8,7 +8,7 @@ export function getMeta() {
   return { title: 'Using Custom Layout' }
 }
 
-export default function Index(props) {
+export default function Index() {
   const { snapshot, state, actions } = useRouteContext()
   const [input, setInput] = useState(null)
   const addItem = async (value) => {

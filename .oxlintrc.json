@@ -3,7 +3,7 @@
   "categories": {
     "correctness": "error"
   },
-  "plugins": ["import", "typescript"],
+  "plugins": ["eslint", "import", "oxc", "typescript", "unicorn"],
   "rules": {
     "import/extensions": [
       "error",
@@ -12,7 +12,7 @@
         "ignorePackages": true
       }
     ],
-    "no-unused-vars": "off",
+    "no-unused-vars": "warn",
     "typescript/consistent-type-definitions": "error"
   }
 }

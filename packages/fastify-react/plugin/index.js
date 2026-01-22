@@ -1,5 +1,3 @@
-import { readFileSync, existsSync } from 'node:fs'
-import { join } from 'node:path'
 import viteFastify from '@fastify/vite/plugin'
 import {
   prefix,
@@ -9,8 +7,6 @@ import {
   createPlaceholderExports,
 } from './virtual.js'
 import { closeBundle } from './preload.js'
-import { parseStateKeys } from './parsers.js'
-import { generateStores } from './stores.js'
 
 export default function viteFastifyReactPlugin({ ts } = {}) {
   const context = {

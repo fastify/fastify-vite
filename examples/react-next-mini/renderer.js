@@ -11,7 +11,7 @@ export default {
   createRoute,
 }
 
-function createRoute({ handler, errorHandler, route }, scope, config) {
+function createRoute({ handler, errorHandler, route }, scope) {
   if (route.getServerSideProps) {
     // If getServerSideProps is provided, register JSON endpoint for it
     scope.get(`/json${route.path}`, async (req, reply) => {
@@ -27,7 +27,7 @@ function createRoute({ handler, errorHandler, route }, scope, config) {
     // If getServerSideProps is provided,
     // make sure it runs before the SSR route handler
     ...(route.getServerSideProps && {
-      async preHandler(req, reply) {
+      async preHandler(req) {
         req.serverSideProps = await route.getServerSideProps({
           req,
           fetchJSON: scope.fetchJSON,

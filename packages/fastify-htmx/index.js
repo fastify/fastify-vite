@@ -26,7 +26,7 @@ async function prepareClient(clientModule, scope, config) {
   let defaultLayout = null
   try {
     defaultLayout = await resolveLayoutFilePath(config.vite.root, 'default')
-  } catch (e) {
+  } catch {
     scope.log.info('No default layout specified. Falling back to virtual layout.')
   }
 
@@ -190,7 +190,7 @@ async function findClientImports(config, path, { js = [], css = [], svg = [] } =
           const specifier = filePathWithExtension.replace(root, '')
 
           return specifier
-        } catch (e) {
+        } catch {
           return ''
         }
       }),

@@ -22,7 +22,7 @@ export async function createHtmlTemplates(source, config) {
   }
 }
 
-async function removeClientModule(html, config) {
+async function removeClientModule(html) {
   const decoder = new TextDecoder()
 
   let output = ''

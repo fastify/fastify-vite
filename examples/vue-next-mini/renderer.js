@@ -16,7 +16,7 @@ export function prepareServer(server) {
   server.log.info('prepareServer() hook picked up from configuration!')
 }
 
-async function createRoute({ handler, errorHandler, route }, scope, config) {
+async function createRoute({ handler, errorHandler, route }, scope) {
   if (route.configure) {
     await route.configure(scope)
   }
@@ -35,7 +35,7 @@ async function createRoute({ handler, errorHandler, route }, scope, config) {
     // If getServerSideProps is provided,
     // make sure it runs before the SSR route handler
     ...(route.getServerSideProps && {
-      async preHandler(req, reply) {
+      async preHandler(req) {
         req.serverSideProps = await route.getServerSideProps({
           req,
           ky: scope.ky,
