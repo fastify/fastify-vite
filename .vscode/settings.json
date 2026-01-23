@@ -5,11 +5,5 @@
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
   "files.insertFinalNewline": true,
-  "oxc.enable": true,
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  "oxc.enable": true
 }
