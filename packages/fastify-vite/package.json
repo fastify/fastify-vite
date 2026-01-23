@@ -41,6 +41,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "pnpm build",
     "test": "pnpm build && vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
