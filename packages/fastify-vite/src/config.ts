@@ -1,6 +1,6 @@
 import { DefaultConfig } from './config/defaults.ts'
 import { resolveClientModule, resolveRoot } from './config/paths.ts'
-import { resolveViteConfig } from './config/vite-config.ts'
+import { resolveDevViteConfig, resolveProdViteConfig } from './config/vite-config.ts'
 import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
 import type { FastifyViteOptions, RuntimeConfig } from './types/options.ts'
 
@@ -8,20 +8,25 @@ export async function configure(options: FastifyViteOptions): Promise<RuntimeCon
   const defaultConfig = { ...DefaultConfig }
   const root = resolveRoot(options.root)
   const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const config = Object.assign(defaultConfig, { ...options }) as RuntimeConfig
-  config.root = root
-  const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
-  Object.assign(config, { vite, viteConfig })
+  const runtimeConfig = Object.assign(defaultConfig, { ...options }) as RuntimeConfig
+
+  runtimeConfig.root = root
+
+  const viteConfig = dev
+    ? await resolveDevViteConfig(root, { spa: runtimeConfig.spa })
+    : await resolveProdViteConfig(root, { distDir: runtimeConfig.distDir })
+
+  Object.assign(runtimeConfig, { viteConfig })
 
   const baseAssetUrl = options.baseAssetUrl
-  const originalBase = vite.base || '/'
+  const originalBase = viteConfig.base || '/'
 
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite, root, baseAssetUrl, originalBase })
-  Object.assign(config, { bundle })
-  if (typeof config.renderer === 'string') {
-    const { default: renderer, ...named } = await import(config.renderer)
-    config.renderer = { ...renderer, ...named }
+  const bundle = await resolveBundle({ dev, vite: viteConfig, root, baseAssetUrl, originalBase })
+  Object.assign(runtimeConfig, { bundle })
+  if (typeof runtimeConfig.renderer === 'string') {
+    const { default: renderer, ...named } = await import(runtimeConfig.renderer)
+    runtimeConfig.renderer = { ...renderer, ...named }
   }
   // Settings that can be provided by a renderer package to override defaults
   const rendererSettings = [
@@ -38,13 +43,15 @@ export async function configure(options: FastifyViteOptions): Promise<RuntimeCon
   type RendererSettingKey = (typeof rendererSettings)[number]
 
   for (const setting of rendererSettings) {
-    const rendererConfig = config.renderer as Record<string, unknown>
-    const configRecord = config as unknown as Record<RendererSettingKey, unknown>
+    const rendererConfig = runtimeConfig.renderer as Record<string, unknown>
+    const configRecord = runtimeConfig as unknown as Record<RendererSettingKey, unknown>
     configRecord[setting] = rendererConfig[setting] ?? configRecord[setting]
   }
 
-  config.clientModule =
-    vite.fastify.clientModule ?? config.clientModule ?? resolveClientModule(vite.root)
+  runtimeConfig.clientModule =
+    viteConfig.fastify.clientModule ??
+    runtimeConfig.clientModule ??
+    resolveClientModule(viteConfig.root)
 
-  return config
+  return runtimeConfig
 }

@@ -1,5 +1,5 @@
 import type { Manifest } from 'vite'
-import type { ExtendedResolvedViteConfig } from './vite-configs.ts'
+import type { ViteConfigForBundle } from './vite-configs.ts'
 
 export interface Bundle {
   manifest?: Manifest
@@ -9,7 +9,7 @@ export interface Bundle {
 
 export interface BundleConfig {
   dev: boolean
-  vite: ExtendedResolvedViteConfig
+  vite: ViteConfigForBundle
   root: string
   baseAssetUrl?: string
   originalBase?: string

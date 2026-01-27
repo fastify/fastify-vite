@@ -1,4 +1,4 @@
-import type { ResolvedConfig as ViteResolvedConfig, UserConfig } from 'vite'
+import type { ResolvedConfig as ViteResolvedConfig, ResolvedBuildOptions, UserConfig } from 'vite'
 
 export interface ViteFastifyConfig {
   clientModule?: string
@@ -23,6 +23,28 @@ export interface SerializableViteConfig extends WithFastifyConfig {
   root?: string
   build?: {
     assetsDir?: string
+    outDir?: string
+  }
+}
+
+/**
+ * The resolved Vite config returned in dev mode.
+ * Extends ExtendedUserConfig but with build limited to assetsDir and outDir,
+ * and fastify guaranteed to be present.
+ */
+export interface ResolvedDevViteConfig extends Omit<ExtendedUserConfig, 'build' | 'fastify'> {
+  fastify: ViteFastifyConfig
+  build: Pick<ResolvedBuildOptions, 'assetsDir' | 'outDir'>
+}
+
+/**
+ * Minimal Vite config interface required by bundle resolution.
+ * This is the common interface satisfied by both SerializableViteConfig and ResolvedDevViteConfig.
+ */
+export interface ViteConfigForBundle {
+  fastify?: ViteFastifyConfig
+  root?: string
+  build?: {
     outDir?: string
   }
 }
