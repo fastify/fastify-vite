@@ -71,7 +71,9 @@ export interface ResolvedFastifyViteConfig {
     config: RuntimeConfig,
   ) => Promise<ClientModule | undefined>
 
-  createHtmlTemplateFunction: (source: string) => Promise<HtmlTemplateFunction>
+  createHtmlTemplateFunction: (
+    source: string,
+  ) => HtmlTemplateFunction | Promise<HtmlTemplateFunction>
 
   createHtmlFunction: (
     source: string,

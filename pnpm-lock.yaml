@@ -15,9 +15,6 @@ catalogs:
     fastify:
       specifier: ^5.6.2
       version: 5.6.2
-    html-rewriter-wasm:
-      specifier: ^0.4.1
-      version: 0.4.1
     tsx:
       specifier: ^4.21.0
       version: 4.21.0
@@ -675,9 +672,6 @@ importers:
       history:
         specifier: latest
         version: 5.3.0
-      html-rewriter-wasm:
-        specifier: 'catalog:'
-        version: 0.4.1
       minipass:
         specifier: latest
         version: 7.1.2
@@ -717,9 +711,6 @@ importers:
       fs-extra:
         specifier: ^11.3.3
         version: 11.3.3
-      html-rewriter-wasm:
-        specifier: 'catalog:'
-        version: 0.4.1
       klaw:
         specifier: ^4.1.0
         version: 4.1.0
@@ -778,9 +769,6 @@ importers:
       devalue:
         specifier: 'catalog:'
         version: 5.6.2
-      html-rewriter-wasm:
-        specifier: 'catalog:'
-        version: 0.4.1
       mlly:
         specifier: ^1.5.0
         version: 1.7.4
