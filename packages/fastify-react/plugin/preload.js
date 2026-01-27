@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, isAbsolute, parse as parsePath } from 'node:path'
-import { HTMLRewriter } from 'html-rewriter-wasm'
 
 const imageFileRE = /\.((png)|(jpg)|(svg)|(webp)|(gif))$/
 
@@ -44,30 +43,14 @@ export async function closeBundle(resolvedBundle) {
     for (const js of jsImports) {
       jsPreloads += `  <link rel="modulepreload" crossorigin href="${base}${js}">\n`
     }
-    const pageHtml = await appendHead(indexHtml, imagePreloads, cssPreloads, jsPreloads)
+    const pageHtml = appendHead(indexHtml, imagePreloads, cssPreloads, jsPreloads)
     writeHtml(page, pageHtml, distDir)
   }
 }
 
-async function appendHead(html, ...tags) {
-  const encoder = new TextEncoder()
-  const decoder = new TextDecoder()
-  let output = ''
-  const rewriter = new HTMLRewriter((outputChunk) => {
-    output += decoder.decode(outputChunk)
-  })
-  rewriter.on('head', {
-    element(element) {
-      element.prepend(tags.join('\n  '), { html: true })
-    },
-  })
-  try {
-    await rewriter.write(encoder.encode(html))
-    await rewriter.end()
-    return output
-  } finally {
-    rewriter.free()
-  }
+function appendHead(html, ...tags) {
+  const content = tags.join('\n  ')
+  return html.replace(/<head([^>]*)>/i, `<head$1>\n  ${content}`)
 }
 
 function writeHtml(page, pageHtml, distDir) {

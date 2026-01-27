@@ -71,10 +71,10 @@
     "acorn-walk": "^8.3.4",
     "devalue": "catalog:",
     "history": "latest",
-    "html-rewriter-wasm": "catalog:",
     "minipass": "latest",
     "mlly": "^1.7.4",
     "react": "catalog:react",
+    
     "react-dom": "catalog:react",
     "react-router": "catalog:react",
     "valtio": "latest",

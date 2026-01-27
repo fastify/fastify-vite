@@ -8,7 +8,6 @@ catalog:
   '@fastify/middie': ^9.1.0
   devalue: ^5.6.2
   fastify: ^5.6.2
-  html-rewriter-wasm: ^0.4.1
   tsx: ^4.21.0
   typescript: ^5.9.3
   vite: ^7.3.0

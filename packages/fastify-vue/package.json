@@ -67,7 +67,6 @@
     "acorn": "^8.12.1",
     "acorn-walk": "^8.3.4",
     "devalue": "catalog:",
-    "html-rewriter-wasm": "catalog:",
     "mlly": "^1.5.0",
     "vue": "catalog:vue",
     "vue-router": "catalog:vue",

@@ -1,96 +1,44 @@
-import { HTMLRewriter } from 'html-rewriter-wasm'
-
 const jsPath = /^[a-zA-Z_$][a-zA-Z_$.0-9]*$/
+const commentPattern = /<!--\s*([a-zA-Z_$][a-zA-Z_$.0-9]*)\s*-->/g
+const scriptTagPattern = /<script(\s[^>]*)?>[\s\S]*?<\/script>/gi
 
-async function compileHtmlTemplate(source: string): Promise<[string, string[]]> {
-  const encoder = new TextEncoder()
-  const decoder = new TextDecoder()
-
-  let output = ''
-  let decoded = ''
-  let isScriptTag = false
-  let isScript = false
-
+function compileHtmlTemplate(source: string): [string, string[]] {
   const params: string[] = []
-  const rewriter = new HTMLRewriter((chunk) => {
-    decoded = decoder.decode(chunk)
-    if (isScript) {
-      decoded = JSON.stringify(decoded).slice(1, -1)
+
+  // Process script tags first - escape their content so ${} doesn't get interpreted
+  let processed = source.replace(scriptTagPattern, (match) => {
+    // JSON.stringify escapes special characters including backticks and ${}
+    // We wrap the content in ${"..."} so the template literal preserves it exactly
+    const openTagEnd = match.indexOf('>') + 1
+    const closeTagStart = match.lastIndexOf('<')
+
+    const openTag = match.slice(0, openTagEnd)
+    const content = match.slice(openTagEnd, closeTagStart)
+    const closeTag = match.slice(closeTagStart)
+
+    if (content.length === 0) {
+      return match
     }
-    output += decoded
+
+    // Escape the content by JSON.stringify, then strip the outer quotes
+    const escaped = JSON.stringify(content).slice(1, -1)
+    return `${openTag}\${"${escaped}"}${closeTag}`
   })
 
-  const processComment = (text: string): string | null => {
-    const trimmed = text.trim()
-    if (jsPath.test(trimmed)) {
-      params.push(trimmed)
-      return `\${${trimmed} ?? ''}`
+  // Replace comment placeholders with template expressions
+  processed = processed.replace(commentPattern, (_match, varName) => {
+    if (jsPath.test(varName)) {
+      params.push(varName)
+      return `\${${varName} ?? ''}`
     }
-    return null
-  }
-
-  rewriter.on('*', {
-    element(element) {
-      for (const [name, value] of element.attributes) {
-        if (!value) {
-          continue
-        }
-        const commentMatch = value.match(/^#([^#]*)#$/)
-        if (commentMatch) {
-          const commentText = commentMatch[1]
-          const replacement = processComment(commentText)
-          if (replacement) {
-            element.setAttribute(name, replacement)
-          }
-        }
-      }
-    },
+    return _match
   })
 
-  rewriter.on('script', {
-    element(element) {
-      element.prepend('${"')
-      element.append('"}')
-      isScriptTag = true
-      element.onEndTag(() => {
-        isScriptTag = false
-      })
-    },
-  })
-
-  rewriter.onDocument({
-    text(text) {
-      if (text.lastInTextNode) {
-        isScriptTag = false
-        isScript = false
-        return
-      }
-      if (isScriptTag) {
-        isScript = true
-      }
-    },
-    comments(comment) {
-      const replacement = processComment(comment.text)
-      if (replacement) {
-        comment.replace(replacement)
-      }
-    },
-  })
-
-  try {
-    await rewriter.write(encoder.encode(source))
-    await rewriter.end()
-  } finally {
-    rewriter.free()
-  }
-
-  return [output, params]
+  return [processed, params]
 }
 
-async function createHtmlTemplateFunction(
-  source: string,
-): Promise<(data?: Record<string, unknown>) => string> {
-  const [compiled, params] = await compileHtmlTemplate(source)
+function createHtmlTemplateFunction(source: string): (data?: Record<string, unknown>) => string {
+  const [compiled, params] = compileHtmlTemplate(source)
   return new Function(
     params.length ? `{ ${[...new Set(params.map((s) => s.split('.')[0]))].join(', ')} }` : '',
     `return \`${compiled}\``,
