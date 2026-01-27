@@ -60,7 +60,7 @@ export function transformAssetUrls(
 
   // Transform src attributes on script, img, source, video, audio
   result = result.replace(
-    /(<(?:script|img|source|video|audio)\s[^>]*\bsrc\s*=\s*)(["'])([^"']*)\2/gi,
+    /(<(?:script|img|source|video|audio)\b[^>]*?\ssrc\s*=\s*)(["'])([^"']*)\2/gi,
     (match, prefix, quote, url) => {
       const newUrl = transformUrl(url)
       return newUrl ? `${prefix}${quote}${newUrl}${quote}` : match
@@ -69,7 +69,7 @@ export function transformAssetUrls(
 
   // Transform href attributes on link tags
   result = result.replace(
-    /(<link\s[^>]*\bhref\s*=\s*)(["'])([^"']*)\2/gi,
+    /(<link\b[^>]*?\shref\s*=\s*)(["'])([^"']*)\2/gi,
     (match, prefix, quote, url) => {
       const newUrl = transformUrl(url)
       return newUrl ? `${prefix}${quote}${newUrl}${quote}` : match
@@ -78,7 +78,7 @@ export function transformAssetUrls(
 
   // Transform srcset attributes on img and source
   result = result.replace(
-    /(<(?:img|source)\s[^>]*\bsrcset\s*=\s*)(["'])([^"']*)\2/gi,
+    /(<(?:img|source)\b[^>]*?\ssrcset\s*=\s*)(["'])([^"']*)\2/gi,
     (match, prefix, quote, srcset) => {
       const newSrcset = transformSrcset(srcset)
       return newSrcset ? `${prefix}${quote}${newSrcset}${quote}` : match
@@ -87,7 +87,7 @@ export function transformAssetUrls(
 
   // Transform poster attributes on video
   result = result.replace(
-    /(<video\s[^>]*\bposter\s*=\s*)(["'])([^"']*)\2/gi,
+    /(<video\b[^>]*?\sposter\s*=\s*)(["'])([^"']*)\2/gi,
     (match, prefix, quote, url) => {
       const newUrl = transformUrl(url)
       return newUrl ? `${prefix}${quote}${newUrl}${quote}` : match

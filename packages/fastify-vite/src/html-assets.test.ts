@@ -119,6 +119,16 @@ describe('transformAssetUrls', () => {
     expect(result).toBe('<script src="/other/script.js"></script>')
   })
 
+  it('does not transform data attributes that include src or href', async () => {
+    const html = [
+      '<img data-src="/assets/image.png">',
+      '<link data-href="/assets/style.css">',
+      '<source data-srcset="/assets/image.webp 1x">',
+    ].join('\n')
+    const result = await transformAssetUrls(html, '/', 'https://cdn.example.com')
+    expect(result).toBe(html)
+  })
+
   it('leaves URLs without base prefix unchanged when base is not /', async () => {
     const html = '<link href="/favicon.ico" rel="icon">'
     const result = await transformAssetUrls(html, '/app/', 'https://cdn.example.com')
