@@ -13,8 +13,11 @@ export async function configure(options: FastifyViteOptions): Promise<RuntimeCon
   const [vite, viteConfig] = await resolveViteConfig(root, dev, config)
   Object.assign(config, { vite, viteConfig })
 
+  const baseAssetUrl = options.baseAssetUrl
+  const originalBase = vite.base || '/'
+
   const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite, root })
+  const bundle = await resolveBundle({ dev, vite, root, baseAssetUrl, originalBase })
   Object.assign(config, { bundle })
   if (typeof config.renderer === 'string') {
     const { default: renderer, ...named } = await import(config.renderer)

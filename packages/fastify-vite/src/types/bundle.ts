@@ -11,4 +11,6 @@ export interface BundleConfig {
   dev: boolean
   vite: ExtendedResolvedViteConfig
   root: string
+  baseAssetUrl?: string
+  originalBase?: string
 }

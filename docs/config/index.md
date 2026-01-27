@@ -22,6 +22,23 @@ When set to `true`, **disables SSR** and just sets up integration for delivering
 
 This can be customized however by providing your own `createHtmlFunction()`.
 
+### `baseAssetUrl`
+
+Custom base URL for assets in production HTML output. Use this for CDN deployments where static assets are served from a different origin than your application server.
+
+```js
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  baseAssetUrl: process.env.CDN_URL,
+})
+```
+
+This option works by replacing Vite's [`base`](https://vite.dev/config/shared-options.html#base) path in your HTML with the specified URL. For example, if your Vite `base` is `/` (the default), then `/assets/main.js` becomes `https://cdn.example.com/assets/main.js`. If your Vite `base` is `/app/`, then `/app/assets/main.js` becomes `https://cdn.example.com/assets/main.js`.
+
+The transformation happens once at server startup, so there's no per-request overhead. Local `@fastify/static` routes are still registered as a fallback.
+
+See [Serving assets from a CDN](/guide/build-and-deploy#serving-assets-from-a-cdn) for more details.
+
 ### `renderer`
 
 A single configuration object which can be used to set all [Renderer options](/config/#renderer-options).

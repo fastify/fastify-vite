@@ -168,3 +168,72 @@ Also note that in **production mode**, **`@fastify/vite`** will serve static ass
 If you don't need SSR, it can also just serve as a convenience to serve your static Vite bundle through Fastify via [@fastify/static][fastify-static], automatically inferring your bundle's output directory from your Vite configuration file, and still allowing you to leverage Vite's development server for hot reload.
 
 > Tip: If you are using Docker, your final `CMD` should be `node server.js` and not `npm run anything`. This will allow SIGTERM signals to be sent directly to the `node` process and not an intermediary `npm` process which usually fails to forward the messages properly to `node`.
+
+## Serving assets from a CDN
+
+For high-traffic applications, serving static assets from a CDN (Content Delivery Network) significantly reduces load on your origin server and improves load times for users worldwide.
+
+### Setting up CDN asset serving
+
+Use the `baseAssetUrl` option to rewrite asset URLs in your HTML to point to your CDN:
+
+```js
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  baseAssetUrl: process.env.CDN_URL,
+})
+```
+
+With `CDN_URL=https://cdn.example.com`, your HTML output changes from:
+
+```html
+<script type="module" src="/assets/main-abc123.js"></script>
+<link rel="stylesheet" href="/assets/style-def456.css" />
+```
+
+To:
+
+```html
+<script type="module" src="https://cdn.example.com/assets/main-abc123.js"></script>
+<link rel="stylesheet" href="https://cdn.example.com/assets/style-def456.css" />
+```
+
+### How it works
+
+The `baseAssetUrl` option replaces Vite's [`base`](https://vite.dev/config/shared-options.html#base) path in your HTML output with the CDN URL. If your Vite `base` is `/` (the default), asset paths like `/assets/main.js` become `https://cdn.example.com/assets/main.js`. If you've configured a custom base like `/app/`, then `/app/assets/main.js` becomes `https://cdn.example.com/assets/main.js`.
+
+The URL transformation happens **once at server startup** when loading `index.html` from your dist folder. This means:
+
+- **No per-request overhead** - the HTML is pre-transformed
+- **Runtime flexibility** - different CDN URLs per environment without rebuilding
+- **Local fallback** - `@fastify/static` routes remain registered, so assets can still be served locally if needed
+
+### What gets transformed
+
+All standard asset references in your HTML are rewritten:
+
+- `<script src="...">`
+- `<link href="...">`
+- `<img src="...">` and `<img srcset="...">`
+- `<video src="...">` and `<video poster="...">`
+- `<audio src="...">`
+- `<source src="...">` and `<source srcset="...">`
+
+External URLs (`https://...`, `http://...`) and data URLs (`data:...`) are preserved as-is.
+
+### Deploying your assets
+
+You'll need to upload your built assets to your CDN. The files to upload are in your `dist/client/` directory (or wherever your Vite build outputs client assets). Common approaches:
+
+1. **CI/CD pipeline** - Upload assets to S3/CloudFront, GCS, or your CDN of choice during deployment
+2. **CDN pull** - Configure your CDN to pull from your origin server on cache miss
+3. **Build-time upload** - Add a post-build script to sync assets to your CDN
+
+Example using AWS S3:
+
+```bash
+# After vite build
+aws s3 sync dist/client/ s3://my-bucket/assets/ --cache-control "public,max-age=31536000,immutable"
+```
+
+Since Vite adds content hashes to filenames (e.g., `main-abc123.js`), you can use aggressive caching headers.
