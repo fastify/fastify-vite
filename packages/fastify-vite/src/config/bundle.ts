@@ -4,12 +4,15 @@ import { readFile } from 'node:fs/promises'
 
 import { resolveIfRelative } from '../ioutils.ts'
 import { getApplicationRootDir } from './paths.ts'
+import { transformAssetUrls } from '../html-assets.ts'
 import type { Bundle, BundleConfig } from '../types/bundle.ts'
 
 export async function resolveSSRBundle({
   dev,
   vite,
   root,
+  baseAssetUrl,
+  originalBase,
 }: BundleConfig): Promise<Bundle | undefined> {
   const bundle: Bundle = {}
   let clientOutDir: string
@@ -29,7 +32,11 @@ export async function resolveSSRBundle({
     if (!existsSync(indexHtmlPath)) {
       return
     }
-    bundle.indexHtml = await readFile(indexHtmlPath, 'utf8')
+    let indexHtml = await readFile(indexHtmlPath, 'utf8')
+    if (baseAssetUrl && originalBase) {
+      indexHtml = await transformAssetUrls(indexHtml, originalBase, baseAssetUrl)
+    }
+    bundle.indexHtml = indexHtml
     const manifestPaths = [
       join(clientOutDir, 'ssr-manifest.json'),
       join(clientOutDir, '.vite/ssr-manifest.json'),
@@ -51,6 +58,8 @@ export async function resolveSPABundle({
   dev,
   vite,
   root,
+  baseAssetUrl,
+  originalBase,
 }: BundleConfig): Promise<Bundle | undefined> {
   const bundle: Bundle = {}
   if (!dev) {
@@ -70,7 +79,11 @@ export async function resolveSPABundle({
     if (!existsSync(indexHtmlPath)) {
       return
     }
-    bundle.indexHtml = await readFile(indexHtmlPath, 'utf8')
+    let indexHtml = await readFile(indexHtmlPath, 'utf8')
+    if (baseAssetUrl && originalBase) {
+      indexHtml = await transformAssetUrls(indexHtml, originalBase, baseAssetUrl)
+    }
+    bundle.indexHtml = indexHtml
   } else {
     bundle.manifest = {}
   }

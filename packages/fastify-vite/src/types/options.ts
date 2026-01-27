@@ -36,6 +36,12 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
    * Use this when mounting @fastify/vite under a path prefix.
    */
   prefix?: string
+  /**
+   * Custom base URL for assets in production HTML output.
+   * Use this for CDN deployments where static assets are served from a different origin.
+   * Example: `baseAssetUrl: process.env.CDN_URL`
+   */
+  baseAssetUrl?: string
 }
 
 /** Internal resolved configuration after defaults and renderer merged */
