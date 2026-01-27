@@ -22,12 +22,14 @@ type UserConfigModule =
       default: UserConfigExport | ExtendedUserConfig | ExtendedUserConfigFn
     }
 
-function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'build']) {
+const VITE_CONFIG_JSON = 'vite.config.json'
+
+export function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'build']) {
   for (const folderName of folderNames) {
     const folder = join(appRoot, folderName)
 
     // Check folder/vite.config.json
-    let configPath = join(folder, 'vite.config.json')
+    let configPath = join(folder, VITE_CONFIG_JSON)
     if (existsSync(configPath)) {
       return configPath
     }
@@ -37,7 +39,7 @@ function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'b
       for (const entry of readdirSync(folder)) {
         const entryPath = join(folder, entry)
         if (lstatSync(entryPath).isDirectory()) {
-          configPath = join(entryPath, 'vite.config.json')
+          configPath = join(entryPath, VITE_CONFIG_JSON)
           if (existsSync(configPath)) {
             return configPath
           }
@@ -48,7 +50,7 @@ function findViteConfigJson(appRoot: string, folderNames: string[] = ['dist', 'b
     }
 
     // Check client/folder/ - common pattern for projects with nested client folder
-    configPath = join(appRoot, 'client', folderName, 'vite.config.json')
+    configPath = join(appRoot, 'client', folderName, VITE_CONFIG_JSON)
     if (existsSync(configPath)) {
       return configPath
     }
@@ -82,7 +84,7 @@ export interface ResolveProdViteConfigOptions {
  *
  * @throws Error if no Vite config file is found
  */
-async function resolveDevViteConfig(
+export async function resolveDevViteConfig(
   root: string,
   { spa }: ResolveDevViteConfigOptions = {},
 ): Promise<ResolvedDevViteConfig> {
@@ -142,7 +144,7 @@ async function resolveDevViteConfig(
  *
  * @throws Error if cached config file is not found
  */
-async function resolveProdViteConfig(
+export async function resolveProdViteConfig(
   root: string,
   { distDir }: ResolveProdViteConfigOptions = {},
 ): Promise<SerializableViteConfig> {
@@ -151,7 +153,7 @@ async function resolveProdViteConfig(
   let viteConfigDistFile: string | null
   if (distDir) {
     if (isAbsolute(distDir)) {
-      viteConfigDistFile = join(dirname(distDir), 'vite.config.json')
+      viteConfigDistFile = join(dirname(distDir), VITE_CONFIG_JSON)
     } else {
       viteConfigDistFile = findViteConfigJson(appRoot, [distDir])
     }
@@ -170,5 +172,3 @@ async function resolveProdViteConfig(
 
   return JSON.parse(await readFile(viteConfigDistFile, 'utf-8'))
 }
-
-export { resolveDevViteConfig, resolveProdViteConfig }

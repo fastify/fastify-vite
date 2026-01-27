@@ -55,7 +55,7 @@ export interface ResolvedFastifyViteConfig {
 
   // Override types that differ from FastifyViteOptions
   bundle: Bundle
-  vite?: unknown
+  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
   renderer: Record<string, unknown> | string
 
   // Internal properties not in FastifyViteOptions
@@ -112,13 +112,14 @@ interface BaseRuntimeConfig extends Omit<ResolvedFastifyViteConfig, 'dev' | 'vit
 /** Runtime config in development mode with full Vite resolved config */
 export interface DevRuntimeConfig extends BaseRuntimeConfig {
   dev: true
-  vite: ExtendedResolvedViteConfig
+  viteConfig: ExtendedResolvedViteConfig
 }
 
 /** Runtime config in production mode with serialized Vite config from vite.config.json */
 export interface ProdRuntimeConfig extends BaseRuntimeConfig {
   dev: false
-  vite: ExtendedResolvedViteConfig | SerializableViteConfig
+  viteConfig: SerializableViteConfig
 }
 
+/** Resolved fastify-vite configuration built by merging options with default configs */
 export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig

@@ -5,7 +5,7 @@ import type { FastifyInstance } from 'fastify'
 import FastifyStatic from '@fastify/static'
 import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
-import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
+import type { SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
 import type { FastifyViteDecorationPriorToSetup } from './support.ts'
 
@@ -70,7 +70,7 @@ async function loadBundle(
 async function loadEntries(
   config: ProdRuntimeConfig,
   clientOutDir: string,
-  viteConfig: SerializableViteConfig | ExtendedResolvedViteConfig,
+  viteConfig: SerializableViteConfig,
 ) {
   if (config.spa) {
     return {}
@@ -113,28 +113,27 @@ async function loadEntries(
 export async function setup(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
 ): Promise<ClientModule | undefined> {
-  const config = fastifyViteDecoration.runtimeConfig as ProdRuntimeConfig
-  const { spa, vite } = config
+  const runtimeConfig = fastifyViteDecoration.runtimeConfig as ProdRuntimeConfig
+  const { spa, viteConfig } = runtimeConfig
   let clientOutDir: string
   let ssrOutDir: string
   let assetsDir: string
 
-  if (vite.fastify?.outDirs) {
-    const { outDirs } = vite.fastify
+  if (viteConfig.fastify?.outDirs) {
+    const { outDirs } = viteConfig.fastify
 
     const { packageDirectory } = await import('package-directory')
-    const outDirRoot = await packageDirectory({ cwd: config.root })
+    const outDirRoot = await packageDirectory({ cwd: runtimeConfig.root })
 
     clientOutDir = resolveIfRelative(outDirs.client!, outDirRoot)
     ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
-    assetsDir = (vite as ExtendedResolvedViteConfig).build.assetsDir
+    assetsDir = viteConfig.build.assetsDir
   } else {
-    const viteBaseConfig = vite as SerializableViteConfig
-    const outDir = resolveIfRelative(viteBaseConfig.build!.outDir!, viteBaseConfig.root!)
+    const outDir = resolveIfRelative(viteConfig.build!.outDir!, viteConfig.root!)
 
     clientOutDir = resolve(outDir, 'client')
     ssrOutDir = resolve(outDir, 'server')
-    assetsDir = viteBaseConfig.build!.assetsDir!
+    assetsDir = viteConfig.build!.assetsDir!
   }
 
   if (!existsSync(clientOutDir)) {
@@ -145,10 +144,10 @@ export async function setup(
     throw new Error(`No SSR distribution bundle found at ${ssrOutDir}.`)
   }
 
-  const registrationPrefix = config.prefix || ''
-  const basePathname = URL.canParse(vite.base ?? '')
-    ? new URL(vite.base!).pathname
-    : vite.base || '/'
+  const registrationPrefix = runtimeConfig.prefix || ''
+  const basePathname = URL.canParse(viteConfig.base ?? '')
+    ? new URL(viteConfig.base!).pathname
+    : viteConfig.base || '/'
   await fastifyViteDecoration.scope.register(async function assetFiles(scope: FastifyInstance) {
     const root = [resolve(clientOutDir, assetsDir)]
     if (existsSync(resolve(ssrOutDir, assetsDir))) {
@@ -172,32 +171,36 @@ export async function setup(
     })
   })
 
-  Object.defineProperty(config, 'hasRenderFunction', {
+  Object.defineProperty(runtimeConfig, 'hasRenderFunction', {
     writable: false,
-    value: typeof config.createRenderFunction === 'function',
+    value: typeof runtimeConfig.createRenderFunction === 'function',
   })
 
-  const { entries, ssrManifest } = await loadEntries(config, clientOutDir, vite)
+  const { entries, ssrManifest } = await loadEntries(runtimeConfig, clientOutDir, viteConfig)
 
-  Object.defineProperty(config, 'ssrManifest', {
+  Object.defineProperty(runtimeConfig, 'ssrManifest', {
     writable: false,
     value: ssrManifest,
   })
 
-  const client: ClientModule | undefined = !config.spa
-    ? await config.prepareClient(entries, fastifyViteDecoration.scope, config)
+  const client: ClientModule | undefined = !runtimeConfig.spa
+    ? await runtimeConfig.prepareClient(entries, fastifyViteDecoration.scope, runtimeConfig)
     : undefined
 
   fastifyViteDecoration.scope.decorateReply(
     'html',
-    await config.createHtmlFunction(config.bundle.indexHtml!, fastifyViteDecoration.scope, config),
+    await runtimeConfig.createHtmlFunction(
+      runtimeConfig.bundle.indexHtml!,
+      fastifyViteDecoration.scope,
+      runtimeConfig,
+    ),
   )
 
-  if (config.hasRenderFunction && client) {
-    const renderFunction = await config.createRenderFunction(
+  if (runtimeConfig.hasRenderFunction && client) {
+    const renderFunction = await runtimeConfig.createRenderFunction(
       client,
       fastifyViteDecoration.scope,
-      config,
+      runtimeConfig,
     )
     fastifyViteDecoration.scope.decorateReply('render', renderFunction)
   }
