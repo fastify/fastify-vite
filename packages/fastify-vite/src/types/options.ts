@@ -17,7 +17,6 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
   spa?: boolean
   renderer?: string | Partial<RendererOption>
   vite?: UserConfig
-  viteConfig?: string
   bundle?: {
     manifest?: Manifest
     indexHtml?: string | Buffer
@@ -51,7 +50,6 @@ export interface ResolvedFastifyViteConfig {
   spa: boolean
 
   // These stay optional (filled in by configure())
-  viteConfig?: string
   distDir?: string
   prefix?: string
 

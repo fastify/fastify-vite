@@ -3,7 +3,12 @@ import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
 import type { ConfigEnv, UserConfigExport } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type { ExtendedUserConfig, ExtendedResolvedViteConfig } from '../types/vite-configs.ts'
+import type {
+  ExtendedUserConfig,
+  ExtendedResolvedViteConfig,
+  ResolvedDevViteConfig,
+  SerializableViteConfig,
+} from '../types/vite-configs.ts'
 
 /** Function that returns an extended user config, matching Vite's UserConfigFn signature */
 type ExtendedUserConfigFn = (env: ConfigEnv) => ExtendedUserConfig | Promise<ExtendedUserConfig>
@@ -61,44 +66,34 @@ function findConfigFile(root: string) {
   }
 }
 
-async function resolveViteConfig(
+/** Options for resolveDevViteConfig */
+export interface ResolveDevViteConfigOptions {
+  spa?: boolean
+}
+
+/** Options for resolveProdViteConfig */
+export interface ResolveProdViteConfigOptions {
+  distDir?: string
+}
+
+/**
+ * Resolves Vite configuration for development mode.
+ * Reads the live vite.config file and resolves it via Vite's API.
+ *
+ * @throws Error if no Vite config file is found
+ */
+async function resolveDevViteConfig(
   root: string,
-  dev: boolean,
-  {
-    spa,
-    distDir,
-  }: {
-    spa?: boolean
-    distDir?: string
-  } = {},
-) {
+  { spa }: ResolveDevViteConfigOptions = {},
+): Promise<ResolvedDevViteConfig> {
   const command = 'build'
-  const mode = dev ? 'development' : 'production'
-  if (!dev) {
-    const appRoot = await getApplicationRootDir(root)
-    let viteConfigDistFile: string
-    if (distDir) {
-      if (isAbsolute(distDir)) {
-        viteConfigDistFile = join(dirname(distDir), 'vite.config.json')
-      } else {
-        viteConfigDistFile = findViteConfigJson(appRoot, [distDir])
-      }
-    } else {
-      // Auto-detect from standard locations relative to app root
-      viteConfigDistFile = findViteConfigJson(appRoot)
-    }
-    if (viteConfigDistFile) {
-      return [JSON.parse(await readFile(viteConfigDistFile, 'utf-8')), dirname(viteConfigDistFile)]
-    }
-    const searchedIn = distDir || `${appRoot}/{dist,build}`
-    console.warn(`Failed to load cached Vite configuration. Searched in: ${searchedIn}`)
-    process.exit(1)
-  }
+  const mode = 'development'
 
   let configFile = findConfigFile(root)
   if (!configFile) {
-    return [null, null]
+    throw new Error(`No Vite config file found. Searched for vite.config.{js,mjs,ts} in: ${root}`)
   }
+
   const { resolveConfig } = await import('vite')
   const resolvedConfig = (await resolveConfig(
     {
@@ -107,9 +102,11 @@ async function resolveViteConfig(
     command,
     mode,
   )) as ExtendedResolvedViteConfig
+
   if (process.platform === 'win32') {
     configFile = `file://${configFile}`
   }
+
   let userConfig = (await import(configFile).then((m) => m.default)) as UserConfigModule
   if (
     userConfig &&
@@ -119,6 +116,7 @@ async function resolveViteConfig(
   ) {
     userConfig = userConfig.default
   }
+
   const resolvedUserConfig = (await Promise.resolve(
     typeof userConfig === 'function'
       ? userConfig({
@@ -128,17 +126,49 @@ async function resolveViteConfig(
         })
       : userConfig,
   )) as ExtendedUserConfig
-  resolvedUserConfig.fastify = resolvedConfig.fastify
 
-  return [
-    Object.assign(resolvedUserConfig, {
-      build: {
-        assetsDir: resolvedConfig.build.assetsDir,
-        outDir: resolvedConfig.build.outDir,
-      },
-    }),
-    configFile,
-  ]
+  return Object.assign(resolvedUserConfig, {
+    fastify: resolvedConfig.fastify,
+    build: {
+      assetsDir: resolvedConfig.build.assetsDir,
+      outDir: resolvedConfig.build.outDir,
+    },
+  })
 }
 
-export { resolveViteConfig }
+/**
+ * Resolves Vite configuration for production mode.
+ * Reads the cached vite.config.json from the dist folder.
+ *
+ * @throws Error if cached config file is not found
+ */
+async function resolveProdViteConfig(
+  root: string,
+  { distDir }: ResolveProdViteConfigOptions = {},
+): Promise<SerializableViteConfig> {
+  const appRoot = await getApplicationRootDir(root)
+
+  let viteConfigDistFile: string | null
+  if (distDir) {
+    if (isAbsolute(distDir)) {
+      viteConfigDistFile = join(dirname(distDir), 'vite.config.json')
+    } else {
+      viteConfigDistFile = findViteConfigJson(appRoot, [distDir])
+    }
+  } else {
+    // Auto-detect from standard locations relative to app root
+    viteConfigDistFile = findViteConfigJson(appRoot)
+  }
+
+  if (!viteConfigDistFile) {
+    const searchedIn = distDir || `${appRoot}/{dist,build}`
+    throw new Error(
+      `Failed to load cached Vite configuration. Searched in: ${searchedIn}\n` +
+        `Ensure you have run 'vite build' to generate the production bundle.`,
+    )
+  }
+
+  return JSON.parse(await readFile(viteConfigDistFile, 'utf-8'))
+}
+
+export { resolveDevViteConfig, resolveProdViteConfig }
