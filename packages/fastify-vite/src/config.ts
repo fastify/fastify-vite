@@ -6,24 +6,22 @@ import type { FastifyViteOptions, RuntimeConfig } from './types/options.ts'
 
 export async function configure(options: FastifyViteOptions): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }
+  const { baseAssetUrl, dev, spa } = options
   const root = resolveRoot(options.root)
-  const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
+  const isDevMode = typeof dev === 'boolean' ? dev : defaultConfig.dev
   const runtimeConfig = Object.assign(defaultConfig, { ...options }) as RuntimeConfig
 
   runtimeConfig.root = root
 
-  const viteConfig = dev
+  const viteConfig = isDevMode
     ? await resolveDevViteConfig(root)
     : await resolveProdViteConfig(root, { distDir: runtimeConfig.distDir })
 
-  Object.assign(runtimeConfig, { viteConfig })
+  runtimeConfig.viteConfig = viteConfig
 
-  const baseAssetUrl = options.baseAssetUrl
-  const originalBase = viteConfig.base || '/'
+  const resolveBundle = spa ? resolveSPABundle : resolveSSRBundle
+  runtimeConfig.bundle = await resolveBundle({ baseAssetUrl, isDevMode, root, viteConfig })
 
-  const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite: viteConfig, root, baseAssetUrl, originalBase })
-  Object.assign(runtimeConfig, { bundle })
   if (typeof runtimeConfig.renderer === 'string') {
     const { default: renderer, ...named } = await import(runtimeConfig.renderer)
     runtimeConfig.renderer = { ...renderer, ...named }

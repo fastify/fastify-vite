@@ -8,23 +8,22 @@ import { transformAssetUrls } from '../html-assets.ts'
 import type { Bundle, BundleConfig } from '../types/bundle.ts'
 
 export async function resolveSSRBundle({
-  dev,
-  vite,
+  isDevMode,
+  viteConfig,
   root,
   baseAssetUrl,
-  originalBase,
 }: BundleConfig): Promise<Bundle | undefined> {
   const bundle: Bundle = {}
   let clientOutDir: string
 
-  if (!dev) {
-    if (vite.fastify) {
+  if (!isDevMode) {
+    if (viteConfig.fastify) {
       clientOutDir = resolveIfRelative(
-        vite.fastify.outDirs?.client || '',
+        viteConfig.fastify.outDirs?.client || '',
         await getApplicationRootDir(root),
       )
     } else {
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      bundle.dir = resolveIfRelative(viteConfig.build.outDir, viteConfig.root)
       clientOutDir = join(bundle.dir, 'client')
     }
 
@@ -33,8 +32,8 @@ export async function resolveSSRBundle({
       return
     }
     let indexHtml = await readFile(indexHtmlPath, 'utf8')
-    if (baseAssetUrl && originalBase) {
-      indexHtml = await transformAssetUrls(indexHtml, originalBase, baseAssetUrl)
+    if (baseAssetUrl) {
+      indexHtml = await transformAssetUrls(indexHtml, viteConfig.base || '/', baseAssetUrl)
     }
     bundle.indexHtml = indexHtml
     const manifestPaths = [
@@ -55,23 +54,22 @@ export async function resolveSSRBundle({
 }
 
 export async function resolveSPABundle({
-  dev,
-  vite,
+  isDevMode,
+  viteConfig,
   root,
   baseAssetUrl,
-  originalBase,
 }: BundleConfig): Promise<Bundle | undefined> {
   const bundle: Bundle = {}
-  if (!dev) {
+  if (!isDevMode) {
     let clientOutDir: string
 
-    if (vite.fastify) {
+    if (viteConfig.fastify) {
       clientOutDir = resolveIfRelative(
-        vite.fastify.outDirs?.client || '',
+        viteConfig.fastify.outDirs?.client || '',
         await getApplicationRootDir(root),
       )
     } else {
-      bundle.dir = resolveIfRelative(vite.build.outDir, vite.root)
+      bundle.dir = resolveIfRelative(viteConfig.build.outDir, viteConfig.root)
       clientOutDir = join(bundle.dir, 'client')
     }
 
@@ -80,8 +78,8 @@ export async function resolveSPABundle({
       return
     }
     let indexHtml = await readFile(indexHtmlPath, 'utf8')
-    if (baseAssetUrl && originalBase) {
-      indexHtml = await transformAssetUrls(indexHtml, originalBase, baseAssetUrl)
+    if (baseAssetUrl) {
+      indexHtml = await transformAssetUrls(indexHtml, viteConfig.base || '/', baseAssetUrl)
     }
     bundle.indexHtml = indexHtml
   } else {

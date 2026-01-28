@@ -8,9 +8,8 @@ export interface Bundle {
 }
 
 export interface BundleConfig {
-  dev: boolean
-  vite: SerializableViteConfig
+  isDevMode: boolean
+  viteConfig: SerializableViteConfig
   root: string
   baseAssetUrl?: string
-  originalBase?: string
 }
