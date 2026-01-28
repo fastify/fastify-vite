@@ -96,6 +96,15 @@ interface BaseRuntimeConfig {
   ) => ReplyDotRenderFunction | Promise<ReplyDotRenderFunction>
 }
 
+/**
+ * Work-in-progress config used during configure().
+ * All fields optional since they're filled incrementally.
+ */
+export interface IncompleteRuntimeConfig extends Partial<BaseRuntimeConfig> {
+  dev?: boolean
+  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
+}
+
 /** Runtime config in development mode with full Vite resolved config */
 export interface DevRuntimeConfig extends BaseRuntimeConfig {
   dev: true
@@ -110,12 +119,3 @@ export interface ProdRuntimeConfig extends BaseRuntimeConfig {
 
 /** Resolved fastify-vite configuration built by merging options with default configs */
 export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig
-
-/**
- * Work-in-progress config used during configure().
- * All fields optional since they're filled incrementally.
- */
-export type WipRuntimeConfig = Partial<BaseRuntimeConfig> & {
-  dev?: boolean
-  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
-}
