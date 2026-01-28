@@ -67,16 +67,13 @@ export interface ResolveProdViteConfigOptions {
  * @throws Error if no Vite config file is found
  */
 export async function resolveDevViteConfig(root: string): Promise<ExtendedResolvedViteConfig> {
-  const command = 'build'
-  const mode = 'development'
-
   const configFile = findConfigFile(root)
   if (!configFile) {
     throw new Error(`No Vite config file found. Searched for vite.config.{js,mjs,ts} in: ${root}`)
   }
 
   const { resolveConfig } = await import('vite')
-  return await resolveConfig({ configFile }, command, mode)
+  return await resolveConfig({ configFile }, 'serve', 'development')
 }
 
 /**
