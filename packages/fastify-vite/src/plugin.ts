@@ -27,8 +27,8 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
   const { spa, clientModule } = options
   let customOutDir: string | undefined
   let jsonFilePath: string
-  let configToWrite: SerializableViteConfig = {}
-  let resolvedConfig: ExtendedResolvedViteConfig = {} as ExtendedResolvedViteConfig
+  let configToWrite: SerializableViteConfig
+  let resolvedConfig: ExtendedResolvedViteConfig
 
   return {
     name: 'vite-fastify',
