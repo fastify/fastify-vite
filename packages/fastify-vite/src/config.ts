@@ -2,14 +2,14 @@ import { DefaultConfig } from './config/defaults.ts'
 import { resolveClientModule, resolveRoot } from './config/paths.ts'
 import { resolveDevViteConfig, resolveProdViteConfig } from './config/vite-config.ts'
 import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
-import type { FastifyViteOptions, PartialRuntimeConfig, RuntimeConfig } from './types/options.ts'
+import type { FastifyViteOptions, RuntimeConfig, WipRuntimeConfig } from './types/options.ts'
 
 export async function configure(options: FastifyViteOptions): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }
   const { baseAssetUrl, dev, spa } = options
   const root = resolveRoot(options.root)
   const isDevMode = typeof dev === 'boolean' ? dev : defaultConfig.dev
-  const runtimeConfig = Object.assign(defaultConfig, { ...options }) as PartialRuntimeConfig
+  const runtimeConfig = Object.assign(defaultConfig, { ...options }) as WipRuntimeConfig
 
   runtimeConfig.root = root
 

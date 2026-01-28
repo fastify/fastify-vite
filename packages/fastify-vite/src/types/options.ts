@@ -119,10 +119,11 @@ export interface ProdRuntimeConfig extends BaseRuntimeConfig {
 export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig
 
 /**
- * Partial runtime config used during configuration.
- * Has optional viteConfig since it's set after initial merge.
+ * Work-in-progress config used during configure().
+ * All fields optional since they're filled incrementally.
  */
-export interface PartialRuntimeConfig extends BaseRuntimeConfig {
-  dev: boolean
+export type WipRuntimeConfig = Omit<Partial<BaseRuntimeConfig>, 'bundle'> & {
+  dev?: boolean
+  bundle?: Partial<Bundle>
   viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
 }
