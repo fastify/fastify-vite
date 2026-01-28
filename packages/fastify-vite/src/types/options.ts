@@ -1,7 +1,5 @@
 import type { FastifyInstance } from 'fastify'
-import type { Manifest, UserConfig } from 'vite'
 
-import type { Bundle } from './bundle.ts'
 import type { ClientEntries, ClientModule } from './client.ts'
 import type { CreateRouteArgs, ErrorHandler, RouteHandler } from './handlers.ts'
 import type { HtmlTemplateFunction } from './html.ts'
@@ -12,16 +10,15 @@ import type { ExtendedResolvedViteConfig, SerializableViteConfig } from './vite-
 
 /** User-provided options for the @fastify/vite plugin */
 export interface FastifyViteOptions extends Partial<RendererOption> {
-  dev?: boolean
+  /** Where to look for the vite configuration file */
   root: string
+
+  /** Whether to use development mode or not */
+  dev?: boolean
+
+  /** Whether to use SPA mode or not */
   spa?: boolean
   renderer?: string | Partial<RendererOption>
-  vite?: UserConfig
-  bundle?: {
-    manifest?: Manifest
-    indexHtml?: string | Buffer
-    dir?: string
-  }
   /**
    * Override the directory to search for `vite.config.json` in production mode.
    * By default, the runtime automatically finds the app root via `package.json`
@@ -43,26 +40,19 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
   baseAssetUrl?: string
 }
 
-/** Internal resolved configuration after defaults and renderer merged */
-export interface ResolvedFastifyViteConfig {
-  dev: boolean
+/** Base runtime config with all resolved properties */
+interface BaseRuntimeConfig {
   root: string
   spa: boolean
-
-  // These stay optional (filled in by configure())
   distDir?: string
   prefix?: string
-
-  // Override types that differ from FastifyViteOptions
-  bundle: Bundle
-  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
+  baseAssetUrl?: string
   renderer: Record<string, unknown> | string
-
-  // Internal properties not in FastifyViteOptions
   virtualModulePrefix: string
   clientModule?: string
+  hasRenderFunction?: boolean
 
-  // Renderer functions with resolved signatures (required, with defaults)
+  // Renderer functions
   prepareServer: (scope: FastifyInstance, config: RuntimeConfig) => void
 
   prepareClient: (
@@ -106,9 +96,13 @@ export interface ResolvedFastifyViteConfig {
   ) => ReplyDotRenderFunction | Promise<ReplyDotRenderFunction>
 }
 
-interface BaseRuntimeConfig extends Omit<ResolvedFastifyViteConfig, 'dev' | 'vite'> {
-  hasRenderFunction?: boolean
-  ssrManifest?: Manifest
+/**
+ * Work-in-progress config used during configure().
+ * All fields optional since they're filled incrementally.
+ */
+export interface IncompleteRuntimeConfig extends Partial<BaseRuntimeConfig> {
+  dev?: boolean
+  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
 }
 
 /** Runtime config in development mode with full Vite resolved config */

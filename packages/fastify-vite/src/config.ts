@@ -1,29 +1,23 @@
 import { DefaultConfig } from './config/defaults.ts'
 import { resolveClientModule, resolveRoot } from './config/paths.ts'
 import { resolveDevViteConfig, resolveProdViteConfig } from './config/vite-config.ts'
-import { resolveSSRBundle, resolveSPABundle } from './config/bundle.ts'
-import type { FastifyViteOptions, RuntimeConfig } from './types/options.ts'
+import type { FastifyViteOptions, RuntimeConfig, IncompleteRuntimeConfig } from './types/options.ts'
 
 export async function configure(options: FastifyViteOptions): Promise<RuntimeConfig> {
   const defaultConfig = { ...DefaultConfig }
+  const { dev } = options
   const root = resolveRoot(options.root)
-  const dev = typeof options.dev === 'boolean' ? options.dev : defaultConfig.dev
-  const runtimeConfig = Object.assign(defaultConfig, { ...options }) as RuntimeConfig
+  const isDevMode = typeof dev === 'boolean' ? dev : defaultConfig.dev
+  const runtimeConfig = Object.assign(defaultConfig, { ...options }) as IncompleteRuntimeConfig
 
   runtimeConfig.root = root
 
-  const viteConfig = dev
+  const viteConfig = isDevMode
     ? await resolveDevViteConfig(root)
     : await resolveProdViteConfig(root, { distDir: runtimeConfig.distDir })
 
-  Object.assign(runtimeConfig, { viteConfig })
+  runtimeConfig.viteConfig = viteConfig
 
-  const baseAssetUrl = options.baseAssetUrl
-  const originalBase = viteConfig.base || '/'
-
-  const resolveBundle = options.spa ? resolveSPABundle : resolveSSRBundle
-  const bundle = await resolveBundle({ dev, vite: viteConfig, root, baseAssetUrl, originalBase })
-  Object.assign(runtimeConfig, { bundle })
   if (typeof runtimeConfig.renderer === 'string') {
     const { default: renderer, ...named } = await import(runtimeConfig.renderer)
     runtimeConfig.renderer = { ...renderer, ...named }
@@ -53,5 +47,6 @@ export async function configure(options: FastifyViteOptions): Promise<RuntimeCon
     runtimeConfig.clientModule ??
     resolveClientModule(viteConfig.root)
 
-  return runtimeConfig
+  // At this point, viteConfig is set, so it's a valid RuntimeConfig
+  return runtimeConfig as RuntimeConfig
 }

@@ -7,6 +7,7 @@ import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
 import type { SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
+import { transformAssetUrls } from '../html-assets.ts'
 import type { FastifyViteDecorationPriorToSetup } from './support.ts'
 
 type EntryBundle =
@@ -69,26 +70,11 @@ async function loadBundle(
 
 async function loadEntries(
   config: ProdRuntimeConfig,
-  clientOutDir: string,
   viteConfig: SerializableViteConfig,
-) {
+): Promise<ClientEntries> {
   if (config.spa) {
     return {}
   }
-  let ssrManifestPath: string
-  const manifestPaths = [
-    resolve(clientOutDir, 'ssr-manifest.json'),
-    resolve(clientOutDir, '.vite/ssr-manifest.json'),
-    resolve(clientOutDir, '.vite/manifest.json'),
-  ]
-  for (const manifestPath of manifestPaths) {
-    if (existsSync(manifestPath)) {
-      ssrManifestPath = manifestPath
-      break
-    }
-  }
-  const ssrManifestPathOrUrl =
-    process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath!)) : ssrManifestPath!
 
   const entries: ClientEntries = {}
   if (viteConfig.fastify?.entryPaths) {
@@ -104,10 +90,7 @@ async function loadEntries(
       }
     }
   }
-  return {
-    entries,
-    ssrManifest: JSON.parse(await readFile(ssrManifestPathOrUrl as string, 'utf8')),
-  }
+  return entries
 }
 
 export async function setup(
@@ -176,24 +159,25 @@ export async function setup(
     value: typeof runtimeConfig.createRenderFunction === 'function',
   })
 
-  const { entries, ssrManifest } = await loadEntries(runtimeConfig, clientOutDir, viteConfig)
-
-  Object.defineProperty(runtimeConfig, 'ssrManifest', {
-    writable: false,
-    value: ssrManifest,
-  })
+  const entries = await loadEntries(runtimeConfig, viteConfig)
 
   const client: ClientModule | undefined = !runtimeConfig.spa
     ? await runtimeConfig.prepareClient(entries, fastifyViteDecoration.scope, runtimeConfig)
     : undefined
 
+  const indexHtmlPath = join(clientOutDir, 'index.html')
+  let indexHtml = await readFile(indexHtmlPath, 'utf8')
+  if (runtimeConfig.baseAssetUrl) {
+    indexHtml = await transformAssetUrls(
+      indexHtml,
+      viteConfig.base || '/',
+      runtimeConfig.baseAssetUrl,
+    )
+  }
+
   fastifyViteDecoration.scope.decorateReply(
     'html',
-    await runtimeConfig.createHtmlFunction(
-      runtimeConfig.bundle.indexHtml!,
-      fastifyViteDecoration.scope,
-      runtimeConfig,
-    ),
+    await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
   )
 
   if (runtimeConfig.hasRenderFunction && client) {
