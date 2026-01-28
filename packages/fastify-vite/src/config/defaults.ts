@@ -6,17 +6,12 @@ import type { RuntimeConfig, WipRuntimeConfig } from '../types/options.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderResult } from '../types/reply.ts'
 import type { ClientRouteArgs } from '../types/route.ts'
 
-/** Defaults: all functions filled, but not root/viteConfig/bundle */
+/** Defaults: all functions filled, but not root/viteConfig */
 type ConfigDefaults = Omit<WipRuntimeConfig, 'root' | 'viteConfig'>
 
 export const DefaultConfig: ConfigDefaults = {
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
-  bundle: {
-    manifest: undefined,
-    indexHtml: undefined,
-    dir: undefined, // deprecated
-  },
   renderer: {},
   spa: false,
 

@@ -1,7 +1,5 @@
 import type { FastifyInstance } from 'fastify'
-import type { Manifest } from 'vite'
 
-import type { Bundle } from './bundle.ts'
 import type { ClientEntries, ClientModule } from './client.ts'
 import type { CreateRouteArgs, ErrorHandler, RouteHandler } from './handlers.ts'
 import type { HtmlTemplateFunction } from './html.ts'
@@ -21,11 +19,6 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
   /** Whether to use SPA mode or not */
   spa?: boolean
   renderer?: string | Partial<RendererOption>
-  bundle?: {
-    manifest?: Manifest
-    indexHtml?: string | Buffer
-    dir?: string
-  }
   /**
    * Override the directory to search for `vite.config.json` in production mode.
    * By default, the runtime automatically finds the app root via `package.json`
@@ -53,7 +46,7 @@ interface BaseRuntimeConfig {
   spa: boolean
   distDir?: string
   prefix?: string
-  bundle: Bundle
+  baseAssetUrl?: string
   renderer: Record<string, unknown> | string
   virtualModulePrefix: string
   clientModule?: string
@@ -122,8 +115,7 @@ export type RuntimeConfig = DevRuntimeConfig | ProdRuntimeConfig
  * Work-in-progress config used during configure().
  * All fields optional since they're filled incrementally.
  */
-export type WipRuntimeConfig = Omit<Partial<BaseRuntimeConfig>, 'bundle'> & {
+export type WipRuntimeConfig = Partial<BaseRuntimeConfig> & {
   dev?: boolean
-  bundle?: Partial<Bundle>
   viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
 }

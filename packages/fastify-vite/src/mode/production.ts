@@ -1,4 +1,5 @@
 import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { isAbsolute, join, parse, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
 import FastifyStatic from '@fastify/static'
@@ -6,6 +7,7 @@ import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
 import type { SerializableViteConfig } from '../types/vite-configs.ts'
 import { resolveIfRelative } from '../ioutils.ts'
+import { transformAssetUrls } from '../html-assets.ts'
 import type { FastifyViteDecorationPriorToSetup } from './support.ts'
 
 type EntryBundle =
@@ -163,13 +165,19 @@ export async function setup(
     ? await runtimeConfig.prepareClient(entries, fastifyViteDecoration.scope, runtimeConfig)
     : undefined
 
+  const indexHtmlPath = join(clientOutDir, 'index.html')
+  let indexHtml = await readFile(indexHtmlPath, 'utf8')
+  if (runtimeConfig.baseAssetUrl) {
+    indexHtml = await transformAssetUrls(
+      indexHtml,
+      viteConfig.base || '/',
+      runtimeConfig.baseAssetUrl,
+    )
+  }
+
   fastifyViteDecoration.scope.decorateReply(
     'html',
-    await runtimeConfig.createHtmlFunction(
-      runtimeConfig.bundle.indexHtml!,
-      fastifyViteDecoration.scope,
-      runtimeConfig,
-    ),
+    await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
   )
 
   if (runtimeConfig.hasRenderFunction && client) {
