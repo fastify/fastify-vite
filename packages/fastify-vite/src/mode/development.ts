@@ -91,11 +91,15 @@ async function loadEntryModulePaths(
   return entryModulePaths
 }
 
-async function loadEntries(
+export async function loadEntries(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
   config: DevRuntimeConfig,
 ): Promise<void> {
-  fastifyViteDecoration.runners = {}
+  // Initialize runners object only once to prevent memory leaks
+  // Vite's ModuleRunner.import() automatically returns the latest version after HMR updates
+  if (!fastifyViteDecoration.runners) {
+    fastifyViteDecoration.runners = {}
+  }
 
   const entryModulePaths = await loadEntryModulePaths(config)
 
@@ -107,8 +111,13 @@ async function loadEntries(
     if (env === 'client') {
       continue
     }
-    const runner = createServerModuleRunner(envConfig)
-    fastifyViteDecoration.runners[env] = runner
+
+    // Reuse existing runner or create a new one
+    let runner = fastifyViteDecoration.runners[env]
+    if (!runner) {
+      runner = createServerModuleRunner(envConfig)
+      fastifyViteDecoration.runners[env] = runner
+    }
 
     if (env in entryModulePaths) {
       const entryModule = (await runner.import(entryModulePaths[env])) as LoadedEntryModule
@@ -214,7 +223,15 @@ export async function setup(
     },
   )
 
-  fastifyViteDecoration.scope.addHook('onClose', () => fastifyViteDecoration.devServer!.close())
+  fastifyViteDecoration.scope.addHook('onClose', async () => {
+    // Close all runners to clean up HMR event listeners
+    if (fastifyViteDecoration.runners) {
+      await Promise.all(
+        Object.values(fastifyViteDecoration.runners).map((runner) => runner.close()),
+      )
+    }
+    await fastifyViteDecoration.devServer!.close()
+  })
 
   await loadEntries(fastifyViteDecoration, runtimeConfig)
 
