@@ -1,12 +1,19 @@
 import type { FastifyInstance } from 'fastify'
 import { createHtmlTemplateFunction } from '../html.ts'
+import type { Bundle } from '../types/bundle.ts'
 import type { ClientEntries } from '../types/client.ts'
 import type { CreateRouteArgs, ErrorHandler, RouteHandler } from '../types/handlers.ts'
-import type { ResolvedFastifyViteConfig, RuntimeConfig } from '../types/options.ts'
+import type { RuntimeConfig } from '../types/options.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderResult } from '../types/reply.ts'
 import type { ClientRouteArgs } from '../types/route.ts'
 
-export const DefaultConfig: Omit<ResolvedFastifyViteConfig, 'root'> = {
+/** Type for DefaultConfig - partial config before dev/viteConfig are resolved */
+interface ConfigDefaults extends Omit<RuntimeConfig, 'dev' | 'root' | 'bundle' | 'viteConfig'> {
+  dev: boolean
+  bundle: Partial<Bundle>
+}
+
+export const DefaultConfig: ConfigDefaults = {
   // Whether or not to enable Vite's Dev Server
   dev: process.argv.includes('--dev'),
   bundle: {

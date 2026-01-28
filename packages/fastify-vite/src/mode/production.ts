@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
 import { isAbsolute, join, parse, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
 import FastifyStatic from '@fastify/static'
@@ -69,26 +68,11 @@ async function loadBundle(
 
 async function loadEntries(
   config: ProdRuntimeConfig,
-  clientOutDir: string,
   viteConfig: SerializableViteConfig,
-) {
+): Promise<ClientEntries> {
   if (config.spa) {
     return {}
   }
-  let ssrManifestPath: string
-  const manifestPaths = [
-    resolve(clientOutDir, 'ssr-manifest.json'),
-    resolve(clientOutDir, '.vite/ssr-manifest.json'),
-    resolve(clientOutDir, '.vite/manifest.json'),
-  ]
-  for (const manifestPath of manifestPaths) {
-    if (existsSync(manifestPath)) {
-      ssrManifestPath = manifestPath
-      break
-    }
-  }
-  const ssrManifestPathOrUrl =
-    process.platform === 'win32' ? new URL(fileUrl(ssrManifestPath!)) : ssrManifestPath!
 
   const entries: ClientEntries = {}
   if (viteConfig.fastify?.entryPaths) {
@@ -104,10 +88,7 @@ async function loadEntries(
       }
     }
   }
-  return {
-    entries,
-    ssrManifest: JSON.parse(await readFile(ssrManifestPathOrUrl as string, 'utf8')),
-  }
+  return entries
 }
 
 export async function setup(
@@ -176,12 +157,7 @@ export async function setup(
     value: typeof runtimeConfig.createRenderFunction === 'function',
   })
 
-  const { entries, ssrManifest } = await loadEntries(runtimeConfig, clientOutDir, viteConfig)
-
-  Object.defineProperty(runtimeConfig, 'ssrManifest', {
-    writable: false,
-    value: ssrManifest,
-  })
+  const entries = await loadEntries(runtimeConfig, viteConfig)
 
   const client: ClientModule | undefined = !runtimeConfig.spa
     ? await runtimeConfig.prepareClient(entries, fastifyViteDecoration.scope, runtimeConfig)
