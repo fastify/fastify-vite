@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type { InlineConfig, Plugin as VitePlugin, ResolvedConfig, UserConfig } from 'vite'
-import { createServer, createServerModuleRunner, defineConfig, mergeConfig } from 'vite'
+import type { Plugin as VitePlugin, ResolvedConfig } from 'vite'
+import { createServer, createServerModuleRunner } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
 import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
@@ -140,8 +140,8 @@ export async function setup(
     await fastifyViteDecoration.scope.register(middie)
   }
 
-  const baseConfig: InlineConfig = {
-    configFile: false,
+  fastifyViteDecoration.devServer = await createServer({
+    configFile: runtimeConfig.viteConfig.configFile,
     server: {
       middlewareMode: true,
       hmr: {
@@ -149,13 +149,7 @@ export async function setup(
       },
     },
     appType: 'custom',
-  }
-  const devServerOptions = mergeConfig(
-    defineConfig(baseConfig) as UserConfig,
-    runtimeConfig.viteConfig as unknown as UserConfig,
-  ) as InlineConfig
-
-  fastifyViteDecoration.devServer = await createServer(devServerOptions)
+  })
   // Connect.Server implements the middleware handler interface
   fastifyViteDecoration.scope.use(
     fastifyViteDecoration.devServer.middlewares as unknown as MiddieHandler,

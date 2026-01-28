@@ -13,7 +13,7 @@ export async function configure(options: FastifyViteOptions): Promise<RuntimeCon
   runtimeConfig.root = root
 
   const viteConfig = dev
-    ? await resolveDevViteConfig(root, { spa: runtimeConfig.spa })
+    ? await resolveDevViteConfig(root)
     : await resolveProdViteConfig(root, { distDir: runtimeConfig.distDir })
 
   Object.assign(runtimeConfig, { viteConfig })

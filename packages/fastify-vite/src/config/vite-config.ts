@@ -1,26 +1,8 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
-import type { ConfigEnv, UserConfigExport } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type {
-  ExtendedUserConfig,
-  ExtendedResolvedViteConfig,
-  ResolvedDevViteConfig,
-  SerializableViteConfig,
-} from '../types/vite-configs.ts'
-
-/** Function that returns an extended user config, matching Vite's UserConfigFn signature */
-type ExtendedUserConfigFn = (env: ConfigEnv) => ExtendedUserConfig | Promise<ExtendedUserConfig>
-
-/** Module shape when importing a vite.config file - handles both direct and default exports */
-type UserConfigModule =
-  | UserConfigExport
-  | ExtendedUserConfig
-  | ExtendedUserConfigFn
-  | {
-      default: UserConfigExport | ExtendedUserConfig | ExtendedUserConfigFn
-    }
+import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
 
 const VITE_CONFIG_JSON = 'vite.config.json'
 
@@ -84,58 +66,17 @@ export interface ResolveProdViteConfigOptions {
  *
  * @throws Error if no Vite config file is found
  */
-export async function resolveDevViteConfig(
-  root: string,
-  { spa }: ResolveDevViteConfigOptions = {},
-): Promise<ResolvedDevViteConfig> {
+export async function resolveDevViteConfig(root: string): Promise<ExtendedResolvedViteConfig> {
   const command = 'build'
   const mode = 'development'
 
-  let configFile = findConfigFile(root)
+  const configFile = findConfigFile(root)
   if (!configFile) {
     throw new Error(`No Vite config file found. Searched for vite.config.{js,mjs,ts} in: ${root}`)
   }
 
   const { resolveConfig } = await import('vite')
-  const resolvedConfig = (await resolveConfig(
-    {
-      configFile,
-    },
-    command,
-    mode,
-  )) as ExtendedResolvedViteConfig
-
-  if (process.platform === 'win32') {
-    configFile = `file://${configFile}`
-  }
-
-  let userConfig = (await import(configFile).then((m) => m.default)) as UserConfigModule
-  if (
-    userConfig &&
-    typeof userConfig === 'object' &&
-    'default' in userConfig &&
-    userConfig.default
-  ) {
-    userConfig = userConfig.default
-  }
-
-  const resolvedUserConfig = (await Promise.resolve(
-    typeof userConfig === 'function'
-      ? userConfig({
-          command,
-          mode,
-          isSsrBuild: !spa,
-        })
-      : userConfig,
-  )) as ExtendedUserConfig
-
-  return Object.assign(resolvedUserConfig, {
-    fastify: resolvedConfig.fastify,
-    build: {
-      assetsDir: resolvedConfig.build.assetsDir,
-      outDir: resolvedConfig.build.outDir,
-    },
-  })
+  return await resolveConfig({ configFile }, command, mode)
 }
 
 /**
