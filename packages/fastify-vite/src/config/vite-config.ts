@@ -104,7 +104,8 @@ export async function resolveProdViteConfig(
     const searchedIn = distDir || `${appRoot}/{dist,build}`
     throw new Error(
       `Failed to load cached Vite configuration. Searched in: ${searchedIn}\n` +
-        `Ensure you have run 'vite build' to generate the production bundle.`,
+        `Ensure you have run 'vite build' to generate the production bundle.\n` +
+        `If you intended to run in development mode, set the 'dev' option to true.`,
     )
   }
 
