@@ -13,8 +13,8 @@ catalogs:
       specifier: ^5.6.2
       version: 5.6.2
     fastify:
-      specifier: ^5.6.2
-      version: 5.6.2
+      specifier: ^5.7.3
+      version: 5.7.4
     html-rewriter-wasm:
       specifier: ^0.4.1
       version: 0.4.1
@@ -136,7 +136,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
     devDependencies:
       vite:
         specifier: 'catalog:'
@@ -149,7 +149,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
     devDependencies:
       vite:
         specifier: 'catalog:'
@@ -165,7 +165,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       jotai:
         specifier: ^2.12.2
         version: 2.12.2(@types/react@19.1.2)(react@19.2.3)
@@ -196,7 +196,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       jotai:
         specifier: ^2.12.2
         version: 2.12.2(@types/react@19.1.2)(react@19.2.3)
@@ -236,7 +236,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       jotai:
         specifier: ^2.12.2
         version: 2.12.2(@types/react@19.1.2)(react@19.2.3)
@@ -264,7 +264,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       react:
         specifier: catalog:react
         version: 19.2.3
@@ -286,7 +286,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       react:
         specifier: catalog:react
         version: 19.2.3
@@ -308,7 +308,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       react:
         specifier: catalog:react
         version: 19.2.3
@@ -345,7 +345,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       react:
         specifier: catalog:react
         version: 19.2.3
@@ -382,7 +382,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
     devDependencies:
       vite:
         specifier: 'catalog:'
@@ -401,7 +401,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       vue:
         specifier: catalog:vue
         version: 3.5.26(typescript@5.9.3)
@@ -444,7 +444,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       ky:
         specifier: ^1.8.0
         version: 1.8.0
@@ -490,7 +490,7 @@ importers:
         version: 5.6.2
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       vue:
         specifier: catalog:vue
         version: 3.5.26(typescript@5.9.3)
@@ -527,7 +527,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       vue:
         specifier: catalog:vue
         version: 3.5.26(typescript@5.9.3)
@@ -561,7 +561,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       vue:
         specifier: catalog:vue
         version: 3.5.26(typescript@5.9.3)
@@ -595,7 +595,7 @@ importers:
         version: link:../../packages/fastify-vite
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       vue:
         specifier: catalog:vue
         version: 3.5.26(typescript@5.9.3)
@@ -735,7 +735,7 @@ importers:
         version: 22.19.3
       fastify:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.4
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -3830,8 +3830,8 @@ packages:
   fastify@5.6.2:
     resolution: {integrity: sha512-dPugdGnsvYkBlENLhCgX8yhyGCsCPrpA8lFWbTNU428l+YOnLgYHR69hzV8HWPC79n536EqzqQtvhtdaCE0dKg==}
 
-  fastq@1.19.1:
-    resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
+  fastify@5.7.4:
+    resolution: {integrity: sha512-e6l5NsRdaEP8rdD8VR0ErJASeyaRbzXYpmkrpr2SuvuMq6Si3lvsaVy5C+7gLanEkvjpMDzBXWE5HPeb/hgTxA==}
 
   fastq@1.20.1:
     resolution: {integrity: sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==}
@@ -6973,7 +6973,7 @@ snapshots:
   '@nodelib/fs.walk@1.2.8':
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.19.1
+      fastq: 1.20.1
 
   '@oxfmt/darwin-arm64@0.24.0':
     optional: true
@@ -8668,9 +8668,23 @@ snapshots:
       semver: 7.7.3
       toad-cache: 3.7.0
 
-  fastq@1.19.1:
+  fastify@5.7.4:
     dependencies:
-      reusify: 1.1.0
+      '@fastify/ajv-compiler': 4.0.5
+      '@fastify/error': 4.2.0
+      '@fastify/fast-json-stringify-compiler': 5.0.3
+      '@fastify/proxy-addr': 5.1.0
+      abstract-logging: 2.0.1
+      avvio: 9.1.0
+      fast-json-stringify: 6.1.1
+      find-my-way: 9.4.0
+      light-my-request: 6.6.0
+      pino: 10.1.0
+      process-warning: 5.0.0
+      rfdc: 1.4.1
+      secure-json-parse: 4.1.0
+      semver: 7.7.3
+      toad-cache: 3.7.0
 
   fastq@1.20.1:
     dependencies:

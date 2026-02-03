@@ -7,7 +7,7 @@ packages:
 catalog:
   '@fastify/middie': ^9.1.0
   devalue: ^5.6.2
-  fastify: ^5.6.2
+  fastify: ^5.7.3
   html-rewriter-wasm: ^0.4.1
   tsx: ^4.21.0
   typescript: ^5.9.3
