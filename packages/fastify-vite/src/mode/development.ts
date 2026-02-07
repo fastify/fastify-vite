@@ -6,7 +6,6 @@ import { createServer, createServerModuleRunner } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
 import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
-import type { DecoratedReply } from '../types/reply.ts'
 import type { RouteDefinition } from '../types/route.ts'
 import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './support.ts'
 
@@ -200,15 +199,14 @@ export async function setup(
         indexHtml,
       )
 
-      const decoratedReply = reply as DecoratedReply
-      decoratedReply.html = await runtimeConfig.createHtmlFunction(
+      reply.html = await runtimeConfig.createHtmlFunction(
         transformedHtml,
         fastifyViteDecoration.scope,
         runtimeConfig,
       )
 
       if (runtimeConfig.hasRenderFunction) {
-        decoratedReply.render = await runtimeConfig.createRenderFunction(
+        reply.render = await runtimeConfig.createRenderFunction(
           hotScope[hot].client,
           fastifyViteDecoration.scope,
           runtimeConfig,
