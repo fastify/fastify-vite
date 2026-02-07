@@ -62,6 +62,13 @@ class FastifyViteDecoration implements FastifyViteDecorationPriorToSetup {
     this[kOptions] = options
   }
 
+  /**
+   * Completes @fastify/vite runtime initialization.
+   *
+   * This is intentionally not run during plugin registration; call
+   * `await server.vite.ready()` when your app is ready to start Vite setup,
+   * decorate reply methods, and register client-derived routes.
+   */
   async ready(): Promise<void> {
     // Process all user-provided options and compute all Vite configuration settings
     this.runtimeConfig = await configure(this[kOptions])
