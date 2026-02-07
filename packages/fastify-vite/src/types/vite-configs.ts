@@ -16,9 +16,8 @@ declare module 'vite' {
 }
 
 /** The JSON structure written to vite.config.json by the plugin */
-export interface SerializableViteConfig extends Partial<
-  Pick<ViteResolvedConfig, 'base' | 'fastify'>
-> {
+export interface SerializableViteConfig
+  extends Pick<ViteResolvedConfig, 'root'>, Partial<Pick<ViteResolvedConfig, 'base'>> {
   build: Pick<ViteBuildOptions, 'assetsDir' | 'outDir'>
-  root: string // not read-only to allow incremental construction
+  fastify?: ViteFastifyConfig
 }
