@@ -2,7 +2,7 @@ import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
 
 export interface RouteDefinition {
   path?: string
-  method?: string
+  method?: RouteOptions['method']
   configure?: (scope: FastifyInstance) => void | Promise<void>
   default?: (...args: unknown[]) => unknown
   [key: string]: unknown
