@@ -1,11 +1,10 @@
-import type { FastifyInstance } from 'fastify'
+import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
 
 import type { ClientEntries, ClientModule } from './client.ts'
-import type { CreateRouteArgs, ErrorHandler, RouteHandler } from './handlers.ts'
 import type { HtmlTemplateFunction } from './html.ts'
 import type { RendererOption } from './renderer.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderFunction } from './reply.ts'
-import type { ClientRouteArgs } from './route.ts'
+import type { ClientRouteArgs, CreateRouteArgs } from './route.ts'
 import type { ExtendedResolvedViteConfig, SerializableViteConfig } from './vite-configs.ts'
 
 /** User-provided options for the @fastify/vite plugin */
@@ -53,7 +52,7 @@ interface BaseRuntimeConfig {
   hasRenderFunction?: boolean
 
   // Renderer functions
-  prepareServer: (scope: FastifyInstance, config: RuntimeConfig) => void
+  prepareServer: (scope: FastifyInstance, config: RuntimeConfig) => void | Promise<void>
 
   prepareClient: (
     entries: ClientEntries,
@@ -81,13 +80,15 @@ interface BaseRuntimeConfig {
     args: ClientRouteArgs,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => RouteHandler
+  ) => RouteHandlerMethod | Promise<RouteHandlerMethod>
 
   createErrorHandler: (
     args: ClientRouteArgs,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => ErrorHandler
+  ) =>
+    | NonNullable<RouteOptions['errorHandler']>
+    | Promise<NonNullable<RouteOptions['errorHandler']>>
 
   createRenderFunction?: (
     clientModule: ClientModule,

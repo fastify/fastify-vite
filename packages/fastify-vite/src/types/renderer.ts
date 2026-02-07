@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
 
 /** Helper type to loosen strict object types by adding index signature */
 export type Loosen<T> = T & Record<string, unknown>
@@ -65,21 +65,21 @@ export interface RendererOption<
     client: C,
     scope: FastifyInstance,
     config?: unknown,
-  ): (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
+  ): NonNullable<RouteOptions['errorHandler']> | Promise<NonNullable<RouteOptions['errorHandler']>>
   createRoute(
     args: Loosen<{
       client?: C
-      handler?: (...args: unknown[]) => unknown
-      errorHandler: (error: Error, req?: FastifyRequest, reply?: FastifyReply) => void
+      handler?: RouteHandlerMethod
+      errorHandler: NonNullable<RouteOptions['errorHandler']>
       route?: RouteType
     }>,
     scope: FastifyInstance,
     config: unknown,
-  ): void
+  ): void | Promise<void>
   createRouteHandler(
     client: C,
     scope: FastifyInstance,
     config?: unknown,
-  ): (req: FastifyRequest, reply: FastifyReply) => Promise<unknown>
+  ): RouteHandlerMethod | Promise<RouteHandlerMethod>
   prepareClient(clientModule: CM, scope?: FastifyInstance, config?: unknown): Promise<C>
 }

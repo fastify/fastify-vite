@@ -1,4 +1,10 @@
-import type { FastifyInstance, FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify'
+import type {
+  FastifyError,
+  FastifyInstance,
+  FastifyPluginCallback,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify'
 import type { ViteDevServer } from 'vite'
 import type { ModuleRunner } from 'vite/module-runner'
 import fp from 'fastify-plugin'
@@ -11,7 +17,7 @@ import type {
   ProdRuntimeConfig,
   RuntimeConfig,
 } from './types/options.ts'
-import type { DecoratedReply, ReplyDotRenderContext, ReplyDotRenderResult } from './types/reply.ts'
+import type { ReplyDotRenderContext, ReplyDotRenderResult } from './types/reply.ts'
 import type { RouteDefinition } from './types/route.ts'
 
 // Re-export types for consumers
@@ -113,10 +119,10 @@ class FastifyViteDecoration implements FastifyViteDecorationPriorToSetup {
               this.scope,
               this.runtimeConfig,
             )
-            return await handler(req, reply as DecoratedReply)
+            return await handler.call(this.scope, req, reply)
           }
           const hmrErrorHandler = async (
-            error: Error,
+            error: FastifyError,
             req: FastifyRequest,
             reply: FastifyReply,
           ) => {
@@ -136,7 +142,7 @@ class FastifyViteDecoration implements FastifyViteDecorationPriorToSetup {
               this.scope,
               this.runtimeConfig,
             )
-            return await errorHandler(error, req, reply)
+            return await errorHandler.call(this.scope, error, req, reply)
           }
 
           await this.runtimeConfig.createRoute(

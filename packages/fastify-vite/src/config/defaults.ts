@@ -1,10 +1,9 @@
-import type { FastifyInstance } from 'fastify'
+import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
 import { createHtmlTemplateFunction } from '../html.ts'
 import type { ClientEntries } from '../types/client.ts'
-import type { CreateRouteArgs, ErrorHandler, RouteHandler } from '../types/handlers.ts'
 import type { RuntimeConfig, IncompleteRuntimeConfig } from '../types/options.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderResult } from '../types/reply.ts'
-import type { ClientRouteArgs } from '../types/route.ts'
+import type { ClientRouteArgs, CreateRouteArgs } from '../types/route.ts'
 
 /** Defaults: all functions filled, but not root/viteConfig */
 type ConfigDefaults = Omit<IncompleteRuntimeConfig, 'root' | 'viteConfig'>
@@ -79,7 +78,7 @@ export const DefaultConfig: ConfigDefaults = {
     { client, route }: ClientRouteArgs,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ): RouteHandler {
+  ): RouteHandlerMethod {
     if (config.hasRenderFunction) {
       return async (req, reply) => {
         const page = await reply.render({
@@ -109,7 +108,7 @@ export const DefaultConfig: ConfigDefaults = {
     _args: ClientRouteArgs,
     _scope: FastifyInstance,
     config: RuntimeConfig,
-  ): ErrorHandler {
+  ): NonNullable<RouteOptions['errorHandler']> {
     return (error, req, reply) => {
       if (config.dev) {
         console.log(error)

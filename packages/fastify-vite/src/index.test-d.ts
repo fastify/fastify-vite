@@ -10,7 +10,6 @@ const options = {
   async prepareClient({ routes: routesPromise, context: contextPromise, ...others }) {
     const context = await contextPromise
     const resolvedRoutes = await routesPromise
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { context, routes: resolvedRoutes, ...others }
   },
   createHtmlFunction(source) {
@@ -23,7 +22,7 @@ const options = {
   },
   renderer: {
     createErrorHandler(client, scope, config) {
-      return (error: Error, req?: any, reply?: any) => {}
+      return (error: Error, req: any, reply: any) => {}
     },
     createRoute({ client }, scope, config) {},
     createRouteHandler(client, scope, config) {
@@ -42,7 +41,6 @@ describe('test by options', () => {
     expectTypeOf<FastifyPluginCallback<FastifyViteOptions, Server>>(FastifyVite)
     expectTypeOf<FastifyPluginCallback<FastifyViteOptions, Server>>(FastifyViteAll.default)
     expectTypeOf<FastifyPluginCallback<FastifyViteOptions>>(fastifyVite)
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     expectTypeOf(options.createHtmlFunction).parameter(0).toEqualTypeOf('string')
   })
 })
