@@ -1,11 +1,12 @@
 import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
+import type { ResolvedConfig } from 'vite'
 
 import type { ClientEntries, ClientModule } from './client.ts'
 import type { HtmlTemplateFunction } from './html.ts'
 import type { RendererOption } from './renderer.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderFunction } from './reply.ts'
 import type { ClientRouteArgs, CreateRouteArgs } from './route.ts'
-import type { ExtendedResolvedViteConfig, SerializableViteConfig } from './vite-configs.ts'
+import type { SerializableViteConfig } from './vite-configs.ts'
 
 /** User-provided options for the @fastify/vite plugin */
 export interface FastifyViteOptions extends Partial<RendererOption> {
@@ -103,13 +104,13 @@ interface BaseRuntimeConfig {
  */
 export interface IncompleteRuntimeConfig extends Partial<BaseRuntimeConfig> {
   dev?: boolean
-  viteConfig?: ExtendedResolvedViteConfig | SerializableViteConfig
+  viteConfig?: ResolvedConfig | SerializableViteConfig
 }
 
 /** Runtime config in development mode with full Vite resolved config */
 export interface DevRuntimeConfig extends BaseRuntimeConfig {
   dev: true
-  viteConfig: ExtendedResolvedViteConfig
+  viteConfig: ResolvedConfig
 }
 
 /** Runtime config in production mode with serialized Vite config from vite.config.json */

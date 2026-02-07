@@ -1,8 +1,9 @@
 import { existsSync, lstatSync, readdirSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
+import type { ResolvedConfig } from 'vite'
 import { getApplicationRootDir } from './paths.ts'
-import type { ExtendedResolvedViteConfig, SerializableViteConfig } from '../types/vite-configs.ts'
+import type { SerializableViteConfig } from '../types/vite-configs.ts'
 
 const VITE_CONFIG_JSON = 'vite.config.json'
 
@@ -66,7 +67,7 @@ export interface ResolveProdViteConfigOptions {
  *
  * @throws Error if no Vite config file is found
  */
-export async function resolveDevViteConfig(root: string): Promise<ExtendedResolvedViteConfig> {
+export async function resolveDevViteConfig(root: string): Promise<ResolvedConfig> {
   const configFile = findConfigFile(root)
   if (!configFile) {
     throw new Error(`No Vite config file found. Searched for vite.config.{js,mjs,ts} in: ${root}`)

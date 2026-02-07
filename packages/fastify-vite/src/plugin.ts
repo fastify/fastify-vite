@@ -2,11 +2,7 @@ import { dirname, isAbsolute, join, relative, sep } from 'node:path'
 import { writeFile } from 'node:fs/promises'
 import getDeepMergeFunction from '@fastify/deepmerge'
 import type { Plugin, ResolvedConfig, UserConfig } from 'vite'
-import type {
-  ExtendedResolvedViteConfig,
-  SerializableViteConfig,
-  ViteFastifyConfig,
-} from './types/vite-configs.ts'
+import type { SerializableViteConfig, ViteFastifyConfig } from './types/vite-configs.ts'
 
 export interface ViteFastifyPluginOptions {
   /**
@@ -28,7 +24,7 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
   let customOutDir: string | undefined
   let jsonFilePath: string
   let configToWrite: SerializableViteConfig
-  let resolvedConfig: ExtendedResolvedViteConfig
+  let resolvedConfig: ResolvedConfig
 
   return {
     name: 'vite-fastify',
@@ -71,7 +67,7 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
       const { base, build, mode, root: resolvedViteRoot } = config
       const { assetsDir } = build
 
-      resolvedConfig = config as ExtendedResolvedViteConfig
+      resolvedConfig = config
 
       resolvedConfig.fastify = { clientModule }
 
