@@ -23,12 +23,3 @@ export type ReplyDotHtmlFunction = (
   this: FastifyReply,
   ctx?: ReplyDotRenderResult,
 ) => FastifyReply | Promise<FastifyReply>
-
-/**
- * A FastifyReply that has been decorated with html() and render() methods.
- * This is the reply type available after vite.ready() has been called.
- */
-export interface DecoratedReply extends FastifyReply {
-  render: (ctx?: ReplyDotRenderContext) => ReplyDotRenderResult | Promise<ReplyDotRenderResult>
-  html: (ctx?: ReplyDotRenderResult) => FastifyReply | Promise<FastifyReply>
-}
