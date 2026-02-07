@@ -1,8 +1,8 @@
 import type { FastifyInstance, RouteOptions } from 'fastify'
 
-export interface RouteDefinition {
+// TODO: Revisit whether omitting `url`/`handler` is strictly needed or if we can simplify route merge/runtime behavior.
+export interface RouteDefinition extends Partial<Omit<RouteOptions, 'url' | 'handler'>> {
   path?: string
-  method?: RouteOptions['method']
   configure?: (scope: FastifyInstance) => void | Promise<void>
   default?: (...args: unknown[]) => unknown
   [key: string]: unknown
