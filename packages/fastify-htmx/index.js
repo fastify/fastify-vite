@@ -25,6 +25,7 @@ async function prepareClient(clientModule, scope, config) {
 
   let defaultLayout = null
   try {
+    // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
     defaultLayout = await resolveLayoutFilePath(config.vite.root, 'default')
   } catch {
     scope.log.info('No default layout specified. Falling back to virtual layout.')

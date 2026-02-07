@@ -105,18 +105,24 @@ interface BaseRuntimeConfig {
 export interface IncompleteRuntimeConfig extends Partial<BaseRuntimeConfig> {
   dev?: boolean
   viteConfig?: ResolvedConfig | SerializableViteConfig
+  /** @deprecated Use `viteConfig` instead. */
+  readonly vite?: ResolvedConfig | SerializableViteConfig
 }
 
 /** Runtime config in development mode with full Vite resolved config */
 export interface DevRuntimeConfig extends BaseRuntimeConfig {
   dev: true
   viteConfig: ResolvedConfig
+  /** @deprecated Use `viteConfig` instead. */
+  readonly vite: ResolvedConfig
 }
 
 /** Runtime config in production mode with serialized Vite config from vite.config.json */
 export interface ProdRuntimeConfig extends BaseRuntimeConfig {
   dev: false
   viteConfig: SerializableViteConfig
+  /** @deprecated Use `viteConfig` instead. */
+  readonly vite: SerializableViteConfig
 }
 
 /** Resolved fastify-vite configuration built by merging options with default configs */
