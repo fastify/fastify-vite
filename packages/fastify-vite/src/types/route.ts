@@ -1,4 +1,4 @@
-import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
+import type { FastifyInstance, RouteOptions } from 'fastify'
 
 export interface RouteDefinition {
   path?: string
@@ -15,7 +15,5 @@ export interface ClientRouteArgs {
 }
 
 /** Full args for createRoute including handler and error handler */
-export interface CreateRouteArgs extends ClientRouteArgs {
-  handler?: RouteHandlerMethod
-  errorHandler: NonNullable<RouteOptions['errorHandler']>
-}
+export interface CreateRouteArgs
+  extends ClientRouteArgs, Pick<RouteOptions, 'handler' | 'errorHandler'> {}
