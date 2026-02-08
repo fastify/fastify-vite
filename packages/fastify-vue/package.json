@@ -1,6 +1,6 @@
 {
   "name": "@fastify/vue",
-  "version": "1.2.0",
+  "version": "1.2.1-rc.0",
   "description": "The official @fastify/vite renderer for Vue",
   "keywords": [
     "fastify",
