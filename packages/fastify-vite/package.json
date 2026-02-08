@@ -6,7 +6,7 @@
     "fastify",
     "vite"
   ],
-  "homepage": "https://fastify.github.io/fastify-vite/",
+  "homepage": "https://vite.fastify.dev/",
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },

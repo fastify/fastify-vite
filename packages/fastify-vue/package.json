@@ -7,7 +7,7 @@
     "vite",
     "vue"
   ],
-  "homepage": "https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue",
+  "homepage": "https://vite.fastify.dev/vue/",
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },

@@ -7,7 +7,7 @@
     "react",
     "vite"
   ],
-  "homepage": "https://fastify.github.io/fastify-vite/react/",
+  "homepage": "https://vite.fastify.dev/react/",
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
