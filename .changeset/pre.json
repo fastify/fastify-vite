@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "rc",
+  "initialVersions": {
+    "@fastify/htmx": "0.4.1",
+    "@fastify/react": "1.1.5",
+    "@fastify/vite": "8.4.1",
+    "@fastify/vue": "1.2.0"
+  },
+  "changesets": []
+}
