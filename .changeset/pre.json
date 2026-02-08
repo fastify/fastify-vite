@@ -7,5 +7,15 @@
     "@fastify/vite": "8.4.1",
     "@fastify/vue": "1.2.0"
   },
-  "changesets": []
+  "changesets": [
+    "fix-vite-config-ts-loading",
+    "petite-ends-brush",
+    "polite-mirrors-nail",
+    "remove-html-rewriter-renderers",
+    "remove-html-rewriter-vite",
+    "shiny-coats-relax",
+    "silent-candies-roll",
+    "sixty-candles-learn",
+    "tidy-shrimps-sink"
+  ]
 }

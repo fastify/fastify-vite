@@ -1,6 +1,6 @@
 {
   "name": "@fastify/vite",
-  "version": "8.4.1",
+  "version": "9.0.0-rc.0",
   "description": "Official Fastify plugin for Vite integration.",
   "keywords": [
     "fastify",
