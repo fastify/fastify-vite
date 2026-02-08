@@ -45,18 +45,18 @@
     "test": "pnpm build && vitest run --no-file-parallelism && vitest --typecheck.only --run"
   },
   "dependencies": {
-    "@fastify/deepmerge": "^3.1.0",
+    "@fastify/deepmerge": "^3.2.0",
     "@fastify/middie": "catalog:",
     "@fastify/static": "^9.0.0",
     "fastify-plugin": "^5.1.0",
     "fs-extra": "^11.3.3",
     "klaw": "^4.1.0",
-    "package-directory": "^8.1.0"
+    "package-directory": "^8.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/klaw": "^3.0.7",
-    "@types/node": "^22.19.3",
+    "@types/node": "^22.19.10",
     "fastify": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
