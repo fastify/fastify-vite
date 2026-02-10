@@ -796,11 +796,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^1.1.5
+        version: 1.1.5(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -854,11 +854,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^1.1.5
+        version: 1.1.5(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -912,11 +912,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+        specifier: ^1.1.5
+        version: 1.1.5(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
         specifier: ^2.0.8
         version: 2.0.8(react@19.2.3)
@@ -982,11 +982,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: ^1.1.3
-        version: 1.1.3(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
+        specifier: ^1.2.0
+        version: 1.2.0(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@5.9.3))
@@ -1031,11 +1031,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: ^1.1.3
-        version: 1.1.3(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
+        specifier: ^1.2.0
+        version: 1.2.0(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@5.9.3))
@@ -1077,11 +1077,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.2.2
-        version: 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+        specifier: ^8.4.1
+        version: 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
-        specifier: ^1.1.3
-        version: 1.1.3(@types/node@22.14.0)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
+        specifier: ^1.2.0
+        version: 1.2.0(@types/node@22.14.0)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@5.9.3))
@@ -2264,9 +2264,6 @@ packages:
   '@fastify/merge-json-schemas@0.2.1':
     resolution: {integrity: sha512-OA3KGBCy6KtIvLf8DINC5880o5iBlDX4SxzLQS8HorJAbqluzLRn80UXU0bxZn7UOFhFgpRJDasfwn9nG4FG4A==}
 
-  '@fastify/middie@9.0.3':
-    resolution: {integrity: sha512-7OYovKXp9UKYeVMcjcFLMcSpoMkmcZmfnG+eAvtdiatN35W7c+r9y1dRfpA+pfFVNuHGGqI3W+vDTmjvcfLcMA==}
-
   '@fastify/middie@9.1.0':
     resolution: {integrity: sha512-cObruXSFB5CCqn2m9sF5ktf6pNQX+QQth2N39FGXXV+8M4O+dWzkvqjqzwpIWvwvIffP9+O7KaLN+5xVgFFdWw==}
 
@@ -2276,8 +2273,8 @@ packages:
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
 
-  '@fastify/react@1.1.2':
-    resolution: {integrity: sha512-aj2uTJNp6DdEbN094iwX3fNH1pGlQaX1azbp4QTdkIio0nDaegjj3CizvX72ZblwXGHrZjPq+g0NDdkRKt6YkA==}
+  '@fastify/react@1.1.5':
+    resolution: {integrity: sha512-g7rTVaOclYfPCzdHs3uZnFEHqdXUrH28zVhuek97id6IFCVkYsQdQrALIrIZ5Ehz5KHCopEK9HFhck6L9iHWXA==}
 
   '@fastify/send@4.1.0':
     resolution: {integrity: sha512-TMYeQLCBSy2TOFmV95hQWkiTYgC/SEx7vMdV+wnZVX4tt8VBLKzmH8vV9OzJehV0+XBfg+WxPMt5wp+JBUKsVw==}
@@ -2285,14 +2282,14 @@ packages:
   '@fastify/static@9.0.0':
     resolution: {integrity: sha512-r64H8Woe/vfilg5RTy7lwWlE8ZZcTrc3kebYFMEUBrMqlydhQyoiExQXdYAy2REVpST/G35+stAM8WYp1WGmMA==}
 
-  '@fastify/vite@8.2.2':
-    resolution: {integrity: sha512-M22nPvdiEcdo/VNGFL27d0Rtm/shg/57SR0MsMwR6K6SCpjLv3Dvn2hibA8HC7ih8GcbnlKl4pdyJu9EbUMhoA==}
+  '@fastify/vite@8.4.1':
+    resolution: {integrity: sha512-phfSE+GPL0hvFOPDRVCIk2y24elodtSKDbTodddQ8dxxNIhLzz90afSSOPTabOu3QiofJyOhJi/IvemXGnVJ3A==}
     peerDependencies:
       fastify: '>=5'
       vite: '>=6'
 
-  '@fastify/vue@1.1.3':
-    resolution: {integrity: sha512-15mae8GuD81IHzfsnKbUnYgtIiMKVv2/6sQ24wtlGp31XEJCpxHLd4ImepCUp1aJwT6C04Hpa4lV4jou3fTANQ==}
+  '@fastify/vue@1.2.0':
+    resolution: {integrity: sha512-IzhhakCWwTssUVjmVxbkUWwVROmEWs8ROHxblwMlE1FhHAlVyPAP1QiSUKbBOqFIg/GO+2qZh0PdId4GIRbdsg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3854,9 +3851,6 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
-
-  devalue@5.6.1:
-    resolution: {integrity: sha512-jDwizj+IlEZBunHcOuuFVBnIMPAEHvTsJj0BcIp94xYguLRVBcXO853px/MyIJvbVzWdsGvrRweIUWJw8hBP7A==}
 
   devalue@5.6.2:
     resolution: {integrity: sha512-nPRkjWzzDQlsejL1WVifk5rvcFi/y1onBRxjaFMjZeR9mFpqu2gmAZ9xUB9/IEanEP/vBtGeGganC/GO1fmufg==}
@@ -7161,13 +7155,6 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  '@fastify/middie@9.0.3':
-    dependencies:
-      '@fastify/error': 4.2.0
-      fastify-plugin: 5.1.0
-      path-to-regexp: 8.3.0
-      reusify: 1.1.0
-
   '@fastify/middie@9.1.0':
     dependencies:
       '@fastify/error': 4.2.0
@@ -7185,44 +7172,44 @@ snapshots:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
 
-  '@fastify/react@1.1.2(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
+  '@fastify/react@1.1.5(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
-      '@fastify/vite': 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
-      '@unhead/react': 2.0.8(react@19.2.3)
+      '@fastify/vite': 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+      '@unhead/react': 2.0.8(react@19.2.4)
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
-      devalue: 5.6.1
+      devalue: 5.6.2
       history: 5.3.0
       html-rewriter-wasm: 0.4.1
       minipass: 7.1.2
       mlly: 1.8.0
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      react-router: 7.12.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.3)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      react-router: 7.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.4)
       youch: 3.3.4
     transitivePeerDependencies:
       - '@types/react'
       - fastify
       - vite
 
-  '@fastify/react@1.1.2(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
+  '@fastify/react@1.1.5(@types/react@19.1.2)(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
     dependencies:
-      '@fastify/vite': 8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
-      '@unhead/react': 2.0.8(react@19.2.3)
+      '@fastify/vite': 8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+      '@unhead/react': 2.0.8(react@19.2.4)
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
-      devalue: 5.6.1
+      devalue: 5.6.2
       history: 5.3.0
       html-rewriter-wasm: 0.4.1
       minipass: 7.1.2
       mlly: 1.8.0
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      react-router: 7.12.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.3)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+      react-router: 7.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      valtio: 2.3.0(@types/react@19.1.2)(react@19.2.4)
       youch: 3.3.4
     transitivePeerDependencies:
       - '@types/react'
@@ -7246,10 +7233,10 @@ snapshots:
       fastq: 1.20.1
       glob: 13.0.0
 
-  '@fastify/vite@8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
+  '@fastify/vite@8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.2.0
-      '@fastify/middie': 9.0.3
+      '@fastify/middie': 9.1.0
       '@fastify/static': 9.0.0
       fastify: 5.7.4
       fastify-plugin: 5.1.0
@@ -7259,10 +7246,10 @@ snapshots:
       package-directory: 8.2.0
       vite: 7.3.0(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
 
-  '@fastify/vite@8.2.2(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
+  '@fastify/vite@8.4.1(fastify@5.7.4)(vite@7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.2.0
-      '@fastify/middie': 9.0.3
+      '@fastify/middie': 9.1.0
       '@fastify/static': 9.0.0
       fastify: 5.7.4
       fastify-plugin: 5.1.0
@@ -7272,10 +7259,10 @@ snapshots:
       package-directory: 8.2.0
       vite: 7.3.0(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
 
-  '@fastify/vite@8.2.2(fastify@5.7.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
+  '@fastify/vite@8.4.1(fastify@5.7.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.2.0
-      '@fastify/middie': 9.0.3
+      '@fastify/middie': 9.1.0
       '@fastify/static': 9.0.0
       fastify: 5.7.4
       fastify-plugin: 5.1.0
@@ -7285,10 +7272,10 @@ snapshots:
       package-directory: 8.2.0
       vite: 7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1)
 
-  '@fastify/vite@8.2.2(fastify@5.7.4)(vite@7.3.1(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
+  '@fastify/vite@8.4.1(fastify@5.7.4)(vite@7.3.1(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.2.0
-      '@fastify/middie': 9.0.3
+      '@fastify/middie': 9.1.0
       '@fastify/static': 9.0.0
       fastify: 5.7.4
       fastify-plugin: 5.1.0
@@ -7298,13 +7285,13 @@ snapshots:
       package-directory: 8.2.0
       vite: 7.3.1(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1)
 
-  '@fastify/vue@1.1.3(@types/node@22.14.0)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
+  '@fastify/vue@1.2.0(@types/node@22.14.0)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.2.2(fastify@5.7.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
+      '@fastify/vite': 8.4.1(fastify@5.7.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
       acorn: 8.15.0
       acorn-walk: 8.3.4
-      devalue: 5.6.1
+      devalue: 5.6.2
       html-rewriter-wasm: 0.4.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@5.9.3)
@@ -7327,13 +7314,13 @@ snapshots:
       - typescript
       - yaml
 
-  '@fastify/vue@1.1.3(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)':
+  '@fastify/vue@1.2.0(@types/node@22.19.10)(fastify@5.7.4)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.2.2(fastify@5.7.4)(vite@7.3.1(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
+      '@fastify/vite': 8.4.1(fastify@5.7.4)(vite@7.3.1(@types/node@22.19.10)(jiti@2.4.2)(lightningcss@1.29.3)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
       acorn: 8.15.0
       acorn-walk: 8.3.4
-      devalue: 5.6.1
+      devalue: 5.6.2
       html-rewriter-wasm: 0.4.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@5.9.3)
@@ -8966,8 +8953,6 @@ snapshots:
 
   detect-libc@2.1.2:
     optional: true
-
-  devalue@5.6.1: {}
 
   devalue@5.6.2: {}
 
@@ -10959,13 +10944,6 @@ snapshots:
     optional: true
 
   valtio@2.1.4(@types/react@19.1.2)(react@19.2.3):
-    dependencies:
-      proxy-compare: 3.0.1
-    optionalDependencies:
-      '@types/react': 19.1.2
-      react: 19.2.3
-
-  valtio@2.3.0(@types/react@19.1.2)(react@19.2.3):
     dependencies:
       proxy-compare: 3.0.1
     optionalDependencies:
