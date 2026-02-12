@@ -173,7 +173,7 @@ If you don't need SSR, it can also just serve as a convenience to serve your sta
 
 For high-traffic applications, serving static assets from a CDN (Content Delivery Network) significantly reduces load on your origin server and improves load times for users worldwide.
 
-### Setting up CDN asset serving
+### Push-based CDN (`baseAssetUrl`)
 
 Use the `baseAssetUrl` option to rewrite asset URLs in your HTML to point to your CDN:
 
@@ -237,3 +237,38 @@ aws s3 sync dist/client/ s3://my-bucket/assets/ --cache-control "public,max-age=
 ```
 
 Since Vite adds content hashes to filenames (e.g., `main-abc123.js`), you can use aggressive caching headers.
+
+### Pull-based CDN (origin pull)
+
+If your CDN sits in front of your origin server (Cloudflare, CloudFront origin pull, Fastly), requests for static assets are intercepted automatically. No URL rewriting is needed, so `baseAssetUrl` doesn't apply here.
+
+Use [`fastifyStaticOptions`](/config/#fastifystaticOptions) to control the `Cache-Control` headers your origin sends. The CDN uses these headers to determine how long to cache each asset:
+
+```js
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  fastifyStaticOptions: {
+    maxAge: 31536000,
+    immutable: true,
+  },
+})
+```
+
+This sends `Cache-Control: public, max-age=31536000, immutable` on all static asset responses.
+
+For more granular control, use `setHeaders` to vary cache policy by file type or add CDN-specific headers:
+
+```js
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  fastifyStaticOptions: {
+    setHeaders(res, path) {
+      if (path.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache')
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+      }
+    },
+  },
+})
+```

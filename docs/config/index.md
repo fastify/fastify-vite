@@ -63,6 +63,8 @@ This is especially useful when using `@fastify/compress`, which strips the `Cont
 
 These options only apply in production mode. In development mode, Vite's dev server handles static file serving.
 
+See [Pull-based CDN (origin pull)](/guide/build-and-deploy#pull-based-cdn-origin-pull) for more details.
+
 ### `renderer`
 
 A single configuration object which can be used to set all [Renderer options](/config/#renderer-options).
