@@ -137,6 +137,7 @@ export async function setup(
       root.push(resolve(ssrOutDir, assetsDir))
     }
     await scope.register(FastifyStatic, {
+      ...runtimeConfig.fastifyStaticOptions,
       root,
       prefix: join(registrationPrefix, basePathname, assetsDir).replace(/\\/g, '/'),
     })
@@ -144,6 +145,7 @@ export async function setup(
 
   await fastifyViteDecoration.scope.register(async function publicFiles(scope: FastifyInstance) {
     await scope.register(FastifyStatic, {
+      ...runtimeConfig.fastifyStaticOptions,
       root: clientOutDir,
       prefix: join(registrationPrefix, basePathname).replace(/\\/g, '/'),
       index: false,

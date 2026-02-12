@@ -163,7 +163,7 @@ Once your build processes are complete and your `dist` directory is populated, y
 
 > Make sure to have `NODE_ENV` set to `production` as well in case your framework requires it (like React) for SSR in production as well. Accidentally running React SSR in development mode is quite common and can lead to serious performance degradation.
 
-Also note that in **production mode**, **`@fastify/vite`** will serve static assets from your Vite application via [`@fastify/static`](https://github.com/fastify/fastify-static) automatically, but you should consider using a CDN for those files if you can, or just serve through Nginx instead of directly through Node.js.
+Also note that in **production mode**, **`@fastify/vite`** will serve static assets from your Vite application via [`@fastify/static`](https://github.com/fastify/fastify-static) automatically, but you should consider using a CDN for those files if you can, or just serve through Nginx instead of directly through Node.js. You can customize the underlying `@fastify/static` options (e.g., `preCompressed`, `maxAge`, `setHeaders`) via [`fastifyStaticOptions`](/config/#fastifystaticOptions).
 
 If you don't need SSR, it can also just serve as a convenience to serve your static Vite bundle through Fastify via [@fastify/static][fastify-static], automatically inferring your bundle's output directory from your Vite configuration file, and still allowing you to leverage Vite's development server for hot reload.
 

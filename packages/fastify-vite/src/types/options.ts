@@ -1,3 +1,4 @@
+import type { FastifyStaticOptions } from '@fastify/static'
 import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
 import type { ResolvedConfig } from 'vite'
 
@@ -7,6 +8,9 @@ import type { RendererOption } from './renderer.ts'
 import type { ReplyDotHtmlFunction, ReplyDotRenderFunction } from './reply.ts'
 import type { ClientRouteArgs, CreateRouteArgs } from './route.ts'
 import type { SerializableViteConfig } from './vite-configs.ts'
+
+/** Keys managed internally by @fastify/vite — not overridable via fastifyStaticOptions */
+type ManagedStaticKeys = 'root' | 'prefix' | 'serve'
 
 /** User-provided options for the @fastify/vite plugin */
 export interface FastifyViteOptions extends Partial<RendererOption> {
@@ -38,6 +42,12 @@ export interface FastifyViteOptions extends Partial<RendererOption> {
    * Example: `baseAssetUrl: process.env.CDN_URL`
    */
   baseAssetUrl?: string
+  /**
+   * Options forwarded to the underlying `@fastify/static` registrations in production mode.
+   * Use this to configure `preCompressed`, `maxAge`, `immutable`, `setHeaders`, etc.
+   * The `root`, `prefix`, and `serve` options are managed internally and cannot be overridden.
+   */
+  fastifyStaticOptions?: Omit<FastifyStaticOptions, ManagedStaticKeys>
 }
 
 /** Base runtime config with all resolved properties */
@@ -47,6 +57,7 @@ interface BaseRuntimeConfig {
   distDir?: string
   prefix?: string
   baseAssetUrl?: string
+  fastifyStaticOptions?: Omit<FastifyStaticOptions, ManagedStaticKeys>
   renderer: Record<string, unknown> | string
   virtualModulePrefix: string
   clientModule?: string

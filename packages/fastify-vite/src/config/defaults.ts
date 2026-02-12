@@ -13,6 +13,7 @@ export const DefaultConfig: ConfigDefaults = {
   dev: process.argv.includes('--dev'),
   renderer: {},
   spa: false,
+  fastifyStaticOptions: {},
 
   virtualModulePrefix: '$app',
 
