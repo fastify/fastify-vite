@@ -1,12 +1,13 @@
 import Fastify from 'fastify'
 import fastifyVite from '../../src/index.ts'
 
-export async function main(dev) {
+export async function main(dev, opts = {}) {
   const server = Fastify()
 
   await server.register(fastifyVite, {
     dev,
     root: import.meta.dirname,
+    ...opts,
   })
 
   await server.vite.ready()

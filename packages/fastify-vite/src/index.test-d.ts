@@ -52,3 +52,25 @@ app.register(FastifyVite, {
   spa: false,
 })
 app.vite.ready()
+
+// fastifyStaticOptions: accepts valid @fastify/static options
+app.register(FastifyVite, {
+  root: process.cwd(),
+  fastifyStaticOptions: {
+    preCompressed: true,
+    maxAge: 31536000,
+    immutable: true,
+  },
+})
+
+// @ts-expect-error - root is managed internally and cannot be overridden
+app.register(FastifyVite, {
+  root: process.cwd(),
+  fastifyStaticOptions: { root: '/bad' },
+})
+
+// @ts-expect-error - prefix is managed internally and cannot be overridden
+app.register(FastifyVite, {
+  root: process.cwd(),
+  fastifyStaticOptions: { prefix: '/bad' },
+})

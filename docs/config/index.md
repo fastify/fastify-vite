@@ -39,6 +39,32 @@ The transformation happens once at server startup, so there's no per-request ove
 
 See [Serving assets from a CDN](/guide/build-and-deploy#serving-assets-from-a-cdn) for more details.
 
+### `fastifyStaticOptions`
+
+Options forwarded to the underlying [`@fastify/static`](https://github.com/fastify/fastify-static) registrations in production mode. Use this to configure `preCompressed`, `maxAge`, `immutable`, `setHeaders`, and any other `@fastify/static` option.
+
+The `root`, `prefix`, and `serve` options are managed internally by `@fastify/vite` and cannot be overridden.
+
+```js
+await server.register(FastifyVite, {
+  root: import.meta.url,
+  fastifyStaticOptions: {
+    preCompressed: true,
+    maxAge: 31536000,
+    immutable: true,
+    setHeaders(res) {
+      res.setHeader('X-Custom-Header', 'value')
+    },
+  },
+})
+```
+
+This is especially useful when using `@fastify/compress`, which strips the `Content-Length` header during gzip compression. If you have an nginx reverse proxy using HTTP/1.0 upstream connections, you can pre-compress your assets at build time and use `preCompressed: true` to serve them directly with the correct `Content-Length` intact.
+
+These options only apply in production mode. In development mode, Vite's dev server handles static file serving.
+
+See [Pull-based CDN (origin pull)](/guide/build-and-deploy#pull-based-cdn-origin-pull) for more details.
+
 ### `renderer`
 
 A single configuration object which can be used to set all [Renderer options](/config/#renderer-options).
