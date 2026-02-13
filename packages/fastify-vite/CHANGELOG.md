@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 9.0.0-rc.1
+
+### Minor Changes
+
+- d3a7520: Add `fastifyStaticOptions` for configuring `@fastify/static` in production mode. This allows passing options like `preCompressed`, `maxAge`, and `immutable` through to the underlying static file server.
+
 ## 9.0.0-rc.0
 
 ### Major Changes
