@@ -8,6 +8,7 @@
     "@fastify/vue": "1.2.0"
   },
   "changesets": [
+    "add-fastify-static-options",
     "fix-vite-config-ts-loading",
     "petite-ends-brush",
     "polite-mirrors-nail",
