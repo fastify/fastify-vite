@@ -47,7 +47,12 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
         rawConfig.environments.client ?? {},
       )
       if (!spa) {
-        const ssrEntryPoint = clientModule ?? resolveClientModule(rawConfig.root)
+        const ssrEntryPoint = clientModule ?? resolveClientModule(rawConfig.root ?? '.')
+        if (!ssrEntryPoint) {
+          throw new Error(
+            'Could not resolve SSR entry point. Provide a clientModule option or create an index.{js,mjs,mts,ts,cjs,jsx,tsx} file.',
+          )
+        }
         rawConfig.environments.ssr = deepMerge(
           createSSREnvironment(isDevMode, outDir, ssrEntryPoint),
           rawConfig.environments.ssr ?? {},
@@ -82,6 +87,9 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
       }
 
       const applicationRootDirectory = await packageDirectory({ cwd: resolvedViteRoot })
+      if (!applicationRootDirectory) {
+        throw new Error(`Could not find package root from: ${resolvedViteRoot}`)
+      }
 
       // For SSR builds, `vite build` is executed twice: once for client and once for server.
       // We need to merge the two configs and make both `outDir` properties available.
@@ -95,7 +103,7 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
               | { outDir?: string; rollupOptions?: { input?: { index?: string } } }
               | undefined
             if (envBuild?.outDir) {
-              fastify.outDirs[env] = envBuild.outDir
+              fastify.outDirs![env] = envBuild.outDir
             }
             if (envBuild?.rollupOptions?.input?.index) {
               return [env, envBuild.rollupOptions.input.index]
@@ -110,7 +118,7 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
         root: resolvedViteRoot,
         build: {
           assetsDir,
-          outDir: fastify.outDirs.client ?? 'dist/client',
+          outDir: fastify.outDirs?.client ?? 'dist/client',
         },
         fastify,
       })

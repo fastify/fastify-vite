@@ -60,7 +60,7 @@ interface BaseRuntimeConfig {
   fastifyStaticOptions?: Omit<FastifyStaticOptions, ManagedStaticKeys>
   renderer: Record<string, unknown> | string
   virtualModulePrefix: string
-  clientModule?: string
+  clientModule: string | null
   hasRenderFunction?: boolean
 
   // Renderer functions
@@ -70,7 +70,7 @@ interface BaseRuntimeConfig {
     entries: ClientEntries,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => Promise<ClientModule | undefined>
+  ) => Promise<ClientModule | null>
 
   createHtmlTemplateFunction: (
     source: string,

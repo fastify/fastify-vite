@@ -44,21 +44,24 @@ export const DefaultConfig: ConfigDefaults = {
       }
     }
     if (config.hasRenderFunction) {
-      return async function (ctx: ReplyDotRenderResult) {
+      return async function (ctx?: ReplyDotRenderResult) {
         this.type('text/html')
         this.send(await indexHtmlTemplate(ctx ?? (await this.render(ctx))))
         return this
       }
     }
-    return async function (ctx: ReplyDotRenderResult) {
+    return async function (ctx?: ReplyDotRenderResult) {
       this.type('text/html')
-      this.send(await indexHtmlTemplate(ctx))
+      this.send(await indexHtmlTemplate(ctx!))
       return this
     }
   },
 
   async createRoute(args: CreateRouteArgs, scope: FastifyInstance): Promise<void> {
     const { handler, errorHandler, route } = args
+    if (!route) {
+      return
+    }
     if (route.configure) {
       await route.configure(scope)
     }
@@ -92,7 +95,7 @@ export const DefaultConfig: ConfigDefaults = {
       }
     }
     return async (req, reply) => {
-      const page = await route.default({ app: scope, req, reply })
+      const page = await route?.default?.({ app: scope, req, reply })
       return reply.html({
         app: scope,
         req,

@@ -50,10 +50,13 @@ async function loadBundle(
   } else {
     const { packageDirectory } = await import('package-directory')
     const pkgDir = await packageDirectory({ cwd: rootDir })
+    if (!pkgDir) {
+      throw new Error(`Could not find package root from: ${rootDir}`)
+    }
     getBundlePath = (serverFile: string) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
   }
 
-  let bundlePath: string | URL
+  let bundlePath: string | URL | undefined
 
   for (const serverFile of bundleFiles) {
     bundlePath = getBundlePath(serverFile)
@@ -95,7 +98,7 @@ async function loadEntries(
 
 export async function setup(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
-): Promise<ClientModule | undefined> {
+): Promise<ClientModule | null> {
   const runtimeConfig = fastifyViteDecoration.runtimeConfig as ProdRuntimeConfig
   const { spa, viteConfig } = runtimeConfig
   let clientOutDir: string
@@ -107,6 +110,9 @@ export async function setup(
 
     const { packageDirectory } = await import('package-directory')
     const outDirRoot = await packageDirectory({ cwd: runtimeConfig.root })
+    if (!outDirRoot) {
+      throw new Error(`Could not find package root from: ${runtimeConfig.root}`)
+    }
 
     clientOutDir = resolveIfRelative(outDirs.client!, outDirRoot)
     ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
@@ -163,9 +169,9 @@ export async function setup(
 
   const entries = await loadEntries(runtimeConfig, viteConfig)
 
-  const client: ClientModule | undefined = !runtimeConfig.spa
+  const client: ClientModule | null = !runtimeConfig.spa
     ? await runtimeConfig.prepareClient(entries, fastifyViteDecoration.scope, runtimeConfig)
-    : undefined
+    : null
 
   const indexHtmlPath = join(clientOutDir, 'index.html')
   let indexHtml = await readFile(indexHtmlPath, 'utf8')
@@ -183,7 +189,7 @@ export async function setup(
   )
 
   if (runtimeConfig.hasRenderFunction && client) {
-    const renderFunction = await runtimeConfig.createRenderFunction(
+    const renderFunction = await runtimeConfig.createRenderFunction!(
       client,
       fastifyViteDecoration.scope,
       runtimeConfig,
