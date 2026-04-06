@@ -1,5 +1,15 @@
 # @fastify/vite
 
+## 9.0.0-rc.2
+
+### Minor Changes
+
+- df04e8a: Internally upgrade to Vite 8
+
+### Patch Changes
+
+- 46815ca: Bump @fastify/deepmerge@3.2.1, fs-extra@11.3.4
+
 ## 9.0.0-rc.1
 
 ### Minor Changes
