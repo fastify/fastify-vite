@@ -88,6 +88,9 @@ export async function resolveProdViteConfig(
   { distDir }: ResolveProdViteConfigOptions = {},
 ): Promise<SerializableViteConfig> {
   const appRoot = await getApplicationRootDir(root)
+  if (!appRoot) {
+    throw new Error(`Could not find application root from: ${root}`)
+  }
 
   let viteConfigDistFile: string | null
   if (distDir) {

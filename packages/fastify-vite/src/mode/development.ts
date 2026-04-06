@@ -28,7 +28,7 @@ interface ViteEnvironmentsConfig {
 }
 
 interface HotState {
-  client?: ClientModule
+  client?: ClientModule | null
   routeHash?: Map<string, RouteDefinition>
 }
 
@@ -70,7 +70,10 @@ async function loadEntryModulePaths(
     environments: {},
   }
 
-  await setupEnvironments.call({}, viteEnvsConfig, { mode: 'development' })
+  await setupEnvironments.call({} as never, viteEnvsConfig, {
+    mode: 'development',
+    command: 'serve',
+  })
 
   const { client: _, ...nonClientEnvs } = Object.fromEntries(
     Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
@@ -132,7 +135,7 @@ export async function loadEntries(
 
 export async function setup(
   fastifyViteDecoration: FastifyViteDecorationPriorToSetup,
-): Promise<ClientModule | undefined> {
+): Promise<ClientModule | null> {
   const runtimeConfig = fastifyViteDecoration.runtimeConfig as DevRuntimeConfig
 
   if (!fastifyViteDecoration.scope.hasDecorator('use')) {
@@ -160,8 +163,8 @@ export async function setup(
   // After decoration, the scope has the hot state
   const hotScope = fastifyViteDecoration.scope as HotScope
 
-  fastifyViteDecoration.scope.decorateReply('render', null)
-  fastifyViteDecoration.scope.decorateReply('html', null)
+  fastifyViteDecoration.scope.decorateReply('render', null as never)
+  fastifyViteDecoration.scope.decorateReply('html', null as never)
 
   Object.defineProperty(runtimeConfig, 'hasRenderFunction', {
     writable: false,
@@ -175,11 +178,11 @@ export async function setup(
       const clientResult =
         !runtimeConfig.spa &&
         (await runtimeConfig.prepareClient(
-          fastifyViteDecoration.entries,
+          fastifyViteDecoration.entries!,
           fastifyViteDecoration.scope,
           runtimeConfig,
         ))
-      const client = clientResult ? (clientResult as ClientModule) : undefined
+      const client = clientResult ? (clientResult as ClientModule) : null
       hotScope[hot].client = client
       if (client && hasIterableRoutes(client)) {
         if (!hotScope[hot].routeHash) {
@@ -206,8 +209,8 @@ export async function setup(
       )
 
       if (runtimeConfig.hasRenderFunction) {
-        reply.render = await runtimeConfig.createRenderFunction(
-          hotScope[hot].client,
+        reply.render = await runtimeConfig.createRenderFunction!(
+          hotScope[hot].client!,
           fastifyViteDecoration.scope,
           runtimeConfig,
         )
@@ -230,11 +233,11 @@ export async function setup(
   const clientResult =
     !runtimeConfig.spa &&
     (await runtimeConfig.prepareClient(
-      fastifyViteDecoration.entries,
+      fastifyViteDecoration.entries!,
       fastifyViteDecoration.scope,
       runtimeConfig,
     ))
-  const client = clientResult ? (clientResult as ClientModule) : undefined
+  const client = clientResult ? (clientResult as ClientModule) : null
 
   return client
 }

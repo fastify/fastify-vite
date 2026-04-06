@@ -43,7 +43,7 @@ declare module 'fastify' {
 }
 
 interface ModeModule {
-  setup: (ctx: FastifyViteDecorationPriorToSetup) => Promise<ClientModule | undefined>
+  setup: (ctx: FastifyViteDecorationPriorToSetup) => Promise<ClientModule | null>
   hot?: symbol
 }
 
