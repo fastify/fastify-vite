@@ -12,9 +12,9 @@
     "prep-for-release": "zx package.mjs --prep-for-release"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.8",
-    "oxfmt": "^0.28.0",
-    "oxlint": "^1.43.0",
+    "@changesets/cli": "^2.30.0",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0",
     "vite": "catalog:",
     "vitest": "catalog:",
     "zx": "^8.8.5"
