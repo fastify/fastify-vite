@@ -10,6 +10,7 @@
   "changesets": [
     "add-fastify-static-options",
     "fix-vite-config-ts-loading",
+    "khaki-worlds-give",
     "petite-ends-brush",
     "polite-mirrors-nail",
     "remove-html-rewriter-renderers",
@@ -17,6 +18,7 @@
     "shiny-coats-relax",
     "silent-candies-roll",
     "sixty-candles-learn",
-    "tidy-shrimps-sink"
+    "tidy-shrimps-sink",
+    "upset-pandas-cover"
   ]
 }
