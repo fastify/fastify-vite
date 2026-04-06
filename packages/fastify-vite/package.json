@@ -59,6 +59,7 @@
     "@types/node": "^22.19.10",
     "fastify": "catalog:",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
