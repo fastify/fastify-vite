@@ -48,7 +48,7 @@ export async function resolveId(id) {
       if (override) {
         return override
       }
-      return id
+      return `/$app/${virtual}`
     }
   }
 }

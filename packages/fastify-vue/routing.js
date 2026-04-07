@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { join, isAbsolute } from 'node:path'
+import { join } from 'node:path'
 import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
@@ -112,11 +112,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   } else {
     const { id } = route
     const htmlPath = id.replace('pages/', 'html/').replace(/\.vue$/, '.html')
-    // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
-    let distDir = config.vite.build.outDir
-    if (!isAbsolute(config.vite.build.outDir)) {
-      distDir = join(config.vite.root, distDir)
-    }
+    let distDir = config.viteConfig.build.outDir
     const htmlSource = readFileSync(join(distDir, htmlPath), 'utf8')
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
     handler = (_, reply) => htmlFunction.call(reply)

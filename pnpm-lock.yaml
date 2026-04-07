@@ -995,11 +995,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.4.1
-        version: 8.4.1(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^9.0.0
+        version: 9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.2.0
-        version: 1.2.0(@types/node@24.12.2)(fastify@5.8.4)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
+        version: 1.2.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@6.0.2))
@@ -1044,11 +1044,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.4.1
-        version: 8.4.1(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
+        specifier: ^9.0.0
+        version: 9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.2.0
-        version: 1.2.0(@types/node@24.12.2)(fastify@5.8.4)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
+        version: 1.2.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@6.0.2))
@@ -1090,11 +1090,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^8.4.1
-        version: 8.4.1(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
+        specifier: ^9.0.0
+        version: 9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
       '@fastify/vue':
         specifier: ^1.2.0
-        version: 1.2.0(@types/node@22.14.0)(fastify@5.8.4)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
+        version: 1.2.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
         specifier: ^2.0.5
         version: 2.0.8(vue@3.5.26(typescript@5.9.3))
@@ -2196,8 +2196,14 @@ packages:
       fastify: '>=5'
       vite: '>=6'
 
-  '@fastify/vue@1.2.0':
-    resolution: {integrity: sha512-IzhhakCWwTssUVjmVxbkUWwVROmEWs8ROHxblwMlE1FhHAlVyPAP1QiSUKbBOqFIg/GO+2qZh0PdId4GIRbdsg==}
+  '@fastify/vite@9.0.0':
+    resolution: {integrity: sha512-KyGhrOxPK2TFQtAkgZEJcOVlKQFnK7l9QV9vz243ABgxkOkGdfu2HlYres3TuPBNBXJlG72dr2ao3VpttQFMaA==}
+    peerDependencies:
+      fastify: '>=5'
+      vite: '>=6'
+
+  '@fastify/vue@1.2.1':
+    resolution: {integrity: sha512-CeVE2OgydiUZiWNbpr5HUAx4yQmJVYUb7F8LCfilfC8gYLIfkCX6Ltvi5EfZ8CdqusD0eqlGSYnNmWvdRtqT/Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -5816,46 +5822,6 @@ packages:
       terser:
         optional: true
 
-  vite@7.3.1:
-    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      lightningcss: ^1.21.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   vite@8.0.5:
     resolution: {integrity: sha512-nmu43Qvq9UopTRfMx2jOYW5l16pb3iDC1JH6yMuPkpVbzK0k+L7dfsEDH4jRgYFmsg0sTAqkojoZgzLMlwHsCQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -7134,32 +7100,6 @@ snapshots:
       fastq: 1.20.1
       glob: 13.0.6
 
-  '@fastify/vite@8.4.1(fastify@5.8.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(yaml@2.7.1))':
-    dependencies:
-      '@fastify/deepmerge': 3.2.1
-      '@fastify/middie': 9.3.1
-      '@fastify/static': 9.0.0
-      fastify: 5.8.4
-      fastify-plugin: 5.1.0
-      fs-extra: 11.3.4
-      html-rewriter-wasm: 0.4.1
-      klaw: 4.1.0
-      package-directory: 8.2.0
-      vite: 7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(yaml@2.7.1)
-
-  '@fastify/vite@8.4.1(fastify@5.8.4)(vite@7.3.1(@types/node@24.12.2)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.7.1))':
-    dependencies:
-      '@fastify/deepmerge': 3.2.1
-      '@fastify/middie': 9.3.1
-      '@fastify/static': 9.0.0
-      fastify: 5.8.4
-      fastify-plugin: 5.1.0
-      fs-extra: 11.3.4
-      html-rewriter-wasm: 0.4.1
-      klaw: 4.1.0
-      package-directory: 8.2.0
-      vite: 7.3.1(@types/node@24.12.2)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.7.1)
-
   '@fastify/vite@8.4.1(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
       '@fastify/deepmerge': 3.2.1
@@ -7186,26 +7126,52 @@ snapshots:
       package-directory: 8.2.0
       vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1)
 
-  '@fastify/vue@1.2.0(@types/node@22.14.0)(fastify@5.8.4)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
+  '@fastify/vite@9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
-      '@fastify/vite': 8.4.1(fastify@5.8.4)(vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(yaml@2.7.1))
+      '@fastify/deepmerge': 3.2.1
+      '@fastify/middie': 9.3.1
+      '@fastify/static': 9.0.0
+      fastify: 5.8.4
+      fastify-plugin: 5.1.0
+      fs-extra: 11.3.4
+      klaw: 4.1.0
+      package-directory: 8.2.0
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1)
+
+  '@fastify/vite@9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))':
+    dependencies:
+      '@fastify/deepmerge': 3.2.1
+      '@fastify/middie': 9.3.1
+      '@fastify/static': 9.0.0
+      fastify: 5.8.4
+      fastify-plugin: 5.1.0
+      fs-extra: 11.3.4
+      klaw: 4.1.0
+      package-directory: 8.2.0
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1)
+
+  '@fastify/vue@1.2.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
+    dependencies:
+      '@fastify/vite': 9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
       acorn: 8.15.0
       acorn-walk: 8.3.4
       devalue: 5.6.2
-      html-rewriter-wasm: 0.4.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@5.9.3)
       vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
       youch: 3.3.4
     optionalDependencies:
-      vite: 7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(yaml@2.7.1)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1)
     transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
       - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
       - fastify
       - jiti
       - less
-      - lightningcss
       - sass
       - sass-embedded
       - stylus
@@ -7215,26 +7181,28 @@ snapshots:
       - typescript
       - yaml
 
-  '@fastify/vue@1.2.0(@types/node@24.12.2)(fastify@5.8.4)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)':
+  '@fastify/vue@1.2.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)':
     dependencies:
-      '@fastify/vite': 8.4.1(fastify@5.8.4)(vite@7.3.1(@types/node@24.12.2)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.7.1))
+      '@fastify/vite': 9.0.0(fastify@5.8.4)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@6.0.2))
       acorn: 8.15.0
       acorn-walk: 8.3.4
       devalue: 5.6.2
-      html-rewriter-wasm: 0.4.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@6.0.2)
       vue-router: 4.6.4(vue@3.5.26(typescript@6.0.2))
       youch: 3.3.4
     optionalDependencies:
-      vite: 7.3.1(@types/node@24.12.2)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.7.1)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1)
     transitivePeerDependencies:
+      - '@emnapi/core'
+      - '@emnapi/runtime'
       - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
       - fastify
       - jiti
       - less
-      - lightningcss
       - sass
       - sass-embedded
       - stylus
@@ -10596,6 +10564,7 @@ snapshots:
       '@rollup/rollup-win32-x64-gnu': 4.57.1
       '@rollup/rollup-win32-x64-msvc': 4.57.1
       fsevents: 2.3.3
+    optional: true
 
   roughjs@4.6.6:
     dependencies:
@@ -10935,38 +10904,6 @@ snapshots:
       '@types/node': 24.12.2
       fsevents: 2.3.3
       lightningcss: 1.32.0
-
-  vite@7.3.1(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.20.3)(yaml@2.7.1):
-    dependencies:
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
-      postcss: 8.5.8
-      rollup: 4.57.1
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      '@types/node': 22.14.0
-      fsevents: 2.3.3
-      jiti: 2.4.2
-      lightningcss: 1.32.0
-      tsx: 4.20.3
-      yaml: 2.7.1
-
-  vite@7.3.1(@types/node@24.12.2)(jiti@2.4.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.7.1):
-    dependencies:
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
-      postcss: 8.5.8
-      rollup: 4.57.1
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      '@types/node': 24.12.2
-      fsevents: 2.3.3
-      jiti: 2.4.2
-      lightningcss: 1.32.0
-      tsx: 4.21.0
-      yaml: 2.7.1
 
   vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1):
     dependencies:
