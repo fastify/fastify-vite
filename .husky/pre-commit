@@ -1,2 +1,1 @@
-pnpm lint:fix
-pnpm format
+pnpm exec lint-staged
