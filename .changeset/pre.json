@@ -10,6 +10,7 @@
   "changesets": [
     "add-fastify-static-options",
     "fix-vite-config-ts-loading",
+    "good-beers-burn",
     "khaki-worlds-give",
     "petite-ends-brush",
     "polite-mirrors-nail",

@@ -1,5 +1,13 @@
 # @fastify/react
 
+## 1.1.6-rc.1
+
+### Patch Changes
+
+- 8574892: Fix html template parsing security issues
+- Updated dependencies [8574892]
+  - @fastify/vite@9.0.0-rc.3
+
 ## 1.1.6-rc.0
 
 ### Patch Changes
