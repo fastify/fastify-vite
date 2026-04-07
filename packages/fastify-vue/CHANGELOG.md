@@ -1,5 +1,29 @@
 # @fastify/vue
 
+## 1.2.1
+
+### Patch Changes
+
+- 34f6381: Fix html template parsing security issues
+- 34f6381: Remove html-rewriter-wasm dependency
+
+  Internal refactor to remove the stale html-rewriter-wasm dependency. No API changes.
+  HTML manipulation now uses simple regex operations instead of WebAssembly-based parsing.
+
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+- Updated dependencies [34f6381]
+  - @fastify/vite@9.0.0
+
 ## 1.2.1-rc.1
 
 ### Patch Changes
