@@ -83,6 +83,6 @@ All dependencies from **vue-base**.
 
 - It's currently impossible to run **multiple** Vite development servers, which means `@fastify/vite` can **only be registered once**. Vite's new [Environment API](https://vite.dev/guide/api-environment) was created to avoid this necessity.
 
-- `@fastify/vue` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/vue/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer. SPA support is planned for the next major release, see the [project roadmap](/roadmap).
+- `@fastify/vue` currently has no support for producing a fully functional **static bundle**, that is, even when you use [`clientOnly`](/vue/rendering-modes#client-only), you'd need to be running the Fastify server integrated with the `@fastify/vite` renderer.
 
-- There's not hot reload for the `context.js` file. This should be addressed in the next major release, see the [project roadmap](/roadmap).
+- There's not hot reload for the `context.js` file.

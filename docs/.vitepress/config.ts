@@ -42,7 +42,6 @@ export default withMermaid({
       '/vue/': { base: '/vue/', items: sidebarVue() },
       '/react/': { base: '/react/', items: sidebarReact() },
       '/config/': { base: '/config/', items: sidebarConfig() },
-      '/roadmap': { base: '/guide/', items: sidebarGuide() },
       '/contributing': { base: '/guide/', items: sidebarGuide() },
     },
 
@@ -308,7 +307,6 @@ function React(collapsed = false) {
 function Common() {
   return [
     { text: 'Configuration', base: '/config/', link: 'index' },
-    { text: 'Roadmap', base: '/', link: 'roadmap' },
     { text: 'Contributing', base: '/', link: 'contributing' },
   ]
 }

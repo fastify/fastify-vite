@@ -1,5 +1,6 @@
 {
   "name": "@fastify-vite/docs",
+  "version": null,
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,6 +17,5 @@
     "mermaid": "^11.12.2",
     "vitepress": "1.6.4",
     "vitepress-plugin-mermaid": "^2.0.17"
-  },
-  "version": null
+  }
 }
