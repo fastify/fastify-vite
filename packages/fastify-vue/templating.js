@@ -1,6 +1,4 @@
-import { createHtmlTemplateFunction } from '@fastify/vite/utils'
-
-const moduleScriptPattern = /<script\s[^>]*\btype\s*=\s*["']module["'][^>]*>[\s\S]*?<\/script>/gi
+import { createHtmlTemplateFunction, removeHtmlModuleScripts } from '@fastify/vite/utils'
 
 export function createHtmlTemplates(source, config) {
   const el = '<!-- element -->'
@@ -24,5 +22,5 @@ export function createHtmlTemplates(source, config) {
 }
 
 function removeClientModule(html) {
-  return html.replace(moduleScriptPattern, '')
+  return removeHtmlModuleScripts(html)
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createHtmlTemplateFunction } from './html.ts'
+import { createHtmlTemplateFunction, removeHtmlModuleScripts } from './html.ts'
 
 describe('createHtmlTemplateFunction', () => {
   it('replaces comments without spaces <!-- element -->', () => {
@@ -62,5 +62,40 @@ describe('createHtmlTemplateFunction', () => {
     const templateFn = createHtmlTemplateFunction(html)
     const resultStr = templateFn()
     expect(resultStr).toBe(html)
+  })
+
+  it('does not replace placeholders inside script tags', () => {
+    const html = [
+      '<script>',
+      'const raw = "<!-- element -->"',
+      '</script>',
+      '<!-- element -->',
+    ].join('\n')
+
+    const templateFn = createHtmlTemplateFunction(html)
+
+    expect(templateFn({ element: '<div>ok</div>' })).toBe(
+      ['<script>', 'const raw = "<!-- element -->"', '</script>', '<div>ok</div>'].join('\n'),
+    )
+  })
+})
+
+describe('removeHtmlModuleScripts', () => {
+  it('removes module scripts with flexible spacing', () => {
+    const html = [
+      '<div>before</div>',
+      '<script type = module src="./mount.js">console.log(1)</script >',
+      '<script type="application/json">{"ok":true}</script>',
+      '<div>after</div>',
+    ].join('\n')
+
+    expect(removeHtmlModuleScripts(html)).toBe(
+      [
+        '<div>before</div>',
+        '',
+        '<script type="application/json">{"ok":true}</script>',
+        '<div>after</div>',
+      ].join('\n'),
+    )
   })
 })
