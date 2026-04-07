@@ -1,5 +1,11 @@
 # @fastify/vue
 
+## 1.2.2
+
+### Patch Changes
+
+- 78f209e: Vite 8 compatibility fixes
+
 ## 1.2.1
 
 ### Patch Changes
