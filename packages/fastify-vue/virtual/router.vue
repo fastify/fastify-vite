@@ -14,9 +14,7 @@ export default {
           const Component = slotProps?.Component
           const child = Component ? h(Component, { key: route.path }) : null
           const wrapped = h(Layout, null, { default: () => child })
-          return isServer
-            ? wrapped
-            : h(Suspense, null, { default: () => wrapped })
+          return isServer ? wrapped : h(Suspense, null, { default: () => wrapped })
         },
       })
   },

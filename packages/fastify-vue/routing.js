@@ -35,11 +35,7 @@ export function createErrorHandler(_, scope, config) {
   }
 }
 
-export async function createRoute(
-  { client, errorHandler, route },
-  scope,
-  config,
-) {
+export async function createRoute({ client, errorHandler, route }, scope, config) {
   if (route.configure) {
     await route.configure(scope)
   }
@@ -51,13 +47,7 @@ export async function createRoute(
   RouteContext.extend(client.context)
 
   const onRequest = async (req, reply) => {
-    req.route = await RouteContext.create(
-      scope,
-      req,
-      reply,
-      route,
-      client.context,
-    )
+    req.route = await RouteContext.create(scope, req, reply, route, client.context)
   }
 
   const preHandler = [
@@ -144,10 +134,7 @@ export async function createRoute(
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    const dataPath = (route.dataPath ?? route.path).replace(
-      /:\w[\w-]*\+.*/,
-      '*',
-    )
+    const dataPath = (route.dataPath ?? route.path).replace(/:\w[\w-]*\+.*/, '*')
     scope.get(`/-/data${dataPath}`, {
       onRequest,
       async handler(req, reply) {

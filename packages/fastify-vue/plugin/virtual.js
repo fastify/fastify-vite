@@ -58,10 +58,7 @@ export function loadVirtualModule(virtualInput, options) {
   if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
     virtual += options.ts ? '.ts' : '.js'
   }
-  if (
-    !virtualModules.includes(virtual) &&
-    !virtualModulesTS.includes(virtual)
-  ) {
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
   let virtualRootDir = options.ts ? virtualRootTS : virtualRoot
@@ -98,10 +95,7 @@ virtualModules.includes = function (virtual) {
 
 function loadVirtualModuleOverride(viteProjectRoot, virtualInput) {
   let virtual = virtualInput
-  if (
-    !virtualModules.includes(virtual) &&
-    !virtualModulesTS.includes(virtual)
-  ) {
+  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
     return
   }
   let overridePath = resolve(viteProjectRoot, virtual)
