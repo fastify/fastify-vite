@@ -7,6 +7,7 @@ if (!globalThis.port) {
 export default () => ({
   root: import.meta.dirname,
   plugins: [viteFastify()],
+  build: { emptyOutDir: true },
   server: {
     hmr: {
       port: globalThis.port++,

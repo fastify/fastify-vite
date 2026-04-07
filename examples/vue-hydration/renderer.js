@@ -12,7 +12,7 @@ async function foobarHook(req) {
   req.server.log.info(`Hello from ${req.url} and foobarHook`)
 }
 
-function createRoute({ handler, errorHandler, route }, scope, config) {
+function createRoute({ handler, errorHandler, route }, scope) {
   scope.route({
     url: route.path,
     method: 'GET',

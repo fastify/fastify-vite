@@ -1,13 +1,13 @@
 {
   "name": "@fastify/react",
-  "version": "1.1.5",
+  "version": "1.1.6-rc.1",
   "description": "The official @fastify/vite renderer for React",
   "keywords": [
     "fastify",
     "react",
     "vite"
   ],
-  "homepage": "https://fastify.github.io/fastify-vite/react/",
+  "homepage": "https://vite.fastify.dev/react/",
   "bugs": {
     "url": "https://github.com/fastify/fastify-vite/issues"
   },
@@ -71,7 +71,6 @@
     "acorn-walk": "^8.3.4",
     "devalue": "catalog:",
     "history": "latest",
-    "html-rewriter-wasm": "catalog:",
     "minipass": "latest",
     "mlly": "^1.7.4",
     "react": "catalog:react",

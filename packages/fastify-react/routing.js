@@ -106,6 +106,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   } else {
     const { id } = route
     const htmlPath = id.replace('pages/', 'html/').replace(/\.(j|t)sx$/, '.html')
+    // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
     let distDir = config.vite.build.outDir
     if (!isAbsolute(config.vite.build.outDir)) {
       distDir = join(config.vite.root, distDir)

@@ -2,7 +2,7 @@ import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import renderer from './renderer.js'
 
-export async function main(dev) {
+export async function main() {
   const server = Fastify({
     logger: {
       transport: {

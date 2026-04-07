@@ -22,7 +22,7 @@ export default {
 }
 
 // The return value of this function gets registered as reply.html()
-async function createHtmlFunction(source, scope, config) {
+async function createHtmlFunction(source) {
   const [headSource, footer] = source.split('<!-- element -->')
   const headTemplate = await createHtmlTemplateFunction(headSource)
   return function ({ stream, data }) {

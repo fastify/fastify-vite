@@ -1,3 +1,3 @@
-import { createApp } from './base'
+import { createApp } from './base.ts'
 
 createApp().mount('#root')

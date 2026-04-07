@@ -75,7 +75,7 @@ async function createResponse(req, routes) {
 export async function createHtmlFunction(source, _, config) {
   // Creates `universal` and `serverOnly` sets of
   // HTML `beforeElement` and `afterElement` templates
-  const templates = await createHtmlTemplates(source, config)
+  const templates = createHtmlTemplates(source, config)
 
   // Registered as reply.html()
   return async function () {

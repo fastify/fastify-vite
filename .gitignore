@@ -18,3 +18,5 @@ vite.config.ts.timestamp-*
 
 # vitepress cache directory
 **/.vitepress/cache
+
+CLAUDE.md

@@ -1,0 +1,19 @@
+{
+  "name": "@fastify-vite/example-static-options",
+  "private": true,
+  "description": "Demonstrates fastifyStaticOptions for configuring @fastify/static in production",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

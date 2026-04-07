@@ -1,8 +1,22 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "checkJs": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
     "lib": ["ES2020"],
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "rewriteRelativeImportExtensions": true,
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "esnext"
   },
-  "include": ["types/*.test-d.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.js", "fixtures/**/*"]
 }
