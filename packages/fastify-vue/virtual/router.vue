@@ -1,18 +1,24 @@
-<script setup>
-import Layout from '$app/layout.vue'
-</script>
+<script>
+import { h, Suspense } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import Layout from '/$app/layout.vue'
 
-<template>
-  <RouterView v-slot="{ Component }">
-    <template v-if="$isServer">
-      <Layout>
-        <component :is="Component" :key="$route.path" />
-      </Layout>
-    </template>
-    <Suspense v-else>
-      <Layout>
-        <component :is="Component" :key="$route.path" />
-      </Layout>
-    </Suspense>
-  </RouterView>
-</template>
+export default {
+  setup() {
+    const route = useRoute()
+    const isServer = import.meta.env.SSR
+
+    return () =>
+      h(RouterView, null, {
+        default: (slotProps) => {
+          const Component = slotProps?.Component
+          const child = Component ? h(Component, { key: route.path }) : null
+          const wrapped = h(Layout, null, { default: () => child })
+          return isServer
+            ? wrapped
+            : h(Suspense, null, { default: () => wrapped })
+        },
+      })
+  },
+}
+</script>

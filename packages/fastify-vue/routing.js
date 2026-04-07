@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { join, isAbsolute } from 'node:path'
+import { join } from 'node:path'
 import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
@@ -35,7 +35,11 @@ export function createErrorHandler(_, scope, config) {
   }
 }
 
-export async function createRoute({ client, errorHandler, route }, scope, config) {
+export async function createRoute(
+  { client, errorHandler, route },
+  scope,
+  config,
+) {
   if (route.configure) {
     await route.configure(scope)
   }
@@ -47,7 +51,13 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   RouteContext.extend(client.context)
 
   const onRequest = async (req, reply) => {
-    req.route = await RouteContext.create(scope, req, reply, route, client.context)
+    req.route = await RouteContext.create(
+      scope,
+      req,
+      reply,
+      route,
+      client.context,
+    )
   }
 
   const preHandler = [
@@ -112,11 +122,7 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   } else {
     const { id } = route
     const htmlPath = id.replace('pages/', 'html/').replace(/\.vue$/, '.html')
-    // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
-    let distDir = config.vite.build.outDir
-    if (!isAbsolute(config.vite.build.outDir)) {
-      distDir = join(config.vite.root, distDir)
-    }
+    let distDir = config.viteConfig.build.outDir
     const htmlSource = readFileSync(join(distDir, htmlPath), 'utf8')
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
     handler = (_, reply) => htmlFunction.call(reply)
@@ -138,7 +144,10 @@ export async function createRoute({ client, errorHandler, route }, scope, config
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
-    const dataPath = (route.dataPath ?? route.path).replace(/:\w[\w-]*\+.*/, '*')
+    const dataPath = (route.dataPath ?? route.path).replace(
+      /:\w[\w-]*\+.*/,
+      '*',
+    )
     scope.get(`/-/data${dataPath}`, {
       onRequest,
       async handler(req, reply) {
