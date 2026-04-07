@@ -8,11 +8,13 @@
     "lint:fix": "pnpm -r run lint:fix && oxlint --fix .",
     "test": "pnpm --filter './packages/*' run --if-present test",
     "test:examples": "pnpm --filter './examples/*' run test",
+    "prepare": "husky",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
+    "husky": "^9.1.7",
     "oxfmt": "^0.43.0",
     "oxlint": "^1.58.0",
     "vite": "catalog:",
