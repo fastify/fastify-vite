@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 9.0.0-rc.3
+
+### Patch Changes
+
+- 8574892: Fix html template parsing security issues
+
 ## 9.0.0-rc.2
 
 ### Minor Changes
