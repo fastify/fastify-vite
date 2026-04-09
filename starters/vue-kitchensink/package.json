@@ -13,7 +13,7 @@
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/vite": "^9.0.0",
     "@fastify/vue": "^1.2.0",
-    "@unhead/vue": "^2.0.5",
+    "@unhead/vue": "^2.1.13",
     "fastify": "^5.8.4",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"

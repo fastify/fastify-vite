@@ -674,8 +674,8 @@ importers:
         specifier: workspace:^
         version: link:../fastify-vite
       '@unhead/react':
-        specifier: ^2.0.8
-        version: 2.0.8(react@19.2.4)
+        specifier: ^2.1.13
+        version: 2.1.13(react@19.2.4)
       acorn:
         specifier: ^8.14.1
         version: 8.14.1
@@ -777,8 +777,8 @@ importers:
         specifier: workspace:^
         version: link:../fastify-vite
       '@unhead/vue':
-        specifier: ^2.0.5
-        version: 2.0.8(vue@3.5.26(typescript@6.0.2))
+        specifier: ^2.1.13
+        version: 2.1.13(vue@3.5.26(typescript@6.0.2))
       acorn:
         specifier: ^8.12.1
         version: 8.14.1
@@ -821,8 +821,8 @@ importers:
         specifier: ^8.4.1
         version: 8.4.1(fastify@5.8.4)(vite@8.0.7(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
-        specifier: ^2.0.8
-        version: 2.0.8(react@19.2.3)
+        specifier: ^2.1.13
+        version: 2.1.13(react@19.2.3)
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -879,8 +879,8 @@ importers:
         specifier: ^8.4.1
         version: 8.4.1(fastify@5.8.4)(vite@8.0.7(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
       '@unhead/react':
-        specifier: ^2.0.8
-        version: 2.0.8(react@19.2.3)
+        specifier: ^2.1.13
+        version: 2.1.13(react@19.2.3)
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -937,8 +937,8 @@ importers:
         specifier: ^8.4.1
         version: 8.4.1(fastify@5.8.4)(vite@8.0.7(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
       '@unhead/react':
-        specifier: ^2.0.8
-        version: 2.0.8(react@19.2.3)
+        specifier: ^2.1.13
+        version: 2.1.13(react@19.2.3)
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -1007,8 +1007,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.1(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
       '@unhead/vue':
-        specifier: ^2.0.5
-        version: 2.0.8(vue@3.5.26(typescript@6.0.2))
+        specifier: ^2.1.13
+        version: 2.1.13(vue@3.5.26(typescript@6.0.2))
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -1056,8 +1056,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.1(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)
       '@unhead/vue':
-        specifier: ^2.0.5
-        version: 2.0.8(vue@3.5.26(typescript@6.0.2))
+        specifier: ^2.1.13
+        version: 2.1.13(vue@3.5.26(typescript@6.0.2))
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -1102,8 +1102,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.1(@types/node@22.14.0)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)
       '@unhead/vue':
-        specifier: ^2.0.5
-        version: 2.0.8(vue@3.5.26(typescript@5.9.3))
+        specifier: ^2.1.13
+        version: 2.1.13(vue@3.5.26(typescript@5.9.3))
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
@@ -3147,15 +3147,15 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
-  '@unhead/react@2.0.8':
-    resolution: {integrity: sha512-H/DmGG2Nz2OU3ASEZzLOIlwzQl027yOl0YhnlLEu3y6pvV/myLtgogcb68hXyHAtmpMAfnxhivUxCaiuFW7C6w==}
+  '@unhead/react@2.1.13':
+    resolution: {integrity: sha512-gC48tNJ0UtbithkiKCc2WUlxbVVk5o171EtruS2w2hQUblfYFHzCPu2hljjT1e0tUHXXqN8EMv7mpxHddMB2sg==}
     peerDependencies:
-      react: '>=18'
+      react: '>=18.3.1'
 
-  '@unhead/vue@2.0.8':
-    resolution: {integrity: sha512-e30+CfCl1avR+hzFtpvnBSesZ5TN2KbShStdT2Z+zs5WIBUvobQwVxSR0arX43To6KfwtCXAfi0iOOIH0kufHQ==}
+  '@unhead/vue@2.1.13':
+    resolution: {integrity: sha512-HYy0shaHRnLNW9r85gppO8IiGz0ONWVV3zGdlT8CQ0tbTwixznJCIiyqV4BSV1aIF1jJIye0pd1p/k6Eab8Z/A==}
     peerDependencies:
-      vue: '>=3.5.13'
+      vue: '>=3.5.18'
 
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
@@ -4291,6 +4291,9 @@ packages:
 
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
+
+  hookable@6.1.0:
+    resolution: {integrity: sha512-ZoKZSJgu8voGK2geJS+6YtYjvIzu9AOM/KZXsBxr83uhLL++e9pEv/dlgwgy3dvHg06kTz6JOh1hk3C8Ceiymw==}
 
   html-encoding-sniffer@4.0.0:
     resolution: {integrity: sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ==}
@@ -5683,8 +5686,8 @@ packages:
     resolution: {integrity: sha512-H/nlJ/h0ggGC+uRL3ovD+G0i4bqhvsDOpbDv7At5eFLlj2b41L8QliGbnl2H7SnDiYhENphh1tQFJZf+MyfLsQ==}
     engines: {node: '>=20.18.1'}
 
-  unhead@2.0.8:
-    resolution: {integrity: sha512-63WR+y08RZE7ChiFdgNY64haAkhCtUS5/HM7xo4Q83NA63txWbEh2WGmrKbArdQmSct+XlqbFN8ZL1yWpQEHEA==}
+  unhead@2.1.13:
+    resolution: {integrity: sha512-jO9M1sI6b2h/1KpIu4Jeu+ptumLmUKboRRLxys5pYHFeT+lqTzfNHbYUX9bxVDhC1FBszAGuWcUVlmvIPsah8Q==}
 
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
@@ -7011,7 +7014,7 @@ snapshots:
   '@fastify/react@1.1.5(@types/react@19.1.2)(fastify@5.8.4)(vite@8.0.7(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))':
     dependencies:
       '@fastify/vite': 8.4.1(fastify@5.8.4)(vite@8.0.7(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
-      '@unhead/react': 2.0.8(react@19.2.4)
+      '@unhead/react': 2.1.13(react@19.2.4)
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
@@ -7033,7 +7036,7 @@ snapshots:
   '@fastify/react@1.1.5(@types/react@19.1.2)(fastify@5.8.4)(vite@8.0.7(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))':
     dependencies:
       '@fastify/vite': 8.4.1(fastify@5.8.4)(vite@8.0.7(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
-      '@unhead/react': 2.0.8(react@19.2.4)
+      '@unhead/react': 2.1.13(react@19.2.4)
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
@@ -7122,7 +7125,7 @@ snapshots:
   '@fastify/vue@1.2.1(@types/node@22.14.0)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.20.3)(typescript@5.9.3)(yaml@2.7.1)':
     dependencies:
       '@fastify/vite': 9.0.0(fastify@5.8.4)(vite@8.0.7(@types/node@22.14.0)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.7.1))
-      '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
+      '@unhead/vue': 2.1.13(vue@3.5.26(typescript@5.9.3))
       acorn: 8.15.0
       acorn-walk: 8.3.4
       devalue: 5.7.1
@@ -7151,7 +7154,7 @@ snapshots:
   '@fastify/vue@1.2.1(@types/node@24.12.2)(esbuild@0.27.2)(fastify@5.8.4)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.7.1)':
     dependencies:
       '@fastify/vite': 9.0.0(fastify@5.8.4)(vite@8.0.7(@types/node@24.12.2)(esbuild@0.27.2)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.7.1))
-      '@unhead/vue': 2.0.8(vue@3.5.26(typescript@6.0.2))
+      '@unhead/vue': 2.1.13(vue@3.5.26(typescript@6.0.2))
       acorn: 8.15.0
       acorn-walk: 8.3.4
       devalue: 5.7.1
@@ -7931,26 +7934,26 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/react@2.0.8(react@19.2.3)':
+  '@unhead/react@2.1.13(react@19.2.3)':
     dependencies:
       react: 19.2.3
-      unhead: 2.0.8
+      unhead: 2.1.13
 
-  '@unhead/react@2.0.8(react@19.2.4)':
+  '@unhead/react@2.1.13(react@19.2.4)':
     dependencies:
       react: 19.2.4
-      unhead: 2.0.8
+      unhead: 2.1.13
 
-  '@unhead/vue@2.0.8(vue@3.5.26(typescript@5.9.3))':
+  '@unhead/vue@2.1.13(vue@3.5.26(typescript@5.9.3))':
     dependencies:
-      hookable: 5.5.3
-      unhead: 2.0.8
+      hookable: 6.1.0
+      unhead: 2.1.13
       vue: 3.5.26(typescript@5.9.3)
 
-  '@unhead/vue@2.0.8(vue@3.5.26(typescript@6.0.2))':
+  '@unhead/vue@2.1.13(vue@3.5.26(typescript@6.0.2))':
     dependencies:
-      hookable: 5.5.3
-      unhead: 2.0.8
+      hookable: 6.1.0
+      unhead: 2.1.13
       vue: 3.5.26(typescript@6.0.2)
 
   '@upsetjs/venn.js@2.0.0':
@@ -9314,6 +9317,8 @@ snapshots:
       '@babel/runtime': 7.27.0
 
   hookable@5.5.3: {}
+
+  hookable@6.1.0: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:
@@ -10780,9 +10785,9 @@ snapshots:
 
   undici@7.24.7: {}
 
-  unhead@2.0.8:
+  unhead@2.1.13:
     dependencies:
-      hookable: 5.5.3
+      hookable: 6.1.0
 
   unist-util-is@6.0.1:
     dependencies:
