@@ -29,6 +29,6 @@
     "typescript-eslint": "catalog:eslint",
     "vite": "catalog:",
     "vue-eslint-parser": "catalog:eslint",
-    "vue-tsc": "^2.2.8"
+    "vue-tsc": "^3.2.6"
   }
 }
