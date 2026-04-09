@@ -10,8 +10,8 @@ catalogs:
       specifier: ^9.3.1
       version: 9.3.1
     devalue:
-      specifier: ^5.6.2
-      version: 5.6.2
+      specifier: ^5.7.1
+      version: 5.7.1
     fastify:
       specifier: ^5.8.4
       version: 5.8.4
@@ -165,7 +165,7 @@ importers:
         version: link:../../packages/fastify-vite
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -196,7 +196,7 @@ importers:
         version: link:../../packages/fastify-vite
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -236,7 +236,7 @@ importers:
         version: link:../../packages/fastify-vite
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -414,7 +414,7 @@ importers:
         version: link:../../packages/fastify-vite
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -457,7 +457,7 @@ importers:
         version: 3.5.13(vue@3.5.26(typescript@6.0.2))
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -503,7 +503,7 @@ importers:
         version: link:../../packages/fastify-vite
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       fastify:
         specifier: 'catalog:'
         version: 5.8.4
@@ -687,7 +687,7 @@ importers:
         version: 8.3.4
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       history:
         specifier: latest
         version: 5.3.0
@@ -787,7 +787,7 @@ importers:
         version: 8.3.4
       devalue:
         specifier: 'catalog:'
-        version: 5.6.2
+        version: 5.7.1
       mlly:
         specifier: ^1.5.0
         version: 1.7.4
@@ -3877,8 +3877,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  devalue@5.6.2:
-    resolution: {integrity: sha512-nPRkjWzzDQlsejL1WVifk5rvcFi/y1onBRxjaFMjZeR9mFpqu2gmAZ9xUB9/IEanEP/vBtGeGganC/GO1fmufg==}
+  devalue@5.7.1:
+    resolution: {integrity: sha512-MUbZ586EgQqdRnC4yDrlod3BEdyvE4TapGYHMW2CiaW+KkkFmWEFqBUaLltEZCGi0iFXCEjRF0OjF0DV2QHjOA==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -7056,7 +7056,7 @@ snapshots:
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
-      devalue: 5.6.2
+      devalue: 5.7.1
       history: 5.3.0
       html-rewriter-wasm: 0.4.1
       minipass: 7.1.2
@@ -7078,7 +7078,7 @@ snapshots:
       acorn: 8.15.0
       acorn-strip-function: 1.2.0
       acorn-walk: 8.3.4
-      devalue: 5.6.2
+      devalue: 5.7.1
       history: 5.3.0
       html-rewriter-wasm: 0.4.1
       minipass: 7.1.2
@@ -7166,7 +7166,7 @@ snapshots:
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@5.9.3))
       acorn: 8.15.0
       acorn-walk: 8.3.4
-      devalue: 5.6.2
+      devalue: 5.7.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@5.9.3)
       vue-router: 4.6.4(vue@3.5.26(typescript@5.9.3))
@@ -7195,7 +7195,7 @@ snapshots:
       '@unhead/vue': 2.0.8(vue@3.5.26(typescript@6.0.2))
       acorn: 8.15.0
       acorn-walk: 8.3.4
-      devalue: 5.6.2
+      devalue: 5.7.1
       mlly: 1.8.0
       vue: 3.5.26(typescript@6.0.2)
       vue-router: 4.6.4(vue@3.5.26(typescript@6.0.2))
@@ -8796,7 +8796,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  devalue@5.6.2: {}
+  devalue@5.7.1: {}
 
   devlop@1.1.0:
     dependencies:
