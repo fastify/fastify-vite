@@ -18,7 +18,7 @@
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "react-router": "catalog:react",
-    "undici": "^7.18.2"
+    "undici": "^7.24.7"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "catalog:react",
