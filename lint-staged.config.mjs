@@ -40,6 +40,13 @@ function joinArgs(args) {
   return args.map(quote).join(' ')
 }
 
+function runOxfmt(files) {
+  const command = `pnpm exec oxfmt --write ${joinArgs(files)}`
+
+  // oxfmt exits 2 when every explicitly passed file is internally ignored.
+  return `sh -c ${quote(`${command}; status=$?; [ "$status" -eq 0 ] || [ "$status" -eq 2 ]`)}`
+}
+
 export default {
   '**/*': (stagedFiles) => {
     const commands = []
@@ -67,7 +74,7 @@ export default {
 
     const formatFiles = uniqueFiles.filter((file) => formattableExtensions.has(path.extname(file)))
     if (formatFiles.length > 0) {
-      commands.push(`pnpm exec oxfmt --write ${joinArgs(formatFiles)}`)
+      commands.push(runOxfmt(formatFiles))
     }
 
     return commands
