@@ -1,5 +1,12 @@
 # @fastify/react
 
+## 1.1.7
+
+### Patch Changes
+
+- 0cba104: Bump to unhead v2.1.13
+- 492e392: Upgrade devalue to v5.7.1 (security)
+
 ## 1.1.6
 
 ### Patch Changes
