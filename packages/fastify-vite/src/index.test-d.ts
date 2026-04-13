@@ -12,8 +12,8 @@ const options = {
     const resolvedRoutes = await routesPromise
     return { context, routes: resolvedRoutes, ...others }
   },
-  createHtmlFunction(source) {
-    return ({ routes, context, body }) => Promise.resolve()
+  async createHtmlFunction(source) {
+    return (ctx) => Promise.resolve()
   },
   createRenderFunction({ create, routes, createApp }) {
     return Promise.resolve((req) => {

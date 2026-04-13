@@ -1,4 +1,5 @@
 import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
+import type { RouteDefinition } from './route.ts'
 
 /** Helper type to loosen strict object types by adding index signature */
 export type Loosen<T> = T & Record<string, unknown>
@@ -37,22 +38,8 @@ export interface RendererFunctions {
     source: string,
     scope?: unknown,
     config?: unknown,
-  ): (ctx: Ctx) => Promise<unknown>
-  createRenderFunction(
-    args: Loosen<{
-      routes?: Array<RouteType>
-      create?: (arg0: Record<string, unknown>) => unknown
-      createApp: unknown
-    }>,
-  ): Promise<
-    (
-      server: unknown,
-      req: unknown,
-      reply: unknown,
-    ) =>
-      | (Ctx | { element: string; hydration?: string })
-      | Promise<Ctx | { element: string; hydration?: string }>
-  >
+  ): Promise<(ctx?: Ctx) => unknown>
+  createRenderFunction(client: Record<string, unknown>): Promise<(...args: unknown[]) => unknown>
 }
 
 /** Renderer option interface for custom renderers */
@@ -71,7 +58,7 @@ export interface RendererOption<
       client?: C
       handler?: RouteHandlerMethod
       errorHandler: NonNullable<RouteOptions['errorHandler']>
-      route?: RouteType
+      route?: RouteDefinition
     }>,
     scope: FastifyInstance,
     config: unknown,

@@ -1,0 +1,69 @@
+{
+  "name": "@fastify/tanstack",
+  "version": "0.0.1",
+  "description": "@fastify/vite renderer for TanStack Router SSR",
+  "keywords": [
+    "fastify",
+    "ssr",
+    "tanstack",
+    "tanstack-router",
+    "vite"
+  ],
+  "homepage": "https://github.com/fastify/fastify-vite",
+  "bugs": {
+    "url": "https://github.com/fastify/fastify-vite/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastify/fastify-vite.git"
+  },
+  "files": [
+    "dist/**/*",
+    "!dist/**/*.test.*",
+    "virtual/**/*"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin/index.d.ts",
+      "import": "./dist/plugin/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "@tanstack/history": "^1.0.0",
+    "@tanstack/react-router": "^1.0.0",
+    "@tanstack/router-core": "^1.0.0",
+    "mlly": "^1.7.4",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "youch": "^3.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "fastify": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}
