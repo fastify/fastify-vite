@@ -43,5 +43,8 @@ jobs:
       - name: Build @fastify/vite
         run: pnpm --filter @fastify/vite build
 
+      - name: Build @fastify/tanstack
+        run: pnpm --filter @fastify/tanstack build
+
       - name: Run integration tests
         run: pnpm test:examples
