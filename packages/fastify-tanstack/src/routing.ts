@@ -3,12 +3,7 @@ import { join, isAbsolute } from 'node:path'
 import { createHtmlFunction } from './rendering.ts'
 import Youch from 'youch'
 import type { FastifyInstance, FastifyReply, FastifyRequest, RouteOptions } from 'fastify'
-import type { RuntimeConfig, RouteDefinition } from '@fastify/vite'
-
-interface ClientEntries {
-  ssr?: unknown
-  [key: string]: unknown
-}
+import type { RuntimeConfig, RouteDefinition, ClientEntries, ClientModule } from '@fastify/vite'
 
 interface TanStackRoute {
   path: string
@@ -16,7 +11,7 @@ interface TanStackRoute {
   configure?: (scope: FastifyInstance) => void | Promise<void>
 }
 
-interface TanStackClient {
+interface TanStackClient extends ClientModule {
   createAppRouter:
     | ((...args: unknown[]) => unknown)
     | Promise<{ createAppRouter?: unknown; default?: unknown }>

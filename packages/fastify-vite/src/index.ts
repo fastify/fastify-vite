@@ -22,6 +22,8 @@ import type { RouteDefinition } from './types/route.ts'
 
 // Re-export types for consumers
 export type {
+  ClientEntries,
+  ClientModule,
   DevRuntimeConfig,
   FastifyViteOptions,
   ProdRuntimeConfig,
