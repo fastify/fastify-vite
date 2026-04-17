@@ -7,7 +7,7 @@
     "lint": " pnpm -r run lint && oxlint .",
     "lint:fix": "pnpm -r run lint:fix && oxlint --fix .",
     "test": "pnpm --filter './packages/*' run --if-present test",
-    "test:examples": "pnpm --filter './examples/*' run test",
+    "test:e2e": "pnpm --filter './e2e/*' run test",
     "prepare": "husky",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
