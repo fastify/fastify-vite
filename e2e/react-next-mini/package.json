@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-react-next-mini",
+  "name": "@fastify-vite/e2e-react-next-mini",
   "private": true,
   "type": "module",
   "scripts": {

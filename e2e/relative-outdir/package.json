@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-relative-outdir",
+  "name": "@fastify-vite/e2e-relative-outdir",
   "private": true,
   "description": "Demonstrates issue #303: vite.config.json path mismatch with relative outDir",
   "type": "module",

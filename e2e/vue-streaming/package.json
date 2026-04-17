@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-vue-streaming",
+  "name": "@fastify-vite/e2e-vue-streaming",
   "private": true,
   "type": "module",
   "scripts": {

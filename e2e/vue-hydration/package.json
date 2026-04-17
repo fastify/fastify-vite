@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-vue-hydration",
+  "name": "@fastify-vite/e2e-vue-hydration",
   "private": true,
   "type": "module",
   "scripts": {

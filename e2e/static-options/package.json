@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-static-options",
+  "name": "@fastify-vite/e2e-static-options",
   "private": true,
   "description": "Demonstrates fastifyStaticOptions for configuring @fastify/static in production",
   "type": "module",

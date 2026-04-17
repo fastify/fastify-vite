@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-vue-next",
+  "name": "@fastify-vite/e2e-vue-next",
   "private": true,
   "type": "module",
   "scripts": {

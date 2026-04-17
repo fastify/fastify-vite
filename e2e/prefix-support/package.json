@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-prefix-support",
+  "name": "@fastify-vite/e2e-prefix-support",
   "private": true,
   "description": "Demonstrates issue #358: static assets should respect registration prefix",
   "type": "module",

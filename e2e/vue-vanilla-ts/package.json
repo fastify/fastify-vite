@@ -1,5 +1,5 @@
 {
-  "name": "@fastify-vite/example-vue-vanilla-ts",
+  "name": "@fastify-vite/e2e-vue-vanilla-ts",
   "private": true,
   "type": "module",
   "scripts": {
