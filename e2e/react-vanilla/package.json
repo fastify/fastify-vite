@@ -1,0 +1,21 @@
+{
+  "name": "@fastify-vite/e2e-react-vanilla",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "fastify": "catalog:",
+    "react": "catalog:react",
+    "react-dom": "catalog:react"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "catalog:react",
+    "vite": "catalog:"
+  }
+}

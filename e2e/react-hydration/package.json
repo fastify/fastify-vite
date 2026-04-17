@@ -1,0 +1,24 @@
+{
+  "name": "@fastify-vite/e2e-react-hydration",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "devalue": "catalog:",
+    "fastify": "catalog:",
+    "jotai": "^2.12.2",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "catalog:react"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "catalog:react",
+    "vite": "catalog:"
+  }
+}

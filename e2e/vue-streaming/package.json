@@ -1,0 +1,29 @@
+{
+  "name": "@fastify-vite/e2e-vue-streaming",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "node server.js",
+    "build": "vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "devalue": "catalog:",
+    "fastify": "catalog:",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:eslint",
+    "@vitejs/plugin-vue": "catalog:vue",
+    "eslint": "catalog:eslint",
+    "eslint-config-prettier": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "globals": "catalog:eslint",
+    "vite": "catalog:"
+  }
+}
