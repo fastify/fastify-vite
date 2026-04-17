@@ -5,12 +5,12 @@ packages:
   - starters/*
 
 catalog:
-  '@fastify/middie': ^9.3.1
+  '@fastify/middie': ^9.3.2
   devalue: ^5.7.1
-  fastify: ^5.8.4
+  fastify: ^5.8.5
   tsx: ^4.21.0
-  typescript: ^6.0.2
-  vite: ^8.0.7
+  typescript: ^6.0.3
+  vite: ^8.0.8
   vitest: ^4.1.4
 
 catalogs:
