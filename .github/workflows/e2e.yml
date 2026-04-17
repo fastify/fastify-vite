@@ -1,4 +1,4 @@
-name: Integration
+name: E2E
 
 on:
   push:
@@ -43,5 +43,5 @@ jobs:
       - name: Build @fastify/vite
         run: pnpm --filter @fastify/vite build
 
-      - name: Run integration tests
-        run: pnpm test:examples
+      - name: Run E2E tests
+        run: pnpm test:e2e
