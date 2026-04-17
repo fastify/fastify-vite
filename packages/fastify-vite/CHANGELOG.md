@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 9.0.1
+
+### Patch Changes
+
+- 9e43724: Security bump: @fastify/middie@9.3.2. Also bumps @fastify/static@9.1.1.
+
 ## 9.0.0
 
 ### Major Changes
