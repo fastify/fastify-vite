@@ -65,6 +65,5 @@
   "peerDependencies": {
     "fastify": ">=5",
     "vite": ">=6"
-  },
-  "deprecated": false
+  }
 }
