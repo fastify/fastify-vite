@@ -722,8 +722,8 @@ importers:
         specifier: 'catalog:'
         version: 9.3.2
       '@fastify/static':
-        specifier: ^9.1.1
-        version: 9.1.1
+        specifier: ^9.1.2
+        version: 9.1.3
       fastify-plugin:
         specifier: ^5.1.0
         version: 5.1.0
@@ -1986,8 +1986,8 @@ packages:
   '@fastify/send@4.1.0':
     resolution: {integrity: sha512-TMYeQLCBSy2TOFmV95hQWkiTYgC/SEx7vMdV+wnZVX4tt8VBLKzmH8vV9OzJehV0+XBfg+WxPMt5wp+JBUKsVw==}
 
-  '@fastify/static@9.1.1':
-    resolution: {integrity: sha512-LHxFea3qdwe0Pbbkh/yux7/k6nFNLGTNcbLKVYgmRDB6LdDE/8TFSO7qWZ0IzM/nF6iwR8W03oFlwe4v79R1Ow==}
+  '@fastify/static@9.1.3':
+    resolution: {integrity: sha512-aXrYtsiryLhRxRNaxNqsn7FUISeb7rB9q4eHUPIot5aeQBLNahnz1m6thzm7JWC1poSGXS9XrX8DvuMivp2hkQ==}
 
   '@fastify/vite@9.0.1':
     resolution: {integrity: sha512-OPr3E38cvYq34JhFhi4vITI10U5f+ezYm5GzFuqcjsvxtoqIz1o4gUpD6KqZJzVgQBXa2TlIx7Z108sD8SJ7gQ==}
@@ -6531,7 +6531,7 @@ snapshots:
       http-errors: 2.0.1
       mime: 3.0.0
 
-  '@fastify/static@9.1.1':
+  '@fastify/static@9.1.3':
     dependencies:
       '@fastify/accept-negotiator': 2.0.1
       '@fastify/send': 4.1.0
@@ -6544,7 +6544,7 @@ snapshots:
     dependencies:
       '@fastify/deepmerge': 3.2.1
       '@fastify/middie': 9.3.2
-      '@fastify/static': 9.1.1
+      '@fastify/static': 9.1.3
       fastify: 5.8.5
       fastify-plugin: 5.1.0
       fs-extra: 11.3.4
@@ -6556,7 +6556,7 @@ snapshots:
     dependencies:
       '@fastify/deepmerge': 3.2.1
       '@fastify/middie': 9.3.2
-      '@fastify/static': 9.1.1
+      '@fastify/static': 9.1.3
       fastify: 5.8.5
       fastify-plugin: 5.1.0
       fs-extra: 11.3.4
