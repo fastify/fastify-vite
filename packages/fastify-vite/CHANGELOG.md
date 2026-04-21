@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 9.0.2
+
+### Patch Changes
+
+- 122bd3c: Upgrade @fastify/static to v9.1.2
+
 ## 9.0.1
 
 ### Patch Changes
