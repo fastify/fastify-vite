@@ -1,3 +1,4 @@
+import type { Readable } from 'node:stream'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 
 import type { RouteDefinition } from './route.ts'
@@ -22,4 +23,4 @@ export type ReplyDotRenderFunction = (
 export type ReplyDotHtmlFunction = (
   this: FastifyReply,
   ctx?: ReplyDotRenderResult,
-) => FastifyReply | Promise<FastifyReply>
+) => FastifyReply | string | Readable | Promise<FastifyReply | string | Readable>

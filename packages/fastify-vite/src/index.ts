@@ -1,3 +1,4 @@
+import type { Readable } from 'node:stream'
 import type {
   FastifyError,
   FastifyInstance,
@@ -11,29 +12,49 @@ import fp from 'fastify-plugin'
 import { configure } from './config.ts'
 import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './mode/support.ts'
 import type { ClientEntries, ClientModule } from './types/client.ts'
+import type { HtmlTemplateFunction } from './types/html.ts'
 import type {
   DevRuntimeConfig,
   FastifyViteOptions,
   ProdRuntimeConfig,
   RuntimeConfig,
 } from './types/options.ts'
-import type { ReplyDotRenderContext, ReplyDotRenderResult } from './types/reply.ts'
-import type { RouteDefinition } from './types/route.ts'
+import type { RendererOption } from './types/renderer.ts'
+import type {
+  ReplyDotHtmlFunction,
+  ReplyDotRenderContext,
+  ReplyDotRenderFunction,
+  ReplyDotRenderResult,
+} from './types/reply.ts'
+import type { ClientRouteArgs, CreateRouteArgs, RouteDefinition } from './types/route.ts'
+import type { SerializableViteConfig } from './types/vite-configs.ts'
 
 // Re-export types for consumers
 export type {
+  ClientEntries,
+  ClientModule,
+  ClientRouteArgs,
+  CreateRouteArgs,
   DevRuntimeConfig,
   FastifyViteOptions,
+  HtmlTemplateFunction,
   ProdRuntimeConfig,
+  RendererOption,
+  ReplyDotHtmlFunction as HtmlFunction,
   ReplyDotRenderContext as RenderContext,
+  ReplyDotRenderFunction as RenderFunction,
+  ReplyDotRenderResult as RenderResult,
   RouteDefinition,
   RuntimeConfig,
+  SerializableViteConfig,
 }
 
 // Module augmentation for Fastify
 declare module 'fastify' {
   interface FastifyReply {
-    html(ctx?: ReplyDotRenderResult): FastifyReply | Promise<FastifyReply>
+    html(
+      ctx?: ReplyDotRenderResult,
+    ): FastifyReply | string | Readable | Promise<FastifyReply | string | Readable>
     render(ctx?: ReplyDotRenderContext): ReplyDotRenderResult | Promise<ReplyDotRenderResult>
   }
 
