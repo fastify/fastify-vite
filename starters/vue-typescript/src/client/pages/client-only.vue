@@ -8,10 +8,10 @@
   <p>See the output of <code>curl http://localhost:3000/client-only</code>.</p>
 </template>
 
-<script>
+<script lang="ts">
 export const clientOnly = true
 
-export function getMeta() {
+export function getMeta(): UseHeadInput {
   return {
     title: 'Client Only Page',
   }

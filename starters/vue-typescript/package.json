@@ -9,6 +9,7 @@
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
     "build:server": "tsc",
+    "typecheck": "vue-tsc --noEmit -p src/client/tsconfig.json",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
@@ -22,14 +23,15 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.1",
-    "@types/node": "^22.13.17",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^25.5.2",
     "@vitejs/plugin-vue": "^6.0.5",
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
     "tailwindcss": "^4.1.1",
     "tsx": "^4.19.4",
     "typescript": "^5.9.3",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "vue-tsc": "^3.2.6"
   }
 }

@@ -4,8 +4,8 @@
   <Message :secs="6" />
 </template>
 
-<script>
-import Message from '/components/Message.vue'
+<script lang="ts">
+import Message from '../components/Message.vue'
 
 export const streaming = true
 

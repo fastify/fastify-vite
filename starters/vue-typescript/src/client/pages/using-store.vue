@@ -19,17 +19,17 @@
   </p>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue'
 import { todoList } from '$app/stores'
 
-export function getMeta() {
+export function getMeta(): UseHeadInput {
   return { title: 'Todo List — Using Store' }
 }
 
 export default {
   setup() {
-    const inputValue = ref(null)
+    const inputValue = ref<string>('')
     const addItem = async () => {
       await todoList.add(inputValue.value)
       inputValue.value = ''
