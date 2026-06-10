@@ -1,4 +1,9 @@
-export function generateStores(keys) {
+export interface GeneratedStoreModule {
+  code: string
+  map: null
+}
+
+export function generateStores(keys: string[]): GeneratedStoreModule {
   let code = `
 import { useRouteContext } from '@fastify/vue/client'
 

@@ -17,53 +17,48 @@
     "url": "git+https://github.com/fastify/fastify-vite.git"
   },
   "files": [
-    "client.js",
-    "context.js",
-    "index.js",
-    "rendering.js",
-    "routing.js",
-    "server.js",
-    "templating.js",
-    "plugin/index.js",
-    "plugin/parsers.js",
-    "plugin/preload.js",
-    "plugin/stores.js",
-    "plugin/virtual.js",
-    "virtual-ts/context.ts",
-    "virtual-ts/create.ts",
-    "virtual-ts/hooks.ts",
-    "virtual-ts/index.ts",
-    "virtual-ts/layout.vue",
-    "virtual-ts/mount.ts",
-    "virtual-ts/root.vue",
-    "virtual-ts/router.vue",
-    "virtual-ts/routes.ts",
-    "virtual/context.js",
-    "virtual/create.js",
-    "virtual/hooks.js",
-    "virtual/index.js",
-    "virtual/layout.vue",
-    "virtual/mount.js",
-    "virtual/root.vue",
-    "virtual/router.vue",
-    "virtual/routes.js",
-    "virtual-ts/layouts/default.vue",
-    "virtual/layouts/default.vue"
+    "dist/**/*",
+    "!dist/**/*.test.*",
+    "virtual/**/*",
+    "virtual-ts/**/*",
+    "virtual.d.ts"
   ],
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./index.js",
-    "./plugin": "./plugin/index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin/index.d.ts",
+      "import": "./dist/plugin/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./virtual": {
+      "types": "./virtual.d.ts"
+    }
   },
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --no-file-parallelism"
+  },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "@unhead/vue": "^2.1.13",
+    "@unhead/vue": "^3.0.0",
     "acorn": "^8.12.1",
     "acorn-walk": "^8.3.4",
     "devalue": "catalog:",
@@ -73,9 +68,22 @@
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:vue"
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue": "catalog:vue",
+    "fastify": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "vite": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22.6"
   }
 }
