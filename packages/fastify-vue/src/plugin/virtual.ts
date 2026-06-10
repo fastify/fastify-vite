@@ -2,40 +2,51 @@ import { readFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { findExports } from 'mlly'
 
-const virtualRoot = resolve(import.meta.dirname, '..', 'virtual')
-const virtualRootTS = resolve(import.meta.dirname, '..', 'virtual-ts')
+// Compiled path: dist/plugin/virtual.js, so we go up two levels to reach
+// the package root where virtual/ and virtual-ts/ live alongside dist/.
+const virtualRoot = resolve(import.meta.dirname, '..', '..', 'virtual')
+const virtualRootTS = resolve(import.meta.dirname, '..', '..', 'virtual-ts')
 
-const virtualModules = [
-  'mount.js',
-  'routes.js',
+// Virtual module stems, without `.js`/`.ts` extension. Resolved against
+// either `virtual/` or `virtual-ts/` based on the plugin's `ts` option.
+const virtualModuleStems: readonly string[] = [
+  'mount',
+  'routes',
   'router.vue',
   'layouts/',
   'layout.vue',
-  'create.js',
+  'create',
   'root.vue',
-  'context.js',
-  'index.js',
+  'context',
+  'index',
   'stores',
   'hooks',
 ]
 
-const virtualModulesTS = [
-  'mount.ts',
-  'routes.ts',
-  'router.vue',
-  'layouts/',
-  'layout.vue',
-  'create.ts',
-  'root.vue',
-  'context.ts',
-  'index.ts',
-  'stores',
-  'hooks',
-]
+function stripExt(virtual: string): string {
+  return virtual.replace(/\.(js|ts)$/, '')
+}
+
+function hasVirtualPrefix(virtual: string): boolean {
+  if (!virtual) {
+    return false
+  }
+  const stem = stripExt(virtual)
+  for (const entry of virtualModuleStems) {
+    if (stem.startsWith(entry)) {
+      return true
+    }
+  }
+  return false
+}
 
 export const prefix = /^\/?\$app\//
 
-export async function resolveId(id) {
+interface ResolveCtx {
+  root: string
+}
+
+export function resolveId(this: ResolveCtx, id: string): string | undefined {
   // Paths are prefixed with .. on Windows by the glob import
   if (process.platform === 'win32' && /^\.\.\/[C-Z]:/.test(id)) {
     return id.substring(3)
@@ -51,17 +62,26 @@ export async function resolveId(id) {
       return `/$app/${virtual}`
     }
   }
+  return undefined
 }
 
-export function loadVirtualModule(virtualInput, options) {
+export interface LoadedVirtualModule {
+  code: string
+  map: null
+}
+
+export function loadVirtualModule(
+  virtualInput: string,
+  options: { ts?: boolean },
+): LoadedVirtualModule | undefined {
   let virtual = virtualInput
   if (!virtual.endsWith('.vue') && !virtual.match(/\.(ts|js)$/)) {
     virtual += options.ts ? '.ts' : '.js'
   }
-  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
+  if (!hasVirtualPrefix(virtual)) {
     return
   }
-  let virtualRootDir = options.ts ? virtualRootTS : virtualRoot
+  const virtualRootDir = options.ts ? virtualRootTS : virtualRoot
   const codePath = resolve(virtualRootDir, virtual)
   return {
     code: readFileSync(codePath, 'utf8'),
@@ -69,51 +89,31 @@ export function loadVirtualModule(virtualInput, options) {
   }
 }
 
-virtualModulesTS.includes = function (virtual) {
-  if (!virtual) {
-    return false
-  }
-  for (const entry of this) {
-    if (virtual.startsWith(entry)) {
-      return true
-    }
-  }
-  return false
-}
-
-virtualModules.includes = function (virtual) {
-  if (!virtual) {
-    return false
-  }
-  for (const entry of this) {
-    if (virtual.startsWith(entry)) {
-      return true
-    }
-  }
-  return false
-}
-
-function loadVirtualModuleOverride(viteProjectRoot, virtualInput) {
-  let virtual = virtualInput
-  if (!virtualModules.includes(virtual) && !virtualModulesTS.includes(virtual)) {
+function loadVirtualModuleOverride(
+  viteProjectRoot: string,
+  virtual: string,
+): string | undefined {
+  if (!hasVirtualPrefix(virtual)) {
     return
   }
-  let overridePath = resolve(viteProjectRoot, virtual)
-  if (existsSync(overridePath)) {
-    return overridePath
+  const base = resolve(viteProjectRoot, virtual)
+  const candidates = virtual.endsWith('.vue')
+    ? [base]
+    : [base, base.replace(/\.js$/, '.ts')]
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) {
+      return candidate
+    }
   }
-  overridePath = overridePath.replace('.js', '.ts')
-  if (existsSync(overridePath)) {
-    return overridePath
-  }
+  return undefined
 }
 
-export function loadSource(id) {
+export function loadSource(id: string): string {
   const filePath = id.replace(/\?client$/, '').replace(/\?server$/, '')
   return readFileSync(filePath, 'utf8')
 }
 
-export function createPlaceholderExports(source) {
+export function createPlaceholderExports(source: string): string {
   let pExports = ''
   for (const exp of findExports(source)) {
     switch (exp.type) {

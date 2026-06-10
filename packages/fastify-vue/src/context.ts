@@ -1,7 +1,44 @@
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import type { App } from 'vue'
+import type { Router } from 'vue-router'
+import type { UseHeadInput, VueHeadClient } from '@unhead/vue'
+import type { ContextInit } from './types/context.ts'
+import type { RouteDefinition } from './types/route.ts'
+
 const routeContextInspect = Symbol.for('nodejs.util.inspect.custom')
 
 export default class RouteContext {
-  static async create(server, req, reply, route, contextInit) {
+  server: FastifyInstance
+  req: FastifyRequest
+  reply: FastifyReply
+  ssrContext: Record<string, unknown>
+  firstRender: boolean
+  head: UseHeadInput
+  data: unknown
+  key: string | undefined
+  meta: Record<string, unknown> | undefined
+  state: Record<string, unknown> | null
+  layout: string | undefined
+  streaming: boolean | undefined
+  clientOnly: boolean | undefined
+  serverOnly: boolean | undefined
+  getMeta: boolean
+  getData: boolean
+  onEnter: boolean
+  actions?: unknown
+  error?: unknown
+  app?: App
+  router?: Router
+  store?: unknown
+  useHead?: VueHeadClient
+
+  static async create(
+    server: FastifyInstance,
+    req: FastifyRequest,
+    reply: FastifyReply,
+    route: RouteDefinition,
+    contextInit?: ContextInit,
+  ): Promise<RouteContext> {
     const routeContext = new RouteContext(server, req, reply, route)
     if (contextInit) {
       if (contextInit.state) {
@@ -14,7 +51,21 @@ export default class RouteContext {
     return routeContext
   }
 
-  constructor(server, req, reply, route) {
+  static extend(initial: ContextInit): void {
+    const { default: _def, ...extra } = initial
+    for (const [prop, value] of Object.entries(extra)) {
+      if (prop !== 'data' && prop !== 'state') {
+        Object.defineProperty(RouteContext.prototype, prop, { enumerable: true, value })
+      }
+    }
+  }
+
+  constructor(
+    server: FastifyInstance,
+    req: FastifyRequest,
+    reply: FastifyReply,
+    route: RouteDefinition,
+  ) {
     this.server = server
     this.req = req
     this.reply = reply
@@ -37,7 +88,7 @@ export default class RouteContext {
     this.onEnter = !!route.onEnter
   }
 
-  [routeContextInspect]() {
+  [routeContextInspect](): unknown {
     return {
       ...this,
       actions: this.actions,
@@ -47,7 +98,11 @@ export default class RouteContext {
     }
   }
 
-  toJSON() {
+  // Serialized into the SSR hydration payload (`window.route`).
+  // `serverOnly` and `streaming` are deliberately omitted because hydration
+  // doesn't run for `serverOnly` responses and `streaming` only affects how
+  // the body is delivered to the client. `error` is server-only state.
+  toJSON(): Record<string, unknown> {
     return {
       state: this.state,
       data: this.data,
@@ -60,15 +115,6 @@ export default class RouteContext {
       onEnter: this.onEnter,
       firstRender: this.firstRender,
       clientOnly: this.clientOnly,
-    }
-  }
-}
-
-RouteContext.extend = (initial) => {
-  const { default: _, ...extra } = initial
-  for (const [prop, value] of Object.entries(extra)) {
-    if (prop !== 'data' && prop !== 'state') {
-      Object.defineProperty(RouteContext.prototype, prop, { enumerable: true, value })
     }
   }
 }

@@ -1,28 +1,32 @@
-import test from 'node:test'
-import assert from 'node:assert'
+import { describe, it, expect } from 'vitest'
+import { parseStateKeys } from './parsers.ts'
 
-test('parseStateKeys', () => {
-  const a = `export function state () {
-    return {
+describe('parseStateKeys', () => {
+  it('parses function declaration state exports', () => {
+    const a = `export function state () {
+      return {
+        user: {
+          authenticated: false,
+        },
+        todoList: null,
+      }
+    }`
+    expect(parseStateKeys(a)).toEqual(['user', 'todoList'])
+  })
+
+  it('parses arrow function state exports', () => {
+    const b = `export const state = () => ({
       user: {
         authenticated: false,
       },
       todoList: null,
-    }
-  }`
-  assert.equal(['user', 'todoList'], parseStateKeys(a))
+    })
+    if (1) {
+      const state = () => {
 
-  const b = `export const state = () => ({
-    user: {
-      authenticated: false,
-    },
-    todoList: null,
+      }
+    }
+    `
+    expect(parseStateKeys(b)).toEqual(['user', 'todoList'])
   })
-  if (1) {
-    const state = () => {
-
-    }
-  }
-  `
-  assert.equal(['user', 'todoList'], parseStateKeys(b))
 })
