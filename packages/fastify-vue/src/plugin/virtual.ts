@@ -89,17 +89,12 @@ export function loadVirtualModule(
   }
 }
 
-function loadVirtualModuleOverride(
-  viteProjectRoot: string,
-  virtual: string,
-): string | undefined {
+function loadVirtualModuleOverride(viteProjectRoot: string, virtual: string): string | undefined {
   if (!hasVirtualPrefix(virtual)) {
     return
   }
   const base = resolve(viteProjectRoot, virtual)
-  const candidates = virtual.endsWith('.vue')
-    ? [base]
-    : [base, base.replace(/\.js$/, '.ts')]
+  const candidates = virtual.endsWith('.vue') ? [base] : [base, base.replace(/\.js$/, '.ts')]
   for (const candidate of candidates) {
     if (existsSync(candidate)) {
       return candidate

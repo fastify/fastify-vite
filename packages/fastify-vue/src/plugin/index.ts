@@ -102,10 +102,7 @@ export default function viteFastifyVue({ ts }: ViteFastifyVueOptions = {}): Plug
   ]
 }
 
-function config(
-  config: UserConfig,
-  { command }: { command: string; isSsrBuild?: boolean },
-) {
+function config(config: UserConfig, { command }: { command: string; isSsrBuild?: boolean }) {
   if (command === 'build') {
     if (!config.build) {
       config.build = {}

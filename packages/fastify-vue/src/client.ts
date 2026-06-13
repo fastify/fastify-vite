@@ -1,12 +1,13 @@
 import { inject } from 'vue'
-import { useRoute, createMemoryHistory, createWebHistory, type RouteLocationNormalized } from 'vue-router'
+import {
+  useRoute,
+  createMemoryHistory,
+  createWebHistory,
+  type RouteLocationNormalized,
+} from 'vue-router'
 import type { Ref } from 'vue'
 import type { UseHeadInput } from '@unhead/vue'
-import type {
-  BeforeEachHandlerArgs,
-  CtxHydration,
-  RouteContextLike,
-} from './types/client.ts'
+import type { BeforeEachHandlerArgs, CtxHydration, RouteContextLike } from './types/client.ts'
 
 export type { BeforeEachHandlerArgs, CtxHydration, RouteContextLike }
 
@@ -91,7 +92,8 @@ interface HydratedRoute {
 export async function hydrateRoutes(
   from: Record<string, () => Promise<Record<string, unknown>>>,
 ): Promise<HydratedRoute[]> {
-  const windowRoutes = (window as unknown as { routes: Array<HydratedRoute & { id: string }> }).routes
+  const windowRoutes = (window as unknown as { routes: Array<HydratedRoute & { id: string }> })
+    .routes
   return windowRoutes.map((route) => {
     route.loader = memoImport(from[route.id])
     route.component = () => route.loader()

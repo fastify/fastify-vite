@@ -32,4 +32,3 @@ export function createHtmlTemplates(source: string, _config?: unknown): HtmlTemp
     },
   }
 }
-

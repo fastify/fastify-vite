@@ -12,11 +12,7 @@ import type { RuntimeConfig } from '@fastify/vite'
 import RouteContext from './context.ts'
 import { createHtmlFunction } from './rendering.ts'
 import type { ContextInit } from './types/context.ts'
-import type {
-  CreateFactory,
-  KeyedRoute,
-  VueRouteDefinition,
-} from './types/route.ts'
+import type { CreateFactory, KeyedRoute, VueRouteDefinition } from './types/route.ts'
 
 interface ClientEntries {
   ssr: ClientModule
@@ -48,11 +44,7 @@ export async function prepareClient(
   return client
 }
 
-export function createErrorHandler(
-  _: unknown,
-  _scope: FastifyInstance,
-  config: RuntimeConfig,
-) {
+export function createErrorHandler(_: unknown, _scope: FastifyInstance, config: RuntimeConfig) {
   return async (error: FastifyError, req: FastifyRequest, reply: FastifyReply) => {
     req.log.error(error)
     if (config.dev) {
@@ -94,13 +86,7 @@ export async function createRoute(
   RouteContext.extend(client.context)
 
   const onRequest = async (req: FastifyRequest, reply: FastifyReply) => {
-    ;req.route = await RouteContext.create(
-      scope,
-      req,
-      reply,
-      route,
-      client.context,
-    )
+    req.route = await RouteContext.create(scope, req, reply, route, client.context)
   }
 
   const preHandler: Array<(req: FastifyRequest, reply: FastifyReply) => Promise<void>> = [
@@ -207,11 +193,7 @@ export async function createRoute(
   }
 }
 
-function appendHook(
-  route: Record<string, unknown>,
-  hookName: string,
-  hook: unknown,
-): void {
+function appendHook(route: Record<string, unknown>, hookName: string, hook: unknown): void {
   const incoming = Array.isArray(hook) ? hook : [hook]
   const existing = route[hookName]
     ? Array.isArray(route[hookName])

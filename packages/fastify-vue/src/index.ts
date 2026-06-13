@@ -13,8 +13,4 @@ export { default as RouteContext } from './context.ts'
 export type { ViteFastifyVueOptions } from './types/options.ts'
 export type { RouteDefinition, VueRouteDefinition } from './types/route.ts'
 export type { ContextInit } from './types/context.ts'
-export type {
-  BeforeEachHandlerArgs,
-  CtxHydration,
-  RouteContextLike,
-} from './types/client.ts'
+export type { BeforeEachHandlerArgs, CtxHydration, RouteContextLike } from './types/client.ts'
