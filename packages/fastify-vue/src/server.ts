@@ -81,15 +81,17 @@ export async function createRoutes(
   if (Array.isArray(from)) {
     for (const routeDef of from) {
       promises.push(
-        getRouteModule(routeDef.path, routeDef.component as RouteModuleInput).then((routeModule) => {
-          return {
-            id: routeDef.path,
-            name: routeDef.path ?? routeModule.path,
-            path: routeDef.path ?? routeModule.path,
-            key: routeDef.path ?? routeModule.path,
-            ...routeModule,
-          } as RouteEntry
-        }),
+        getRouteModule(routeDef.path, routeDef.component as RouteModuleInput).then(
+          (routeModule) => {
+            return {
+              id: routeDef.path,
+              name: routeDef.path ?? routeModule.path,
+              path: routeDef.path ?? routeModule.path,
+              key: routeDef.path ?? routeModule.path,
+              ...routeModule,
+            } as RouteEntry
+          },
+        ),
       )
     }
   } else {

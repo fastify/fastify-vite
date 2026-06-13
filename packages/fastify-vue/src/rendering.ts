@@ -28,7 +28,10 @@ interface RouteContextWithRuntime extends RouteContext {
 export async function createRenderFunction({
   routes,
   create: _create,
-}: { routes: RoutesList; create: CreateFactory }) {
+}: {
+  routes: RoutesList
+  create: CreateFactory
+}) {
   // Used when hydrating Vue Router on the client
   const routeMap = Object.fromEntries(routes.map((r) => [r.key, r]))
   // Registered as reply.render()
@@ -134,15 +137,10 @@ export async function createHtmlFunction(
   }
 }
 
-export function sendClientOnlyShell(
-  templates: TemplatesPair,
-  context: RouteContextWithRuntime,
-) {
+export function sendClientOnlyShell(templates: TemplatesPair, context: RouteContextWithRuntime) {
   return transformHtmlTemplate(
     context.useHead!,
-    `${templates.beforeElement(context)}${templates.afterElement(
-      context,
-    )}`,
+    `${templates.beforeElement(context)}${templates.afterElement(context)}`,
   )
 }
 
@@ -153,9 +151,7 @@ export function sendShell(
 ) {
   return transformHtmlTemplate(
     context.useHead!,
-    `${templates.beforeElement(context)}${body}${templates.afterElement(
-      context,
-    )}`,
+    `${templates.beforeElement(context)}${body}${templates.afterElement(context)}`,
   )
 }
 
@@ -173,16 +169,10 @@ async function* createShellStream(
   body: Readable,
 ) {
   const useHead = context.useHead!
-  yield transformHtmlTemplate(
-    useHead,
-    templates.beforeElement(context),
-  )
+  yield transformHtmlTemplate(useHead, templates.beforeElement(context))
 
   for await (const chunk of body) {
     yield transformHtmlTemplate(useHead, chunk.toString())
   }
-  yield transformHtmlTemplate(
-    useHead,
-    templates.afterElement(context),
-  )
+  yield transformHtmlTemplate(useHead, templates.afterElement(context))
 }

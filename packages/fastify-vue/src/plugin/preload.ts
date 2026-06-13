@@ -83,11 +83,7 @@ function appendHead(html: string, ...tags: string[]): string {
   return html.replace(/<head([^>]*)>/i, `<head$1>\n  ${content}`)
 }
 
-function writeHtml(
-  page: { htmlPath: string },
-  pageHtml: string,
-  distDir: string,
-): void {
+function writeHtml(page: { htmlPath: string }, pageHtml: string, distDir: string): void {
   const { dir, base } = parsePath(page.htmlPath)
   const htmlDir = join(distDir, dir)
   if (!existsSync(htmlDir)) {
