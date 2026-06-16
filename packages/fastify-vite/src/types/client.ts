@@ -1,11 +1,14 @@
+import type { RouteDefinition } from './route.ts'
+
 export interface ClientModule {
-  createApp?: (...args: unknown[]) => unknown
-  create?: (...args: unknown[]) => unknown
-  routes?: unknown
+  create?: (...args: never[]) => unknown
+  routes?:
+    | Iterable<RouteDefinition>
+    | (() => Iterable<RouteDefinition> | Promise<Iterable<RouteDefinition>>)
   [key: string]: unknown
 }
 
 export interface ClientEntries {
   ssr?: ClientModule
-  [key: string]: unknown
+  [env: string]: ClientModule | undefined
 }

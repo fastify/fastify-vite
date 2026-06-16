@@ -80,7 +80,7 @@ interface BaseRuntimeConfig {
     source: string,
     scope: FastifyInstance,
     config: RuntimeConfig,
-  ) => Promise<ReplyDotHtmlFunction>
+  ) => ReplyDotHtmlFunction | Promise<ReplyDotHtmlFunction>
 
   createRoute: (
     args: CreateRouteArgs,

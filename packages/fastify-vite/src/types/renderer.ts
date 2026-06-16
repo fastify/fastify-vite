@@ -1,85 +1,48 @@
 import type { FastifyInstance, RouteHandlerMethod, RouteOptions } from 'fastify'
-
-/** Helper type to loosen strict object types by adding index signature */
-export type Loosen<T> = T & Record<string, unknown>
-
-/** Route properties available in renderer context */
-export type RouteType = Partial<{
-  server: unknown
-  req: unknown
-  reply: unknown
-  head: unknown
-  state: unknown
-  data: Record<string, unknown>
-  firstRender: boolean
-  layout: unknown
-  getMeta: unknown
-  getData: unknown
-  onEnter: unknown
-  streaming: unknown
-  clientOnly: unknown
-  serverOnly: unknown
-}>
-
-/** Renderer context passed to html/render functions */
-export type Ctx = Loosen<{
-  routes: Array<RouteType>
-  context: unknown
-  body: unknown
-  stream: unknown
-  data: unknown
-}>
-
-/** Renderer function definitions */
-export interface RendererFunctions {
-  createHtmlTemplateFunction(source: string): unknown
-  createHtmlFunction(
-    source: string,
-    scope?: unknown,
-    config?: unknown,
-  ): (ctx: Ctx) => Promise<unknown>
-  createRenderFunction(
-    args: Loosen<{
-      routes?: Array<RouteType>
-      create?: (arg0: Record<string, unknown>) => unknown
-      createApp: unknown
-    }>,
-  ): Promise<
-    (
-      server: unknown,
-      req: unknown,
-      reply: unknown,
-    ) =>
-      | (Ctx | { element: string; hydration?: string })
-      | Promise<Ctx | { element: string; hydration?: string }>
-  >
-}
+import type { ClientEntries, ClientModule } from './client.ts'
+import type { RuntimeConfig } from './options.ts'
+import type { ReplyDotHtmlFunction, ReplyDotRenderFunction } from './reply.ts'
+import type { ClientRouteArgs, CreateRouteArgs } from './route.ts'
 
 /** Renderer option interface for custom renderers */
-export interface RendererOption<
-  CM = string | Record<string, unknown> | unknown,
-  C = unknown,
-> extends RendererFunctions {
-  clientModule: CM
+export interface RendererOption {
+  clientModule: string
+
+  createHtmlTemplateFunction(source: string): unknown
+
+  createHtmlFunction(
+    source: string,
+    scope: FastifyInstance,
+    config: RuntimeConfig,
+  ): ReplyDotHtmlFunction | Promise<ReplyDotHtmlFunction>
+
+  createRenderFunction(
+    client: ClientModule,
+    scope: FastifyInstance,
+    config: RuntimeConfig,
+  ): Promise<ReplyDotRenderFunction>
+
   createErrorHandler(
-    client: C,
+    args: ClientRouteArgs,
     scope: FastifyInstance,
-    config?: unknown,
+    config: RuntimeConfig,
   ): NonNullable<RouteOptions['errorHandler']> | Promise<NonNullable<RouteOptions['errorHandler']>>
+
   createRoute(
-    args: Loosen<{
-      client?: C
-      handler?: RouteHandlerMethod
-      errorHandler: NonNullable<RouteOptions['errorHandler']>
-      route?: RouteType
-    }>,
+    args: CreateRouteArgs,
     scope: FastifyInstance,
-    config: unknown,
+    config: RuntimeConfig,
   ): void | Promise<void>
+
   createRouteHandler(
-    client: C,
+    args: ClientRouteArgs,
     scope: FastifyInstance,
-    config?: unknown,
+    config: RuntimeConfig,
   ): RouteHandlerMethod | Promise<RouteHandlerMethod>
-  prepareClient(clientModule: CM, scope?: FastifyInstance, config?: unknown): Promise<C>
+
+  prepareClient(
+    entries: ClientEntries,
+    scope: FastifyInstance,
+    config: RuntimeConfig,
+  ): Promise<ClientModule | null>
 }
