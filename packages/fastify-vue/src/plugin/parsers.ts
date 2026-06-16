@@ -1,16 +1,21 @@
+import { stripTypeScriptTypes } from 'node:module'
 import * as acorn from 'acorn'
 import * as walk from 'acorn-walk'
 
-export function parseStateKeys(code) {
-  const ast = acorn.parse(code, { sourceType: 'module', ecmaVersion: 2020 })
+export function parseStateKeys(code: string): string[] {
+  const jsCode = stripTypeScriptTypes(code, { sourceMap: false })
+  const ast = acorn.parse(jsCode, { sourceType: 'module', ecmaVersion: 2020 })
 
-  let objectKeys = []
+  let objectKeys: string[] = []
 
   walk.simple(ast, {
-    ExportNamedDeclaration(node) {
+    ExportNamedDeclaration(node: acorn.ExportNamedDeclaration) {
+      if (!node.declaration) {
+        return
+      }
       if (node.declaration.type === 'FunctionDeclaration') {
         for (const subNode of node.declaration.body.body) {
-          if (subNode.type === 'ReturnStatement' && subNode.argument.type === 'ObjectExpression') {
+          if (subNode.type === 'ReturnStatement' && subNode.argument?.type === 'ObjectExpression') {
             objectKeys = extractObjectKeys(subNode.argument)
           }
         }
@@ -18,7 +23,7 @@ export function parseStateKeys(code) {
         for (const subNode of node.declaration.declarations) {
           if (
             subNode.type === 'VariableDeclarator' &&
-            subNode.init.type === 'ArrowFunctionExpression' &&
+            subNode.init?.type === 'ArrowFunctionExpression' &&
             subNode.init.body.type === 'ObjectExpression'
           ) {
             objectKeys = extractObjectKeys(subNode.init.body)
@@ -31,10 +36,10 @@ export function parseStateKeys(code) {
   return objectKeys
 }
 
-function extractObjectKeys(node) {
-  const keys = []
+function extractObjectKeys(node: acorn.ObjectExpression): string[] {
+  const keys: string[] = []
   for (const prop of node.properties) {
-    if (prop.key && prop.key.type === 'Identifier') {
+    if (prop.type === 'Property' && prop.key.type === 'Identifier') {
       keys.push(prop.key.name)
     }
   }

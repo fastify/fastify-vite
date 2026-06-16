@@ -21,7 +21,7 @@ await server.register(FastifyFormBody)
 await server.register(FastifyVite, {
   root: resolve(import.meta.dirname, '..'),
   distDir: import.meta.dirname, // This file will also live in the dist folder when built
-  renderer: '@fastify/vue',
+  renderer: import.meta.resolve('@fastify/vue'),
 })
 
 await server.vite.ready()

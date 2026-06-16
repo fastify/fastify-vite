@@ -2,14 +2,16 @@
 // requests are made to the current location, so no base
 // URL configuration is needed in this example.
 
-export function sendJSON(path, options) {
+export function sendJSON(path: string, options: RequestInit & { json?: unknown }) {
   return fetch(path, {
     headers: {
       'Content-Type': 'application/json',
     },
-    ...(options.json && {
-      body: JSON.stringify(options.json),
-    }),
+    ...(options.json
+      ? {
+          body: JSON.stringify(options.json),
+        }
+      : {}),
     ...options,
   })
 }

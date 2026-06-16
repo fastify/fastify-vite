@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 export const layout = 'default'
 
-export function getData({ req }) {
-  let pathMatch = req.params['*']
+export function getData({ req }: RouteContext) {
+  let pathMatch = (req.params as Record<string, string>)['*']
   if (pathMatch.charAt(pathMatch.length - 1) == '/') {
     pathMatch = pathMatch.substr(0, pathMatch.length - 1)
   }
@@ -13,9 +13,9 @@ export function getData({ req }) {
 }
 </script>
 
-<script setup>
+<script setup lang="ts">
 import { useData } from '$app/hooks'
-const data = useData()
+const data = useData<{ pathMatch: string[] }>()
 </script>
 
 <template>

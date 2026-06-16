@@ -23,15 +23,15 @@
   </p>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, reactive } from 'vue'
 import { useData } from '$app/hooks'
 
-export function getMeta() {
+export function getMeta(): UseHeadInput {
   return { title: 'Todo List — Using Data' }
 }
 
-export function getData({ server }) {
+export function getData({ server }: RouteContext) {
   return {
     todoList: server.db.todoList,
   }
@@ -39,9 +39,9 @@ export function getData({ server }) {
 
 export default {
   setup() {
-    const data = useData()
-    const inputValue = ref(null)
-    const todoList = reactive(data.todoList)
+    const data = useData<{ todoList: string[] }>()
+    const inputValue = ref('')
+    const todoList = reactive<string[]>(data.todoList)
     const addItem = () => {
       todoList.push(inputValue.value)
       inputValue.value = ''

@@ -20,19 +20,19 @@
   </p>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue'
 import { todoList } from '$app/stores'
 
 export const layout = 'auth'
 
-export function getMeta() {
+export function getMeta(): UseHeadInput {
   return { title: 'Using Custom Layout' }
 }
 
 export default {
   setup() {
-    const inputValue = ref(null)
+    const inputValue = ref<string>('')
     const addItem = async () => {
       await todoList.add(inputValue.value)
       inputValue.value = ''

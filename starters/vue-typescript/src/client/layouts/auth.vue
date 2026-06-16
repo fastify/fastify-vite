@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouteContext } from '@fastify/vue/client'
-const { actions, state } = useRouteContext()
+const { actions, state } = useRouteContext<{ actions: AppActions; state: AppState }>()
 </script>
