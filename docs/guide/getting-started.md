@@ -196,7 +196,7 @@ Regardless of whether you want to simply deliver a SPA bundle to the browser or 
 
 ## Architectural primitives
 
-If you want to have access to your client module on the server for SSR or other purposes, **@fastify/vite** offers granular hooks that let you set up a rendering function (receiving access to to your Vite application module), a HTML templating function and register server-side routes for your client routes. The diagram below shows the order of execution of each available hook.
+If you want to have access to your client module on the server for SSR or other purposes, **@fastify/vite** offers granular hooks that let you set up a rendering function (receiving access to your Vite application module), a HTML templating function and register server-side routes for your client routes. The diagram below shows the order of execution of each available hook.
 
 ```text
 └─ prepareClient()
