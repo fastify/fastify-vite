@@ -1,0 +1,47 @@
+pre-commit:
+  jobs:
+    - name: oxlint
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-hydration
+      root: examples/vue-hydration
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-next-mini
+      root: examples/vue-next-mini
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-streaming
+      root: examples/vue-streaming
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-vanilla
+      root: examples/vue-vanilla
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-vanilla-spa
+      root: examples/vue-vanilla-spa
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: eslint-vue-vanilla-ts
+      root: examples/vue-vanilla-ts
+      glob: '*.{js,mjs,ts,vue}'
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: oxfmt
+      glob: '*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,json,md,mdx,yml,yaml,html,css,scss,less}'
+      run: sh -c 'pnpm exec oxfmt --write "$@"; status=$?; [ "$status" -eq 0 ] || [ "$status" -eq 2 ]' -- {staged_files}
+      stage_fixed: true
