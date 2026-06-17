@@ -21,7 +21,7 @@
     "minipass": "^7.1.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router": "^7.12.0",
+    "react-router": "^7.15.1",
     "valtio": "^2.1.4"
   },
   "devDependencies": {
@@ -35,6 +35,6 @@
     "tailwindcss": "^4.1.1",
     "tsx": "^4.19.4",
     "typescript": "^5.9.3",
-    "vite": "^8.0.7"
+    "vite": "^8.0.16"
   }
 }

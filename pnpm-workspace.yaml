@@ -6,11 +6,11 @@ packages:
 
 catalog:
   '@fastify/middie': ^9.3.2
-  devalue: ^5.7.1
+  devalue: ^5.8.1
   fastify: ^5.8.5
   tsx: ^4.21.0
   typescript: ^6.0.3
-  vite: ^8.0.8
+  vite: ^8.0.16
   vitest: ^4.1.4
 
 catalogs:
@@ -26,10 +26,14 @@ catalogs:
     '@vitejs/plugin-react': ^6.0.1
     react: ^19.2.4
     react-dom: ^19.2.4
-    react-router: ^7.12.0
+    react-router: ^7.15.1
   solid:
     solid-js: ^1.9.5
   vue:
     '@vitejs/plugin-vue': ^6.0.5
     vue: ^3.5.26
     vue-router: ^4.6.4
+
+overrides:
+  '@xmldom/xmldom': '>=0.9.10'
+  esbuild: '>=0.28.1'
