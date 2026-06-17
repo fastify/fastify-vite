@@ -10,6 +10,12 @@ export default withMermaid({
   lastUpdated: true,
   cleanUrls: true,
 
+  vite: {
+    build: {
+      target: 'esnext',
+    },
+  },
+
   markdown: {
     theme: {
       light: 'github-light',

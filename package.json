@@ -8,26 +8,17 @@
     "lint:fix": "pnpm -r run lint:fix && oxlint --fix .",
     "test": "pnpm --filter './packages/*' run --if-present test",
     "test:e2e": "pnpm --filter './e2e/*' run test",
-    "prepare": "husky",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
     "prep-for-release": "zx package.mjs --prep-for-release"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
+    "lefthook": "^1.11.13",
+    "oxfmt": "^0.55.0",
+    "oxlint": "^1.70.0",
     "vite": "catalog:",
     "vitest": "catalog:",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@10.29.1+sha512.48dae233635a645768a3028d19545cacc1688639eeb1f3734e42d6d6b971afbf22aa1ac9af52a173d9c3a20c15857cfa400f19994d79a2f626fcc73fccda9bbc",
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "typescript"
-      ]
-    }
-  }
+  "packageManager": "pnpm@10.29.1+sha512.48dae233635a645768a3028d19545cacc1688639eeb1f3734e42d6d6b971afbf22aa1ac9af52a173d9c3a20c15857cfa400f19994d79a2f626fcc73fccda9bbc"
 }
