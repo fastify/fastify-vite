@@ -15,13 +15,13 @@ These examples serve two purposes:
 To run all example integration tests:
 
 ```bash
-pnpm test:examples
+pnpm test:e2e
 ```
 
 To run tests for a specific example:
 
 ```bash
-cd examples/react-vanilla
+cd e2e/react-vanilla
 pnpm test
 ```
 

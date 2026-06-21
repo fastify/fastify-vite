@@ -88,7 +88,7 @@ If unset, **`@fastify/vite`** will automatically try to resolve `index.js` from 
 
 As soon as the client module is loaded, it is passed to the `prepareClient()` configuration function.
 
-See its default definition [here](https://github.com/fastify/fastify-vite/blob/main/packages/fastify-vite/config.js#L39). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (**Vue Router**, **React Router** etc). That's why `prepareClient()` is implemented that way by default.
+See its default definition [here](https://github.com/fastify/fastify-vite/blob/main/packages/fastify-vite/src/config/defaults.ts#L21). If it finds `routes` defined, **`@fastify/vite`** will use it to register an individual Fastify (server-level) route for each of your client-level routes (**Vue Router**, **React Router** etc). That's why `prepareClient()` is implemented that way by default.
 
 ### `createRenderFunction`
 

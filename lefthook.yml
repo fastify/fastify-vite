@@ -6,37 +6,37 @@ pre-commit:
       stage_fixed: true
 
     - name: eslint-vue-hydration
-      root: examples/vue-hydration
+      root: e2e/vue-hydration
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
 
     - name: eslint-vue-next-mini
-      root: examples/vue-next-mini
+      root: e2e/vue-next-mini
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
 
     - name: eslint-vue-streaming
-      root: examples/vue-streaming
+      root: e2e/vue-streaming
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
 
     - name: eslint-vue-vanilla
-      root: examples/vue-vanilla
+      root: e2e/vue-vanilla
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
 
     - name: eslint-vue-vanilla-spa
-      root: examples/vue-vanilla-spa
+      root: e2e/vue-vanilla-spa
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true
 
     - name: eslint-vue-vanilla-ts
-      root: examples/vue-vanilla-ts
+      root: e2e/vue-vanilla-ts
       glob: '*.{js,mjs,ts,vue}'
       run: pnpm exec eslint --fix {staged_files}
       stage_fixed: true

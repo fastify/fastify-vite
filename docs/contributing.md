@@ -22,4 +22,4 @@ This project uses [oxlint](https://oxc.rs/docs/guide/usage/linter.html) to lint 
 
 **`@fastify/vite`**, **`@fastify/vue`** and **`@fastify/react`** live in the [same monorepo](https://github.com/fastify/fastify-vite) and are set up to work as a [**pnpm workspace**](https://pnpm.io/workspaces).
 
-The `examples/` also serve as test suites. Running `pnpm test` from the root folder after making changes to `@fastify/vite` will run the tests for all examples.
+The `e2e/` examples also serve as integration tests. Running `pnpm test:e2e` from the root folder after making changes to `@fastify/vite` will run the tests for all examples.
