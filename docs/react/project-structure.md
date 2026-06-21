@@ -208,7 +208,7 @@ export default function Index () {
 }
 :::
 
-[react-base]: https://github.com/fastify/fastify-vite/tree/dev/starters/react-base
+[react-base]: https://github.com/fastify/fastify-vite/tree/main/starters/react-base
 
 This example is actually provided as the [react-base][react-base] starter.
 

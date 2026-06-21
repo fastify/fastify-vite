@@ -26,7 +26,7 @@ Support for other JavaScript environments with HTTP support based on the [Fetch]
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/main/starters/react-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">react-base</code></a>
 
 The **react-base** starter template includes just about the minimum set of files to get your `@fastify/react` application going. It contains no embedded examples other than `pages/index.jsx`, and no additional dependencies.
 
@@ -35,7 +35,7 @@ The **react-base** starter template includes just about the minimum set of files
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/react-base#dev your-app
+giget gh:fastify/fastify-vite/starters/react-base your-app
 ```
 
 #### Dependencies
@@ -55,7 +55,7 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
     - **`@unhead/react`**
     - **`valtio`**
 
-- [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-react) for the React application shell.
+- [**`@fastify/react`**](https://github.com/fastify/fastify-vite/tree/main/packages/fastify-react) for the React application shell.
 
 - [**`@vitejs/plugin-react`**](https://github.com/vitejs/vite-plugin-react) for React support in Vite.
 
@@ -65,7 +65,7 @@ giget gh:fastify/fastify-vite/starters/react-base#dev your-app
 
 - [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
 
-### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/main/starters/react-kitchensink" target="_blank" rel="noreferrer"><code>react-kitchensink</code></a>
 
 The **react-kitchensink** starter template includes all of **react-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
@@ -74,7 +74,7 @@ The **react-kitchensink** starter template includes all of **react-base** plus a
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/react-kitchensink#dev your-app
+giget gh:fastify/fastify-vite/starters/react-kitchensink your-app
 ```
 
 #### Dependencies

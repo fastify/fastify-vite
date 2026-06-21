@@ -20,7 +20,7 @@ export const serverOnly = true
 </script>
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/server-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/vue-kitchensink/client/pages/server-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/vue-kitchensink) starter template.
 
 ## Client only
 
@@ -38,7 +38,7 @@ export const clientOnly = true
 </script>
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/client-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/vue-kitchensink/client/pages/client-only.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/vue-kitchensink) starter template.
 
 ## Streaming
 
@@ -62,4 +62,4 @@ export default {
 </script>
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/vue-kitchensink/client/pages/streaming.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/vue-kitchensink/client/pages/streaming.vue) is part of the [vue-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/vue-kitchensink) starter template.

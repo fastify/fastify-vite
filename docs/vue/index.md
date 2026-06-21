@@ -26,7 +26,7 @@ Support for other JavaScript environments with HTTP support based on the [Fetch]
 
 Since `@fastify/vite` is not a framework but rather a Fastify plugin, it can't run your application on its own, you need to have your Fastify server, a Vite configuration file, and the basic file structure that make up your frontend.
 
-### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-base</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/main/starters/vue-base" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-base</code></a>
 
 The **vue-base** starter template includes just about the minimum set of files to get your `@fastify/vue` application going.
 
@@ -37,7 +37,7 @@ It contains no embedded examples other than `pages/index.vue`, and no additional
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
+giget gh:fastify/fastify-vite/starters/vue-base your-app
 ```
 
 #### Dependencies
@@ -48,7 +48,7 @@ giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
 
-- [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/dev/packages/fastify-vue) for the Vue application shell.
+- [**`@fastify/vue`**](https://github.com/fastify/fastify-vite/tree/main/packages/fastify-vue) for the Vue application shell.
   - And its peer dependencies:
     - **`devalue`**
     - **`@unhead/vue`**
@@ -63,7 +63,7 @@ giget gh:fastify/fastify-vite/starters/vue-base#dev your-app
 
 - [**`postcss-preset-env`**](https://www.npmjs.com/package/postcss-preset-env) for access to all latest CSS features.
 
-### <a href="https://github.com/fastify/fastify-vite/tree/dev/starters/vue-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-kitchensink</code></a>
+### <a href="https://github.com/fastify/fastify-vite/tree/main/starters/vue-kitchensink" target="_blank" rel="noreferrer"><code style="white-space: nowrap;">vue-kitchensink</code></a>
 
 The **vue-kitchensink** starter template includes all of **vue-base** plus a sample `context.js` initialization file and same additional example routes under `pages/`.
 
@@ -72,7 +72,7 @@ The **vue-kitchensink** starter template includes all of **vue-base** plus a sam
 We recommend using [`giget`](https://github.com/unjs/giget) to download straight from GitHub.
 
 ```
-giget gh:fastify/fastify-vite/starters/vue-kitchensink#dev your-app
+giget gh:fastify/fastify-vite/starters/vue-kitchensink your-app
 ```
 
 #### Dependencies
