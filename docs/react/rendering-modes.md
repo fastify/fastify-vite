@@ -18,7 +18,7 @@ export function Index() {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/react-kitchensink/client/pages/server-only.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/react-kitchensink/client/pages/server-only.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/react-kitchensink) starter template.
 
 ## Client only
 
@@ -34,7 +34,7 @@ export function Index() {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/react-kitchensink/client/pages/client-only.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/react-kitchensink/client/pages/client-only.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/react-kitchensink) starter template.
 
 ## Streaming
 
@@ -63,4 +63,4 @@ function Message() {
 }
 ```
 
-[This example](https://github.com/fastify/fastify-vite/blob/dev/starters/react-kitchensink/client/pages/streaming.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/dev/starters/react-kitchensink) starter template.
+[This example](https://github.com/fastify/fastify-vite/blob/main/starters/react-kitchensink/client/pages/streaming.jsx) is part of the [react-kitchensink](https://github.com/fastify/fastify-vite/tree/main/starters/react-kitchensink) starter template.
