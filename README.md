@@ -16,7 +16,7 @@ This repository is also the home of `@fastify/vue` and `@fastify/react`.
 
 They provide basic Nuxt and Next.js-like functionality, respectively, through `@fastify/vite`.
 
-Official examples (low-level integration) can be found in [`examples/`](https://github.com/fastify/fastify-vite/tree/main/examples).
+Official examples (low-level integration) can be found in [`e2e/`](https://github.com/fastify/fastify-vite/tree/main/e2e).
 
 Official starters (DX-focused) using `@fastify/vue` and `@fastify/react` can be found in [`starters/`](https://github.com/fastify/fastify-vite/tree/main/starters).
 

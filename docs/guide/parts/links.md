@@ -8,11 +8,11 @@
 [nuxt]: https://nuxt.com/
 [fastify-vue]: /vue/
 [fastify-react]: /react/
-[react-next]: https://github.com/fastify/fastify-vite/tree/main/examples/react-next
-[vue-next]: https://github.com/fastify/fastify-vite/tree/main/examples/vue-next
-[react-hydration]: https://github.com/fastify/fastify-vite/tree/main/examples/react-hydration
-[react-vanilla]: https://github.com/fastify/fastify-vite/tree/main/examples/react-vanilla
+[react-next]: https://github.com/fastify/fastify-vite/tree/main/e2e/react-next-mini
+[vue-next]: https://github.com/fastify/fastify-vite/tree/main/e2e/vue-next-mini
+[react-hydration]: https://github.com/fastify/fastify-vite/tree/main/e2e/react-hydration
+[react-vanilla]: https://github.com/fastify/fastify-vite/tree/main/e2e/react-vanilla
 [ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
 [ssr-2]: https://www.patterns.dev/react/server-side-rendering
 [vite]: https://vitejs.dev/
-[vue-hydration]: https://github.com/fastify/fastify-vite/tree/main/examples/vue-hydration
+[vue-hydration]: https://github.com/fastify/fastify-vite/tree/main/e2e/vue-hydration
