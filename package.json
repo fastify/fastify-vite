@@ -9,7 +9,8 @@
     "test": "pnpm --filter './packages/*' run --if-present test",
     "test:e2e": "pnpm --filter './e2e/*' run test",
     "prep-for-dev": "zx package.mjs --prep-for-dev",
-    "prep-for-release": "zx package.mjs --prep-for-release"
+    "prep-for-release": "zx package.mjs --prep-for-release",
+    "version:release": "changeset version && pnpm prep-for-release"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
