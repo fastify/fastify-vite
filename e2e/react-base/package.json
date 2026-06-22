@@ -1,0 +1,27 @@
+{
+  "name": "@fastify-vite/e2e-react-base",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js --dev",
+    "start": "NODE_ENV=production node server.js",
+    "build": "vite build --app",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/react": "workspace:^",
+    "@fastify/vite": "workspace:^",
+    "@unhead/react": "^2.1.13",
+    "fastify": "catalog:",
+    "history": "latest",
+    "minipass": "latest",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "react-router": "catalog:react",
+    "valtio": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "catalog:react",
+    "vite": "catalog:"
+  }
+}

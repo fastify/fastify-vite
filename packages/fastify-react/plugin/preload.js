@@ -4,7 +4,7 @@ import { join, isAbsolute, parse as parsePath } from 'node:path'
 const imageFileRE = /\.((png)|(jpg)|(svg)|(webp)|(gif))$/
 
 export async function closeBundle(resolvedBundle) {
-  if (this.environment.name !== 'client') {
+  if (this.environment.name !== 'client' || !resolvedBundle) {
     return
   }
   const { assetsInlineLimit } = this.environment.config.build

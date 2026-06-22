@@ -4,7 +4,6 @@ import { findExports } from 'mlly'
 
 const virtualRoot = resolve(import.meta.dirname, '..', 'virtual')
 const virtualRootTS = resolve(import.meta.dirname, '..', 'virtual-ts')
-
 const virtualModules = [
   'mount.js',
   'resource.js',
@@ -46,7 +45,7 @@ export async function resolveId(id) {
       if (override) {
         return override
       }
-      return id
+      return `/$app/${virtual}`
     }
   }
 }
