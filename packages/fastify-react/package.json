@@ -62,7 +62,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "node --test plugin/*.test.js"
+  },
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/react": "^2.1.13",
