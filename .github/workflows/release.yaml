@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      prepare_published_packages:
+        description: Run prep-for-release and commit updates after a publish already happened.
+        required: false
+        default: false
+        type: boolean
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -40,12 +46,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare Published Packages
+      - name: Wait for Published Packages
         if: steps.changesets.outputs.published == 'true'
+        env:
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+        run: pnpm wait-for-published-packages
+
+      - name: Prepare Published Packages
+        if: steps.changesets.outputs.published == 'true' || (github.event_name == 'workflow_dispatch' && inputs.prepare_published_packages)
         run: pnpm prep-for-release
 
       - name: Commit Published Package Updates
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.changesets.outputs.published == 'true' || (github.event_name == 'workflow_dispatch' && inputs.prepare_published_packages)
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
