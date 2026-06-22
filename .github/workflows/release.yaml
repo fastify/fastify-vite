@@ -36,7 +36,21 @@ jobs:
         id: changesets
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         with:
-          version: pnpm run version:release
           publish: pnpm changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Published Packages
+        if: steps.changesets.outputs.published == 'true'
+        run: pnpm prep-for-release
+
+      - name: Commit Published Package Updates
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add packages/fastify-vite/package.json starters pnpm-lock.yaml
+            git commit -m "Prepare published packages"
+            git push
+          fi
