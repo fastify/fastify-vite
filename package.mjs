@@ -47,7 +47,7 @@ async function prepForRelease() {
     writeFileSync(join(starterRoot, starter, 'package.json'), JSON.stringify(pkgJSON, null, 2))
   }
   cd(root)
-  await $`pnpm i`
+  await $`pnpm install --no-frozen-lockfile`
   await $`pnpm format`
   process.exit()
 }
@@ -67,7 +67,7 @@ async function prepForDev() {
     writeFileSync(join(starterRoot, starter, 'package.json'), JSON.stringify(pkgJSON, null, 2))
   }
   cd(root)
-  await $`pnpm i`
+  await $`pnpm install --no-frozen-lockfile`
   await $`pnpm format`
   process.exit()
 }
