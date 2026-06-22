@@ -856,8 +856,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.7
-        version: 1.1.7(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.1.8
+        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
         specifier: ^9.1.0
         version: 9.1.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -914,8 +914,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.7
-        version: 1.1.7(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.1.8
+        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
         specifier: ^9.1.0
         version: 9.1.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -972,8 +972,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.7
-        version: 1.1.7(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.1.8
+        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
         specifier: ^9.1.0
         version: 9.1.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -1875,8 +1875,8 @@ packages:
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
 
-  '@fastify/react@1.1.7':
-    resolution: {integrity: sha512-w1nhfDv+v6zB8Lvf+iPzslDtdj1YTgEHsbWvWe+WLpbyr+sgIjPcam4qIcxLTGfep1xS7zhxAOlUNFigSigHqg==}
+  '@fastify/react@1.1.8':
+    resolution: {integrity: sha512-Gl4Ksb7gqp039zZiiul44mCAQFojpzcFR++j7kujbngxVn+fowOIRype1ngzlsq7SDRI4nQXV9ujg1bI+Btvig==}
 
   '@fastify/send@4.1.0':
     resolution: {integrity: sha512-TMYeQLCBSy2TOFmV95hQWkiTYgC/SEx7vMdV+wnZVX4tt8VBLKzmH8vV9OzJehV0+XBfg+WxPMt5wp+JBUKsVw==}
@@ -6343,7 +6343,7 @@ snapshots:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
 
-  '@fastify/react@1.1.7(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/react@1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@fastify/vite': 9.1.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react': 2.1.13(react@19.2.4)
@@ -6364,7 +6364,7 @@ snapshots:
       - fastify
       - vite
 
-  '@fastify/react@1.1.7(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/react@1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@fastify/vite': 9.1.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react': 2.1.13(react@19.2.4)
