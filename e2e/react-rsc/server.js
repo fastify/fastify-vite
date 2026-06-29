@@ -1,10 +1,12 @@
 import Fastify from 'fastify'
 import FastifyVite from '@fastify/vite'
 import * as renderer from '@fastify/react'
+import multipart from '@fastify/multipart'
 
 export async function main(dev) {
   const server = Fastify()
 
+  await server.register(multipart)
   await server.register(FastifyVite, {
     root: import.meta.dirname,
     dev: dev ?? process.argv.includes('--dev'),

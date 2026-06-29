@@ -23,6 +23,21 @@ export default function Index() {
           <li>
             <a href="/error">RSC Error</a>
           </li>
+          <li>
+            <a href="/auth-page">Auth Page</a>
+          </li>
+          <li>
+            <a href="/data-action">Data Action</a>
+          </li>
+          <li>
+            <a href="/using-data">Using Data</a>
+          </li>
+          <li>
+            <a href="/using-store">Using Store</a>
+          </li>
+          <li>
+            <a href="/streaming">Streaming</a>
+          </li>
         </ul>
       </nav>
     </div>

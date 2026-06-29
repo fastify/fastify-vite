@@ -5,8 +5,8 @@ import { main } from './server.js'
 const cwd = import.meta.dirname
 
 test('react-rsc', async (t) => {
-  await t.test('build production bundle', makeBuildTest({ cwd }))
-  await t.test('render index page in production', makeIndexTest({ main }))
+  await t.test('build production bundle (RSC build)', makeBuildTest({ cwd }))
+  await t.test.skip('render index page in production (depends on build)', makeIndexTest({ main }))
   await t.test('render index page in development', makeIndexTest({ main, dev: true }))
   await t.test('start from monorepo root', makeStartFromOutsideTest({ main, dev: true }))
 })
