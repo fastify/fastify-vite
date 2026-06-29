@@ -1,4 +1,5 @@
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import { createElement, useState, useEffect, startTransition } from 'react'
 import { hydrateRoutes } from '@fastify/react/client'
 import { createHead } from '@unhead/react/client'
 import routes from '$app/routes.js'
@@ -6,29 +7,144 @@ import create from '$app/create.jsx'
 import * as context from '$app/context.js'
 
 async function mountApp(...targets) {
-  const ctxHydration = await extendContext(window.route, context)
-  const resolvedRoutes = await hydrateRoutes(routes)
-  const routeMap = Object.fromEntries(resolvedRoutes.map((route) => [route.path, route]))
-  const useHead = createHead()
-  ctxHydration.useHead = useHead
-  ctxHydration.useHead.push(window.route.head)
-
-  const app = create({
-    ctxHydration,
-    routes: window.routes,
-    routeMap,
-  })
-
   let mountTargetFound = false
   for (const target of targets) {
     const targetElem = document.querySelector(target)
     if (targetElem) {
       mountTargetFound = true
-      if (ctxHydration.clientOnly) {
-        createRoot(targetElem).render(app)
+
+      // Detect RSC page by checking for FLIGHT_DATA or _R_ bootstrap script
+      const isRscPage = window.__FLIGHT_DATA || document.getElementById('_R_')
+
+      if (isRscPage) {
+        // RSC path — decode payload BEFORE hydration (canonical starter pattern)
+        // Dynamically import to avoid pulling RSC deps for non-RSC pages
+        const { rscStream } = await import('rsc-html-stream/client')
+        const { createFromReadableStream, setRequireModule, setServerCallback } =
+          await import('@vitejs/plugin-rsc/browser')
+
+        // The @vitejs/plugin-rsc/browser module's initialize() calls
+        // setRequireModule internally. The react-server-dom vendor file uses
+        // a __webpack_require__-based module loading system which gets
+        // patched by rsc:patch-react-server-dom-webpack during transformation.
+        // However, Vite's esbuild-based dep pre-bundling skips this transform,
+        // leaving the pre-bundled vendor file with undefined __webpack_require__.
+        // We define it here as a delegate to __vite_rsc_require__ (set up by
+        // setRequireModule). Additionally, the RSC flight data protocol decodes
+        // $$ -> $, so the $$cache= tag created by createReferenceCacheTag becomes
+        // $cache= after flight data decoding. The internal removeReferenceCacheTag
+        // looks for $$cache= and misses it, so we strip $cache= here too.
+        // Note: we use string concatenation to avoid the
+        // rsc:patch-react-server-dom-webpack transform from inadvertently
+        // patching this polyfill code.
+        const wpRequire = '__' + 'webpack_require' + '__'
+        if (typeof globalThis[wpRequire] === 'undefined') {
+          globalThis[wpRequire] = (id) => {
+            // Strip $cache= tag (single $ version). The RSC protocol flight data
+            // decodes $$ -> $, so createReferenceCacheTag's $$cache= becomes $cache=.
+            const cc = '$' + 'cache='
+            const cleanId = id.includes(cc) ? id.split(cc)[0] : id
+            return globalThis.__vite_rsc_require__(cleanId)
+          }
+          globalThis[wpRequire].u = () => {}
+        }
+
+        // Also strip $cache= tag directly in __vite_rsc_require__ — the
+        // __webpack_require__ polyfill above handles calls from the pre-bundled
+        // vendor file, but when the rsc:patch-react-server-dom-webpack transform
+        // replaces __webpack_require__ directly with __vite_rsc_require__ (bypassing
+        // the polyfill), $cache= still reaches __vite_rsc_require__. The RSC
+        // protocol decodes $$ -> $, so $$cache= becomes $cache= after flight data
+        // decoding, but removeReferenceCacheTag only looks for $$cache=.
+        const _origViteRscRequire = globalThis.__vite_rsc_require__
+        globalThis.__vite_rsc_require__ = (id) => {
+          const cacheIdx = id.indexOf('$cache=')
+          if (cacheIdx !== -1) id = id.slice(0, cacheIdx)
+          return _origViteRscRequire(id)
+        }
+
+        // ┌─── React Refresh Preamble ──────────────────────────────────────┐
+        // │ Set preamble flags BEFORE createFromReadableStream so that       │
+        // │ client modules loaded dynamically by the RSC stream decoder      │
+        // │ (via __vite_rsc_require__ → import()) don't trigger the          │
+        // │ react-refresh-wrapper's preamble check.                          │
+        // │ The HTML template <script> that normally sets these flags runs   │
+        // │ TOO LATE — after RSC stream decoding starts loading client       │
+        // │ modules via import(), and the Rolldown refresh wrapper checks    │
+        // │ window.$RefreshReg$ synchronously at module evaluation time.     │
+        // └──────────────────────────────────────────────────────────────────┘
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+
+        const initialPayload = await createFromReadableStream(rscStream)
+
+        function RscRoot() {
+          const [payload, setPayload] = useState(initialPayload)
+
+          // Store setter for server action callback invocations
+          useEffect(() => {
+            window.__rscSetPayload = (v) => startTransition(() => setPayload(v))
+            // Register server action callback for initial hydration.
+            // RscContent (in rsc-content.jsx) calls setServerCallback only
+            // for client-side navigations; for initial page hydration we
+            // must register it here.
+            setServerCallback(async (id, args) => {
+              const { createTemporaryReferenceSet, encodeReply, createFromFetch } =
+                await import('@vitejs/plugin-rsc/browser')
+              const temporaryReferences = createTemporaryReferenceSet()
+              const rscUrl = `${window.location.pathname}_.rsc${window.location.search}`
+              const payload = await createFromFetch(
+                fetch(rscUrl, {
+                  method: 'POST',
+                  headers: { 'x-rsc-action': id },
+                  body: await encodeReply(args, { temporaryReferences }),
+                }),
+                { temporaryReferences },
+              )
+              startTransition(() => setPayload(payload))
+              const { ok, data } = payload.returnValue ?? {}
+              if (!ok) throw data
+              return data
+            })
+          }, [])
+
+          // Apply head metadata from the RSC payload to the document
+          useEffect(() => {
+            if (payload.head?.title) {
+              document.title = payload.head.title
+            }
+          }, [payload])
+
+          return payload.matches?.[0]?.element ?? null
+        }
+
+        // Pass formState as third argument to hydrateRoot
+        hydrateRoot(targetElem, createElement(RscRoot), {
+          formState: initialPayload.formState,
+        })
       } else {
-        hydrateRoot(targetElem, app)
+        // Non-RSC path (unchanged)
+        const ctxHydration = await extendContext(window.route, context)
+        const resolvedRoutes = await hydrateRoutes(routes)
+        const routeMap = Object.fromEntries(resolvedRoutes.map((route) => [route.path, route]))
+        const useHead = createHead()
+        ctxHydration.useHead = useHead
+        ctxHydration.useHead.push(window.route.head)
+
+        const app = create({
+          ctxHydration,
+          routes: window.routes,
+          routeMap,
+        })
+
+        if (ctxHydration.clientOnly) {
+          createRoot(targetElem).render(app)
+        } else {
+          hydrateRoot(targetElem, app)
+        }
       }
+
       break
     }
   }
