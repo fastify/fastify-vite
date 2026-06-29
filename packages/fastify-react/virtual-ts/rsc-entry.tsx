@@ -10,6 +10,7 @@ import {
   decodeFormState,
 } from '@vitejs/plugin-rsc/rsc'
 import { unstable_matchRSCServerRequest as matchRSCServerRequest } from 'react-router'
+import { Youch } from 'youch'
 
 const URL_POSTFIX = '_.rsc'
 const HEADER_ACTION_ID = 'x-rsc-action'
@@ -54,10 +55,10 @@ function buildRouteConfig(routesManifest) {
   })
 }
 
-function resolveGetMeta(routeId, routesManifest) {
+function resolveGetMeta(routeId, routesManifest, url) {
   const loader = routesManifest[routeId]
   if (typeof loader !== 'function') return null
-  return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta() : null))
+  return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta({ url }) : null))
 }
 
 async function handler(request) {
@@ -98,43 +99,58 @@ async function handler(request) {
   const routesManifest = import.meta.glob('/pages/**/*.{jsx,tsx}', { eager: true, query: '?react' })
   const routes = buildRouteConfig(routesManifest)
 
-  let head
-  const rscResponse = await matchRSCServerRequest({
-    createTemporaryReferenceSet: () => createTemporaryReferenceSet(),
-    decodeAction,
-    decodeFormState,
-    decodeReply,
-    loadServerAction,
-    request,
-    routes,
-    generateResponse(match) {
-      const routeId = match.matches?.[match.matches.length - 1]?.route?.id
-      if (routeId) {
-        resolveGetMeta(routeId, routesManifest).then((meta) => {
-          head = meta
+  let rscResponse
+  let htmlResponse
+
+  try {
+    rscResponse = await matchRSCServerRequest({
+      createTemporaryReferenceSet,
+      decodeAction,
+      decodeFormState,
+      decodeReply,
+      loadServerAction,
+      request,
+      routes,
+      async generateResponse(match) {
+        // Extract head metadata from the matched leaf route
+        const leafMatch = match.payload?.matches?.[match.payload.matches.length - 1]
+        let head = null
+        if (leafMatch?.route?.id) {
+          head = await resolveGetMeta(leafMatch.route.id, routesManifest, renderRequest.url)
+        }
+
+        // Spread the full match payload (includes type, matches, loaderData, location)
+        const rscPayload = { ...match.payload, head, formState, returnValue }
+        const rscOptions = temporaryReferences ? { temporaryReferences } : undefined
+        return new Response(renderToReadableStream(rscPayload, rscOptions), {
+          status: actionStatus ?? match.statusCode,
+          headers: match.headers,
         })
-      }
-      const rscPayload = { root: null, head: null, formState, returnValue }
-      const rscOptions = temporaryReferences ? { temporaryReferences } : undefined
-      return new Response(renderToReadableStream(rscPayload, rscOptions), {
-        status: match.statusCode,
-        headers: match.headers,
-      })
-    },
-  })
+      },
+    })
 
-  if (renderRequest.isRsc) {
-    return rscResponse
+    if (renderRequest.isRsc) {
+      return rscResponse
+    }
+
+    const cloned = rscResponse.clone()
+    const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.tsx', { environment: 'ssr' })
+    const htmlResult = await ssrEntry.generateHTML(request, await cloned)
+
+    return new Response(htmlResult.stream, {
+      status: htmlResult.status,
+      headers: { 'Content-Type': 'text/html' },
+    })
+  } catch (error) {
+    // Render error using Youch (project convention for dev error pages)
+    const { Youch } = await import('youch')
+    const youch = new Youch()
+    const html = await youch.toHTML(error, { title: 'RSC Render Error' })
+    return new Response(html, {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' },
+    })
   }
-
-  const cloned = rscResponse.clone()
-  const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.tsx', { environment: 'ssr' })
-  const htmlResult = await ssrEntry.generateHTML(request, await cloned)
-
-  return new Response(htmlResult.stream, {
-    status: htmlResult.status,
-    headers: { 'Content-Type': 'text/html' },
-  })
 }
 
 export default { fetch: handler }

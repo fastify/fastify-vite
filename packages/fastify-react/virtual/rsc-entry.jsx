@@ -8,7 +8,7 @@ import {
 } from '@vitejs/plugin-rsc/rsc'
 import { unstable_matchRSCServerRequest as matchRSCServerRequest } from 'react-router'
 import routesManifest from '$app/routes.js'
-
+import { filePathToRoutePath } from '#runtime/route-utils.js'
 /**
  * URL suffix to differentiate RSC requests from SSR requests.
  * RSC requests end with '_.rsc', which is stripped to get the actual URL path.
@@ -42,31 +42,6 @@ function parseRenderRequest(request) {
     }
   }
   return { isRsc: false, isAction, url }
-}
-
-/**
- * Transform a file path from `import.meta.glob` into a route path string.
- *
- * Handles:
- * - `/pages/index` -> `/` (after extension stripping)
- * - `/pages/about` -> `/about`
- * - `/pages/blog/[slug]` -> `/blog/:slug`
- * - `/pages/blog/[...slug]` -> `/blog/*`
- */
-function filePathToRoutePath(importPath) {
-  return (
-    importPath
-      // Remove '/pages' prefix and file extension (.jsx or .tsx)
-      .slice(6, -4)
-      // Replace [id] with :id and [...slug] with :slug+
-      .replace(/\[([.\w]+\+?)\]/g, (_, m) => `:${m}`)
-      // Replace catch-all params (e.g., :slug+) with wildcard (*)
-      .replace(/:\w+\+/, '*')
-      // Convert /index to /
-      .replace(/\/index$/, '/')
-      // Remove trailing slashes
-      .replace(/(.+)\/+$/, (_, m) => m[1])
-  )
 }
 
 /**
@@ -169,54 +144,103 @@ async function handler(request) {
     }
   }
 
-  // ------------------------------------------------------------------
-  // 2. Match request to route and generate RSC response
-  // ------------------------------------------------------------------
-  const routes = buildRouteConfig()
-
-  const rscResponse = await matchRSCServerRequest({
-    createTemporaryReferenceSet,
-    decodeAction,
-    decodeFormState,
-    decodeReply,
-    loadServerAction,
-    request,
-    routes,
-    async generateResponse(match) {
-      // Extract head metadata from the matched route's page module
-      const head = match.route?.id ? await extractHeadMeta(match.route.id, renderRequest.url) : null
-
-      const rscPayload = {
-        root: match.payload?.root ?? null,
-        head,
-        formState,
-        returnValue,
-      }
-
-      return new Response(renderToReadableStream(rscPayload), {
-        status: actionStatus ?? match.statusCode,
-        headers: match.headers,
-      })
-    },
-  })
-
-  // ------------------------------------------------------------------
-  // 3. Return RSC stream for .rsc requests
-  // ------------------------------------------------------------------
-  if (renderRequest.isRsc) {
-    return rscResponse
+  // After action handling, replace request with a GET request so React
+  // Router skips mutation processing entirely. The action result is already
+  // stored in returnValue — React Router just needs to render the route,
+  // not process the action itself. If we pass a POST request with a consumed
+  // body (already read by request.formData()), React Router's processServerAction
+  // tries request.clone().formData() on an ended stream, producing empty FormData.
+  if (renderRequest.isAction) {
+    const rscUrl = new URL(request.url)
+    request = new Request(rscUrl, {
+      method: 'GET',
+      headers: request.headers,
+    })
   }
 
   // ------------------------------------------------------------------
-  // 4. Delegate to SSR environment for full document (HTML) requests
+  // 2-4. Match, generate RSC response, and produce HTML for document requests
   // ------------------------------------------------------------------
-  const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.jsx', { environment: 'ssr' })
-  const htmlResult = await ssrEntry.generateHTML(request, await rscResponse.clone())
+  let rscResponse
+  try {
+    const routes = buildRouteConfig()
 
-  return new Response(htmlResult.stream, {
-    status: htmlResult.status,
-    headers: { 'Content-Type': 'text/html' },
-  })
+    rscResponse = await matchRSCServerRequest({
+      createTemporaryReferenceSet,
+      decodeAction,
+      decodeFormState,
+      decodeReply,
+      loadServerAction,
+      request,
+      routes,
+      async generateResponse(match) {
+        // Extract head metadata from the matched leaf route
+        const leafMatch = match.payload?.matches?.[match.payload.matches.length - 1]
+        let head = null
+
+        // Primary approach: use leafMatch route id from react-router match
+        if (leafMatch?.route?.id) {
+          head = await extractHeadMeta(leafMatch.route.id, renderRequest.url)
+        }
+
+        // P3: Fallback — match by URL pathname against routesManifest directly.
+        // This handles cases where the match payload's route.id format doesn't
+        // align with the import.meta.glob keys in routesManifest.
+        if (!head) {
+          const routePath = renderRequest.url.pathname
+          for (const [importPath, loader] of Object.entries(routesManifest)) {
+            if (filePathToRoutePath(importPath) === routePath) {
+              head = await extractHeadMeta(importPath, renderRequest.url)
+              break
+            }
+          }
+        }
+
+        // Spread the full match payload (includes type, matches, loaderData, location)
+        const rscPayload = { ...match.payload, head, formState, returnValue }
+
+        const rscOptions = temporaryReferences ? { temporaryReferences } : undefined
+        return new Response(renderToReadableStream(rscPayload, rscOptions), {
+          status: actionStatus ?? match.statusCode,
+          headers: match.headers,
+        })
+      },
+    })
+
+    // Return RSC stream for .rsc requests directly
+    if (renderRequest.isRsc) {
+      return rscResponse
+    }
+
+    // Delegate to SSR environment for full document (HTML) requests
+    const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.jsx', { environment: 'ssr' })
+    const htmlResult = await ssrEntry.generateHTML(request, rscResponse.clone())
+
+    // Buffer the RSC HTML stream and send as a string response body.
+    // This avoids streaming compatibility issues with Fastify's sendWebStream()
+    // when the stream produces content asynchronously via TransformStream.flush().
+    const bodyChunks = []
+    const htmlReader = htmlResult.body.getReader()
+    let readResult
+    while (!(readResult = await htmlReader.read()).done) {
+      bodyChunks.push(readResult.value)
+    }
+    const bodyText = bodyChunks.map((c) => new TextDecoder().decode(c, { stream: true })).join('')
+
+    return new Response(bodyText, {
+      status: htmlResult.status,
+      headers: { 'Content-Type': 'text/html' },
+    })
+  } catch (error) {
+    // Render error using Youch (project convention for dev error pages)
+    const { Youch } = await import('youch')
+    const youch = new Youch()
+    const html = await youch.toHTML(error, { title: 'RSC Render Error' })
+    return new Response(html, {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' },
+    })
+  }
 }
 
 export default { fetch: handler }

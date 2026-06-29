@@ -31,24 +31,49 @@ const virtualModulesTS = [
   'context.ts',
   'core.tsx',
   'index.ts',
+  'rsc-entry.tsx',
+  'ssr-entry.tsx',
+  'rsc-content.tsx',
 ]
+
+// Vite marks virtual modules with a null byte (\0) internally.
+// Strip it before checking against the $app prefix.
+// Use charCodeAt check instead of regex to avoid no-control-regex lint rule.
+function stripNullByte(id) {
+  return id.charCodeAt(0) === 0 ? id.slice(1) : id
+}
 
 export const prefix = /^\/?\$app\//
 
-export async function resolveId(id) {
+export async function resolveId(id, importer) {
   // Paths are prefixed with .. on Windows by the glob import
   if (process.platform === 'win32' && /^\.\.\/[C-Z]:/.test(id)) {
     return id.substring(3)
   }
 
-  if (prefix.test(id)) {
-    const [, virtual] = id.split(prefix)
+  const cleanId = stripNullByte(id)
+  if (prefix.test(cleanId)) {
+    const [, virtual] = cleanId.split(prefix)
     if (virtual) {
       const override = loadVirtualModuleOverride(this.root, virtual)
       if (override) {
         return override
       }
-      return `/$app/${virtual}`
+      return `\0$app/${virtual}`
+    }
+  }
+
+  // Resolve relative imports from virtual modules (e.g., './ssr-entry.jsx' from '\0$app/rsc-entry.jsx')
+  if (importer && prefix.test(stripNullByte(importer)) && cleanId.startsWith('./')) {
+    const importerPath = stripNullByte(importer)
+    const importerParts = importerPath.split('/')
+    const dir = importerParts.slice(0, -1).join('/')
+    const resolved = `${dir}/${cleanId.slice(2)}`
+    if (prefix.test(resolved)) {
+      const [, virtual] = resolved.split(prefix)
+      if (virtual) {
+        return `\0$app/${virtual}`
+      }
     }
   }
 }

@@ -1,15 +1,13 @@
 'use client'
 
-import { useState, useEffect, Component } from 'react'
+import { useState, useEffect, Component, startTransition } from 'react'
 import { useLocation } from 'react-router'
 import {
   createFromFetch,
-  createFromReadableStream,
   setServerCallback,
   createTemporaryReferenceSet,
   encodeReply,
 } from '@vitejs/plugin-rsc/browser'
-import { rscStream } from 'rsc-html-stream/client'
 
 class RscErrorBoundary extends Component {
   constructor(props) {
@@ -58,43 +56,48 @@ export default function RscContent() {
         }),
         { temporaryReferences },
       )
-      setElement(payload)
+      startTransition(() => {
+        setElement(payload.matches?.[0]?.element ?? null)
+        setLoading(false)
+      })
       const { ok, data } = payload.returnValue ?? {}
       if (!ok) throw data
       return data
     })
   }, [])
 
-  // Fetch or read RSC content on mount and navigation
+  // Apply head metadata (title, meta, link) from the RSC payload
+  function applyHeadFromPayload(payload) {
+    if (payload?.head) {
+      if (payload.head.title) {
+        document.title = payload.head.title
+      }
+      // Additional meta/link updates from payload.head can be added here
+    }
+  }
+
+  // Fetch RSC content on client navigation (initial hydration handled by mount.js)
   useEffect(() => {
     let cancelled = false
     setLoading(true)
 
-    const isInitialRender = !element && rscStream
-    if (isInitialRender) {
-      // First render: use injected RSC stream from the HTML payload
-      createFromReadableStream(rscStream).then((payload) => {
-        if (!cancelled) {
-          setElement(payload)
+    const rscUrl = `${location.pathname}_.rsc${location.search}`
+    createFromFetch(fetch(rscUrl)).then((payload) => {
+      if (!cancelled) {
+        startTransition(() => {
+          setElement(payload.matches?.[0]?.element ?? null)
           setLoading(false)
-        }
-      })
-    } else {
-      // Client navigation: fetch .rsc payload for the current route
-      const rscUrl = `${location.pathname}_.rsc${location.search}`
-      createFromFetch(fetch(rscUrl)).then((payload) => {
-        if (!cancelled) {
-          setElement(payload)
-          setLoading(false)
-        }
-      })
-    }
+        })
+        applyHeadFromPayload(payload)
+      }
+    })
 
     return () => {
       cancelled = true
     }
   }, [location.pathname, location.search])
 
+  // Only show loading on initial render, not on client navigation (avoids flicker)
   if (loading && !element) {
     return <div className="rsc-loading">Loading...</div>
   }

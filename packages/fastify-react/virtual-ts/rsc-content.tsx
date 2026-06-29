@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Component } from 'react'
+import { useState, useEffect, Component, startTransition } from 'react'
 import { useLocation } from 'react-router'
 import {
   createFromFetch,
@@ -58,7 +58,10 @@ export default function RscContent() {
         }),
         { temporaryReferences },
       )
-      setElement(payload.root)
+      startTransition(() => {
+        setElement(payload.root)
+        setLoading(false)
+      })
       const { ok, data } = payload.returnValue ?? {}
       if (!ok) throw data
       return data
@@ -85,8 +88,10 @@ export default function RscContent() {
       // First render: use injected RSC stream from the HTML payload
       createFromReadableStream(rscStream).then((payload) => {
         if (!cancelled) {
-          setElement(payload.root)
-          setLoading(false)
+          startTransition(() => {
+            setElement(payload.root)
+            setLoading(false)
+          })
           applyHeadFromPayload(payload)
         }
       })
@@ -95,8 +100,10 @@ export default function RscContent() {
       const rscUrl = `${location.pathname}_.rsc${location.search}`
       createFromFetch(fetch(rscUrl)).then((payload) => {
         if (!cancelled) {
-          setElement(payload.root)
-          setLoading(false)
+          startTransition(() => {
+            setElement(payload.root)
+            setLoading(false)
+          })
           applyHeadFromPayload(payload)
         }
       })
