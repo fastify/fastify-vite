@@ -1,3 +1,5 @@
+import { filePathToRoutePath } from './route-utils.js'
+
 // Otherwise we get a ReferenceError, but since
 // this function is only ran once, there's no overhead
 class Routes extends Array {
@@ -73,18 +75,7 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
               .replace(/^\/*|\/*$/g, '')
               // Replace slashes with underscores
               .replace(/\//g, '_'),
-            path:
-              routeModule.path ??
-              path
-                // Remove /pages and .vue extension
-                .slice(6, -4)
-                // Replace [id] with :id and [slug+] with :slug+
-                .replace(param, (_, m) => `:${m}`)
-                .replace(/:\w+\+/, (_, m) => `*`)
-                // Replace '/index' with '/'
-                .replace(/\/index$/, '/')
-                // Remove trailing slashs
-                .replace(/(.+)\/+$/, (...m) => m[1]),
+            path: routeModule.path ?? filePathToRoutePath(path),
             ...routeModule,
           }
 
@@ -101,6 +92,12 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
 }
 
 export function getRouteModuleExports(routeModule) {
+  if (routeModule.rsc && routeModule.getData) {
+    throw new Error(
+      `Route has both rsc: true and getData() — these are mutually exclusive. ` +
+        `Use RSC server component data fetching instead.`,
+    )
+  }
   return {
     // The Route component (default export)
     component: routeModule.default,
