@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { join, isAbsolute } from 'node:path'
-import Youch from 'youch'
+import { Youch } from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
 
@@ -16,6 +16,10 @@ export async function prepareClient(entries, _) {
     const { default: create } = await client.create
     client.create = create
   }
+  // Attach the RSC handler from the RSC environment entry (rsc-entry.jsx)
+  if (entries.rsc) {
+    client.rscHandler = entries.rsc
+  }
   return client
 }
 
@@ -23,10 +27,10 @@ export function createErrorHandler(_, scope, config) {
   return async (error, req, reply) => {
     req.log.error(error)
     if (config.dev) {
-      const youch = new Youch(error, req.raw)
+      const youch = new Youch()
       reply.code(500)
       reply.type('text/html')
-      reply.send(await youch.toHTML())
+      reply.send(await youch.toHTML(error))
       return reply
     }
     reply.code(500)
@@ -99,9 +103,16 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     })
   }
 
-  // Route handler
+  // Route handler — branch on rsc
   let handler
-  if (config.dev) {
+  if (route.rsc) {
+    handler = async (req, reply) => {
+      const { convertRequest, sendResponse } = await import('./rsc-handler.js')
+      const request = await convertRequest(req)
+      const response = await client.rscHandler.fetch(request)
+      sendResponse(reply, response)
+    }
+  } else if (config.dev) {
     handler = (_, reply) => reply.html()
   } else {
     const { id } = route
@@ -129,6 +140,21 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     handler,
     ...route,
   })
+
+  // Register companion route for RSC _.rsc suffix requests.
+  // Client-side code (mount.js, rsc-content.jsx) constructs action/fetch
+  // URLs as `${pathname}_.rsc`, e.g., `/actions_.rsc`.
+  // Without this companion route, Fastify returns 404 for these requests.
+  if (route.rsc) {
+    scope.route({
+      url: routePath + '_.rsc',
+      method: ['GET', 'POST'],
+      errorHandler,
+      handler,
+      onRequest: route.onRequest,
+      preHandler: route.preHandler,
+    })
+  }
 
   if (route.getData) {
     // If getData is provided, register JSON endpoint for it
