@@ -1,4 +1,5 @@
 import viteFastify from '@fastify/vite/plugin'
+import rsc from '@vitejs/plugin-rsc'
 import {
   prefix,
   resolveId,
@@ -12,9 +13,13 @@ export default function viteFastifyReactPlugin({ ts } = {}) {
   const context = {
     root: null,
   }
+  const clientModule = ts ? '$app/index.ts' : '$app/index.js'
   return [
     viteFastify({
-      clientModule: ts ? '$app/index.ts' : '$app/index.js',
+      clientModule,
+    }),
+    rsc({
+      serverHandler: false,
     }),
     {
       // https://vite.dev/guide/api-plugin#conventions
@@ -62,15 +67,43 @@ function configResolved(config) {
   this.root = config.root
 }
 
-function config(config, { command }) {
+function config(rawConfig, { command }) {
+  if (!rawConfig.environments) {
+    rawConfig.environments = {}
+  }
+
+  const outDir = rawConfig.build?.outDir ?? 'dist'
+
+  // The RSC environment is needed in both dev and build modes.
+  // In dev mode, the module runner needs a null-byte-free virtual module ID.
+  // In build mode, Rollup handles the null byte prefix for virtual modules.
+  const isBuild = command === 'build'
+  rawConfig.environments.rsc = {
+    build: {
+      outDir: `${outDir}/rsc`,
+      rollupOptions: {
+        input: {
+          index: isBuild ? '\0$app/rsc-entry.jsx' : '$app/rsc-entry.jsx',
+        },
+      },
+    },
+    resolve: {
+      conditions: ['react-server'],
+    },
+  }
+
   if (command === 'build') {
-    if (!config.build) {
-      config.build = {}
+    if (!rawConfig.build) {
+      rawConfig.build = {}
     }
-    if (!config.build.rollupOptions) {
-      config.build.rollupOptions = {}
+    if (!rawConfig.build.rollupOptions) {
+      rawConfig.build.rollupOptions = {}
     }
-    config.build.rollupOptions.onwarn = onwarn
+    rawConfig.build.rollupOptions.onwarn = onwarn
+
+    // Don't override buildApp — the @vitejs/plugin-rsc plugin already sets up
+    // its own 5-step build pipeline (scan rsc → scan ssr → build rsc → build client → build ssr)
+    // which properly handles environment import resolution.
   }
 }
 
