@@ -15,6 +15,9 @@ const virtualModules = [
   'context.js',
   'core.jsx',
   'index.js',
+  'rsc-entry.jsx',
+  'ssr-entry.jsx',
+  'rsc-content.jsx',
 ]
 
 const virtualModulesTS = [

@@ -24,3 +24,13 @@ test('resolveId leaves project overrides as real files', async (t) => {
 
   assert.equal(await resolveId.call({ root }, '$app/layouts.js'), override)
 })
+
+test('resolveId resolves $app/rsc-entry.jsx', async () => {
+  const result = await resolveId.call({ root: import.meta.dirname }, '$app/rsc-entry.jsx')
+  assert.equal(result, '/$app/rsc-entry.jsx')
+})
+
+test('resolveId resolves $app/rsc-content.jsx', async () => {
+  const result = await resolveId.call({ root: import.meta.dirname }, '$app/rsc-content.jsx')
+  assert.equal(result, '/$app/rsc-content.jsx')
+})
