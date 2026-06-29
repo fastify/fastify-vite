@@ -1,7 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import type { Plugin as VitePlugin, ResolvedConfig } from 'vite'
 import { createServer, createServerModuleRunner } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
 import type { ClientModule } from '../types/client.ts'
@@ -10,22 +9,6 @@ import type { RouteDefinition } from '../types/route.ts'
 import { hasIterableRoutes, type FastifyViteDecorationPriorToSetup } from './support.ts'
 
 export const hot = Symbol('hotModuleReplacementProxy')
-
-interface ViteEnvironmentsConfig {
-  root: string
-  environments: Record<
-    string,
-    {
-      build?: {
-        rollupOptions?: {
-          input?: {
-            index?: string
-          }
-        }
-      }
-    }
-  >
-}
 
 interface HotState {
   client?: ClientModule | null
@@ -46,51 +29,24 @@ interface LoadedEntryModule {
 async function loadEntryModulePaths(
   runtimeConfig: DevRuntimeConfig,
 ): Promise<Record<string, string> | null> {
-  if (runtimeConfig.spa) {
-    return null
-  }
-  const entryModulePaths: Record<string, string> = {}
+  if (runtimeConfig.spa) return null
 
   const { viteConfig } = runtimeConfig
+  const result: Record<string, string> = {}
 
-  if (!hasPlugin(viteConfig, 'vite-fastify')) {
-    throw new Error("@fastify/vite's Vite plugin not registered")
+  for (const [envName, env] of Object.entries(viteConfig.environments ?? {})) {
+    if (envName === 'client') continue
+    const input = env.build?.rollupOptions?.input
+    if (!input) continue
+    const entry = Object.values(input).find(Boolean) as string | undefined
+    if (!entry) continue
+    // Strip Vite's \0 virtual module prefix before checking against virtualModulePrefix
+    const cleanPath = entry.charCodeAt(0) === 0 ? entry.slice(1) : entry
+    result[envName] = cleanPath.startsWith(runtimeConfig.virtualModulePrefix)
+      ? cleanPath
+      : resolve(viteConfig.root, cleanPath.replace(/^\/+/, ''))
   }
-
-  const plugin = findPlugin(viteConfig, 'vite-fastify')
-  const configHook = plugin.config
-
-  const setupEnvironments = typeof configHook === 'function' ? configHook : configHook?.handler
-  if (!setupEnvironments) {
-    throw new Error("@fastify/vite's Vite plugin has no config hook")
-  }
-
-  const viteEnvsConfig: ViteEnvironmentsConfig = {
-    root: viteConfig.root,
-    environments: {},
-  }
-
-  await setupEnvironments.call({} as never, viteEnvsConfig, {
-    mode: 'development',
-    command: 'serve',
-  })
-
-  const { client: _, ...nonClientEnvs } = Object.fromEntries(
-    Object.keys(viteEnvsConfig.environments).map((env) => [env, 1]),
-  )
-
-  for (const env of Object.keys(nonClientEnvs)) {
-    const environment = viteEnvsConfig.environments[env]
-    if (environment.build?.rollupOptions?.input?.index) {
-      const modulePath = environment.build.rollupOptions.input.index.startsWith(
-        runtimeConfig.virtualModulePrefix,
-      )
-        ? environment.build.rollupOptions.input.index
-        : resolve(viteConfig.root, environment.build.rollupOptions.input.index.replace(/^\/+/, ''))
-      entryModulePaths[env] = modulePath
-    }
-  }
-  return entryModulePaths
+  return Object.keys(result).length > 0 ? result : null
 }
 
 export async function loadEntries(
@@ -240,35 +196,4 @@ export async function setup(
   const client = clientResult ? (clientResult as ClientModule) : null
 
   return client
-}
-
-function findPlugin(config: ResolvedConfig, pluginName: string): VitePlugin {
-  for (const plugin of config.plugins) {
-    if (Array.isArray(plugin)) {
-      for (const subPlugin of plugin) {
-        if ((subPlugin as VitePlugin).name === pluginName) {
-          return subPlugin as VitePlugin
-        }
-      }
-    }
-    if ((plugin as VitePlugin).name === pluginName) {
-      return plugin as VitePlugin
-    }
-  }
-  const found = config.plugins.some((_) => {
-    if (Array.isArray(_)) {
-      return _.some((__) => (__ as VitePlugin).name === pluginName)
-    }
-    return (_ as VitePlugin).name === pluginName
-  })
-  return found ? ({} as VitePlugin) : ({} as VitePlugin)
-}
-
-function hasPlugin(config: ResolvedConfig, pluginName: string): boolean {
-  return config.plugins.some((_) => {
-    if (Array.isArray(_)) {
-      return _.some((__) => (__ as VitePlugin).name === pluginName)
-    }
-    return (_ as VitePlugin).name === pluginName
-  })
 }
