@@ -7,7 +7,7 @@ import layouts from '$app/layouts.js'
 import { waitFetch, waitResource } from '$app/resource.js'
 
 // Lazily loaded RSC content component — only used client-side
-const RscContent = import.meta.env.SSR ? null : lazy(() => import('$app/rsc-content.jsx'))
+const RscContent = import.meta.env.SSR ? null : lazy(() => import('$app/rsc-content.tsx'))
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
