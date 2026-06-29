@@ -100,7 +100,7 @@ export async function createRoutes(fromPromise, { param } = { param: /\[([.\w]+\
   return new Routes(...(await Promise.all(promises)))
 }
 
-function getRouteModuleExports(routeModule) {
+export function getRouteModuleExports(routeModule) {
   return {
     // The Route component (default export)
     component: routeModule.default,
@@ -114,6 +114,8 @@ function getRouteModuleExports(routeModule) {
     streaming: routeModule.streaming,
     clientOnly: routeModule.clientOnly,
     serverOnly: routeModule.serverOnly,
+    // RSC-enabled route
+    rsc: routeModule.rsc ?? false,
     // Server configure function
     configure: routeModule.configure,
     // Route-level Fastify hooks
