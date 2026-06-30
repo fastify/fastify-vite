@@ -103,7 +103,7 @@ async function extractHeadMeta(routeId, url) {
  * @param {object} match - The React Router match object
  * @returns {Promise<object|null>}
  */
-async function extractOnEnter(routeId, requestUrl, match) {
+async function extractOnEnter(routeId, requestUrl, match, state) {
   const loader = routesManifest[routeId]
   if (!loader) return null
 
@@ -115,7 +115,7 @@ async function extractOnEnter(routeId, requestUrl, match) {
         url: requestUrl,
         params: leafMatch?.params ?? {},
         data: {},
-        state: null,
+        state: state ?? null,
         server: null,
         req: null,
         reply: null,
@@ -235,7 +235,12 @@ async function handler(request) {
 
         // Primary approach: use leafMatch route id from react-router match
         if (leafMatch?.route?.id) {
-          onEnterData = await extractOnEnter(leafMatch.route.id, renderRequest.url, match)
+          onEnterData = await extractOnEnter(
+            leafMatch.route.id,
+            renderRequest.url,
+            match,
+            valtioState,
+          )
           head = await extractHeadMeta(leafMatch.route.id, renderRequest.url)
         }
 
@@ -252,8 +257,15 @@ async function handler(request) {
           }
         }
 
+        // Merge onEnterData into Valtio state so client components can read
+        // it via useRouteContext() + useSnapshot(). Then remove onEnterData
+        // from the payload — it's redundant after merging.
+        if (onEnterData && valtioState) {
+          Object.assign(valtioState, onEnterData)
+        }
+
         // Spread the full match payload (includes type, matches, loaderData, location)
-        const rscPayload = { ...match.payload, head, formState, returnValue, onEnterData }
+        const rscPayload = { ...match.payload, head, formState, returnValue }
 
         // Wrap RSC element tree with ValtioHydrator if Valtio state is available.
         // valtioState may be a plain object (from context.js state()) or a Valtio

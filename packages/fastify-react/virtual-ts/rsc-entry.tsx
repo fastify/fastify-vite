@@ -51,7 +51,7 @@ function resolveGetMeta(routeId, routesManifest, url) {
   return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta({ url }) : null))
 }
 
-async function extractOnEnter(routeId, requestUrl, match, routesManifest) {
+async function extractOnEnter(routeId, requestUrl, match, routesManifest, state) {
   const loader = routesManifest[routeId]
   if (typeof loader !== 'function') return null
 
@@ -63,7 +63,7 @@ async function extractOnEnter(routeId, requestUrl, match, routesManifest) {
         url: requestUrl,
         params: leafMatch?.params ?? {},
         data: {},
-        state: null,
+        state: state ?? null,
         server: null,
         req: null,
         reply: null,
@@ -143,12 +143,20 @@ async function handler(request) {
             renderRequest.url,
             match,
             routesManifest,
+            valtioState,
           )
           head = await resolveGetMeta(leafMatch.route.id, routesManifest, renderRequest.url)
         }
 
+        // Merge onEnterData into Valtio state so client components can read
+        // it via useRouteContext() + useSnapshot(). Then remove onEnterData
+        // from the payload — it's redundant after merging.
+        if (onEnterData && valtioState) {
+          Object.assign(valtioState, onEnterData)
+        }
+
         // Spread the full match payload (includes type, matches, loaderData, location)
-        const rscPayload = { ...match.payload, head, formState, returnValue, onEnterData }
+        const rscPayload = { ...match.payload, head, formState, returnValue }
 
         // Wrap RSC element tree with ValtioHydrator if Valtio state is available.
         // valtioState may be a plain object (from context.js state()) or a Valtio
