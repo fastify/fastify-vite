@@ -26,6 +26,13 @@ export async function convertRequest(req) {
 export async function sendResponse(reply, response) {
   reply.code(response.status)
   for (const [key, value] of response.headers) {
+    // Strip Content-Length for streaming responses — Fastify's
+    // sendWebStream() handles framing via chunked transfer encoding.
+    // react-router's routeRSCServerRequest sets Content-Length on RSC
+    // payload responses, which would short-circuit the HTML stream.
+    if (key.toLowerCase() === 'content-length' && response.body instanceof ReadableStream) {
+      continue
+    }
     reply.header(key, value)
   }
   if (response.body) {

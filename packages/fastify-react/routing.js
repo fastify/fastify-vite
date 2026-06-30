@@ -116,6 +116,13 @@ export async function createRoute({ client, errorHandler, route }, scope, config
       const request = await convertRequest(req)
       const response = await client.rscHandler.fetch(request)
       sendResponse(reply, response)
+      // CRITICAL: return reply so Fastify's async-handler promise wrapper
+      // doesn't treat the handler as resolved-with-undefined and race the
+      // stream with a second reply.send(undefined). Without this, the
+      // streaming ReadableStream body gets killed mid-flight and the
+      // client receives content-length: 0 with an empty body.
+      // See fastify/fastify#4029, #4018, #6682.
+      return reply
     }
   } else if (config.dev) {
     handler = (_, reply) => reply.html()
