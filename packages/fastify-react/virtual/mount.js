@@ -13,8 +13,8 @@ async function mountApp(...targets) {
     if (targetElem) {
       mountTargetFound = true
 
-      // Detect RSC page by checking for FLIGHT_DATA or _R_ bootstrap script
-      const isRscPage = window.__FLIGHT_DATA || document.getElementById('_R_')
+      // Detect RSC page via FLIGHT_DATA (injected by SSR entries in the HTML)
+      const isRscPage = window.__FLIGHT_DATA
 
       if (isRscPage) {
         // RSC path — decode payload BEFORE hydration (canonical starter pattern)
