@@ -161,16 +161,12 @@ async function handler(request) {
         // Wrap RSC element tree with ValtioHydrator if Valtio state is available.
         // valtioState may be a plain object (from context.js state()) or a Valtio
         // proxy (if the user returned proxy({...}) from their state function).
-        // snapshot() only works on proxy objects — fall back to the raw value.
+        // snapshot() only works on proxy objects — use getVersion() to check
+        // silently before calling snapshot(), avoiding Valtio's console.warn.
         if (valtioState && rscPayload.matches?.[0]?.element) {
-          let stateSnapshot
-          try {
-            const { snapshot } = await import('valtio')
-            stateSnapshot = snapshot(valtioState)
-          } catch {
-            // Not a Valtio proxy — plain object, use directly
-            stateSnapshot = valtioState
-          }
+          const { snapshot, getVersion } = await import('valtio')
+          const stateSnapshot =
+            getVersion(valtioState) !== undefined ? snapshot(valtioState) : valtioState
           rscPayload.matches[0].element = (
             <ValtioHydrator state={stateSnapshot}>{rscPayload.matches[0].element}</ValtioHydrator>
           )
