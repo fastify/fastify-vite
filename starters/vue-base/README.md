@@ -1,3 +1,3 @@
 <br>
 
-The official **[@fastify/vue](https://fastify.github.io/fastify-vite/vue/)** base starter template.
+The official **[@fastify/vue](https://vite.fastify.dev/vue/)** base starter template.

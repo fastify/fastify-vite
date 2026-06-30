@@ -42,7 +42,7 @@ giget gh:fastify/fastify-vite/starters/react-base your-app
 
 - [**`fastify`**](https://github.com/fastify/fastify) as the **Node.js** server.
 
-- [**`vite`**](https://vitejs.dev/) for the client application bundling.
+- [**`vite`**](https://vite.dev) for the client application bundling.
 
 - [**`@fastify/vite`**](https://github.com/fastify/fastify-vite) for Vite integration in Fastify.
   - And its peer dependencies:
