@@ -1,5 +1,5 @@
 import { createFromReadableStream } from '@vitejs/plugin-rsc/ssr'
-import { renderToReadableStream } from 'react-dom/server.edge'
+import { renderToReadableStream } from 'react-dom/server'
 import {
   unstable_routeRSCServerRequest as routeRSCServerRequest,
   unstable_RSCStaticRouter as RSCStaticRouter,
@@ -13,13 +13,27 @@ import { join } from 'node:path'
  * Tries the Vite client root first, falls back to a hardcoded template.
  */
 function loadHtmlTemplate() {
-  // Try reading from the Vite client root relative to CWD
-  const candidates = [
-    join(process.cwd(), 'client', 'index.html'),
-    'client/index.html',
-    join(process.cwd(), 'index.html'),
-    'index.html',
-  ]
+  // In dev mode, prefer the source template which references $app/mount.js
+  // (resolved by Vite's virtual module system). In production, prefer the
+  // built template with hashed bundled scripts.
+  // Avoid loading production build artifacts in dev mode — the Vite dev
+  // server cannot serve the hashed bundled assets at those paths.
+  const isDev = import.meta.env.DEV
+  const candidates = isDev
+    ? [
+        join(process.cwd(), 'client', 'index.html'),
+        'client/index.html',
+        join(process.cwd(), 'client', 'dist', 'client', 'index.html'),
+        join(process.cwd(), 'index.html'),
+        'index.html',
+      ]
+    : [
+        join(process.cwd(), 'client', 'dist', 'client', 'index.html'),
+        join(process.cwd(), 'client', 'index.html'),
+        'client/index.html',
+        join(process.cwd(), 'index.html'),
+        'index.html',
+      ]
   for (const path of candidates) {
     try {
       if (existsSync(path)) {
@@ -74,9 +88,7 @@ async function readRSCPayload(rscBody) {
 }
 
 export async function generateHTML(request, serverResponse) {
-  // Read the RSC flight data BEFORE passing to routeRSCServerRequest,
-  // because routeRSCServerRequest internally consumes serverResponse.body
-  // via getPayload() / createStream() for route matching.
+  // Read the RSC flight data for client-side hydration scripts.
   let rscPayloadScripts = ''
   try {
     const clone = serverResponse.clone()
@@ -89,6 +101,17 @@ export async function generateHTML(request, serverResponse) {
   const indexHtml = loadHtmlTemplate()
   const [templateBefore, templateAfter] = indexHtml.split(el)
 
+  // Use routeRSCServerRequest from react-router to handle RSC stream reading,
+  // redirect detection, and response wrapping. Previously we reimplemented
+  // this directly, but that bypassed react-router's Router context management
+  // and used react-dom/server.edge — a separate module from the non-RSC
+  // renderer's react-dom/server (node). Both modules share the same React
+  // LocationContext object but manage _currentValue independently, causing
+  // "Router inside another Router" errors after non-RSC page renders.
+  // Using react-dom/server (not .edge) ensures both renders share the same
+  // module instance with consistent context lifecycle.
+  const bootstrapScriptContent = await import.meta.viteRsc.loadBootstrapScriptContent('index')
+
   return await routeRSCServerRequest({
     request,
     serverResponse,
@@ -97,8 +120,6 @@ export async function generateHTML(request, serverResponse) {
     async renderHTML(getPayload, options) {
       const payload = await getPayload()
       const formState = payload.formState
-
-      const bootstrapScriptContent = await import.meta.viteRsc.loadBootstrapScriptContent('index')
 
       // Create unhead instance and push head metadata from getMeta
       const head = createHead()

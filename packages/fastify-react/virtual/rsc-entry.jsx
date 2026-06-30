@@ -150,10 +150,17 @@ async function handler(request) {
   // not process the action itself. If we pass a POST request with a consumed
   // body (already read by request.formData()), React Router's processServerAction
   // tries request.clone().formData() on an ended stream, producing empty FormData.
+  // Also strip the _.rsc suffix from the request URL — parseRenderRequest already
+  // parsed it and stored the clean URL in renderRequest.url, but the original
+  // request still has _.rsc in its URL, which react-router can't match.
   if (renderRequest.isAction) {
-    const rscUrl = new URL(request.url)
-    request = new Request(rscUrl, {
+    request = new Request(renderRequest.url, {
       method: 'GET',
+      headers: request.headers,
+    })
+  } else if (renderRequest.isRsc) {
+    request = new Request(renderRequest.url, {
+      method: request.method,
       headers: request.headers,
     })
   }
@@ -232,14 +239,36 @@ async function handler(request) {
       headers: { 'Content-Type': 'text/html' },
     })
   } catch (error) {
-    // Render error using Youch (project convention for dev error pages)
-    const { Youch } = await import('youch')
-    const youch = new Youch()
-    const html = await youch.toHTML(error, { title: 'RSC Render Error' })
-    return new Response(html, {
-      status: 500,
-      headers: { 'Content-Type': 'text/html' },
-    })
+    // Log the full error for debugging
+    console.error(
+      '[rsc-entry] handler error:',
+      error?.constructor?.name,
+      error?.message,
+      error?.stack?.split('\n').slice(0, 4).join('\n'),
+    )
+    // Render error using Youch (project convention for dev error pages).
+    // In production, Youch may not be resolvable from the RSC bundle's
+    // runtime location — fall back to a minimal error string.
+    try {
+      const { Youch } = await import('youch')
+      const youch = new Youch()
+      const html = await youch.toHTML(error, { title: 'RSC Render Error' })
+      return new Response(html, {
+        status: 500,
+        headers: { 'Content-Type': 'text/html' },
+      })
+    } catch {
+      const errorText =
+        error?.message ??
+        (typeof error === 'string' ? error : (error?.toString() ?? 'Unknown error'))
+      return new Response(
+        `<html><body><h1>500 — Internal Server Error</h1><pre>${errorText}</pre></body></html>`,
+        {
+          status: 500,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        },
+      )
+    }
   }
 }
 

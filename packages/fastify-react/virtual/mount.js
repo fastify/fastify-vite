@@ -42,6 +42,13 @@ async function mountApp(...targets) {
           globalThis[wpRequire] = (id) => {
             // Strip $cache= tag (single $ version). The RSC protocol flight data
             // decodes $$ -> $, so createReferenceCacheTag's $$cache= becomes $cache=.
+            // IMPORTANT: Only strip $cache= when $$cache= is NOT present —
+            // $cache= matches inside $$cache= (at the second $), producing
+            // a broken URL like /components/foo.jsx$ instead of /components/foo.jsx.
+            // When $$cache= is present, removeReferenceCacheTag handles it.
+            if (id.includes('$$cache=')) {
+              return globalThis.__vite_rsc_require__(id)
+            }
             const cc = '$' + 'cache='
             const cleanId = id.includes(cc) ? id.split(cc)[0] : id
             return globalThis.__vite_rsc_require__(cleanId)
@@ -56,8 +63,14 @@ async function mountApp(...targets) {
         // the polyfill), $cache= still reaches __vite_rsc_require__. The RSC
         // protocol decodes $$ -> $, so $$cache= becomes $cache= after flight data
         // decoding, but removeReferenceCacheTag only looks for $$cache=.
+        // IMPORTANT: $cache= substring check matches inside $$cache= (at the
+        // second $), stripping from the wrong position. Always check $$cache=
+        // first and delegate to the original handler which knows how to strip it.
         const _origViteRscRequire = globalThis.__vite_rsc_require__
         globalThis.__vite_rsc_require__ = (id) => {
+          if (id.includes('$$cache=')) {
+            return _origViteRscRequire(id)
+          }
           const cacheIdx = id.indexOf('$cache=')
           if (cacheIdx !== -1) id = id.slice(0, cacheIdx)
           return _origViteRscRequire(id)

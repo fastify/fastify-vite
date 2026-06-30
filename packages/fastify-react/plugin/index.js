@@ -243,8 +243,16 @@ function config(rawConfig, { command }) {
     // Build: externalize React so the SSR bundle imports from host
     if (ssr.resolve?.noExternal && Array.isArray(ssr.resolve.noExternal)) {
       ssr.resolve.noExternal = ssr.resolve.noExternal.filter(
-        (pkg) => pkg !== 'react' && pkg !== 'react-dom',
+        (pkg) => pkg !== 'react' && pkg !== 'react-dom' && pkg !== 'react-router',
       )
+    }
+    // Ensure react-router shares the same instance across the RSC and SSR
+    // bundles — the SSR entry is imported at runtime by the RSC handler via
+    // import.meta.viteRsc.import(), and separate react-router copies cause
+    // "You cannot render a <Router> inside another <Router>" errors.
+    if (!ssr.external) ssr.external = []
+    if (Array.isArray(ssr.external)) {
+      ssr.external.push('react-router')
     }
 
     // Dev: don't pre-bundle React so Vite's SSR module runner resolves

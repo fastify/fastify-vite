@@ -56,6 +56,11 @@ export async function createRoute({ client, errorHandler, route }, scope, config
 
   const preHandler = [
     async (req) => {
+      // RSC routes use client.rscHandler.fetch() which manages its own
+      // rendering via matchRSCServerRequest and the SSR entry. Creating
+      // a React app with StaticRouter here would conflict with the
+      // SSR entry's RSCStaticRouter — skip it entirely.
+      if (route.rsc) return
       if (!req.route.clientOnly) {
         const app = client.create({
           routes: client.routes,
@@ -117,10 +122,14 @@ export async function createRoute({ client, errorHandler, route }, scope, config
   } else {
     const { id } = route
     const htmlPath = id.replace('pages/', 'html/').replace(/\.(j|t)sx$/, '.html')
-    // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
-    let distDir = config.vite.build.outDir
-    if (!isAbsolute(config.vite.build.outDir)) {
-      distDir = join(config.vite.root, distDir)
+    // Use config.viteConfig (the serialized Vite config) for outDir.
+    // Resolve relative outDir against the absolute config.root (the fixture/
+    // project root), not config.vite.root — the serialized root is relative
+    // and joining two relative paths produces a doubled path in production.
+    const viteConfig = config.viteConfig ?? config.vite
+    let distDir = viteConfig.build.outDir
+    if (!isAbsolute(distDir)) {
+      distDir = join(config.root, distDir)
     }
     const htmlSource = readFileSync(join(distDir, htmlPath), 'utf8')
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
