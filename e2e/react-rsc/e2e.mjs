@@ -165,9 +165,14 @@ test.describe('RSC e2e', () => {
     await expect(page.locator('li')).toHaveCount(3)
   })
 
-  test('12. Valtio store page renders', async ({ page }) => {
+  test('12. Valtio store page renders state from server seed', async ({ page }) => {
     await page.goto(`${BASE_URL}/using-store`)
     await expect(page.locator('h2')).toHaveText('Valtio State Management')
+    // Valtio state seeded from context.js and threaded through ValtioHydrator
+    await expect(page.getByTestId('valtio-count')).toHaveText('Count: 42', { timeout: 10000 })
+    await expect(page.getByTestId('valtio-message')).toHaveText('Message: Hello from Valtio!', {
+      timeout: 10000,
+    })
   })
 
   test('13. Data server action — button click shows server data', async ({ page }) => {
