@@ -191,6 +191,7 @@ function config(rawConfig, { command }) {
 
   rawConfig.environments.rsc = {
     ...existingRsc,
+    keepProcessEnv: false,
     build: {
       ...existingRsc.build,
       outDir: `${outDir}/rsc`,
