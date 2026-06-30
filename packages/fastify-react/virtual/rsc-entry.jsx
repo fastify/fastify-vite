@@ -298,21 +298,15 @@ async function handler(request) {
     const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.jsx', { environment: 'ssr' })
     const htmlResult = await ssrEntry.generateHTML(request, rscResponse.clone())
 
-    // Buffer the RSC HTML stream and send as a string response body.
-    // This avoids streaming compatibility issues with Fastify's sendWebStream()
-    // when the stream produces content asynchronously via TransformStream.flush().
-    const bodyChunks = []
-    const htmlReader = htmlResult.body.getReader()
-    let readResult
-    while (!(readResult = await htmlReader.read()).done) {
-      bodyChunks.push(readResult.value)
+    // Defensive guard: catch empty-body responses early with a clear error.
+    if (!htmlResult.body) {
+      const body = await htmlResult.text()
+      throw new Error(`RSC SSR response has no body (status ${htmlResult.status}): ${body}`)
     }
-    const bodyText = bodyChunks.map((c) => new TextDecoder().decode(c, { stream: true })).join('')
 
-    return new Response(bodyText, {
-      status: htmlResult.status,
-      headers: { 'Content-Type': 'text/html' },
-    })
+    // Pass the streaming Response through — ssr-entry.jsx's TransformStream
+    // emits chunks progressively, and Fastify's sendWebStream() handles them.
+    return htmlResult
   } catch (error) {
     // Log the full error for debugging
     console.error(

@@ -136,30 +136,33 @@ export async function generateHTML(request, serverResponse) {
 
       const decoder = new TextDecoder()
       const encoder = new TextEncoder()
-      let html = ''
 
-      // Buffer the RSC SSR content, then wrap in the index.html template,
-      // inject head metadata, and embed the RSC flight data for hydration.
+      // Inject head metadata into the template start before streaming begins.
+      // templateBefore contains <head> tags, so transformHtmlTemplate can
+      // inject title/meta/link tags there. Individual SSR chunks don't contain
+      // <head>, so they'd pass through transformHtmlTemplate unchanged anyway.
+      const headInjectedBefore = await transformHtmlTemplate(head, templateBefore)
+
+      // Stream the RSC SSR content progressively — emit templateBefore first,
+      // then each cleaned HTML chunk, then RSC payload scripts and templateAfter.
       return htmlStream.pipeThrough(
         new TransformStream({
-          transform(chunk, _controller) {
+          start(controller) {
+            controller.enqueue(encoder.encode(headInjectedBefore))
+          },
+          transform(chunk, controller) {
             const str = typeof chunk === 'string' ? chunk : decoder.decode(chunk, { stream: true })
-            html += str
+            // Strip the _R_ bootstrap script — mount.js handles RSC hydration.
+            // React SSR doesn't split <script> tags across chunk boundaries,
+            // so a simple .replace() on each chunk is sufficient.
+            const cleaned = str.replace(/<script id="_R_">.*?<\/script>/g, '')
+            controller.enqueue(encoder.encode(cleaned))
           },
           async flush(controller) {
-            // Strip the _R_ bootstrap script — mount.js handles RSC hydration
-            html = html.replace(/<script id="_R_">.*?<\/script>/g, '')
-
-            // Build the full HTML document using the template
-            const bodyContent = templateBefore + html + (templateAfter ?? '')
-
-            // Inject head metadata (title, meta, etc.) via unhead
-            const headInjected = await transformHtmlTemplate(head, bodyContent)
-
-            // Embed RSC flight data before </body> for client hydration
-            const finalHtml = headInjected.replace('</body>', rscPayloadScripts + '</body>')
-
-            controller.enqueue(encoder.encode(finalHtml))
+            // Embed RSC flight data and the rest of the HTML shell.
+            // No controller.terminate() — returning from flush() lets the
+            // TransformStream close both sides normally.
+            controller.enqueue(encoder.encode(rscPayloadScripts + (templateAfter ?? '')))
           },
         }),
       )
