@@ -6,53 +6,10 @@ settings:
 
 catalogs:
   default:
-    '@fastify/middie':
-      specifier: ^9.3.2
-      version: 9.3.2
     devalue:
       specifier: ^5.8.1
       version: 5.8.1
-    fastify:
-      specifier: ^5.8.5
-      version: 5.8.5
-    tsx:
-      specifier: ^4.21.0
-      version: 4.21.0
-    typescript:
-      specifier: ^6.0.3
-      version: 6.0.3
-    vite:
-      specifier: ^8.0.16
-      version: 8.0.16
-    vitest:
-      specifier: ^4.1.9
-      version: 4.1.4
-  eslint:
-    '@eslint/js':
-      specifier: ^10.0.1
-      version: 10.0.1
-    eslint:
-      specifier: ^10.2.0
-      version: 10.2.0
-    eslint-config-prettier:
-      specifier: ^10.1.8
-      version: 10.1.8
-    eslint-plugin-vue:
-      specifier: ^10.8.0
-      version: 10.8.0
-    globals:
-      specifier: ^17.4.0
-      version: 17.5.0
-    typescript-eslint:
-      specifier: ^8.58.1
-      version: 8.58.2
-    vue-eslint-parser:
-      specifier: ^10.4.0
-      version: 10.4.0
   react:
-    '@vitejs/plugin-react':
-      specifier: ^6.0.1
-      version: 6.0.1
     react:
       specifier: ^19.2.4
       version: 19.2.4
@@ -62,16 +19,6 @@ catalogs:
     react-router:
       specifier: ^7.15.1
       version: 7.18.0
-  vue:
-    '@vitejs/plugin-vue':
-      specifier: ^6.0.5
-      version: 6.0.5
-    vue:
-      specifier: ^3.5.26
-      version: 3.5.26
-    vue-router:
-      specifier: ^4.6.4
-      version: 4.6.4
 
 overrides:
   '@xmldom/xmldom': '>=0.9.10'
