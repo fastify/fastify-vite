@@ -56,7 +56,9 @@
     "virtual/rsc-content.jsx",
     "virtual/rsc-entry.jsx",
     "virtual/ssr-entry.jsx",
+    "virtual/valtio-hydrator.jsx",
     "virtual-ts/layouts/default.tsx",
+    "virtual-ts/valtio-hydrator.tsx",
     "virtual/layouts/default.jsx"
   ],
   "type": "module",

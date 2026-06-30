@@ -18,6 +18,7 @@ const virtualModules = [
   'rsc-entry.jsx',
   'ssr-entry.jsx',
   'rsc-content.jsx',
+  'valtio-hydrator.jsx',
 ]
 
 const virtualModulesTS = [
@@ -34,6 +35,7 @@ const virtualModulesTS = [
   'rsc-entry.tsx',
   'ssr-entry.tsx',
   'rsc-content.tsx',
+  'valtio-hydrator.tsx',
 ]
 
 // Vite marks virtual modules with a null byte (\0) internally.

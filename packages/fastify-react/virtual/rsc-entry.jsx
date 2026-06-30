@@ -9,6 +9,7 @@ import {
 import { unstable_matchRSCServerRequest as matchRSCServerRequest } from 'react-router'
 import routesManifest from '$app/routes.js'
 import { filePathToRoutePath } from '#runtime/route-utils.js'
+import ValtioHydrator from '$app/valtio-hydrator.jsx'
 /**
  * URL suffix to differentiate RSC requests from SSR requests.
  * RSC requests end with '_.rsc', which is stripped to get the actual URL path.
@@ -89,6 +90,51 @@ async function extractHeadMeta(routeId, url) {
 }
 
 /**
+ * Execute the `onEnter` lifecycle hook from the matched route module.
+ * This runs before the server component render, allowing the route to
+ * perform data loading, authentication checks, or other side effects.
+ *
+ * The `onEnter` callback receives a `ctx` object with request context.
+ * If it returns data, it's included in the RSC payload as `onEnterData`.
+ * Errors are logged but don't crash the render.
+ *
+ * @param {string} routeId - The file path of the matched route
+ * @param {URL} requestUrl - The normalized request URL
+ * @param {object} match - The React Router match object
+ * @returns {Promise<object|null>}
+ */
+async function extractOnEnter(routeId, requestUrl, match) {
+  const loader = routesManifest[routeId]
+  if (!loader) return null
+
+  try {
+    const routeModule = await loader()
+    if (typeof routeModule?.onEnter === 'function') {
+      const leafMatch = match.payload?.matches?.slice(-1)[0]
+      const ctx = {
+        url: requestUrl,
+        params: leafMatch?.params ?? {},
+        data: {},
+        state: null,
+        server: null,
+        req: null,
+        reply: null,
+        firstRender: true,
+        getMeta: !!routeModule.getMeta,
+        getData: false,
+        onEnter: true,
+      }
+      const result = await routeModule.onEnter(ctx)
+      return result ?? null
+    }
+  } catch (err) {
+    // onEnter is optional — log the error and continue rendering
+    console.error('[rsc-entry] onEnter error:', err)
+  }
+  return null
+}
+
+/**
  * RSC request handler.
  *
  * Processes incoming HTTP requests, handling three cases:
@@ -103,6 +149,7 @@ async function extractHeadMeta(routeId, url) {
  * @returns {Promise<Response>} The RSC stream or HTML response
  */
 async function handler(request) {
+  const valtioState = request.__valtioState
   const renderRequest = parseRenderRequest(request)
 
   // ------------------------------------------------------------------
@@ -181,12 +228,14 @@ async function handler(request) {
       request,
       routes,
       async generateResponse(match) {
-        // Extract head metadata from the matched leaf route
+        // Execute onEnter and extract head metadata from the matched leaf route
         const leafMatch = match.payload?.matches?.[match.payload.matches.length - 1]
         let head = null
+        let onEnterData = null
 
         // Primary approach: use leafMatch route id from react-router match
         if (leafMatch?.route?.id) {
+          onEnterData = await extractOnEnter(leafMatch.route.id, renderRequest.url, match)
           head = await extractHeadMeta(leafMatch.route.id, renderRequest.url)
         }
 
@@ -204,7 +253,25 @@ async function handler(request) {
         }
 
         // Spread the full match payload (includes type, matches, loaderData, location)
-        const rscPayload = { ...match.payload, head, formState, returnValue }
+        const rscPayload = { ...match.payload, head, formState, returnValue, onEnterData }
+
+        // Wrap RSC element tree with ValtioHydrator if Valtio state is available.
+        // valtioState may be a plain object (from context.js state()) or a Valtio
+        // proxy (if the user returned proxy({...}) from their state function).
+        // snapshot() only works on proxy objects — fall back to the raw value.
+        if (valtioState && rscPayload.matches?.[0]?.element) {
+          let stateSnapshot
+          try {
+            const { snapshot } = await import('valtio')
+            stateSnapshot = snapshot(valtioState)
+          } catch {
+            // Not a Valtio proxy — plain object, use directly
+            stateSnapshot = valtioState
+          }
+          rscPayload.matches[0].element = (
+            <ValtioHydrator state={stateSnapshot}>{rscPayload.matches[0].element}</ValtioHydrator>
+          )
+        }
 
         const rscOptions = temporaryReferences ? { temporaryReferences } : undefined
         return new Response(renderToReadableStream(rscPayload, rscOptions), {

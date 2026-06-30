@@ -18,7 +18,9 @@ export async function convertRequest(req) {
       init.body = body
     }
   }
-  return new Request(url, init)
+  const request = new Request(url, init)
+  request.__valtioState = req.route?.state ?? null
+  return request
 }
 
 export async function sendResponse(reply, response) {
