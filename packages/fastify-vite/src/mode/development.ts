@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import { createServer, createServerModuleRunner } from 'vite'
+import { createServer, createServerModuleRunner, isRunnableDevEnvironment } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
 import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
@@ -71,9 +71,14 @@ export async function loadEntries(
     }
 
     // Reuse existing runner or create a new one
+    // Use the environment's own runner (RunnableDevEnvironment.runner) where available
+    // to avoid creating a second ModuleRunner instance later when @vitejs/plugin-rsc
+    // performs cross-environment imports via import.meta.viteRsc.import('ssr', ...).
     let runner = fastifyViteDecoration.runners[env]
     if (!runner) {
-      runner = createServerModuleRunner(envConfig)
+      runner = isRunnableDevEnvironment(envConfig)
+        ? envConfig.runner
+        : createServerModuleRunner(envConfig)
       fastifyViteDecoration.runners[env] = runner
     }
 
