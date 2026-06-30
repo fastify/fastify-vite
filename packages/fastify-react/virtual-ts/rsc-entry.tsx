@@ -10,21 +10,10 @@ import {
   decodeFormState,
 } from '@vitejs/plugin-rsc/rsc'
 import { unstable_matchRSCServerRequest as matchRSCServerRequest } from 'react-router'
-import { Youch } from 'youch'
+import { filePathToRoutePath } from '#runtime/route-utils.js'
 
 const URL_POSTFIX = '_.rsc'
 const HEADER_ACTION_ID = 'x-rsc-action'
-
-const param = /\[([.\w]+\+?)\]/
-
-function filePathToRoutePath(importPath) {
-  return importPath
-    .slice(6, -4)
-    .replace(param, (_, m) => `:${m}`)
-    .replace(/:\w+\+/, '*')
-    .replace(/\/index$/, '/')
-    .replace(/(.+)\/+$/, '$1')
-}
 
 function parseRenderRequest(request) {
   const url = new URL(request.url)
