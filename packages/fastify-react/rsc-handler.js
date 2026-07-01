@@ -20,6 +20,8 @@ export async function convertRequest(req) {
   }
   const request = new Request(url, init)
   request.__valtioState = req.route?.state ?? null
+  request.__server = req.route?.server ?? null
+  request.__req = req
   return request
 }
 
