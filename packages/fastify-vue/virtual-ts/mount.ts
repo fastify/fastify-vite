@@ -13,6 +13,9 @@ async function mountApp(...targets) {
     routes: window.routes,
     routeMap,
   })
+
+  ctxHydration.useHead.push(window.route.head)
+
   await router.isReady()
   let mountTargetFound = false
   for (const target of targets) {
