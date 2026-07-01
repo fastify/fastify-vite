@@ -26,3 +26,16 @@ test('getRouteModuleExports returns rsc: false when explicitly false', async () 
   })
   assert.equal(result.rsc, false)
 })
+
+test('getRouteModuleExports throws when both rsc and getData are set', async () => {
+  const { getRouteModuleExports } = await import('./server.js')
+  assert.throws(
+    () =>
+      getRouteModuleExports({
+        default: () => null,
+        rsc: true,
+        getData: () => {},
+      }),
+    { message: /mutually exclusive/ },
+  )
+})
