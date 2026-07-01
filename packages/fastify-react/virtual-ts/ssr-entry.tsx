@@ -1,5 +1,5 @@
 import { createFromReadableStream } from '@vitejs/plugin-rsc/ssr'
-import { renderToReadableStream } from 'react-dom/server.edge'
+import { renderToReadableStream } from 'react-dom/server'
 import {
   unstable_routeRSCServerRequest as routeRSCServerRequest,
   unstable_RSCStaticRouter as RSCStaticRouter,
@@ -11,14 +11,30 @@ import { join } from 'node:path'
 /**
  * Load the index.html template for the HTML document shell.
  * Tries the Vite client root first, falls back to a hardcoded template.
+ *
+ * In dev mode, prefer the source template which references $app/mount.js
+ * (resolved by Vite's virtual module system). In production, prefer the
+ * built template with hashed bundled scripts.
+ * Avoid loading production build artifacts in dev mode — the Vite dev
+ * server cannot serve the hashed bundled assets at those paths.
  */
 function loadHtmlTemplate(): string {
-  const candidates = [
-    join(process.cwd(), 'client', 'index.html'),
-    'client/index.html',
-    join(process.cwd(), 'index.html'),
-    'index.html',
-  ]
+  const isDev = import.meta.env.DEV
+  const candidates = isDev
+    ? [
+        join(process.cwd(), 'client', 'index.html'),
+        'client/index.html',
+        join(process.cwd(), 'client', 'dist', 'client', 'index.html'),
+        join(process.cwd(), 'index.html'),
+        'index.html',
+      ]
+    : [
+        join(process.cwd(), 'client', 'dist', 'client', 'index.html'),
+        join(process.cwd(), 'client', 'index.html'),
+        'client/index.html',
+        join(process.cwd(), 'index.html'),
+        'index.html',
+      ]
   for (const path of candidates) {
     try {
       if (existsSync(path)) {
@@ -68,10 +84,14 @@ async function readRSCPayload(rscBody: ReadableStream<Uint8Array>): Promise<stri
 }
 
 export async function generateHTML(request: Request, serverResponse: Response) {
-  // Read the RSC flight data BEFORE passing to routeRSCServerRequest,
-  // because routeRSCServerRequest internally consumes serverResponse.body
-  // via getPayload() / createStream() for route matching.
-  const rscPayloadScripts = await readRSCPayload(serverResponse.clone().body!)
+  // Read the RSC flight data for client-side hydration scripts.
+  let rscPayloadScripts = ''
+  try {
+    const clone = serverResponse.clone()
+    rscPayloadScripts = await readRSCPayload(clone.body!)
+  } catch (err) {
+    console.error('[ssr-entry] Failed to read RSC payload', err)
+  }
 
   const indexHtml = loadHtmlTemplate()
   const el = '<!-- element -->'
@@ -102,25 +122,33 @@ export async function generateHTML(request: Request, serverResponse: Response) {
 
       const decoder = new TextDecoder()
       const encoder = new TextEncoder()
-      let html = ''
 
+      // Inject head metadata into the template start before streaming begins.
+      // templateBefore contains <head> tags, so transformHtmlTemplate can
+      // inject title/meta/link tags there. Individual SSR chunks don't contain
+      // <head>, so they'd pass through transformHtmlTemplate unchanged anyway.
+      const headInjectedBefore = await transformHtmlTemplate(head, templateBefore)
+
+      // Stream the RSC SSR content progressively — emit templateBefore first,
+      // then each cleaned HTML chunk, then RSC payload scripts and templateAfter.
       return htmlStream.pipeThrough(
         new TransformStream({
-          transform(chunk, _controller) {
+          start(controller) {
+            controller.enqueue(encoder.encode(headInjectedBefore))
+          },
+          transform(chunk, controller) {
             const str = typeof chunk === 'string' ? chunk : decoder.decode(chunk, { stream: true })
-            html += str
+            // Strip the _R_ bootstrap script — mount.js handles RSC hydration.
+            // React SSR doesn't split <script> tags across chunk boundaries,
+            // so a simple .replace() on each chunk is sufficient.
+            const cleaned = str.replace(/<script id="_R_">.*?<\/script>/g, '')
+            controller.enqueue(encoder.encode(cleaned))
           },
           async flush(controller) {
-            // Strip the _R_ bootstrap script — mount.js handles RSC hydration
-            html = html.replace(/<script id="_R_">.*?<\/script>/g, '')
-
-            const bodyContent = templateBefore + html + (templateAfter ?? '')
-
-            const headInjected = await transformHtmlTemplate(head, bodyContent)
-
-            const finalHtml = headInjected.replace('</body>', rscPayloadScripts + '</body>')
-
-            controller.enqueue(encoder.encode(finalHtml))
+            // Embed RSC flight data and the rest of the HTML shell.
+            // No controller.terminate() — returning from flush() lets the
+            // TransformStream close both sides normally.
+            controller.enqueue(encoder.encode(rscPayloadScripts + (templateAfter ?? '')))
           },
         }),
       )

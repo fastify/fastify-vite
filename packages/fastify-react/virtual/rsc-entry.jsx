@@ -83,8 +83,8 @@ async function extractHeadMeta(routeId, url) {
     if (typeof routeModule?.getMeta === 'function') {
       return await routeModule.getMeta({ url })
     }
-  } catch {
-    // getMeta is optional — silently ignore failures
+  } catch (err) {
+    console.warn('[rsc-entry] getMeta error:', err)
   }
   return null
 }

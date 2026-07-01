@@ -48,7 +48,12 @@ function buildRouteConfig(routesManifest) {
 function resolveGetMeta(routeId, routesManifest, url) {
   const loader = routesManifest[routeId]
   if (typeof loader !== 'function') return null
-  return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta({ url }) : null))
+  try {
+    return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta({ url }) : null))
+  } catch (err) {
+    console.warn('[rsc-entry] getMeta error:', err)
+    return null
+  }
 }
 
 async function extractOnEnter(routeId, requestUrl, match, routesManifest, state) {
@@ -184,23 +189,49 @@ async function handler(request) {
       return rscResponse
     }
 
-    const cloned = rscResponse.clone()
     const ssrEntry = await import.meta.viteRsc.import('./ssr-entry.tsx', { environment: 'ssr' })
-    const htmlResult = await ssrEntry.generateHTML(request, await cloned)
+    const htmlResult = await ssrEntry.generateHTML(request, rscResponse.clone())
 
-    return new Response(htmlResult.stream, {
-      status: htmlResult.status,
-      headers: { 'Content-Type': 'text/html' },
-    })
+    // Defensive guard: catch empty-body responses early with a clear error.
+    if (!htmlResult.body) {
+      const body = await htmlResult.text()
+      throw new Error(`RSC SSR response has no body (status ${htmlResult.status}): ${body}`)
+    }
+
+    // Pass the streaming Response through — ssr-entry.tsx's TransformStream
+    // emits chunks progressively, and Fastify's sendWebStream() handles them.
+    return htmlResult
   } catch (error) {
-    // Render error using Youch (project convention for dev error pages)
-    const { Youch } = await import('youch')
-    const youch = new Youch()
-    const html = await youch.toHTML(error, { title: 'RSC Render Error' })
-    return new Response(html, {
-      status: 500,
-      headers: { 'Content-Type': 'text/html' },
-    })
+    // Log the full error for debugging
+    console.error(
+      '[rsc-entry] handler error:',
+      error?.constructor?.name,
+      error?.message,
+      error?.stack?.split('\n').slice(0, 4).join('\n'),
+    )
+    // Render error using Youch (project convention for dev error pages).
+    // In production, Youch may not be resolvable from the RSC bundle's
+    // runtime location — fall back to a minimal error string.
+    try {
+      const { Youch } = await import('youch')
+      const youch = new Youch()
+      const html = await youch.toHTML(error, { title: 'RSC Render Error' })
+      return new Response(html, {
+        status: 500,
+        headers: { 'Content-Type': 'text/html' },
+      })
+    } catch {
+      const errorText =
+        error?.message ??
+        (typeof error === 'string' ? error : (error?.toString() ?? 'Unknown error'))
+      return new Response(
+        `<html><body><h1>500 — Internal Server Error</h1><pre>${errorText}</pre></body></html>`,
+        {
+          status: 500,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        },
+      )
+    }
   }
 }
 
