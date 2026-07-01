@@ -116,7 +116,7 @@ async function handler(request) {
       try {
         const result = await decodedAction()
         formState = await decodeFormState(result, formData)
-      } catch (e) {
+      } catch {
         return new Response('Internal Server Error', { status: 500 })
       }
     }
@@ -126,7 +126,6 @@ async function handler(request) {
   const routes = buildRouteConfig(routesManifest)
 
   let rscResponse
-  let htmlResponse
 
   try {
     rscResponse = await matchRSCServerRequest({

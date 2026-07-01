@@ -249,7 +249,7 @@ async function handler(request) {
         // align with the import.meta.glob keys in routesManifest.
         if (!head) {
           const routePath = renderRequest.url.pathname
-          for (const [importPath, loader] of Object.entries(routesManifest)) {
+          for (const [importPath] of Object.entries(routesManifest)) {
             if (filePathToRoutePath(importPath) === routePath) {
               head = await extractHeadMeta(importPath, renderRequest.url)
               break
