@@ -45,15 +45,18 @@ function buildRouteConfig(routesManifest) {
   })
 }
 
-function resolveGetMeta(routeId, routesManifest, url) {
+async function resolveGetMeta(routeId, routesManifest, url) {
   const loader = routesManifest[routeId]
   if (typeof loader !== 'function') return null
   try {
-    return loader().then((mod) => (typeof mod.getMeta === 'function' ? mod.getMeta({ url }) : null))
+    const mod = await loader()
+    if (typeof mod.getMeta === 'function') {
+      return await mod.getMeta({ url })
+    }
   } catch (err) {
     console.warn('[rsc-entry] getMeta error:', err)
-    return null
   }
+  return null
 }
 
 async function extractOnEnter(routeId, requestUrl, match, routesManifest, state) {

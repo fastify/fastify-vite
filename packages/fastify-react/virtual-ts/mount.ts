@@ -20,7 +20,7 @@ async function mountApp(...targets: string[]) {
         // RSC path — decode payload BEFORE hydration (canonical starter pattern)
         // Dynamically import to avoid pulling RSC deps for non-RSC pages
         const { rscStream } = await import('rsc-html-stream/client')
-        const { createFromReadableStream, setRequireModule, setServerCallback } =
+        const { createFromReadableStream, setServerCallback } =
           await import('@vitejs/plugin-rsc/browser')
 
         // The @vitejs/plugin-rsc/browser module's initialize() calls

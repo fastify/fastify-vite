@@ -17,6 +17,6 @@ export function state() {
 /**
  * Default context initializer (required by the runtime).
  */
-export default async function init(ctx) {
+export default async function init() {
   // No additional setup needed for this fixture
 }
