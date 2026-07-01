@@ -66,16 +66,6 @@ export default function RscContent() {
     })
   }, [])
 
-  // Apply head metadata (title, meta, link) from the RSC payload
-  function applyHeadFromPayload(payload) {
-    if (payload?.head) {
-      if (payload.head.title) {
-        document.title = payload.head.title
-      }
-      // Additional meta/link updates from payload.head can be added here
-    }
-  }
-
   // Fetch RSC content on client navigation (initial hydration handled by mount.js)
   useEffect(() => {
     let cancelled = false
@@ -88,7 +78,9 @@ export default function RscContent() {
           setElement(payload.matches?.[0]?.element ?? null)
           setLoading(false)
         })
-        applyHeadFromPayload(payload)
+        if (payload?.head?.title) {
+          document.title = payload.head.title
+        }
       }
     })
 
