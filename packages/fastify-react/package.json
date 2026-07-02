@@ -21,7 +21,9 @@
     "context.js",
     "index.js",
     "rendering.js",
+    "route-utils.js",
     "routing.js",
+    "rsc-handler.js",
     "server.js",
     "templating.js",
     "plugin/index.js",
@@ -39,6 +41,9 @@
     "virtual-ts/resource.ts",
     "virtual-ts/root.tsx",
     "virtual-ts/routes.ts",
+    "virtual-ts/rsc-content.tsx",
+    "virtual-ts/rsc-entry.tsx",
+    "virtual-ts/ssr-entry.tsx",
     "virtual/context.js",
     "virtual/core.jsx",
     "virtual/create.jsx",
@@ -48,7 +53,12 @@
     "virtual/resource.js",
     "virtual/root.jsx",
     "virtual/routes.js",
+    "virtual/rsc-content.jsx",
+    "virtual/rsc-entry.jsx",
+    "virtual/ssr-entry.jsx",
+    "virtual/valtio-hydrator.jsx",
     "virtual-ts/layouts/default.tsx",
+    "virtual-ts/valtio-hydrator.tsx",
     "virtual/layouts/default.jsx"
   ],
   "type": "module",
@@ -63,11 +73,12 @@
     "access": "public"
   },
   "scripts": {
-    "test": "node --test plugin/*.test.js"
+    "test": "node --test plugin/*.test.js rsc-handler.test.js routing.test.js server.test.js"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
     "@unhead/react": "^2.1.13",
+    "@vitejs/plugin-rsc": "^0.5.27",
     "acorn": "^8.14.1",
     "acorn-strip-function": "^1.2.0",
     "acorn-walk": "^8.3.4",
@@ -78,7 +89,8 @@
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "react-router": "catalog:react",
+    "rsc-html-stream": "^0.0.7",
     "valtio": "latest",
-    "youch": "^3.3.4"
+    "youch": "^4.1.1"
   }
 }
