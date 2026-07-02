@@ -42,6 +42,15 @@ describe('loadEntries', () => {
       viteConfig: {
         root: '/test',
         plugins: [{ name: 'vite-fastify', config: vi.fn() }] as unknown[],
+        environments: {
+          ssr: {
+            build: {
+              rollupOptions: {
+                input: { index: '/test/server.js' },
+              },
+            },
+          },
+        },
       },
       virtualModulePrefix: 'virtual:',
       prepareClient: vi.fn().mockResolvedValue({}),
