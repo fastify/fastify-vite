@@ -100,13 +100,17 @@ export function viteFastify(options: ViteFastifyPluginOptions = {}): Plugin {
         Object.entries(resolvedConfig.environments)
           .map(([env, envConfig]) => {
             const envBuild = envConfig.build as
-              | { outDir?: string; rollupOptions?: { input?: { index?: string } } }
+              | { outDir?: string; rollupOptions?: { input?: Record<string, string> } }
               | undefined
             if (envBuild?.outDir) {
               fastify.outDirs![env] = envBuild.outDir
             }
-            if (envBuild?.rollupOptions?.input?.index) {
-              return [env, envBuild.rollupOptions.input.index]
+            const input = envBuild?.rollupOptions?.input
+            if (input) {
+              const entry = Object.values(input).find(Boolean)
+              if (entry) {
+                return [env, entry]
+              }
             }
             return false
           })
