@@ -13,6 +13,20 @@ export function makeIndexTest({ main, dev }) {
   }
 }
 
+export function makeRscIndexTest({ main, pageUrl }) {
+  return async () => {
+    const server = await main(false)
+    const response = await server.inject({ method: 'GET', url: pageUrl })
+    assert.strictEqual(response.statusCode, 200)
+    assert.ok(
+      response.body.includes('__FLIGHT_DATA'),
+      `RSC page ${pageUrl} should embed flight data in HTML`,
+    )
+    assert.ok(response.body.includes('<!doctype html>'), 'Response should be a valid HTML document')
+    await server.close()
+  }
+}
+
 // export function makeBuildTest () {
 //   return async () => {
 //     const builder = await createBuilder()

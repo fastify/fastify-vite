@@ -8,9 +8,11 @@ import { loadVirtualModule, prefix, resolveId } from './virtual.js'
 test('resolveId anchors built-in $app modules at the Vite root', async () => {
   const resolved = await resolveId.call({ root: import.meta.dirname }, '$app/layouts.js')
 
-  assert.equal(resolved, '/$app/layouts.js')
+  assert.equal(resolved, '\x00$app/layouts.js')
 
-  const [, virtual] = resolved.split(prefix)
+  // Strip null byte before splitting with prefix (same pattern as resolveId)
+  const cleanId = resolved.charCodeAt(0) === 0 ? resolved.slice(1) : resolved
+  const [, virtual] = cleanId.split(prefix)
   assert.equal(virtual, 'layouts.js')
   assert.ok(loadVirtualModule(virtual).code.includes("import.meta.glob('/layouts/*.{jsx,tsx}')"))
 })
@@ -23,4 +25,14 @@ test('resolveId leaves project overrides as real files', async (t) => {
   await writeFile(override, 'export default {}')
 
   assert.equal(await resolveId.call({ root }, '$app/layouts.js'), override)
+})
+
+test('resolveId resolves $app/rsc-entry.jsx', async () => {
+  const result = await resolveId.call({ root: import.meta.dirname }, '$app/rsc-entry.jsx')
+  assert.equal(result, '\x00$app/rsc-entry.jsx')
+})
+
+test('resolveId resolves $app/rsc-content.jsx', async () => {
+  const result = await resolveId.call({ root: import.meta.dirname }, '$app/rsc-content.jsx')
+  assert.equal(result, '\x00$app/rsc-content.jsx')
 })

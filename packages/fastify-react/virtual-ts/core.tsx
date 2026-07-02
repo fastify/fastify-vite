@@ -1,10 +1,13 @@
 import { createPath } from 'history'
-import { useEffect } from 'react'
+import { useEffect, lazy } from 'react'
 import { BrowserRouter, StaticRouter, useLocation } from 'react-router'
 import { proxy } from 'valtio'
 import { RouteContext, useRouteContext } from '@fastify/react/client'
 import layouts from '$app/layouts.js'
 import { waitFetch, waitResource } from '$app/resource.js'
+
+// Lazily loaded RSC content component — only used client-side
+const RscContent = import.meta.env.SSR ? null : lazy(() => import('$app/rsc-content.tsx'))
 
 export const isServer = import.meta.env.SSR
 export const Router = isServer ? StaticRouter : BrowserRouter
@@ -70,6 +73,12 @@ export function AppRoute({ ctxHydration, ctx, children }) {
     window.route.firstRender = false
     window.route.actionData = {}
   }, [location])
+
+  // For RSC routes, delegate to RscContent which handles
+  // its own data fetching, head management and rendering
+  if (ctx.rsc) {
+    return <RscContent />
+  }
 
   // If we have a getData function registered for this route
   if (!ctx.data && ctx.getData) {
