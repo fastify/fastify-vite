@@ -127,7 +127,7 @@ export default {
 
 In `package.json`, take note of how the `dev`, `start` and `build` commands are defined, all just using your `server.js` file and Vite.
 
-Then for the client code, cleanly separated in the `client/` directory, you have `index.html` loading `mount.js`, `base.jsx` with a React component and `mount.js` loading it. Notice that Vite requires you to have an `index.html` file as it's [the front-and-central build entry point](https://vitejs.dev/guide/#index-html-and-project-root).
+Then for the client code, cleanly separated in the `client/` directory, you have `index.html` loading `mount.js`, `base.jsx` with a React component and `mount.js` loading it. Notice that Vite requires you to have an `index.html` file as it's [the front-and-central build entry point](https://vite.dev/guide/#index-html-and-project-root).
 
 ::: code-group
 
@@ -192,7 +192,7 @@ In all examples in this documentation, the client application code is kept in a 
 It's important to realize that in `server.js`, the `root` configuration option determines where your `vite.config.js` is located. But in `vite.config.js` itself, the `root` configuration option determines where your `index.html` is located. This is your **project root** in Vite's context.
 :::
 
-Regardless of whether you want to simply deliver a SPA bundle to the browser or perform SSR, projects using **`@fastify/vite`** will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vitejs.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vitejs.dev/config/).
+Regardless of whether you want to simply deliver a SPA bundle to the browser or perform SSR, projects using **`@fastify/vite`** will always need a minimum of **three files**: the Fastify **server**, an [index.html file](https://vite.dev/guide/#index-html-and-project-root) and a [Vite configuration file](https://vite.dev/config/).
 
 ## Architectural primitives
 

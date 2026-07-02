@@ -1,3 +1,3 @@
 <br>
 
-The official **[@fastify/react](https://fastify.github.io/fastify-vite/react/)** basic starter template.
+The official **[@fastify/react](https://vite.fastify.dev/react/)** basic starter template.

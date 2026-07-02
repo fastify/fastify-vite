@@ -225,7 +225,7 @@ In this example, `server.js` is the Fastify server and also the place where both
 
 Like in any `@fastify/vite` application, `client/index.js` are the portions of your client code that get loaded by the server. It exports your application's factory function (`create`), the application routes and the [route context](/vue/route-context) initialization module, all loaded via [smart imports](/vue/project-structure#smart-imports), covered later on this page.
 
-Notice that `client/index.html` needs to exist as the [front-and-central entry point](https://vitejs.dev/guide/#index-html-and-project-root) of your application, and `@fastify/vue` has its own structure for it.
+Notice that `client/index.html` needs to exist as the [front-and-central entry point](https://vite.dev/guide/#index-html-and-project-root) of your application, and `@fastify/vue` has its own structure for it.
 
 Also notice that in `vite.config.js`, `@fastify/vue/plugin` needs to be registered so that [**smart imports**](/vue/project-structure#smart-imports) can work.
 

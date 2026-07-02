@@ -2,7 +2,7 @@
 [react]: https://react.dev/
 [fastify-cli]: https://github.com/fastify/fastify-cli
 [fastify-static]: https://github.com/fastify/fastify-static
-[fastify-vite]: https://fastify.github.io/fastify-vite/
+[fastify-vite]: https://vite.fastify.dev/
 [fastify]: https://fastify.dev/
 [next]: https://nextjs.org/
 [nuxt]: https://nuxt.com/
@@ -14,5 +14,5 @@
 [react-vanilla]: https://github.com/fastify/fastify-vite/tree/main/e2e/react-vanilla
 [ssr-1]: https://hire.jonasgalvez.com.br/2022/apr/30/a-gentle-introduction-to-ssr/
 [ssr-2]: https://www.patterns.dev/react/server-side-rendering
-[vite]: https://vitejs.dev/
+[vite]: https://vite.dev/
 [vue-hydration]: https://github.com/fastify/fastify-vite/tree/main/e2e/vue-hydration
