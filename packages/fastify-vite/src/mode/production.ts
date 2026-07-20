@@ -30,7 +30,7 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
-async function resolvePkgDir({ cwd }: { cwd: string }): Promise<string> {
+export async function resolvePkgDir({ cwd }: { cwd: string }): Promise<string> {
   const { packageDirectory } = await import('package-directory')
   const pkgDir = await packageDirectory({ cwd })
   if (!pkgDir) {
