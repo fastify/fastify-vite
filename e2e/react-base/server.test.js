@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { makeBuildTest, makeIndexTest, makeStartFromOutsideTest } from '../test-factories.mjs'
 import { main } from './server.js'
 
 const getClientTransform = async (server, id) => {
@@ -7,6 +8,15 @@ const getClientTransform = async (server, id) => {
   assert.ok(result?.code, `${id} transformed code exists`)
   return result.code
 }
+
+test('react-base', async (t) => {
+  const cwd = import.meta.dirname
+
+  await t.test('build production bundle', makeBuildTest({ cwd }))
+  await t.test('render index page in production', makeIndexTest({ main }))
+  await t.test('render index page in development', makeIndexTest({ main, dev: true }))
+  await t.test('start from monorepo root', makeStartFromOutsideTest({ main }))
+})
 
 test('react-base resolves virtual module glob imports in development', async (t) => {
   const server = await main(true)
