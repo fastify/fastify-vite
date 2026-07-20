@@ -30,6 +30,15 @@ function fileUrl(str: string): string {
   return encodeURI(`file://${pathName}`)
 }
 
+async function resolvePkgDir({ cwd }: { cwd: string }): Promise<string> {
+  const { packageDirectory } = await import('package-directory')
+  const pkgDir = await packageDirectory({ cwd })
+  if (!pkgDir) {
+    throw new Error(`Could not find package root from: ${cwd}`)
+  }
+  return pkgDir
+}
+
 async function loadBundle(
   distOutDir: string,
   entryPath: string,
@@ -48,11 +57,7 @@ async function loadBundle(
   if (isAbsolute(distOutDir)) {
     getBundlePath = (serverFile: string) => fixWin32Path(resolve(distOutDir, serverFile))
   } else {
-    const { packageDirectory } = await import('package-directory')
-    const pkgDir = await packageDirectory({ cwd: rootDir })
-    if (!pkgDir) {
-      throw new Error(`Could not find package root from: ${rootDir}`)
-    }
+    const pkgDir = await resolvePkgDir({ cwd: rootDir })
     getBundlePath = (serverFile: string) => fixWin32Path(resolve(pkgDir, distOutDir, serverFile))
   }
 
@@ -108,11 +113,7 @@ export async function setup(
   if (viteConfig.fastify?.outDirs) {
     const { outDirs } = viteConfig.fastify
 
-    const { packageDirectory } = await import('package-directory')
-    const outDirRoot = await packageDirectory({ cwd: runtimeConfig.root })
-    if (!outDirRoot) {
-      throw new Error(`Could not find package root from: ${runtimeConfig.root}`)
-    }
+    const outDirRoot = await resolvePkgDir({ cwd: runtimeConfig.root })
 
     clientOutDir = resolveIfRelative(outDirs.client!, outDirRoot)
     ssrOutDir = resolveIfRelative(outDirs.ssr || '', outDirRoot)
