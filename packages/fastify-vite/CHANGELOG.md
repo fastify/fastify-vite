@@ -1,5 +1,11 @@
 # @fastify/vite
 
+## 9.2.0
+
+### Minor Changes
+
+- 58d7d59: Expose "resolvePkgDir" function in utils so @fastify/react can use it to resolve relative paths in vite's `build.outDir` config.
+
 ## 9.1.1
 
 ### Patch Changes
