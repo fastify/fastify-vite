@@ -3,6 +3,7 @@ import { join, isAbsolute } from 'node:path'
 import Youch from 'youch'
 import RouteContext from './context.js'
 import { createHtmlFunction } from './rendering.js'
+import { resolvePkgDir } from '@fastify/vite/utils'
 
 export async function prepareClient(entries, _) {
   const client = entries.ssr
@@ -109,7 +110,8 @@ export async function createRoute({ client, errorHandler, route }, scope, config
     // TODO: Switch to config.viteConfig once deprecated config.vite alias is removed.
     let distDir = config.vite.build.outDir
     if (!isAbsolute(config.vite.build.outDir)) {
-      distDir = join(config.vite.root, distDir)
+      const outDirRoot = await resolvePkgDir({ cwd: config.root })
+      distDir = join(outDirRoot, distDir)
     }
     const htmlSource = readFileSync(join(distDir, htmlPath), 'utf8')
     const htmlFunction = await createHtmlFunction(htmlSource, scope, config)
