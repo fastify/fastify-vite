@@ -856,11 +856,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.8
-        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react':
         specifier: ^2.1.13
         version: 2.1.13(react@19.2.4)
@@ -914,11 +914,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.8
-        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react':
         specifier: ^2.1.13
         version: 2.1.13(react@19.2.4)
@@ -972,11 +972,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/react':
-        specifier: ^1.1.8
-        version: 1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react':
         specifier: ^2.1.13
         version: 2.1.13(react@19.2.4)
@@ -1042,8 +1042,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vue':
         specifier: ^1.2.3
         version: 1.2.3(@types/node@24.12.2)(esbuild@0.28.1)(fastify@5.8.5)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.9.0)
@@ -1091,8 +1091,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vue':
         specifier: ^1.2.3
         version: 1.2.3(@types/node@24.12.2)(esbuild@0.28.1)(fastify@5.8.5)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.9.0)
@@ -1137,8 +1137,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@fastify/vite':
-        specifier: ^9.1.1
-        version: 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+        specifier: ^9.2.0
+        version: 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@fastify/vue':
         specifier: ^1.2.3
         version: 1.2.3(@types/node@22.14.0)(esbuild@0.28.1)(fastify@5.8.5)(jiti@2.4.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.9.0)
@@ -1875,8 +1875,8 @@ packages:
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
 
-  '@fastify/react@1.1.8':
-    resolution: {integrity: sha512-Gl4Ksb7gqp039zZiiul44mCAQFojpzcFR++j7kujbngxVn+fowOIRype1ngzlsq7SDRI4nQXV9ujg1bI+Btvig==}
+  '@fastify/react@1.2.0':
+    resolution: {integrity: sha512-koiCntGyo1nLCDbobND5ud5/czEKfKJFmirJNB7C0qasFNZZTFHlLYnKB0ZeT++mOo+b6GYNi2upcX03G0VbXA==}
 
   '@fastify/send@4.1.0':
     resolution: {integrity: sha512-TMYeQLCBSy2TOFmV95hQWkiTYgC/SEx7vMdV+wnZVX4tt8VBLKzmH8vV9OzJehV0+XBfg+WxPMt5wp+JBUKsVw==}
@@ -1884,8 +1884,8 @@ packages:
   '@fastify/static@9.1.3':
     resolution: {integrity: sha512-aXrYtsiryLhRxRNaxNqsn7FUISeb7rB9q4eHUPIot5aeQBLNahnz1m6thzm7JWC1poSGXS9XrX8DvuMivp2hkQ==}
 
-  '@fastify/vite@9.1.1':
-    resolution: {integrity: sha512-tsS9nuMk928FK5DvpFebgLJH5blz0RTOajvLiZ4ylYNNKrq77GOneeokWL/NFnTxhfUuvdjCWXLbDSixCcI/Ew==}
+  '@fastify/vite@9.2.0':
+    resolution: {integrity: sha512-NbOf51ZSTIjKAK7Suw8kxCinUq5vLUT4jjlGhJ6cnb/LTw0hB6kx/N4ygG2RjU5S8x46bgwG2YJTBS3agnN6VA==}
     peerDependencies:
       fastify: '>=5'
       vite: '>=6'
@@ -6343,9 +6343,9 @@ snapshots:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
 
-  '@fastify/react@1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/react@1.2.0(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
-      '@fastify/vite': 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+      '@fastify/vite': 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react': 2.1.13(react@19.2.4)
       acorn: 8.16.0
       acorn-strip-function: 1.2.0
@@ -6364,9 +6364,9 @@ snapshots:
       - fastify
       - vite
 
-  '@fastify/react@1.1.8(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/react@1.2.0(@types/react@19.1.2)(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
-      '@fastify/vite': 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+      '@fastify/vite': 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/react': 2.1.13(react@19.2.4)
       acorn: 8.16.0
       acorn-strip-function: 1.2.0
@@ -6402,7 +6402,7 @@ snapshots:
       fastq: 1.20.1
       glob: 13.0.6
 
-  '@fastify/vite@9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/vite@9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@fastify/deepmerge': 3.2.1
       '@fastify/middie': 9.3.2
@@ -6414,7 +6414,7 @@ snapshots:
       package-directory: 8.2.0
       vite: 8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0)
 
-  '@fastify/vite@9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@fastify/vite@9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@fastify/deepmerge': 3.2.1
       '@fastify/middie': 9.3.2
@@ -6428,7 +6428,7 @@ snapshots:
 
   '@fastify/vue@1.2.3(@types/node@22.14.0)(esbuild@0.28.1)(fastify@5.8.5)(jiti@2.4.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.9.0)':
     dependencies:
-      '@fastify/vite': 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+      '@fastify/vite': 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@22.14.0)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/vue': 2.1.13(vue@3.5.26(typescript@5.9.3))
       acorn: 8.16.0
       acorn-walk: 8.3.4
@@ -6457,7 +6457,7 @@ snapshots:
 
   '@fastify/vue@1.2.3(@types/node@24.12.2)(esbuild@0.28.1)(fastify@5.8.5)(jiti@2.4.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.9.0)':
     dependencies:
-      '@fastify/vite': 9.1.1(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
+      '@fastify/vite': 9.2.0(fastify@5.8.5)(vite@8.0.16(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.4.2)(tsx@4.21.0)(yaml@2.9.0))
       '@unhead/vue': 2.1.13(vue@3.5.26(typescript@6.0.3))
       acorn: 8.16.0
       acorn-walk: 8.3.4
