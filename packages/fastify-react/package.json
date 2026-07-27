@@ -63,7 +63,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "node --test plugin/*.test.js"
+    "test": "node --test plugin/*.test.js server.test.js"
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
