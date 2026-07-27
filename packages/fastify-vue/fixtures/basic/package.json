@@ -1,0 +1,19 @@
+{
+  "name": "@fastify-vue/basic-test-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build --app"
+  },
+  "dependencies": {
+    "@fastify/vite": "workspace:^",
+    "@fastify/vue": "workspace:^",
+    "fastify": "catalog:",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "catalog:vue",
+    "vite": "catalog:"
+  }
+}

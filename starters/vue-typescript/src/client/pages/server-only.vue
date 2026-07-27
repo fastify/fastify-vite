@@ -8,6 +8,6 @@
   <p>See the output of <code>curl http://localhost:3000/server-only</code>.</p>
 </template>
 
-<script>
+<script lang="ts">
 export const serverOnly = true
 </script>

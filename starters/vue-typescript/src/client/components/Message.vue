@@ -2,12 +2,12 @@
   <p>{{ message }}</p>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
-    secs: Number,
+    secs: { type: Number, required: true },
   },
-  async setup(props) {
+  async setup(props: { secs: number }) {
     const message = await afterSeconds({
       message: 'Delayed as an asynchronous component',
       seconds: props.secs,
@@ -16,8 +16,8 @@ export default {
   },
 }
 
-function afterSeconds({ message, seconds }) {
-  return new Promise((resolve) => {
+function afterSeconds({ message, seconds }: { message: string; seconds: number }) {
+  return new Promise<string>((resolve) => {
     setTimeout(() => {
       resolve(message)
     }, seconds * 1000)

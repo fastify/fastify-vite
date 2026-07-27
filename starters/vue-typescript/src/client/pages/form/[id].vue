@@ -1,12 +1,16 @@
-<script>
+<script lang="ts">
 export const layout = 'default'
 
-export function getData({ req, reply }) {
+interface FormData extends Record<string, unknown> {
+  number: string
+}
+
+export function getData({ req, reply }: RouteContext) {
   if (req.method === 'POST') {
-    if (req.body.number !== '42') {
+    if ((req.body as FormData).number !== '42') {
       return reply.redirect('/')
     }
-    return req.body
+    return req.body as FormData
   } else {
     return {
       number: '',
@@ -15,9 +19,9 @@ export function getData({ req, reply }) {
 }
 </script>
 
-<script setup>
+<script setup lang="ts">
 import { useData } from '$app/hooks'
-const data = useData()
+const data = useData<FormData>()
 </script>
 
 <template>

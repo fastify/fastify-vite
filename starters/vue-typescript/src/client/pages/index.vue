@@ -25,11 +25,11 @@
   </ul>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useState } from '$app/hooks'
 import logo from '/assets/logo.svg'
 
-const state = useState()
+const state = useState<AppState>()
 
 if (import.meta.env.SSR) {
   // State is automatically hydrated on the client
@@ -39,8 +39,8 @@ if (import.meta.env.SSR) {
 const message = state.message
 </script>
 
-<script>
-export function getMeta() {
+<script lang="ts">
+export function getMeta(): UseHeadInput {
   return {
     title: 'Welcome to @fastify/vue!',
   }
