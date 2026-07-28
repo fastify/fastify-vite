@@ -1,5 +1,11 @@
 # @fastify/react
 
+## 1.2.1
+
+### Patch Changes
+
+- ea0371d: Fixes multiple route parameters not expanding
+
 ## 1.2.0
 
 ### Minor Changes

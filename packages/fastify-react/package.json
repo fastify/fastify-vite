@@ -1,6 +1,6 @@
 {
   "name": "@fastify/react",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "The official @fastify/vite renderer for React",
   "keywords": [
     "fastify",
