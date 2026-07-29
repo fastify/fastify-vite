@@ -262,11 +262,11 @@ For more granular control, use `setHeaders` to vary cache policy by file type or
 await server.register(FastifyVite, {
   root: import.meta.url,
   fastifyStaticOptions: {
-    setHeaders(res, path) {
+    setHeaders(reply, path) {
       if (path.endsWith('.html')) {
-        res.setHeader('Cache-Control', 'no-cache')
+        reply.header('Cache-Control', 'no-cache')
       } else {
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+        reply.header('Cache-Control', 'public, max-age=31536000, immutable')
       }
     },
   },

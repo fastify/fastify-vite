@@ -52,8 +52,8 @@ await server.register(FastifyVite, {
     preCompressed: true,
     maxAge: 31536000,
     immutable: true,
-    setHeaders(res) {
-      res.setHeader('X-Custom-Header', 'value')
+    setHeaders(reply) {
+      reply.header('X-Custom-Header', 'value')
     },
   },
 })
