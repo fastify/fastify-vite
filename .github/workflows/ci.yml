@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Verify packages are publishable
+        run: |
+          pnpm build
+          pnpm --filter './packages/*' publish --dry-run --no-git-checks --force
+
       - name: Lint code
         run: pnpm lint
 
