@@ -8,8 +8,8 @@ import { main as esmServer } from './esm/server.js'
 const staticOpts = {
   fastifyStaticOptions: {
     preCompressed: true,
-    setHeaders(res) {
-      res.setHeader('X-Test-Static', '1')
+    setHeaders(reply) {
+      reply.header('X-Test-Static', '1')
     },
   },
 }
