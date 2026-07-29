@@ -10,8 +10,8 @@ export async function main(dev) {
     spa: true,
     fastifyStaticOptions: {
       preCompressed: true,
-      setHeaders(res) {
-        res.setHeader('X-Custom-Header', 'from-static-options')
+      setHeaders(reply) {
+        reply.header('X-Custom-Header', 'from-static-options')
       },
     },
   })
