@@ -1,5 +1,12 @@
 # @fastify/vue
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [03cf160]
+  - @fastify/vite@10.0.0
+
 ## 2.0.0
 
 ### Major Changes
