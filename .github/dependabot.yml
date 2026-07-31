@@ -1,0 +1,280 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /e2e/relative-outdir
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-hydration
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-base
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-next-mini
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-streaming
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-vanilla-spa
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-vanilla-spa-ts
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-vanilla-ts
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-vanilla-spa
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-vanilla
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-streaming
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/middie-compat
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/static-options
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-next-mini
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/vue-vanilla-ts
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/prefix-support
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-hydration
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /e2e/react-vanilla
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/react-base
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/react-kitchensink
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/vue-base
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/react-typescript
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/vue-typescript
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /starters/vue-kitchensink
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /docs
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /packages/fastify-htmx
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /packages/fastify-react
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /packages/fastify-vite
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /packages/fastify-vue
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
