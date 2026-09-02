@@ -10,7 +10,7 @@ catalog:
   fastify: ^5.8.5
   tsx: ^4.21.0
   typescript: ^6.0.3
-  vite: ^8.0.16
+  vite: ^8.2.0
   vitest: ^4.1.9
 
 catalogs:
@@ -26,7 +26,7 @@ catalogs:
     '@vitejs/plugin-react': ^6.0.1
     react: ^19.2.4
     react-dom: ^19.2.4
-    react-router: ^7.15.1
+    react-router: ^7.18.2
   solid:
     solid-js: ^1.9.5
   vue:
