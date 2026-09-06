@@ -5,20 +5,22 @@ packages:
   - starters/*
 
 catalog:
-  '@fastify/middie': ^9.3.2
+  '@fastify/middie': ^9.3.4
+  '@unhead/vue': ^3.4.0
   devalue: ^5.8.1
-  fastify: ^5.8.5
+  fastify: ^5.12.1
+  react-router: ^7.18.2
   tsx: ^4.21.0
   typescript: ^6.0.3
   vite: ^8.0.16
-  vitest: ^4.1.9
+  vitest: ^5.0.0
 
 catalogs:
   eslint:
     '@eslint/js': ^10.0.1
-    eslint: ^10.2.0
+    eslint: ^10.10.0
     eslint-config-prettier: ^10.1.8
-    eslint-plugin-vue: ^10.8.0
+    eslint-plugin-vue: ^10.11.0
     globals: ^17.4.0
     typescript-eslint: ^8.58.1
     vue-eslint-parser: ^10.4.0
@@ -26,11 +28,11 @@ catalogs:
     '@vitejs/plugin-react': ^6.0.1
     react: ^19.2.4
     react-dom: ^19.2.4
-    react-router: ^7.15.1
+    react-router: ^7.18.2
   solid:
     solid-js: ^1.9.5
   vue:
-    '@unhead/vue': ^3.0.0
+    '@unhead/vue': ^3.4.0
     '@vitejs/plugin-vue': ^6.0.5
     vue: ^3.5.26
     vue-router: ^4.6.4
@@ -39,8 +41,9 @@ onlyBuiltDependencies:
   - lefthook
 
 overrides:
-  '@xmldom/xmldom': '>=0.9.10'
+  '@xmldom/xmldom': '>=0.9.12'
   esbuild: '>=0.28.1'
+  vite: '>=6.4.3'
 
 peerDependencyRules:
   ignoreMissing:

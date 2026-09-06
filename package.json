@@ -13,7 +13,7 @@
     "wait-for-published-packages": "zx package.mjs --wait-for-published-packages"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.2",
     "lefthook": "^1.11.13",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
