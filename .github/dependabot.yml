@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    commit-message:
+      prefix: 'chore'
+    schedule:
+      interval: 'weekly'
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - '*'
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: 'npm'
+    directories:
+      - '/'
+    commit-message:
+      prefix: 'chore'
+    schedule:
+      interval: 'weekly'
+    cooldown:
+      default-days: 7
+    versioning-strategy: 'increase-if-necessary'
+    groups:
+      dependencies:
+        dependency-type: 'production'
+      dev-dependencies:
+        dependency-type: 'development'
+    open-pull-requests-limit: 10

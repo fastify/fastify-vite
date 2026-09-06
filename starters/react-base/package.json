@@ -12,19 +12,19 @@
     "@fastify/react": "^1.2.2",
     "@fastify/vite": "^10.0.0",
     "@unhead/react": "^2.1.13",
-    "fastify": "^5.8.5",
+    "fastify": "^5.12.1",
     "history": "^5.3.0",
     "minipass": "^7.1.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router": "^7.15.1",
+    "react-router": "^7.18.2",
     "valtio": "^2.1.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.1",
     "@vitejs/plugin-react": "^6.0.1",
-    "postcss": "^8.5.3",
-    "postcss-preset-env": "^10.1.5",
+    "postcss": "^8.5.23",
+    "postcss-preset-env": "^11.5.1",
     "tailwindcss": "^4.1.1",
     "vite": "^8.0.16"
   }
