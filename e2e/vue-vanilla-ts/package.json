@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@eslint/js": "catalog:eslint",
-    "@types/node": "^22.13.17",
+    "@types/node": "^26.5.1",
     "@vitejs/plugin-vue": "catalog:vue",
     "eslint": "catalog:eslint",
     "eslint-config-prettier": "catalog:eslint",
