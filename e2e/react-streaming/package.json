@@ -12,7 +12,7 @@
     "@fastify/vite": "workspace:^",
     "devalue": "catalog:",
     "fastify": "catalog:",
-    "jotai": "^2.12.2",
+    "jotai": "^3.0.0",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "react-router": "catalog:react"

@@ -48,7 +48,7 @@
     "@fastify/deepmerge": "^3.2.1",
     "@fastify/middie": "catalog:",
     "@fastify/static": "^10.1.2",
-    "fastify-plugin": "^5.1.0",
+    "fastify-plugin": "^6.0.0",
     "fs-extra": "^11.3.4",
     "klaw": "^4.1.0",
     "package-directory": "^8.2.0"

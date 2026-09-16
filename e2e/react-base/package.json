@@ -11,7 +11,7 @@
   "dependencies": {
     "@fastify/react": "workspace:^",
     "@fastify/vite": "workspace:^",
-    "@unhead/react": "^2.1.13",
+    "@unhead/react": "^3.4.0",
     "fastify": "catalog:",
     "history": "latest",
     "minipass": "latest",

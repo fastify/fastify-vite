@@ -9,9 +9,9 @@ catalog:
   '@unhead/vue': ^3.4.0
   devalue: ^5.8.1
   fastify: ^5.12.1
-  react-router: ^7.18.2
+  react-router: ^8.3.1
   tsx: ^4.21.0
-  typescript: ^6.0.3
+  typescript: ^7.0.2
   vite: ^8.0.16
   vitest: ^5.0.0
 
@@ -28,14 +28,14 @@ catalogs:
     '@vitejs/plugin-react': ^6.0.1
     react: ^19.2.4
     react-dom: ^19.2.4
-    react-router: ^7.18.2
+    react-router: ^8.3.1
   solid:
     solid-js: ^1.9.5
   vue:
     '@unhead/vue': ^3.4.0
     '@vitejs/plugin-vue': ^6.0.5
     vue: ^3.5.26
-    vue-router: ^4.6.4
+    vue-router: ^5.3.1
 
 onlyBuiltDependencies:
   - lefthook
