@@ -12,13 +12,13 @@
     "@fastify/vite": "workspace:^",
     "devalue": "catalog:",
     "fastify": "catalog:",
-    "jotai": "^2.12.2",
-    "ky": "^1.8.0",
-    "ky-universal": "^0.12.0",
+    "jotai": "^3.0.0",
+    "ky": "^2.1.0",
+    "ky-universal": "^1.0.0",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "react-router": "catalog:react",
-    "undici": "^7.29.0"
+    "undici": "^8.10.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "catalog:react",

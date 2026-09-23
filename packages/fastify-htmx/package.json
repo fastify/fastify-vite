@@ -38,7 +38,7 @@
   "dependencies": {
     "@kitajs/html": "^4.2.9",
     "@rollup/plugin-inject": "^5.0.5",
-    "htmx.org": "^2.0.6",
+    "htmx.org": "^4.0.0",
     "mlly": "^1.7.4"
   }
 }
