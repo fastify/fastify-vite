@@ -26,19 +26,6 @@ export default import.meta.glob('/pages/**/*.{jsx,tsx}')
 
 To change the location where routes are loaded from, just place a `routes.js` file at your Vite project's root directory and `@fastify/react/plugin` will automatically recognize it and use it instead.
 
-In your Vite configuration file:
-
-```js
-import viteFastifyReact from '@fastify/react/plugin'
-
-export default {
-  plugins: [
-    // ...
-    viteFastifyReact({ globPattern: '/views/**/*.tsx' }),
-  ],
-}
-```
-
 ## Dynamic parameters
 
 Dynamic route parameters uses `[param]` for a singular parameter and `[param+]` for wildcard routes.
