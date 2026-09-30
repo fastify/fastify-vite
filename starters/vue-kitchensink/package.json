@@ -9,14 +9,14 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@fastify/formbody": "^8.0.2",
+    "@fastify/formbody": "^9.0.0",
     "@fastify/one-line-logger": "^2.0.2",
     "@fastify/vite": "^10.0.0",
     "@fastify/vue": "^2.0.1",
     "@unhead/vue": "^3.0.0",
     "fastify": "^5.8.5",
     "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.3.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",

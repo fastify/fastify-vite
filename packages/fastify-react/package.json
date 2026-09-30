@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@fastify/vite": "workspace:^",
-    "@unhead/react": "^2.1.13",
+    "@unhead/react": "^3.4.1",
     "acorn": "^8.14.1",
     "acorn-strip-function": "^1.2.0",
     "acorn-walk": "^8.3.4",
@@ -79,6 +79,6 @@
     "react-dom": "catalog:react",
     "react-router": "catalog:react",
     "valtio": "latest",
-    "youch": "^3.3.4"
+    "youch": "^4.1.1"
   }
 }
