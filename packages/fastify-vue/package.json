@@ -65,7 +65,7 @@
     "youch": "^3.3.4"
   },
   "devDependencies": {
-    "@types/node": "^24.12.2",
+    "@types/node": "^26.6.2",
     "@unhead/vue": "catalog:vue",
     "@vitejs/plugin-vue": "catalog:vue",
     "fastify": "catalog:",
