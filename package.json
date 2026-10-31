@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.2",
-    "lefthook": "^1.11.13",
-    "oxfmt": "^0.55.0",
+    "lefthook": "^2.2.0",
+    "oxfmt": "^0.72.0",
     "oxlint": "^1.70.0",
     "vite": "catalog:",
     "vitest": "catalog:",
