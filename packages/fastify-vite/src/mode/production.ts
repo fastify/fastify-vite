@@ -175,19 +175,21 @@ export async function setup(
     : null
 
   const indexHtmlPath = join(clientOutDir, 'index.html')
-  let indexHtml = await readFile(indexHtmlPath, 'utf8')
-  if (runtimeConfig.baseAssetUrl) {
-    indexHtml = await transformAssetUrls(
-      indexHtml,
-      viteConfig.base || '/',
-      runtimeConfig.baseAssetUrl,
+  if (existsSync(indexHtmlPath)) {
+    let indexHtml = await readFile(indexHtmlPath, 'utf8')
+    if (runtimeConfig.baseAssetUrl) {
+      indexHtml = await transformAssetUrls(
+        indexHtml,
+        viteConfig.base || '/',
+        runtimeConfig.baseAssetUrl,
+      )
+    }
+
+    fastifyViteDecoration.scope.decorateReply(
+      'html',
+      await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
     )
   }
-
-  fastifyViteDecoration.scope.decorateReply(
-    'html',
-    await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
-  )
 
   if (runtimeConfig.hasRenderFunction && client) {
     const renderFunction = await runtimeConfig.createRenderFunction!(

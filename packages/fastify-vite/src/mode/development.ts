@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
@@ -157,17 +158,19 @@ export async function setup(
       }
       const { viteConfig } = runtimeConfig
       const indexHtmlPath = join(viteConfig.root, 'index.html')
-      const indexHtml = await readFile(indexHtmlPath, 'utf8')
-      const transformedHtml = await fastifyViteDecoration.devServer!.transformIndexHtml(
-        req.url,
-        indexHtml,
-      )
+      if (existsSync(indexHtmlPath)) {
+        const indexHtml = await readFile(indexHtmlPath, 'utf8')
+        const transformedHtml = await fastifyViteDecoration.devServer!.transformIndexHtml(
+          req.url,
+          indexHtml,
+        )
 
-      reply.html = await runtimeConfig.createHtmlFunction(
-        transformedHtml,
-        fastifyViteDecoration.scope,
-        runtimeConfig,
-      )
+        reply.html = await runtimeConfig.createHtmlFunction(
+          transformedHtml,
+          fastifyViteDecoration.scope,
+          runtimeConfig,
+        )
+      }
 
       if (runtimeConfig.hasRenderFunction) {
         reply.render = await runtimeConfig.createRenderFunction!(
