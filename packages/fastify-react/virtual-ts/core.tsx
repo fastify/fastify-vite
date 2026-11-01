@@ -48,35 +48,42 @@ export function AppRoute({ ctxHydration, ctx, children }) {
   }
   // Note that on the client, window.route === ctxHydration
 
-  // Indicates whether or not this is a first render on the client
-  ctx.firstRender = window.route.firstRender
+  const location = useLocation()
+  const { pathname, search } = location
+  const path = createPath({ pathname, search })
 
-  // If running on the client, the server context data
-  // is still available, hydrated from window.route
-  if (ctx.firstRender) {
+  if (window.route.firstRender) {
+    // Indicates whether or not this is a first render on the client
+    ctx.firstRender = true
+    // If running on the client, the server context data
+    // is still available, hydrated from window.route
     ctx.data = window.route.data
     ctx.head = window.route.head
-  } else {
+    ctx.lastPath = path
+  } else if (ctx.lastPath !== path) {
+    ctx.firstRender = false
     ctx.data = undefined
     ctx.head = undefined
+    ctx.onEnterExecuted = false
+    ctx.lastPath = path
   }
-
-  const location = useLocation()
-  const path = createPath(location)
 
   // When the next route renders client-side,
   // force it to execute all URMA hooks again
   useEffect(() => {
     window.route.firstRender = false
     window.route.actionData = {}
-  }, [location])
+    ctx.lastPath = path
+    return () => {
+      ctx.lastPath = undefined
+    }
+  }, [ctx, path])
 
   // If we have a getData function registered for this route
-  if (!ctx.data && ctx.getData) {
+  if (!ctx.firstRender && !ctx.data && ctx.getData) {
     try {
-      const { pathname, search } = location
       // If not, fetch data from the JSON endpoint
-      ctx.data = waitFetch(`/-/data${pathname}${search}`)
+      ctx.data = waitFetch(`/-/data${path}`)
     } catch (status) {
       // If it's an actual error...
       if (status instanceof Error) {
@@ -90,7 +97,7 @@ export function AppRoute({ ctxHydration, ctx, children }) {
   // Note that ctx.loader() at this point will resolve the
   // memoized module, so there's barely any overhead
 
-  if (!ctx.firstRender && ctx.getMeta) {
+  if (!ctx.firstRender && !ctx.head && ctx.getMeta) {
     const updateMeta = async () => {
       const { getMeta } = await ctx.loader()
       ctx.head = await getMeta(ctx)
@@ -99,7 +106,7 @@ export function AppRoute({ ctxHydration, ctx, children }) {
     waitResource(path, 'updateMeta', updateMeta)
   }
 
-  if (!ctx.firstRender && ctx.onEnter) {
+  if (!ctx.firstRender && !ctx.onEnterExecuted && ctx.onEnter) {
     const runOnEnter = async () => {
       const { onEnter } = await ctx.loader()
       const updatedData = await onEnter(ctx)
@@ -107,6 +114,7 @@ export function AppRoute({ ctxHydration, ctx, children }) {
         ctx.data = {}
       }
       Object.assign(ctx.data, updatedData)
+      ctx.onEnterExecuted = true
     }
     waitResource(path, 'onEnter', runOnEnter)
   }

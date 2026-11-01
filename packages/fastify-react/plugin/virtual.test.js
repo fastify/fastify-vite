@@ -24,3 +24,13 @@ test('resolveId leaves project overrides as real files', async (t) => {
 
   assert.equal(await resolveId.call({ root }, '$app/layouts.js'), override)
 })
+
+test('core virtual module ignores location.hash and preserves ctx state across same-path re-renders', () => {
+  for (const ts of [false, true]) {
+    const { code } = loadVirtualModule(ts ? 'core.tsx' : 'core.jsx', ts)
+    assert.ok(code.includes('createPath({ pathname, search })'))
+    assert.ok(code.includes('ctx.lastPath !== path'))
+    assert.ok(code.includes('!ctx.firstRender && !ctx.head && ctx.getMeta'))
+    assert.ok(code.includes('!ctx.firstRender && !ctx.onEnterExecuted && ctx.onEnter'))
+  }
+})
