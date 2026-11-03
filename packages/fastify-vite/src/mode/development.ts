@@ -1,9 +1,9 @@
-import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { createServer, createServerModuleRunner, isRunnableDevEnvironment } from 'vite'
 import middie, { type Handler as MiddieHandler } from '@fastify/middie'
+import { existsAsync } from '../ioutils.ts'
 import type { ClientModule } from '../types/client.ts'
 import type { DevRuntimeConfig } from '../types/options.ts'
 import type { RouteDefinition } from '../types/route.ts'
@@ -158,7 +158,7 @@ export async function setup(
       }
       const { viteConfig } = runtimeConfig
       const indexHtmlPath = join(viteConfig.root, 'index.html')
-      if (existsSync(indexHtmlPath)) {
+      if (await existsAsync(indexHtmlPath)) {
         const indexHtml = await readFile(indexHtmlPath, 'utf8')
         const transformedHtml = await fastifyViteDecoration.devServer!.transformIndexHtml(
           req.url,

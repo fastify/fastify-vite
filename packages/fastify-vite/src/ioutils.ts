@@ -1,12 +1,21 @@
 import { existsSync, lstatSync } from 'node:fs'
-import type { Stats } from 'node:fs'
-import { writeFile, readFile } from 'node:fs/promises'
+import type { PathLike, Stats } from 'node:fs'
+import { access, writeFile, readFile } from 'node:fs/promises'
 import { isAbsolute, join, resolve, parse, dirname, basename, sep } from 'node:path'
 import { ensureDir, remove } from 'fs-extra'
 import klaw from 'klaw'
 
 export function resolveIfRelative(p: string, root: string): string {
   return isAbsolute(p) ? p : resolve(root, p)
+}
+
+export async function existsAsync(p: PathLike): Promise<boolean> {
+  try {
+    await access(p)
+    return true
+  } catch {
+    return false
+  }
 }
 
 export async function* walk(
