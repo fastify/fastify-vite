@@ -1,4 +1,3 @@
-import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { isAbsolute, join, parse, resolve } from 'node:path'
 import type { FastifyInstance } from 'fastify'
@@ -6,7 +5,7 @@ import FastifyStatic from '@fastify/static'
 import type { ClientEntries, ClientModule } from '../types/client.ts'
 import type { ProdRuntimeConfig } from '../types/options.ts'
 import type { SerializableViteConfig } from '../types/vite-configs.ts'
-import { resolveIfRelative } from '../ioutils.ts'
+import { existsAsync, resolveIfRelative } from '../ioutils.ts'
 import { transformAssetUrls } from '../html-assets.ts'
 import type { FastifyViteDecorationPriorToSetup } from './support.ts'
 
@@ -65,7 +64,7 @@ async function loadBundle(
 
   for (const serverFile of bundleFiles) {
     bundlePath = getBundlePath(serverFile)
-    if (existsSync(bundlePath)) {
+    if (await existsAsync(bundlePath)) {
       break
     }
   }
@@ -126,11 +125,11 @@ export async function setup(
     assetsDir = viteConfig.build!.assetsDir!
   }
 
-  if (!existsSync(clientOutDir)) {
+  if (!(await existsAsync(clientOutDir))) {
     throw new Error(`No client distribution bundle found at ${clientOutDir}.`)
   }
 
-  if (!spa && !existsSync(ssrOutDir)) {
+  if (!spa && !(await existsAsync(ssrOutDir))) {
     throw new Error(`No SSR distribution bundle found at ${ssrOutDir}.`)
   }
 
@@ -140,7 +139,7 @@ export async function setup(
     : viteConfig.base || '/'
   await fastifyViteDecoration.scope.register(async function assetFiles(scope: FastifyInstance) {
     const root = [resolve(clientOutDir, assetsDir)]
-    if (existsSync(resolve(ssrOutDir, assetsDir))) {
+    if (await existsAsync(resolve(ssrOutDir, assetsDir))) {
       root.push(resolve(ssrOutDir, assetsDir))
     }
     await scope.register(FastifyStatic, {
@@ -175,19 +174,21 @@ export async function setup(
     : null
 
   const indexHtmlPath = join(clientOutDir, 'index.html')
-  let indexHtml = await readFile(indexHtmlPath, 'utf8')
-  if (runtimeConfig.baseAssetUrl) {
-    indexHtml = await transformAssetUrls(
-      indexHtml,
-      viteConfig.base || '/',
-      runtimeConfig.baseAssetUrl,
+  if (await existsAsync(indexHtmlPath)) {
+    let indexHtml = await readFile(indexHtmlPath, 'utf8')
+    if (runtimeConfig.baseAssetUrl) {
+      indexHtml = await transformAssetUrls(
+        indexHtml,
+        viteConfig.base || '/',
+        runtimeConfig.baseAssetUrl,
+      )
+    }
+
+    fastifyViteDecoration.scope.decorateReply(
+      'html',
+      await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
     )
   }
-
-  fastifyViteDecoration.scope.decorateReply(
-    'html',
-    await runtimeConfig.createHtmlFunction(indexHtml, fastifyViteDecoration.scope, runtimeConfig),
-  )
 
   if (runtimeConfig.hasRenderFunction && client) {
     const renderFunction = await runtimeConfig.createRenderFunction!(

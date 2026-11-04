@@ -6,12 +6,13 @@ vi.mock('vite', async (importOriginal) => {
   const actual = await importOriginal<typeof import('vite')>()
   return {
     ...actual,
+    createServer: vi.fn(),
     createServerModuleRunner: vi.fn(),
   }
 })
 
-import { createServerModuleRunner } from 'vite'
-import { loadEntries } from './development.ts'
+import { createServer, createServerModuleRunner } from 'vite'
+import { loadEntries, setup } from './development.ts'
 
 describe('loadEntries', () => {
   beforeEach(() => {
@@ -87,5 +88,67 @@ describe('loadEntries', () => {
     await loadEntries(mockDecoration, mockConfig)
 
     expect(createServerModuleRunner).not.toHaveBeenCalled()
+  })
+})
+
+describe('setup', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should skip reading index.html in onRequest when it does not exist', async () => {
+    const transformIndexHtml = vi.fn()
+    vi.mocked(createServer).mockResolvedValue({
+      middlewares: {},
+      environments: {},
+      transformIndexHtml,
+      close: vi.fn(),
+    } as never)
+
+    let onRequestHandler:
+      | ((req: unknown, reply: Record<string, unknown>) => Promise<void>)
+      | undefined
+    const createHtmlFunction = vi.fn()
+
+    const scope: Record<PropertyKey, unknown> = {
+      server: {},
+      hasDecorator: vi.fn().mockReturnValue(true),
+      use: vi.fn(),
+      decorate: vi.fn((key: PropertyKey, value: unknown) => {
+        scope[key] = value
+      }),
+      decorateReply: vi.fn(),
+      addHook: vi.fn(
+        (hook: string, fn: (req: unknown, reply: Record<string, unknown>) => Promise<void>) => {
+          if (hook === 'onRequest') {
+            onRequestHandler = fn
+          }
+        },
+      ),
+    }
+
+    const mockDecoration = {
+      scope,
+      runtimeConfig: {
+        spa: true,
+        viteConfig: {
+          configFile: false,
+          root: '/non-existent-root-dir',
+          environments: {},
+        },
+        createHtmlFunction,
+      },
+    }
+
+    // @ts-expect-error - mock object doesn't match full type
+    await setup(mockDecoration)
+
+    expect(onRequestHandler).toBeDefined()
+    const reply: Record<string, unknown> = {}
+    await onRequestHandler!({ url: '/' }, reply)
+
+    expect(transformIndexHtml).not.toHaveBeenCalled()
+    expect(createHtmlFunction).not.toHaveBeenCalled()
+    expect(reply.html).toBeUndefined()
   })
 })
