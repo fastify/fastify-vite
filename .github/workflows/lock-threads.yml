@@ -16,4 +16,4 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    uses: fastify/workflows/.github/workflows/lock-threads.yml@6d2e20befa0c8fef6f7c7c1b5e8b79fbbf8d3d9a # v7.1.0
+    uses: fastify/workflows/.github/workflows/lock-threads.yml@731d0cca9a6a5b9586dad6b0326d49001ab9216f # v7.2.0
