@@ -62,7 +62,7 @@
     "acorn-walk": "^8.3.4",
     "devalue": "catalog:",
     "mlly": "^1.5.0",
-    "youch": "^3.3.4"
+    "youch": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
